@@ -81,6 +81,17 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
         active: view === 'log'
       });
     }
+    if (onToggleRandomMode) {
+      menuItems.push({
+        icon: 'fa-shuffle',
+        label: randomMode ? t('settings.switchToLevelMode') : t('settings.switchToRandomMode'),
+        onClick: () => {
+          onToggleRandomMode();
+          onClose();
+        },
+        highlight: randomMode
+      });
+    }
   }
 
   // Quiz view items

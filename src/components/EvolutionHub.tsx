@@ -1,6 +1,6 @@
 import React from 'react';
 import { UserStats, PersonaStage } from '../types';
-import { LEVELS, QUESTIONS_PER_LEVEL } from '../constants';
+import { LEVELS, QUESTIONS_PER_LEVEL, getStarsFromProgress, getRandomModeScore, getPersonaFromRandomScore, getNextRandomModeThreshold } from '../constants';
 import { PersonaBadge } from './PersonaBadge';
 import { ProgressBar } from './ProgressBar';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -13,59 +13,144 @@ interface EvolutionHubProps {
 
 export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }) => {
   const { t } = useLanguage();
+  const randomMode = stats.randomMode ?? false;
+  const rm = stats.randomModeStats ?? { totalAnswered: 0, totalCorrect: 0 };
+  const randomScore = getRandomModeScore(rm);
+  const randomPersona = getPersonaFromRandomScore(randomScore);
+  const nextThreshold = getNextRandomModeThreshold(randomScore);
   const currentLevelInfo = LEVELS.find(l => l.level === stats.currentLevel) || LEVELS[0];
   const progress = stats.levelProgress[stats.currentLevel] || 0;
-  
+
   const totalCompleted = stats.completedQuestionIds.length;
   const totalPossible = 1000; // Roadmap target: 10 levels * 100 questions
   const globalPercentage = Math.round((totalCompleted / totalPossible) * 100);
 
-  const lastAccuracy = stats.lastSessionScore !== undefined && stats.lastSessionTotal 
+  const lastAccuracy = stats.lastSessionScore !== undefined && stats.lastSessionTotal
     ? Math.round((stats.lastSessionScore / stats.lastSessionTotal) * 100)
     : null;
+
+  // Calculate stars earned for current level (use acquiredStars, or derive from progress for migration)
+  const earnedStars = stats.acquiredStars?.[stats.currentLevel] ?? getStarsFromProgress(progress);
+
+  const displayPersona = randomMode ? randomPersona : currentLevelInfo.persona;
+
+  const renderStars = () => {
+    return (
+      <div className="flex gap-2 justify-center mt-3">
+        {[1, 2, 3].map(starNum => (
+          <div
+            key={starNum}
+            className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-500
+              ${starNum <= earnedStars
+                ? 'bg-amber-400 text-amber-900 shadow-[0_0_15px_rgba(251,191,36,0.5)] scale-110'
+                : 'bg-slate-800 text-slate-600 border border-white/5'
+              }`}
+          >
+            <i className={`fas fa-star ${starNum <= earnedStars ? 'animate-pulse' : ''} text-sm`}></i>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-700">
       <div className="flex flex-col items-center gap-3 py-6 border-b border-white/5 mb-2">
-        <PersonaBadge stage={currentLevelInfo.persona} size="md" />
+        <PersonaBadge stage={displayPersona} size="md" />
         <div className="text-center space-y-1">
           <h1 className="text-xl font-black text-white tracking-tight uppercase">
-            {formatTranslation(t('hub.evolutionStage'), { level: stats.currentLevel })} {stats.currentLevel}
+            {randomMode ? t('hub.randomModeLabel') : `${formatTranslation(t('hub.evolutionStage'), { level: stats.currentLevel })} ${stats.currentLevel}`}
           </h1>
           <div className="flex items-center gap-2 justify-center">
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
             <span className="text-slate-400 font-bold text-[10px] tracking-widest uppercase">
-              {currentLevelInfo.persona} {t('hub.class')}
+              {displayPersona} {t('hub.class')}
             </span>
           </div>
+          {!randomMode && renderStars()}
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="glass rounded-3xl p-8 space-y-6 flex flex-col justify-between">
-          <div>
-            <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-              <i className="fas fa-dna text-indigo-400"></i> {t('hub.currentGenome')}
-            </h3>
-            <p className="text-slate-400 leading-relaxed text-xs">
-              {t(`levels.level${currentLevelInfo.level}` as any)}
-            </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {currentLevelInfo.concepts.map(c => (
-                <span key={c} className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-[9px] font-mono border border-indigo-500/20">
-                  {c}
-                </span>
-              ))}
-            </div>
-          </div>
-          
-          <div className="space-y-2 pt-6 border-t border-white/5">
-            <div className="flex justify-between text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-              <span>{t('hub.stageProgress')}</span>
-              <span>{progress} / {QUESTIONS_PER_LEVEL}</span>
-            </div>
-            <ProgressBar current={progress} total={QUESTIONS_PER_LEVEL} colorClass="bg-indigo-500" />
-          </div>
+          {randomMode ? (
+            <>
+              <div>
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  <i className="fas fa-shuffle text-indigo-400"></i> {t('hub.randomModeLabel')}
+                </h3>
+                <p className="text-slate-400 leading-relaxed text-xs">
+                  Questions from all levels. Earn points to evolve through the same 10 personas.
+                </p>
+              </div>
+              <div className="space-y-4 pt-6 border-t border-white/5">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5">
+                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">{t('hub.totalAnswered')}</div>
+                    <div className="text-lg font-black text-white">{rm.totalAnswered}</div>
+                  </div>
+                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5">
+                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">{t('hub.correct')}</div>
+                    <div className="text-lg font-black text-emerald-400">{rm.totalCorrect}</div>
+                  </div>
+                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 col-span-2">
+                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">{t('hub.accuracy')}</div>
+                    <div className="text-lg font-black text-sky-400">
+                      {rm.totalAnswered > 0 ? Math.round((rm.totalCorrect / rm.totalAnswered) * 100) : 0}%
+                    </div>
+                  </div>
+                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 col-span-2">
+                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">{t('hub.evolutionScore')}</div>
+                    <div className="text-lg font-black text-indigo-400">{randomScore}</div>
+                  </div>
+                </div>
+                {nextThreshold && (
+                  <>
+                    <div className="flex justify-between text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                      <span>{formatTranslation(t('hub.pointsToNext'), { points: nextThreshold.minScore - randomScore, persona: nextThreshold.persona })}</span>
+                      <span>{randomScore} / {nextThreshold.minScore}</span>
+                    </div>
+                    <ProgressBar current={randomScore} total={nextThreshold.minScore} colorClass="bg-indigo-500" />
+                  </>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              <div>
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  <i className="fas fa-dna text-indigo-400"></i> {t('hub.currentGenome')}
+                </h3>
+                <p className="text-slate-400 leading-relaxed text-xs">
+                  {t(`levels.level${currentLevelInfo.level}` as any)}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {currentLevelInfo.concepts.map(c => (
+                    <span key={c} className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-[9px] font-mono border border-indigo-500/20">
+                      {c}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-4 pt-6 border-t border-white/5">
+                <div className="flex justify-between text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                  <span>
+                    {earnedStars === 0 && t('subLevels.beginnerProgress')}
+                    {earnedStars === 1 && t('subLevels.intermediateProgress')}
+                    {earnedStars === 2 && t('subLevels.expertProgress')}
+                    {earnedStars === 3 && t('subLevels.masteryProgress')}
+                  </span>
+                  <span>{progress} / {QUESTIONS_PER_LEVEL}</span>
+                </div>
+                <ProgressBar current={progress} total={QUESTIONS_PER_LEVEL} colorClass="bg-indigo-500" />
+                <div className="flex justify-between text-[8px] text-slate-600 font-black tracking-widest px-1">
+                  <span>{t('subLevels.beginnerCaps')}</span>
+                  <span className="ml-4">{t('subLevels.intermediateCaps')}</span>
+                  <span>{t('subLevels.expertCaps')}</span>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="glass rounded-3xl p-8 space-y-6 flex flex-col justify-between border-indigo-500/20 bg-indigo-500/5">
@@ -73,7 +158,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
               <i className="fas fa-microchip text-indigo-400"></i> {t('hub.nextMutation')}
             </h3>
-            
+
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-slate-900/50 rounded-2xl p-4 border border-white/5">
                 <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">{t('hub.batchSize')}</div>
@@ -88,11 +173,11 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
             </div>
 
             <p className="text-slate-300 text-xs leading-relaxed">
-              {t('hub.absorbText')} {formatTranslation(t('hub.mutationsRemaining'), { count: QUESTIONS_PER_LEVEL - progress })}
+              {randomMode ? t('hub.randomModeAbsorbText') : `${t('hub.absorbText')} ${formatTranslation(t('hub.mutationsRemaining'), { count: QUESTIONS_PER_LEVEL - progress })}`}
             </p>
           </div>
 
-          <button 
+          <button
             onClick={onStartQuiz}
             className="w-full py-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-2xl font-black text-lg transition-all transform hover:scale-[1.02] active:scale-95 shadow-2xl shadow-indigo-500/40 flex items-center justify-center gap-3"
           >
@@ -112,15 +197,14 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
             <p className="text-[10px] text-slate-500">{totalCompleted} / {totalPossible} {t('hub.conceptsText')}</p>
           </div>
         </div>
-        
+
         <div className="flex gap-1.5">
           {LEVELS.map(l => (
-            <div 
+            <div
               key={l.level}
-              className={`w-1.5 h-6 rounded-full transition-all duration-500 ${
-                l.level < stats.currentLevel ? 'bg-indigo-500' : 
-                l.level === stats.currentLevel ? 'bg-indigo-500/40 animate-pulse' : 'bg-slate-800'
-              }`}
+              className={`w-1.5 h-6 rounded-full transition-all duration-500 ${l.level < stats.currentLevel ? 'bg-indigo-500' :
+                  l.level === stats.currentLevel ? 'bg-indigo-500/40 animate-pulse' : 'bg-slate-800'
+                }`}
               title={l.persona}
             />
           ))}

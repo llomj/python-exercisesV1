@@ -292,9 +292,9 @@ Enhancement functions (`enhanceVagueMethodCalls`, `enhanceBareMethodCall`) are d
 
 ## 🔴 CRITICAL: Question-Solution Coherence Bug
 
-**STATUS: ⚠️ URGENT - NEEDS SYSTEMATIC FIX**
+**STATUS: ✅ FIXED (2025-02-28) — 0 mismatches remain**
 
-**Problem**: Questions and their solutions are not coherent. The code in the question doesn't match the expected solutions.
+**Problem**: Questions and their solutions were not coherent. The code in the question didn't match the expected solutions.
 
 **Example - ID 72**:
 - **Question shows**: `"HELLO".lower()`
@@ -316,11 +316,12 @@ Enhancement functions (`enhanceVagueMethodCalls`, `enhanceBareMethodCall`) are d
 
 **Priority**: CRITICAL - This breaks the fundamental learning experience. Students cannot learn if questions are incorrect.
 
-**Task**:
-- Review ALL 1000 questions systematically
-- For each question, verify: `eval(question_code) == solutions[correct_option_index]`
-- Fix any mismatches found
-- Document the review process and fixes applied
+**Fix Applied (2025-02-28)**:
+- ✅ Enhanced `scripts/validate_questions.py` with robust `matches_option()`: handles Python repr formats (' vs "), set ordering, bytes equivalence, generator/iterator types, semantic mappings (e.g. -5 ↔ "Negative five"), __main__ vs builtins class repr, and conceptual answers.
+- ✅ Fixed 4 real bugs in `level5.ts`: correct_option_index for append/extend/remove questions (IDs 1238, 1239, 1240, 1244) — changed from 0 to 3 so "None" is correctly marked (Python return value).
+- ✅ Fixed f-string options in `level1_intermediate_b.ts` (IDs 185–187): options now match Python output directly (e.g. '  abc' instead of '"  abc"').
+- ✅ Fixed ascii() option in `level1_intermediate_b.ts` (ID 195): option now matches Python repr exactly.
+- Run `npx tsx scripts/export_questions.ts && python3 scripts/validate_questions.py` to revalidate.
 
 **User Report - ID 71 Issue**:
 - Question: "HELLO".lower()
@@ -500,6 +501,37 @@ For each question ID:
 - Translate glossary terms and definitions
 - Translate persona stage names
 - Consider translating question text (though Python code/questions may remain in English for learning purposes)
+
+### French Detailed Explanations (Explication du Codon) - BATCH TRANSLATION:
+**Status**: IDs 1-500 translated. IDs 501-1000 pending.
+
+When the user selects French, the "description approfondie" (detailed explanation) shown when clicking "Cliquez pour voir l'explication du codon" or "Cliquez pour réduire" is now translated for questions that have French translations.
+
+**Implementation**:
+- File: `src/data/detailedExplanationsTranslations.ts`
+- Object: `DETAILED_EXPLANATIONS_FR: Record<number, string>` - maps question ID to French text
+- Helper: `getTranslatedDetailedExplanation(id, englishText, language)` - returns French if available, else English
+- Components: QuizView, IdLogView, IdSearchModal use this helper when displaying detailed explanations
+
+**Short explanations (e field)**:
+- File: `src/data/shortExplanationsTranslations.ts`
+- Object: `SHORT_EXPLANATIONS_FR: Record<number, string>` - maps question ID to French short explanation
+- Helper: `getTranslatedShortExplanation(id, englishText, language)` - returns French if available, else English
+- Components: QuizView, IdLogView, IdSearchModal use this for the short explanation panel
+- Status: IDs 1-50 translated. IDs 51-1000 pending (add in batches).
+
+**Code Versatility panel (Level 9+)**:
+- File: `src/translations.ts` - quiz.codeVersatility section
+- All labels and content now use t() / tRaw() when language is French
+- Components: QuizView displays translated panel for Level 9+ questions
+
+**Detailed explanations revision task (IDs 1-500)**:
+- French translations must structurally match English exactly
+- Include all sections: Key concepts, How it works, Example(s), Common uses, Edge cases, etc.
+- Sample revisions done for IDs 22, 23. Pattern: compare English `de` structure, add any missing French sections
+- Remaining: IDs 1-21 (may already match), IDs 24-500 need review/expansion
+
+**Batch process**: Add 50 translations at a time. See comments in detailedExplanationsTranslations.ts for instructions.
 
 ### Notes:
 - The translation button is positioned under the XP score icon in the nav

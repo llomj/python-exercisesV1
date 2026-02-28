@@ -6,6 +6,7 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  tRaw: (key: string) => string | string[] | undefined;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -50,8 +51,30 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     return typeof value === 'string' ? value : key;
   };
 
+  // Get translation value (string or array) - for arrays use tRaw and handle in component
+  const tRaw = (key: string): string | string[] | undefined => {
+    const keys = key.split('.');
+    let value: any = translations[language];
+    for (const k of keys) {
+      if (value && typeof value === 'object' && k in value) {
+        value = value[k];
+      } else {
+        value = translations.en;
+        for (const k2 of keys) {
+          if (value && typeof value === 'object' && k2 in value) {
+            value = value[k2];
+          } else {
+            return undefined;
+          }
+        }
+        break;
+      }
+    }
+    return value;
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, tRaw }}>
       {children}
     </LanguageContext.Provider>
   );

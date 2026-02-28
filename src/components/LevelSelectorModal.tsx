@@ -9,13 +9,15 @@ interface LevelSelectorModalProps {
   highestUnlockedLevel: number;
   onSelectLevel: (level: number) => void;
   onClose: () => void;
+  acquiredStars?: Record<number, number>;
 }
 
 export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
   currentLevel,
   highestUnlockedLevel,
   onSelectLevel,
-  onClose
+  onClose,
+  acquiredStars = {}
 }) => {
   const { t } = useLanguage();
 
@@ -62,6 +64,7 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
             const isLocked = levelInfo.level > highestUnlockedLevel;
             const isCurrent = levelInfo.level === currentLevel;
             const isUnlocked = levelInfo.level <= highestUnlockedLevel;
+            const stars = acquiredStars[levelInfo.level] || 0;
 
             return (
               <button
@@ -70,45 +73,47 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
                 disabled={isLocked}
                 className={`
                   relative p-4 rounded-2xl border-2 transition-all
-                  ${isCurrent 
-                    ? 'bg-indigo-500/20 border-indigo-400 shadow-lg shadow-indigo-500/20' 
+                  ${isCurrent
+                    ? 'bg-indigo-500/20 border-indigo-400 shadow-lg shadow-indigo-500/20'
                     : isUnlocked
-                    ? 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20 cursor-pointer'
-                    : 'bg-slate-800/50 border-slate-700/50 opacity-50 cursor-not-allowed'
+                      ? 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20 cursor-pointer'
+                      : 'bg-slate-800/50 border-slate-700/50 opacity-50 cursor-not-allowed'
                   }
                 `}
               >
                 {isLocked && (
-                  <div className="absolute top-2 right-2">
+                  <div className="absolute top-2 right-2 flex gap-1">
                     <i className="fas fa-lock text-slate-500 text-xs"></i>
                   </div>
                 )}
-                {isCurrent && (
-                  <div className="absolute top-2 right-2">
-                    <i className="fas fa-check-circle text-indigo-400 text-xs"></i>
+                {isUnlocked && (
+                  <div className="absolute top-2 right-2 flex gap-0.5">
+                    {[1, 2, 3].map(starNum => (
+                      <i
+                        key={starNum}
+                        className={`fas fa-star text-[10px] ${starNum <= stars ? 'text-amber-400' : 'text-slate-700/50'
+                          }`}
+                      ></i>
+                    ))}
                   </div>
                 )}
                 <div className="flex flex-col items-center gap-2">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl ${
-                    isCurrent 
-                      ? 'bg-indigo-500' 
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl ${isCurrent
+                      ? 'bg-indigo-500'
                       : isUnlocked
-                      ? 'bg-slate-700'
-                      : 'bg-slate-800'
-                  }`}>
-                    <i className={`fas ${getPersonaIcon(levelInfo.persona)} ${
-                      isCurrent ? 'text-white' : isUnlocked ? 'text-slate-400' : 'text-slate-600'
-                    }`}></i>
+                        ? 'bg-slate-700'
+                        : 'bg-slate-800'
+                    }`}>
+                    <i className={`fas ${getPersonaIcon(levelInfo.persona)} ${isCurrent ? 'text-white' : isUnlocked ? 'text-slate-400' : 'text-slate-600'
+                      }`}></i>
                   </div>
                   <div className="text-center">
-                    <div className={`text-sm font-black ${
-                      isCurrent ? 'text-indigo-400' : isUnlocked ? 'text-white' : 'text-slate-500'
-                    }`}>
+                    <div className={`text-sm font-black ${isCurrent ? 'text-indigo-400' : isUnlocked ? 'text-white' : 'text-slate-500'
+                      }`}>
                       {formatTranslation(t('levelSelector.level'), { level: levelInfo.level })}
                     </div>
-                    <div className={`text-[10px] font-bold uppercase tracking-wider mt-1 ${
-                      isCurrent ? 'text-indigo-300' : isUnlocked ? 'text-slate-400' : 'text-slate-600'
-                    }`}>
+                    <div className={`text-[10px] font-bold uppercase tracking-wider mt-1 ${isCurrent ? 'text-indigo-300' : isUnlocked ? 'text-slate-400' : 'text-slate-600'
+                      }`}>
                       {levelInfo.persona}
                     </div>
                   </div>
@@ -120,7 +125,7 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
 
         <div className="pt-4 border-t border-white/10">
           <p className="text-xs text-slate-400 text-center">
-            {currentLevel === highestUnlockedLevel 
+            {currentLevel === highestUnlockedLevel
               ? formatTranslation(t('levelSelector.youAreOnLevel'), { level: currentLevel })
               : formatTranslation(t('levelSelector.currentLevelInfo'), { current: currentLevel, highest: highestUnlockedLevel })
             }

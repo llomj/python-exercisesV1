@@ -3,6 +3,194 @@ import { Question } from '../types';
 import { QUESTIONS_BANK } from '../questionsBank';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatTranslation } from '../translations';
+import { getTranslatedDetailedExplanation } from '../data/detailedExplanationsTranslations';
+import { getTranslatedShortExplanation } from '../data/shortExplanationsTranslations';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+const formatCodeSnippet = (text: string): string => {
+  if (!text) return '';
+
+  const isSimpleExpression = !text.includes('\n') &&
+    !/\b(def|class|if|for|while|with|try|except|finally|else|elif)\b/.test(text);
+
+  if (isSimpleExpression) return text;
+  if (text.includes('\n')) return text;
+
+  let inString: string | null = null;
+  let bracketDepth = 0;
+  let currentLine = '';
+  const initialLines: string[] = [];
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    if (!inString && (char === "'" || char === '"')) {
+      inString = char;
+      currentLine += char;
+    } else if (inString === char && text[i - 1] !== '\\') {
+      inString = null;
+      currentLine += char;
+    } else if (!inString && (char === '[' || char === '(' || char === '{')) {
+      bracketDepth++;
+      currentLine += char;
+    } else if (!inString && (char === ']' || char === ')' || char === '}')) {
+      bracketDepth--;
+      currentLine += char;
+    } else if (!inString && bracketDepth === 0 && char === ':') {
+      currentLine += char;
+      initialLines.push(currentLine.trim());
+      currentLine = '';
+    } else if (!inString && bracketDepth === 0 && char === ';') {
+      if (currentLine.trim()) initialLines.push(currentLine.trim());
+      currentLine = '';
+    } else {
+      currentLine += char;
+    }
+  }
+  if (currentLine.trim()) initialLines.push(currentLine.trim());
+
+  let currentIndent = 0;
+  const formattedLines: string[] = [];
+
+  for (let i = 0; i < initialLines.length; i++) {
+    let line = initialLines[i];
+    if (/^(else|elif|except|finally)\b/.test(line)) {
+      currentIndent = Math.max(0, currentIndent - 1);
+    }
+    if (currentIndent > 0) {
+      if (/^(print|assert|obj\s*=|f\s*=|x\s*=|y\s*=|g\s*=|next\([^)]*\)|[a-z_]\w*\s*=\s*[A-Z])/.test(line) && !line.startsWith('self.')) {
+        currentIndent = 0;
+      }
+      if (/^(class|import|from)\b/.test(line)) currentIndent = 0;
+      if (line.match(/^[a-z_]\w*\(/) && !line.startsWith('self.')) {
+        const funcName = line.split('(')[0];
+        if (!initialLines.slice(0, i).some(l => l.includes('def ' + funcName))) {
+          currentIndent = 0;
+        }
+      }
+    }
+    formattedLines.push(' '.repeat(currentIndent * 4) + line);
+    if (line.endsWith(':')) {
+      currentIndent++;
+    } else if (/^(return|pass|break|continue)\b/.test(line)) {
+      currentIndent = Math.max(0, currentIndent - 1);
+    }
+  }
+  return formattedLines.join('\n');
+};
+
+const translateText = (text: string, language: string): string => {
+  if (language !== 'fr') return text;
+  const questionTranslations: Record<string, string> = {
+    'What is': 'Qu\'est-ce que c\'est',
+    'What is?': 'Qu\'est-ce que c\'est ?',
+    'Result of': 'Résultat de',
+    'Output of': 'Sortie de',
+    'Value of': 'Valeur de',
+    'Which': 'Lequel',
+    'How': 'Comment',
+    'When': 'Quand',
+    'Where': 'Où',
+    'Why': 'Pourquoi',
+    'Can': 'Peut',
+    'Does': 'Est-ce que',
+    'Is': 'Est',
+    'Are': 'Sont',
+    'Will': 'Va',
+    'Would': 'Serait',
+    'Should': 'Devrait',
+  };
+  let translated = text;
+  for (const [en, fr] of Object.entries(questionTranslations)) {
+    const pattern = new RegExp(`^${en.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i');
+    if (pattern.test(translated)) {
+      translated = translated.replace(pattern, fr);
+    }
+  }
+  return translated;
+};
+
+const splitQuestion = (text: string, language: string = 'en') => {
+  try {
+    const enhancedText = translateText(text, language);
+
+    if (enhancedText.includes('\n')) {
+      const lines = enhancedText.split('\n');
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        if (/^\s{2,}/.test(line) || /^\s*(def|class|for|while|if|with|import|from)\s+/.test(line)) {
+          return {
+            prefix: lines.slice(0, i).join('\n').trim(),
+            code: lines.slice(i).join('\n')
+          };
+        }
+      }
+    }
+
+    const questionWords = [
+      'What is', "Qu'est-ce que c'est",
+      'Result', 'Résultat',
+      'Output', 'Sortie',
+      'Value', 'Valeur',
+      'What', 'Which', 'Lequel', 'How', 'Comment', 'When', 'Quand', 'Where', 'Où', 'Why', 'Pourquoi',
+      'Can', 'Peut', 'Does', 'Est-ce que', 'Is', 'Est', 'Are', 'Sont', 'Will', 'Va', 'Would', 'Serait', 'Should', 'Devrait'
+    ];
+
+    let questionWordMatch = null;
+    for (const word of questionWords) {
+      const pattern = new RegExp(`^${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s+`, 'i');
+      const match = enhancedText.match(pattern);
+      if (match) {
+        questionWordMatch = match;
+        break;
+      }
+    }
+
+    if (questionWordMatch && questionWordMatch[0]) {
+      const questionEnd = questionWordMatch[0].length;
+      let remainingText = enhancedText.substring(questionEnd).trim();
+      remainingText = remainingText.replace(/^(of|de|is)\s+/i, '');
+      const hasQuestionMark = remainingText.endsWith('?');
+      if (hasQuestionMark) remainingText = remainingText.slice(0, -1).trim();
+
+      const functionCallPattern = /[a-zA-Z_]\w*\s*\(/;
+      const codeKeywordPattern = /\b(def|class|for|while|if|with|import|from|print)\s+/;
+      const bracketPattern = /[\[\(\{]/;
+
+      if (functionCallPattern.test(remainingText) ||
+        bracketPattern.test(remainingText) ||
+        codeKeywordPattern.test(remainingText)) {
+        return {
+          prefix: enhancedText.substring(0, questionEnd).trim() + (hasQuestionMark ? '?' : ''),
+          code: remainingText
+        };
+      }
+    }
+
+    const codePatterns = [
+      /\b(def|class|for|while|if|with|import|from)\s+/,
+      /print\s*\(/,
+      /[a-zA-Z_]\w*\s*\(/,
+    ];
+
+    for (const pattern of codePatterns) {
+      const match = enhancedText.match(pattern);
+      if (match && match.index !== undefined) {
+        const beforeCode = enhancedText.substring(0, match.index).trim();
+        if (/^(What|Result|Output|Value|Which|How|When|Where|Why|Can|Does|Is|Are|Will|Would|Should)/i.test(beforeCode)) {
+          return {
+            prefix: beforeCode,
+            code: enhancedText.substring(match.index).trim()
+          };
+        }
+      }
+    }
+
+    return { prefix: enhancedText, code: '' };
+  } catch (error) {
+    return { prefix: text, code: '' };
+  }
+};
 
 interface IdSearchModalProps {
   onClose: () => void;
@@ -10,14 +198,14 @@ interface IdSearchModalProps {
 }
 
 export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToLog }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [idInput, setIdInput] = useState('');
   const [question, setQuestion] = useState<Question | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleSearch = () => {
     const id = parseInt(idInput.trim());
-    if (isNaN(id) || id < 1 || id > 1000) {
+    if (isNaN(id) || id < 1 || id > 3000) {
       setError(t('idSearch.invalidId'));
       setQuestion(null);
       return;
@@ -85,7 +273,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
               placeholder={t('idSearch.enterId')}
               className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
               min="1"
-              max="1000"
+              max="3000"
             />
             <button
               onClick={handleSearch}
@@ -122,9 +310,47 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
               </div>
 
               <div className="pt-4 border-t border-white/10">
-                <p className="text-lg font-bold text-white mb-4 leading-relaxed">
-                  {question.question}
-                </p>
+                <div className="mb-4">
+                  {(() => {
+                    const { prefix, code } = splitQuestion(question.question, language);
+                    if (code) {
+                      return (
+                        <div className="flex flex-col">
+                          {prefix && (
+                            <p className="text-lg font-bold text-white leading-relaxed mb-2">{prefix}</p>
+                          )}
+                          <div className="overflow-x-auto bg-slate-800 rounded-lg">
+                            <SyntaxHighlighter
+                              language="python"
+                              style={oneDark}
+                              customStyle={{
+                                padding: '1rem',
+                                margin: 0,
+                                background: 'transparent',
+                                fontSize: '0.875rem',
+                                lineHeight: '1.75',
+                                fontFamily: "'Fira Code', monospace"
+                              }}
+                              codeTagProps={{
+                                style: {
+                                  fontFamily: "'Fira Code', monospace",
+                                  whiteSpace: 'pre',
+                                  display: 'block'
+                                }
+                              }}
+                              PreTag="div"
+                            >
+                              {formatCodeSnippet(code)}
+                            </SyntaxHighlighter>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return (
+                      <p className="text-lg font-bold text-white leading-relaxed">{prefix}</p>
+                    );
+                  })()}
+                </div>
 
                 <div className="space-y-2 mb-4">
                   <p className="text-sm font-bold text-slate-400 mb-2">{t('idSearch.options')}:</p>
@@ -154,7 +380,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
                 <div className="pt-4 border-t border-white/10">
                   <p className="text-sm font-bold text-slate-400 mb-2">{t('idSearch.explanation')}:</p>
                   <p className="text-sm text-slate-300 leading-relaxed">
-                    {question.explanation}
+                    {getTranslatedShortExplanation(question.id, question.explanation, language)}
                   </p>
                   {question.detailedExplanation && (
                     <details className="mt-3">
@@ -162,7 +388,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
                         {t('idSearch.showDetailedExplanation')}
                       </summary>
                       <p className="mt-2 text-sm text-slate-400 leading-relaxed whitespace-pre-line">
-                        {question.detailedExplanation}
+                        {getTranslatedDetailedExplanation(question.id, question.detailedExplanation, language)}
                       </p>
                     </details>
                   )}

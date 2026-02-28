@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { IdLogEntry } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
+import { getTranslatedShortExplanation } from '../data/shortExplanationsTranslations';
 import { QUESTIONS_BANK } from '../questionsBank';
 import { formatTranslation } from '../translations';
+import { getTranslatedDetailedExplanation } from '../data/detailedExplanationsTranslations';
 
 interface IdLogViewProps {
   entries: IdLogEntry[];
@@ -10,7 +12,7 @@ interface IdLogViewProps {
 }
 
 export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [expandedIds, setExpandedIds] = useState<Set<number>>(new Set());
   const sortedEntries = [...entries].sort((a, b) => b.timestamp - a.timestamp);
 
@@ -89,7 +91,10 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
                           {t('glossary.inDepthDescription')}
                         </h5>
                         <div className="text-slate-200 leading-relaxed text-sm whitespace-pre-wrap">
-                          {getQuestionDetailedExplanation(entry.id)}
+                          {(() => {
+                            const det = getQuestionDetailedExplanation(entry.id);
+                            return det ? getTranslatedDetailedExplanation(entry.id, det, language) : null;
+                          })()}
                         </div>
                       </div>
                     </div>
@@ -109,7 +114,7 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
 
                 <div className="pt-3 border-t border-white/5">
                   <p className="text-[11px] text-slate-400 leading-relaxed italic">
-                    {entry.explanation}
+                    {getTranslatedShortExplanation(entry.id, entry.explanation, language)}
                   </p>
                 </div>
               </div>
