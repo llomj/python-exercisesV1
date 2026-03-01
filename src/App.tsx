@@ -275,7 +275,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-indigo-500/30 pb-28">
-      <nav className="pt-[max(2.75rem, env(safe-area-inset-top))] px-2 pb-1.5 flex items-center justify-between border-b border-white/5 sticky top-0 z-50 glass">
+      <nav className="pt-[max(4rem,env(safe-area-inset-top))] px-2 pb-1.5 flex items-center justify-between border-b border-white/5 sticky top-0 z-50 glass">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => setView('hub')}>
             <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
@@ -314,7 +314,7 @@ const App: React.FC = () => {
       </nav>
 
       {/* Settings at bottom - pb lifts gear above iPhone home-indicator; min 2rem when env is 0 in PWA */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 flex justify-center pb-[max(2rem, env(safe-area-inset-bottom))] pt-2 bg-gradient-to-t from-slate-950 to-transparent">
+      <div className="fixed bottom-0 left-0 right-0 z-40 flex justify-center pb-[max(2rem,env(safe-area-inset-bottom))] pt-2 bg-gradient-to-t from-slate-950 to-transparent">
         <button
           onClick={() => setShowSettingsMenu(!showSettingsMenu)}
           className="w-16 h-16 flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all shadow-lg min-w-[64px] min-h-[64px]"
