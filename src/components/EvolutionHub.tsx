@@ -56,7 +56,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz, 
 
   return (
     <div className="space-y-6 animate-in fade-in duration-700">
-      <div className="flex flex-col items-center gap-2 py-2 border-b border-white/5 mb-2">
+      <div className="flex flex-col items-center gap-1.5 py-1.5 border-b border-white/5 mb-1">
         <PersonaBadge stage={displayPersona} size="md" />
         <div className="text-center space-y-1">
           <h1 className="text-xl font-black text-white tracking-tight uppercase">
