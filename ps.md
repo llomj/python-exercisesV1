@@ -103,6 +103,8 @@ Before moving to the next level:
 - Increase bottom padding `pb-[max(2rem, env(safe-area-inset-bottom))]` so gear sits above home-indicator (env often 0 in PWA)
 - Gear `w-14` → `w-16` (64px tap target)
 - SettingsMenu anchorBottom: `bottom-24` → `bottom-28`
+- Latest deployed fix (commit `dca1615`, repo `python-exercisesV1`): fixed Tailwind arbitrary-value syntax by removing spaces in `pt-[max(...)]` and `pb-[max(...)]` so iPhone safe-area offsets are actually applied.
+- Follow-up UI polish: reduced top-bar padding from `pt-[max(4rem,env(safe-area-inset-top))]` to `pt-[env(safe-area-inset-top)]` to remove extra top spacing while keeping standalone body safe-area padding.
 
 ---
 
@@ -141,6 +143,11 @@ Before moving to the next level:
 - Set `Cache-Control: no-cache, must-revalidate` for `index.html` on the CDN. Ensures HTML is always revalidated. May still need SW to not cache HTML.
 
 ### F. Dual settings entry ✅ IMPLEMENTED
+
+**iOS PWA standalone vs browser** (user: "browser preview works, Home Screen doesn't):
+- In standalone mode, `env(safe-area-inset-top)` can be 0; viewport extends under status bar.
+- Fix: `@media (display-mode: standalone) { body { padding-top: max(3rem, env(safe-area-inset-top, 3rem)); } }` in index.html.
+- Nav `pt-[max(2.75rem, env(safe-area-inset-top))]` — 44px minimum to clear status bar.
 - Nav: gear in nav with `pt-[max(3rem, env(safe-area-inset-top))]` so nav sits below status bar.
 - Hub: "Settings" button in global progress card (EvolutionHub) — always visible, tappable.
 - Bottom bar: gear kept as third entry. Three ways to open settings.
@@ -150,6 +157,49 @@ Before moving to the next level:
 - Optional: detect stale version (e.g. compare with a `/version.json` or build timestamp) and show "New version available — tap to reload" with a link to `clear-sw.html`.
 
 **Recommended order**: Try A first (manual clear). If user can't or it doesn't work, implement B (network-first for document).
+
+---
+
+## 🔴 iPhone PWA Settings Bar — WHY FIXES MAY STILL FAIL (ALL POSSIBLE PROBLEMS)
+
+**Symptom**: Settings bar too high / overlaps status bar when opened from Home Screen. Browser preview works.
+
+### A. CACHING (user never gets new code)
+1. **SW install cache** — `cache.addAll(['./index.html'])` at install fetches index; browser cache can serve stale HTML, poisoning SW cache.
+2. **GitHub Pages CDN** — index.html cached; SW fetch may get cached response.
+3. **First load** — Initial navigation can use HTTP cache before SW controls fetches.
+4. **PWA shell** — iOS may freeze the shell at "Add to Home Screen"; reopening reuses it.
+5. **clear-sw.html** — Wrong URL (base path), not visited, or add-to-homescreen from different tab.
+
+### B. iOS STANDALONE MODE
+1. **display-mode: standalone** — iOS might use `minimal-ui`; media query may not match.
+2. **env(safe-area-inset-top)** — Often 0 in standalone; 3rem fallback may be too small (Dynamic Island ≈ 59pt).
+3. **viewport-fit=cover** — Content extends under status bar; needs padding.
+4. **apple-mobile-web-app-status-bar-style** — black vs black-translucent affects layout.
+5. **env() support** — WebView in standalone may not honor env().
+
+### C. GITHUB PAGES
+1. **Base path** — /python-exercises-learn/; manifest/start_url must match.
+2. **404 / SPA** — Custom 404 could serve wrong page.
+3. **CDN** — Cannot control Cache-Control on index.html.
+4. **Deploy timing** — Build may not be finished when user refreshes.
+
+### D. LAYOUT / STRUCTURE
+1. **Nav sticky top-0** — Sticks to viewport top; viewport may include status bar.
+2. **Body padding** — May be overridden by child layout.
+3. **Inset size** — 3rem (48px) may be too small for Dynamic Island; try 4rem (64px).
+
+### E. WHAT IS "SETTINGS BAR"?
+- Top nav (RANK, XP, gear) overlapping status bar?
+- Bottom bar gear in home-indicator zone (hard to tap)?
+- SettingsMenu popup wrong position?
+
+### F. THINGS TO TRY NEXT
+1. **Don't pre-cache index.html** — Remove from STATIC_ASSETS; only cache after network fetch. ✅ v8
+2. **Larger fallback** — Use 4rem (64px) instead of 3rem for standalone. ✅ v8
+3. **Both media queries** — Add `@media (display-mode: minimal-ui)` with same rules as standalone. ✅ v8
+4. **Version check** — Compare deployed version and show "Update" prompt with link to clear-sw.
+5. **Confirm URL** — Ensure clear-sw.html is at `https://llomj.github.io/python-exercises-learn/clear-sw.html`.
 
 ## Solutions Needed
 - Increase code panel size significantly
