@@ -42,10 +42,7 @@
             overscroll-behavior-y: contain; /* Prevents pull-to-refresh on mobile */
             padding-bottom: env(safe-area-inset-bottom, 0);
         }
-        /* Mobile PWA: push content below status bar (iPhone notch/ Dynamic Island) */
-        @media (max-width: 768px) {
-            body { padding-top: 3.5rem; }
-        }
+        /* Mobile PWA: nav has extra top padding - see App.tsx pt-16 */
         .code-font {
             font-family: 'Fira Code', monospace;
         }

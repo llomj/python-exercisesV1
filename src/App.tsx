@@ -275,7 +275,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-indigo-500/30">
-      <nav className="p-4 flex items-center justify-between border-b border-white/5 sticky top-0 z-50 glass">
+      <nav className="pt-16 px-4 pb-4 sm:pt-4 flex items-center justify-between border-b border-white/5 sticky top-0 z-50 glass">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => setView('hub')}>
             <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
@@ -331,7 +331,7 @@ const App: React.FC = () => {
 
       </nav>
 
-      <main className="container mx-auto px-4 py-8 max-w-4xl min-h-[calc(100dvh-160px)]">
+      <main className="container mx-auto px-4 py-6 max-w-4xl min-h-[calc(100dvh-160px)]">
         {view === 'quiz' ? (
           <QuizView
             level={stats.currentLevel}
