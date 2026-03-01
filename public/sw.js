@@ -1,4 +1,4 @@
-const CACHE_NAME = 'python-exercises-learn-offline-v6';
+const CACHE_NAME = 'python-exercises-learn-offline-v7';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -44,7 +44,7 @@ self.addEventListener('fetch', (event) => {
   const isDoc = event.request.mode === 'navigate' || event.request.destination === 'document';
   if (isDoc) {
     event.respondWith(
-      fetch(event.request)
+      fetch(event.request, { cache: 'reload' })
         .then((response) => {
           if (response && response.status === 200 && response.type !== 'opaque') {
             const clone = response.clone();
