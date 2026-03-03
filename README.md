@@ -5,4 +5,4 @@ https://llomj.github.io/python-exercises-learn/
 
 #This phone app is a python exercise app multiple-choice where user can level up 10 levels learning python.
 
-#AI agent tools used to build app. Google AI studio, Antigravity, cursor, opencode.
+#AI agent tools used to build app. Cursor, Codex, opencode.
