@@ -39,7 +39,13 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
 
   if (!isOpen) return null;
 
-  const menuItems = [];
+  const menuItems: Array<{
+    icon: string;
+    label: string;
+    onClick: () => void;
+    active?: boolean;
+    highlight?: boolean;
+  }> = [];
 
   // Hub view items
   if (view === 'hub') {
@@ -50,8 +56,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
         onClick: () => {
           onShowGlossary();
           onClose();
-        },
-        active: view === 'glossary'
+        }
       });
     }
     if (onShowIdSearch) {
@@ -81,8 +86,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
         onClick: () => {
           onShowLearningLog();
           onClose();
-        },
-        active: view === 'log'
+        }
       });
     }
     if (onToggleRandomMode) {
@@ -100,16 +104,6 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
 
   // Quiz view items
   if (view === 'quiz') {
-    if (onShowOperations) {
-      menuItems.push({
-        icon: 'fa-calculator',
-        label: t('app.operations'),
-        onClick: () => {
-          onShowOperations();
-          onClose();
-        }
-      });
-    }
     if (onToggleRandomMode) {
       menuItems.push({
         icon: 'fa-shuffle',
@@ -124,6 +118,16 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   }
 
   // Common items
+  if (onShowOperations) {
+    menuItems.push({
+      icon: 'fa-calculator',
+      label: t('app.operations'),
+      onClick: () => {
+        onShowOperations();
+        onClose();
+      }
+    });
+  }
   if (onShowLevelSelector) {
     menuItems.push({
       icon: 'fa-layer-group',
@@ -149,11 +153,11 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   return (
     <>
       {/* Backdrop */}
-      <div 
+      <div
         className="fixed inset-0 z-40"
         onClick={onClose}
       />
-      
+
       {/* Menu - near top-right on mobile, below trigger on desktop */}
       <div className={`z-50 min-w-[200px] ${anchorBottom ? 'fixed top-[max(4rem,env(safe-area-inset-top))] right-4' : 'absolute top-full right-0 mt-2'}`}>
         <div className="glass-settings rounded-2xl p-2 shadow-2xl border border-white/10 animate-in slide-in-from-top-2 duration-200">
@@ -163,11 +167,11 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
               onClick={item.onClick}
               className={`
                 w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left
-                ${item.active 
-                  ? 'bg-indigo-500/20 text-indigo-400' 
+                ${item.active
+                  ? 'bg-indigo-500/20 text-indigo-400'
                   : item.highlight
-                  ? 'bg-green-500/10 text-green-400 hover:bg-green-500/20'
-                  : 'text-slate-300 hover:bg-white/10 hover:text-white'
+                    ? 'bg-green-500/10 text-green-400 hover:bg-green-500/20'
+                    : 'text-slate-300 hover:bg-white/10 hover:text-white'
                 }
               `}
             >
@@ -175,7 +179,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
               <span className="text-sm font-medium">{item.label}</span>
             </button>
           ))}
-          
+
           {/* Reset App button - at bottom with warning styling */}
           {onResetApp && (
             <>

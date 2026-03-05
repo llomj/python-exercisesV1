@@ -114,17 +114,20 @@ const App: React.FC = () => {
     : currentLevelInfo.persona;
   const currentProgress = stats.levelProgress[stats.currentLevel] || 0;
 
+  const getPersonaIconStyle = (persona: PersonaStage): string => {
+    return persona === PersonaStage.OCTOPUS ? 'fa-brands' : 'fas';
+  };
   const getPersonaIcon = (persona: PersonaStage): string => {
     const personaIcons: Record<PersonaStage, string> = {
       [PersonaStage.PLANKTON]: "fa-microbe",
       [PersonaStage.SHRIMP]: "fa-shrimp",
-      [PersonaStage.CRAB]: "fa-crab",
+      [PersonaStage.CRAB]: "fa-hand-peace",
       [PersonaStage.SMALL_FISH]: "fa-fish",
-      [PersonaStage.OCTOPUS]: "fa-octopus",
-      [PersonaStage.SEAL]: "fa-seal",
+      [PersonaStage.OCTOPUS]: "fa-octopus-deploy",
+      [PersonaStage.SEAL]: "fa-water",
       [PersonaStage.DOLPHIN]: "fa-dolphin",
-      [PersonaStage.SHARK]: "fa-shark",
-      [PersonaStage.WHALE]: "fa-whale",
+      [PersonaStage.SHARK]: "fa-shield-halved",
+      [PersonaStage.WHALE]: "fa-cloud",
       [PersonaStage.GOD_WHALE]: "fa-globe",
     };
     return personaIcons[persona] || 'fa-fish';
@@ -299,7 +302,7 @@ const App: React.FC = () => {
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-3 bg-white/5 px-3 py-1.5 rounded-2xl border border-white/10">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-sm">
-                <i className={`fas ${getPersonaIcon(currentPersona)} text-white`}></i>
+                <i className={`${getPersonaIconStyle(currentPersona)} ${getPersonaIcon(currentPersona)} text-white`}></i>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-none">{t('app.rank')}</span>
@@ -339,16 +342,16 @@ const App: React.FC = () => {
         onClose={() => setShowSettingsMenu(false)}
         view={view}
         anchorBottom
-          randomMode={randomMode}
-          onToggleRandomMode={view === 'hub' || view === 'quiz' ? handleRandomModeToggle : undefined}
-          onShowGlossary={view === 'hub' ? () => setView('glossary') : undefined}
-          onShowIdSearch={view === 'hub' ? () => setShowIdSearch(true) : undefined}
-          onShowIdLog={view === 'hub' ? () => setShowIdLog(true) : undefined}
-          onShowLearningLog={view === 'hub' ? () => setView('log') : undefined}
-          onShowOperations={view === 'quiz' ? () => setShowOperations(true) : undefined}
-          onShowLevelSelector={() => setShowLevelSelector(true)}
-          onToggleLanguage={toggleLanguage}
-          onResetApp={() => setShowResetModal(true)}
+        randomMode={randomMode}
+        onToggleRandomMode={view === 'hub' || view === 'quiz' ? handleRandomModeToggle : undefined}
+        onShowGlossary={view === 'hub' ? () => setView('glossary') : undefined}
+        onShowIdSearch={view === 'hub' ? () => setShowIdSearch(true) : undefined}
+        onShowIdLog={view === 'hub' ? () => setShowIdLog(true) : undefined}
+        onShowLearningLog={view === 'hub' ? () => setView('log') : undefined}
+        onShowOperations={() => setShowOperations(true)}
+        onShowLevelSelector={() => setShowLevelSelector(true)}
+        onToggleLanguage={toggleLanguage}
+        onResetApp={() => setShowResetModal(true)}
       />
 
       <main className="container mx-auto px-4 py-1 max-w-4xl min-h-[calc(100dvh-160px)]">
@@ -405,7 +408,7 @@ const App: React.FC = () => {
                     {formatTranslation(t('subLevels.youEarnedStar'), {
                       star: showResult.starEarned === 1 ? t('subLevels.beginner')
                         : showResult.starEarned === 2 ? t('subLevels.intermediate')
-                        : t('subLevels.expert')
+                          : t('subLevels.expert')
                     })}
                   </p>
                 </>
@@ -439,8 +442,8 @@ const App: React.FC = () => {
             <button
               onClick={() => setShowResult(null)}
               className={`w-full py-4 rounded-2xl font-bold text-white transition-all transform active:scale-95 shadow-xl relative z-10 ${showResult.starEarned
-                  ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/30 text-amber-950 text-lg'
-                  : 'bg-indigo-500 hover:bg-indigo-600 shadow-indigo-500/30'
+                ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/30 text-amber-950 text-lg'
+                : 'bg-indigo-500 hover:bg-indigo-600 shadow-indigo-500/30'
                 }`}
             >
               {showResult.starEarned ? t('subLevels.continueEvolution') : t('result.backToHub')}
