@@ -10,13 +10,13 @@ const personaIcons: Record<string, string> = {
   Egg: "fa-egg",
   Plankton: "fa-microbe",
   Shrimp: "fa-shrimp",
-  Crab: "fa-crab",
+  Crab: "fa-hand-peace",      // free approximation for PRO fa-crab
   "Small Fish": "fa-fish",
-  Octopus: "fa-octopus",
-  Seal: "fa-seal",
+  Octopus: "fa-octopus-deploy", // brand icon
+  Seal: "fa-water",            // free approximation for PRO fa-seal
   Dolphin: "fa-dolphin",
-  Shark: "fa-shark",
-  Whale: "fa-whale",
+  Shark: "fa-shield-halved",   // free approximation for PRO fa-shark
+  Whale: "fa-cloud",           // free approximation for PRO fa-whale
   "God Whale": "fa-globe",
 };
 

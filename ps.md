@@ -180,7 +180,7 @@ Before moving to the next level:
 5. **env() support** — WebView in standalone may not honor env().
 
 ### C. GITHUB PAGES
-1. **Base path** — /python-exercises-learn/; manifest/start_url must match.
+1. **Base path** — /python-exercisesV1/ (from repo name); manifest/start_url must match.
 2. **404 / SPA** — Custom 404 could serve wrong page.
 3. **CDN** — Cannot control Cache-Control on index.html.
 4. **Deploy timing** — Build may not be finished when user refreshes.
@@ -200,7 +200,7 @@ Before moving to the next level:
 2. **Larger fallback** — Use 4rem (64px) instead of 3rem for standalone. ✅ v8
 3. **Both media queries** — Add `@media (display-mode: minimal-ui)` with same rules as standalone. ✅ v8
 4. **Version check** — Compare deployed version and show "Update" prompt with link to clear-sw.
-5. **Confirm URL** — Ensure clear-sw.html is at `https://llomj.github.io/python-exercises-learn/clear-sw.html`.
+5. **Confirm URL** — Ensure clear-sw.html is at `https://llomj.github.io/python-exercisesV1/clear-sw.html`.
 
 ## Solutions Needed
 - Increase code panel size significantly

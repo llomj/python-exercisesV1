@@ -2,10 +2,10 @@
 
 ## Quick Fix for 404 Error
 
-If `https://llomj.github.io/python-exercises-learn/` shows a 404 or redirects to GitHub:
+If `https://llomj.github.io/python-exercisesV1/` shows a 404 or redirects to GitHub:
 
 ### Step 1: Go to Repository Settings
-1. Visit: https://github.com/llomj/python-exercises-learn
+1. Visit: https://github.com/llomj/python-exercisesV1
 2. Click the **"Settings"** tab (top menu, after "Issues" and "Pull requests")
 3. **Note**: You must be signed in as the repository owner
 
@@ -16,13 +16,13 @@ If `https://llomj.github.io/python-exercises-learn/` shows a 404 or redirects to
 3. Click **"Save"**
 
 ### Step 3: Verify Deployment
-1. Go to **"Actions"** tab: https://github.com/llomj/python-exercises-learn/actions
+1. Go to **"Actions"** tab: https://github.com/llomj/python-exercisesV1/actions
 2. Wait for the **"Deploy to GitHub Pages"** workflow to complete (green checkmark)
 3. It should take 2-3 minutes after you save the settings
 
 ### Step 4: Access Your App
 After deployment completes:
-- **App URL**: https://llomj.github.io/python-exercises-learn/
+- **App URL**: https://llomj.github.io/python-exercisesV1/
 
 ## Troubleshooting
 
@@ -39,7 +39,7 @@ After deployment completes:
 
 ## Current Configuration
 
-- ✅ Base path configured: `/python-exercises-learn/`
+- ✅ Base path configured: `/python-exercisesV1/` (from repo name in Actions)
 - ✅ Vite build configured correctly
 - ✅ Service worker path updated
 - ✅ 404.html for routing
