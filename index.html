@@ -42,10 +42,10 @@
             overscroll-behavior-y: contain;
             padding-bottom: env(safe-area-inset-bottom, 0);
         }
-        /* iOS PWA standalone: env(safe-area-inset-top) often 0 - force padding so nav clears status bar */
-        @media (display-mode: standalone) {
+        /* iOS PWA: env(safe-area-inset-top) often 0 - force padding so nav clears status bar (4rem for Dynamic Island) */
+        @media (display-mode: standalone), (display-mode: minimal-ui) {
             body {
-                padding-top: max(3rem, env(safe-area-inset-top, 3rem));
+                padding-top: max(4rem, env(safe-area-inset-top, 4rem));
             }
         }
         .code-font {
@@ -55,6 +55,12 @@
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-settings {
+            background: rgba(30, 41, 59, 0.22);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
         .evolution-gradient {
             background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
