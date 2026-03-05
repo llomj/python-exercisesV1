@@ -6,307 +6,2559 @@
  */
 
 export const DETAILED_EXPLANATIONS_FR: Record<number, string> = {
-  // Level 0 (1-300): detailed explanations aligned with level0.ts
-  1: `Les entiers sont des nombres entiers. type(0) renvoie <class 'int'>.`,
-  2: `type(1) renvoie <class 'int'>.`,
-  3: `Les nombres entiers négatifs sont des int. type(-5) renvoie <class 'int'>.`,
-  4: `Les nombres avec une virgule décimale sont des float. type(3.0) renvoie <class 'float'>.`,
-  5: `0.0 est un float. type(0.0) renvoie <class 'float'>.`,
-  6: `Les guillemets vides créent une chaîne. type('') renvoie <class 'str'>. La chaîne vide est encore une chaîne.`,
-  7: `En Python, un seul caractère est une chaîne (str). type('a') renvoie <class 'str'>. Il n'y a pas de type char séparé.`,
-  8: `True est un booléen. type(True) renvoie <class 'bool'>.`,
-  9: `False est un booléen. type(False) renvoie <class 'bool'>.`,
-  10: `None a le type NoneType. type(None) renvoie <class 'NoneType'>.`,
-  11: `Les crochets créent une liste. type([]) renvoie <class 'list'>.`,
-  12: `Les parenthèses créent un tuple. type(()) renvoie <class 'tuple'>.`,
-  13: `Les accolades vides créent un dictionnaire. type({}) renvoie <class 'dict'>.`,
-  14: `set() crée un ensemble vide. type(set()) renvoie <class 'set'>.`,
-  15: `42 est un entier. type(42) renvoie <class 'int'>.`,
-  16: `100 est un entier. type(100) renvoie <class 'int'>.`,
-  17: `1.5 est un float. type(1.5) renvoie <class 'float'>.`,
-  18: `Le texte entre guillemets est une chaîne. type('hello') renvoie <class 'str'>.`,
-  19: `[1] est une liste avec un élément. type([1]) renvoie <class 'list'>.`,
-  20: `(1,) est un tuple ; la virgule est requise. type((1,)) renvoie <class 'tuple'>.`,
-  21: `{1: 2} est un dictionnaire. type({1: 2}) renvoie <class 'dict'>.`,
-  22: `{1, 2} est un ensemble. type({1, 2}) renvoie <class 'set'>.`,
-  23: `b'x' est de type bytes. type(b'x') renvoie <class 'bytes'>.`,
-  24: `2 est un entier. type(2) renvoie <class 'int'>.`,
-  25: `10 est un entier. type(10) renvoie <class 'int'>.`,
-  26: `-1 est un int. type(-1) renvoie <class 'int'>.`,
-  27: `0.5 est un float. type(0.5) renvoie <class 'float'>.`,
-  28: `2.5 est un float. type(2.5) renvoie <class 'float'>.`,
-  29: `Une chaîne d'un caractère est de type str. type('x') renvoie <class 'str'>.`,
-  30: `Les guillemets doubles créent aussi une chaîne. type("") renvoie <class 'str'>.`,
-  31: `[0] est une liste. type([0]) renvoie <class 'list'>.`,
-  32: `[1, 2] est une liste. type([1, 2]) renvoie <class 'list'>.`,
-  33: `(1, 2) est un tuple. type((1, 2)) renvoie <class 'tuple'>.`,
-  34: `{'a': 1} est un dict. type({'a': 1}) renvoie <class 'dict'>.`,
-  35: `{0} est un ensemble à un élément. type({0}) renvoie <class 'set'>.`,
-  36: `7 est un entier. type(7) renvoie <class 'int'>.`,
-  37: `99 est un entier. type(99) renvoie <class 'int'>.`,
-  38: `-10 est un int. type(-10) renvoie <class 'int'>.`,
-  39: `1.0 a une décimale, donc c'est un float. type(1.0) renvoie <class 'float'>.`,
-  40: `10.0 est un float. type(10.0) renvoie <class 'float'>.`,
-  41: `'0' entre guillemets est une chaîne, pas l'entier 0. type('0') renvoie <class 'str'>.`,
-  42: `'1' est une chaîne. type('1') renvoie <class 'str'>.`,
-  43: `15 est un entier. type(15) renvoie <class 'int'>.`,
-  44: `3 est un entier. type(3) renvoie <class 'int'>.`,
-  45: `4.0 est un float. type(4.0) renvoie <class 'float'>.`,
-  46: `'hi' est une chaîne. type('hi') renvoie <class 'str'>.`,
-  47: `[1, 2, 3] est une liste. type([1, 2, 3]) renvoie <class 'list'>.`,
-  48: `(0,) est un tuple à un élément. type((0,)) renvoie <class 'tuple'>.`,
-  49: `range(3) est un objet range. type(range(3)) renvoie <class 'range'>.`,
-  50: `... est le littéral ellipsis (Ellipsis). type(...) renvoie <class 'ellipsis'>.`,
-  51: `L'addition de deux entiers donne un entier. 1 + 1 = 2.`,
-  52: `Addition simple : 2 + 3 = 5.`,
-  53: `Soustraction : 10 - 3 = 7.`,
-  54: `Multiplication : 4 * 2 = 8.`,
-  55: `En Python 3, l'opérateur / renvoie toujours un float.`,
-  56: `// est la division entière (troncature vers le bas). 9 // 2 = 4.`,
-  57: `% donne le reste de la division. 9 % 2 = 1.`,
-  58: `** est l'exponentiation. 2 ** 3 = 8.`,
-  59: `print() affiche la valeur sur la console. print(5) affiche 5.`,
-  60: `print() affiche le contenu de la chaîne. print('hi') affiche hi sans les guillemets.`,
-  61: `Un nom de variable valide peut contenir lettres, chiffres et underscore ; il ne peut pas commencer par un chiffre. my_var est valide ; 2nd et my-var ne le sont pas.`,
-  62: `Les espaces ne sont pas autorisés dans les noms de variables. "first name" contient un espace.`,
-  63: `L'assignation stocke la valeur dans la variable. x = 7 assigne 7 à x.`,
-  64: `0 + 0 = 0.`,
-  65: `Tout nombre multiplié par 0 donne 0. 1 * 0 = 0.`,
-  66: `5 - 5 = 0.`,
-  67: `Division entière : 8 // 4 = 2. // supprime la partie décimale.`,
-  68: `Le reste lorsque 7 est divisé par 4. 7 = 1*4 + 3, donc 7 % 4 = 3.`,
-  69: `3 au carré vaut 9. 3 ** 2 = 9.`,
-  70: `len() compte les caractères. La chaîne vide a une longueur 0.`,
-  71: `Un caractère a une longueur 1. len('A') = 1.`,
-  72: `Deux caractères ont une longueur 2. len('AB') = 2.`,
-  73: `La liste vide a une longueur 0. len([]) = 0.`,
-  74: `Une liste avec un élément a une longueur 1. len([5]) = 1.`,
-  75: `Une liste avec deux éléments a une longueur 2. len([1, 2]) = 2.`,
-  76: `0 est falsy en Python. bool(0) est False.`,
-  77: `Les nombres non nuls sont truthy. bool(1) est True.`,
-  78: `La chaîne vide est falsy. bool('') est False.`,
-  79: `Une chaîne non vide est truthy. bool('a') est True.`,
-  80: `int() tronque vers zéro. int(2.9) = 2.`,
-  81: `float(3) donne 3.0. Conversion d'un int en float.`,
-  82: `str(42) donne la chaîne '42'. Conversion d'un nombre en chaîne.`,
-  83: `4 + 5 = 9. Addition.`,
-  84: `6 - 2 = 4. Soustraction.`,
-  85: `3 * 3 = 9. Multiplication.`,
-  86: `12 / 4 = 3.0 (float). La division renvoie un float.`,
-  87: `15 // 4 = 3 (division entière).`,
-  88: `5 % 2 = 1 (reste). Modulo.`,
-  89: `Tout nombre à la puissance 0 vaut 1. 10 ** 0 = 1.`,
-  90: `L'opposé de -2 est 2. Double négation.`,
-  91: `abs() donne la valeur absolue. abs(-7) = 7.`,
-  92: `min() renvoie la plus petite valeur. min(5, 3) = 3.`,
-  93: `max() renvoie la plus grande valeur. max(5, 3) = 5.`,
-  94: `round() arrondit à l'entier le plus proche. round(2.4) = 2.`,
-  95: `round(2.6) = 3. Arrondi à l'entier supérieur ici.`,
-  96: `Le + concatène les chaînes. 'a' + 'b' = 'ab'.`,
-  97: `Chaîne × nombre répète la chaîne. 'x' * 2 = 'xx'.`,
-  98: `Les listes se concatènent avec +. [1] + [2] = [1, 2].`,
-  99: `L'index 0 est le premier caractère. 'hi'[0] = 'h'.`,
-  100: `L'index 1 est le deuxième caractère. 'hi'[1] = 'i'.`,
-  101: `L'index -1 est le dernier caractère. L'index négatif compte depuis la fin.`,
-  102: `Premier élément de la liste. [10, 20][0] = 10.`,
-  103: `Deuxième élément de la liste. [10, 20][1] = 20.`,
-  104: `== teste l'égalité. 2 == 2 est True.`,
-  105: `2 n'est pas égal à 3. 2 == 3 est False.`,
-  106: `!= signifie « différent de ». 2 != 3 est True.`,
-  107: `2 est strictement inférieur à 3. 2 < 3 est True.`,
-  108: `3 est strictement supérieur à 2. 3 > 2 est True.`,
-  109: `<= signifie « inférieur ou égal ». 2 <= 2 est True.`,
-  110: `>= signifie « supérieur ou égal ». 3 >= 3 est True.`,
-  111: `not inverse le booléen. not False est True.`,
-  112: `not True vaut False. not inverse la valeur.`,
-  113: `and exige que les deux soient True. True and True = True.`,
-  114: `and est False si l'un est False. True and False = False.`,
-  115: `or est True si l'un est True. True or False = True.`,
-  116: `or est False seulement si les deux sont False. False or False = False.`,
-  117: `La multiplication est prioritaire sur l'addition. 2*3=6, 1+6=7.`,
-  118: `Les parenthèses ont la priorité. (1+2)*3 = 3*3 = 9.`,
-  119: `10 / 2 = 5.0.`,
-  120: `10 // 3 = 3. Division entière.`,
-  121: `10 % 3 = 1. Modulo.`,
-  122: `Tranche de l'index 1 à 2 (exclu). 'abc'[1:2] = 'b'.`,
-  123: `Tranche du début jusqu'à l'index 2. 'abc'[:2] = 'ab'.`,
-  124: `Tranche de l'index 1 jusqu'à la fin. 'abc'[1:] = 'bc'.`,
-  125: `list() transforme chaque caractère en élément. list('ab') = ['a', 'b'].`,
-  126: `tuple() convertit une liste en tuple. tuple([1, 2]) = (1, 2).`,
-  127: `set() supprime les doublons. set([1,1,2]) = {1, 2}.`,
-  128: `dict() crée un dictionnaire vide. dict() = {}.`,
-  129: `list() crée une liste vide. list() = [].`,
-  130: `int() convertit une chaîne numérique en int. int('9') = 9.`,
-  131: `float() convertit une chaîne en float. float('1.5') = 1.5.`,
-  132: `'a' est une sous-chaîne de 'cat'. 'a' in 'cat' est True.`,
-  133: `'x' n'est pas dans 'cat'. in vérifie l'appartenance.`,
-  134: `1 est dans la liste. in fonctionne pour les listes.`,
-  135: `0 n'est pas dans la liste. Test d'appartenance.`,
-  136: `Il n'existe qu'un seul None. None is None est True.`,
-  137: `2+2 = 4, un int. type(4) est int.`,
-  138: `int + float donne un float. type(2 + 2.0) est float.`,
-  139: `'a'*2 = 'aa', une chaîne. La répétition de chaîne donne une chaîne.`,
-  140: `[1]*2 = [1, 1], une liste. La répétition de liste donne une liste.`,
-  141: `len() renvoie un entier. type(len('')) est int.`,
-  142: `sum() additionne tous les nombres. sum([1,2,3]) = 6.`,
-  143: `La somme d'une liste vide est 0. sum([]) = 0.`,
-  144: `min() de plusieurs valeurs. min(3,1,2) = 1.`,
-  145: `max() de plusieurs valeurs. max(3,1,2) = 3.`,
-  146: `pow(2, 4) = 2**4 = 16. pow(base, exp) est l'exponentiation.`,
-  147: `divmod renvoie (quotient, reste). divmod(7, 2) = (3, 1).`,
-  148: `0 à n'importe quelle puissance positive vaut 0. 0 ** 5 = 0.`,
-  149: `Racine carrée de 4. 4 ** 0.5 = 2.0.`,
-  150: `or renvoie la première valeur truthy ou la dernière. 0 or 5 = 5.`,
-  151: `and renvoie la dernière valeur si les deux sont truthy. 3 and 4 = 4.`,
-  152: `and court-circuite sur la première valeur falsy. 0 and 5 = 0.`,
-  153: `Un tuple de deux éléments a une longueur 2. len((1, 2)) = 2.`,
-  154: `Un ensemble de deux éléments a une longueur 2. len({1, 2}) = 2.`,
-  155: `Un dict avec une clé a une longueur 1. len({1: 2}) = 1.`,
-  156: `Les listes sont comparées par valeur. [1] == [1] est True.`,
-  157: `Les chaînes égales sont ==. 'ab' == 'ab' est True.`,
-  158: `Les tuples égaux sont ==. (1,) == (1,) est True.`,
-  159: `En Python, 1 == True (égalité de valeur). 1 == True est True.`,
-  160: `La chaîne vide n'est pas égale à False. '' == False est False.`,
-  161: `not in teste l'absence. 0 not in [1, 2] est True.`,
-  162: `Addition : 7 + 8 = 15.`,
-  163: `Soustraction : 20 - 7 = 13.`,
-  164: `Multiplication : 5 * 4 = 20.`,
-  165: `16 / 4 = 4.0. La division en Python 3 renvoie un float.`,
-  166: `Division entière : 18 // 5 = 3.`,
-  167: `Reste : 18 % 5 = 3.`,
-  168: `4 ** 2 = 16. 4 au carré.`,
-  169: `len() compte les caractères dans une chaîne. 'hello' a 5 caractères.`,
-  170: `len() renvoie le nombre d'éléments d'une liste. La liste a 3 éléments.`,
-  171: `La liste vide est falsy en Python. bool([]) est False.`,
-  172: `Une liste non vide est truthy. bool([0]) est True.`,
-  173: `int() tronque vers zéro. int(0.9) = 0.`,
-  174: `str(0) = '0' (chaîne). str() convertit un nombre en chaîne.`,
-  175: `+ concatène les chaînes. 'no' + 'te' = 'note'.`,
-  176: `'o' * 4 = 'oooo'. La répétition de chaîne.`,
-  177: `+ concatène les listes. [3] + [4] = [3, 4].`,
-  178: `Index 0 : premier caractère de 'dog', soit 'd'.`,
-  179: `Index -1 : dernier caractère de 'dog', soit 'g'.`,
-  180: `Dernier élément : [5, 6, 7][-1] = 7.`,
-  181: `4 == 4 est True. == teste l'égalité.`,
-  182: `5 == 5 donc 5 != 5 est False.`,
-  183: `1 < 10 est True.`,
-  184: `10 > 1 est True.`,
-  185: `5 <= 5 est True. <= inclut l'égalité.`,
-  186: `3 >= 4 est False. 3 n'est pas supérieur ou égal à 4.`,
-  187: `+ concatène les tuples. (1, 2) + (3,) = (1, 2, 3).`,
-  188: `Tranche [1:3] : caractères aux index 1 et 2. 'pie'[1:3] = 'ie'.`,
-  189: `[:2] : du début à l'index 2 (exclu). 'pie'[:2] = 'pi'.`,
-  190: `[2:] : de l'index 2 à la fin. 'pie'[2:] = 'e'.`,
-  191: `list([1, 2]) renvoie une nouvelle liste [1, 2].`,
-  192: `tuple((1,)) = (1,). tuple() sur un tuple renvoie une copie.`,
-  193: `Les ensembles n'ont pas de doublons. set([2, 2, 3]) = {2, 3}.`,
-  194: `Division entière : 11 // 2 = 5.`,
-  195: `Reste : 11 % 2 = 1.`,
-  196: `Addition de floats : 1.5 + 1.5 = 3.0.`,
-  197: `Les nombres avec une virgule décimale sont des float. type(1.0) est float.`,
-  198: `La chaîne vide est toujours de type str. type('') est str.`,
-  199: `[[]] est une liste dont l'unique élément est une liste vide. type([[]]) est list.`,
-  200: `En Python, 0 et False sont égaux en valeur. 0 == False est True.`,
-  201: `in vérifie l'appartenance dans un tuple. 1 est dans (1, 2).`,
-  202: `not in vérifie l'absence. 10 n'est pas dans (1, 2).`,
-  203: `abs(0) = 0.`,
-  204: `En Python 3, round(5.5) arrondit à 6.`,
-  205: `min() renvoie le plus petit argument. min(0, 1) = 0.`,
-  206: `max() renvoie le plus grand argument. max(0, -1) = 0.`,
-  207: `sum() additionne tous les éléments. sum([0, 1, 2]) = 3.`,
-  208: `pow(3, 2) = 3**2 = 9.`,
-  209: `divmod renvoie (quotient, reste). divmod(10, 3) = (3, 1).`,
-  210: `or est True si au moins un opérande est True. True or True = True.`,
-  211: `and est False si un opérande est False. False and True = False.`,
-  212: `Priorité des opérateurs : * avant +. 2*3=6, 6+4=10.`,
-  213: `Les parenthèses ont la priorité. 3+4=7, 2*7=14.`,
-  214: `not in est True quand la sous-chaîne est absente. 'a' not in 'bc' est True.`,
-  215: `Une tranche vide de liste donne []. [][:0] = [].`,
-  216: `L'index 0 est le premier élément d'un tuple. (1, 2)[0] = 1.`,
-  217: `type(False) renvoie <class 'bool'>.`,
-  218: `type(None) renvoie <class 'NoneType'>.`,
-  219: `type([]) renvoie <class 'list'>. [] est une liste.`,
-  220: `Les accolades vides créent un dict, pas un set. type({}) est dict.`,
-  221: `not inverse le booléen. not False est True.`,
-  222: `not True est False.`,
-  223: `True and True = True. Les deux sont True.`,
-  224: `True and False = False. and est False si l'un est False.`,
-  225: `True or False = True. or est True si l'un est True.`,
-  226: `False or False = False. Les deux sont False.`,
-  227: `En Python, 0 == False (égalité de valeur).`,
-  228: `1 == True est True. 1 et True sont égaux en valeur.`,
-  229: `La chaîne vide n'est pas égale à False. '' == False est False.`,
-  230: `Il n'existe qu'un seul None.`,
-  231: `Multiplication avant addition : 1 + 2*3 = 7.`,
-  232: `Les parenthèses d'abord : (1+2)*3 = 9.`,
-  233: `10 / 2 = 5.0.`,
-  234: `10 // 3 = 3. Division entière.`,
-  235: `10 % 3 = 1. Reste.`,
-  236: `Tranche 'abc'[1:2] = 'b'.`,
-  237: `'abc'[:2] = 'ab'. Du début à l'index 2 (exclu).`,
-  238: `'abc'[1:] = 'bc'. De l'index 1 à la fin.`,
-  239: `list('ab') = ['a', 'b'].`,
-  240: `tuple([1, 2]) = (1, 2).`,
-  241: `set supprime les doublons : {1, 2}.`,
-  242: `dict() crée un dictionnaire vide.`,
-  243: `list() crée une liste vide.`,
-  244: `int('9') = 9. int() convertit une chaîne numérique en int.`,
-  245: `Addition : 7 + 8 = 15.`,
-  246: `Soustraction : 20 - 7 = 13.`,
-  247: `Multiplication : 5 * 4 = 20.`,
-  248: `16 / 4 = 4.0. En Python 3 la division renvoie un float.`,
-  249: `Division entière : 18 // 5 = 3.`,
-  250: `Reste : 18 % 5 = 3.`,
-  251: `4 ** 2 = 16. 4 au carré.`,
-  252: `'hello' a 5 caractères. len() compte les caractères.`,
-  253: `La liste a 3 éléments. len() renvoie le nombre d'éléments.`,
-  254: `La liste vide est falsy. bool([]) est False.`,
-  255: `Une liste non vide est truthy. bool([0]) est True.`,
-  256: `int(0.9) = 0. int() tronque vers zéro.`,
-  257: `str(0) = '0' (chaîne). str() convertit un nombre en chaîne.`,
-  258: `Concaténation : 'no' + 'te' = 'note'.`,
-  259: `'o' * 4 = 'oooo'. Répétition de chaîne.`,
-  260: `[3] + [4] = [3, 4]. Concaténation de listes.`,
-  261: `Premier caractère de 'dog' : 'd'. Index 0.`,
-  262: `Dernier caractère de 'dog' : 'g'. Index -1.`,
-  263: `Dernier élément : [5, 6, 7][-1] = 7.`,
-  264: `4 == 4 est True. == teste l'égalité.`,
-  265: `5 != 5 est False. 5 est égal à 5.`,
-  266: `1 < 10 est True.`,
-  267: `10 > 1 est True.`,
-  268: `5 <= 5 est True. <= inclut l'égalité.`,
-  269: `3 >= 4 est False.`,
-  270: `Concaténation de tuples : (1, 2) + (3,) = (1, 2, 3).`,
-  271: `'pie'[1:3] = 'ie'. Tranche des index 1 et 2.`,
-  272: `'pie'[:2] = 'pi'. Deux premiers caractères.`,
-  273: `'pie'[2:] = 'e'. De l'index 2 à la fin.`,
-  274: `list([1, 2]) renvoie une liste. list() sur une liste renvoie une copie.`,
-  275: `tuple((1,)) = (1,).`,
-  276: `set([2, 2, 3]) = {2, 3}. Les ensembles suppriment les doublons.`,
-  277: `11 // 2 = 5. Division entière.`,
-  278: `11 % 2 = 1. Reste.`,
-  279: `Addition de floats : 1.5 + 1.5 = 3.0.`,
-  280: `1.0 est un float. Les nombres avec virgule sont des float.`,
-  281: `La chaîne vide est toujours de type str. type('') est str.`,
-  282: `[[]] est une liste contenant une liste. type([[]]) est list.`,
-  283: `En Python, 0 == False (égalité de valeur).`,
-  284: `1 est dans le tuple (1, 2). in vérifie l'appartenance.`,
-  285: `10 n'est pas dans (1, 2). not in vérifie l'absence.`,
-  286: `abs(0) = 0.`,
-  287: `round(5.5) = 6. En Python 3, round(5.5) arrondit à 6.`,
-  288: `min(0, 1) = 0. min() renvoie le plus petit.`,
-  289: `max(0, -1) = 0. max() renvoie le plus grand.`,
-  290: `sum([0, 1, 2]) = 3. sum() additionne les éléments.`,
-  291: `pow(3, 2) = 9. pow(3, 2) = 3**2.`,
-  292: `divmod(10, 3) = (3, 1). divmod renvoie (quotient, reste).`,
-  293: `True or True = True. or est True si l'un est True.`,
-  294: `La multiplication d'abord : 2*3=6, 6+4=10. Priorité des opérateurs.`,
-  295: `Parenthèses d'abord : 3+4=7, 2*7=14.`,
-  296: `'a' n'est pas dans 'bc'. not in est True si la sous-chaîne est absente.`,
-  297: `Une tranche vide de liste donne []. [][:0] = [].`,
-  298: `Premier élément du tuple : (1, 2)[0] = 1. Index 0.`,
-  299: `False est de type bool. type(False) renvoie <class 'bool'>.`,
-  300: `None a le type NoneType. type(None) renvoie <class 'NoneType'>.`,
+  // Level 0 (1-300): detailed explanations aligned with level0.ts (structure: Débutant / Intermédiaire / Expert)
+  1: `Les entiers sont des nombres entiers. type(0) renvoie <class 'int'>.
+
+Débutant :
+• Les entiers sont des nombres entiers : 0, 1, -5, 42.
+• type(0) renvoie <class 'int'> car 0 est un entier.
+
+Intermédiaire :
+• type() est une fonction intégrée qui renvoie le type (classe) de toute valeur.
+• En Python, les nombres entiers (positifs, négatifs ou zéro) ont le type int.
+• Les nombres avec une virgule décimale (ex. 3.0, 1.5) ont le type float.
+
+Expert :
+• type(x) renvoie l'objet classe ; pour 0 c'est int. type(0) == int est True.
+• L'affichage <class 'int'> est la représentation en chaîne de l'objet type.`,
+  2: `type(1) renvoie <class 'int'>.
+
+Débutant :
+• 1 est un nombre entier, donc son type est int.
+• type(1) donne <class 'int'>.
+
+Intermédiaire :
+• Tout nombre entier positif sans virgule décimale est un int.
+• type() indique le genre de valeur pour l'utiliser correctement.
+
+Expert :
+• int est un type intégré ; type(1) est le même objet que int. En arithmétique, True se comporte comme 1 (bool est une sous-classe de int).`,
+  3: `Les entiers négatifs sont encore de type int.
+
+Débutant :
+• -5 est un nombre entier (négatif), donc type(-5) est <class 'int'>.
+• En Python, les nombres négatifs sans virgule sont des entiers.
+
+Intermédiaire :
+• int couvre tous les entiers : positifs, négatifs et zéro.
+• Seule la présence d'une virgule décimale (ex. -5.0) fait d'une valeur un float.
+
+Expert :
+• type(-5) renvoie int. Pour le typage, utiliser isinstance(x, int) si on veut inclure les sous-classes (ex. bool).`,
+  4: `Les nombres avec une virgule décimale sont des float.
+
+Débutant :
+• 3.0 a une virgule décimale, donc c'est un float, pas un int.
+• type(3.0) renvoie <class 'float'>.
+
+Intermédiaire :
+• En Python, 3 et 3.0 sont des types différents : int vs float, même si 3 == 3.0 est True.
+• La division (/) produit toujours un float en Python 3, donc 6 / 2 donne 3.0.
+
+Expert :
+• float implémente le flottant IEEE 754 ; type(3.0) est float. Pour l'arithmétique décimale exacte, voir le module decimal.`,
+  5: `0.0 est un float à cause de la virgule décimale.
+
+Débutant :
+• 0.0 a une virgule décimale, donc type(0.0) est <class 'float'>.
+• 0 est int ; 0.0 est float.
+
+Intermédiaire :
+• Même quand la valeur est zéro, le littéral 0.0 est stocké comme float.
+• En Python 3, 0 == 0.0 est True (égalité de valeur), mais type(0) != type(0.0).
+
+Expert :
+• type(0.0) est float. Pour du code sensible au type, 0 et 0.0 peuvent se comporter différemment (ex. dans les annotations ou isinstance).`,
+  6: `La chaîne vide est encore une chaîne.
+
+Débutant :
+• Les guillemets vides '' créent une chaîne sans caractère. type('') est <class 'str'>.
+• Une chaîne peut avoir zéro ou plus de caractères ; '' en a zéro.
+
+Intermédiaire :
+• str est le type pour le texte. '' est l'élément neutre pour la concaténation : '' + 'hi' == 'hi'.
+• len('') vaut 0 ; bool('') est False (les chaînes vides sont falsy).
+
+Expert :
+• type('') est str. La chaîne vide est un objet de type singleton utilisé pour « pas de texte » ; ce n'est pas None (type NoneType).`,
+  7: `Python n'a pas de type caractère séparé ; un seul caractère est une chaîne.
+
+Débutant :
+• 'a' est une chaîne d'un caractère. type('a') renvoie <class 'str'>.
+• Il n'y a pas de type « char » en Python — utiliser une chaîne d'un caractère.
+
+Intermédiaire :
+• En Python, le texte est toujours str ; len('a') vaut 1.
+• Indexer une chaîne renvoie une chaîne : 'hello'[0] est 'h' (str), pas un type char.
+
+Expert :
+• En Python, str est une séquence de points de code Unicode. type('a') est str ; il n'y a pas de char. Pour des octets, utiliser bytes ou bytearray.`,
+  8: `True est une valeur booléenne.
+
+Débutant :
+• True est l'une des deux valeurs booléennes (True et False). type(True) est <class 'bool'>.
+• Les booléens représentent oui/non ou activé/désactivé.
+
+Intermédiaire :
+• bool est une sous-classe de int : True vaut 1, False vaut 0. Donc True + True vaut 2.
+• Utiliser les booléens dans les conditions : if x:, while flag:, etc.
+
+Expert :
+• type(True) est bool ; isinstance(True, int) est True. Pour l'identité, True is True. Il n'existe qu'un seul objet True et un seul False.`,
+  9: `False est une valeur booléenne.
+
+Débutant :
+• False est l'une des deux valeurs booléennes. type(False) renvoie <class 'bool'>.
+• False signifie « non » ou « désactivé » en logique.
+
+Intermédiaire :
+• bool est une sous-classe de int : False vaut 0. Donc False + False vaut 0.
+• Les collections vides et zéro sont « falsy » ; bool(0) et bool('') sont False.
+
+Expert :
+• type(False) est bool. Utiliser « is False » pour les tests d'identité plutôt que == quand on vise le booléen False.`,
+  10: `None représente « aucune valeur » ; son type est NoneType.
+
+Débutant :
+• None signifie « pas de valeur » ou « vide ». type(None) renvoie <class 'NoneType'>.
+• None est souvent utilisé pour indiquer une absence de résultat.
+
+Intermédiaire :
+• Il n'existe qu'un seul objet None. Pour tester : if x is None.
+• None n'est pas 0 ni False ; c'est un type à part.
+
+Expert :
+• type(None) est NoneType. None est un singleton. Ne pas utiliser == None de façon systématique ; préférer is None.`,
+  11: `Les crochets créent une liste. type([]) renvoie <class 'list'>.
+
+Débutant :
+• [] est une liste vide. type([]) renvoie <class 'list'>.
+• Les listes contiennent une séquence d'éléments, éventuellement vide.
+
+Intermédiaire :
+• list est le type mutable pour des séquences ordonnées. [] est la liste vide.
+• len([]) vaut 0 ; on peut ajouter avec append, concaténer avec +.
+
+Expert :
+• type([]) est list. Les listes sont des tableaux dynamiques ; [] crée une nouvelle liste vide.`,
+  12: `Les parenthèses créent un tuple. type(()) renvoie <class 'tuple'>.
+
+Débutant :
+• () est un tuple vide. type(()) renvoie <class 'tuple'>.
+• Les tuples sont des séquences, souvent utilisés pour des paires ou triplets.
+
+Intermédiaire :
+• tuple est un type immuable. () est le tuple vide. (1,) est un tuple à un élément (la virgule est requise).
+• Les tuples sont hashables s'ils ne contiennent que des éléments hashables.
+
+Expert :
+• type(()) est tuple. () est le seul tuple vide ; les tuples sont immuables.`,
+  13: `Les accolades vides créent un dictionnaire. type({}) renvoie <class 'dict'>.
+
+Débutant :
+• {} est un dictionnaire vide. type({}) renvoie <class 'dict'>.
+• Un dictionnaire associe des clés à des valeurs.
+
+Intermédiaire :
+• En Python, {} donne un dict (pas un set). Pour un ensemble vide, utiliser set().
+• dict est le type pour les paires clé-valeur ; {} est le dictionnaire vide.
+
+Expert :
+• type({}) est dict. Les dictionnaires sont des tables de hachage ; {} crée un dict vide.`,
+  14: `set() crée un ensemble vide. type(set()) renvoie <class 'set'>.
+
+Débutant :
+• set() crée un ensemble sans élément. type(set()) renvoie <class 'set'>.
+• Les ensembles contiennent des éléments uniques, sans ordre.
+
+Intermédiaire :
+• {} n'est pas un set mais un dict ; pour un ensemble vide il faut set().
+• Les ensembles sont non ordonnés et mutables ; les éléments doivent être hashables.
+
+Expert :
+• type(set()) est set. set() est le seul moyen d'obtenir un ensemble vide ({} est un dict).`,
+  15: `42 est un entier. type(42) renvoie <class 'int'>.
+
+Débutant :
+• 42 est un nombre entier. type(42) renvoie <class 'int'>.
+• Tout nombre entier sans virgule est de type int.
+
+Intermédiaire :
+• type(42) est int. Les littéraux entiers en base 10 sont des int.
+• En Python 3, int a une précision arbitraire (pas de limite fixe comme en C).
+
+Expert :
+• type(42) est int. Les entiers Python sont des objets ; 42 est un littéral int.`,
+  16: `100 est un entier. type(100) renvoie <class 'int'>.
+
+Débutant :
+• 100 est un nombre entier. type(100) renvoie <class 'int'>.
+• Même principe : pas de virgule décimale donc int.
+
+Intermédiaire :
+• type(100) est int. Même chose pour tout littéral entier en base 10.
+• 100, 0, -1 sont tous de type int.
+
+Expert :
+• type(100) est int. Les entiers en Python 3 sont de précision arbitraire.`,
+  17: `1.5 est un float. type(1.5) renvoie <class 'float'>.
+
+Débutant :
+• 1.5 a une virgule décimale, donc c'est un float. type(1.5) renvoie <class 'float'>.
+• Les nombres décimaux sont des float.
+
+Intermédiaire :
+• type(1.5) est float. En Python, 1 est int et 1.5 est float.
+• Les flottants suivent la norme IEEE 754 (imprécisions possibles en décimal).
+
+Expert :
+• type(1.5) est float. Pour une arithmétique décimale exacte, utiliser le module decimal.`,
+  18: `Le texte entre guillemets est une chaîne. type('hello') renvoie <class 'str'>.
+
+Débutant :
+• 'hello' est une chaîne de caractères. type('hello') renvoie <class 'str'>.
+• Tout texte entre guillemets simples ou doubles est une chaîne.
+
+Intermédiaire :
+• type('hello') est str. len('hello') vaut 5. Les chaînes sont immuables.
+• On peut indexer : 'hello'[0] vaut 'h', 'hello'[-1] vaut 'o'.
+
+Expert :
+• type('hello') est str. En Python 3, les chaînes sont des séquences de points de code Unicode.`,
+  19: `[1] est une liste avec un élément. type([1]) renvoie <class 'list'>.
+
+Débutant :
+• [1] est une liste qui contient le nombre 1. type([1]) renvoie <class 'list'>.
+• Les crochets créent une liste ; ici avec un seul élément.
+
+Intermédiaire :
+• type([1]) est list. len([1]) vaut 1. [1] est différent de 1 (un conteneur vs une valeur).
+• On peut modifier : [1].append(2) donne [1, 2].
+
+Expert :
+• type([1]) est list. Une liste est une séquence mutable ; [1] contient une référence à l'entier 1.`,
+  20: `(1,) est un tuple ; la virgule est requise. type((1,)) renvoie <class 'tuple'>.
+
+Débutant :
+• (1,) est un tuple à un élément. La virgule après 1 est nécessaire pour le distinguer de (1) qui est juste 1 entre parenthèses.
+• type((1,)) renvoie <class 'tuple'>.
+
+Intermédiaire :
+• (1) est l'entier 1 ; (1,) est un tuple. La virgule fait la différence.
+• Les tuples sont immuables : on ne peut pas modifier (1,) après création.
+
+Expert :
+• type((1,)) est tuple. La virgule est la syntaxe pour un tuple à un élément ; () sans virgule est une expression groupée.`,
+  21: `{1: 2} est un dictionnaire. type({1: 2}) renvoie <class 'dict'>.
+
+Débutant :
+• {1: 2} associe la clé 1 à la valeur 2. type({1: 2}) renvoie <class 'dict'>.
+• Les dictionnaires utilisent des accolades avec des paires clé : valeur.
+
+Intermédiaire :
+• type({1: 2}) est dict. Les clés doivent être hashables ; les valeurs peuvent être quelconques.
+• Accès : {1: 2}[1] vaut 2. Modifiable : on peut ajouter ou modifier des paires.
+
+Expert :
+• type({1: 2}) est dict. Les dict sont des tables de hachage ; l'ordre d'insertion est préservé (Python 3.7+).`,
+  22: `{1, 2} est un ensemble. type({1, 2}) renvoie <class 'set'>.
+
+Débutant :
+• {1, 2} est un ensemble de deux éléments. type({1, 2}) renvoie <class 'set'>.
+• Les ensembles n'ont pas de doublons et sont non ordonnés.
+
+Intermédiaire :
+• type({1, 2}) est set. Les éléments doivent être hashables. {1, 1, 2} donne {1, 2}.
+• Pas d'indexation : les ensembles ne sont pas des séquences.
+
+Expert :
+• type({1, 2}) est set. Les sets sont des tables de hachage sans valeur associée ; l'ordre n'est pas garanti.`,
+  23: `b'x' est de type bytes. type(b'x') renvoie <class 'bytes'>.
+
+Débutant :
+• b'x' est une séquence d'octets (bytes). type(b'x') renvoie <class 'bytes'>.
+• Le préfixe b devant une chaîne crée des bytes, pas une str.
+
+Intermédiaire :
+• type(b'x') est bytes. Les bytes sont des séquences d'entiers 0–255, immuables.
+• En Python 3, 'x' est str (Unicode) ; b'x' est bytes (octets bruts).
+
+Expert :
+• type(b'x') est bytes. bytes est une séquence immuable d'octets ; pour du binaire mutable, utiliser bytearray.`,
+  24: `2 est un entier. type(2) renvoie <class 'int'>.
+
+Débutant :
+• 2 est un nombre entier. type(2) renvoie <class 'int'>.
+• Même règle : pas de virgule donc int.
+
+Intermédiaire :
+• type(2) est int. 2 est un littéral entier.
+• En conditions, 2 est truthy ; 2 == True est False (types différents), mais 2 == (1+1) est True.
+
+Expert :
+• type(2) est int. Les entiers sont des objets ; 2 est une instance de int.`,
+  25: `10 est un entier. type(10) renvoie <class 'int'>.
+
+Débutant :
+• 10 est un nombre entier. type(10) renvoie <class 'int'>.
+• Tout littéral entier sans virgule est int.
+
+Intermédiaire :
+• type(10) est int. Même type que 0, 1, 42, -5.
+• 10 peut être utilisé dans toute opération arithmétique sur les int.
+
+Expert :
+• type(10) est int. En Python 3, int a une précision arbitraire.`,
+  26: `-1 est un int. type(-1) renvoie <class 'int'>.
+
+Débutant :
+• -1 est un entier négatif. type(-1) renvoie <class 'int'>.
+• Les entiers négatifs sont aussi de type int.
+
+Intermédiaire :
+• type(-1) est int. -1 est souvent utilisé pour « dernier élément » en indexation (ex. s[-1]).
+• -1 est truthy (tout nombre non nul l'est).
+
+Expert :
+• type(-1) est int. Les indices négatifs en Python désignent les éléments depuis la fin.`,
+  27: `0.5 est un float. type(0.5) renvoie <class 'float'>.
+
+Débutant :
+• 0.5 a une virgule décimale, donc c'est un float. type(0.5) renvoie <class 'float'>.
+• Les nombres avec un point décimal sont des float.
+
+Intermédiaire :
+• type(0.5) est float. 0.5 est un littéral flottant.
+• En Python 3, 1/2 donne 0.5 (float) ; 1//2 donne 0 (int).
+
+Expert :
+• type(0.5) est float. Les flottants sont en base 2 ; certains décimaux ne sont pas représentables exactement.`,
+  28: `2.5 est un float. type(2.5) renvoie <class 'float'>.
+
+Débutant :
+• 2.5 a une virgule décimale. type(2.5) renvoie <class 'float'>.
+• Même principe : point décimal donc float.
+
+Intermédiaire :
+• type(2.5) est float. 2 et 2.5 sont des types différents.
+• 2 + 2.5 donne 4.5 (float) à cause de la promotion de type.
+
+Expert :
+• type(2.5) est float. int + float donne toujours float en Python.`,
+  29: `Une chaîne d'un caractère est de type str. type('x') renvoie <class 'str'>.
+
+Débutant :
+• 'x' est une chaîne d'un caractère. type('x') renvoie <class 'str'>.
+• Il n'y a pas de type « caractère » séparé en Python.
+
+Intermédiaire :
+• type('x') est str. len('x') vaut 1. 'x'[0] renvoie 'x' (encore une str).
+• Les chaînes sont immuables : on ne peut pas modifier 'x' sur place.
+
+Expert :
+• type('x') est str. En Python 3, str est une séquence de points de code Unicode.`,
+  30: `Les guillemets doubles créent aussi une chaîne. type("") renvoie <class 'str'>.
+
+Débutant :
+• "" est la chaîne vide, comme ''. type("") renvoie <class 'str'>.
+• En Python, ' et " sont équivalents pour délimiter une chaîne.
+
+Intermédiaire :
+• type("") est str. "" et '' sont la même chose (chaîne vide).
+• On utilise " quand la chaîne contient ', et inversement.
+
+Expert :
+• type("") est str. Les guillemets triples """ ou ''' permettent des chaînes sur plusieurs lignes.`,
+  31: `[0] est une liste. type([0]) renvoie <class 'list'>.
+
+Débutant :
+• [0] est une liste contenant l'entier 0. type([0]) renvoie <class 'list'>.
+• La liste contient un seul élément, qui vaut 0.
+
+Intermédiaire :
+• type([0]) est list. [0] est différent de 0 : c'est un conteneur.
+• bool([0]) est True car la liste est non vide (le contenu 0 ne change pas ça).
+
+Expert :
+• type([0]) est list. Une liste peut contenir n'importe quel type ; ici un int.`,
+  32: `[1, 2] est une liste. type([1, 2]) renvoie <class 'list'>.
+
+Débutant :
+• [1, 2] est une liste de deux entiers. type([1, 2]) renvoie <class 'list'>.
+• L'ordre est conservé : premier élément 1, deuxième 2.
+
+Intermédiaire :
+• type([1, 2]) est list. len([1, 2]) vaut 2. [1, 2][0] vaut 1, [1, 2][1] vaut 2.
+• On peut concaténer : [1, 2] + [3] donne [1, 2, 3].
+
+Expert :
+• type([1, 2]) est list. Les listes sont des séquences mutables ordonnées.`,
+  33: `(1, 2) est un tuple. type((1, 2)) renvoie <class 'tuple'>.
+
+Débutant :
+• (1, 2) est un tuple de deux éléments. type((1, 2)) renvoie <class 'tuple'>.
+• Les tuples sont comme des listes mais immuables.
+
+Intermédiaire :
+• type((1, 2)) est tuple. (1, 2)[0] vaut 1. On ne peut pas faire (1, 2).append(...).
+• Les tuples sont hashables si leurs éléments le sont ; utilisables comme clés de dict.
+
+Expert :
+• type((1, 2)) est tuple. Les tuples sont des séquences immuables ; souvent utilisés pour retourner plusieurs valeurs.`,
+  34: `{'a': 1} est un dict. type({'a': 1}) renvoie <class 'dict'>.
+
+Débutant :
+• {'a': 1} associe la clé 'a' à la valeur 1. type({'a': 1}) renvoie <class 'dict'>.
+• Les clés peuvent être des chaînes (ou d'autres types hashables).
+
+Intermédiaire :
+• type({'a': 1}) est dict. Accès : {'a': 1}['a'] vaut 1.
+• Les dictionnaires sont mutables ; on peut ajouter ou modifier des paires.
+
+Expert :
+• type({'a': 1}) est dict. Les clés doivent être hashables et uniques.`,
+  35: `{0} est un ensemble à un élément. type({0}) renvoie <class 'set'>.
+
+Débutant :
+• {0} est un ensemble contenant l'entier 0. type({0}) renvoie <class 'set'>.
+• Un ensemble à un élément ; les ensembles n'ont pas de doublons.
+
+Intermédiaire :
+• type({0}) est set. len({0}) vaut 1. 0 in {0} est True.
+• {0} est différent de [] et (0,) : c'est un set, non ordonné.
+
+Expert :
+• type({0}) est set. Les éléments d'un set doivent être hashables.`,
+  36: `7 est un entier. type(7) renvoie <class 'int'>.
+
+Débutant :
+• 7 est un nombre entier. type(7) renvoie <class 'int'>.
+• Pas de virgule décimale donc type int.
+
+Intermédiaire :
+• type(7) est int. 7 est truthy. 7 % 2 vaut 1 (impair).
+• En boucle : range(7) produit 0, 1, 2, 3, 4, 5, 6.
+
+Expert :
+• type(7) est int. Les littéraux entiers en base 10 sont du type int.`,
+  37: `99 est un entier. type(99) renvoie <class 'int'>.
+
+Débutant :
+• 99 est un nombre entier. type(99) renvoie <class 'int'>.
+• Même règle : entier sans virgule, type int.
+
+Intermédiaire :
+• type(99) est int. En Python 3, la taille des int n'est pas limitée à 32 ou 64 bits.
+• 99 est truthy ; 99 == True est False (types différents).
+
+Expert :
+• type(99) est int. Les entiers Python ont une précision arbitraire.`,
+  38: `-10 est un int. type(-10) renvoie <class 'int'>.
+
+Débutant :
+• -10 est un entier négatif. type(-10) renvoie <class 'int'>.
+• Les entiers négatifs sont de type int.
+
+Intermédiaire :
+• type(-10) est int. -10 est truthy (non nul).
+• abs(-10) vaut 10 ; -10 // 3 vaut -4 (division entière vers -infini).
+
+Expert :
+• type(-10) est int. La division entière en Python tronque vers -infini, pas vers zéro.`,
+  39: `1.0 a une décimale, donc c'est un float. type(1.0) renvoie <class 'float'>.
+
+Débutant :
+• 1.0 a un point décimal, donc type(1.0) est <class 'float'>.
+• 1 est int, 1.0 est float ; la valeur est la même (1 == 1.0) mais pas le type.
+
+Intermédiaire :
+• type(1.0) est float. En arithmétique mixte, int + float donne float.
+• 1 + 1.0 donne 2.0, pas 2.
+
+Expert :
+• type(1.0) est float. La promotion de type en Python : int + float -> float.`,
+  40: `10.0 est un float. type(10.0) renvoie <class 'float'>.
+
+Débutant :
+• 10.0 a un point décimal. type(10.0) renvoie <class 'float'>.
+• 10 est int, 10.0 est float.
+
+Intermédiaire :
+• type(10.0) est float. 10 == 10.0 est True (égalité de valeur).
+• Pour le typage strict, 10 et 10.0 peuvent être traités différemment.
+
+Expert :
+• type(10.0) est float. En annotations de type, int et float sont distincts.`,
+  41: `'0' entre guillemets est une chaîne, pas l'entier 0. type('0') renvoie <class 'str'>.
+
+Débutant :
+• '0' est une chaîne contenant le caractère 0. type('0') renvoie <class 'str'>.
+• Les guillemets font une chaîne ; pour l'entier 0, on écrit 0 sans guillemets.
+
+Intermédiaire :
+• type('0') est str. int('0') convertit en entier et donne 0.
+• '0' + '0' donne '00' ; 0 + 0 donne 0.
+
+Expert :
+• type('0') est str. str et int sont des types différents ; conversion explicite avec int() ou str().`,
+  42: `'1' est une chaîne. type('1') renvoie <class 'str'>.
+
+Débutant :
+• '1' est une chaîne d'un caractère. type('1') renvoie <class 'str'>.
+• Ce n'est pas l'entier 1 ; c'est le caractère « 1 » en texte.
+
+Intermédiaire :
+• type('1') est str. int('1') vaut 1. '1' * 2 donne '11'.
+• En conditions, '1' est truthy (chaîne non vide).
+
+Expert :
+• type('1') est str. Ne pas confondre littéral chaîne et littéral entier.`,
+  43: `15 est un entier. type(15) renvoie <class 'int'>.
+
+Débutant :
+• 15 est un nombre entier. type(15) renvoie <class 'int'>.
+• Tout entier sans virgule est de type int.
+
+Intermédiaire :
+• type(15) est int. 15 // 2 vaut 7, 15 % 2 vaut 1.
+• range(15) produit 0 à 14.
+
+Expert :
+• type(15) est int. Les entiers sont des objets de première classe en Python.`,
+  44: `3 est un entier. type(3) renvoie <class 'int'>.
+
+Débutant :
+• 3 est un nombre entier. type(3) renvoie <class 'int'>.
+• Même règle : int pour les entiers sans virgule.
+
+Intermédiaire :
+• type(3) est int. 3 ** 2 vaut 9. 3 est truthy.
+• En slice : 'abc'[0:3] ou 'abc'[:3] donne 'abc'.
+
+Expert :
+• type(3) est int. Les littéraux numériques sans point décimal sont des int.`,
+  45: `4.0 est un float. type(4.0) renvoie <class 'float'>.
+
+Débutant :
+• 4.0 a un point décimal. type(4.0) renvoie <class 'float'>.
+• 4 est int, 4.0 est float.
+
+Intermédiaire :
+• type(4.0) est float. 4 == 4.0 est True.
+• En division : 8 / 2 donne 4.0 en Python 3 (toujours float).
+
+Expert :
+• type(4.0) est float. L'opérateur / en Python 3 renvoie toujours un float.`,
+  46: `'hi' est une chaîne. type('hi') renvoie <class 'str'>.
+
+Débutant :
+• 'hi' est une chaîne de deux caractères. type('hi') renvoie <class 'str'>.
+• len('hi') vaut 2 ; 'hi'[0] vaut 'h', 'hi'[1] vaut 'i'.
+
+Intermédiaire :
+• type('hi') est str. Les chaînes sont immuables : 'hi'.upper() renvoie 'HI' sans modifier 'hi'.
+• 'hi' * 2 donne 'hihi'.
+
+Expert :
+• type('hi') est str. str est une séquence de caractères Unicode, immuable.`,
+  47: `[1, 2, 3] est une liste. type([1, 2, 3]) renvoie <class 'list'>.
+
+Débutant :
+• [1, 2, 3] est une liste de trois entiers. type([1, 2, 3]) renvoie <class 'list'>.
+• L'ordre est préservé : 1, puis 2, puis 3.
+
+Intermédiaire :
+• type([1, 2, 3]) est list. len([1, 2, 3]) vaut 3. Indexation : [1, 2, 3][-1] vaut 3.
+• sum([1, 2, 3]) vaut 6.
+
+Expert :
+• type([1, 2, 3]) est list. Les listes sont des séquences mutables ordonnées.`,
+  48: `(0,) est un tuple à un élément. type((0,)) renvoie <class 'tuple'>.
+
+Débutant :
+• (0,) est un tuple contenant l'entier 0. La virgule est nécessaire pour avoir un tuple et non l'entier 0.
+• type((0,)) renvoie <class 'tuple'>.
+
+Intermédiaire :
+• (0) est l'entier 0 ; (0,) est un tuple. type((0,)) est tuple.
+• (0,)[0] vaut 0. Les tuples sont immuables.
+
+Expert :
+• type((0,)) est tuple. La virgule crée un tuple à un élément ; sans elle, les parenthèses ne font que grouper.`,
+  49: `range(3) est un objet range. type(range(3)) renvoie <class 'range'>.
+
+Débutant :
+• range(3) crée une séquence « de 0 à 2 ». type(range(3)) renvoie <class 'range'>.
+• On l'utilise souvent dans for i in range(3): pour boucler 3 fois.
+
+Intermédiaire :
+• type(range(3)) est range. range(3) produit 0, 1, 2 (3 exclus). list(range(3)) donne [0, 1, 2].
+• range est paresseux : il ne crée pas toute la liste en mémoire.
+
+Expert :
+• type(range(3)) est range. range est un type séquence immuable, souvent utilisé pour les index de boucle.`,
+  50: `... est le littéral ellipsis (Ellipsis). type(...) renvoie <class 'ellipsis'>.
+
+Débutant :
+• ... (trois points) est une valeur spéciale en Python. type(...) renvoie <class 'ellipsis'>.
+• On le voit parfois dans des indices ou des signatures (ex. numpy, type hints).
+
+Intermédiaire :
+• type(...) est ellipsis. Ellipsis est un singleton, comme None.
+• En typage : Tuple[int, ...] signifie « tuple d'int de longueur quelconque ».
+
+Expert :
+• type(...) est ellipsis. ... est un littéral qui évalue à l'objet Ellipsis ; utilisé dans numpy et les annotations.`,
+  51: `L'addition de deux entiers donne un entier. 1 + 1 = 2.
+
+Débutant :
+• 1 + 1 fait 2. Additionner deux nombres entiers donne un entier. Le résultat est 2.
+• En Python, + entre deux nombres signifie l'addition. Donc 1 + 1 = 2.
+
+Intermédiaire :
+• 1 + 1 = 2. Les deux opérandes sont int, donc le résultat est int. La réponse est 2.
+• Pour la concaténation de chaînes on utilise aussi + mais avec des str : '1' + '1' = '11'. Ici ce sont des nombres, donc 2.
+
+Expert :
+• int.__add__ ; 1 + 1 = 2. Le résultat est l'entier 2.`,
+  52: `Addition simple : 2 + 3 = 5.
+
+Débutant :
+• 2 + 3 fait 5. Le résultat est 5.
+• L'opérateur + entre nombres fait l'addition. Donc 2 + 3 = 5.
+
+Intermédiaire :
+• 2 + 3 = 5. Les deux sont des int, le résultat est int. La réponse est 5.
+• Même principe que 1 + 1 : int + int = int.
+
+Expert :
+• 2 + 3 = 5. Le résultat est 5.`,
+  53: `Soustraction : 10 - 3 = 7.
+
+Débutant :
+• 10 - 3 fait 7. On enlève 3 à 10, on obtient 7. Le résultat est 7.
+• En Python, - entre deux nombres signifie la soustraction. Donc 10 - 3 = 7.
+
+Intermédiaire :
+• 10 - 3 = 7. Les deux opérandes sont int, le résultat est int. La réponse est 7.
+• L'opérateur - peut aussi désigner un nombre négatif (ex. -3) ou la différence d'ensembles. Ici c'est la soustraction.
+
+Expert :
+• int.__sub__ ; 10 - 3 = 7. Le résultat est l'entier 7.`,
+  54: `Multiplication : 4 * 2 = 8.
+
+Débutant :
+• 4 * 2 signifie 4 fois 2, soit 8. Le résultat est 8.
+• En Python, * est utilisé pour la multiplication (pas la lettre x). Donc 4 * 2 = 8.
+
+Intermédiaire :
+• 4 * 2 = 8. Les deux sont des int, le résultat est int. Pour les chaînes, * signifie la répétition : 'a' * 3 = 'aaa'.
+• Avec des nombres, * est la multiplication. La réponse est 8.
+
+Expert :
+• int.__mul__ ; 4 * 2 = 8. Le résultat est l'entier 8.`,
+  55: `En Python 3, l'opérateur / renvoie toujours un float.
+
+Débutant :
+• 6 / 2 donne 3.0. En Python 3, / (division « vraie ») renvoie toujours un float. Le résultat est 3.0 (pas l'entier 3).
+• Donc / donne un résultat décimal. 6 / 2 = 3.0. La réponse est 3.0.
+
+Intermédiaire :
+• En Python 3, / est la division flottante. Pour le quotient entier, utiliser 6 // 2 = 3. La réponse est 3.0.
+• / renvoie toujours un float en Python 3. Donc 6 / 2 = 3.0.
+
+Expert :
+• __truediv__ ; en Python 3 / renvoie toujours un float. Le résultat est 3.0.`,
+  56: `// est la division entière (troncature vers le bas). 9 // 2 = 4.
+
+Débutant :
+• 9 // 2 signifie 9 divisé par 2 en ne gardant que la partie entière. 9 ÷ 2 = 4,5 ; on prend 4. Le résultat est 4.
+• Donc // est la « division entière » ou « division par défaut ». 9 // 2 = 4 (pas 4.0).
+
+Intermédiaire :
+• 9 // 2 = 4. Donc // donne le quotient (partie entière par défaut). 9 // 2 = 4 (pas 4.5). Le type du résultat suit les opérandes (int ici).
+• / donne un float en Python 3 (9/2 = 4.5), mais // donne le quotient entier. Donc 9 // 2 = 4.
+
+Expert :
+• int.__floordiv__ ; 9 // 2 = 4. Division entière ; le résultat est int quand les deux opérandes sont int.`,
+  57: `% donne le reste de la division. 9 % 2 = 1.
+
+Débutant :
+• 9 % 2 signifie le reste quand on divise 9 par 2. 9 = 4*2 + 1 ; le reste est 1. Le résultat est 1.
+• Donc % est l'opérateur « modulo » ou « reste ». 9 % 2 = 1.
+
+Intermédiaire :
+• 9 % 2 = 1. Donc 9 // 2 = 4 et 9 % 2 = 1. Donc 9 = 4*2 + 1. Utile pour le bouclage (ex. heure % 12) ou pair/impair (n % 2).
+• % renvoie toujours un résultat du même signe que le diviseur (en Python). Donc 9 % 2 = 1.
+
+Expert :
+• int.__mod__ ; 9 % 2 = 1. Reste de la division. divmod(9, 2) = (4, 1).`,
+  58: `** est l'exponentiation. 2 ** 3 = 8.
+
+Débutant :
+• 2 ** 3 signifie 2 à la puissance 3 : 2*2*2 = 8. Le résultat est 8.
+• En Python, ** sert à l'exponentiation (élever à une puissance). Donc 2 ** 3 = 8.
+
+Intermédiaire :
+• 2 ** 3 = 8. ** a une priorité plus élevée que * et +. Donc 2 ** 3 vaut 8. Pour 0 ** 0, Python renvoie 1.
+• Donc 2 ** 4 = 16, 10 ** 2 = 100. La réponse est 8.
+
+Expert :
+• int.__pow__ ; 2 ** 3 = 8. Exponentiation. pow(2, 3) est équivalent.`,
+  59: `print() affiche la valeur sur la console. print(5) affiche 5.
+
+Débutant :
+• print(5) envoie la valeur 5 sur la sortie standard (la console). On voit « 5 » à l'écran.
+• print() est une fonction intégrée. Elle convertit son argument en chaîne et l'affiche.
+
+Intermédiaire :
+• print(5) affiche 5 (sans guillemets). print('hi') affiche hi. Par défaut, print ajoute un retour à la ligne à la fin.
+• On peut passer plusieurs arguments : print(1, 2) affiche « 1 2 » (séparés par un espace).
+
+Expert :
+• print() appelle str() sur les arguments et écrit sur sys.stdout. C'est une fonction built-in.`,
+  60: `print() affiche le contenu de la chaîne. print('hi') affiche hi sans les guillemets.
+
+Débutant :
+• print('hi') affiche les caractères h et i. Les guillemets ne sont pas affichés ; ils délimitent la chaîne dans le code.
+• Donc à l'écran on voit : hi.
+
+Intermédiaire :
+• print('hi') affiche hi. Pour afficher des guillemets, les inclure dans la chaîne : print("'il dit"") ou utiliser des échappements.
+• Les chaînes entre guillemets sont des littéraux ; print affiche leur contenu.
+
+Expert :
+• print() convertit l'argument en str et écrit sur stdout. Les guillemets sont une notation du code source, pas une partie de la valeur.`,
+  61: `Un nom de variable valide peut contenir lettres, chiffres et underscore ; il ne peut pas commencer par un chiffre.
+
+Débutant :
+• Un nom valide peut contenir des lettres (a-z, A-Z), des chiffres (0-9) et des underscores (_). Il ne peut pas commencer par un chiffre.
+• my_var est valide ; 2nd et my-var ne le sont pas (2nd commence par un chiffre, my-var contient un tiret).
+
+Intermédiaire :
+• Les noms sont sensibles à la casse : ma_var et Ma_var sont deux noms différents.
+• Les mots réservés (if, for, def, etc.) ne peuvent pas être utilisés comme noms de variables.
+
+Expert :
+• Les identifiants Python suivent la grammaire : (letter|"_")(letter|digit|"_")*. Pas d'espaces ni de caractères spéciaux.`,
+  62: `Les espaces ne sont pas autorisés dans les noms de variables.
+
+Débutant :
+• Un nom de variable ne peut pas contenir d'espace. "first name" n'est pas un identifiant valide (c'est une chaîne de deux mots).
+• Pour représenter « first name », utiliser first_name (underscore) ou firstName (camelCase).
+
+Intermédiaire :
+• Les espaces séparent les tokens en Python. first name serait interprété comme deux noms (variable first, puis name), ce qui provoquerait une erreur.
+• Les identifiants doivent être un seul mot (lettres, chiffres, underscore).
+
+Expert :
+• La grammaire des identifiants n'autorise pas les espaces. Les espaces sont des séparateurs de tokens.`,
+  63: `L'assignation stocke la valeur dans la variable. x = 7 assigne 7 à x.
+
+Débutant :
+• x = 7 met la valeur 7 dans la variable x. Ensuite, x désigne 7 jusqu'à une prochaine assignation.
+• Le signe = est l'assignation (pas une égalité mathématique). On lit « x reçoit 7 ».
+
+Intermédiaire :
+• En Python, les variables sont des références à des objets. x = 7 fait que x référence l'objet entier 7.
+• On peut réassigner : x = 8 ; alors x vaut 8. L'ancienne valeur 7 peut être récupérée par le garbage collector si plus référencée.
+
+Expert :
+• L'assignation lie un nom à un objet. Pas de « variable » au sens C : un nom dans un namespace qui pointe vers un objet.`,
+  64: `0 + 0 = 0.
+
+Débutant :
+• 0 + 0 fait 0. Additionner zéro et zéro donne zéro. Le résultat est 0.
+• Donc 0 + 0 = 0. La réponse est 0.
+
+Intermédiaire :
+• 0 + 0 = 0. Les deux sont des int, le résultat est int. 0 est l'élément neutre de l'addition.
+• Donc 0 + 0 = 0.
+
+Expert :
+• 0 + 0 = 0. Le résultat est 0.`,
+  65: `Tout nombre multiplié par 0 donne 0. 1 * 0 = 0.
+
+Débutant :
+• 1 * 0 signifie 1 fois zéro. Tout nombre multiplié par 0 donne 0. Le résultat est 0.
+• Donc 1 * 0 = 0. La réponse est 0.
+
+Intermédiaire :
+• 1 * 0 = 0. 0 est l'élément absorbant pour la multiplication : a * 0 = 0 pour tout a.
+• Donc 1 * 0 = 0.
+
+Expert :
+• 1 * 0 = 0. Le résultat est 0.`,
+  66: `5 - 5 = 0.
+
+Débutant :
+• 5 - 5 fait 0. On enlève 5 à 5, il reste 0. Le résultat est 0.
+• Donc 5 - 5 = 0. La réponse est 0.
+
+Intermédiaire :
+• 5 - 5 = 0. Les deux sont des int, le résultat est int. Soustraire un nombre de lui-même donne 0.
+• Donc 5 - 5 = 0.
+
+Expert :
+• 5 - 5 = 0. Le résultat est 0.`,
+  67: `Division entière : 8 // 4 = 2. // supprime la partie décimale.
+
+Débutant :
+• 8 // 4 signifie 8 divisé par 4, partie entière seulement. 8 ÷ 4 = 2. Le résultat est 2.
+• Donc // est la division entière. 8 // 4 = 2. La réponse est 2.
+
+Intermédiaire :
+• 8 // 4 = 2. Donc le quotient est 2. 8 % 4 = 0. Donc 8 = 2*4 + 0. La réponse est 2.
+• Donc 8 // 4 = 2.
+
+Expert :
+• 8 // 4 = 2. Division entière. Le résultat est 2.`,
+  68: `Le reste lorsque 7 est divisé par 4. 7 = 1*4 + 3, donc 7 % 4 = 3.
+
+Débutant :
+• 7 % 4 est le reste quand on divise 7 par 4. 7 = 1*4 + 3 ; le reste est 3. Le résultat est 3.
+• Donc % est le reste. 7 % 4 = 3. La réponse est 3.
+
+Intermédiaire :
+• 7 % 4 = 3. Donc 7 // 4 = 1 et 7 % 4 = 3. Donc 7 = 1*4 + 3. La réponse est 3.
+• Donc 7 % 4 = 3. Utile pour pair/impair : n % 2 == 0 signifie pair.
+
+Expert :
+• 7 % 4 = 3. Reste. Le résultat est 3.`,
+  69: `3 au carré vaut 9. 3 ** 2 = 9.
+
+Débutant :
+• 3 ** 2 signifie 3 à la puissance 2 : 3*3 = 9. Le résultat est 9.
+• Donc ** est l'exponentiation. 3 ** 2 = 9. La réponse est 9.
+
+Intermédiaire :
+• 3 ** 2 = 9. Donc 3**0 = 1, 3**1 = 3, 3**2 = 9. La réponse est 9.
+• Donc 3 ** 2 = 9.
+
+Expert :
+• 3 ** 2 = 9. Exponentiation. Le résultat est 9.`,
+  70: `len() compte les caractères. La chaîne vide a une longueur 0.
+
+Débutant :
+• La chaîne vide '' n'a aucun caractère, donc sa longueur est 0. len('') vaut 0.
+• len() indique combien il y a de caractères dans une chaîne (ou d'éléments dans une liste). Donc len('') = 0.
+
+Intermédiaire :
+• len('') = 0. Pour toute séquence, len() renvoie le nombre d'éléments. Donc len('a') = 1, len('ab') = 2.
+• La chaîne vide a une longueur 0. Pareil pour la liste vide : len([]) = 0. La réponse est 0.
+
+Expert :
+• str.__len__ ; len('') = 0. La chaîne vide a zéro caractère. O(1) pour les types built-in.`,
+  71: `Un caractère a une longueur 1. len('A') = 1.
+
+Débutant :
+• La chaîne 'A' a un caractère, donc len('A') vaut 1. Le résultat est 1.
+• len() compte les caractères d'une chaîne. Un seul caractère donne une longueur 1. Donc len('A') = 1.
+
+Intermédiaire :
+• len('A') = 1. Une chaîne d'un seul caractère a une longueur 1. Donc len(' ') (espace) vaut aussi 1.
+• Pour les chaînes, len() est le nombre de caractères. La réponse est 1.
+
+Expert :
+• len('A') = 1. Un caractère, longueur 1. O(1) pour str.`,
+  72: `Deux caractères ont une longueur 2. len('AB') = 2.
+
+Débutant :
+• La chaîne 'AB' a deux caractères (A et B), donc len('AB') vaut 2. Le résultat est 2.
+• len() compte les caractères. Deux caractères donnent une longueur 2. Donc len('AB') = 2.
+
+Intermédiaire :
+• len('AB') = 2. La longueur est le nombre de caractères. Donc len('hello') = 5.
+• Pour toute chaîne, len(s) est le nombre de caractères. La réponse est 2.
+
+Expert :
+• len('AB') = 2. Deux caractères. O(1) pour str.`,
+  73: `La liste vide a une longueur 0. len([]) = 0.
+
+Débutant :
+• La liste vide [] n'a aucun élément, donc len([]) vaut 0. Le résultat est 0.
+• len() fonctionne aussi sur les listes : il renvoie le nombre d'éléments. Donc len([]) = 0.
+
+Intermédiaire :
+• len([]) = 0. La liste vide a une longueur 0. Pareil pour la chaîne vide, le tuple vide, le dict vide. La réponse est 0.
+• Quand il n'y a aucun élément, len vaut 0. Donc len([]) = 0.
+
+Expert :
+• list.__len__ ; len([]) = 0. O(1) pour list.`,
+  74: `Une liste avec un élément a une longueur 1. len([5]) = 1.
+
+Débutant :
+• La liste [5] a un élément (le nombre 5), donc len([5]) vaut 1. Le résultat est 1.
+• len() sur une liste compte le nombre d'éléments. Un élément donne une longueur 1. Donc len([5]) = 1.
+
+Intermédiaire :
+• len([5]) = 1. Un élément donne une longueur 1. Donc len([1, 2]) = 2. La réponse est 1.
+• Pour les listes, len() est le nombre d'éléments. Donc len([5]) = 1.
+
+Expert :
+• len([5]) = 1. Un élément. O(1) pour list.`,
+  75: `Une liste avec deux éléments a une longueur 2. len([1, 2]) = 2.
+
+Débutant :
+• La liste [1, 2] a deux éléments, donc len([1, 2]) vaut 2. Le résultat est 2.
+• len() sur une liste compte le nombre d'éléments. Deux éléments donnent une longueur 2. Donc len([1, 2]) = 2.
+
+Intermédiaire :
+• len([1, 2]) = 2. La longueur est le nombre d'éléments. Donc len([1, 2, 3]) = 3. La réponse est 2.
+• Pour les listes, len() est le nombre d'éléments. Donc len([1, 2]) = 2.
+
+Expert :
+• len([1, 2]) = 2. Deux éléments. O(1) pour list.`,
+  76: `0 est falsy en Python. bool(0) est False.
+
+Débutant :
+• En Python, le nombre 0 est considéré comme « falsy ». Donc bool(0) renvoie False. Le résultat est False.
+• bool() convertit une valeur en True ou False. 0 devient False. Donc bool(0) est False.
+
+Intermédiaire :
+• bool(0) est False. Donc dans les conditions, 0 se comporte comme False. « if 0: » ne s'exécuterait pas. La réponse est False.
+• Les valeurs falsy incluent 0, 0.0, '', [], (), {}, None. Donc bool(0) est False.
+
+Expert :
+• bool(0) est False. 0 est falsy ; utilisé dans les tests de vérité. bool(0) renvoie False.`,
+  77: `Les nombres non nuls sont truthy. bool(1) est True.
+
+Débutant :
+• En Python, les nombres non nuls sont « truthy ». Donc bool(1) renvoie True. Le résultat est True.
+• bool() convertit une valeur en True ou False. 1 (et tout nombre non nul) devient True. Donc bool(1) est True.
+
+Intermédiaire :
+• bool(1) est True. Donc dans les conditions, 1 se comporte comme True. « if 1: » s'exécuterait. La réponse est True.
+• Les valeurs truthy incluent tout nombre non nul, chaîne non vide, liste non vide, etc. Donc bool(1) est True.
+
+Expert :
+• bool(1) est True. 1 est truthy. bool(1) renvoie True.`,
+  78: `La chaîne vide est falsy. bool('') est False.
+
+Débutant :
+• La chaîne vide '' n'a aucun caractère et est « falsy ». Donc bool('') renvoie False. Le résultat est False.
+• bool() sur une chaîne : la chaîne vide est False, toute chaîne non vide est True. Donc bool('') est False.
+
+Intermédiaire :
+• bool('') est False. Donc dans les conditions, '' se comporte comme False. « if '': » ne s'exécuterait pas. La réponse est False.
+• Une séquence vide ('', []) est falsy. Donc bool('') est False.
+
+Expert :
+• bool('') est False. La chaîne vide est falsy. bool('') renvoie False.`,
+  79: `Une chaîne non vide est truthy. bool('a') est True.
+
+Débutant :
+• La chaîne 'a' a au moins un caractère, donc elle est « truthy ». Donc bool('a') renvoie True. Le résultat est True.
+• bool() sur une chaîne : une chaîne non vide est True. Donc bool('a') est True. bool(' ') (espace) est aussi True.
+
+Intermédiaire :
+• bool('a') est True. Dans les conditions, toute chaîne non vide est truthy. La réponse est True.
+• Les séquences non vides sont truthy. Donc bool('a') est True.
+
+Expert :
+• bool('a') est True. Une chaîne non vide est truthy. bool('a') renvoie True.`,
+  80: `int() tronque vers zéro. int(2.9) = 2.
+
+Débutant :
+• int(2.9) convertit le float 2.9 en entier en supprimant la partie décimale. On obtient 2 (pas 3 — Python tronque vers zéro). Le résultat est 2.
+• Donc int() n'arrondit pas ; il tronque. int(2.9) = 2 et int(-2.9) = -2. La réponse est 2.
+
+Intermédiaire :
+• int(2.9) = 2. int() tronque vers zéro. Donc int(2.2) = 2, int(2.9) = 2. Pour arrondir, utiliser round(2.9) = 3.
+• int(float) tronque. La réponse est 2.
+
+Expert :
+• int(2.9) tronque vers zéro ; le résultat est 2. int() supprime la partie fractionnaire. La réponse est 2.`,
+  81: `float(3) donne 3.0. Conversion d'un int en float.
+
+Débutant :
+• float(3) convertit l'entier 3 en float. On obtient 3.0. Le résultat est 3.0 (un float).
+• Donc float() transforme un nombre en nombre décimal. float(3) = 3.0. La réponse est 3.0.
+
+Intermédiaire :
+• float(3) = 3.0. Conversion int vers float. Donc float(0) = 0.0. type(float(3)) est float.
+• Quand on a besoin d'un float (ex. pour la division), float(3) donne 3.0. La réponse est 3.0.
+
+Expert :
+• float(3) = 3.0. Conversion int vers float. Le résultat est le float 3.0.`,
+  82: `str(42) donne la chaîne '42'. Conversion d'un nombre en chaîne.
+
+Débutant :
+• str(42) convertit le nombre 42 en chaîne '42'. On obtient le(s) caractère(s) qui représentent 42. Le résultat est '42'.
+• Donc str() transforme une valeur en texte (chaîne). str(42) = '42'. La réponse est '42'.
+
+Intermédiaire :
+• str(42) = '42'. Le résultat est une chaîne, pas un nombre. str(42) + str(5) = '425', pas 47. type(str(42)) est str.
+• Pour l'affichage ou la concaténation avec des chaînes, str(42) donne '42'. La réponse est '42'.
+
+Expert :
+• str(42) = '42'. Conversion int vers str. Le résultat est la chaîne '42'.`,
+  83: `4 + 5 = 9. Addition.
+
+Débutant :
+• 4 + 5 fait 9. Additionner deux entiers donne 9. Le résultat est 9.
+• En Python, + entre nombres est l'addition. Donc 4 + 5 = 9. La réponse est 9.
+
+Intermédiaire :
+• 4 + 5 = 9. Les deux sont des int, le résultat est int. La réponse est 9.
+• Donc 4 + 5 = 9.
+
+Expert :
+• 4 + 5 = 9. Le résultat est 9.`,
+  84: `6 - 2 = 4. Soustraction.
+
+Débutant :
+• 6 - 2 fait 4. Le résultat est 4.
+• En Python, - entre nombres est la soustraction. Donc 6 - 2 = 4. La réponse est 4.
+
+Intermédiaire :
+• 6 - 2 = 4. Les deux sont des int, le résultat est int. La réponse est 4.
+• Donc 6 - 2 = 4.
+
+Expert :
+• 6 - 2 = 4. Le résultat est 4.`,
+  85: `3 * 3 = 9. Multiplication.
+
+Débutant :
+• 3 * 3 fait 9. Le résultat est 9.
+• En Python, * est la multiplication. Donc 3 * 3 = 9. La réponse est 9.
+
+Intermédiaire :
+• 3 * 3 = 9. Les deux sont des int, le résultat est int. La réponse est 9.
+• Donc 3 * 3 = 9.
+
+Expert :
+• 3 * 3 = 9. Le résultat est 9.`,
+  86: `12 / 4 = 3.0 (float). La division renvoie un float.
+
+Débutant :
+• 12 / 4 donne 3.0. En Python 3, / donne toujours un float. Le résultat est 3.0 (pas l'entier 3).
+• Donc / donne un résultat décimal. 12 / 4 = 3.0. La réponse est 3.0.
+
+Intermédiaire :
+• 12 / 4 = 3.0. En Python 3, / est la division flottante. Donc 12 / 4 est 3.0. Pour le quotient entier utiliser 12 // 4 = 3. La réponse est 3.0.
+• / renvoie toujours un float en Python 3. Donc 12 / 4 = 3.0.
+
+Expert :
+• 12 / 4 = 3.0. __truediv__ ; en Python 3 / renvoie toujours un float. Le résultat est 3.0.`,
+  87: `15 // 4 = 3 (division entière).
+
+Débutant :
+• 15 // 4 est la partie entière de 15 ÷ 4. 15 ÷ 4 = 3,75 ; on prend 3. Le résultat est 3.
+• Donc // est la division entière (par défaut). 15 // 4 = 3. La réponse est 3.
+
+Intermédiaire :
+• 15 // 4 = 3. Donc // tronque vers moins l'infini (floor). 15 % 4 = 3. Donc 15 = 3*4 + 3. La réponse est 3.
+• Donc 15 // 4 = 3.
+
+Expert :
+• 15 // 4 = 3. Division entière. Le résultat est 3.`,
+  88: `5 % 2 = 1 (reste). Modulo.
+
+Débutant :
+• 5 % 2 est le reste quand on divise 5 par 2. 5 = 2*2 + 1 ; le reste est 1. Le résultat est 1.
+• Donc % est le reste. 5 % 2 = 1. La réponse est 1.
+
+Intermédiaire :
+• 5 % 2 = 1. Donc 5 // 2 = 2 et 5 % 2 = 1. Donc 5 = 2*2 + 1. La réponse est 1.
+• Donc 5 % 2 = 1. Utile pour pair/impair : n % 2 == 0 signifie pair.
+
+Expert :
+• 5 % 2 = 1. Reste. Le résultat est 1.`,
+  89: `Tout nombre à la puissance 0 vaut 1. 10 ** 0 = 1.
+
+Débutant :
+• 10 ** 0 signifie 10 à la puissance 0. En math, tout nombre (non nul) à la puissance 0 vaut 1. Le résultat est 1.
+• Donc 10 ** 0 = 1. La réponse est 1.
+
+Intermédiaire :
+• 10 ** 0 = 1. Donc a ** 0 = 1 pour tout a (y compris 0 ** 0 = 1 en Python). La réponse est 1.
+• Tout nombre à la puissance 0 vaut 1. Donc 10 ** 0 = 1.
+
+Expert :
+• 10 ** 0 = 1. Par convention a**0 = 1. Le résultat est 1.`,
+  90: `L'opposé de -2 est 2. Double négation.
+
+Débutant :
+• -(-2) signifie l'opposé de -2. Moins fois moins donne plus. Donc -(-2) = 2. Le résultat est 2.
+• Donc une double négation donne un positif. -(-2) = 2. La réponse est 2.
+
+Intermédiaire :
+• -(-2) = 2. L'opérateur unaire - inverse le signe. Donc -(-2) vaut 2. La réponse est 2.
+• Donc -(-2) = 2.
+
+Expert :
+• -(-2) = 2. Double négation. Le résultat est 2.`,
+  91: `abs() donne la valeur absolue. abs(-7) = 7.
+
+Débutant :
+• abs(-7) donne la « valeur absolue » de -7 — sa distance à zéro. On obtient 7. Le résultat est 7.
+• Donc abs() rend les négatifs positifs et laisse les positifs tels quels. abs(-7) = 7. La réponse est 7.
+
+Intermédiaire :
+• abs(-7) = 7. Donc abs(x) vaut x si x >= 0, et -x si x < 0. abs(7) = 7, abs(-7) = 7. La réponse est 7.
+• abs() renvoie la magnitude (non négative). Donc abs(-7) = 7.
+
+Expert :
+• abs(-7) = 7. Valeur absolue. Le résultat est 7.`,
+  92: `min() renvoie la plus petite valeur. min(5, 3) = 3.
+
+Débutant :
+• min(5, 3) renvoie le plus petit de 5 et 3. On obtient 3. Le résultat est 3.
+• Donc min() donne le minimum. min(5, 3) = 3. La réponse est 3.
+
+Intermédiaire :
+• min(5, 3) = 3. min() peut prendre deux arguments ou plus. min(3, 1, 2) = 1. La réponse est 3.
+• Donc min(5, 3) = 3.
+
+Expert :
+• min(5, 3) = 3. Minimum. Le résultat est 3.`,
+  93: `max() renvoie la plus grande valeur. max(5, 3) = 5.
+
+Débutant :
+• max(5, 3) renvoie le plus grand de 5 et 3. On obtient 5. Le résultat est 5.
+• Donc max() donne le maximum. max(5, 3) = 5. La réponse est 5.
+
+Intermédiaire :
+• max(5, 3) = 5. max() peut prendre deux arguments ou plus. max(3, 1, 2) = 3. La réponse est 5.
+• Donc max(5, 3) = 5.
+
+Expert :
+• max(5, 3) = 5. Maximum. Le résultat est 5.`,
+  94: `round() arrondit à l'entier le plus proche. round(2.4) = 2.
+
+Débutant :
+• round(2.4) arrondit 2.4 à l'entier le plus proche. 2.4 est plus proche de 2 que de 3, donc on obtient 2. Le résultat est 2.
+• Donc round() arrondit au nombre entier le plus proche. round(2.4) = 2. La réponse est 2.
+
+Intermédiaire :
+• round(2.4) = 2. round(2.5) en Python 3 utilise l'arrondi « banquier » (demi vers pair). Donc round(2.4) = 2. La réponse est 2.
+• Donc round(2.4) = 2.
+
+Expert :
+• round(2.4) = 2. Arrondi. Le résultat est 2.`,
+  95: `round(2.6) = 3. Arrondi à l'entier supérieur ici.
+
+Débutant :
+• round(2.6) arrondit 2.6 à l'entier le plus proche. 2.6 est plus proche de 3 que de 2, donc on obtient 3. Le résultat est 3.
+• Donc round(2.6) = 3. La réponse est 3.
+
+Intermédiaire :
+• round(2.6) = 3. round() arrondit à l'entier le plus proche. La réponse est 3.
+• Donc round(2.6) = 3.
+
+Expert :
+• round(2.6) = 3. Arrondi. Le résultat est 3.`,
+  96: `Le + concatène les chaînes. 'a' + 'b' = 'ab'.
+
+Débutant :
+• 'a' + 'b' assemble les deux chaînes : on obtient 'ab'. Le résultat est 'ab'.
+• Donc + pour les chaînes signifie « mettre bout à bout ». 'a' + 'b' = 'ab'. La réponse est 'ab'.
+
+Intermédiaire :
+• 'a' + 'b' = 'ab'. Donc str + str concatène. 'hello' + '!' = 'hello!'. La réponse est 'ab'.
+• Donc + concatène les chaînes. 'a' + 'b' = 'ab'.
+
+Expert :
+• 'a' + 'b' = 'ab'. str.__add__ ; concaténation. Le résultat est 'ab'.`,
+  97: `Chaîne × nombre répète la chaîne. 'x' * 2 = 'xx'.
+
+Débutant :
+• 'x' * 2 répète la chaîne 'x' deux fois : 'xx'. Le résultat est 'xx'.
+• Donc chaîne * nombre répète la chaîne. 'x' * 2 = 'xx'. La réponse est 'xx'.
+
+Intermédiaire :
+• 'x' * 2 = 'xx'. Donc str * int donne une nouvelle chaîne. 'ab' * 2 = 'abab'. La réponse est 'xx'.
+• Donc 'x' * 2 = 'xx'.
+
+Expert :
+• 'x' * 2 = 'xx'. str.__mul__(int) ; répétition. Le résultat est 'xx'.`,
+  98: `Les listes se concatènent avec +. [1] + [2] = [1, 2].
+
+Débutant :
+• [1] + [2] assemble les deux listes : on obtient [1, 2]. Le résultat est [1, 2].
+• Donc + pour les listes signifie « mettre les listes bout à bout ». [1] + [2] = [1, 2]. La réponse est [1, 2].
+
+Intermédiaire :
+• [1] + [2] = [1, 2]. Donc list + list concatène (crée une nouvelle liste). La réponse est [1, 2].
+• Donc + concatène les listes. [1] + [2] = [1, 2].
+
+Expert :
+• [1] + [2] = [1, 2]. list.__add__ ; concaténation. Le résultat est [1, 2].`,
+  99: `L'index 0 est le premier caractère. 'hi'[0] = 'h'.
+
+Débutant :
+• 'hi'[0] est le caractère à la position 0 (le premier). On obtient 'h'. Le résultat est 'h'.
+• L'indexation commence à 0. Donc 'hi'[0] = 'h', 'hi'[1] = 'i'. La réponse est 'h'.
+
+Intermédiaire :
+• 'hi'[0] = 'h'. L'index 0 est le premier caractère. Donc 'hello'[0] = 'h'. La réponse est 'h'.
+• Donc 'hi'[0] = 'h'.
+
+Expert :
+• 'hi'[0] = 'h'. Indexation str ; l'index 0 est le premier. Le résultat est 'h'.`,
+  100: `L'index 1 est le deuxième caractère. 'hi'[1] = 'i'.
+
+Débutant :
+• 'hi'[1] est le caractère à la position 1 (le deuxième). On obtient 'i'. Le résultat est 'i'.
+• L'index 1 est le deuxième caractère. Donc 'hi'[1] = 'i'. La réponse est 'i'.
+
+Intermédiaire :
+• 'hi'[1] = 'i'. L'index 1 est le deuxième caractère. La réponse est 'i'.
+• Donc 'hi'[1] = 'i'.
+
+Expert :
+• 'hi'[1] = 'i'. Indexation str. Le résultat est 'i'.`,
+  101: `L'index -1 est le dernier caractère. L'index négatif compte depuis la fin.
+
+Débutant :
+• 'hi'[-1] est le dernier caractère. On obtient 'i'. Le résultat est 'i'. (L'index négatif compte depuis la fin.)
+• Donc -1 est le dernier, -2 l'avant-dernier. 'hi'[-1] = 'i'. La réponse est 'i'.
+
+Intermédiaire :
+• 'hi'[-1] = 'i'. Les indices négatifs comptent depuis la fin : -1 est le dernier. La réponse est 'i'.
+• Donc 'hi'[-1] = 'i'.
+
+Expert :
+• 'hi'[-1] = 'i'. Index négatif ; -1 est le dernier. Le résultat est 'i'.`,
+  102: `Premier élément de la liste. [10, 20][0] = 10.
+
+Débutant :
+• [10, 20][0] est le premier élément de la liste. On obtient 10. Le résultat est 10.
+• L'indexation commence à 0. Donc [10, 20][0] = 10, [10, 20][1] = 20. La réponse est 10.
+
+Intermédiaire :
+• [10, 20][0] = 10. L'index 0 est le premier élément. La réponse est 10.
+• Donc [10, 20][0] = 10.
+
+Expert :
+• [10, 20][0] = 10. Indexation de liste. Le résultat est 10.`,
+  103: `Deuxième élément de la liste. [10, 20][1] = 20.
+
+Débutant :
+• [10, 20][1] est le deuxième élément de la liste. On obtient 20. Le résultat est 20.
+• L'index 1 est le deuxième élément. Donc [10, 20][1] = 20. La réponse est 20.
+
+Intermédiaire :
+• [10, 20][1] = 20. L'index 1 est le deuxième élément. La réponse est 20.
+• Donc [10, 20][1] = 20.
+
+Expert :
+• [10, 20][1] = 20. Indexation de liste. Le résultat est 20.`,
+  104: `== teste l'égalité. 2 == 2 est True.
+
+Débutant :
+• 2 == 2 demande : 2 est-il égal à 2 ? Oui. Le résultat est True.
+• Donc == signifie « est égal à ». 2 == 2 est True. La réponse est True.
+
+Intermédiaire :
+• 2 == 2 est True. Donc == compare les valeurs. 2 == 3 est False. La réponse est True.
+• Donc == est l'égalité de valeur (pas l'identité). 2 == 2 est True.
+
+Expert :
+• 2 == 2 est True. Comparaison d'égalité. Le résultat est True.`,
+  105: `2 n'est pas égal à 3. 2 == 3 est False.
+
+Débutant :
+• 2 == 3 demande : 2 est-il égal à 3 ? Non. Le résultat est False.
+• Donc == signifie « est égal à ». 2 == 3 est False. La réponse est False.
+
+Intermédiaire :
+• 2 == 3 est False. Donc == compare les valeurs. La réponse est False.
+• Donc 2 == 3 est False.
+
+Expert :
+• 2 == 3 est False. La comparaison d'égalité échoue. Le résultat est False.`,
+  106: `!= signifie « différent de ». 2 != 3 est True.
+
+Débutant :
+• 2 != 3 demande : 2 est-il différent de 3 ? Oui — ils sont différents. Le résultat est True.
+• Donc != signifie « différent de ». 2 != 3 est True. La réponse est True.
+
+Intermédiaire :
+• 2 != 3 est True. Donc != est l'opposé de ==. 2 != 2 est False. La réponse est True.
+• Donc != teste l'inégalité. 2 != 3 est True.
+
+Expert :
+• 2 != 3 est True. Inégalité. Le résultat est True.`,
+  107: `2 est strictement inférieur à 3. 2 < 3 est True.
+
+Débutant :
+• 2 < 3 demande : 2 est-il inférieur à 3 ? Oui. Le résultat est True.
+• Donc < signifie « strictement inférieur à ». 2 < 3 est True. La réponse est True.
+
+Intermédiaire :
+• 2 < 3 est True. Donc < compare l'ordre. 3 < 2 est False. La réponse est True.
+• Donc 2 < 3 est True.
+
+Expert :
+• 2 < 3 est True. Comparaison « strictement inférieur ». Le résultat est True.`,
+  108: `3 est strictement supérieur à 2. 3 > 2 est True.
+
+Débutant :
+• 3 > 2 demande : 3 est-il supérieur à 2 ? Oui. Le résultat est True.
+• Donc > signifie « strictement supérieur à ». 3 > 2 est True. La réponse est True.
+
+Intermédiaire :
+• 3 > 2 est True. Donc > compare l'ordre. 2 > 3 est False. La réponse est True.
+• Donc 3 > 2 est True.
+
+Expert :
+• 3 > 2 est True. Comparaison « strictement supérieur ». Le résultat est True.`,
+  109: `<= signifie « inférieur ou égal ». 2 <= 2 est True.
+
+Débutant :
+• 2 <= 2 demande : 2 est-il inférieur ou égal à 2 ? Oui — 2 est égal à 2, donc ça compte. Le résultat est True.
+• Donc <= signifie « inférieur ou égal ». 2 <= 2 est True. La réponse est True.
+
+Intermédiaire :
+• 2 <= 2 est True. Donc <= est True quand < ou ==. 3 <= 2 est False. La réponse est True.
+• Donc 2 <= 2 est True.
+
+Expert :
+• 2 <= 2 est True. Inférieur ou égal. Le résultat est True.`,
+  110: `>= signifie « supérieur ou égal ». 3 >= 3 est True.
+
+Débutant :
+• 3 >= 3 demande : 3 est-il supérieur ou égal à 3 ? Oui — 3 est égal à 3. Le résultat est True.
+• Donc >= signifie « supérieur ou égal ». 3 >= 3 est True. La réponse est True.
+
+Intermédiaire :
+• 3 >= 3 est True. Donc >= est True quand > ou ==. 2 >= 3 est False. La réponse est True.
+• Donc 3 >= 3 est True.
+
+Expert :
+• 3 >= 3 est True. Supérieur ou égal. Le résultat est True.`,
+  111: `not inverse le booléen. not False est True.
+
+Débutant :
+• not False signifie l'opposé de False. On obtient True. Le résultat est True.
+• Donc not échange True en False et False en True. not False est True. La réponse est True.
+
+Intermédiaire :
+• not False est True. Donc not est la négation logique. not True est False. La réponse est True.
+• Donc not renvoie un bool. not False est True.
+
+Expert :
+• not False est True. Négation logique. Le résultat est True.`,
+  112: `not True vaut False. not inverse la valeur.
+
+Débutant :
+• not True signifie l'opposé de True. On obtient False. Le résultat est False.
+• Donc not échange True en False. not True est False. La réponse est False.
+
+Intermédiaire :
+• not True est False. Donc not est la négation logique. La réponse est False.
+• Donc not True est False.
+
+Expert :
+• not True est False. Négation logique. Le résultat est False.`,
+  113: `and exige que les deux soient True. True and True = True.
+
+Débutant :
+• True and True : les deux sont True, donc le résultat est True. La réponse est True.
+• Donc and est True seulement quand les deux côtés sont True. True and True est True. La réponse est True.
+
+Intermédiaire :
+• True and True est True. Donc and renvoie la première valeur falsy ou la dernière. Ici les deux sont truthy, on obtient la dernière : True. La réponse est True.
+• Donc True and True est True.
+
+Expert :
+• True and True est True. Et logique. Le résultat est True.`,
+  114: `and est False si l'un est False. True and False = False.
+
+Débutant :
+• True and False : l'un est False, donc le tout est False. Le résultat est False.
+• Donc and est True seulement quand les deux sont True. True and False est False. La réponse est False.
+
+Intermédiaire :
+• True and False est False. Donc and court-circuite : on obtient la première falsy (False). La réponse est False.
+• Donc True and False est False.
+
+Expert :
+• True and False est False. Et logique. Le résultat est False.`,
+  115: `or est True si l'un est True. True or False = True.
+
+Débutant :
+• True or False : au moins un est True, donc le résultat est True. La réponse est True.
+• Donc or est True quand au moins un côté est True. True or False est True. La réponse est True.
+
+Intermédiaire :
+• True or False est True. Donc or renvoie la première valeur truthy ou la dernière. Ici la première est True, donc on obtient True. La réponse est True.
+• Donc True or False est True.
+
+Expert :
+• True or False est True. Ou logique. Le résultat est True.`,
+  116: `or est False seulement si les deux sont False. False or False = False.
+
+Débutant :
+• False or False : les deux sont False, donc le résultat est False. La réponse est False.
+• Donc or est True seulement quand au moins un est True. False or False est False. La réponse est False.
+
+Intermédiaire :
+• False or False est False. Donc or renvoie la première truthy ou la dernière. Ici les deux sont falsy, on obtient la dernière : False. La réponse est False.
+• Donc False or False est False.
+
+Expert :
+• False or False est False. Ou logique. Le résultat est False.`,
+  117: `La multiplication est prioritaire sur l'addition. 2*3=6, 1+6=7.
+
+Débutant :
+• 1 + 2 * 3 : la multiplication est faite d'abord. Donc 2 * 3 = 6, puis 1 + 6 = 7. Le résultat est 7.
+• Donc * a une priorité plus élevée que +. On fait 2*3 d'abord, puis on ajoute 1. Donc 1 + 2 * 3 = 7. La réponse est 7.
+
+Intermédiaire :
+• 1 + 2 * 3 = 7. Donc * et / ont une priorité plus élevée que + et -. Donc 1 + 2 * 3 = 1 + 6 = 7. La réponse est 7.
+• Donc priorité des opérateurs : * avant +. Donc 1 + 2 * 3 = 7.
+
+Expert :
+• 1 + 2 * 3 = 7. La multiplication a une priorité plus élevée que l'addition. Le résultat est 7.`,
+  118: `Les parenthèses ont la priorité. (1+2)*3 = 3*3 = 9.
+
+Débutant :
+• (1 + 2) * 3 : les parenthèses d'abord. Donc 1 + 2 = 3, puis 3 * 3 = 9. Le résultat est 9.
+• Donc () impose l'ordre. (1 + 2) * 3 = 3 * 3 = 9. La réponse est 9.
+
+Intermédiaire :
+• (1 + 2) * 3 = 9. Donc les parenthèses l'emportent sur la priorité normale. On fait 1+2 d'abord, puis on multiplie par 3. La réponse est 9.
+• Donc (1 + 2) * 3 = 9.
+
+Expert :
+• (1 + 2) * 3 = 9. Les parenthèses d'abord. Le résultat est 9.`,
+  119: `10 / 2 = 5.0.
+
+Débutant :
+• 10 / 2 donne 5.0. En Python 3, / (division « vraie ») donne toujours un float. Le résultat est 5.0 (pas l'entier 5).
+• Donc / donne un résultat décimal. 10 / 2 = 5.0. La réponse est 5.0.
+
+Intermédiaire :
+• 10 / 2 = 5.0. Donc en Python 3, / est la division flottante. Donc 10 / 2 est 5.0. Pour le quotient entier utiliser 10 // 2 = 5. La réponse est 5.0.
+• Donc / renvoie toujours un float en Python 3. 10 / 2 = 5.0.
+
+Expert :
+• 10 / 2 = 5.0. __truediv__ ; en Python 3 / renvoie toujours un float. Le résultat est 5.0.`,
+  120: `10 // 3 = 3. Division entière.
+
+Débutant :
+• 10 // 3 est la partie entière de 10 ÷ 3. 10 ÷ 3 = 3,33... ; on prend 3. Le résultat est 3.
+• Donc // est la division entière (par défaut). 10 // 3 = 3. La réponse est 3.
+
+Intermédiaire :
+• 10 // 3 = 3. Donc // tronque vers moins l'infini (floor). 10 % 3 = 1. Donc 10 = 3*3 + 1. La réponse est 3.
+• Donc 10 // 3 = 3.
+
+Expert :
+• 10 // 3 = 3. Division entière. Le résultat est 3.`,
+  121: `10 % 3 = 1. Modulo.
+
+Débutant :
+• 10 % 3 est le reste quand on divise 10 par 3. 10 = 3*3 + 1 ; le reste est 1. Le résultat est 1.
+• Donc % est le reste. 10 % 3 = 1. La réponse est 1.
+
+Intermédiaire :
+• 10 % 3 = 1. Donc 10 // 3 = 3 et 10 % 3 = 1. Donc 10 = 3*3 + 1. La réponse est 1.
+• Donc 10 % 3 = 1.
+
+Expert :
+• 10 % 3 = 1. Reste. Le résultat est 1.`,
+  122: `Tranche de l'index 1 à 2 (exclu). 'abc'[1:2] = 'b'.
+
+Débutant :
+• 'abc'[1:2] prend une tranche de l'index 1 à (sans inclure) 2. On obtient le caractère à l'index 1 : 'b'. Le résultat est 'b'.
+• Donc [début:fin] va de début jusqu'à (sans inclure) fin. 'abc'[1:2] = 'b'. La réponse est 'b'.
+
+Intermédiaire :
+• 'abc'[1:2] = 'b'. Donc la tranche [1:2] correspond aux index 1..2 exclus. On obtient un seul caractère. La réponse est 'b'.
+• Donc 'abc'[1:2] = 'b'.
+
+Expert :
+• 'abc'[1:2] = 'b'. Tranche ; début=1, fin=2, pas=1. Le résultat est 'b'.`,
+  123: `Tranche du début jusqu'à l'index 2. 'abc'[:2] = 'ab'.
+
+Débutant :
+• 'abc'[:2] prend du début jusqu'à (sans inclure) l'index 2. On obtient 'ab'. Le résultat est 'ab'.
+• Donc l'absence de début signifie « depuis le début ». 'abc'[:2] = 'ab'. La réponse est 'ab'.
+
+Intermédiaire :
+• 'abc'[:2] = 'ab'. Donc [:2] est équivalent à [0:2]. On obtient les index 0 et 1. La réponse est 'ab'.
+• Donc 'abc'[:2] = 'ab'.
+
+Expert :
+• 'abc'[:2] = 'ab'. Tranche ; début par défaut 0. Le résultat est 'ab'.`,
+  124: `Tranche de l'index 1 jusqu'à la fin. 'abc'[1:] = 'bc'.
+
+Débutant :
+• 'abc'[1:] prend de l'index 1 jusqu'à la fin. On obtient 'bc'. Le résultat est 'bc'.
+• Donc l'absence de fin signifie « jusqu'à la fin ». 'abc'[1:] = 'bc'. La réponse est 'bc'.
+
+Intermédiaire :
+• 'abc'[1:] = 'bc'. Donc [1:] est équivalent à [1:len('abc')]. On obtient les index 1 et 2. La réponse est 'bc'.
+• Donc 'abc'[1:] = 'bc'.
+
+Expert :
+• 'abc'[1:] = 'bc'. Tranche ; fin par défaut à la fin. Le résultat est 'bc'.`,
+  125: `list() transforme chaque caractère en élément. list('ab') = ['a', 'b'].
+
+Débutant :
+• list('ab') transforme la chaîne 'ab' en liste de ses caractères. On obtient ['a', 'b']. Le résultat est ['a', 'b'].
+• Donc list() sur une chaîne donne une liste de chaînes d'un caractère. list('ab') = ['a', 'b']. La réponse est ['a', 'b'].
+
+Intermédiaire :
+• list('ab') = ['a', 'b']. Donc list(itérable) consomme l'itérable et en fait une liste. list('hello') = ['h','e','l','l','o']. La réponse est ['a', 'b'].
+• Donc list('ab') = ['a', 'b'].
+
+Expert :
+• list('ab') = ['a', 'b']. list(itérable) ; str est itérable de caractères. Le résultat est ['a', 'b'].`,
+  126: `tuple() convertit une liste en tuple. tuple([1, 2]) = (1, 2).
+
+Débutant :
+• tuple([1, 2]) transforme la liste [1, 2] en tuple avec les mêmes éléments. On obtient (1, 2). Le résultat est (1, 2).
+• Donc tuple() sur une liste donne un tuple. tuple([1, 2]) = (1, 2). La réponse est (1, 2).
+
+Intermédiaire :
+• tuple([1, 2]) = (1, 2). Donc tuple(itérable) crée un tuple à partir de l'itérable. La réponse est (1, 2).
+• Donc tuple([1, 2]) = (1, 2).
+
+Expert :
+• tuple([1, 2]) = (1, 2). tuple(itérable) ; list est itérable. Le résultat est (1, 2).`,
+  127: `set() supprime les doublons. set([1,1,2]) = {1, 2}.
+
+Débutant :
+• set([1, 1, 2]) crée un ensemble à partir de la liste. Les ensembles n'ont pas de doublons, donc on obtient {1, 2}. Le résultat est {1, 2}.
+• Donc set() supprime les valeurs en double. set([1, 1, 2]) = {1, 2}. La réponse est {1, 2}.
+
+Intermédiaire :
+• set([1, 1, 2]) = {1, 2}. Donc les ensembles ne contiennent que des éléments uniques. L'ordre peut changer (les ensembles sont non ordonnés). La réponse est {1, 2}.
+• Donc set([1, 1, 2]) = {1, 2}.
+
+Expert :
+• set([1, 1, 2]) = {1, 2}. set(itérable) ; les doublons sont supprimés. Le résultat est {1, 2}.`,
+  128: `dict() crée un dictionnaire vide. dict() = {}.
+
+Débutant :
+• dict() crée un dictionnaire vide. On obtient {}. Le résultat est {}.
+• Donc dict() sans argument donne un dictionnaire vide. dict() = {}. La réponse est {}.
+
+Intermédiaire :
+• dict() = {}. Donc dictionnaire vide. {} crée aussi un dictionnaire vide. La réponse est {}.
+• Donc dict() = {}.
+
+Expert :
+• dict() = {}. Dictionnaire vide. Le résultat est {}.`,
+  129: `list() crée une liste vide. list() = [].
+
+Débutant :
+• list() crée une liste vide. On obtient []. Le résultat est [].
+• Donc list() sans argument donne une liste vide. list() = []. La réponse est [].
+
+Intermédiaire :
+• list() = []. Donc liste vide. [] crée aussi une liste vide. La réponse est [].
+• Donc list() = [].
+
+Expert :
+• list() = []. Liste vide. Le résultat est [].`,
+  130: `int() convertit une chaîne numérique en int. int('9') = 9.
+
+Débutant :
+• int('9') convertit la chaîne '9' en entier 9. On obtient 9. Le résultat est 9.
+• Donc int() sur une chaîne numérique donne le nombre. int('9') = 9. La réponse est 9.
+
+Intermédiaire :
+• int('9') = 9. Donc int(chaîne) analyse la chaîne. int('42') = 42. La réponse est 9.
+• Donc int('9') = 9.
+
+Expert :
+• int('9') = 9. int(chaîne) analyse. Le résultat est 9.`,
+  131: `float() convertit une chaîne en float. float('1.5') = 1.5.
+
+Débutant :
+• float('1.5') convertit la chaîne '1.5' en float 1.5. On obtient 1.5. Le résultat est 1.5.
+• Donc float() sur une chaîne numérique donne le nombre décimal. float('1.5') = 1.5. La réponse est 1.5.
+
+Intermédiaire :
+• float('1.5') = 1.5. Donc float(chaîne) analyse la chaîne. float('3.14') = 3.14. La réponse est 1.5.
+• Donc float('1.5') = 1.5.
+
+Expert :
+• float('1.5') = 1.5. float(chaîne) analyse. Le résultat est 1.5.`,
+  132: `'a' est une sous-chaîne de 'cat'. 'a' in 'cat' est True.
+
+Débutant :
+• 'a' in 'cat' demande : 'a' est-il une sous-chaîne de 'cat' ? Oui — 'a' apparaît. Donc le résultat est True.
+• Donc « in » pour les chaînes vérifie si une chaîne apparaît dans une autre. 'a' in 'cat' est True. La réponse est True.
+
+Intermédiaire :
+• 'a' in 'cat' est True. Pour les chaînes, in vérifie la sous-chaîne (contiguë). 'ab' in 'abc' est True ; 'ac' in 'abc' est False.
+• Donc in fonctionne pour l'appartenance dans les séquences (liste, tuple) et la sous-chaîne pour les str. 'a' in 'cat' est True.
+
+Expert :
+• str.__contains__ ; 'a' in 'cat' est True. Test de sous-chaîne. Le résultat est True.`,
+  133: `'x' n'est pas dans 'cat'. in vérifie l'appartenance.
+
+Débutant :
+• 'x' in 'cat' demande : 'x' est-il dans la chaîne 'cat' ? Non — 'cat' ne contient pas 'x'. Le résultat est False.
+• Donc quand le caractère (ou la sous-chaîne) n'est pas là, in renvoie False. 'x' in 'cat' est False. La réponse est False.
+
+Intermédiaire :
+• 'x' in 'cat' est False. Donc in renvoie False quand la sous-chaîne n'est pas trouvée. 'z' in 'cat' est False.
+• Donc in pour les chaînes est l'appartenance à une sous-chaîne. 'x' in 'cat' est False.
+
+Expert :
+• 'x' in 'cat' est False. Le test de sous-chaîne échoue. Le résultat est False.`,
+  134: `1 est dans la liste. in fonctionne pour les listes.
+
+Débutant :
+• 1 in [1, 2] demande : 1 est-il un élément de la liste [1, 2] ? Oui — le premier élément est 1. Le résultat est True.
+• Donc « in » pour les listes vérifie si une valeur est l'un des éléments. 1 in [1, 2] est True. La réponse est True.
+
+Intermédiaire :
+• 1 in [1, 2] est True. Donc in vérifie l'appartenance. 3 in [1, 2] est False. La réponse est True.
+• Donc in fonctionne pour les listes, tuples, ensembles, dict (clés). 1 in [1, 2] est True.
+
+Expert :
+• list.__contains__ ; 1 in [1, 2] est True. Test d'appartenance. O(n) pour une liste. Le résultat est True.`,
+  135: `0 n'est pas dans la liste. Test d'appartenance.
+
+Débutant :
+• 0 in [1, 2] demande : 0 est-il un élément de la liste [1, 2] ? Non — la liste contient 1 et 2. Le résultat est False.
+• Donc quand la valeur n'est pas dans la liste, in renvoie False. 0 in [1, 2] est False. La réponse est False.
+
+Intermédiaire :
+• 0 in [1, 2] est False. Donc in renvoie False quand la valeur n'est pas trouvée. La réponse est False.
+• Donc pour l'appartenance, 0 in [1, 2] est False.
+
+Expert :
+• 0 in [1, 2] est False. Le test d'appartenance échoue. Le résultat est False.`,
+  136: `Il n'existe qu'un seul None. None is None est True.
+
+Débutant :
+• None is None demande : ce None est-il le même que celui-là ? En Python il n'y a qu'un seul None, donc oui. Le résultat est True.
+• Donc « is » vérifie l'identité (même objet). None is None est True. La réponse est True.
+
+Intermédiaire :
+• None is None est True. Donc il existe un seul objet None. « is » est la bonne façon de tester None (pas ==). La réponse est True.
+• Donc None is None est True.
+
+Expert :
+• None is None est True. Test d'identité ; il n'y a qu'un seul singleton None. Le résultat est True.`,
+  137: `2+2 = 4, un int. type(4) est int.
+
+Débutant :
+• 2 + 2 fait 4, et 4 est un entier. Donc type(2+2) est <class 'int'>. Le résultat est <class 'int'>.
+• Donc additionner deux int donne un int. type(2+2) est int. La réponse est <class 'int'>.
+
+Intermédiaire :
+• 2+2=4 ; type(4) est int. Donc type(2+2) renvoie la classe int. La réponse est <class 'int'>.
+• Donc type(2+2) est int.
+
+Expert :
+• type(2+2) est int. Donc int + int -> int. Le résultat est <class 'int'>.`,
+  138: `int + float donne un float. type(2 + 2.0) est float.
+
+Débutant :
+• 2 + 2.0 fait 4.0 (un float). Quand on mélange int et float, le résultat est un float. Donc type(2+2.0) est <class 'float'>.
+• Donc int + float donne float. type(2+2.0) est float. La réponse est <class 'float'>.
+
+Intermédiaire :
+• 2+2.0=4.0 ; type(4.0) est float. Donc promotion de type. La réponse est <class 'float'>.
+• Donc type(2+2.0) est float.
+
+Expert :
+• type(2+2.0) est float. Donc int + float -> float. Le résultat est <class 'float'>.`,
+  139: `'a'*2 = 'aa', une chaîne. La répétition de chaîne donne une chaîne.
+
+Débutant :
+• 'a' * 2 fait 'aa' (la chaîne 'a' répétée deux fois). Donc le résultat est une chaîne. type('a'*2) est <class 'str'>.
+• Donc chaîne * nombre donne une chaîne. Le type du résultat est str.
+
+Intermédiaire :
+• 'a'*2 = 'aa' ; type('aa') est str. Donc type('a'*2) renvoie la classe str. Pour list * int on obtient une liste : type([1]*2) est list.
+• Donc str * int -> str ; list * int -> list. Le type du résultat suit le type de la séquence.
+
+Expert :
+• str.__mul__(int) renvoie str. Donc type('a'*2) est str. Le résultat est une nouvelle chaîne ; l'originale est inchangée (les chaînes sont immuables).`,
+  140: `[1]*2 = [1, 1], une liste. La répétition de liste donne une liste.
+
+Débutant :
+• [1] * 2 fait [1, 1] (la liste [1] répétée deux fois). Donc le résultat est une liste. type([1]*2) est <class 'list'>.
+• Donc liste * nombre donne une liste. Le type du résultat est list. Note : [1]*2 crée [1, 1] (deux références au même 1).
+
+Intermédiaire :
+• [1]*2 = [1, 1] ; type([1, 1]) est list. Donc type([1]*2) renvoie la classe list. Pareil pour tuple : (1,)*2 = (1, 1), type tuple.
+• Attention : [1]*2 donne deux références au même int. Pour [[1]]*2 on a deux références à la même liste (souvent un bug).
+
+Expert :
+• list.__mul__(int) renvoie une nouvelle liste avec la séquence répétée. Donc type([1]*2) est list. Copie superficielle : mêmes éléments répétés.`,
+  141: `len() renvoie un entier. type(len('')) est int.
+
+Débutant :
+• len('') vaut 0 (la chaîne vide a une longueur 0). La valeur 0 est un entier. Donc type(len('')) est <class 'int'>.
+• len() renvoie toujours un entier — le nombre d'éléments ou de caractères. Donc type(len(quoi que ce soit)) est int.
+
+Intermédiaire :
+• len('') = 0 ; type(0) est int. Donc type(len('')) est int. Pareil pour len([]), len((1,2)), etc. — len renvoie toujours int.
+• Donc on peut utiliser len() dans l'arithmétique : len('hi') + 1 vaut 3. Et type(len(x)) est toujours int pour les types built-in.
+
+Expert :
+• len() appelle __len__ et doit renvoyer un entier non négatif. Donc type(len('')) est int. Pour les classes personnalisées, __len__ doit renvoyer un int.`,
+  142: `sum() additionne tous les nombres. sum([1,2,3]) = 6.
+
+Débutant :
+• sum([1, 2, 3]) additionne tous les nombres de la liste : 1 + 2 + 3 = 6. Donc le résultat est 6.
+• sum() prend un itérable de nombres et renvoie leur total. Donc sum([1, 2, 3]) = 6.
+
+Intermédiaire :
+• sum([1, 2, 3]) = 6. On peut passer un second argument (départ) : sum([1, 2, 3], 10) = 16. Le départ par défaut est 0.
+• sum() fonctionne sur tout itérable de nombres : sum((1, 2, 3)) = 6. Itérable vide : sum([]) = 0.
+
+Expert :
+• sum(iterable, start=0) fait la somme de start + tous les éléments. Donc sum([1,2,3]) = 0+1+2+3 = 6. Pour les float, utiliser math.fsum() pour une meilleure précision.`,
+  143: `La somme d'une liste vide est 0. sum([]) = 0.
+
+Débutant :
+• La somme d'aucun nombre est 0. Donc sum([]) = 0. Une liste vide n'a aucun élément à additionner, donc le total est 0.
+• C'est l'« identité » pour l'addition : additionner zéro nombre donne 0. Donc sum([]) = 0.
+
+Intermédiaire :
+• sum([]) = 0. La valeur de départ par défaut de sum() est 0. Donc sum([]) c'est 0 + (rien) = 0. sum([], 10) donnerait 10.
+• Utile quand la liste peut être vide : total = sum(nombres) fonctionne même si nombres est [].
+
+Expert :
+• sum(iterable, start=0) ; quand l'itérable est vide, sum renvoie start. Donc sum([]) = 0. sum([]) ne lève jamais ; il renvoie 0.`,
+  144: `min() de plusieurs valeurs. min(3,1,2) = 1.
+
+Débutant :
+• min(3, 1, 2) renvoie la plus petite des trois valeurs : 1. Donc le résultat est 1.
+• min() peut prendre deux arguments ou plus et renvoie le plus petit. Donc min(3, 1, 2) = 1.
+
+Intermédiaire :
+• min(3, 1, 2) = 1. On peut aussi utiliser min() sur un seul itérable : min([3, 1, 2]) = 1. Itérable vide lève ValueError.
+• min() fonctionne avec tout type comparable (nombres, chaînes). Donc min(3, 1, 2) = 1.
+
+Expert :
+• min(*args ou iterable) renvoie le plus petit. Donc min(3, 1, 2) = 1. Argument key optionnel : min([-1, 2, -3], key=abs) = -1.`,
+  145: `max() de plusieurs valeurs. max(3,1,2) = 3.
+
+Débutant :
+• max(3, 1, 2) renvoie la plus grande des trois valeurs : 3. Donc le résultat est 3.
+• max() peut prendre deux arguments ou plus et renvoie le plus grand. Donc max(3, 1, 2) = 3.
+
+Intermédiaire :
+• max(3, 1, 2) = 3. On peut aussi utiliser max() sur un seul itérable : max([3, 1, 2]) = 3. Itérable vide lève ValueError.
+• max() fonctionne avec tout type comparable. Donc max(3, 1, 2) = 3.
+
+Expert :
+• max(*args ou iterable) renvoie le plus grand. Donc max(3, 1, 2) = 3. Argument key optionnel : max([-1, 2, -3], key=abs) = -3.`,
+  146: `pow(2, 4) = 2**4 = 16. pow(base, exp) est l'exponentiation.
+
+Débutant :
+• pow(2, 4) signifie 2 à la puissance 4 : 2*2*2*2 = 16. Donc pow(2, 4) = 16. Équivalent à 2 ** 4.
+• pow() est une fonction intégrée. pow(2, 4) = 16. Donc le résultat est 16.
+
+Intermédiaire :
+• pow(2, 4) = 16. On peut passer un troisième argument pour le modulo : pow(2, 4, 5) = (2**4) % 5 = 16 % 5 = 1. Plus efficace pour les grands nombres.
+• Donc pow(a, b) vaut a**b. pow(a, b, m) vaut (a**b) % m (utilisé en cryptographie).
+
+Expert :
+• pow(base, exp[, mod]) renvoie base**exp, ou (base**exp) % mod si mod est donné. Donc pow(2, 4) = 16. La forme à trois arguments est efficace pour l'exponentiation modulaire.`,
+  147: `divmod renvoie (quotient, reste). divmod(7, 2) = (3, 1).
+
+Débutant :
+• divmod(7, 2) donne à la fois le quotient et le reste de 7 par 2. Donc 7 = 3*2 + 1. Le résultat est (3, 1).
+• Donc divmod(7, 2) = (3, 1). Le premier nombre est 7//2, le second est 7%2. Un seul appel au lieu de deux.
+
+Intermédiaire :
+• divmod(7, 2) = (3, 1). Donc 7 // 2 = 3 et 7 % 2 = 1. divmod(a, b) renvoie (a//b, a%b). Utile quand on a besoin des deux.
+• Donc quotient, reste = divmod(7, 2) donne quotient=3, reste=1. Marche avec les float : divmod(7.5, 2) = (3.0, 1.5).
+
+Expert :
+• divmod(a, b) renvoie (a//b, a%b). Donc divmod(7, 2) = (3, 1). Un seul appel au lieu de deux ; légèrement plus efficace. Pour b==0, ZeroDivisionError.`,
+  148: `0 à n'importe quelle puissance positive vaut 0. 0 ** 5 = 0.
+
+Débutant :
+• Zéro à n'importe quelle puissance positive reste zéro. Donc 0 ** 5 = 0. (0 * 0 * 0 * 0 * 0 = 0.)
+• Donc 0 ** 1 = 0, 0 ** 5 = 0, 0 ** 100 = 0. Seul 0 ** 0 est spécial (en Python ça vaut 1).
+
+Intermédiaire :
+• 0 ** 5 = 0. Donc pour n > 0, 0 ** n = 0. 0 ** 0 vaut 1 en Python (par convention). Donc 0 ** 5 = 0.
+• Exposant négatif : 0 ** -1 serait 1/0 (ZeroDivisionError). Donc 0 à une puissance positive vaut 0.
+
+Expert :
+• 0 ** n pour n > 0 vaut 0. 0 ** 0 vaut 1 en Python. Donc 0 ** 5 = 0. Pour 0 ** négatif, ZeroDivisionError.`,
+  149: `Racine carrée de 4. 4 ** 0.5 = 2.0.
+
+Débutant :
+• 4 ** 0.5 signifie 4 à la puissance 0,5, soit la racine carrée de 4. La racine carrée de 4 est 2. Donc le résultat est 2.0 (un float).
+• Donc 4 ** 0.5 = 2.0. Utiliser un exposant fractionnaire (0,5) donne une racine. Donc 4 ** 0.5 est la racine carrée.
+
+Intermédiaire :
+• 4 ** 0.5 = 2.0. Donc x ** 0.5 est la racine carrée de x. Donc 9 ** 0.5 = 3.0. Le résultat est toujours un float quand l'exposant est un float.
+• Donc 4 ** 0.5 = 2.0. Pour une base négative, 4 ** 0.5 fonctionne ; (-4) ** 0.5 donnerait un complexe.
+
+Expert :
+• Pour un exposant float, ** renvoie un float (ou complexe pour base négative et exposant non entier). Donc 4 ** 0.5 = 2.0. Utiliser math.sqrt(4) pour la clarté.`,
+  150: `or renvoie la première valeur truthy ou la dernière. 0 or 5 = 5.
+
+Débutant :
+• or renvoie la première valeur « truthy », ou la dernière si toutes sont « falsy ». 0 est falsy, donc on regarde 5. 5 est truthy, donc le résultat est 5.
+• Donc 0 or 5 = 5. On n'obtient pas True — on obtient la valeur réelle 5 (qui est truthy). Donc le résultat est 5.
+
+Intermédiaire :
+• 0 or 5 = 5. Donc or renvoie le premier opérande truthy, ou le dernier opérande si tous sont falsy. Donc 0 or 5 renvoie 5 (le premier truthy).
+• Court-circuit : si le premier est truthy, c'est lui qui est renvoyé et le second n'est pas évalué. Donc 3 or 5 vaut 3.
+
+Expert :
+• or renvoie le premier truthy ou le dernier. Donc 0 or 5 = 5. Utilisé pour les valeurs par défaut : x = entrée_utilisateur or "défaut". Évaluation en court-circuit.`,
+  151: `and renvoie la dernière valeur si les deux sont truthy. 3 and 4 = 4.
+
+Débutant : 3 and 4 : les deux sont truthy, donc on obtient la dernière valeur : 4. Résultat 4.
+Intermédiaire : and renvoie la première falsy ou la dernière. Ici les deux truthy → 4.
+Expert : and renvoie la dernière quand les deux truthy. 3 and 4 = 4.`,
+  152: `and court-circuite sur la première valeur falsy. 0 and 5 = 0.
+
+Débutant : 0 and 5 : 0 est falsy, donc le résultat est 0. Le 5 n'est pas évalué (court-circuit).
+Intermédiaire : and court-circuite : dès qu'on voit 0 (falsy), on renvoie 0.
+Expert : and court-circuite sur la première falsy. 0 and 5 = 0.`,
+  153: `Un tuple de deux éléments a une longueur 2. len((1, 2)) = 2.
+
+Débutant : (1, 2) a deux éléments, donc len((1, 2)) vaut 2. len() fonctionne sur les tuples.
+Intermédiaire : len((1, 2)) = 2. Tuple de deux éléments.
+Expert : tuple.__len__ ; len((1, 2)) = 2. O(1).`,
+  154: `Un ensemble de deux éléments a une longueur 2. len({1, 2}) = 2.
+
+Débutant : {1, 2} a deux éléments, donc len({1, 2}) vaut 2. len() fonctionne sur les ensembles.
+Intermédiaire : len({1, 2}) = 2. Les ensembles n'ont pas de doublons ; chaque élément compte une fois.
+Expert : set.__len__ ; len({1, 2}) = 2. O(1).`,
+  155: `Un dict avec une clé a une longueur 1. len({1: 2}) = 1.
+
+Débutant : {1: 2} a une paire clé-valeur, donc len({1: 2}) vaut 1. len() sur un dict compte les clés.
+Intermédiaire : len({1: 2}) = 1. Un dict à une clé a une longueur 1.
+Expert : dict.__len__ ; len({1: 2}) = 1. O(1).`,
+  156: `Les listes sont comparées par valeur. [1] == [1] est True.
+
+Débutant : [1] et [1] ont le même contenu (un élément, 1), donc ils sont égaux : [1] == [1] est True.
+Intermédiaire : == pour les listes compare élément par élément. [1] == [1] est True (même contenu, pas forcément même objet).
+Expert : list.__eq__ ; [1] == [1] compare les éléments. Pour l'identité utiliser « is ».`,
+  157: `Les chaînes égales sont ==. 'ab' == 'ab' est True.
+
+Débutant : Les deux chaînes 'ab' ont les mêmes caractères, donc 'ab' == 'ab' est True.
+Intermédiaire : == pour les chaînes compare caractère par caractère. Égalité de contenu.
+Expert : str.__eq__ ; 'ab' == 'ab' est True. Égalité de valeur.`,
+  158: `Les tuples égaux sont ==. (1,) == (1,) est True.
+
+Débutant : Les deux tuples (1,) ont le même contenu, donc (1,) == (1,) est True.
+Intermédiaire : == pour les tuples compare élément par élément. (1,) == (1,) est True.
+Expert : tuple.__eq__ ; (1,) == (1,) est True. Égalité de valeur.`,
+  159: `En Python, 1 == True (égalité de valeur). 1 == True est True.
+
+Débutant : En Python, 1 et True sont considérés égaux en valeur. Donc 1 == True est True. (Mais types différents : type(1) est int, type(True) est bool.)
+Intermédiaire : bool est une sous-classe de int ; True vaut 1. Donc 1 == True est True.
+Expert : bool sous-classe de int ; True a la valeur 1. 1 == True est True (égalité de valeur).`,
+  160: `La chaîne vide n'est pas égale à False. '' == False est False.
+
+Débutant : '' et False ne sont pas la même valeur. '' == False est False. (Les deux sont « falsy » en conditions mais pas égaux.)
+Intermédiaire : Seuls certains falsy sont égaux : 0 == False, 1 == True. '' != False, [] != False.
+Expert : str et bool ; '' et False sont de types différents et non égaux. '' == False est False.`,
+  161: `not in teste l'absence. 0 not in [1, 2] est True.
+
+Débutant : « 0 not in [1, 2] » signifie « 0 n'est pas un élément de [1, 2] ». La liste contient 1 et 2, pas 0. Donc True.
+Intermédiaire : 0 in [1, 2] est False ; donc « not in » donne True. « x not in L » équivaut à « not (x in L) ».
+Expert : not in est la négation de in. 0 not in [1, 2] est True.`,
+  162: `Addition : 7 + 8 = 15.
+
+Débutant : 7 + 8 = 15. Additionner deux entiers donne 15. Résultat 15.
+Intermédiaire : 7 + 8 = 15. Les deux sont int, le résultat est int.
+Expert : 7 + 8 = 15. Le résultat est 15.`,
+  163: `Soustraction : 20 - 7 = 13.
+
+Débutant : 20 - 7 = 13. Enlever 7 à 20 donne 13. Résultat 13.
+Intermédiaire : 20 - 7 = 13. Les deux sont int, le résultat est int.
+Expert : 20 - 7 = 13. Le résultat est 13.`,
+  164: `Multiplication : 5 * 4 = 20.
+
+Débutant : 5 * 4 = 20. Multiplier 5 par 4 donne 20. Résultat 20.
+Intermédiaire : 5 * 4 = 20. Les deux sont int, le résultat est int.
+Expert : 5 * 4 = 20. Le résultat est 20.`,
+  165: `16 / 4 = 4.0. La division en Python 3 renvoie un float.
+
+Débutant : 16 / 4 donne 4.0. En Python 3, / renvoie toujours un float. Résultat 4.0.
+Intermédiaire : 16 / 4 = 4.0. / renvoie un float. Pour le quotient entier : 16 // 4 = 4.
+Expert : En Python 3, / renvoie toujours un float. 16 / 4 = 4.0.`,
+  166: `Division entière : 18 // 5 = 3.
+
+Débutant : 18 // 5 est la partie entière de 18 ÷ 5. 18 ÷ 5 = 3,6... ; on prend 3. Résultat 3.
+Intermédiaire : 18 // 5 = 3. 18 % 5 = 3. 18 = 3*5 + 3.
+Expert : Division entière ; 18 // 5 = 3.`,
+  167: `Reste : 18 % 5 = 3.
+
+Débutant : 18 % 5 est le reste de 18 ÷ 5. 18 = 3*5 + 3 ; le reste est 3. Résultat 3.
+Intermédiaire : 18 % 5 = 3. 18 // 5 = 3. 18 = 3*5 + 3.
+Expert : 18 % 5 = 3. Reste.`,
+  168: `4 ** 2 = 16. 4 au carré.
+
+Débutant : 4 ** 2 signifie 4 à la puissance 2 : 4*4 = 16. Résultat 16.
+Intermédiaire : 4 ** 2 = 16. 4 au carré.
+Expert : 4 ** 2 = 16. Exponentiation.`,
+  169: `len() compte les caractères dans une chaîne. 'hello' a 5 caractères.
+
+Débutant : 'hello' a 5 lettres, donc len('hello') vaut 5. len() sur une chaîne compte les caractères.
+Intermédiaire : len('hello') = 5. Cinq caractères.
+Expert : len('hello') = 5. Longueur de la chaîne. O(1).`,
+  170: `len() renvoie le nombre d'éléments d'une liste. La liste a 3 éléments.
+
+Débutant : [1, 2, 3] a trois éléments, donc len([1, 2, 3]) vaut 3. len() sur une liste compte les éléments.
+Intermédiaire : len([1, 2, 3]) = 3. Trois éléments.
+Expert : len([1, 2, 3]) = 3. Longueur de la liste. O(1).`,
+  171: `La liste vide est falsy en Python. bool([]) est False.
+
+Débutant : La liste vide [] est « falsy ». bool([]) renvoie False. Résultat False.
+Intermédiaire : bool([]) est False. Les séquences vides sont falsy.
+Expert : bool([]) est False. Liste vide = falsy.`,
+  172: `Une liste non vide est truthy. bool([0]) est True.
+
+Débutant : [0] a un élément, donc la liste est « truthy ». bool([0]) est True. (C'est la liste qui est truthy, pas le 0 dedans.)
+Intermédiaire : bool([0]) est True. La liste a une longueur 1 ; la truthiness porte sur le conteneur.
+Expert : bool([0]) est True. Liste non vide = truthy.`,
+  173: `int() tronque vers zéro. int(0.9) = 0.
+
+Débutant : int(0.9) enlève la partie décimale. On obtient 0 (pas 1 — Python tronque vers zéro). Résultat 0.
+Intermédiaire : int(0.9) = 0. int() tronque, n'arrondit pas. Pour arrondir : round(0.9) = 1.
+Expert : int(0.9) tronque vers zéro ; résultat 0.`,
+  174: `str(0) = '0' (chaîne). str() convertit un nombre en chaîne.
+
+Débutant : str(0) convertit le nombre 0 en chaîne '0'. On obtient '0'. Résultat '0'.
+Intermédiaire : str(0) = '0'. Le résultat est une chaîne, pas un nombre.
+Expert : str(0) = '0'. Conversion int vers str.`,
+  175: `+ concatène les chaînes. 'no' + 'te' = 'note'.
+
+Débutant : 'no' + 'te' assemble les deux chaînes : on obtient 'note'. Résultat 'note'.
+Intermédiaire : 'no' + 'te' = 'note'. Concaténation de chaînes.
+Expert : str.__add__ ; 'no' + 'te' = 'note'. Concaténation.`,
+  176: `'o' * 4 = 'oooo'. La répétition de chaîne.
+
+Débutant : 'o' * 4 répète 'o' quatre fois : 'oooo'. Résultat 'oooo'.
+Intermédiaire : 'o' * 4 = 'oooo'. str * int = répétition.
+Expert : 'o' * 4 = 'oooo'. str.__mul__(int).`,
+  177: `+ concatène les listes. [3] + [4] = [3, 4].
+
+Débutant : [3] + [4] assemble les deux listes : on obtient [3, 4]. Résultat [3, 4].
+Intermédiaire : [3] + [4] = [3, 4]. Concaténation de listes (nouvelle liste).
+Expert : list.__add__ ; [3] + [4] = [3, 4].`,
+  178: `Index 0 : premier caractère de 'dog', soit 'd'.
+
+Débutant : 'dog'[0] est le premier caractère : 'd'. L'indexation commence à 0. Résultat 'd'.
+Intermédiaire : 'dog'[0] = 'd'. Index 0 = premier caractère.
+Expert : 'dog'[0] = 'd'. Indexation str.`,
+  179: `Index -1 : dernier caractère de 'dog', soit 'g'.
+
+Débutant : 'dog'[-1] est le dernier caractère : 'g'. L'index -1 compte depuis la fin. Résultat 'g'.
+Intermédiaire : 'dog'[-1] = 'g'. Index négatif = depuis la fin.
+Expert : 'dog'[-1] = 'g'. Dernier caractère.`,
+  180: `Dernier élément : [5, 6, 7][-1] = 7.
+
+Débutant : [5, 6, 7][-1] est le dernier élément : 7. L'index -1 = dernier. Résultat 7.
+Intermédiaire : [5, 6, 7][-1] = 7. Index négatif sur une liste.
+Expert : [5, 6, 7][-1] = 7. Dernier élément.`,
+  181: `4 == 4 est True. == teste l'égalité.
+
+Débutant : 4 == 4 demande : 4 est-il égal à 4 ? Oui. Résultat True.
+Intermédiaire : 4 == 4 est True. == compare les valeurs.
+Expert : 4 == 4 est True. Égalité.`,
+  182: `5 == 5 donc 5 != 5 est False.
+
+Débutant : 5 != 5 demande : 5 est-il différent de 5 ? Non. Résultat False.
+Intermédiaire : 5 == 5 est True, donc 5 != 5 est False.
+Expert : 5 != 5 est False. Inégalité.`,
+  183: `1 < 10 est True.
+
+Débutant : 1 < 10 demande : 1 est-il inférieur à 10 ? Oui. Résultat True.
+Intermédiaire : 1 < 10 est True. Comparaison d'ordre.
+Expert : 1 < 10 est True. Strictement inférieur.`,
+  184: `10 > 1 est True.
+
+Débutant : 10 > 1 demande : 10 est-il supérieur à 1 ? Oui. Résultat True.
+Intermédiaire : 10 > 1 est True. Comparaison d'ordre.
+Expert : 10 > 1 est True. Strictement supérieur.`,
+  185: `5 <= 5 est True. <= inclut l'égalité.
+
+Débutant : 5 <= 5 demande : 5 est-il inférieur ou égal à 5 ? Oui (5 est égal à 5). Résultat True.
+Intermédiaire : 5 <= 5 est True. <= est True si < ou ==.
+Expert : 5 <= 5 est True. Inférieur ou égal.`,
+  186: `3 >= 4 est False. 3 n'est pas supérieur ou égal à 4.
+
+Débutant : 3 >= 4 demande : 3 est-il supérieur ou égal à 4 ? Non. Résultat False.
+Intermédiaire : 3 >= 4 est False. 3 est strictement inférieur à 4.
+Expert : 3 >= 4 est False. Supérieur ou égal.`,
+  187: `+ concatène les tuples. (1, 2) + (3,) = (1, 2, 3).
+
+Débutant : (1, 2) + (3,) assemble les deux tuples : on obtient (1, 2, 3). Résultat (1, 2, 3).
+Intermédiaire : (1, 2) + (3,) = (1, 2, 3). Concaténation de tuples (nouveau tuple).
+Expert : tuple.__add__ ; (1, 2) + (3,) = (1, 2, 3).`,
+  188: `Tranche [1:3] : caractères aux index 1 et 2. 'pie'[1:3] = 'ie'.
+
+Débutant : 'pie'[1:3] prend de l'index 1 à (sans inclure) 3. On obtient 'ie'. Résultat 'ie'.
+Intermédiaire : 'pie'[1:3] = 'ie'. Tranche [1:3] = index 1 et 2.
+Expert : 'pie'[1:3] = 'ie'. Tranche.`,
+  189: `[:2] : du début à l'index 2 (exclu). 'pie'[:2] = 'pi'.
+
+Débutant : 'pie'[:2] prend du début jusqu'à (sans inclure) l'index 2. On obtient 'pi'. Résultat 'pi'.
+Intermédiaire : 'pie'[:2] = 'pi'. [:2] = deux premiers caractères.
+Expert : 'pie'[:2] = 'pi'. Tranche depuis le début.`,
+  190: `[2:] : de l'index 2 à la fin. 'pie'[2:] = 'e'.
+
+Débutant : 'pie'[2:] prend de l'index 2 à la fin. On obtient 'e'. Résultat 'e'.
+Intermédiaire : 'pie'[2:] = 'e'. [2:] = de l'index 2 à la fin.
+Expert : 'pie'[2:] = 'e'. Tranche jusqu'à la fin.`,
+  191: `list([1, 2]) renvoie une nouvelle liste [1, 2].
+
+Débutant : list([1, 2]) crée une nouvelle liste avec les mêmes éléments : [1, 2]. Copie superficielle.
+Intermédiaire : list([1, 2]) = [1, 2]. list(itérable) sur une liste donne une nouvelle liste.
+Expert : list([1, 2]) = [1, 2]. Nouvelle liste (copie superficielle).`,
+  192: `tuple((1,)) = (1,). tuple() sur un tuple renvoie une copie.
+
+Débutant : tuple((1,)) crée un nouveau tuple avec les mêmes éléments : (1,). Résultat (1,).
+Intermédiaire : tuple((1,)) = (1,). tuple(itérable) sur un tuple.
+Expert : tuple((1,)) = (1,). Nouveau tuple.`,
+  193: `Les ensembles n'ont pas de doublons. set([2, 2, 3]) = {2, 3}.
+
+Débutant : set([2, 2, 3]) crée un ensemble ; les doublons sont supprimés. On obtient {2, 3}. Résultat {2, 3}.
+Intermédiaire : set([2, 2, 3]) = {2, 3}. Les ensembles ne contiennent que des éléments uniques.
+Expert : set([2, 2, 3]) = {2, 3}. Doublons supprimés.`,
+  194: `Division entière : 11 // 2 = 5.
+
+Débutant : 11 // 2 est la partie entière de 11 ÷ 2. 11 ÷ 2 = 5,5 ; on prend 5. Résultat 5.
+Intermédiaire : 11 // 2 = 5. 11 % 2 = 1. 11 = 5*2 + 1.
+Expert : 11 // 2 = 5. Division entière.`,
+  195: `Reste : 11 % 2 = 1.
+
+Débutant : 11 % 2 est le reste de 11 ÷ 2. 11 = 5*2 + 1 ; le reste est 1. Résultat 1.
+Intermédiaire : 11 % 2 = 1. 11 // 2 = 5. 11 = 5*2 + 1.
+Expert : 11 % 2 = 1. Reste.`,
+  196: `Addition de floats : 1.5 + 1.5 = 3.0.
+
+Débutant : 1.5 + 1.5 = 3.0. Additionner deux float donne un float. Résultat 3.0.
+Intermédiaire : 1.5 + 1.5 = 3.0. float + float = float.
+Expert : 1.5 + 1.5 = 3.0. Addition de float.`,
+  197: `Les nombres avec une virgule décimale sont des float. type(1.0) est float.
+
+Débutant : 1.0 a un point décimal, donc c'est un float. type(1.0) renvoie <class 'float'>.
+Intermédiaire : type(1.0) est float. Littéral avec point décimal = float.
+Expert : type(1.0) est float. Littéral float.`,
+  198: `La chaîne vide est toujours de type str. type('') est str.
+
+Débutant : '' est une chaîne vide, donc type('') est <class 'str'>. La chaîne vide reste une chaîne.
+Intermédiaire : type('') est str. Chaîne vide = str.
+Expert : type('') est str. Chaîne vide.`,
+  199: `[[]] est une liste dont l'unique élément est une liste vide. type([[]]) est list.
+
+Débutant : [[]] est une liste qui contient un seul élément : la liste vide []. type([[]]) est <class 'list'>.
+Intermédiaire : type([[]]) est list. Les crochets extérieurs font une liste.
+Expert : type([[]]) est list. Liste contenant un élément (une liste).`,
+  200: `En Python, 0 et False sont égaux en valeur. 0 == False est True.
+
+Débutant : En Python, 0 == False est True. 0 et False sont égaux en valeur. Résultat True.
+Intermédiaire : bool est une sous-classe de int ; False vaut 0. Donc 0 == False est True.
+Expert : 0 == False est True. Égalité de valeur.`,
+  201: `in vérifie l'appartenance dans un tuple. 1 est dans (1, 2).
+
+Débutant : 1 in (1, 2) demande : 1 est-il dans le tuple ? Oui. Résultat True.
+Intermédiaire : in fonctionne sur les tuples. 1 in (1, 2) est True.
+Expert : 1 in (1, 2) est True. Test d'appartenance.`,
+  202: `not in vérifie l'absence. 10 n'est pas dans (1, 2).
+
+Débutant : 10 not in (1, 2) demande : 10 n'est-il pas dans le tuple ? Oui — 10 n'est pas dans (1, 2). Résultat True.
+Intermédiaire : not in est True quand la valeur est absente. 10 not in (1, 2) est True.
+Expert : 10 not in (1, 2) est True. not in.`,
+  203: `abs(0) = 0.
+
+Débutant : abs(0) est la valeur absolue de 0. On obtient 0. Résultat 0.
+Intermédiaire : abs(0) = 0. La valeur absolue de zéro est zéro.
+Expert : abs(0) = 0. Valeur absolue.`,
+  204: `En Python 3, round(5.5) arrondit à 6.
+
+Débutant : round(5.5) arrondit 5.5 à l'entier le plus proche. En Python 3, 5.5 arrondit à 6. Résultat 6.
+Intermédiaire : round(5.5) = 6. Python 3 utilise l'arrondi « banquier » (demi vers pair) mais 5.5 → 6.
+Expert : round(5.5) = 6. Arrondi.`,
+  205: `min() renvoie le plus petit argument. min(0, 1) = 0.
+
+Débutant : min(0, 1) renvoie le plus petit de 0 et 1 : 0. Résultat 0.
+Intermédiaire : min(0, 1) = 0. min() renvoie le minimum.
+Expert : min(0, 1) = 0. Minimum.`,
+  206: `max() renvoie le plus grand argument. max(0, -1) = 0.
+
+Débutant : max(0, -1) renvoie le plus grand de 0 et -1 : 0. Résultat 0.
+Intermédiaire : max(0, -1) = 0. max() renvoie le maximum.
+Expert : max(0, -1) = 0. Maximum.`,
+  207: `sum() additionne tous les éléments. sum([0, 1, 2]) = 3.
+
+Débutant : sum([0, 1, 2]) additionne 0 + 1 + 2 = 3. Résultat 3.
+Intermédiaire : sum([0, 1, 2]) = 3. sum() additionne tous les nombres de l'itérable.
+Expert : sum([0, 1, 2]) = 3. Somme.`,
+  208: `pow(3, 2) = 3**2 = 9.
+
+Débutant : pow(3, 2) signifie 3 à la puissance 2 : 3*3 = 9. Résultat 9.
+Intermédiaire : pow(3, 2) = 9. Équivalent à 3 ** 2.
+Expert : pow(3, 2) = 9. Exponentiation.`,
+  209: `divmod renvoie (quotient, reste). divmod(10, 3) = (3, 1).
+
+Débutant : divmod(10, 3) donne quotient et reste. 10 = 3*3 + 1 ; on obtient (3, 1). Résultat (3, 1).
+Intermédiaire : divmod(10, 3) = (3, 1). 10 // 3 = 3 et 10 % 3 = 1.
+Expert : divmod(10, 3) = (3, 1). (quotient, reste).`,
+  210: `or est True si au moins un opérande est True. True or True = True.
+
+Débutant : True or True : au moins un est True, donc le résultat est True.
+Intermédiaire : or est True quand au moins un opérande est True. True or True est True.
+Expert : True or True est True. Ou logique.`,
+  211: `and est False si un opérande est False. False and True = False.
+
+Débutant : False and True : l'un est False, donc le résultat est False.
+Intermédiaire : and est False si l'un est False. False and True est False.
+Expert : False and True est False. Et logique.`,
+  212: `Priorité des opérateurs : * avant +. 2*3=6, 6+4=10.
+
+Débutant : 2 * 3 + 4 : on fait 2*3 d'abord (6), puis 6+4 = 10. Résultat 10.
+Intermédiaire : * a une priorité plus élevée que +. 2 * 3 + 4 = 10.
+Expert : 2 * 3 + 4 = 10. Priorité des opérateurs.`,
+  213: `Les parenthèses ont la priorité. 3+4=7, 2*7=14.
+
+Débutant : 2 * (3 + 4) : on fait (3+4) d'abord (7), puis 2*7 = 14. Résultat 14.
+Intermédiaire : Les parenthèses l'emportent sur la priorité. 2 * (3 + 4) = 14.
+Expert : 2 * (3 + 4) = 14. Parenthèses.`,
+  214: `not in est True quand la sous-chaîne est absente. 'a' not in 'bc' est True.
+
+Débutant : 'a' not in 'bc' demande : 'a' n'est-il pas dans 'bc' ? Oui — 'a' n'est pas dans 'bc'. Résultat True.
+Intermédiaire : not in pour les chaînes : True quand la sous-chaîne est absente. 'a' not in 'bc' est True.
+Expert : 'a' not in 'bc' est True. not in.`,
+  215: `Une tranche vide de liste donne []. [][:0] = [].
+
+Débutant : [][:0] est une tranche de la liste vide du début à l'index 0. On obtient []. Résultat [].
+Intermédiaire : Toute tranche de [] donne []. [][:0] = [].
+Expert : [][:0] = []. Tranche vide.`,
+  216: `L'index 0 est le premier élément d'un tuple. (1, 2)[0] = 1.
+
+Débutant : (1, 2)[0] est le premier élément du tuple : 1. L'index 0 = premier. Résultat 1.
+Intermédiaire : (1, 2)[0] = 1. Indexation de tuple.
+Expert : (1, 2)[0] = 1. Indexation tuple.`,
+  217: `type(False) renvoie <class 'bool'>.
+
+Débutant : False est une valeur booléenne. type(False) renvoie <class 'bool'>.
+Intermédiaire : type(False) est bool. False est de type bool.
+Expert : type(False) est bool. Type bool.`,
+  218: `type(None) renvoie <class 'NoneType'>.
+
+Débutant : None a son propre type : NoneType. type(None) renvoie <class 'NoneType'>.
+Intermédiaire : type(None) est NoneType. None n'est pas 0 ni False.
+Expert : type(None) est NoneType. Type None.`,
+  219: `type([]) renvoie <class 'list'>. [] est une liste.
+
+Débutant : [] est une liste vide. type([]) renvoie <class 'list'>.
+Intermédiaire : type([]) est list. [] est une liste.
+Expert : type([]) est list. Type list.`,
+  220: `Les accolades vides créent un dict, pas un set. type({}) est dict.
+
+Débutant : {} est un dictionnaire vide. type({}) renvoie <class 'dict'>. (Pour un ensemble vide utiliser set().)
+Intermédiaire : type({}) est dict. {} est un dict ; set() est l'ensemble vide.
+Expert : type({}) est dict. Dict vide.`,
+  221: `not inverse le booléen. not False est True.
+
+Débutant : not False signifie l'opposé de False. On obtient True.
+Intermédiaire : not inverse la valeur booléenne. not False est True.
+Expert : not False est True. Négation logique.`,
+  222: `not True est False.
+
+Débutant : not True signifie l'opposé de True. On obtient False.
+Intermédiaire : not inverse. not True est False.
+Expert : not True est False. Négation logique.`,
+  223: `True and True = True. Les deux sont True.
+
+Débutant : True and True : les deux sont True, donc le résultat est True.
+Intermédiaire : and est True seulement quand les deux sont True. True and True est True.
+Expert : True and True est True. Et logique.`,
+  224: `True and False = False. and est False si l'un est False.
+
+Débutant : True and False : l'un est False, donc le résultat est False.
+Intermédiaire : and est False si un opérande est False. True and False est False.
+Expert : True and False est False. Et logique.`,
+  225: `True or False = True. or est True si l'un est True.
+
+Débutant : True or False : au moins un est True, donc le résultat est True.
+Intermédiaire : or est True quand au moins un est True. True or False est True.
+Expert : True or False est True. Ou logique.`,
+  226: `False or False = False. Les deux sont False.
+
+Débutant : False or False : les deux sont False, donc le résultat est False.
+Intermédiaire : or est False seulement quand les deux sont False. False or False est False.
+Expert : False or False est False. Ou logique.`,
+  227: `En Python, 0 == False (égalité de valeur).
+
+Débutant : En Python, 0 == False est True. 0 et False sont égaux en valeur.
+Intermédiaire : bool est sous-classe de int ; False vaut 0. 0 == False est True.
+Expert : 0 == False est True. Égalité de valeur.`,
+  228: `1 == True est True. 1 et True sont égaux en valeur.
+
+Débutant : En Python, 1 == True est True. 1 et True sont égaux en valeur.
+Intermédiaire : bool est sous-classe de int ; True vaut 1. 1 == True est True.
+Expert : 1 == True est True. Égalité de valeur.`,
+  229: `La chaîne vide n'est pas égale à False. '' == False est False.
+
+Débutant : '' == False demande : la chaîne vide est-elle égale à False ? Non. (Les deux sont falsy mais pas égaux.)
+Intermédiaire : Seuls 0==False et 1==True ; '' n'est pas égal à False.
+Expert : str et bool ; '' et False sont de types différents, non égaux. '' == False est False.`,
+  230: `Il n'existe qu'un seul None.
+
+Débutant : Il n'y a qu'un seul objet None en Python. None is None est True.
+Intermédiaire : None est un singleton. Pour tester : if x is None.
+Expert : Un seul objet None. Test d'identité avec « is ».`,
+  231: `Multiplication avant addition : 1 + 2*3 = 7.
+
+Débutant : 1 + 2*3 : la multiplication d'abord. 2*3 = 6, puis 1+6 = 7. Résultat 7.
+Intermédiaire : * a priorité sur +. 1 + 2*3 = 7.
+Expert : 1 + 2*3 = 7. Priorité.`,
+  232: `Les parenthèses d'abord : (1+2)*3 = 9.
+
+Débutant : (1+2)*3 : les parenthèses d'abord. 1+2 = 3, puis 3*3 = 9. Résultat 9.
+Intermédiaire : Les parenthèses l'emportent. (1+2)*3 = 9.
+Expert : (1+2)*3 = 9. Parenthèses.`,
+  233: `10 / 2 = 5.0.
+
+Débutant : 10 / 2 donne 5.0. En Python 3, / renvoie toujours un float. Résultat 5.0.
+Intermédiaire : 10 / 2 = 5.0. / = division flottante.
+Expert : 10 / 2 = 5.0. / renvoie float.`,
+  234: `10 // 3 = 3. Division entière.
+
+Débutant : 10 // 3 est la partie entière de 10 ÷ 3. 10 ÷ 3 = 3,33... ; on prend 3. Résultat 3.
+Intermédiaire : 10 // 3 = 3. 10 % 3 = 1. 10 = 3*3 + 1.
+Expert : 10 // 3 = 3. Division entière.`,
+  235: `10 % 3 = 1. Reste.
+
+Débutant : 10 % 3 est le reste de 10 ÷ 3. 10 = 3*3 + 1 ; le reste est 1. Résultat 1.
+Intermédiaire : 10 % 3 = 1. 10 // 3 = 3. 10 = 3*3 + 1.
+Expert : 10 % 3 = 1. Reste.`,
+  236: `Tranche 'abc'[1:2] = 'b'.
+
+Débutant : 'abc'[1:2] prend une tranche de l'index 1 à (sans inclure) 2. On obtient 'b'. Résultat 'b'.
+Intermédiaire : [1:2] = un seul caractère (index 1). 'abc'[1:2] = 'b'.
+Expert : 'abc'[1:2] = 'b'. Tranche.`,
+  237: `'abc'[:2] = 'ab'. Du début à l'index 2 (exclu).
+
+Débutant : 'abc'[:2] prend du début jusqu'à (sans inclure) l'index 2. On obtient 'ab'. Résultat 'ab'.
+Intermédiaire : [:2] = indices 0 et 1. 'abc'[:2] = 'ab'.
+Expert : 'abc'[:2] = 'ab'. Tranche depuis le début.`,
+  238: `'abc'[1:] = 'bc'. De l'index 1 à la fin.
+
+Débutant : 'abc'[1:] prend de l'index 1 à la fin. On obtient 'bc'. Résultat 'bc'.
+Intermédiaire : [1:] = indices 1 et 2. 'abc'[1:] = 'bc'.
+Expert : 'abc'[1:] = 'bc'. Tranche jusqu'à la fin.`,
+  239: `list('ab') = ['a', 'b'].
+
+Débutant : list('ab') transforme la chaîne 'ab' en liste de caractères : ['a', 'b']. Résultat ['a', 'b'].
+Intermédiaire : list(itérable) sur une str donne une liste de caractères. list('ab') = ['a', 'b'].
+Expert : list('ab') = ['a', 'b']. str est itérable de caractères.`,
+  240: `tuple([1, 2]) = (1, 2).
+
+Débutant : tuple([1, 2]) transforme la liste [1, 2] en tuple (1, 2). Résultat (1, 2).
+Intermédiaire : tuple(itérable) convertit l'itérable en tuple. tuple([1, 2]) = (1, 2).
+Expert : tuple([1, 2]) = (1, 2). Conversion list → tuple.`,
+  241: `set supprime les doublons : {1, 2}.
+
+Débutant : set([1, 1, 2]) crée un ensemble ; les doublons sont supprimés. On obtient {1, 2}. Résultat {1, 2}.
+Intermédiaire : Les ensembles n'ont que des éléments uniques. set([1, 1, 2]) = {1, 2}.
+Expert : set([1, 1, 2]) = {1, 2}. Doublons supprimés.`,
+  242: `dict() crée un dictionnaire vide.
+
+Débutant : dict() crée un dictionnaire vide. On obtient {}. Résultat {}.
+Intermédiaire : dict() = {}. Dictionnaire vide. {} aussi.
+Expert : dict() = {}. Dict vide.`,
+  243: `list() crée une liste vide.
+
+Débutant : list() crée une liste vide. On obtient []. Résultat [].
+Intermédiaire : list() = []. Liste vide. [] aussi.
+Expert : list() = []. Liste vide.`,
+  244: `int('9') = 9. int() convertit une chaîne numérique en int.
+
+Débutant : int('9') convertit la chaîne '9' en entier 9. Résultat 9.
+Intermédiaire : int(chaîne) analyse la chaîne. int('9') = 9.
+Expert : int('9') = 9. Conversion str → int.`,
+  245: `Addition : 7 + 8 = 15.
+
+Débutant : 7 + 8 = 15. Addition. Résultat 15.
+Intermédiaire : 7 + 8 = 15. Les deux sont int.
+Expert : 7 + 8 = 15. Le résultat est 15.`,
+  246: `Soustraction : 20 - 7 = 13.
+
+Débutant : 20 - 7 = 13. Soustraction. Résultat 13.
+Intermédiaire : 20 - 7 = 13. Les deux sont int.
+Expert : 20 - 7 = 13. Le résultat est 13.`,
+  247: `Multiplication : 5 * 4 = 20.
+
+Débutant : 5 * 4 = 20. Multiplication. Résultat 20.
+Intermédiaire : 5 * 4 = 20. Les deux sont int.
+Expert : 5 * 4 = 20. Le résultat est 20.`,
+  248: `16 / 4 = 4.0. En Python 3 la division renvoie un float.
+
+Débutant : 16 / 4 donne 4.0. En Python 3, / renvoie toujours un float. Résultat 4.0.
+Intermédiaire : 16 / 4 = 4.0. / = division flottante.
+Expert : 16 / 4 = 4.0. / renvoie float.`,
+  249: `Division entière : 18 // 5 = 3.
+
+Débutant : 18 // 5 est la partie entière de 18 ÷ 5. 18 ÷ 5 = 3,6... ; on prend 3. Résultat 3.
+Intermédiaire : 18 // 5 = 3. 18 % 5 = 3.
+Expert : 18 // 5 = 3. Division entière.`,
+  250: `Reste : 18 % 5 = 3.
+
+Débutant : 18 % 5 est le reste de 18 ÷ 5. 18 = 3*5 + 3 ; le reste est 3. Résultat 3.
+Intermédiaire : 18 % 5 = 3. 18 // 5 = 3. 18 = 3*5 + 3.
+Expert : 18 % 5 = 3. Reste.`,
+  251: `4 ** 2 = 16. 4 au carré.
+
+Débutant : 4 ** 2 signifie 4 à la puissance 2 : 4*4 = 16. Résultat 16.
+Intermédiaire : 4 ** 2 = 16. 4 au carré.
+Expert : 4 ** 2 = 16. Exponentiation.`,
+  252: `'hello' a 5 caractères. len() compte les caractères.
+
+Débutant : 'hello' a 5 lettres, donc len('hello') vaut 5. len() compte les caractères d'une chaîne.
+Intermédiaire : len('hello') = 5. Cinq caractères.
+Expert : len('hello') = 5. Longueur str.`,
+  253: `La liste a 3 éléments. len() renvoie le nombre d'éléments.
+
+Débutant : [1, 2, 3] a trois éléments, donc len([1, 2, 3]) vaut 3. len() sur une liste compte les éléments.
+Intermédiaire : len([1, 2, 3]) = 3. Trois éléments.
+Expert : len([1, 2, 3]) = 3. Longueur list.`,
+  254: `La liste vide est falsy. bool([]) est False.
+
+Débutant : La liste vide [] est « falsy ». bool([]) renvoie False.
+Intermédiaire : bool([]) est False. Les séquences vides sont falsy.
+Expert : bool([]) est False. Liste vide = falsy.`,
+  255: `Une liste non vide est truthy. bool([0]) est True.
+
+Débutant : [0] a un élément, donc la liste est « truthy ». bool([0]) est True.
+Intermédiaire : bool([0]) est True. La liste est non vide (le 0 dedans ne change pas ça).
+Expert : bool([0]) est True. Liste non vide = truthy.`,
+  256: `int(0.9) = 0. int() tronque vers zéro.
+
+Débutant : int(0.9) supprime la partie décimale. On obtient 0 (pas 1). Résultat 0.
+Intermédiaire : int(0.9) = 0. int() tronque, n'arrondit pas.
+Expert : int(0.9) = 0. Troncature vers zéro.`,
+  257: `str(0) = '0' (chaîne). str() convertit un nombre en chaîne.
+
+Débutant : str(0) convertit le nombre 0 en chaîne '0'. Résultat '0'.
+Intermédiaire : str(0) = '0'. Le résultat est une chaîne.
+Expert : str(0) = '0'. Conversion int → str.`,
+  258: `Concaténation : 'no' + 'te' = 'note'.
+
+Débutant : 'no' + 'te' assemble les deux chaînes : 'note'. Résultat 'note'.
+Intermédiaire : 'no' + 'te' = 'note'. Concaténation.
+Expert : 'no' + 'te' = 'note'. str.__add__.`,
+  259: `'o' * 4 = 'oooo'. Répétition de chaîne.
+
+Débutant : 'o' * 4 répète 'o' quatre fois : 'oooo'. Résultat 'oooo'.
+Intermédiaire : 'o' * 4 = 'oooo'. str * int = répétition.
+Expert : 'o' * 4 = 'oooo'. str.__mul__.`,
+  260: `[3] + [4] = [3, 4]. Concaténation de listes.
+
+Débutant : [3] + [4] assemble les deux listes : [3, 4]. Résultat [3, 4].
+Intermédiaire : [3] + [4] = [3, 4]. Concaténation de listes.
+Expert : [3] + [4] = [3, 4]. list.__add__.`,
+  261: `Premier caractère de 'dog' : 'd'. Index 0.
+
+Débutant : 'dog'[0] est le premier caractère : 'd'. Index 0 = premier. Résultat 'd'.
+Intermédiaire : 'dog'[0] = 'd'. Premier caractère.
+Expert : 'dog'[0] = 'd'. Indexation str.`,
+  262: `Dernier caractère de 'dog' : 'g'. Index -1.
+
+Débutant : 'dog'[-1] est le dernier caractère : 'g'. Index -1 = dernier. Résultat 'g'.
+Intermédiaire : 'dog'[-1] = 'g'. Dernier caractère.
+Expert : 'dog'[-1] = 'g'. Index négatif.`,
+  263: `Dernier élément : [5, 6, 7][-1] = 7.
+
+Débutant : [5, 6, 7][-1] est le dernier élément : 7. Résultat 7.
+Intermédiaire : [5, 6, 7][-1] = 7. Index -1 = dernier.
+Expert : [5, 6, 7][-1] = 7. Dernier élément.`,
+  264: `4 == 4 est True. == teste l'égalité.
+
+Débutant : 4 == 4 demande : 4 est-il égal à 4 ? Oui. Résultat True.
+Intermédiaire : 4 == 4 est True. == compare les valeurs.
+Expert : 4 == 4 est True. Égalité.`,
+  265: `5 != 5 est False. 5 est égal à 5.
+
+Débutant : 5 != 5 demande : 5 est-il différent de 5 ? Non. Résultat False.
+Intermédiaire : 5 == 5, donc 5 != 5 est False.
+Expert : 5 != 5 est False. Inégalité.`,
+  266: `1 < 10 est True.
+
+Débutant : 1 < 10 demande : 1 est-il inférieur à 10 ? Oui. Résultat True.
+Intermédiaire : 1 < 10 est True. Comparaison.
+Expert : 1 < 10 est True. Strictement inférieur.`,
+  267: `10 > 1 est True.
+
+Débutant : 10 > 1 demande : 10 est-il supérieur à 1 ? Oui. Résultat True.
+Intermédiaire : 10 > 1 est True. Comparaison.
+Expert : 10 > 1 est True. Strictement supérieur.`,
+  268: `5 <= 5 est True. <= inclut l'égalité.
+
+Débutant : 5 <= 5 demande : 5 est-il inférieur ou égal à 5 ? Oui (5 = 5). Résultat True.
+Intermédiaire : 5 <= 5 est True. <= inclut l'égalité.
+Expert : 5 <= 5 est True. Inférieur ou égal.`,
+  269: `3 >= 4 est False.
+
+Débutant : 3 >= 4 demande : 3 est-il supérieur ou égal à 4 ? Non. Résultat False.
+Intermédiaire : 3 >= 4 est False. 3 est inférieur à 4.
+Expert : 3 >= 4 est False. Supérieur ou égal.`,
+  270: `Concaténation de tuples : (1, 2) + (3,) = (1, 2, 3).
+
+Débutant : (1, 2) + (3,) assemble les deux tuples : (1, 2, 3). Résultat (1, 2, 3).
+Intermédiaire : (1, 2) + (3,) = (1, 2, 3). Concaténation de tuples.
+Expert : (1, 2) + (3,) = (1, 2, 3). tuple.__add__.`,
+  271: `'pie'[1:3] = 'ie'. Tranche des index 1 et 2.
+
+Débutant : 'pie'[1:3] prend de l'index 1 à (sans inclure) 3. On obtient 'ie'. Résultat 'ie'.
+Intermédiaire : 'pie'[1:3] = 'ie'. Tranche [1:3] = index 1 et 2.
+Expert : 'pie'[1:3] = 'ie'. Tranche.`,
+  272: `'pie'[:2] = 'pi'. Deux premiers caractères.
+
+Débutant : 'pie'[:2] prend du début jusqu'à (sans inclure) l'index 2. On obtient 'pi'. Résultat 'pi'.
+Intermédiaire : 'pie'[:2] = 'pi'. Deux premiers caractères.
+Expert : 'pie'[:2] = 'pi'. Tranche depuis le début.`,
+  273: `'pie'[2:] = 'e'. De l'index 2 à la fin.
+
+Débutant : 'pie'[2:] prend de l'index 2 à la fin. On obtient 'e'. Résultat 'e'.
+Intermédiaire : 'pie'[2:] = 'e'. De l'index 2 à la fin.
+Expert : 'pie'[2:] = 'e'. Tranche jusqu'à la fin.`,
+  274: `list([1, 2]) renvoie une liste. list() sur une liste renvoie une copie.
+
+Débutant : list([1, 2]) crée une nouvelle liste [1, 2]. Résultat [1, 2].
+Intermédiaire : list([1, 2]) = [1, 2]. list(itérable) sur une liste = copie superficielle.
+Expert : list([1, 2]) = [1, 2]. Nouvelle liste.`,
+  275: `tuple((1,)) = (1,).
+
+Débutant : tuple((1,)) crée un nouveau tuple (1,). Résultat (1,).
+Intermédiaire : tuple((1,)) = (1,). tuple() sur un tuple = copie.
+Expert : tuple((1,)) = (1,). Nouveau tuple.`,
+  276: `set([2, 2, 3]) = {2, 3}. Les ensembles suppriment les doublons.
+
+Débutant : set([2, 2, 3]) crée un ensemble ; les doublons sont supprimés. On obtient {2, 3}.
+Intermédiaire : set([2, 2, 3]) = {2, 3}. Ensembles = éléments uniques.
+Expert : set([2, 2, 3]) = {2, 3}. Doublons supprimés.`,
+  277: `11 // 2 = 5. Division entière.
+
+Débutant : 11 // 2 est la partie entière de 11 ÷ 2. 11 ÷ 2 = 5,5 ; on prend 5. Résultat 5.
+Intermédiaire : 11 // 2 = 5. 11 % 2 = 1.
+Expert : 11 // 2 = 5. Division entière.`,
+  278: `11 % 2 = 1. Reste.
+
+Débutant : 11 % 2 est le reste de 11 ÷ 2. 11 = 5*2 + 1 ; le reste est 1. Résultat 1.
+Intermédiaire : 11 % 2 = 1. 11 // 2 = 5.
+Expert : 11 % 2 = 1. Reste.`,
+  279: `Addition de floats : 1.5 + 1.5 = 3.0.
+
+Débutant : 1.5 + 1.5 = 3.0. Addition de deux float donne un float. Résultat 3.0.
+Intermédiaire : 1.5 + 1.5 = 3.0. float + float = float.
+Expert : 1.5 + 1.5 = 3.0. Addition float.`,
+  280: `1.0 est un float. Les nombres avec virgule sont des float.
+
+Débutant : 1.0 a un point décimal, donc c'est un float. type(1.0) est <class 'float'>.
+Intermédiaire : type(1.0) est float. Littéral avec virgule = float.
+Expert : type(1.0) est float. Littéral float.`,
+  281: `La chaîne vide est toujours de type str. type('') est str.
+
+Débutant : '' est une chaîne vide, donc type('') est <class 'str'>.
+Intermédiaire : type('') est str. Chaîne vide = str.
+Expert : type('') est str. Chaîne vide.`,
+  282: `[[]] est une liste contenant une liste. type([[]]) est list.
+
+Débutant : [[]] est une liste qui contient un élément : la liste vide []. type([[]]) est <class 'list'>.
+Intermédiaire : type([[]]) est list. Liste contenant une liste.
+Expert : type([[]]) est list. Liste à un élément (une liste).`,
+  283: `En Python, 0 == False (égalité de valeur).
+
+Débutant : En Python, 0 == False est True. 0 et False sont égaux en valeur.
+Intermédiaire : bool sous-classe de int ; False vaut 0. 0 == False est True.
+Expert : 0 == False est True. Égalité de valeur.`,
+  284: `1 est dans le tuple (1, 2). in vérifie l'appartenance.
+
+Débutant : 1 in (1, 2) demande : 1 est-il dans le tuple ? Oui. Résultat True.
+Intermédiaire : in fonctionne sur les tuples. 1 in (1, 2) est True.
+Expert : 1 in (1, 2) est True. Appartenance.`,
+  285: `10 n'est pas dans (1, 2). not in vérifie l'absence.
+
+Débutant : 10 not in (1, 2) demande : 10 n'est-il pas dans le tuple ? Oui. Résultat True.
+Intermédiaire : not in est True quand la valeur est absente. 10 not in (1, 2) est True.
+Expert : 10 not in (1, 2) est True. not in.`,
+  286: `abs(0) = 0.
+
+Débutant : abs(0) est la valeur absolue de 0. On obtient 0. Résultat 0.
+Intermédiaire : abs(0) = 0. Valeur absolue de zéro = 0.
+Expert : abs(0) = 0. Valeur absolue.`,
+  287: `round(5.5) = 6. En Python 3, round(5.5) arrondit à 6.
+
+Débutant : round(5.5) arrondit 5.5 à l'entier le plus proche. En Python 3, on obtient 6. Résultat 6.
+Intermédiaire : round(5.5) = 6. Arrondi en Python 3.
+Expert : round(5.5) = 6. Arrondi.`,
+  288: `min(0, 1) = 0. min() renvoie le plus petit.
+
+Débutant : min(0, 1) renvoie le plus petit de 0 et 1 : 0. Résultat 0.
+Intermédiaire : min(0, 1) = 0. min() = minimum.
+Expert : min(0, 1) = 0. Minimum.`,
+  289: `max(0, -1) = 0. max() renvoie le plus grand.
+
+Débutant : max(0, -1) renvoie le plus grand de 0 et -1 : 0. Résultat 0.
+Intermédiaire : max(0, -1) = 0. max() = maximum.
+Expert : max(0, -1) = 0. Maximum.`,
+  290: `sum([0, 1, 2]) = 3. sum() additionne les éléments.
+
+Débutant : sum([0, 1, 2]) additionne 0 + 1 + 2 = 3. Résultat 3.
+Intermédiaire : sum([0, 1, 2]) = 3. sum() additionne tous les éléments.
+Expert : sum([0, 1, 2]) = 3. Somme.`,
+  291: `pow(3, 2) = 9. pow(3, 2) = 3**2.
+
+Débutant : pow(3, 2) signifie 3 à la puissance 2 : 3*3 = 9. Résultat 9.
+Intermédiaire : pow(3, 2) = 9. Équivalent à 3 ** 2.
+Expert : pow(3, 2) = 9. Exponentiation.`,
+  292: `divmod(10, 3) = (3, 1). divmod renvoie (quotient, reste).
+
+Débutant : divmod(10, 3) donne quotient et reste. 10 = 3*3 + 1 ; on obtient (3, 1). Résultat (3, 1).
+Intermédiaire : divmod(10, 3) = (3, 1). 10 // 3 = 3, 10 % 3 = 1.
+Expert : divmod(10, 3) = (3, 1). (quotient, reste).`,
+  293: `True or True = True. or est True si l'un est True.
+
+Débutant : True or True : au moins un est True, donc le résultat est True.
+Intermédiaire : or est True quand au moins un opérande est True. True or True est True.
+Expert : True or True est True. Ou logique.`,
+  294: `La multiplication d'abord : 2*3=6, 6+4=10. Priorité des opérateurs.
+
+Débutant : 2 * 3 + 4 : on fait 2*3 d'abord (6), puis 6+4 = 10. Résultat 10.
+Intermédiaire : * a priorité sur +. 2 * 3 + 4 = 10.
+Expert : 2 * 3 + 4 = 10. Priorité.`,
+  295: `Parenthèses d'abord : 3+4=7, 2*7=14.
+
+Débutant : 2 * (3 + 4) : on fait (3+4) d'abord (7), puis 2*7 = 14. Résultat 14.
+Intermédiaire : Les parenthèses l'emportent. 2 * (3 + 4) = 14.
+Expert : 2 * (3 + 4) = 14. Parenthèses.`,
+  296: `'a' n'est pas dans 'bc'. not in est True si la sous-chaîne est absente.
+
+Débutant : 'a' not in 'bc' demande : 'a' n'est-il pas dans 'bc' ? Oui. Résultat True.
+Intermédiaire : not in pour les chaînes : True quand la sous-chaîne est absente. 'a' not in 'bc' est True.
+Expert : 'a' not in 'bc' est True. not in.`,
+  297: `Une tranche vide de liste donne []. [][:0] = [].
+
+Débutant : [][:0] est une tranche de la liste vide. On obtient []. Résultat [].
+Intermédiaire : Toute tranche de [] donne []. [][:0] = [].
+Expert : [][:0] = []. Tranche vide.`,
+  298: `Premier élément du tuple : (1, 2)[0] = 1. Index 0.
+
+Débutant : (1, 2)[0] est le premier élément du tuple : 1. Index 0 = premier. Résultat 1.
+Intermédiaire : (1, 2)[0] = 1. Indexation de tuple.
+Expert : (1, 2)[0] = 1. Premier élément.`,
+  299: `False est de type bool. type(False) renvoie <class 'bool'>.
+
+Débutant : False est une valeur booléenne. type(False) renvoie <class 'bool'>.
+Intermédiaire : type(False) est bool. False est de type bool.
+Expert : type(False) est bool. Type bool.`,
+  300: `None a le type NoneType. type(None) renvoie <class 'NoneType'>.
+
+Débutant : None a son propre type : NoneType. type(None) renvoie <class 'NoneType'>.
+Intermédiaire : type(None) est NoneType. None est un singleton.
+Expert : type(None) est NoneType. Type None.`,
   301: `La fonction range(n) crée une séquence de nombres de 0 à n-1 (n exclus). range(5) génère les nombres 0, 1, 2, 3, 4, ce qui signifie qu'une boucle utilisant range(5) itérera 5 fois. Comprendre range() est fondamental pour les boucles Python.
 
 Comportement de range(n) :

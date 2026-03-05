@@ -867,9 +867,9 @@ export const QuizView: React.FC<QuizViewProps> = ({
         <button onClick={onExit} className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 text-slate-400 hover:text-white transition-colors border border-white/5">
           <i className="fas fa-times"></i>
         </button>
-        <div className="flex-1 px-6">
-          <div className="flex justify-between items-center text-[10px] font-black tracking-[0.2em] mb-1.5">
-            <div className="flex items-center gap-2">
+        <div className="flex-1 min-w-0 px-6 overflow-x-auto">
+          <div className="flex justify-between items-center text-[10px] font-black tracking-[0.2em] mb-1.5 min-w-max">
+            <div className="flex items-center gap-2 flex-shrink-0">
               <span className="text-indigo-400">
                 {currentQuestion.subLevel === 'Beginner' && t('subLevels.beginnerCaps')}
                 {currentQuestion.subLevel === 'Intermediate' && t('subLevels.intermediateCaps')}
@@ -892,16 +892,10 @@ export const QuizView: React.FC<QuizViewProps> = ({
                 })}
               </div>
             </div>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-4 items-center flex-shrink-0">
               {liveEvolutionScore !== null && (
-                <span
-                  className={`px-2.5 py-1 rounded-lg font-black text-xs border transition-all duration-300 ${
-                    scoreJustIncreased
-                      ? 'bg-emerald-500/30 text-emerald-400 border-emerald-500/50 scale-110'
-                      : 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30'
-                  }`}
-                >
-                  {t('quiz.evolutionPoints')}: {liveEvolutionScore}
+                <span className="text-indigo-400">
+                  {t('quiz.evolution')}: {liveEvolutionScore}
                 </span>
               )}
               <span className="text-indigo-400">
