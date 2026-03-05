@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Star Celebration Sound Preview</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+    button {
+      padding: 1rem 2rem;
+      font-size: 1.25rem;
+      background: linear-gradient(to bottom right, #6366f1, #8b5cf6);
+      color: white;
+      border: none;
+      border-radius: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    }
+    button:hover { opacity: 0.9; }
+    button:active { transform: scale(0.98); }
+    p { color: #94a3b8; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>Star Celebration Sound</h1>
+  <p>Click the button to hear the tune that plays when you earn a star</p>
+  <button id="playBtn">Play preview</button>
+  <p id="msg" style="min-height: 1.5rem; margin-top: 0.5rem;"></p>
+  <p style="font-size: 0.75rem; color: #64748b; max-width: 360px; text-align: center;">Alex Kidd–style bouncy 8-bit jingle (~2 sec). Same as in the app when you earn a star.</p>
+
+  <script>
+    document.getElementById('playBtn').onclick = function playSound() {
+      var msg = document.getElementById('msg');
+      msg.textContent = 'Playing…';
+      msg.style.color = '#94a3b8';
+
+      var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) {
+        msg.textContent = 'Web Audio not supported';
+        msg.style.color = '#f87171';
+        return;
+      }
+      try {
+        var ctx = new AudioContextClass();
+        if (ctx.state === 'suspended') ctx.resume();
+
+        var now = ctx.currentTime;
+        var masterGain = ctx.createGain();
+        masterGain.connect(ctx.destination);
+        masterGain.gain.setValueAtTime(0.9, now);
+        masterGain.gain.linearRampToValueAtTime(0.01, now + 2.2);
+
+        var punch = function(freq, start, dur, vol) {
+          var sq = ctx.createOscillator();
+          var tri = ctx.createOscillator();
+          var g1 = ctx.createGain();
+          var g2 = ctx.createGain();
+          sq.type = 'square';
+          tri.type = 'triangle';
+          sq.frequency.setValueAtTime(freq, now + start);
+          tri.frequency.setValueAtTime(freq, now + start);
+          g1.gain.setValueAtTime(vol, now + start);
+          g1.gain.linearRampToValueAtTime(0.01, now + start + dur);
+          g2.gain.setValueAtTime(vol * 0.5, now + start);
+          g2.gain.linearRampToValueAtTime(0.01, now + start + dur);
+          sq.connect(g1);
+          tri.connect(g2);
+          g1.connect(masterGain);
+          g2.connect(masterGain);
+          sq.start(now + start);
+          tri.start(now + start);
+          sq.stop(now + start + dur + 0.02);
+          tri.stop(now + start + dur + 0.02);
+        };
+
+        var C5 = 523.25, E5 = 659.25, G5 = 783.99, C6 = 1046.5, E6 = 1318.51, G6 = 1567.98;
+
+        punch(C5, 0, 0.07, 0.45);
+        punch(E5, 0.09, 0.07, 0.45);
+        punch(G5, 0.18, 0.07, 0.45);
+        punch(C6, 0.27, 0.12, 0.5);
+        punch(E5, 0.42, 0.07, 0.45);
+        punch(G5, 0.51, 0.07, 0.45);
+        punch(C6, 0.6, 0.07, 0.45);
+        punch(E6, 0.69, 0.14, 0.5);
+        punch(G5, 0.86, 0.07, 0.45);
+        punch(C6, 0.95, 0.07, 0.45);
+        punch(E6, 1.04, 0.07, 0.45);
+        punch(G6, 1.13, 0.18, 0.5);
+        punch(C6, 1.34, 0.22, 0.5);
+        punch(G5, 1.58, 0.12, 0.45);
+
+        setTimeout(function() { ctx.close(); msg.textContent = ''; }, 2400);
+      } catch (e) {
+        msg.textContent = 'Error: ' + (e.message || e);
+        msg.style.color = '#f87171';
+      }
+    };
+  </script>
+</body>
+</html>

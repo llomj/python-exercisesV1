@@ -18,6 +18,7 @@ interface SettingsMenuProps {
   onShowFlow?: () => void;
   onShowLevelSelector?: () => void;
   onToggleLanguage?: () => void;
+  onPreviewStarSound?: () => void;
   onRefreshApp?: () => void;
   onResetApp?: () => void;
 }
@@ -38,6 +39,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onShowFlow,
   onShowLevelSelector,
   onToggleLanguage,
+  onPreviewStarSound,
   onRefreshApp,
   onResetApp
 }) => {
@@ -243,6 +245,20 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
               <span className="text-sm font-medium">{item.label}</span>
             </button>
           ))}
+
+          {/* Preview star celebration sound */}
+          {onPreviewStarSound && (
+            <>
+              <div className="my-2 border-t border-white/10" />
+              <button
+                onClick={onPreviewStarSound}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
+              >
+                <i className="fas fa-volume-high text-sm w-5 flex-shrink-0"></i>
+                <span className="text-sm font-medium">{t('settings.previewStarSound')}</span>
+              </button>
+            </>
+          )}
 
           {/* Refresh App - reloads UI, keeps scoring & progress */}
           {onRefreshApp && (

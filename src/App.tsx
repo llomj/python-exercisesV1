@@ -10,6 +10,64 @@ import { formatTranslation } from './translations';
 
 const LOCAL_STORAGE_KEY = 'python_exercises_learn_stats_v3_offline';
 
+/** Alex Kidd–style bouncy 8-bit congratulation jingle when user earns a star. */
+const playStarCelebrationSound = (): void => {
+  if (typeof window === 'undefined') return;
+  const AudioContextClass = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+  if (!AudioContextClass) return;
+
+  const ctx = new AudioContextClass();
+  if (ctx.state === 'suspended') void ctx.resume();
+
+  const now = ctx.currentTime;
+  const masterGain = ctx.createGain();
+  masterGain.connect(ctx.destination);
+  masterGain.gain.setValueAtTime(0.9, now);
+  masterGain.gain.linearRampToValueAtTime(0.01, now + 2.2);
+
+  const punch = (freq: number, start: number, dur: number, vol: number) => {
+    const sq = ctx.createOscillator();
+    const tri = ctx.createOscillator();
+    const g1 = ctx.createGain();
+    const g2 = ctx.createGain();
+    sq.type = 'square';
+    tri.type = 'triangle';
+    sq.frequency.setValueAtTime(freq, now + start);
+    tri.frequency.setValueAtTime(freq, now + start);
+    g1.gain.setValueAtTime(vol, now + start);
+    g1.gain.linearRampToValueAtTime(0.01, now + start + dur);
+    g2.gain.setValueAtTime(vol * 0.5, now + start);
+    g2.gain.linearRampToValueAtTime(0.01, now + start + dur);
+    sq.connect(g1);
+    tri.connect(g2);
+    g1.connect(masterGain);
+    g2.connect(masterGain);
+    sq.start(now + start);
+    tri.start(now + start);
+    sq.stop(now + start + dur + 0.02);
+    tri.stop(now + start + dur + 0.02);
+  };
+
+  const C5 = 523.25, E5 = 659.25, G5 = 783.99, C6 = 1046.5, E6 = 1318.51, G6 = 1567.98;
+
+  punch(C5, 0, 0.07, 0.45);
+  punch(E5, 0.09, 0.07, 0.45);
+  punch(G5, 0.18, 0.07, 0.45);
+  punch(C6, 0.27, 0.12, 0.5);
+  punch(E5, 0.42, 0.07, 0.45);
+  punch(G5, 0.51, 0.07, 0.45);
+  punch(C6, 0.6, 0.07, 0.45);
+  punch(E6, 0.69, 0.14, 0.5);
+  punch(G5, 0.86, 0.07, 0.45);
+  punch(C6, 0.95, 0.07, 0.45);
+  punch(E6, 1.04, 0.07, 0.45);
+  punch(G6, 1.13, 0.18, 0.5);
+  punch(C6, 1.34, 0.22, 0.5);
+  punch(G5, 1.58, 0.12, 0.45);
+
+  window.setTimeout(() => void ctx.close(), 2400);
+};
+
 const INITIAL_STATS: UserStats = {
   currentLevel: 0,
   xp: 0,
@@ -110,6 +168,10 @@ const App: React.FC = () => {
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stats));
   }, [stats]);
+
+  useEffect(() => {
+    if (showResult?.starEarned) playStarCelebrationSound();
+  }, [showResult?.starEarned]);
 
   const currentLevelInfo = LEVELS.find(l => l.level === stats.currentLevel) || LEVELS[0];
   const currentPersona = (stats.randomMode && stats.randomModeStats)
@@ -337,6 +399,7 @@ const App: React.FC = () => {
         onShowFlow={() => setView('flow')}
         onShowLevelSelector={() => setShowLevelSelector(true)}
         onToggleLanguage={toggleLanguage}
+        onPreviewStarSound={playStarCelebrationSound}
         onRefreshApp={() => window.location.reload()}
         onResetApp={() => setShowResetModal(true)}
       />
