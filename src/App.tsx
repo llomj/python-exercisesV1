@@ -1,6 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { UserStats, PersonaStage, QuestionAttempt } from './types';
 import { EvolutionHub } from './components/EvolutionHub';
+import { PersonaIcon } from './components/PersonaIcon';
 import { SettingsMenu } from './components/SettingsMenu';
 import { IdLogEntry } from './types';
 import { LEVELS, XP_PER_QUESTION, QUESTIONS_PER_LEVEL, getStarsFromProgress, getRandomModeScore, getPersonaFromRandomScore } from './constants';
@@ -10,11 +11,11 @@ import { formatTranslation } from './translations';
 const LOCAL_STORAGE_KEY = 'python_exercises_learn_stats_v3_offline';
 
 const INITIAL_STATS: UserStats = {
-  currentLevel: 1,
+  currentLevel: 0,
   xp: 0,
   totalAttempts: 0,
   completedQuestionIds: [],
-  highestUnlockedLevel: 1,
+  highestUnlockedLevel: 0,
   levelProgress: {},
   acquiredStars: {},
   history: [],
@@ -115,26 +116,6 @@ const App: React.FC = () => {
     ? getPersonaFromRandomScore(getRandomModeScore(stats.randomModeStats))
     : currentLevelInfo.persona;
   const currentProgress = stats.levelProgress[stats.currentLevel] || 0;
-
-  const getPersonaIconStyle = (persona: PersonaStage): string => {
-    return persona === PersonaStage.OCTOPUS ? 'fa-brands' : 'fas';
-  };
-  const getPersonaIcon = (persona: PersonaStage): string => {
-    const personaIcons: Record<PersonaStage, string> = {
-      [PersonaStage.EGG]: "fa-egg",
-      [PersonaStage.PLANKTON]: "fa-microbe",
-      [PersonaStage.SHRIMP]: "fa-shrimp",
-      [PersonaStage.CRAB]: "fa-hand-peace",
-      [PersonaStage.SMALL_FISH]: "fa-fish",
-      [PersonaStage.OCTOPUS]: "fa-octopus-deploy",
-      [PersonaStage.SEAL]: "fa-water",
-      [PersonaStage.DOLPHIN]: "fa-dolphin",
-      [PersonaStage.SHARK]: "fa-shield-halved",
-      [PersonaStage.WHALE]: "fa-cloud",
-      [PersonaStage.GOD_WHALE]: "fa-globe",
-    };
-    return personaIcons[persona] || 'fa-fish';
-  };
 
   const handleStartEvolution = () => {
     setView('quiz');
@@ -304,8 +285,8 @@ const App: React.FC = () => {
 
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-3 bg-white/5 px-3 py-1.5 rounded-2xl border border-white/10">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-sm">
-                <i className={`${getPersonaIconStyle(currentPersona)} ${getPersonaIcon(currentPersona)} text-white`}></i>
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white">
+                <PersonaIcon persona={currentPersona} size="sm" />
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-none">{t('app.rank')}</span>
@@ -356,6 +337,7 @@ const App: React.FC = () => {
         onShowFlow={() => setView('flow')}
         onShowLevelSelector={() => setShowLevelSelector(true)}
         onToggleLanguage={toggleLanguage}
+        onRefreshApp={() => window.location.reload()}
         onResetApp={() => setShowResetModal(true)}
       />
 

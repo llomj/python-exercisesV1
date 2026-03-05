@@ -97,7 +97,7 @@ const splitQuestion = (text: string, language: string = 'en') => {
     }
 
     const questionWords = [
-      'What is', "Qu'est-ce que c'est",
+      'What is', 'Résultat : ',
       'Result', 'Résultat',
       'Output', 'Sortie',
       'Value', 'Valeur',

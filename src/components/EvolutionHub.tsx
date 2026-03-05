@@ -1,7 +1,7 @@
 import React from 'react';
 import { UserStats, PersonaStage } from '../types';
 import { LEVELS, QUESTIONS_PER_LEVEL, TOTAL_QUESTIONS, getStarsFromProgress, getRandomModeScore, getPersonaFromRandomScore, getNextRandomModeThreshold } from '../constants';
-import { PersonaBadge } from './PersonaBadge';
+import { PersonaIcon } from './PersonaIcon';
 import { ProgressBar } from './ProgressBar';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatTranslation } from '../translations';
@@ -56,7 +56,9 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
   return (
     <div className="space-y-6 animate-in fade-in duration-700">
       <div className="flex flex-col items-center gap-1.5 py-1.5 border-b border-white/5 mb-1">
-        <PersonaBadge stage={displayPersona} size="md" />
+        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 text-white">
+          <PersonaIcon persona={displayPersona} size="lg" />
+        </div>
         <div className="text-center space-y-1">
           <h1 className="text-xl font-black text-white tracking-tight uppercase">
             {randomMode ? t('hub.randomModeLabel') : `${formatTranslation(t('hub.evolutionStage'), { level: stats.currentLevel })} ${stats.currentLevel}`}
@@ -72,10 +74,10 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className={`glass rounded-3xl p-8 space-y-6 flex flex-col justify-between ${randomMode ? 'border-indigo-500/20 bg-indigo-500/5' : ''}`}>
+        <div className="glass rounded-3xl p-8 space-y-6 flex flex-col justify-between min-w-0 overflow-x-auto">
           {randomMode ? (
             <>
-              <div>
+              <div className="min-w-0">
                 <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                   <i className="fas fa-shuffle text-indigo-400"></i> {t('hub.randomModeLabel')}
                 </h3>
@@ -83,32 +85,32 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
                   {t('hub.randomModeDescription')}
                 </p>
               </div>
-              <div className="space-y-4 pt-6 border-t border-white/5">
+              <div className="space-y-4 pt-6 border-t border-white/5 min-w-0">
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5">
-                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">{t('hub.totalAnswered')}</div>
-                    <div className="text-lg font-black text-white">{rm.totalAnswered}</div>
+                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 min-w-0">
+                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1 truncate">{t('hub.totalAnswered')}</div>
+                    <div className="text-lg font-black text-white truncate">{rm.totalAnswered}</div>
                   </div>
-                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5">
-                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">{t('hub.correct')}</div>
-                    <div className="text-lg font-black text-emerald-400">{rm.totalCorrect}</div>
+                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 min-w-0">
+                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1 truncate">{t('hub.correct')}</div>
+                    <div className="text-lg font-black text-emerald-400 truncate">{rm.totalCorrect}</div>
                   </div>
-                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 col-span-2">
-                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">{t('hub.accuracy')}</div>
-                    <div className="text-lg font-black text-sky-400">
+                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 col-span-2 min-w-0">
+                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1 truncate">{t('hub.accuracy')}</div>
+                    <div className="text-lg font-black text-sky-400 truncate">
                       {rm.totalAnswered > 0 ? Math.round((rm.totalCorrect / rm.totalAnswered) * 100) : 0}%
                     </div>
                   </div>
-                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 col-span-2">
-                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">{t('hub.evolutionScore')}</div>
-                    <div className="text-lg font-black text-indigo-400">{randomScore}</div>
+                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 col-span-2 min-w-0">
+                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1 truncate">{t('hub.evolutionScore')}</div>
+                    <div className="text-lg font-black text-indigo-400 truncate">{randomScore}</div>
                   </div>
                 </div>
                 {nextThreshold && (
                   <>
-                    <div className="flex justify-between text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                      <span>{formatTranslation(t('hub.pointsToNext'), { points: nextThreshold.minScore - randomScore, persona: nextThreshold.persona })}</span>
-                      <span>{randomScore} / {nextThreshold.minScore}</span>
+                    <div className="flex justify-between text-[10px] font-bold text-slate-500 uppercase tracking-widest gap-2 min-w-0">
+                      <span className="truncate">{formatTranslation(t('hub.pointsToNext'), { points: nextThreshold.minScore - randomScore, persona: nextThreshold.persona })}</span>
+                      <span className="flex-shrink-0">{randomScore} / {nextThreshold.minScore}</span>
                     </div>
                     <ProgressBar current={randomScore} total={nextThreshold.minScore} colorClass="bg-indigo-500" />
                   </>
@@ -153,7 +155,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
           )}
         </div>
 
-        <div className="glass rounded-3xl p-8 space-y-6 flex flex-col justify-between border-indigo-500/20 bg-indigo-500/5">
+        <div className="glass rounded-3xl p-8 space-y-6 flex flex-col justify-between min-w-0 overflow-x-auto">
           <div className="space-y-4">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
               <i className="fas fa-microchip text-indigo-400"></i> {t('hub.nextMutation')}
@@ -186,29 +188,36 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
         </div>
       </div>
 
-      <div className="glass rounded-3xl p-6 flex flex-col sm:flex-row items-center justify-between gap-6 border-white/5">
-        <div className="flex items-center gap-4 flex-1">
-          <div className="w-14 h-14 rounded-2xl bg-slate-800 flex flex-col items-center justify-center border border-white/5">
+      <div className="glass rounded-3xl p-6 flex flex-col sm:flex-row items-center justify-between gap-6 border-white/5 min-w-0 overflow-x-auto">
+        <div className="flex items-center gap-4 flex-1 min-w-0">
+          <div className="w-14 h-14 rounded-2xl bg-slate-800 flex flex-col items-center justify-center border border-white/5 flex-shrink-0">
             <span className="text-xl font-black text-white">{globalPercentage}%</span>
             <span className="text-[7px] font-bold text-slate-500 uppercase tracking-widest">{t('hub.mastery')}</span>
           </div>
-          <div>
-            <h4 className="font-bold text-xs text-slate-200">{t('hub.globalProgress')}</h4>
-            <p className="text-[10px] text-slate-500">{totalCompleted} / {totalPossible} {t('hub.conceptsText')}</p>
+          <div className="min-w-0">
+            <h4 className="font-bold text-xs text-slate-200 truncate">{t('hub.globalProgress')}</h4>
+            <p className="text-[10px] text-slate-500 truncate">{totalCompleted} / {totalPossible} {t('hub.conceptsText')}</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="flex gap-1.5">
-          {LEVELS.map(l => (
-            <div
-              key={l.level}
-              className={`w-1.5 h-6 rounded-full transition-all duration-500 ${l.level < stats.currentLevel ? 'bg-indigo-500' :
-                  l.level === stats.currentLevel ? 'bg-indigo-500/40 animate-pulse' : 'bg-slate-800'
-                }`}
-              title={l.persona}
-            />
-          ))}
+        <div className="flex items-center gap-4 flex-shrink-0">
+          <div className="flex gap-1 items-center overflow-x-auto">
+            {LEVELS.map(l => {
+              const isCurrent = l.level === stats.currentLevel;
+              const isPast = l.level < stats.currentLevel;
+              return (
+                <div
+                  key={l.level}
+                  className={`w-7 h-7 rounded-full flex items-center justify-center border transition-all duration-300 ${
+                    isCurrent ? 'bg-indigo-500/30 border-indigo-400 ring-1 ring-indigo-400/50' :
+                    isPast ? 'bg-indigo-500/20 border-indigo-500/40' : 'bg-slate-800/80 border-slate-700'
+                  }`}
+                  title={`Level ${l.level}: ${l.persona}`}
+                >
+                  <PersonaIcon persona={l.persona} size="sm" muted={!isPast && !isCurrent} />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

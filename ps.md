@@ -23,6 +23,7 @@
 4. Progress through all 10 levels systematically
 
 ### Current Status:
+- Level 0 (Tadpole): ✅ COMPLETED - 300 truly unique beginner questions (print, variables, values, type(), simple expressions; easier than Level 1)
 - Level 1: ✅ COMPLETED - 100 truly unique questions (no number/variable variations)
 - Level 2: ✅ COMPLETED - 100 truly unique questions (no number/variable variations)
 - Level 3: ✅ COMPLETED - 100 truly unique questions (no number/variable variations)
@@ -34,7 +35,7 @@
 - Level 9: ✅ COMPLETED - 100 truly unique questions (no number/variable variations)
 - Level 10: ✅ COMPLETED - 100 truly unique questions (no number/variable variations)
 
-🎉 **ALL 3000 QUESTIONS COMPLETE!** (300 per level × 10 levels) 🎉
+🎉 **ALL 3300 QUESTIONS COMPLETE!** (Level 0: 300 + Levels 1–10: 300 each) 🎉
 
 ### Verification Process:
 Before moving to the next level:

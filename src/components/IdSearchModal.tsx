@@ -98,7 +98,7 @@ const splitQuestion = (text: string, language: string = 'en') => {
     }
 
     const questionWords = [
-      'What is', "Qu'est-ce que c'est",
+      'What is', 'Résultat : ',
       'Result', 'Résultat',
       'Output', 'Sortie',
       'Value', 'Valeur',
@@ -229,7 +229,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
 
   const handleSearch = () => {
     const id = parseInt(idInput.trim());
-    if (isNaN(id) || id < 1 || id > 3000) {
+    if (isNaN(id) || id < 1 || id > 3300) {
       setError(t('idSearch.invalidId'));
       setQuestion(null);
       return;
@@ -297,7 +297,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
               placeholder={t('idSearch.enterId')}
               className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
               min="1"
-              max="3000"
+              max="3300"
             />
             <button
               onClick={handleSearch}

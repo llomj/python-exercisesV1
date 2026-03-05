@@ -534,7 +534,7 @@ const splitQuestion = (text: string, language: string = 'en') => {
     // First, check if there's a question word pattern (English or French)
     // Use simpler pattern matching to avoid regex issues with special characters
     const questionWords = [
-      'What is', "Qu'est-ce que c'est",
+      'What is', 'Résultat : ',
       'Result', 'Résultat',
       'Output', 'Sortie',
       'Value', 'Valeur',

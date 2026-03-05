@@ -6,31 +6,31 @@ interface PersonaBadgeProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-// Font Awesome 6 Free: Use available free icons (fas) and approximations for Pro-only animals
-const personaIconStyle: Record<PersonaStage, string> = {
-  [PersonaStage.EGG]: "fas",
+// Font Awesome 6 Free: animal icons. Tadpole = fa-frog for Level 0. Many animals are Regular (far).
+const personaIconStyle: Record<PersonaStage, 'fas' | 'far'> = {
+  [PersonaStage.TADPOLE]: "fas",
   [PersonaStage.PLANKTON]: "fas",
-  [PersonaStage.SHRIMP]: "fas",
-  [PersonaStage.CRAB]: "fas",
+  [PersonaStage.SHRIMP]: "far",
+  [PersonaStage.CRAB]: "far",
   [PersonaStage.SMALL_FISH]: "fas",
-  [PersonaStage.OCTOPUS]: "fa-brands", // octopus-deploy is a brand icon
-  [PersonaStage.SEAL]: "fas",
-  [PersonaStage.DOLPHIN]: "fas",
-  [PersonaStage.SHARK]: "fas",
-  [PersonaStage.WHALE]: "fas",
+  [PersonaStage.OCTOPUS]: "far",
+  [PersonaStage.SEAL]: "far",
+  [PersonaStage.DOLPHIN]: "far",
+  [PersonaStage.SHARK]: "far",
+  [PersonaStage.WHALE]: "far",
   [PersonaStage.GOD_WHALE]: "fas",
 };
 const personaIcons: Record<PersonaStage, string> = {
-  [PersonaStage.EGG]: "fa-egg",
+  [PersonaStage.TADPOLE]: "fa-frog",
   [PersonaStage.PLANKTON]: "fa-microbe",
   [PersonaStage.SHRIMP]: "fa-shrimp",
-  [PersonaStage.CRAB]: "fa-hand-peace", // approximation for PRO fa-crab
+  [PersonaStage.CRAB]: "fa-crab",
   [PersonaStage.SMALL_FISH]: "fa-fish",
-  [PersonaStage.OCTOPUS]: "fa-octopus-deploy", // brand icon substitution 
-  [PersonaStage.SEAL]: "fa-water", // approximation for PRO fa-seal
+  [PersonaStage.OCTOPUS]: "fa-octopus",
+  [PersonaStage.SEAL]: "fa-seal",
   [PersonaStage.DOLPHIN]: "fa-dolphin",
-  [PersonaStage.SHARK]: "fa-shield-halved", // approximation for PRO fa-shark
-  [PersonaStage.WHALE]: "fa-cloud", // approximation for PRO fa-whale
+  [PersonaStage.SHARK]: "fa-shark",
+  [PersonaStage.WHALE]: "fa-whale",
   [PersonaStage.GOD_WHALE]: "fa-globe",
 };
 

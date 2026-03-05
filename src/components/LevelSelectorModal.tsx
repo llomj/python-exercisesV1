@@ -1,8 +1,8 @@
 import React from 'react';
 import { LEVELS } from '../constants';
-import { PersonaStage } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatTranslation } from '../translations';
+import { PersonaIcon } from './PersonaIcon';
 
 interface LevelSelectorModalProps {
   currentLevel: number;
@@ -28,28 +28,6 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
       onSelectLevel(level);
       onClose();
     }
-  };
-
-  // Font Awesome 6: many animal icons are in Regular (far), not Solid (fas). Use correct style so icons render.
-  const getPersonaIconStyle = (persona: PersonaStage): 'fas' | 'far' => {
-    const regularOnly: PersonaStage[] = [PersonaStage.SHRIMP, PersonaStage.CRAB, PersonaStage.OCTOPUS, PersonaStage.SEAL, PersonaStage.DOLPHIN, PersonaStage.SHARK, PersonaStage.WHALE];
-    return regularOnly.includes(persona) ? 'far' : 'fas';
-  };
-  const getPersonaIcon = (persona: PersonaStage): string => {
-    const personaIcons: Record<PersonaStage, string> = {
-      [PersonaStage.EGG]: "fa-egg",
-      [PersonaStage.PLANKTON]: "fa-microbe",
-      [PersonaStage.SHRIMP]: "fa-shrimp",
-      [PersonaStage.CRAB]: "fa-crab",
-      [PersonaStage.SMALL_FISH]: "fa-fish",
-      [PersonaStage.OCTOPUS]: "fa-octopus",
-      [PersonaStage.SEAL]: "fa-seal",
-      [PersonaStage.DOLPHIN]: "fa-dolphin",
-      [PersonaStage.SHARK]: "fa-shark",
-      [PersonaStage.WHALE]: "fa-whale",
-      [PersonaStage.GOD_WHALE]: "fa-globe",
-    };
-    return personaIcons[persona] || 'fa-circle';
   };
 
   return (
@@ -106,14 +84,13 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
                   </div>
                 )}
                 <div className="flex flex-col items-center gap-2">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center text-xl ${isCurrent
-                      ? 'bg-indigo-500'
-                      : isUnlocked
-                        ? 'bg-slate-700'
-                        : 'bg-slate-800'
-                    }`}>
-                    <i className={`${getPersonaIconStyle(levelInfo.persona)} ${getPersonaIcon(levelInfo.persona)} ${isCurrent ? 'text-white' : isUnlocked ? 'text-slate-400' : 'text-slate-600'
-                      }`}></i>
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center ${isCurrent
+                    ? 'bg-indigo-500 text-white'
+                    : isUnlocked
+                      ? 'bg-slate-700 text-slate-200'
+                      : 'bg-slate-800 text-slate-400'
+                    } ${isLocked ? 'grayscale opacity-70' : ''}`}>
+                    <PersonaIcon persona={levelInfo.persona} size="lg" muted={isLocked} />
                   </div>
                   <div className="text-center">
                     <div className={`text-sm font-black ${isCurrent ? 'text-indigo-400' : isUnlocked ? 'text-white' : 'text-slate-500'

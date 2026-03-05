@@ -1,11 +1,12 @@
 # Python Exercises Learn - AI Agent Operational Rules
 
 ## 1. Genome Checkpoint (STRICT STATE)
-- **Target**: 3000 Questions (300 per level × 10 levels).
-- **Current Progress**: 3000 / 3000 Questions
-- **Last Fulfilled ID**: 3000 (ALL 10 levels complete at 300/300)
+- **Target**: 3300 Questions (Level 0: 300 + Levels 1–10: 300 each = 3300 total).
+- **Current Progress**: 3300 / 3300 Questions
+- **Last Fulfilled ID**: 3300 (Level 0 complete at 300/300, ALL 10 levels complete at 300/300 each)
 - **Uniqueness Level**: HIGH VARIANCE MANDATED.
-- **Rule**: All 3000 questions must be unique. Every question must be a unique logical challenge. No repetitive patterns. Repetitive patterns are considered a failure of educational integrity.
+- **Rule**: All 3300 questions must be unique. Every question must be a unique logical challenge. No repetitive patterns. Repetitive patterns are considered a failure of educational integrity.
+- **Level 0**: Tadpole – very first steps (print, variables, values, type(), simple expressions). For complete beginners. Easier than Level 1.
 
 ## 2. Consent & Modification Rules
 - **Explicit Consent**: No changes shall be made to the source code without explicit user approval.
@@ -19,9 +20,9 @@
 - **Pre-Change Check**: Agents must always consult `ps.md` and `planning.md` before making changes.
 - **Debugging Reference**: Agents must always consult `ps.md` for debugging information and urgent issues.
 
-## 4. The 3,000-Question Genome Goal
-- **Completion Task**: Reach exactly 3,000 high-quality Python questions (300 per level × 10 levels).
-- **Status**: 3,000 ACHIEVED. ALL 10 levels COMPLETE at 300/300 each. Genome checkpoint FULFILLED.
+## 4. The 3,300-Question Genome Goal
+- **Completion Task**: Reach exactly 3,300 high-quality Python questions (Level 0: 300 + Levels 1–10: 300 each).
+- **Status**: 3,300 ACHIEVED. Level 0 (Tadpole) COMPLETE at 300/300. ALL 10 levels COMPLETE at 300/300 each. Genome checkpoint FULFILLED.
 - **Diversity Rule**: Use at least 10 logic templates per stage to ensure students encounter varied syntax and conceptual challenges.
 
 ## 5. Testing and Deployment Rules

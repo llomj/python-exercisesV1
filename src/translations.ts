@@ -140,8 +140,46 @@ export const translations = {
       copyright: "© 2024 Python Exercises Learn. Interactive Learning Platform.",
     },
     
+    // Methods view
+    methods: {
+      subtitle: "Python Ultimate Method Cheat Sheet — built-in methods by type.",
+    },
+
+    // Flow view
+    flow: {
+      levelProgression: "Level progression: Tadpole → God Whale.",
+      levelLabel: "Level",
+      referenceTitle: "Python flow, precedence & control reference",
+      referenceIntro: "Indentation, loops, scope, clauses, control statements, and order of execution.",
+      indentationTitle: "1. Indentation rules",
+      indentationBody: "Python uses indentation to define blocks (no braces). Use 4 spaces per level. Same block = same indent. Inner blocks are indented right of the controlling line.",
+      forLoopsTitle: "2. for loops — order of execution",
+      forLoopsBody: "Order: evaluate iterable once → for each item, assign target → run body. Nested loops: outer iteration first, then inner loop runs to completion for that outer value (outer then inner).",
+      whileLoopsTitle: "3. while loops — order of execution",
+      whileLoopsBody: "Order: 1) test condition; 2) if True, run body; 3) repeat. Condition is evaluated before each body run (top-of-loop check).",
+      globalLocalTitle: "4. Global vs local variables (LEGB)",
+      globalLocalBody: "Name lookup order: Local → Enclosing (nonlocal) → Global → Built-in. Assignment to a name inside a function creates a local variable unless declared global/nonlocal.",
+      clausesTitle: "5. Clauses: if/elif/else, try/except/finally, with",
+      clausesBody: "if/elif/else: first True branch runs, rest skipped. try: run try block; on exception jump to matching except; finally always runs. with: enter context manager, run body, exit (even on exception).",
+      returnPrintTitle: "6. return, print, pass, continue, break, yield",
+      returnPrintBody: "return: exit function and optionally send a value to the caller. print: write to stdout (side effect), returns None. pass: no-op placeholder. continue: skip to next iteration. break: exit the innermost loop. yield: produce a value in a generator and pause.",
+      expressionOrderTitle: "7. Expression order: inner → outer",
+      expressionOrderBody: "In expressions, innermost subexpressions are evaluated first (e.g. arguments before the function call, left to right). Operator precedence: ** then unary ± then * / // % then + - then comparisons then not and or.",
+      loopElseTitle: "8. Loop else and with",
+      loopElseBody: "for/while else: runs only if the loop completes without a break. with: __enter__ then body then __exit__ (order: enter → body → exit).",
+      operatorPrecedenceTitle: "9. Operator precedence (high to low)",
+      operatorPrecedenceBody: "Parentheses, then **, then unary + - ~, then * / // %, then + -, then shift/bitwise, then comparisons (in, not in, is, is not, <, <=, >, >=, !=, ==), then not, then and, then or. Same level: left to right (except ** right to left).",
+      functionCallOrderTitle: "10. Function and method call order",
+      functionCallOrderBody: "Arguments are evaluated left to right before the function runs. For chained calls (e.g. a.b().c()), order: evaluate a → b() → then .c() on that result (left to right).",
+      shortCircuitTitle: "11. Short-circuit (and / or)",
+      shortCircuitBody: "and: evaluate left; if falsy, return it; else return right. or: evaluate left; if truthy, return it; else return right. Right side may not be evaluated.",
+      comprehensionsTitle: "12. Comprehensions and decorators order",
+      comprehensionsBody: "List comp: iterate over iterable (left to right), evaluate expression for each, build list. Nested comps: outer loop first, inner loop runs fully per outer. Decorators: bottom-up (nearest to def runs first when applying), then top-down when calling.",
+    },
+
     // Persona Stages (these might stay as is, but we can translate)
     personas: {
+      tadpole: "Tadpole",
       plankton: "Plankton",
       shrimp: "Shrimp",
       crab: "Crab",
@@ -162,6 +200,7 @@ export const translations = {
       switchToLevelMode: "Switch to Level Mode",
       switchToRandomMode: "Switch to Random Mode",
       settings: "Settings",
+      refreshApp: "Refresh App",
       resetApp: "Reset App",
     },
     
@@ -187,7 +226,7 @@ export const translations = {
     // ID Search & Log
     idSearch: {
       searchById: "Search by ID",
-      enterId: "Enter question ID (1-3000)",
+      enterId: "1-3300...",
       search: "Search",
       saveToLog: "Save to Log",
       saved: "Saved!",
@@ -196,7 +235,7 @@ export const translations = {
       showDetailedExplanation: "Show Detailed Explanation",
       noSavedQuestions: "No saved questions yet. Search by ID and save questions for reference.",
       idLog: "ID Log",
-      invalidId: "Please enter a valid ID between 1 and 3000",
+      invalidId: "Please enter a valid ID between 1 and 3300",
       questionNotFound: "Question with ID {id} not found",
     },
     
@@ -226,6 +265,7 @@ export const translations = {
     
     // Level Descriptions
     levels: {
+      level0: "Your very first steps in Python. Learn what Python is, print(), variables, and basic types.",
       level1: "Basic data types and variable assignment. Learn to store and manipulate simple values.",
       level2: "Mathematical operations and expression evaluation. Master arithmetic and precedence rules.",
       level3: "Decision-making with if/elif/else. Understand boolean logic and truth values.",
@@ -380,8 +420,46 @@ export const translations = {
       copyright: "© 2024 Python Exercises Learn. Plateforme d'Apprentissage Interactive.",
     },
     
+    // Methods view
+    methods: {
+      subtitle: "Aide-mémoire ultime des méthodes Python — méthodes intégrées par type.",
+    },
+
+    // Flow view
+    flow: {
+      levelProgression: "Progression des niveaux : Têtard → Baleine Divine.",
+      levelLabel: "Niveau",
+      referenceTitle: "Référence flux Python, précédence et contrôle",
+      referenceIntro: "Indentation, boucles, portée, clauses, instructions de contrôle et ordre d'exécution.",
+      indentationTitle: "1. Règles d'indentation",
+      indentationBody: "Python utilise l'indentation pour définir les blocs (pas d'accolades). Utilisez 4 espaces par niveau. Même bloc = même indentation. Les blocs internes sont indentés à droite de la ligne de contrôle.",
+      forLoopsTitle: "2. Boucles for — ordre d'exécution",
+      forLoopsBody: "Ordre : évaluer l'itérable une fois → pour chaque élément, assigner la cible → exécuter le corps. Boucles imbriquées : itération externe d'abord, puis la boucle interne s'exécute entièrement pour cette valeur externe.",
+      whileLoopsTitle: "3. Boucles while — ordre d'exécution",
+      whileLoopsBody: "Ordre : 1) tester la condition ; 2) si True, exécuter le corps ; 3) répéter. La condition est évaluée avant chaque exécution du corps (vérification en tête de boucle).",
+      globalLocalTitle: "4. Variables globales vs locales (LEGB)",
+      globalLocalBody: "Ordre de résolution des noms : Local → Enclosant (nonlocal) → Global → Intégré. L'assignation à un nom dans une fonction crée une variable locale sauf si déclarée global/nonlocal.",
+      clausesTitle: "5. Clauses : if/elif/else, try/except/finally, with",
+      clausesBody: "if/elif/else : la première branche True s'exécute, les autres sont ignorées. try : exécuter le bloc try ; en cas d'exception, sauter vers le except correspondant ; finally s'exécute toujours. with : entrer le gestionnaire de contexte, exécuter le corps, sortir (même en cas d'exception).",
+      returnPrintTitle: "6. return, print, pass, continue, break, yield",
+      returnPrintBody: "return : quitter la fonction et optionnellement renvoyer une valeur à l'appelant. print : écrire sur stdout (effet de bord), renvoie None. pass : placeholder sans effet. continue : passer à l'itération suivante. break : quitter la boucle la plus imbriquée. yield : produire une valeur dans un générateur et mettre en pause.",
+      expressionOrderTitle: "7. Ordre des expressions : intérieur → extérieur",
+      expressionOrderBody: "Dans les expressions, les sous-expressions les plus internes sont évaluées en premier (ex. les arguments avant l'appel de fonction, de gauche à droite). Précédence des opérateurs : ** puis unaire ± puis * / // % puis + - puis comparaisons puis not and or.",
+      loopElseTitle: "8. else des boucles et with",
+      loopElseBody: "for/while else : s'exécute seulement si la boucle se termine sans break. with : __enter__ puis corps puis __exit__ (ordre : entrée → corps → sortie).",
+      operatorPrecedenceTitle: "9. Précédence des opérateurs (haut vers bas)",
+      operatorPrecedenceBody: "Parenthèses, puis **, puis unaire + - ~, puis * / // %, puis + -, puis décalage/bitwise, puis comparaisons (in, not in, is, is not, <, <=, >, >=, !=, ==), puis not, puis and, puis or. Même niveau : gauche à droite (sauf ** droite à gauche).",
+      functionCallOrderTitle: "10. Ordre d'appel des fonctions et méthodes",
+      functionCallOrderBody: "Les arguments sont évalués de gauche à droite avant l'exécution de la fonction. Pour les appels chaînés (ex. a.b().c()), ordre : évaluer a → b() → puis .c() sur ce résultat (gauche à droite).",
+      shortCircuitTitle: "11. Court-circuit (and / or)",
+      shortCircuitBody: "and : évaluer la gauche ; si falsy, la renvoyer ; sinon renvoyer la droite. or : évaluer la gauche ; si truthy, la renvoyer ; sinon renvoyer la droite. Le côté droit peut ne pas être évalué.",
+      comprehensionsTitle: "12. Ordre des compréhensions et décorateurs",
+      comprehensionsBody: "List comp : itérer sur l'itérable (gauche à droite), évaluer l'expression pour chaque élément, construire la liste. Comps imbriquées : boucle externe d'abord, boucle interne complète par valeur externe. Décorateurs : bas vers haut (le plus proche du def s'applique en premier), puis haut vers bas à l'appel.",
+    },
+
     // Persona Stages
     personas: {
+      tadpole: "Têtard",
       plankton: "Plancton",
       shrimp: "Crevette",
       crab: "Crabe",
@@ -402,6 +480,7 @@ export const translations = {
       switchToLevelMode: "Passer en Mode Niveau",
       switchToRandomMode: "Passer en Mode Aléatoire",
       settings: "Paramètres",
+      refreshApp: "Actualiser l'App",
       resetApp: "Réinitialiser l'App",
     },
     
@@ -427,7 +506,7 @@ export const translations = {
     // ID Search & Log
     idSearch: {
       searchById: "Rechercher par ID",
-      enterId: "Entrer l'ID de la question (1-3000)",
+      enterId: "1-3300...",
       search: "Rechercher",
       saveToLog: "Enregistrer dans le Journal",
       saved: "Enregistré!",
@@ -436,7 +515,7 @@ export const translations = {
       showDetailedExplanation: "Afficher l'Explication Détaillée",
       noSavedQuestions: "Aucune question enregistrée pour le moment. Recherchez par ID et enregistrez des questions pour référence.",
       idLog: "Journal ID",
-      invalidId: "Veuillez entrer un ID valide entre 1 et 3000",
+      invalidId: "Veuillez entrer un ID valide entre 1 et 3300",
       questionNotFound: "Question avec l'ID {id} introuvable",
     },
     
@@ -466,6 +545,7 @@ export const translations = {
     
     // Level Descriptions
     levels: {
+      level0: "Vos tout premiers pas en Python. Découvrez ce qu'est Python, print(), les variables et les types de base.",
       level1: "Types de données de base et assignation de variables. Apprenez à stocker et manipuler des valeurs simples.",
       level2: "Opérations mathématiques et évaluation d'expressions. Maîtrisez l'arithmétique et les règles de précédence.",
       level3: "Prise de décision avec if/elif/else. Comprenez la logique booléenne et les valeurs de vérité.",

@@ -5,7 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 interface SettingsMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  view: 'hub' | 'quiz' | 'log' | 'glossary';
+  view: 'hub' | 'quiz' | 'log' | 'glossary' | 'methods' | 'flow';
   randomMode?: boolean;
   anchorBottom?: boolean; // When true, menu opens near top-right (mobile-friendly placement)
   onToggleRandomMode?: () => void;
@@ -18,6 +18,7 @@ interface SettingsMenuProps {
   onShowFlow?: () => void;
   onShowLevelSelector?: () => void;
   onToggleLanguage?: () => void;
+  onRefreshApp?: () => void;
   onResetApp?: () => void;
 }
 
@@ -37,6 +38,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onShowFlow,
   onShowLevelSelector,
   onToggleLanguage,
+  onRefreshApp,
   onResetApp
 }) => {
   const { t, language } = useLanguage();
@@ -51,14 +53,44 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     highlight?: boolean;
   }> = [];
 
-  // Hub view items
+  // Hub view items: Random Mode on top, Select Level under it, then Methods, Flow, then rest
   if (view === 'hub') {
-    if (onShowGlossary) {
+    if (onToggleRandomMode) {
       menuItems.push({
-        icon: 'fa-circle-info',
-        label: t('app.glossary'),
+        icon: 'fa-shuffle',
+        label: randomMode ? t('settings.switchToLevelMode') : t('settings.switchToRandomMode'),
         onClick: () => {
-          onShowGlossary();
+          onToggleRandomMode();
+          onClose();
+        }
+      });
+    }
+    if (onShowLevelSelector) {
+      menuItems.push({
+        icon: 'fa-layer-group',
+        label: t('settings.selectLevel'),
+        onClick: () => {
+          onShowLevelSelector();
+          onClose();
+        }
+      });
+    }
+    if (onShowMethods) {
+      menuItems.push({
+        icon: 'fa-code',
+        label: t('app.methods'),
+        onClick: () => {
+          onShowMethods();
+          onClose();
+        }
+      });
+    }
+    if (onShowFlow) {
+      menuItems.push({
+        icon: 'fa-diagram-project',
+        label: t('app.flow'),
+        onClick: () => {
+          onShowFlow();
           onClose();
         }
       });
@@ -93,20 +125,9 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
         }
       });
     }
-    if (onToggleRandomMode) {
-      menuItems.push({
-        icon: 'fa-shuffle',
-        label: randomMode ? t('settings.switchToLevelMode') : t('settings.switchToRandomMode'),
-        onClick: () => {
-          onToggleRandomMode();
-          onClose();
-        },
-        highlight: randomMode
-      });
-    }
   }
 
-  // Quiz view items
+  // Quiz view items: Random Mode then Select Level
   if (view === 'quiz') {
     if (onToggleRandomMode) {
       menuItems.push({
@@ -115,13 +136,22 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
         onClick: () => {
           onToggleRandomMode();
           onClose();
-        },
-        highlight: randomMode
+        }
+      });
+    }
+    if (onShowLevelSelector) {
+      menuItems.push({
+        icon: 'fa-layer-group',
+        label: t('settings.selectLevel'),
+        onClick: () => {
+          onShowLevelSelector();
+          onClose();
+        }
       });
     }
   }
 
-  // Common items
+  // Common items (Methods/Flow already in hub list when view === 'hub')
   if (onShowOperations) {
     menuItems.push({
       icon: 'fa-calculator',
@@ -132,7 +162,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
       }
     });
   }
-  if (onShowMethods) {
+  if (onShowMethods && view !== 'hub') {
     menuItems.push({
       icon: 'fa-code',
       label: t('app.methods'),
@@ -142,9 +172,9 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
       }
     });
   }
-  if (onShowFlow) {
+  if (onShowFlow && view !== 'hub') {
     menuItems.push({
-      icon: 'fa-route',
+      icon: 'fa-diagram-project',
       label: t('app.flow'),
       onClick: () => {
         onShowFlow();
@@ -152,7 +182,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
       }
     });
   }
-  if (onShowLevelSelector) {
+  if (onShowLevelSelector && view !== 'hub' && view !== 'quiz') {
     menuItems.push({
       icon: 'fa-layer-group',
       label: t('settings.selectLevel'),
@@ -169,6 +199,16 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
       label: language === 'en' ? 'Français' : 'English',
       onClick: () => {
         onToggleLanguage();
+        onClose();
+      }
+    });
+  }
+  if (onShowGlossary) {
+    menuItems.push({
+      icon: 'fa-circle-info',
+      label: t('app.glossary'),
+      onClick: () => {
+        onShowGlossary();
         onClose();
       }
     });
@@ -203,6 +243,23 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
               <span className="text-sm font-medium">{item.label}</span>
             </button>
           ))}
+
+          {/* Refresh App - reloads UI, keeps scoring & progress */}
+          {onRefreshApp && (
+            <>
+              <div className="my-2 border-t border-white/10" />
+              <button
+                onClick={() => {
+                  onRefreshApp();
+                  onClose();
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
+              >
+                <i className="fas fa-arrows-rotate text-sm w-5 flex-shrink-0"></i>
+                <span className="text-sm font-medium">{t('settings.refreshApp')}</span>
+              </button>
+            </>
+          )}
 
           {/* Reset App button - at bottom with warning styling */}
           {onResetApp && (

@@ -16,7 +16,7 @@ export const getStarsFromProgress = (progress: number): number => {
 
 // Random Mode: score = correct × accuracy (correct/total). Level 0 = Egg, then same 10 personas.
 export const RANDOM_MODE_THRESHOLDS: { minScore: number; persona: PersonaStage }[] = [
-  { minScore: 0, persona: PersonaStage.EGG },
+  { minScore: 0, persona: PersonaStage.TADPOLE },
   { minScore: 15, persona: PersonaStage.PLANKTON },
   { minScore: 40, persona: PersonaStage.SHRIMP },
   { minScore: 80, persona: PersonaStage.CRAB },
@@ -26,7 +26,7 @@ export const RANDOM_MODE_THRESHOLDS: { minScore: number; persona: PersonaStage }
   { minScore: 600, persona: PersonaStage.DOLPHIN },
   { minScore: 900, persona: PersonaStage.SHARK },
   { minScore: 1300, persona: PersonaStage.WHALE },
-  { minScore: 1300, persona: PersonaStage.GOD_WHALE },
+  { minScore: 2000, persona: PersonaStage.GOD_WHALE },
 ];
 
 /** Evolution score: correct × (correct / total). Rewards both volume and accuracy. */
@@ -57,10 +57,10 @@ export const getNextRandomModeThreshold = (score: number): { minScore: number; p
 export const LEVELS: LevelInfo[] = [
   {
     level: 0,
-    persona: PersonaStage.EGG,
-    concepts: ["literals", "values", "first steps"],
-    description: "Your first steps. Literals, simple values, and type basics.",
-    color: "#94a3b8"
+    persona: PersonaStage.TADPOLE,
+    concepts: ["print", "variables", "types", "basic math", "first steps"],
+    description: "Your very first steps in Python. Learn what Python is, how to use print(), variables, and basic types.",
+    color: "#22c55e"
   },
   {
     level: 1,

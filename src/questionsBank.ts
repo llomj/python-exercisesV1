@@ -85,7 +85,7 @@ const generateLevel = (level: number, stage: PersonaStage, patterns: ((i: number
 };
 
 export const QUESTIONS_BANK: Question[] = [
-  ...generateLevel(0, PersonaStage.EGG, level0Patterns, 1),
+  ...generateLevel(0, PersonaStage.TADPOLE, level0Patterns, 1),
   ...generateLevel(1, PersonaStage.PLANKTON, [...level1Patterns, ...level1IntermediateA, ...level1IntermediateB, ...level1ExpertA, ...level1ExpertB], 301),
   ...generateLevel(2, PersonaStage.SHRIMP, [...level2Patterns, ...level2IntermediateA, ...level2IntermediateB, ...level2ExpertA, ...level2ExpertB], 601),
   ...generateLevel(3, PersonaStage.CRAB, [...level3Patterns, ...level3IntermediateA, ...level3IntermediateB, ...level3ExpertA, ...level3ExpertB], 901),
