@@ -93,6 +93,8 @@ export const translations = {
       backToHub: "BACK TO HUB",
       youEarnedStars: "You earned {count} star(s)!",
       levelAccuracy: "Level accuracy: {percent}%",
+      gameComplete: "CONGRATULATIONS!",
+      gameCompleteSub: "You finished the whole game with 5 stars on every level. Incredible!",
     },
     
     // Random Mode Modal
@@ -377,6 +379,8 @@ export const translations = {
       backToHub: "RETOUR AU HUB",
       youEarnedStars: "Vous avez obtenu {count} étoile(s) !",
       levelAccuracy: "Précision du niveau : {percent} %",
+      gameComplete: "FÉLICITATIONS !",
+      gameCompleteSub: "Vous avez terminé tout le jeu avec 5 étoiles à chaque niveau. Incroyable !",
     },
     
     // Random Mode Modal

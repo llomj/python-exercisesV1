@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>5-Star Jackpot Demo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 0;
+      overflow-x: hidden;
+    }
+    h1 { color: #fbbf24; font-size: 1.75rem; margin: 0; }
+    p { color: #94a3b8; font-size: 0.95rem; text-align: center; max-width: 360px; margin: 0; }
+    .btn {
+      padding: 1rem 2rem;
+      font-size: 1.25rem;
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      color: #0f172a;
+      border: none;
+      border-radius: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 24px rgba(251, 191, 36, 0.4);
+    }
+    .btn:hover { opacity: 0.95; transform: scale(1.02); }
+    .btn:active { transform: scale(0.98); }
+
+    #stars-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+      overflow: hidden;
+    }
+    .fall-star {
+      position: absolute;
+      color: #fbbf24;
+      text-shadow: 0 0 8px rgba(251, 191, 36, 0.8);
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+      5% { opacity: var(--op); }
+      95% { opacity: var(--op); }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    .jackpot-card {
+      background: rgba(30, 41, 59, 0.9);
+      border: 2px solid rgba(251, 191, 36, 0.5);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      text-align: center;
+      max-width: 320px;
+      box-shadow: 0 0 60px rgba(251, 191, 36, 0.2);
+    }
+    .jackpot-card .star-big {
+      font-size: 4rem;
+      color: #fbbf24;
+      margin-bottom: 0.5rem;
+      animation: pulse 0.6s ease-in-out infinite alternate;
+    }
+    @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.1); } }
+    .jackpot-card h2 { color: #fbbf24; margin: 0 0 0.5rem; font-size: 1.5rem; }
+    .jackpot-card .sub { color: #94a3b8; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>5-Star Jackpot Preview</h1>
+  <p>5 stars on one level: first button. All levels 5 stars (game complete): second button — more stars, longer music.</p>
+  <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center;">
+    <button class="btn" id="go">5 stars (one level)</button>
+    <button class="btn" id="goFull" style="background: linear-gradient(135deg, #eab308, #fde047); box-shadow: 0 4px 24px rgba(250, 204, 21, 0.5);">Game complete (all levels)</button>
+  </div>
+
+  <div id="stars-container"></div>
+
+  <script>
+    function playJackpotSound() {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      var ctx = new AC();
+      if (ctx.state === 'suspended') ctx.resume();
+      var now = ctx.currentTime;
+      var g = ctx.createGain();
+      g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.9, now);
+      g.gain.linearRampToValueAtTime(0.01, now + 4.5);
+
+      var fanfare = function(freq, start, dur, vol) {
+        var sq = ctx.createOscillator();
+        var tri = ctx.createOscillator();
+        var g1 = ctx.createGain(), g2 = ctx.createGain();
+        sq.type = 'square'; tri.type = 'triangle';
+        sq.frequency.setValueAtTime(freq, now + start);
+        tri.frequency.setValueAtTime(freq, now + start);
+        g1.gain.setValueAtTime(vol, now + start);
+        g1.gain.linearRampToValueAtTime(0.01, now + start + dur);
+        g2.gain.setValueAtTime(vol * 0.5, now + start);
+        g2.gain.linearRampToValueAtTime(0.01, now + start + dur);
+        sq.connect(g1); tri.connect(g2);
+        g1.connect(g); g2.connect(g);
+        sq.start(now + start); tri.start(now + start);
+        sq.stop(now + start + dur + 0.02);
+        tri.stop(now + start + dur + 0.02);
+      };
+
+      var C5 = 523.25, E5 = 659.25, G5 = 783.99, C6 = 1046.5, E6 = 1318.51, G6 = 1567.98;
+      fanfare(C5, 0, 0.2, 0.4);
+      fanfare(E5, 0.2, 0.2, 0.4);
+      fanfare(G5, 0.4, 0.2, 0.4);
+      fanfare(C6, 0.6, 0.5, 0.5);
+      fanfare(E5, 1.2, 0.15, 0.4);
+      fanfare(G5, 1.35, 0.15, 0.4);
+      fanfare(C6, 1.5, 0.15, 0.4);
+      fanfare(E6, 1.65, 0.6, 0.5);
+      fanfare(G5, 2.35, 0.15, 0.4);
+      fanfare(C6, 2.5, 0.15, 0.4);
+      fanfare(E6, 2.65, 0.15, 0.4);
+      fanfare(G6, 2.8, 0.8, 0.5);
+      fanfare(C6, 3.65, 0.6, 0.5);
+      setTimeout(function() { ctx.close(); }, 4800);
+    }
+
+    function playGameCompleteSound() {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      var ctx = new AC();
+      if (ctx.state === 'suspended') ctx.resume();
+      var now = ctx.currentTime;
+      var g = ctx.createGain();
+      g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.9, now);
+      g.gain.linearRampToValueAtTime(0.01, now + 8);
+
+      var n = function(freq, start, dur, vol) {
+        var sq = ctx.createOscillator();
+        var tri = ctx.createOscillator();
+        var g1 = ctx.createGain(), g2 = ctx.createGain();
+        sq.type = 'square'; tri.type = 'triangle';
+        sq.frequency.setValueAtTime(freq, now + start);
+        tri.frequency.setValueAtTime(freq, now + start);
+        g1.gain.setValueAtTime(vol, now + start);
+        g1.gain.linearRampToValueAtTime(0.01, now + start + dur);
+        g2.gain.setValueAtTime(vol * 0.5, now + start);
+        g2.gain.linearRampToValueAtTime(0.01, now + start + dur);
+        sq.connect(g1); tri.connect(g2);
+        g1.connect(g); g2.connect(g);
+        sq.start(now + start); tri.start(now + start);
+        sq.stop(now + start + dur + 0.02);
+        tri.stop(now + start + dur + 0.02);
+      };
+
+      var C4 = 261.63, E4 = 329.63, G4 = 392, C5 = 523.25, E5 = 659.25, G5 = 783.99, C6 = 1046.5, E6 = 1318.51, G6 = 1567.98;
+      n(C4, 0, 0.25, 0.35);
+      n(E4, 0.25, 0.25, 0.35);
+      n(G4, 0.5, 0.25, 0.35);
+      n(C5, 0.75, 0.5, 0.45);
+      n(G4, 1.35, 0.2, 0.35);
+      n(C5, 1.55, 0.2, 0.35);
+      n(E5, 1.75, 0.2, 0.35);
+      n(G5, 1.95, 0.6, 0.5);
+      n(C5, 2.6, 0.2, 0.35);
+      n(E5, 2.8, 0.2, 0.35);
+      n(G5, 3, 0.2, 0.35);
+      n(C6, 3.2, 0.7, 0.5);
+      n(E5, 4, 0.18, 0.35);
+      n(G5, 4.18, 0.18, 0.35);
+      n(C6, 4.36, 0.18, 0.35);
+      n(E6, 4.54, 0.9, 0.5);
+      n(G5, 5.5, 0.2, 0.35);
+      n(C6, 5.7, 0.2, 0.35);
+      n(E6, 5.9, 0.2, 0.35);
+      n(G6, 6.1, 1, 0.5);
+      n(C6, 7.2, 1.2, 0.55);
+      setTimeout(function() { ctx.close(); }, 8600);
+    }
+
+    function runFallingStars(count) {
+      count = count || 50;
+      var container = document.getElementById('stars-container');
+      container.innerHTML = '';
+      var n = count;
+      for (var i = 0; i < n; i++) {
+        var el = document.createElement('div');
+        el.className = 'fall-star';
+        el.innerHTML = '<i class="fas fa-star"></i>';
+        el.style.left = Math.random() * 100 + '%';
+        el.style.top = '0';
+        el.style.animationDelay = Math.random() * 2 + 's';
+        el.style.animationDuration = (3 + Math.random() * 4) + 's';
+        el.style.fontSize = (8 + Math.random() * 16) + 'px';
+        el.style.setProperty('--op', 0.5 + Math.random() * 0.5);
+        container.appendChild(el);
+      }
+      setTimeout(function() { container.innerHTML = ''; }, count === 120 ? 12000 : 9000);
+    }
+
+    document.getElementById('go').onclick = function() {
+      playJackpotSound();
+      runFallingStars(50);
+    };
+    document.getElementById('goFull').onclick = function() {
+      playGameCompleteSound();
+      runFallingStars(120);
+    };
+  </script>
+</body>
+</html>

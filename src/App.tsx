@@ -1,6 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { UserStats, PersonaStage, QuestionAttempt } from './types';
 import { EvolutionHub } from './components/EvolutionHub';
+import { FallingStars } from './components/FallingStars';
 import { PersonaIcon } from './components/PersonaIcon';
 import { SettingsMenu } from './components/SettingsMenu';
 import { IdLogEntry } from './types';
@@ -68,6 +69,129 @@ const playStarCelebrationSound = (): void => {
   window.setTimeout(() => void ctx.close(), 2400);
 };
 
+/** Upbeat game congratulations fanfare for 5-star (jackpot) completion. */
+const playJackpotCelebrationSound = (): void => {
+  if (typeof window === 'undefined') return;
+  const AudioContextClass = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+  if (!AudioContextClass) return;
+
+  const ctx = new AudioContextClass();
+  if (ctx.state === 'suspended') void ctx.resume();
+
+  const now = ctx.currentTime;
+  const masterGain = ctx.createGain();
+  masterGain.connect(ctx.destination);
+  masterGain.gain.setValueAtTime(0.9, now);
+  masterGain.gain.linearRampToValueAtTime(0.01, now + 4.5);
+
+  const fanfare = (freq: number, start: number, dur: number, vol: number) => {
+    const sq = ctx.createOscillator();
+    const tri = ctx.createOscillator();
+    const g1 = ctx.createGain();
+    const g2 = ctx.createGain();
+    sq.type = 'square';
+    tri.type = 'triangle';
+    sq.frequency.setValueAtTime(freq, now + start);
+    tri.frequency.setValueAtTime(freq, now + start);
+    g1.gain.setValueAtTime(vol, now + start);
+    g1.gain.linearRampToValueAtTime(0.01, now + start + dur);
+    g2.gain.setValueAtTime(vol * 0.5, now + start);
+    g2.gain.linearRampToValueAtTime(0.01, now + start + dur);
+    sq.connect(g1);
+    tri.connect(g2);
+    g1.connect(masterGain);
+    g2.connect(masterGain);
+    sq.start(now + start);
+    tri.start(now + start);
+    sq.stop(now + start + dur + 0.02);
+    tri.stop(now + start + dur + 0.02);
+  };
+
+  const C5 = 523.25, E5 = 659.25, G5 = 783.99, C6 = 1046.5, E6 = 1318.51, G6 = 1567.98;
+
+  fanfare(C5, 0, 0.2, 0.4);
+  fanfare(E5, 0.2, 0.2, 0.4);
+  fanfare(G5, 0.4, 0.2, 0.4);
+  fanfare(C6, 0.6, 0.5, 0.5);
+  fanfare(E5, 1.2, 0.15, 0.4);
+  fanfare(G5, 1.35, 0.15, 0.4);
+  fanfare(C6, 1.5, 0.15, 0.4);
+  fanfare(E6, 1.65, 0.6, 0.5);
+  fanfare(G5, 2.35, 0.15, 0.4);
+  fanfare(C6, 2.5, 0.15, 0.4);
+  fanfare(E6, 2.65, 0.15, 0.4);
+  fanfare(G6, 2.8, 0.8, 0.5);
+  fanfare(C6, 3.65, 0.6, 0.5);
+
+  window.setTimeout(() => void ctx.close(), 4800);
+};
+
+/** Epic "you finished the whole game" fanfare when user has 5 stars on every level. */
+const playGameCompleteSound = (): void => {
+  if (typeof window === 'undefined') return;
+  const AudioContextClass = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+  if (!AudioContextClass) return;
+
+  const ctx = new AudioContextClass();
+  if (ctx.state === 'suspended') void ctx.resume();
+
+  const now = ctx.currentTime;
+  const masterGain = ctx.createGain();
+  masterGain.connect(ctx.destination);
+  masterGain.gain.setValueAtTime(0.9, now);
+  masterGain.gain.linearRampToValueAtTime(0.01, now + 8);
+
+  const n = (freq: number, start: number, dur: number, vol: number) => {
+    const sq = ctx.createOscillator();
+    const tri = ctx.createOscillator();
+    const g1 = ctx.createGain();
+    const g2 = ctx.createGain();
+    sq.type = 'square';
+    tri.type = 'triangle';
+    sq.frequency.setValueAtTime(freq, now + start);
+    tri.frequency.setValueAtTime(freq, now + start);
+    g1.gain.setValueAtTime(vol, now + start);
+    g1.gain.linearRampToValueAtTime(0.01, now + start + dur);
+    g2.gain.setValueAtTime(vol * 0.5, now + start);
+    g2.gain.linearRampToValueAtTime(0.01, now + start + dur);
+    sq.connect(g1);
+    tri.connect(g2);
+    g1.connect(masterGain);
+    g2.connect(masterGain);
+    sq.start(now + start);
+    tri.start(now + start);
+    sq.stop(now + start + dur + 0.02);
+    tri.stop(now + start + dur + 0.02);
+  };
+
+  const C4 = 261.63, E4 = 329.63, G4 = 392, C5 = 523.25, E5 = 659.25, G5 = 783.99;
+  const C6 = 1046.5, E6 = 1318.51, G6 = 1567.98;
+
+  n(C4, 0, 0.25, 0.35);
+  n(E4, 0.25, 0.25, 0.35);
+  n(G4, 0.5, 0.25, 0.35);
+  n(C5, 0.75, 0.5, 0.45);
+  n(G4, 1.35, 0.2, 0.35);
+  n(C5, 1.55, 0.2, 0.35);
+  n(E5, 1.75, 0.2, 0.35);
+  n(G5, 1.95, 0.6, 0.5);
+  n(C5, 2.6, 0.2, 0.35);
+  n(E5, 2.8, 0.2, 0.35);
+  n(G5, 3, 0.2, 0.35);
+  n(C6, 3.2, 0.7, 0.5);
+  n(E5, 4, 0.18, 0.35);
+  n(G5, 4.18, 0.18, 0.35);
+  n(C6, 4.36, 0.18, 0.35);
+  n(E6, 4.54, 0.9, 0.5);
+  n(G5, 5.5, 0.2, 0.35);
+  n(C6, 5.7, 0.2, 0.35);
+  n(E6, 5.9, 0.2, 0.35);
+  n(G6, 6.1, 1, 0.5);
+  n(C6, 7.2, 1.2, 0.55);
+
+  window.setTimeout(() => void ctx.close(), 8600);
+};
+
 const INITIAL_STATS: UserStats = {
   currentLevel: 0,
   xp: 0,
@@ -107,6 +231,7 @@ const App: React.FC = () => {
     total: number;
     starEarned: number | null;
     levelAccuracyPercent?: number;
+    allLevelsFiveStars?: boolean;
     randomMode?: boolean;
     prevScore?: number;
     newScore?: number;
@@ -161,8 +286,14 @@ const App: React.FC = () => {
   }, [stats]);
 
   useEffect(() => {
-    if (showResult?.starEarned) playStarCelebrationSound();
-  }, [showResult?.starEarned]);
+    if (showResult?.starEarned === 5 && showResult?.allLevelsFiveStars) {
+      playGameCompleteSound();
+    } else if (showResult?.starEarned === 5) {
+      playJackpotCelebrationSound();
+    } else if (showResult?.starEarned) {
+      playStarCelebrationSound();
+    }
+  }, [showResult?.starEarned, showResult?.allLevelsFiveStars]);
 
   const currentLevelInfo = LEVELS.find(l => l.level === stats.currentLevel) || LEVELS[0];
   const currentPersona = (stats.randomMode && stats.randomModeStats)
@@ -319,7 +450,13 @@ const App: React.FC = () => {
       const starEarned = newStars > prevStars ? newStars : null;
       const levelAccuracyPercent = newLevelProgress > 0 ? Math.round((newLevelCorrect / newLevelProgress) * 100) : undefined;
 
-      setShowResult({ score, total, starEarned, levelAccuracyPercent });
+      const allLevelsFiveStars = starEarned === 5 && LEVELS.every(level => {
+        const prog = level.level === stats.currentLevel ? newLevelProgress : (stats.levelProgress[level.level] ?? 0);
+        const correct = level.level === stats.currentLevel ? newLevelCorrect : (stats.levelCorrect?.[level.level] ?? 0);
+        return prog > 0 && getStarsFromAccuracy(correct, prog) === 5;
+      });
+
+      setShowResult({ score, total, starEarned, levelAccuracyPercent, allLevelsFiveStars: allLevelsFiveStars || undefined });
     }
 
     setView('hub');
@@ -327,6 +464,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-indigo-500/30 pb-28">
+      {showResult?.starEarned === 5 && <FallingStars count={showResult?.allLevelsFiveStars ? 120 : 50} />}
       <nav className="pt-[env(safe-area-inset-top)] px-2 pb-1.5 flex items-center justify-between border-b border-white/5 sticky top-0 z-50 glass">
         <div className="flex w-full items-center gap-4">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => setView('hub')}>
@@ -455,11 +593,13 @@ const App: React.FC = () => {
             <div className="relative z-10">
               {showResult.starEarned ? (
                 <>
-                  <h2 className="text-3xl font-black mb-2 text-amber-400 bg-clip-text">{t('subLevels.subLevelComplete')}</h2>
+                  <h2 className="text-3xl font-black mb-2 text-amber-400 bg-clip-text">
+                    {showResult.allLevelsFiveStars ? t('result.gameComplete') : t('subLevels.subLevelComplete')}
+                  </h2>
                   <p className="text-slate-300">
-                    {formatTranslation(t('result.youEarnedStars'), { count: showResult.starEarned })}
+                    {showResult.allLevelsFiveStars ? t('result.gameCompleteSub') : formatTranslation(t('result.youEarnedStars'), { count: showResult.starEarned })}
                   </p>
-                  {showResult.levelAccuracyPercent !== undefined && (
+                  {!showResult.allLevelsFiveStars && showResult.levelAccuracyPercent !== undefined && (
                     <p className="text-slate-400 text-sm mt-1">
                       {formatTranslation(t('result.levelAccuracy'), { percent: showResult.levelAccuracyPercent })}
                     </p>

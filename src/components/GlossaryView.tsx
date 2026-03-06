@@ -65,8 +65,15 @@ export const GlossaryView: React.FC<GlossaryViewProps> = ({ onBack }) => {
                 <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
                   <i className="fas fa-book-open text-indigo-400"></i> {t('glossary.inDepthDescription')}
                 </h4>
-                <div className="text-slate-300 leading-relaxed font-medium text-sm sm:text-base whitespace-pre-wrap">
-                  {selectedTerm.detailedDescription}
+                <div className="text-slate-300 leading-relaxed font-medium text-sm sm:text-base">
+                  {selectedTerm.detailedDescription
+                    .split(/\n(?=\d+\.\s)/)
+                    .filter(Boolean)
+                    .map((block, i) => (
+                      <div key={i} className={i > 0 ? 'mt-4' : ''} style={{ whiteSpace: 'pre-wrap' }}>
+                        {block.trim()}
+                      </div>
+                    ))}
                 </div>
               </div>
 
