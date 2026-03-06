@@ -557,7 +557,12 @@ const App: React.FC = () => {
           </Suspense>
         ) : view === 'log' ? (
           <Suspense fallback={<ViewLoading />}>
-            <HistoryLog history={stats.history} onBack={() => setView('hub')} />
+            <HistoryLog
+              history={stats.history}
+              onBack={() => setView('hub')}
+              onSaveToIdLog={saveToIdLog}
+              savedIdLogIds={stats.idLog.map(e => e.id)}
+            />
           </Suspense>
         ) : view === 'glossary' ? (
           <Suspense fallback={<ViewLoading />}>

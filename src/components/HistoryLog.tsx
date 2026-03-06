@@ -6,9 +6,11 @@ import { formatTranslation } from '../translations';
 interface HistoryLogProps {
   history: QuestionAttempt[];
   onBack: () => void;
+  onSaveToIdLog?: (entry: { id: number; question: string; correctAnswer: string; explanation: string }) => void;
+  savedIdLogIds?: number[];
 }
 
-export const HistoryLog: React.FC<HistoryLogProps> = ({ history, onBack }) => {
+export const HistoryLog: React.FC<HistoryLogProps> = ({ history, onBack, onSaveToIdLog, savedIdLogIds = [] }) => {
   const { t } = useLanguage();
   const sortedHistory = [...history].sort((a, b) => b.timestamp - a.timestamp);
 
@@ -43,11 +45,33 @@ export const HistoryLog: React.FC<HistoryLogProps> = ({ history, onBack }) => {
               }`}
             >
               <div className="flex justify-between items-start mb-3">
-                <span className={`text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-widest ${
-                  attempt.isCorrect ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'
-                }`}>
-                  {t('history.level')} {attempt.level} • {attempt.isCorrect ? t('history.correct') : t('history.incorrect')}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className={`text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-widest ${
+                    attempt.isCorrect ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'
+                  }`}>
+                    {t('history.level')} {attempt.level} • {attempt.isCorrect ? t('history.correct') : t('history.incorrect')}
+                  </span>
+                  {onSaveToIdLog && (
+                    <button
+                      type="button"
+                      onClick={() => onSaveToIdLog({
+                        id: attempt.id,
+                        question: attempt.question,
+                        correctAnswer: attempt.correctOption,
+                        explanation: attempt.explanation
+                      })}
+                      className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border transition-colors ${
+                        savedIdLogIds.includes(attempt.id)
+                          ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                          : 'bg-slate-700/50 text-slate-300 border-slate-600/50 hover:bg-slate-700/70'
+                      }`}
+                      title={savedIdLogIds.includes(attempt.id) ? t('idSearch.saved') : t('idSearch.saveToLog')}
+                    >
+                      <i className={`fas ${savedIdLogIds.includes(attempt.id) ? 'fa-check' : 'fa-bookmark'} text-[9px]`}></i>
+                      {t('idSearch.idLog')}
+                    </button>
+                  )}
+                </div>
                 <span className="text-[10px] text-slate-500 font-mono">
                   {new Date(attempt.timestamp).toLocaleDateString()}
                 </span>
