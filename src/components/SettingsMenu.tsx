@@ -123,7 +123,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
   }
 
-  // Quiz view items: Random Mode then Select Level
+  // Quiz view items: same as hub so settings are always identical
   if (view === 'quiz') {
     if (onToggleRandomMode) {
       menuItems.push({
@@ -154,6 +154,36 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
       if (onShowOperations) rulesChildren.push({ icon: 'fa-calculator', label: t('app.operations'), onClick: () => { onShowOperations(); onClose(); } });
       rulesChildren.sort((a, b) => a.label.localeCompare(b.label));
       menuItems.push({ icon: 'fa-book', label: t('levelSelector.rules'), type: 'expandable', children: rulesChildren });
+    }
+    if (onShowIdSearch) {
+      menuItems.push({
+        icon: 'fa-hashtag',
+        label: t('settings.searchById'),
+        onClick: () => {
+          onShowIdSearch();
+          onClose();
+        }
+      });
+    }
+    if (onShowIdLog) {
+      menuItems.push({
+        icon: 'fa-list',
+        label: t('settings.idLog'),
+        onClick: () => {
+          onShowIdLog();
+          onClose();
+        }
+      });
+    }
+    if (onShowLearningLog) {
+      menuItems.push({
+        icon: 'fa-book-open',
+        label: t('app.learningLog'),
+        onClick: () => {
+          onShowLearningLog();
+          onClose();
+        }
+      });
     }
   }
 

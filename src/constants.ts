@@ -40,7 +40,7 @@ export const getStarsFromAccuracyRandom = (correct: number, total: number): numb
   return 0;
 };
 
-// Random Mode: score = correct × accuracy (correct/total). Level 0 = Egg, then same 10 personas.
+// Random Mode: score = correct × accuracy (correct/total). Level 0 = Tadpole, then same 10 personas.
 export const RANDOM_MODE_THRESHOLDS: { minScore: number; persona: PersonaStage }[] = [
   { minScore: 0, persona: PersonaStage.TADPOLE },
   { minScore: 15, persona: PersonaStage.PLANKTON },
@@ -79,7 +79,7 @@ export const getNextRandomModeThreshold = (score: number): { minScore: number; p
   return null;
 };
 
-// Level configurations with personas and concepts (Level 0 = Egg/Cell, most basic)
+// Level configurations with personas and concepts (Level 0 = Tadpole, most basic)
 export const LEVELS: LevelInfo[] = [
   {
     level: 0,

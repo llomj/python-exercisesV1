@@ -1,12 +1,13 @@
 import React from 'react';
 import { PersonaStage } from '../types';
+import { TadpoleSvg } from './PersonaIcon';
 
 interface PersonaBadgeProps {
   stage: PersonaStage;
   size?: 'sm' | 'md' | 'lg';
 }
 
-// Font Awesome 6 Free: animal icons. Tadpole = fa-frog for Level 0. Many animals are Regular (far).
+// Font Awesome 6 Free: animal icons. Tadpole = custom SVG. Many animals are Regular (far).
 const personaIconStyle: Record<PersonaStage, 'fas' | 'far'> = {
   [PersonaStage.TADPOLE]: "fas",
   [PersonaStage.PLANKTON]: "fas",
@@ -21,7 +22,7 @@ const personaIconStyle: Record<PersonaStage, 'fas' | 'far'> = {
   [PersonaStage.GOD_WHALE]: "fas",
 };
 const personaIcons: Record<PersonaStage, string> = {
-  [PersonaStage.TADPOLE]: "fa-frog",
+  [PersonaStage.TADPOLE]: "",
   [PersonaStage.PLANKTON]: "fa-microbe",
   [PersonaStage.SHRIMP]: "fa-shrimp",
   [PersonaStage.CRAB]: "fa-crab",
@@ -34,6 +35,8 @@ const personaIcons: Record<PersonaStage, string> = {
   [PersonaStage.GOD_WHALE]: "fa-globe",
 };
 
+const tadpoleSizes = { sm: 20, md: 28, lg: 40 };
+
 export const PersonaBadge: React.FC<PersonaBadgeProps> = ({ stage, size = 'md' }) => {
   const sizeClasses = {
     sm: 'w-8 h-8 text-sm',
@@ -42,11 +45,16 @@ export const PersonaBadge: React.FC<PersonaBadgeProps> = ({ stage, size = 'md' }
   };
   const style = personaIconStyle[stage] || 'fas';
   const icon = personaIcons[stage] || 'fa-fish';
+  const isTadpole = stage === PersonaStage.TADPOLE;
 
   return (
     <div className={`flex flex-col items-center justify-center`}>
       <div className={`${sizeClasses[size]} rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20`}>
-        <i className={`${style} ${icon} text-white`}></i>
+        {isTadpole ? (
+          <TadpoleSvg size={tadpoleSizes[size]} className="text-white" />
+        ) : (
+          <i className={`${style} ${icon} text-white`}></i>
+        )}
       </div>
     </div>
   );
