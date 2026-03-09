@@ -1,10 +1,12 @@
-const CACHE_NAME = 'python-exercises-learn-offline-v10';
+const CACHE_NAME = 'python-exercises-learn-offline-v11';
+
+const BASE_PATH = '/python-exercisesV1/';
 
 const STATIC_ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './sw.js'
+  BASE_PATH,
+  BASE_PATH + 'index.html',
+  BASE_PATH + 'manifest.json',
+  BASE_PATH + 'sw.js'
 ];
 
 const CDN_URLS = [
@@ -18,18 +20,20 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
+      
       for (const url of STATIC_ASSETS) {
         try {
           await cache.add(url);
         } catch (e) {
-          console.log('Cache install error:', url, e);
+          console.log('Cache add error:', url, e.message);
         }
       }
+      
       for (const url of CDN_URLS) {
         try {
           await cache.add(url);
         } catch (e) {
-          console.log('CDN cache error:', url, e);
+          console.log('CDN cache error:', url, e.message);
         }
       }
     })()
@@ -55,28 +59,56 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
+  const url = event.request.url;
+  const requestUrl = new URL(url);
 
-      return fetch(event.request).then((response) => {
-        if (!response || response.status !== 200 || response.type === 'opaque') {
+  if (requestUrl.origin === location.origin || requestUrl.href.startsWith(location.origin + BASE_PATH)) {
+    event.respondWith(
+      caches.match(event.request).then((cachedResponse) => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+
+        return fetch(event.request).then((response) => {
+          if (!response || response.status !== 200 || response.type === 'opaque') {
+            return response;
+          }
+
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+
           return response;
-        }
-
-        const responseToCache = response.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
+        }).catch(() => {
+          if (event.request.destination === 'document' || event.request.mode === 'navigate') {
+            return caches.match(BASE_PATH + 'index.html');
+          }
         });
-
-        return response;
-      }).catch(() => {
-        if (event.request.destination === 'document') {
-          return caches.match('./index.html');
+      })
+    );
+  } else {
+    event.respondWith(
+      caches.match(event.request).then((cachedResponse) => {
+        if (cachedResponse) {
+          return cachedResponse;
         }
-      });
-    })
-  );
+
+        return fetch(event.request).then((response) => {
+          if (!response || response.status !== 200 || response.type === 'opaque') {
+            return response;
+          }
+
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+
+          return response;
+        }).catch(() => {
+          return new Response('Offline', { status: 503 });
+        });
+      })
+    );
+  }
 });
