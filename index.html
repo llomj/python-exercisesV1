@@ -36,17 +36,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+        html, body {
+            overscroll-behavior-y: none;
+        }
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0f172a;
             color: #f8fafc;
-            overscroll-behavior-y: contain;
             padding-bottom: env(safe-area-inset-bottom, 0);
+            -webkit-overflow-scrolling: touch;
         }
         /* iOS PWA: env(safe-area-inset-top) often 0 - force padding so nav clears status bar (4rem for Dynamic Island) */
         @media (display-mode: standalone), (display-mode: minimal-ui) {
-            body {
-                padding-top: max(4rem, env(safe-area-inset-top, 4rem));
+            .fixed-nav-app, .nav-spacer {
+                padding-top: max(4rem, env(safe-area-inset-top, 4rem)) !important;
             }
         }
         .code-font {
