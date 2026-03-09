@@ -16,6 +16,20 @@ export const translations = {
     hub: {
       evolutionStage: "Evolution Stage",
       class: "Class",
+      // Persona names (animal stages)
+      personas: {
+        tadpole: "Tadpole",
+        plankton: "Plankton",
+        shrimp: "Shrimp",
+        crab: "Crab",
+        smallFish: "Small Fish",
+        octopus: "Octopus",
+        seal: "Seal",
+        dolphin: "Dolphin",
+        shark: "Shark",
+        whale: "Whale",
+        godWhale: "God Whale",
+      },
       currentGenome: "Current Genome",
       nextMutation: "Next Mutation",
       batchSize: "Batch Size",
@@ -318,6 +332,20 @@ export const translations = {
     hub: {
       evolutionStage: "Étape d'Évolution",
       class: "Classe",
+      // Persona names (animal stages)
+      personas: {
+        tadpole: "Têtard",
+        plankton: "Plancton",
+        shrimp: "Crevette",
+        crab: "Crabe",
+        smallFish: "Petit Poisson",
+        octopus: "Pieuvre",
+        seal: "Phoque",
+        dolphin: "Dauphin",
+        shark: "Requin",
+        whale: "Baleine",
+        godWhale: "Baleine Divine",
+      },
       currentGenome: "Génome Actuel",
       nextMutation: "Prochaine Mutation",
       batchSize: "Taille du Lot",

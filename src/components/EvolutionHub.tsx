@@ -13,7 +13,7 @@ interface EvolutionHubProps {
 }
 
 export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { playCutSound } = useSound();
   const randomMode = stats.randomMode ?? false;
   const rm = stats.randomModeStats ?? { totalAnswered: 0, totalCorrect: 0 };
@@ -47,6 +47,25 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
   const displayPersona = randomMode ? randomPersona : currentLevelInfo.persona;
   const starsToShow = randomMode ? randomEarnedStars : earnedStars;
 
+  // Helper function to get translated persona name
+  const getPersonaName = (persona: PersonaStage): string => {
+    const personaKeyMap: Record<PersonaStage, string> = {
+      [PersonaStage.TADPOLE]: 'tadpole',
+      [PersonaStage.PLANKTON]: 'plankton',
+      [PersonaStage.SHRIMP]: 'shrimp',
+      [PersonaStage.CRAB]: 'crab',
+      [PersonaStage.SMALL_FISH]: 'smallFish',
+      [PersonaStage.OCTOPUS]: 'octopus',
+      [PersonaStage.SEAL]: 'seal',
+      [PersonaStage.DOLPHIN]: 'dolphin',
+      [PersonaStage.SHARK]: 'shark',
+      [PersonaStage.WHALE]: 'whale',
+      [PersonaStage.GOD_WHALE]: 'godWhale',
+    };
+    const key = personaKeyMap[persona];
+    return t(`hub.personas.${key}` as any);
+  };
+
   const renderStars = () => {
     return (
       <div className="flex gap-2 justify-center mt-3">
@@ -79,7 +98,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
           <div className="flex items-center gap-2 justify-center">
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
             <span className="text-slate-400 font-bold text-[10px] tracking-widest uppercase">
-              {displayPersona} {t('hub.class')}
+              {getPersonaName(displayPersona)} {t('hub.class')}
             </span>
           </div>
           {renderStars()}

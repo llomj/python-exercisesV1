@@ -6,8 +6,9 @@ export const translateQuestionText = (text: string, language: string): string =>
   if (language !== 'fr') return text;
 
   const questionTranslations: Record<string, string> = {
-    'What is': 'Résultat : ',
-    'What is?': 'Résultat : ',
+    // Core question patterns
+    'What is': 'Quel est le résultat de',
+    'What is?': 'Résultat :',
     'What happens when you': 'Que se passe-t-il quand vous',
     'What happens when': 'Que se passe-t-il quand',
     'What happens if': 'Que se passe-t-il si',
@@ -19,11 +20,27 @@ export const translateQuestionText = (text: string, language: string): string =>
     'Result of': 'Résultat de',
     'Output of': 'Sortie de',
     'Value of': 'Valeur de',
+    'Evaluate': 'Évaluez',
+    'evaluate': 'évaluez',
+    'What is the output': 'Quelle est la sortie',
+    'What is the result': 'Quel est le résultat',
+    'What is the value': 'Quelle est la valeur',
+    'What does': 'Que fait',
+    'What will': 'Que va',
+    'What will be': 'Que sera',
+    'What would': 'Que serait',
+    'What would be': 'Que serait',
+    'What is the': 'Quel est le',
+    'What are the': 'Quels sont les',
+    'Which of the following': 'Laquelle des suivantes',
+    'Which one': 'Laquelle',
     'Which': 'Lequel',
-    'How': 'Comment',
-    'When': 'Quand',
-    'Where': 'Où',
-    'Why': 'Pourquoi',
+    'How many': 'Combien',
+    'How does': 'Comment',
+    'How can': 'Comment peut',
+    'When does': 'Quand',
+    'Where does': 'Où',
+    'Why does': 'Pourquoi',
     'Can': 'Peut',
     'Does': 'Est-ce que',
     'Is': 'Est',
@@ -31,15 +48,71 @@ export const translateQuestionText = (text: string, language: string): string =>
     'Will': 'Va',
     'Would': 'Serait',
     'Should': 'Devrait',
+    'Do': 'Faire',
+    'Does the': 'Le',
+    'Is the': 'Le',
+    'In Python': 'En Python',
+    'in Python': 'en Python',
+    'Consider the following code': 'Considérez le code suivant',
+    'Given the following': 'Soit le',
+    'Given code': 'Soit le code',
+    'Code:': 'Code :',
+    'What print': 'Ce qu\'affiche',
+    'What is printed': 'Ce qui est affiché',
+    'What gets printed': 'Ce qui est affiché',
+    'What will print': 'Ce qu\'affichera',
+    'What does this code do': 'Que fait ce code',
+    'What is the purpose': 'Quel est le but',
+    'Which statement': 'Quelle affirmation',
+    'Which of these': 'Laquelle de ces',
+    'Which statement is': 'Quelle affirmation est',
+    'Which one is': 'Laquelle est',
+    'Choose the': 'Choisissez',
+    'Select': 'Sélectionnez',
+    'Answer:': 'Réponse :',
+    'The method': 'La méthode',
+    'The function': 'La fonction',
+    'The class': 'La classe',
+    'A class': 'Une classe',
+    'An object': 'Un objet',
+    'The object': 'L\'objet',
+    'This code': 'Ce code',
+    'After execution': 'Après exécution',
+    'Before execution': 'Avant exécution',
+    'Starting from': 'À partir de',
+    'What is class': 'Qu\'est-ce que class',
+    'What is def': 'Qu\'est-ce que def',
+    'What is the output of': 'Quelle est la sortie de',
+    'What is the return': 'Quelle est la valeur de retour',
+    'What is returned': 'Ce qui est retourné',
+    'Return value': 'Valeur de retour',
+    'None of these': 'Aucune de ces',
+    'All of these': 'Toutes ces',
+    'Both': 'Les deux',
+    'Neither': 'Aucun des deux',
+    'True or False': 'Vrai ou Faux',
   };
 
   let translated = text;
-  for (const [en, fr] of Object.entries(questionTranslations)) {
-    const pattern = new RegExp(`^${en.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i');
+  
+  // Try to match from longest to shortest to avoid partial matches
+  const sortedEntries = Object.entries(questionTranslations).sort((a, b) => b[0].length - a[0].length);
+  
+  for (const [en, fr] of sortedEntries) {
+    const escaped = en.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Match at start of string or after certain punctuation
+    const pattern = new RegExp(`^${escaped}|:${escaped}|\\(${escaped}`, 'i');
     if (pattern.test(translated)) {
-      translated = translated.replace(pattern, fr);
+      translated = translated.replace(pattern, (match) => {
+        // Preserve case
+        if (match[0] === match[0].toUpperCase()) {
+          return fr.charAt(0).toUpperCase() + fr.slice(1);
+        }
+        return fr;
+      });
     }
   }
+  
   return translated;
 };
 
@@ -69,7 +142,8 @@ export const translateOptionText = (text: string, language: string): string => {
     'Returns the': 'Retourne le',
     'Returns True': 'Retourne Vrai',
     'Returns False': 'Retourne Faux',
-    'Returns None': 'Retourne Aucun',
+    'Returns None': 'Retourne None',
+    'Returns True or False': 'Retourne Vrai ou Faux',
     'Raises an': 'Lève une',
     'Raises': 'Lève',
     'Prints': 'Affiche',
@@ -183,7 +257,6 @@ export const translateOptionText = (text: string, language: string): string => {
     'All of the above': 'Tout ce qui précède',
     'None of the above': 'Aucun de ce qui précède',
     'Both A and B': 'A et B tous les deux',
-    'Both': 'Les deux',
     'The first': 'Le premier',
     'The second': 'Le deuxième',
     'The third': 'Le troisième',
@@ -198,6 +271,32 @@ export const translateOptionText = (text: string, language: string): string => {
     '(1, 2)': '(1, 2)',
     '[1, 2]': '[1, 2]',
     '{1: 2}': '{1: 2}',
+    'a': 'a',
+    'b': 'b', 
+    'c': 'c',
+    'd': 'd',
+    'A': 'A',
+    'B': 'B',
+    'C': 'C',
+    'D': 'D',
+    'The code runs without output': 'Le code s\'exécute sans sortie',
+    'The code runs with output': 'Le code s\'exécute avec sortie',
+    'The code produces an error': 'Le code produit une erreur',
+    'Code runs without error': 'Le code s\'exécute sans erreur',
+    'Code produces error': 'Le code produit une erreur',
+    'No output': 'Pas de sortie',
+    'No error': 'Pas d\'erreur',
+    'Compilation error': 'Erreur de compilation',
+    'Runtime error': 'Erreur d\'exécution',
+    'SyntaxError': 'Erreur de syntaxe',
+    'TypeError': 'Erreur de type',
+    'ValueError': 'Erreur de valeur',
+    'NameError': 'Erreur de nom',
+    'IndexError': 'Erreur d\'index',
+    'KeyError': 'Erreur de clé',
+    'AttributeError': 'Erreur d\'attribut',
+    'ZeroDivisionError': 'Erreur de division par zéro',
+    'IndentationError': 'Erreur d\'indentation',
   };
 
   let translated = text;
