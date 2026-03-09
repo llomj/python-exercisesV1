@@ -1,12 +1,10 @@
-const CACHE_NAME = 'python-exercises-learn-offline-v16';
+const CACHE_NAME = 'python-exercises-learn-offline-v17';
 
 const BASE_PATH = '/python-exercisesV1/';
 
 const STATIC_ASSETS = [
   BASE_PATH,
-  BASE_PATH + 'index.html',
-  BASE_PATH + 'manifest.json',
-  BASE_PATH + 'sw.js'
+  BASE_PATH + 'manifest.json'
 ];
 
 const CDN_URLS = [
@@ -59,56 +57,63 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
-  const url = event.request.url;
-  const requestUrl = new URL(url);
+  const requestUrl = new URL(event.request.url);
+  const isNavigation = event.request.mode === 'navigate' || event.request.destination === 'document';
+  const isLocal = requestUrl.origin === location.origin;
 
-  if (requestUrl.origin === location.origin || requestUrl.href.startsWith(location.origin + BASE_PATH)) {
+  // NETWORK-FIRST for HTML/navigation: always fetch fresh index.html so new JS bundles load
+  if (isNavigation) {
     event.respondWith(
-      caches.match(event.request).then((cachedResponse) => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-
-        return fetch(event.request).then((response) => {
-          if (!response || response.status !== 200 || response.type === 'opaque') {
-            return response;
-          }
-
-          const responseToCache = response.clone();
+      fetch(event.request).then((response) => {
+        if (response && response.status === 200) {
+          const clone = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
+            cache.put(event.request, clone);
           });
-
-          return response;
-        }).catch(() => {
-          if (event.request.destination === 'document' || event.request.mode === 'navigate') {
-            return caches.match(BASE_PATH + 'index.html');
-          }
-        });
+        }
+        return response;
+      }).catch(() => {
+        // Offline fallback: serve cached index.html
+        return caches.match(BASE_PATH + 'index.html').then((cached) => cached || caches.match(BASE_PATH));
       })
     );
-  } else {
-    event.respondWith(
-      caches.match(event.request).then((cachedResponse) => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-
-        return fetch(event.request).then((response) => {
-          if (!response || response.status !== 200 || response.type === 'opaque') {
-            return response;
-          }
-
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-
-          return response;
-        }).catch(() => {
-          return new Response('Offline', { status: 503 });
-        });
-      })
-    );
+    return;
   }
+
+  // CACHE-FIRST for local JS/CSS assets (they have hashed filenames, safe to cache forever)
+  if (isLocal) {
+    event.respondWith(
+      caches.match(event.request).then((cached) => {
+        if (cached) {
+          return cached;
+        }
+        return fetch(event.request).then((response) => {
+          if (response && response.status === 200 && response.type !== 'opaque') {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, clone);
+            });
+          }
+          return response;
+        }).catch(() => undefined);
+      })
+    );
+    return;
+  }
+
+  // CACHE-FIRST for CDN resources
+  event.respondWith(
+    caches.match(event.request).then((cached) => {
+      if (cached) return cached;
+      return fetch(event.request).then((response) => {
+        if (response && response.status === 200 && response.type !== 'opaque') {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, clone);
+          });
+        }
+        return response;
+      }).catch(() => new Response('', { status: 503 }));
+    })
+  );
 });

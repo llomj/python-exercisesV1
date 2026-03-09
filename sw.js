@@ -1,11 +1,17 @@
-const CACHE_NAME = 'python-exercises-learn-offline-v16';
+const CACHE_NAME = 'python-exercises-learn-offline-v17';
 
 const BASE_PATH = '/python-exercisesV1/';
 
-const PRECACHE_URLS = [
+const STATIC_ASSETS = [
   BASE_PATH,
-  BASE_PATH + 'index.html',
   BASE_PATH + 'manifest.json'
+];
+
+const CDN_URLS = [
+  'https://cdn.tailwindcss.com',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap',
+  'https://cdn-icons-png.flaticon.com/512/5968/5968350.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -13,29 +19,19 @@ self.addEventListener('install', (event) => {
     (async () => {
       const cache = await caches.open(CACHE_NAME);
       
-      // Precache core files
-      for (const url of PRECACHE_URLS) {
+      for (const url of STATIC_ASSETS) {
         try {
           await cache.add(url);
         } catch (e) {
-          console.log('PRECACHE error:', url, e.message);
+          console.log('Cache add error:', url, e.message);
         }
       }
       
-      // Precache CDN resources
-      const cdnUrls = [
-        'https://cdn.tailwindcss.com',
-        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-        'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap',
-        'https://cdn-icons-png.flaticon.com/512/5968/5968350.png'
-      ];
-      
-      // Try each CDN URL individually, don't fail if one fails
-      for (const url of cdnUrls) {
+      for (const url of CDN_URLS) {
         try {
           await cache.add(url);
         } catch (e) {
-          // CDN might not be available, that's OK
+          console.log('CDN cache error:', url, e.message);
         }
       }
     })()
@@ -62,16 +58,35 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   const requestUrl = new URL(event.request.url);
-  const isLocal = requestUrl.origin === location.origin || requestUrl.href.startsWith(location.origin + BASE_PATH);
+  const isNavigation = event.request.mode === 'navigate' || event.request.destination === 'document';
+  const isLocal = requestUrl.origin === location.origin;
 
-  // For local resources: cache-first (try cache, fallback to network)
+  // NETWORK-FIRST for HTML/navigation: always fetch fresh index.html so new JS bundles load
+  if (isNavigation) {
+    event.respondWith(
+      fetch(event.request).then((response) => {
+        if (response && response.status === 200) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, clone);
+          });
+        }
+        return response;
+      }).catch(() => {
+        // Offline fallback: serve cached index.html
+        return caches.match(BASE_PATH + 'index.html').then((cached) => cached || caches.match(BASE_PATH));
+      })
+    );
+    return;
+  }
+
+  // CACHE-FIRST for local JS/CSS assets (they have hashed filenames, safe to cache forever)
   if (isLocal) {
     event.respondWith(
       caches.match(event.request).then((cached) => {
         if (cached) {
           return cached;
         }
-        
         return fetch(event.request).then((response) => {
           if (response && response.status === 200 && response.type !== 'opaque') {
             const clone = response.clone();
@@ -80,37 +95,25 @@ self.addEventListener('fetch', (event) => {
             });
           }
           return response;
-        }).catch(() => {
-          // If navigation fails, serve index.html
-          if (event.request.mode === 'navigate' || event.request.destination === 'document') {
-            return caches.match(BASE_PATH + 'index.html');
-          }
-        });
+        }).catch(() => undefined);
       })
     );
     return;
   }
 
-  // For CDN: network-first with cache fallback
+  // CACHE-FIRST for CDN resources
   event.respondWith(
-    fetch(event.request).then((response) => {
-      // Cache successful responses
-      if (response && response.status === 200 && response.type !== 'opaque') {
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, clone);
-        });
-      }
-      return response;
-    }).catch(() => {
-      // Fallback to cache
-      return caches.match(event.request).then((cached) => {
-        if (cached) {
-          return cached;
+    caches.match(event.request).then((cached) => {
+      if (cached) return cached;
+      return fetch(event.request).then((response) => {
+        if (response && response.status === 200 && response.type !== 'opaque') {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, clone);
+          });
         }
-        // Return empty response if nothing cached
-        return new Response('', { status: 503 });
-      });
+        return response;
+      }).catch(() => new Response('', { status: 503 }));
     })
   );
 });
