@@ -1,4 +1,13 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { QuizView } from './components/QuizView';
+import { HistoryLog } from './components/HistoryLog';
+import { GlossaryView } from './components/GlossaryView';
+import { OperationsView } from './components/OperationsView';
+import { IdSearchModal } from './components/IdSearchModal';
+import { IdLogView } from './components/IdLogView';
+import { LevelSelectorModal } from './components/LevelSelectorModal';
+import { MethodsView } from './components/MethodsView';
+import { FlowView } from './components/FlowView';
 import { UserStats, PersonaStage, QuestionAttempt } from './types';
 import { EvolutionHub } from './components/EvolutionHub';
 import { FallingStars } from './components/FallingStars';
@@ -341,16 +350,6 @@ const INITIAL_STATS: UserStats = {
   randomModeStats: { totalAnswered: 0, totalCorrect: 0 },
   randomMode: false
 };
-
-const QuizView = lazy(() => import('./components/QuizView').then((module) => ({ default: module.QuizView })));
-const HistoryLog = lazy(() => import('./components/HistoryLog').then((module) => ({ default: module.HistoryLog })));
-const GlossaryView = lazy(() => import('./components/GlossaryView').then((module) => ({ default: module.GlossaryView })));
-const OperationsView = lazy(() => import('./components/OperationsView').then((module) => ({ default: module.OperationsView })));
-const IdSearchModal = lazy(() => import('./components/IdSearchModal').then((module) => ({ default: module.IdSearchModal })));
-const IdLogView = lazy(() => import('./components/IdLogView').then((module) => ({ default: module.IdLogView })));
-const LevelSelectorModal = lazy(() => import('./components/LevelSelectorModal').then((module) => ({ default: module.LevelSelectorModal })));
-const MethodsView = lazy(() => import('./components/MethodsView').then((module) => ({ default: module.MethodsView })));
-const FlowView = lazy(() => import('./components/FlowView').then((module) => ({ default: module.FlowView })));
 
 const ViewLoading: React.FC = () => (
   <div className="max-w-md mx-auto p-8 glass rounded-3xl text-center text-slate-400">

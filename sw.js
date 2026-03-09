@@ -1,4 +1,4 @@
-const CACHE_NAME = 'python-exercises-learn-offline-v12';
+const CACHE_NAME = 'python-exercises-learn-offline-v13';
 
 const BASE_PATH = '/python-exercisesV1/';
 
