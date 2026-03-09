@@ -11,6 +11,7 @@ import { formatTranslation } from '../translations';
 import { getTranslatedDetailedExplanation } from '../data/detailedExplanationsTranslations';
 import { translateQuestionText, translateOptions } from '../utils/translateQuestion';
 import { getTranslatedShortExplanation, SHORT_EXPLANATIONS_FR } from '../data/shortExplanationsTranslations';
+import { getTranslatedQuestion } from '../data/questionsFr';
 
 // Function to format code snippets with proper Python indentation
 // Ensures newline after : and 4-space indentation for the next line
@@ -453,11 +454,11 @@ const enhanceBareMethodCall = (code: string): string => {
 };
 
 // Function to translate common question patterns and explanations
-const translateText = (text: string, language: string): string => {
+const translateText = (text: string, language: string, questionId?: number): string => {
   if (language !== 'fr') return text;
 
   // Question prefix translation (shared with IdSearchModal, IdLogView)
-  let translated = translateQuestionText(text, language);
+  let translated = translateQuestionText(text, language, questionId);
 
   // Common explanation pattern translations
   const explanationTranslations: Record<string, string> = {
@@ -1004,7 +1005,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
               // No code detected, show as regular question
               return (
                 <h2 className="text-xl md:text-2xl font-bold leading-tight text-white px-4 pt-4">
-                  {translateText(currentQuestion.question, language)}
+                  {translateText(currentQuestion.question, language, currentQuestion.id)}
                 </h2>
               );
             })()}
@@ -1019,7 +1020,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
           )}
           {currentQuestion.options.map((option, idx) => {
             // Translate options when in French mode
-            const translatedOptions = translateOptions(currentQuestion.options, language);
+            const translatedOptions = translateOptions(currentQuestion.options, language, currentQuestion.id);
             const displayOption = translatedOptions[idx];
             let colorClass = "bg-slate-800/50 border-white/5 hover:border-indigo-500/50 hover:bg-slate-800";
             if (isAnswered) {

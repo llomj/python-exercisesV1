@@ -1,9 +1,23 @@
+import { getTranslatedOption } from '../data/optionsFr';
+import { getTranslatedQuestion, QUESTIONS_FR } from '../data/questionsFr';
+
 /**
  * Translates question text to French when language is 'fr'.
  * Used by IdSearchModal, QuizView, and IdLogView.
  */
-export const translateQuestionText = (text: string, language: string): string => {
+export const translateQuestionText = (text: string, language: string, questionId?: number): string => {
   if (language !== 'fr') return text;
+
+  // First try the full translations from our lookup file
+  if (questionId) {
+    if (QUESTIONS_FR && QUESTIONS_FR[questionId]) {
+      // If the question has a multi-line format, we only want to replace the first line
+      // or just return the full translated question if it's not multi-line
+      if (!text.includes('\n')) {
+        return QUESTIONS_FR[questionId];
+      }
+    }
+  }
 
   const questionTranslations: Record<string, string> = {
     // Core question patterns
@@ -120,8 +134,14 @@ export const translateQuestionText = (text: string, language: string): string =>
  * Translates option text to French when language is 'fr'.
  * Used by QuizView for translating answer options.
  */
-export const translateOptionText = (text: string, language: string): string => {
+export const translateOptionText = (text: string, language: string, questionId?: number): string => {
   if (language !== 'fr') return text;
+
+  // Try exact lookup from optionsFr.ts first
+  if (questionId) {
+    const translated = getTranslatedOption(text, language, questionId);
+    if (translated !== text) return translated;
+  }
 
   const optionTranslations: Record<string, string> = {
     // Common answer patterns
@@ -243,7 +263,6 @@ export const translateOptionText = (text: string, language: string): string => {
     'Returns function': 'Retourne fonction',
     'Returns method': 'Retourne méthode',
     'Returns value': 'Retourne valeur',
-    'Returns True or False': 'Retourne Vrai ou Faux',
     'Yes': 'Oui',
     'No': 'Non',
     'A, B, C': 'A, B, C',
@@ -321,7 +340,7 @@ export const translateOptionText = (text: string, language: string): string => {
 /**
  * Translates an array of options to French.
  */
-export const translateOptions = (options: string[], language: string): string[] => {
+export const translateOptions = (options: string[], language: string, questionId?: number): string[] => {
   if (language !== 'fr') return options;
-  return options.map(opt => translateOptionText(opt, language));
+  return options.map(opt => translateOptionText(opt, language, questionId));
 };
