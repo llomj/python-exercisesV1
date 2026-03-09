@@ -43,3 +43,10 @@
 
 ## 8. Verify Code Instruction
 - When the user types "verify code", the agent's role is to verify and debug any problems, issues, conflicts, or potential bugs in the codebase.
+
+## 9. CRITICAL: Offline Support (MOST IMPORTANT)
+- **This app MUST work fully offline**. This is the highest priority feature.
+- **Service Worker**: Always keep `public/sw.js` and root `sw.js` in sync with the same code.
+- **Build Process**: Ensure the build copies the correct `sw.js` to `dist/`.
+- **Testing**: Before pushing any changes, verify offline works by testing in browser with network disabled.
+- **PWA**: Ensure manifest.json is correct and the app can be installed as a PWA.
