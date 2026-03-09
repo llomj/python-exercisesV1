@@ -739,10 +739,10 @@ const App: React.FC = () => {
                   for (let name of names) caches.delete(name);
                 });
               }
-              window.location.replace(window.location.href.split('?')[0] + '?t=' + Date.now());
+              window.location.href = window.location.pathname + '?t=' + Date.now();
             });
           } else {
-            window.location.replace(window.location.href.split('?')[0] + '?t=' + Date.now());
+            window.location.href = window.location.pathname + '?t=' + Date.now();
           }
         }}
         onResetApp={() => setShowResetModal(true)}
