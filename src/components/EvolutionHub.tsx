@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { UserStats, PersonaStage } from '../types';
-import { LEVELS, QUESTIONS_PER_LEVEL, TOTAL_QUESTIONS, getStarsForLevel, getStarsFromAccuracyRandom, getRandomModeScore, getPersonaFromRandomScore, getNextRandomModeThreshold } from '../constants';
+import {
+  LEVELS,
+  QUESTIONS_PER_LEVEL,
+  TOTAL_QUESTIONS,
+  getStarsForLevel,
+  getStarsFromAccuracyRandom,
+  getRandomModeScore,
+  getPersonaFromRandomScore,
+  getNextRandomModeThreshold,
+  GENOME_CONCEPT_DETAILS,
+  GenomeConceptDetail
+} from '../constants';
 import { PersonaIcon } from './PersonaIcon';
 import { ProgressBar } from './ProgressBar';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -47,6 +58,41 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
   const displayPersona = randomMode ? randomPersona : currentLevelInfo.persona;
   const starsToShow = randomMode ? randomEarnedStars : earnedStars;
 
+  const [selectedConcept, setSelectedConcept] = useState<GenomeConceptDetail | null>(null);
+
+  useEffect(() => {
+    if (selectedConcept) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedConcept]);
+
+  const getConceptDetail = (conceptLabel: string): GenomeConceptDetail => {
+    const key = conceptLabel.toLowerCase();
+    const fromMap = GENOME_CONCEPT_DETAILS[key];
+    if (fromMap) return fromMap;
+    const generic: GenomeConceptDetail = {
+      concept: conceptLabel,
+      beginner: formatTranslation(
+        t('hub.genericConceptBeginner'),
+        { concept: conceptLabel, level: currentLevelInfo.level }
+      ),
+      intermediate: formatTranslation(
+        t('hub.genericConceptIntermediate'),
+        { concept: conceptLabel, level: currentLevelInfo.level }
+      ),
+      expert: formatTranslation(
+        t('hub.genericConceptExpert'),
+        { concept: conceptLabel, level: currentLevelInfo.level }
+      )
+    };
+    return generic;
+  };
+
   // Helper function to get translated persona name
   const getPersonaName = (persona: PersonaStage): string => {
     const personaKeyMap: Record<PersonaStage, string> = {
@@ -87,6 +133,66 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
 
   return (
     <div className="space-y-6 animate-in fade-in duration-700">
+      {selectedConcept && (
+        <div className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain flex justify-center items-start sm:items-center p-4">
+          <div
+            className="fixed inset-0 bg-slate-950/85 backdrop-blur-md transition-opacity"
+            onClick={() => { playCutSound(); setSelectedConcept(null); }}
+          ></div>
+          <div className="glass w-full max-w-2xl my-4 sm:my-8 rounded-3xl p-6 sm:p-10 shadow-2xl relative z-10 border-indigo-500/30 animate-in fade-in zoom-in duration-300">
+            <button
+              onClick={() => { playCutSound(); setSelectedConcept(null); }}
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 text-slate-400 hover:text-white transition-colors border border-white/10"
+            >
+              <i className="fas fa-times"></i>
+            </button>
+            <div className="space-y-6 sm:space-y-8 pt-2">
+              <div className="space-y-3">
+                <span className="inline-block text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] px-3 py-1 bg-indigo-500/10 rounded-full border border-indigo-500/20">
+                  {formatTranslation(t('hub.conceptBadge'), { concept: selectedConcept.concept })}
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-black text-white">
+                  {selectedConcept.concept}
+                </h3>
+              </div>
+              <div className="space-y-6">
+                <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-4 sm:p-5">
+                  <h4 className="text-xs font-black text-amber-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <i className="fas fa-seedling"></i> {t('operations.beginnerExplanation')}
+                  </h4>
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    {selectedConcept.beginner}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-4 sm:p-5">
+                  <h4 className="text-xs font-black text-sky-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <i className="fas fa-layer-group"></i> {t('operations.intermediateExplanation')}
+                  </h4>
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    {selectedConcept.intermediate}
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-indigo-500/20 bg-indigo-500/5 p-4 sm:p-5">
+                  <h4 className="text-xs font-black text-indigo-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <i className="fas fa-graduation-cap"></i> {t('operations.expertExplanation')}
+                  </h4>
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    {selectedConcept.expert}
+                  </p>
+                </div>
+              </div>
+              <div className="pt-4 pb-2">
+                <button
+                  onClick={() => { playCutSound(); setSelectedConcept(null); }}
+                  className="w-full py-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-2xl font-black transition-all shadow-xl shadow-indigo-500/20 active:scale-95"
+                >
+                  {t('operations.gotIt')}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="flex flex-col items-center gap-1.5 py-1.5 border-b border-white/5 mb-1">
         <div className="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 text-white">
           <PersonaIcon persona={displayPersona} size="lg" />
@@ -205,11 +311,25 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
                 <p className="text-slate-400 leading-relaxed text-xs">
                   {t(`levels.level${currentLevelInfo.level}` as any)}
                 </p>
-                <div className="mt-6 flex flex-wrap gap-2">
+                <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {currentLevelInfo.concepts.map(c => (
-                    <span key={c} className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-[9px] font-mono border border-indigo-500/20">
-                      {c}
-                    </span>
+                    <button
+                      key={c}
+                      type="button"
+                      onClick={() => {
+                        playCutSound();
+                        const detail = getConceptDetail(c);
+                        setSelectedConcept(detail);
+                      }}
+                      className="glass rounded-2xl px-3 py-3 text-left border border-indigo-500/30 bg-slate-900/70 hover:bg-slate-900 active:scale-[0.98] transition-all cursor-pointer flex flex-col gap-1 min-h-[72px]"
+                    >
+                      <span className="text-[10px] font-black uppercase tracking-[0.18em] text-indigo-400">
+                        {t('hub.conceptLabel')}
+                      </span>
+                      <span className="text-xs sm:text-sm font-mono text-indigo-50">
+                        {c}
+                      </span>
+                    </button>
                   ))}
                 </div>
               </div>

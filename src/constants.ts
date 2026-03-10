@@ -168,6 +168,222 @@ export const LEVELS: LevelInfo[] = [
   }
 ];
 
+export interface GenomeConceptDetail {
+  concept: string;
+  beginner: string;
+  intermediate: string;
+  expert: string;
+}
+
+export const GENOME_CONCEPT_DETAILS: Record<string, GenomeConceptDetail> = {
+  // Level 0 / 1 foundations
+  'print': {
+    concept: 'print',
+    beginner: 'Beginner: `print()` shows values on the screen so you can see what your program is doing. Think of it as asking Python to “say” something out loud.',
+    intermediate: 'Intermediate: `print()` converts its arguments to strings, joins them with the `sep` parameter (default space), appends the `end` parameter (default newline), and writes the result to standard output. It is great for quick debugging and small scripts.',
+    expert: 'Expert: In real applications `print()` is usually replaced or wrapped by structured logging, but understanding that it writes to stdout and how buffering works is important when working with pipes, subprocesses, or redirecting output.'
+  },
+  'variables': {
+    concept: 'variables',
+    beginner: 'Beginner: A variable is a named box where Python remembers a value for you, like writing a label on a container (for example `score = 42`).',
+    intermediate: 'Intermediate: A variable name points to (references) an object in memory, and you can rebind that name to point to different objects or even different types over time.',
+    expert: 'Expert: In CPython, variables are entries in a namespace (a dictionary under the hood) that bind identifiers to objects; understanding bindings, mutability, and aliasing is crucial when several names reference the same underlying object.'
+  },
+  'types': {
+    concept: 'types',
+    beginner: 'Beginner: A type tells you what “kind” of value you have (number, text, True/False, etc.), so Python knows what operations make sense.',
+    intermediate: 'Intermediate: Built‑in types like `int`, `float`, `str`, `bool`, `list`, and `dict` each have their own methods and behaviors; `type(x)` shows the runtime type, and you can convert between types with helpers like `int()`, `str()`, and `float()`.',
+    expert: 'Expert: Python’s dynamic type system means names are untyped but objects are not; understanding the numeric tower, sequence protocols, abstract base classes, and how `__instancecheck__` / `__subclasscheck__` work is key when designing robust APIs.'
+  },
+  'basic math': {
+    concept: 'basic math',
+    beginner: 'Beginner: Basic math in Python uses the same symbols you know from school: `+` to add, `-` to subtract, `*` to multiply, and `/` to divide.',
+    intermediate: 'Intermediate: Operators like `//` (floor division), `%` (remainder), and `**` (power) let you work with integer math, remainders, and exponents; Python follows standard order of operations, so parentheses help make intent clear.',
+    expert: 'Expert: Under the hood, arithmetic operators call methods like `__add__`, `__sub__`, `__mul__`, and `__truediv__`, which makes operator overloading possible on custom numeric types while still respecting precedence rules.'
+  },
+  'first steps': {
+    concept: 'first steps',
+    beginner: 'Beginner: Your first steps combine printing, variables, and basic math so you can see how Python runs simple instructions one after another.',
+    intermediate: 'Intermediate: Early programs help you build a mental model of the read–evaluate–print cycle, how scripts execute top‑to‑bottom, and how to fix basic syntax errors.',
+    expert: 'Expert: Even in simple scripts, thinking about clarity, naming, and small reusable pieces sets you up for good habits in larger projects and prepares you for testing and refactoring later.'
+  },
+  'strings': {
+    concept: 'strings',
+    beginner: 'Beginner: A string is Python’s way to store text like words and sentences, written between quotes such as `"hello"`.',
+    intermediate: 'Intermediate: Strings are immutable sequences, so you can index, slice, and loop over them and use many methods (like `.lower()`, `.split()`, `.replace()`), but any “change” actually creates a new string.',
+    expert: 'Expert: Python strings are Unicode, and operations like slicing, encoding/decoding, and formatting interact with performance and correctness, especially when handling non‑ASCII data or large text streams.'
+  },
+  'comments': {
+    concept: 'comments',
+    beginner: 'Beginner: A comment starts with `#` and is ignored by Python; it is just a note to humans reading your code.',
+    intermediate: 'Intermediate: Good comments explain the why behind the code or tricky edge cases instead of repeating what the code already makes obvious.',
+    expert: 'Expert: Thoughtful commenting, together with docstrings and type hints, documents invariants and design decisions so future readers (including you) can safely modify and extend the code.'
+  },
+  'math': {
+    concept: 'math',
+    beginner: 'Beginner: Math questions practice adding, subtracting, multiplying, dividing, and working with powers and remainders in Python.',
+    intermediate: 'Intermediate: You learn how operator precedence, integer vs float behavior, and functions like `abs`, `round`, and `pow` affect real calculations.',
+    expert: 'Expert: Later levels connect Python’s numeric model (ints, floats, Decimals, Fractions) with topics like overflow, precision, and algorithmic performance for serious numerical work.'
+  },
+  'expressions': {
+    concept: 'expressions',
+    beginner: 'Beginner: An expression is any piece of code that produces a value, like `2 + 3` or `len(name)`.',
+    intermediate: 'Intermediate: Expressions combine operators, function calls, and literals; understanding how they are evaluated left‑to‑right with precedence rules lets you predict results and debug complex lines.',
+    expert: 'Expert: Expression design affects readability and performance; breaking complex expressions into well‑named intermediate results often leads to clearer, more maintainable code and easier testing.'
+  },
+  'order of ops': {
+    concept: 'order of ops',
+    beginner: 'Beginner: Python follows an order of operations similar to PEMDAS, so multiplication happens before addition unless you use parentheses.',
+    intermediate: 'Intermediate: Exponentiation binds first, then unary +/‑, then `* / // %`, then `+ -`, then comparisons and logical operators; parentheses let you make the intended order explicit.',
+    expert: 'Expert: Knowing precedence and associativity rules (for example, `**` is right‑associative) helps you both read others’ code correctly and avoid subtle bugs in complex boolean or arithmetic expressions.'
+  },
+  'conditionals': {
+    concept: 'conditionals',
+    beginner: 'Beginner: Conditionals (`if`, `elif`, `else`) let your program choose different paths depending on whether something is True or False.',
+    intermediate: 'Intermediate: You combine comparisons, logical operators, and truthiness inside conditions to handle multiple cases cleanly instead of writing deeply nested `if` blocks.',
+    expert: 'Expert: Well‑structured conditionals, together with pattern matching and guard clauses, create readable decision trees that are easy to extend and reason about in larger systems.'
+  },
+  'booleans': {
+    concept: 'booleans',
+    beginner: 'Beginner: Booleans are the True/False values Python uses to answer yes/no questions in your code.',
+    intermediate: 'Intermediate: Many operations produce booleans (comparisons, membership tests), and every object has a truthiness value that decides how it behaves in `if` and `while` statements.',
+    expert: 'Expert: In Python, `bool` is a subclass of `int` and custom classes can define `__bool__` or `__len__`, so understanding how truthiness is computed is critical for writing clear conditions and avoiding surprising behavior.'
+  },
+  'logic': {
+    concept: 'logic',
+    beginner: 'Beginner: Logic uses `and`, `or`, and `not` to combine True/False tests into more powerful conditions.',
+    intermediate: 'Intermediate: Logical operators short‑circuit and often return one of their operands instead of a pure bool, which enables handy patterns but can confuse code that expects only True or False.',
+    expert: 'Expert: Complex boolean expressions benefit from being broken into named helper functions or intermediate variables so that intent stays clear and tests can exercise each piece independently.'
+  },
+  'loops': {
+    concept: 'loops',
+    beginner: 'Beginner: Loops let Python repeat a block of code many times so you do not have to write the same line over and over.',
+    intermediate: 'Intermediate: `for` loops iterate over items in a sequence, while `while` loops keep going as long as a condition stays True; `break` and `continue` fine‑tune that flow.',
+    expert: 'Expert: Understanding loop invariants, performance of nested loops, and when to replace explicit loops with comprehensions or vectorized operations is key for writing efficient, clean code.'
+  },
+  'iteration': {
+    concept: 'iteration',
+    beginner: 'Beginner: Iteration means going through items one by one, like visiting each element in a list.',
+    intermediate: 'Intermediate: Python’s `for` loop works with any iterable, including ranges, lists, dictionaries, files, and generators, so many patterns share the same structure.',
+    expert: 'Expert: The iterator protocol (`__iter__`, `__next__`) underpins lazy data processing, generators, and many library abstractions, which lets you handle large or infinite streams efficiently.'
+  },
+  'ranges': {
+    concept: 'ranges',
+    beginner: 'Beginner: `range()` gives you a sequence of numbers for counting in loops, like 0 to 9.',
+    intermediate: 'Intermediate: You control start, stop (exclusive), and step, which makes `range` ideal for indices, countdowns, and patterned iterations.',
+    expert: 'Expert: Range objects are immutable, memory‑efficient sequences; understanding their half‑open intervals and interplay with slicing helps avoid off‑by‑one errors in algorithms.'
+  },
+  'lists': {
+    concept: 'lists',
+    beginner: 'Beginner: A list keeps an ordered collection of items, like a to‑do list you can change.',
+    intermediate: 'Intermediate: Lists are mutable sequences, so you can append, remove, slice, and sort items, and they are the default container for many everyday tasks.',
+    expert: 'Expert: Lists are dynamic arrays under the hood; knowing the cost of operations such as inserting in the middle versus appending helps you choose between lists and other containers like `deque` or `array`.'
+  },
+  'arrays': {
+    concept: 'arrays',
+    beginner: 'Beginner: In this app, “arrays” refers to list‑like collections of items stored in order.',
+    intermediate: 'Intermediate: Python’s built‑in list type covers most array‑style needs; for numeric arrays you can later move to libraries like NumPy for more performance and features.',
+    expert: 'Expert: Understanding contiguous storage, slicing semantics, and how array‑like types expose buffer interfaces is important when working close to the metal or interoperating with C extensions.'
+  },
+  'indexing': {
+    concept: 'indexing',
+    beginner: 'Beginner: Indexing lets you grab a single item from a sequence using its position number, starting at 0.',
+    intermediate: 'Intermediate: Negative indices count from the end, and out‑of‑range indices raise errors; you use indexing heavily with lists and strings.',
+    expert: 'Expert: Because indexing returns references to objects, not copies, changes to mutable elements affect all aliases that share the same container.'
+  },
+  'dictionaries': {
+    concept: 'dictionaries',
+    beginner: 'Beginner: A dictionary stores key–value pairs, like a mini phone book where each name maps to a number.',
+    intermediate: 'Intermediate: Dicts are mutable hash maps with fast average‑case lookups and powerful methods for updating, merging, and iterating over keys, values, and items.',
+    expert: 'Expert: Understanding hashability, collisions, insertion order, and how `__hash__` and `__eq__` interact is essential when using custom objects as keys or designing performant data structures.'
+  },
+  'key-value': {
+    concept: 'key-value',
+    beginner: 'Beginner: “Key–value” means each value in a dictionary is stored under a unique label (the key) you choose.',
+    intermediate: 'Intermediate: Keys must be immutable and hashable, while values can be any type; assigning to an existing key overwrites the old value.',
+    expert: 'Expert: Key design (choosing stable, meaningful keys) is a big part of robust data modeling, especially when serializing, caching, or integrating with external systems.'
+  },
+  'hashing': {
+    concept: 'hashing',
+    beginner: 'Beginner: Hashing is how Python quickly turns a key (like a string) into a number so it can find dictionary entries fast.',
+    intermediate: 'Intermediate: Hash functions aim to spread keys evenly across buckets; in Python, objects that implement `__hash__` and `__eq__` can act as dictionary keys or set elements.',
+    expert: 'Expert: Collisions, hash randomization, and hash‑DoS considerations all matter when you design high‑performance or security‑sensitive code that leans heavily on hashed containers.'
+  },
+  'functions': {
+    concept: 'functions',
+    beginner: 'Beginner: A function is a named recipe for doing a task that you can call whenever you need it.',
+    intermediate: 'Intermediate: Functions take parameters, run some logic, and optionally return values, which keeps your code DRY and easier to test.',
+    expert: 'Expert: Treating functions as first‑class values opens the door to callbacks, higher‑order utilities, decorators, and many functional‑style patterns.'
+  },
+  'parameters': {
+    concept: 'parameters',
+    beginner: 'Beginner: Parameters are the names a function uses for the values it expects you to pass in.',
+    intermediate: 'Intermediate: You can define required, optional (with defaults), and variable‑length parameters to model many different call shapes.',
+    expert: 'Expert: Mastering Python’s rich parameter kinds (positional‑only, keyword‑only, *args, **kwargs) is central to designing clear, flexible function APIs.'
+  },
+  'return': {
+    concept: 'return',
+    beginner: 'Beginner: `return` sends a result back from a function and stops the function immediately.',
+    intermediate: 'Intermediate: Functions can return any object (or several values packed in a tuple), and functions without an explicit return statement implicitly return `None`.',
+    expert: 'Expert: Clear return shapes and early‑return patterns simplify complex logic, while understanding how call stacks and return values interact makes debugging and refactoring safer.'
+  },
+  'classes': {
+    concept: 'classes',
+    beginner: 'Beginner: A class is a template for creating objects that share the same kind of data and behavior.',
+    intermediate: 'Intermediate: Classes group methods and attributes so you can model things from your problem domain directly in code.',
+    expert: 'Expert: Python’s class model is dynamic and supports advanced features like metaclasses, descriptors, and dataclasses, but most designs benefit from simple, well‑named classes with clear responsibilities.'
+  },
+  'objects': {
+    concept: 'objects',
+    beginner: 'Beginner: An object is one specific thing created from a class, like one particular user or bank account.',
+    intermediate: 'Intermediate: Each object keeps its own state but shares methods with other instances of the same class.',
+    expert: 'Expert: In Python everything is an object (including functions and classes themselves), and understanding that unifies many advanced patterns and introspection techniques.'
+  },
+  'methods': {
+    concept: 'methods',
+    beginner: 'Beginner: A method is a function that “belongs to” an object and is called with dot syntax, like `user.login()`.',
+    intermediate: 'Intermediate: Instance methods use `self` to read and update the object’s data; class and static methods support alternative construction and utility behavior.',
+    expert: 'Expert: Knowing how method binding, descriptors, and the method resolution order work explains why different method types behave the way they do and helps you design APIs that are both powerful and predictable.'
+  },
+  'inheritance': {
+    concept: 'inheritance',
+    beginner: 'Beginner: Inheritance lets one class reuse and extend the behavior of another class.',
+    intermediate: 'Intermediate: A child class automatically gets the parent’s methods and attributes and can override or add behavior to specialize it.',
+    expert: 'Expert: Multiple inheritance, MRO, and the choice between inheritance and composition are advanced design topics that strongly influence how flexible and maintainable your class hierarchies are.'
+  },
+  'polymorphism': {
+    concept: 'polymorphism',
+    beginner: 'Beginner: Polymorphism means different objects can respond to the same method name in their own way.',
+    intermediate: 'Intermediate: You can write one function that works with any object that implements the right method, which fits Python’s “duck typing” style.',
+    expert: 'Expert: Protocols, abstract base classes, and structural typing all build on polymorphism to let you express powerful, flexible interfaces in large codebases.'
+  },
+  'encapsulation': {
+    concept: 'encapsulation',
+    beginner: 'Beginner: Encapsulation is about keeping an object’s internal details hidden and exposing only what other code needs.',
+    intermediate: 'Intermediate: In Python you use naming conventions and helper methods to protect invariants and keep related data and behavior together.',
+    expert: 'Expert: Thoughtful encapsulation reduces coupling between parts of your system, making refactoring and extension far safer over time.'
+  },
+  'design patterns': {
+    concept: 'design patterns',
+    beginner: 'Beginner: Design patterns are common “blueprints” developers reuse to solve typical design problems.',
+    intermediate: 'Intermediate: Patterns like Singleton, Factory, Strategy, and Observer give shared names and shapes to solutions, making it easier to discuss and implement architecture.',
+    expert: 'Expert: In Python, many classic patterns become simpler thanks to first‑class functions and dynamic typing; understanding both the original intent and the Pythonic implementation leads to cleaner, more idiomatic designs.'
+  },
+  'architecture': {
+    concept: 'architecture',
+    beginner: 'Beginner: Architecture is the high‑level structure of how your program’s parts fit and talk together.',
+    intermediate: 'Intermediate: You think about modules, layers, and boundaries so that features remain organized instead of turning into one giant file.',
+    expert: 'Expert: Solid architectural choices balance coupling, cohesion, and performance, and they prepare your codebase for growth, testing, and future monetisation.'
+  },
+  'best practices': {
+    concept: 'best practices',
+    beginner: 'Beginner: Best practices are simple habits that make your Python code cleaner and easier to read for others.',
+    intermediate: 'Intermediate: Following conventions like PEP 8, writing tests, and keeping functions small and focused helps prevent bugs and confusion.',
+    expert: 'Expert: Over time, best practices extend into topics like dependency management, observability, performance profiling, and security, all of which matter for production‑grade systems.'
+  }
+};
+
+
 // Glossary data for the app
 export const GLOSSARY = [
   {
