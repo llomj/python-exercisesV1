@@ -321,11 +321,8 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
                         const detail = getConceptDetail(c);
                         setSelectedConcept(detail);
                       }}
-                      className="glass rounded-2xl px-3 py-3 text-left border border-indigo-500/30 bg-slate-900/70 hover:bg-slate-900 active:scale-[0.98] transition-all cursor-pointer flex flex-col gap-1 min-h-[72px]"
+                      className="glass rounded-2xl px-3 py-3 text-left border border-indigo-500/30 bg-slate-900/70 hover:bg-slate-900 active:scale-[0.98] transition-all cursor-pointer flex items-center min-h-[56px]"
                     >
-                      <span className="text-[10px] font-black uppercase tracking-[0.18em] text-indigo-400">
-                        {t('hub.conceptLabel')}
-                      </span>
                       <span className="text-xs sm:text-sm font-mono text-indigo-50">
                         {c}
                       </span>
