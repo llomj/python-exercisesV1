@@ -165,6 +165,36 @@ Before moving to the next level:
 
 ---
 
+## When new nav icons or menus "do not appear" (user sees NO UI change after deploy)
+
+**Symptom**: User reports that a new feature in the nav (e.g. new `Log` icon grouping **Search by ID / ID Log / Learning Log**, or a compact `Settings` icon with **Sound effects / Haptic feedback / Refresh App**) is "nowhere to be seen" on phone PWA, even though:
+- The change is merged into `main` and deployed.
+- Desktop or preview often shows the correct UI.
+
+**Rule for all agents**:
+- **Do NOT immediately assume the code change is missing.** Treat this first as the same **cached PWA build** problem described above.
+- **Do NOT keep re‑explaining the full caching theory to the user.** Instead, follow the short, concrete script below.
+
+**Mandatory steps to fix on the user's device (GitHub Pages / PWA):**
+1. Ask the user to open the app URL **in the browser**, not from the Home Screen icon:  
+   `https://llomj.github.io/python-exercisesV1/`
+2. In that same browser tab, visit:  
+   `https://llomj.github.io/python-exercisesV1/clear-sw.html`  
+   - This unregisters the old service worker and clears its caches for this origin.
+3. When `clear-sw.html` redirects back into the app, tell the user to **hard‑reload once** (Cmd/Ctrl+Shift+R if available) and check the top nav again:
+   - **Log icon** (book) with menu entries:
+     - Search by ID
+     - ID Log
+     - Learning Log
+   - **Language pill** (`EN` / `FR`).
+   - **Small Settings gear** directly under the language pill with:
+     - Sound effects toggle
+     - Haptic feedback toggle
+     - Refresh App
+4. Only **after** steps 1–3 fail on a fresh browser session (not the old PWA shell) should an agent suspect a real code or deploy issue and start debugging the React code or GitHub Actions workflow.
+
+This section exists so future agents **do not repeat the same confusion**: when the user says "nothing changed" on phone, the default assumption is **stale PWA cache**, and the default remedy is **`clear-sw.html` + fresh browser load**, before touching nav/layout code again.
+
 ## CRITICAL: Offline Support & PWA Setup
 
 **This app MUST work fully offline**. This is the highest priority feature.
