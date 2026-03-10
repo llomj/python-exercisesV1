@@ -57,7 +57,15 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   const { t, language } = useLanguage();
   const { playCutSound } = useSound();
   const [rulesExpanded, setRulesExpanded] = useState(false);
-  useEffect(() => { if (!isOpen) setRulesExpanded(false); }, [isOpen]);
+  const [logExpanded, setLogExpanded] = useState(false);
+  const [settingsExpanded, setSettingsExpanded] = useState(false);
+  useEffect(() => {
+    if (!isOpen) {
+      setRulesExpanded(false);
+      setLogExpanded(false);
+      setSettingsExpanded(false);
+    }
+  }, [isOpen]);
 
   const withHaptic = (fn?: () => void) => () => {
     playCutSound();
@@ -111,37 +119,31 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     menuItems.push({ icon: 'fa-book', label: t('levelSelector.rules'), type: 'expandable', children: rulesChildren });
   }
 
-  if (onShowIdSearch) {
-    menuItems.push({
-      icon: 'fa-hashtag',
-      label: t('settings.searchById'),
-      onClick: () => {
-        onShowIdSearch();
-        onClose();
-      }
-    });
-  }
-
-  if (onShowIdLog) {
-    menuItems.push({
-      icon: 'fa-list',
-      label: t('settings.idLog'),
-      onClick: () => {
-        onShowIdLog();
-        onClose();
-      }
-    });
-  }
-
-  if (onShowLearningLog) {
-    menuItems.push({
-      icon: 'fa-book-open',
-      label: t('app.learningLog'),
-      onClick: () => {
-        onShowLearningLog();
-        onClose();
-      }
-    });
+  // Log group: expandable wrapper for Search by ID, ID Log, Learning Log
+  if (onShowIdSearch || onShowIdLog || onShowLearningLog) {
+    const logChildren: Array<{ icon: string; label: string; onClick: () => void }> = [];
+    if (onShowIdSearch) {
+      logChildren.push({
+        icon: 'fa-hashtag',
+        label: t('settings.searchById'),
+        onClick: () => { onShowIdSearch(); onClose(); }
+      });
+    }
+    if (onShowIdLog) {
+      logChildren.push({
+        icon: 'fa-list',
+        label: t('settings.idLog'),
+        onClick: () => { onShowIdLog(); onClose(); }
+      });
+    }
+    if (onShowLearningLog) {
+      logChildren.push({
+        icon: 'fa-book-open',
+        label: t('app.learningLog'),
+        onClick: () => { onShowLearningLog(); onClose(); }
+      });
+    }
+    menuItems.push({ icon: 'fa-book-open', label: 'Log', type: 'expandable', children: logChildren });
   }
 
   if (onToggleLanguage) {
@@ -170,14 +172,28 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
             item.type === 'expandable' && item.children ? (
               <div key={index} className="rounded-xl overflow-hidden">
                 <button
-                  onClick={withHaptic(() => setRulesExpanded(prev => !prev))}
+                  onClick={withHaptic(() => {
+                    if (item.label === t('levelSelector.rules')) {
+                      setRulesExpanded(prev => !prev);
+                    } else if (item.label === 'Log') {
+                      setLogExpanded(prev => !prev);
+                    }
+                  })}
                   className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
                 >
                   <i className={`fas ${item.icon} text-sm w-5 flex-shrink-0 text-indigo-400`}></i>
                   <span className="text-sm font-medium flex-1">{item.label}</span>
-                  <i className={`fas fa-chevron-down text-xs text-slate-500 transition-transform ${rulesExpanded ? 'rotate-180' : ''}`}></i>
+                  <i
+                    className={`fas fa-chevron-down text-xs text-slate-500 transition-transform ${
+                      (item.label === t('levelSelector.rules') && rulesExpanded) ||
+                      (item.label === 'Log' && logExpanded)
+                        ? 'rotate-180'
+                        : ''
+                    }`}
+                  ></i>
                 </button>
-                {rulesExpanded && (
+                {((item.label === t('levelSelector.rules') && rulesExpanded) ||
+                  (item.label === 'Log' && logExpanded)) && (
                   <div className="pl-4 pb-1 space-y-0.5 border-l-2 border-white/10 ml-3">
                     {item.children.map((child, i) => (
                       <button
@@ -220,58 +236,69 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
             )
           )}
 
-          {/* Sound section: toggles only */}
-          {(onToggleSound != null || onToggleHaptic != null) && (
-            <>
-              <div className="my-2 border-t border-white/10" />
-              <div className="flex items-center gap-3 px-4 py-2">
-                <i className="fas fa-volume-high text-sm w-5 flex-shrink-0 text-indigo-400"></i>
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t('settings.soundSection')}</span>
-              </div>
-              {onToggleSound != null && (
-                <button
-                  onClick={withHaptic(onToggleSound)}
-                  className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
-                >
-                  <span className="text-sm font-medium">{t('settings.soundEffects')}</span>
-                  <span className={`w-10 h-6 rounded-full transition-colors flex-shrink-0 ${soundEnabled ? 'bg-indigo-500' : 'bg-slate-600'}`}>
-                    <span className={`block w-5 h-5 mt-0.5 rounded-full bg-white shadow transition-transform ${soundEnabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
-                  </span>
-                </button>
-              )}
-              {onToggleHaptic != null && (
-                <button
-                  onClick={withHaptic(onToggleHaptic)}
-                  className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
-                >
-                  <span className="text-sm font-medium">{t('settings.hapticFeedback')}</span>
-                  <span className={`w-10 h-6 rounded-full transition-colors flex-shrink-0 ${hapticEnabled ? 'bg-indigo-500' : 'bg-slate-600'}`}>
-                    <span className={`block w-5 h-5 mt-0.5 rounded-full bg-white shadow transition-transform ${hapticEnabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
-                  </span>
-                </button>
-              )}
-            </>
-          )}
-
-          {/* Refresh App - reloads UI, keeps scoring & progress */}
-          {onRefreshApp && (
+          {/* Settings section: wrapped under a single Settings icon (sound, haptic, refresh) */}
+          {(onToggleSound != null || onToggleHaptic != null || onRefreshApp) && (
             <>
               <div className="my-2 border-t border-white/10" />
               <button
-                onClick={withHaptic(() => {
-                  onRefreshApp!();
-                  onClose();
-                })}
-                className="w-full flex flex-col items-start gap-0.5 px-4 py-3 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
+                onClick={withHaptic(() => setSettingsExpanded(prev => !prev))}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
               >
-                <span className="flex items-center gap-3 w-full">
-                  <i className="fas fa-arrows-rotate text-sm w-5 flex-shrink-0"></i>
-                  <span className="text-sm font-medium">{t('settings.refreshApp')}</span>
-                </span>
-                <span className="text-[10px] text-slate-500 pl-8">
-                  {formatTranslation(t('settings.appVersion'), { version: APP_VERSION })}
-                </span>
+                <i className="fas fa-gear text-sm w-5 flex-shrink-0 text-indigo-400"></i>
+                <span className="text-sm font-medium flex-1">{t('settings.settings')}</span>
+                <i className={`fas fa-chevron-down text-xs text-slate-500 transition-transform ${settingsExpanded ? 'rotate-180' : ''}`}></i>
               </button>
+              {settingsExpanded && (
+                <>
+                  {(onToggleSound != null || onToggleHaptic != null) && (
+                    <>
+                      <div className="flex items-center gap-3 px-4 py-2">
+                        <i className="fas fa-volume-high text-sm w-5 flex-shrink-0 text-indigo-400"></i>
+                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t('settings.soundSection')}</span>
+                      </div>
+                      {onToggleSound != null && (
+                        <button
+                          onClick={withHaptic(onToggleSound)}
+                          className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
+                        >
+                          <span className="text-sm font-medium">{t('settings.soundEffects')}</span>
+                          <span className={`w-10 h-6 rounded-full transition-colors flex-shrink-0 ${soundEnabled ? 'bg-indigo-500' : 'bg-slate-600'}`}>
+                            <span className={`block w-5 h-5 mt-0.5 rounded-full bg-white shadow transition-transform ${soundEnabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                          </span>
+                        </button>
+                      )}
+                      {onToggleHaptic != null && (
+                        <button
+                          onClick={withHaptic(onToggleHaptic)}
+                          className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
+                        >
+                          <span className="text-sm font-medium">{t('settings.hapticFeedback')}</span>
+                          <span className={`w-10 h-6 rounded-full transition-colors flex-shrink-0 ${hapticEnabled ? 'bg-indigo-500' : 'bg-slate-600'}`}>
+                            <span className={`block w-5 h-5 mt-0.5 rounded-full bg-white shadow transition-transform ${hapticEnabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                          </span>
+                        </button>
+                      )}
+                    </>
+                  )}
+                  {onRefreshApp && (
+                    <button
+                      onClick={withHaptic(() => {
+                        onRefreshApp!();
+                        onClose();
+                      })}
+                      className="w-full flex flex-col items-start gap-0.5 px-4 py-3 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
+                    >
+                      <span className="flex items-center gap-3 w-full">
+                        <i className="fas fa-arrows-rotate text-sm w-5 flex-shrink-0"></i>
+                        <span className="text-sm font-medium">{t('settings.refreshApp')}</span>
+                      </span>
+                      <span className="text-[10px] text-slate-500 pl-8">
+                        {formatTranslation(t('settings.appVersion'), { version: APP_VERSION })}
+                      </span>
+                    </button>
+                  )}
+                </>
+              )}
             </>
           )}
 
