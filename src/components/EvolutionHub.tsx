@@ -194,7 +194,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
         </div>
       )}
       <div className="flex flex-col items-center gap-1.5 py-1.5 border-b border-white/5 mb-1">
-        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20 text-white">
+        <div className="w-14 h-14 rounded-full evolution-gradient flex items-center justify-center shadow-lg shadow-indigo-500/20 text-white">
           <PersonaIcon persona={displayPersona} size="lg" />
         </div>
         <div className="text-center space-y-1">

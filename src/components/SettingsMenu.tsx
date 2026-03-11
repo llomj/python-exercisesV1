@@ -304,13 +304,6 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
                               <span className="w-5 flex-shrink-0 flex items-center justify-center">
                                 <span className="relative inline-flex items-center justify-center">
                                   <i className="fas fa-palette text-sm text-indigo-400"></i>
-                                  <span className="absolute -bottom-1 -right-1 flex gap-0.5">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-slate-200 border border-white/10" />
-                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 border border-white/10" />
-                                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500 border border-white/10" />
-                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 border border-white/10" />
-                                    <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 border border-white/10" />
-                                  </span>
                                 </span>
                               </span>
                               <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t('settings.theme')}</span>
