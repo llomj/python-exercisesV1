@@ -80,6 +80,18 @@
         .evolution-gradient {
             background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
         }
+        /* Theme accent tokens (used to override Tailwind indigo-* utilities) */
+        :root {
+            --accent-500: #6366f1; /* indigo-500 */
+            --accent-600: #4f46e5; /* indigo-600 */
+            --accent-400: #818cf8; /* indigo-400 */
+            --accent-300: #a5b4fc; /* indigo-300 */
+            --accent-500-10: rgba(99, 102, 241, 0.10);
+            --accent-500-20: rgba(99, 102, 241, 0.20);
+            --accent-500-50: rgba(99, 102, 241, 0.50);
+            --accent-500-70: rgba(99, 102, 241, 0.70);
+            --accent-shadow-30: rgba(99, 102, 241, 0.30);
+        }
         /* Mobile specific adjustments */
         @media (max-width: 640px) {
             .container {
@@ -143,6 +155,92 @@
         [data-theme="orange"] .glass { background: rgba(30, 41, 59, 0.82); border-color: rgba(249, 115, 22, 0.18); }
         [data-theme="green"] .glass { background: rgba(15, 23, 42, 0.86); border-color: rgba(16, 185, 129, 0.18); }
         [data-theme="magenta"] .glass { background: rgba(15, 23, 42, 0.86); border-color: rgba(255, 0, 255, 0.2); }
+
+        /* Accent palettes per theme (this drives “main purple” replacements) */
+        [data-theme="default"] {
+            --accent-500: #6366f1;
+            --accent-600: #4f46e5;
+            --accent-400: #818cf8;
+            --accent-300: #a5b4fc;
+            --accent-500-10: rgba(99, 102, 241, 0.10);
+            --accent-500-20: rgba(99, 102, 241, 0.20);
+            --accent-500-50: rgba(99, 102, 241, 0.50);
+            --accent-500-70: rgba(99, 102, 241, 0.70);
+            --accent-shadow-30: rgba(99, 102, 241, 0.30);
+        }
+        [data-theme="light"] {
+            --accent-500: #6366f1;
+            --accent-600: #4f46e5;
+            --accent-400: #4f46e5;
+            --accent-300: #6366f1;
+            --accent-500-10: rgba(99, 102, 241, 0.10);
+            --accent-500-20: rgba(99, 102, 241, 0.20);
+            --accent-500-50: rgba(99, 102, 241, 0.50);
+            --accent-500-70: rgba(99, 102, 241, 0.70);
+            --accent-shadow-30: rgba(99, 102, 241, 0.25);
+        }
+        [data-theme="blue"] {
+            --accent-500: #3b82f6;
+            --accent-600: #2563eb;
+            --accent-400: #60a5fa;
+            --accent-300: #93c5fd;
+            --accent-500-10: rgba(59, 130, 246, 0.10);
+            --accent-500-20: rgba(59, 130, 246, 0.20);
+            --accent-500-50: rgba(59, 130, 246, 0.50);
+            --accent-500-70: rgba(59, 130, 246, 0.70);
+            --accent-shadow-30: rgba(59, 130, 246, 0.30);
+        }
+        [data-theme="orange"] {
+            --accent-500: #f97316;
+            --accent-600: #ea580c;
+            --accent-400: #fb923c;
+            --accent-300: #fdba74;
+            --accent-500-10: rgba(249, 115, 22, 0.10);
+            --accent-500-20: rgba(249, 115, 22, 0.20);
+            --accent-500-50: rgba(249, 115, 22, 0.50);
+            --accent-500-70: rgba(249, 115, 22, 0.70);
+            --accent-shadow-30: rgba(249, 115, 22, 0.30);
+        }
+        [data-theme="green"] {
+            --accent-500: #10b981;
+            --accent-600: #059669;
+            --accent-400: #34d399;
+            --accent-300: #6ee7b7;
+            --accent-500-10: rgba(16, 185, 129, 0.10);
+            --accent-500-20: rgba(16, 185, 129, 0.20);
+            --accent-500-50: rgba(16, 185, 129, 0.50);
+            --accent-500-70: rgba(16, 185, 129, 0.70);
+            --accent-shadow-30: rgba(16, 185, 129, 0.30);
+        }
+        [data-theme="magenta"] {
+            --accent-500: #ff00ff;
+            --accent-600: #e600e6;
+            --accent-400: #ff4dff;
+            --accent-300: #ff80ff;
+            --accent-500-10: rgba(255, 0, 255, 0.10);
+            --accent-500-20: rgba(255, 0, 255, 0.20);
+            --accent-500-50: rgba(255, 0, 255, 0.50);
+            --accent-500-70: rgba(255, 0, 255, 0.70);
+            --accent-shadow-30: rgba(255, 0, 255, 0.30);
+        }
+
+        /* Override “main purple” Tailwind indigo utilities to use accent variables */
+        [data-theme] .bg-indigo-500 { background-color: var(--accent-500) !important; }
+        [data-theme] .hover\:bg-indigo-600:hover { background-color: var(--accent-600) !important; }
+        [data-theme] .text-indigo-400 { color: var(--accent-400) !important; }
+        [data-theme] .text-indigo-300 { color: var(--accent-300) !important; }
+        [data-theme] .border-indigo-500 { border-color: var(--accent-500) !important; }
+        [data-theme] .border-indigo-500\/20 { border-color: var(--accent-500-20) !important; }
+        [data-theme] .bg-indigo-500\/10 { background-color: var(--accent-500-10) !important; }
+        [data-theme] .bg-indigo-500\/20 { background-color: var(--accent-500-20) !important; }
+        [data-theme] .hover\:border-indigo-500\/50:hover { border-color: var(--accent-500-50) !important; }
+        [data-theme] .shadow-indigo-500\/30 { --tw-shadow-color: var(--accent-shadow-30) !important; }
+        [data-theme] .group-hover\:bg-indigo-500:hover { background-color: var(--accent-500) !important; }
+
+        /* App-specific gradient uses accent too */
+        [data-theme] .evolution-gradient {
+            background: linear-gradient(135deg, var(--accent-500) 0%, var(--accent-600) 100%) !important;
+        }
     </style>
 </head>
 <body>
