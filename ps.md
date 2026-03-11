@@ -197,14 +197,12 @@ This section exists so future agents **do not repeat the same confusion**: when 
 
 ## CRITICAL: Offline Support & PWA Setup
 
-**This app MUST work fully offline**. This is the highest priority feature.
+**This app MUST work fully offline.** When the user turns off the internet and reopens the app, it must load and run. See AGENTS.md §9.
 
-**The Fix Implemented**:
-The Vite build process hashes JS and CSS files (e.g. `index-HASH.js`), which breaks offline mode on first load if the files aren't pre-cached during the Service Worker install event.
-To solve this, `sw.js` now dynamically fetches `index.html` during the `install` event and uses regex to extract and cache all `/python-exercisesV1/assets/*.js` and `*.css` files immediately.
-
-**URGENT NOTE FOR ALL AGENTS: OFFLINE MODE MUST NEVER BREAK AGAIN.** 
-If you make ANY changes to caching, routing, or the build process, you must double-check that the service worker correctly pre-caches the Vite-hashed JS and CSS files. DO NOT break this offline functionality!
+**Current implementation:**
+- Build runs `vite build && node scripts/inject-precache.js`. The inject script reads `dist/index.html`, extracts all hashed asset URLs (`/.../assets/*.js` and `*.css`), and injects them into `dist/sw.js` as `PRECACHE_ASSETS`. The service worker precaches these at install so the app works offline after one online load.
+- Root `sw.js` is the template; `public/sw.js` must stay in sync. Do not remove the inject step or change the build to `cp sw.js dist/sw.js`.
+- Navigation is network-first with cache fallback (try `event.request`, then `base + 'index.html'`, then `base`). Local JS/CSS and CDN are cache-first. Fetch handlers never return `undefined` (return 503 if offline and not cached).
 
 ---
 

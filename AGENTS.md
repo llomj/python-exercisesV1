@@ -44,12 +44,16 @@
 ## 8. Verify Code Instruction
 - When the user types "verify code", the agent's role is to verify and debug any problems, issues, conflicts, or potential bugs in the codebase.
 
-## 9. CRITICAL: Offline Support (MOST IMPORTANT)
-- **This app MUST work fully offline**. This is the highest priority feature.
-- **Service Worker**: Always keep `public/sw.js` and root `sw.js` in sync with the same code.
-- **Build Process**: Ensure the build copies the correct `sw.js` to `dist/`.
-- **Testing**: Before pushing any changes, verify offline works by testing in browser with network disabled.
-- **PWA**: Ensure manifest.json is correct and the app can be installed as a PWA.
+## 9. CRITICAL: Full Offline Support (MOST IMPORTANT — DO NOT BREAK)
 
-**URGENT NOTE FOR ALL AGENTS: OFFLINE MODE MUST NEVER BREAK AGAIN.** 
-If you make ANY changes to caching, routing, or the build process, you must double-check that the service worker correctly pre-caches the Vite-hashed JS and CSS files. The `install` event in `sw.js` must fetch `index.html` and pre-cache all assets matched by regex so that the app works offline IMMEDIATELY upon first load. DO NOT break this offline functionality!
+**The app MUST work fully offline.** If the user turns off the internet and reopens the app, it must load and run exactly as when online. This is the highest priority feature.
+
+### Rules all agents MUST follow
+- **Never remove or break offline behavior.** Do not change the build step that generates `dist/sw.js` or the service worker logic that precaches assets.
+- **Build process:** Production build MUST run `vite build && node scripts/inject-precache.js`. Do not change to `cp sw.js dist/sw.js` or drop the inject step. The inject script reads `dist/index.html`, extracts all hashed JS/CSS asset URLs, and injects them into `dist/sw.js` so the service worker precaches them at install. Without this, the app will not work offline after reopen.
+- **Service worker:** Root `sw.js` is the template. `public/sw.js` must stay in sync with root `sw.js`. The file in `dist/` is generated at build time by `scripts/inject-precache.js` and must not be committed; only the template is in the repo.
+- **Do not:** Remove or bypass `scripts/inject-precache.js`; change `PRECACHE_ASSETS` usage in `sw.js`; return `undefined` from fetch handlers (return a 503 Response instead); or change navigation fallback (must try `event.request`, then `base + 'index.html'`, then `base`).
+- **Testing:** Before any deploy or claim that the app works, verify offline: build, serve or deploy, open the app once online, then disable network (or go offline), reopen the app. It must load and run. If it does not, offline support is broken.
+- **PWA:** Keep `manifest.json` correct so the app can be installed as a PWA.
+
+**If you change caching, routing, base path, or the build pipeline, you MUST re-verify offline behavior and leave this section intact.**
