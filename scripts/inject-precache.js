@@ -45,6 +45,7 @@ if (!basePath.endsWith('/')) basePath += '/';
 
 const precacheList = [
   basePath,
+  basePath.endsWith('/') ? basePath.slice(0, -1) : basePath,
   basePath + 'index.html',
   basePath + 'manifest.json',
   ...assets

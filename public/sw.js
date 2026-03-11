@@ -1,4 +1,4 @@
-const CACHE_NAME = 'python-exercises-learn-offline-v24';
+const CACHE_NAME = 'python-exercises-learn-offline-v25';
 
 // Injected at build by scripts/inject-precache.js (from dist/index.html)
 const PRECACHE_ASSETS = []; // BUILD_INJECT
@@ -20,11 +20,17 @@ function getBasePath() {
   }
 }
 
+function getBaseNoSlash() {
+  const base = getBasePath();
+  return base.endsWith('/') ? base.slice(0, -1) : base;
+}
+
 self.addEventListener('install', (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
       const base = getBasePath();
+      const baseNoSlash = getBaseNoSlash();
 
       // Precache all app shell + hashed assets (injected at build)
       for (const url of PRECACHE_ASSETS) {
@@ -34,6 +40,9 @@ self.addEventListener('install', (event) => {
           console.warn('Precache failed:', url, e.message);
         }
       }
+
+      // Ensure both /repo and /repo/ work offline (iOS PWA can reopen without trailing slash)
+      try { await cache.add(baseNoSlash); } catch (_) {}
 
       for (const url of CDN_URLS) {
         try {
@@ -68,6 +77,7 @@ self.addEventListener('fetch', (event) => {
   const isNavigation = event.request.mode === 'navigate' || event.request.destination === 'document' || event.request.url.includes('index.html');
   const isLocal = requestUrl.origin === location.origin;
   const base = getBasePath();
+  const baseNoSlash = getBaseNoSlash();
 
   // Navigation: network first, then cache (so offline reopen works)
   if (isNavigation) {
@@ -79,6 +89,7 @@ self.addEventListener('fetch', (event) => {
               cache.put(event.request, response.clone());
               cache.put(base + 'index.html', response.clone());
               cache.put(base, response.clone());
+              cache.put(baseNoSlash, response.clone());
             });
           }
           return response;
@@ -87,6 +98,7 @@ self.addEventListener('fetch', (event) => {
           return caches.match(event.request)
             .then((cached) => cached || caches.match(base + 'index.html'))
             .then((cached) => cached || caches.match(base))
+            .then((cached) => cached || caches.match(baseNoSlash))
             .then((cached) => cached || new Response('Offline', { status: 503, statusText: 'Offline' }));
         })
     );
