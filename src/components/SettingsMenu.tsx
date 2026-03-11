@@ -63,11 +63,13 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   const [rulesExpanded, setRulesExpanded] = useState(false);
   const [logExpanded, setLogExpanded] = useState(false);
   const [settingsExpanded, setSettingsExpanded] = useState(false);
+  const [themeExpanded, setThemeExpanded] = useState(false);
   useEffect(() => {
     if (!isOpen) {
       setRulesExpanded(false);
       setLogExpanded(false);
       setSettingsExpanded(false);
+      setThemeExpanded(false);
     }
   }, [isOpen]);
 
@@ -293,41 +295,51 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
                       )}
                       {onSetTheme != null && (
                         <div className="pt-1">
-                          <div className="flex items-center gap-3 px-4 py-2">
-                            <span className="w-5 flex-shrink-0 flex items-center justify-center">
-                              <span className="relative inline-flex items-center justify-center">
-                                <i className="fas fa-palette text-sm text-indigo-400"></i>
-                                <span className="absolute -bottom-1 -right-1 flex gap-0.5">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-slate-200 border border-white/10" />
-                                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 border border-white/10" />
-                                  <span className="w-1.5 h-1.5 rounded-full bg-orange-500 border border-white/10" />
-                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 border border-white/10" />
-                                  <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 border border-white/10" />
+                          <button
+                            type="button"
+                            onClick={withHaptic(() => setThemeExpanded(prev => !prev))}
+                            className="w-full flex items-center justify-between gap-3 px-4 py-2 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
+                          >
+                            <span className="flex items-center gap-3">
+                              <span className="w-5 flex-shrink-0 flex items-center justify-center">
+                                <span className="relative inline-flex items-center justify-center">
+                                  <i className="fas fa-palette text-sm text-indigo-400"></i>
+                                  <span className="absolute -bottom-1 -right-1 flex gap-0.5">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-slate-200 border border-white/10" />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 border border-white/10" />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500 border border-white/10" />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 border border-white/10" />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 border border-white/10" />
+                                  </span>
                                 </span>
                               </span>
+                              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t('settings.theme')}</span>
                             </span>
-                            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t('settings.theme')}</span>
-                          </div>
-                          <div className="px-2 pb-1">
-                            {themeOptions.map(opt => {
-                              const isSelected = theme === opt.key;
-                              return (
-                                <button
-                                  key={opt.key}
-                                  onClick={withHaptic(() => onSetTheme(opt.key))}
-                                  className={`w-full flex items-center justify-between gap-3 px-2 py-2 rounded-xl transition-all text-left ${
-                                    isSelected ? 'bg-indigo-500/20 text-white' : 'text-slate-300 hover:bg-white/10 hover:text-white'
-                                  }`}
-                                >
-                                  <span className="flex items-center gap-3">
-                                    <span className={`w-3.5 h-3.5 rounded-full border border-white/10 ${opt.dotClass}`} />
-                                    <span className="text-sm font-medium">{opt.label}</span>
-                                  </span>
-                                  {isSelected && <i className="fas fa-check text-xs text-indigo-300" />}
-                                </button>
-                              );
-                            })}
-                          </div>
+                            <i className={`fas fa-chevron-down text-xs text-slate-500 transition-transform ${themeExpanded ? 'rotate-180' : ''}`}></i>
+                          </button>
+
+                          {themeExpanded && (
+                            <div className="px-2 pb-1">
+                              {themeOptions.map(opt => {
+                                const isSelected = theme === opt.key;
+                                return (
+                                  <button
+                                    key={opt.key}
+                                    onClick={withHaptic(() => onSetTheme(opt.key))}
+                                    className={`w-full flex items-center justify-between gap-3 px-2 py-2 rounded-xl transition-all text-left ${
+                                      isSelected ? 'bg-indigo-500/20 text-white' : 'text-slate-300 hover:bg-white/10 hover:text-white'
+                                    }`}
+                                  >
+                                    <span className="flex items-center gap-3">
+                                      <span className={`w-3.5 h-3.5 rounded-full border border-white/10 ${opt.dotClass}`} />
+                                      <span className="text-sm font-medium">{opt.label}</span>
+                                    </span>
+                                    {isSelected && <i className="fas fa-check text-xs text-indigo-300" />}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          )}
                         </div>
                       )}
                     </>

@@ -711,7 +711,7 @@ const App: React.FC = () => {
 
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-3 bg-white/5 px-3 py-1.5 rounded-2xl border border-white/10">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white">
+              <div className="w-8 h-8 rounded-full evolution-gradient flex items-center justify-center text-white">
                 <PersonaIcon persona={currentPersona} size="sm" />
               </div>
               <div className="flex flex-col">
