@@ -1,4 +1,4 @@
-const CACHE_NAME = 'python-exercises-learn-offline-v25';
+const CACHE_NAME = 'python-exercises-learn-offline-v26';
 
 // Injected at build by scripts/inject-precache.js (from dist/index.html)
 const PRECACHE_ASSETS = []; // BUILD_INJECT
