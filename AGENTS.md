@@ -38,6 +38,24 @@
 - **Structural Parity**: French detailed explanations (explication du codon / description approfondie) must be structurally identical to the English versions: same sections (Key concepts, How it works, Examples, Common uses, Edge cases, etc.), same level of detail, Python code unchanged.
 - **Fallback Rule**: Only fall back to English when a French translation truly does not exist yet; once added, the French version must fully mirror the English content in depth and structure.
 
+## 6b. In-Depth Codon Explanation Structure (Level 0 upwards)
+- **Level 0 First**: Start by enforcing this structure for all Level 0 detailed explanations (IDs 1–300), then apply the same pattern progressively to higher levels.
+- **Keep Existing Tiers**: For each question, keep the current `Beginner / Intermediate / Expert` explanation exactly as-is.
+- **Append 10-Section Block (English)**: Under the Expert section, append a clearly separated block with the following headings in this exact order, each followed by rich, pedagogical content:
+  1. Key Concepts:
+  2. Key Distinctions:
+  3. How It Works:
+  4. Step-by-Step Execution:
+  5. Order of Operations:
+  6. Common Use Cases:
+  7. Edge Cases:
+  8. Performance Considerations:
+  9. Examples:
+  10. Notes:
+- **French Parity**: For every English in-depth explanation that uses this 10-part structure, the French detailed explanation **must** mirror it section-for-section (same 10 headings translated, same ideas, same order). No English-only sections are allowed once the French version exists.
+- **Header styling parity**: In French mode, the in-depth section headers (Concepts clés, Distinctions clés, Fonctionnement, Exécution étape par étape, Ordre des opérations, Cas d'utilisation courants, Cas limites, Considérations de performance, Exemples, Remarques) must use the **same syntax/theme highlighting** as the English headers (Key Concepts, How It Works, Step-by-Step Execution, etc.)—e.g. the same accent class (e.g. `text-indigo-400`, uppercase, tracking) in `QuizView.tsx`. Keep both English and French heading patterns in the `headingPatterns` array so styling is language-agnostic.
+- **Learning Focus**: Each section should teach the concept, not just restate the code. Use concrete mini-scenarios, comparisons, and short code examples inside `Examples:` rather than long theory dumps.
+
 ## 7. Monetisation Goal
 - **Goal**: Monetise this app later. Quality must be top-notch.
 
@@ -57,3 +75,8 @@
 - **PWA:** Keep `manifest.json` correct so the app can be installed as a PWA.
 
 **If you change caching, routing, base path, or the build pipeline, you MUST re-verify offline behavior and leave this section intact.**
+
+## 10. Repository Exclusivity (CRITICAL — DO NOT PUSH OTHER PROJECTS HERE)
+- **This repo only:** All commits and pushes must be for the **Python Exercises Learn** app only. The only GitHub repo for this project is **https://github.com/llomj/python-exercisesV1.git**.
+- **No other project here:** Do not commit, push, or deploy code from any other project (e.g. Tjump / Philosophy Explorer) to this repository. Philosophy Explorer and related work belong in **https://github.com/llomj/Tjump.git** only.
+- **Before pushing:** Confirm that every file and commit belongs to the Python exercises app. If in doubt, do not push.

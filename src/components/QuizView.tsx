@@ -507,6 +507,76 @@ const translateText = (text: string, language: string, questionId?: number): str
   return translated;
 };
 
+const renderDetailedExplanationContent = (text: string, level: number) => {
+  // For Level 0, support structured sections with highlighted headers.
+  if (level === 0) {
+    const lines = text.split('\n');
+    const headingPatterns = [
+      // English (in-depth 10-section + tiers)
+      /^Key Concepts\b/i,
+      /^Key Distinctions\b/i,
+      /^How It Works\b/i,
+      /^Step-By-Step Execution\b/i,
+      /^Step-by-Step Execution\b/i,
+      /^Order Of Operations\b/i,
+      /^Order of Operations\b/i,
+      /^Common Use Cases\b/i,
+      /^Edge Cases\b/i,
+      /^Performance Considerations\b/i,
+      /^Examples\b/i,
+      /^Notes\b/i,
+      // French (same theme: in-depth 10-section + tiers)
+      /^Concepts clés\s*:?/i,
+      /^Distinctions clés\s*:?/i,
+      /^Fonctionnement\s*:?/i,
+      /^Exécution étape par étape\s*:?/i,
+      /^Ordre des opérations\s*:?/i,
+      /^Cas d'utilisation courants\s*:?/i,
+      /^Cas limites\s*:?/i,
+      /^Considérations de performance\s*:?/i,
+      /^Exemples\s*:?/i,
+      /^Remarques\s*:?/i,
+    ];
+
+    return (
+      <div className="text-slate-200 leading-relaxed text-sm">
+        {lines.map((line, index) => {
+          const trimmed = line.trim();
+          const isHeading = headingPatterns.some((re) => re.test(trimmed));
+
+          if (!trimmed) {
+            return <div key={index} className="h-2" />;
+          }
+
+          if (isHeading) {
+            return (
+              <p
+                key={index}
+                className="text-[11px] font-black uppercase tracking-[0.2em] text-indigo-400 mt-3 mb-1"
+              >
+                {trimmed}
+              </p>
+            );
+          }
+
+          return (
+            <p key={index} className="mb-1 whitespace-pre-wrap">
+              {line}
+            </p>
+          );
+        })}
+      </div>
+    );
+  }
+
+  // Other levels: simple block with preserved whitespace.
+  return (
+    <div className="text-slate-200 leading-relaxed text-sm whitespace-pre-wrap">
+      {text}
+    </div>
+  );
+};
+
 // Function to split question into prefix and code
 // Keeps all question text (like "What is", "Result of", "Value of", etc.) together at the top
 const splitQuestion = (text: string, language: string = 'en', questionId?: number) => {
@@ -1135,9 +1205,14 @@ export const QuizView: React.FC<QuizViewProps> = ({
                         <i className="fas fa-graduation-cap text-xs"></i>
                         {t('glossary.inDepthDescription')}
                       </h5>
-                      <div className="text-slate-200 leading-relaxed text-sm whitespace-pre-wrap">
-                        {getTranslatedDetailedExplanation(currentQuestion.id, currentQuestion.detailedExplanation!, language)}
-                      </div>
+                      {renderDetailedExplanationContent(
+                        getTranslatedDetailedExplanation(
+                          currentQuestion.id,
+                          currentQuestion.detailedExplanation!,
+                          language
+                        ),
+                        currentQuestion.level
+                      )}
                     </div>
 
                     {/* Code Versatility Section - Enhanced for Level 9 */}
