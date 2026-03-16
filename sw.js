@@ -1,4 +1,4 @@
-const CACHE_NAME = 'python-exercises-learn-offline-v26';
+const CACHE_NAME = 'python-exercises-learn-offline-BUILD_ID'; // Replaced by inject-precache.js
 
 // Injected at build by scripts/inject-precache.js (from dist/index.html)
 const PRECACHE_ASSETS = []; // BUILD_INJECT
@@ -79,10 +79,10 @@ self.addEventListener('fetch', (event) => {
   const base = getBasePath();
   const baseNoSlash = getBaseNoSlash();
 
-  // Navigation: network first, then cache (so offline reopen works)
+  // Navigation: network first with no HTTP cache (so phone PWA gets fresh HTML and shows new build id), then cache for offline
   if (isNavigation) {
     event.respondWith(
-      fetch(event.request)
+      fetch(event.request, { cache: 'no-store' })
         .then((response) => {
           if (response && response.status === 200) {
             caches.open(CACHE_NAME).then((cache) => {

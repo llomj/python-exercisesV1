@@ -20,7 +20,51 @@ Intermédiaire :
 
 Expert :
 • type(x) renvoie l'objet classe ; pour 0 c'est int. type(0) == int est True.
-• L'affichage <class 'int'> est la représentation en chaîne de l'objet type.`,
+• L'affichage <class 'int'> est la représentation en chaîne de l'objet type.
+
+Concepts clés :
+• Les entiers modélisent des quantités entières (sans partie décimale).
+• 0, 1, -5 sont tous des instances du type intégré int.
+
+Distinctions clés :
+• 0 (int) vs 0.0 (float) : même valeur mathématique, types différents.
+• 0 vs "0" : nombre utilisable en calcul vs texte affiché ou saisi.
+
+Fonctionnement :
+• Python lit le littéral 0 et construit un objet entier.
+• type(0) interroge l'objet pour récupérer sa classe sous-jacente (int).
+
+Exécution étape par étape :
+1. Le littéral 0 est évalué et produit un objet int.
+2. type(0) est appelé avec cet objet comme argument.
+3. type() renvoie la classe int.
+4. L'interpréteur affiche <class 'int'> pour représenter ce type.
+
+Ordre des opérations :
+• Le littéral est créé en premier, puis type() est appliqué au résultat.
+• Il n'y a ici ni opérateurs ni priorité compliquée, juste un appel de fonction.
+
+Cas d'utilisation courants :
+• Vérifier rapidement le type d'une valeur dans le REPL.
+• Expliquer aux débutants la différence entre nombres et chaînes.
+
+Cas limites :
+• Les très grands entiers restent de type int ; Python gère automatiquement leur taille.
+• bool hérite de int, mais type(True) est bool, pas int.
+
+Considérations de performance :
+• Appeler type() sur un littéral comme 0 est négligeable en pratique.
+• La création et l'utilisation de petits entiers sont fortement optimisées en CPython.
+
+Exemples :
+• type(0)          # <class 'int'>
+• type(-10)        # <class 'int'>
+• type(0.0)        # <class 'float'>
+• type("0")        # <class 'str'>
+
+Remarques :
+• Utiliser isinstance(x, int) quand on veut accepter les sous-classes comme bool.
+• <class 'int'> n'est que la représentation textuelle de l'objet type int.`,
   2: `type(1) renvoie <class 'int'>.
 
 Débutant :
@@ -32,7 +76,51 @@ Intermédiaire :
 • type() indique le genre de valeur pour l'utiliser correctement.
 
 Expert :
-• int est un type intégré ; type(1) est le même objet que int. En arithmétique, True se comporte comme 1 (bool est une sous-classe de int).`,
+• int est un type intégré ; type(1) est le même objet que int. En arithmétique, True se comporte comme 1 (bool est une sous-classe de int).
+
+Concepts clés :
+• Les littéraux 1, 2, 3… sont tous des objets int.
+• type() permet de voir la classe sous-jacente d'un objet Python.
+
+Distinctions clés :
+• 1 (int) vs 1.0 (float) vs "1" (str) : trois représentations différentes.
+• Les entiers effectuent des calculs exacts ; les floats sont soumis aux arrondis binaires.
+
+Fonctionnement :
+• Python analyse 1 comme un littéral entier.
+• type(1) renvoie la classe int qui définit le comportement des entiers.
+
+Exécution étape par étape :
+1. Le littéral 1 est lu et converti en objet int.
+2. type(1) est appelé.
+3. type() récupère la classe de cet objet (int).
+4. L'interpréteur affiche <class 'int'>.
+
+Ordre des opérations :
+• Le littéral est évalué, puis passé à type().
+• Il n'y a pas d'autres opérateurs ou priorités à considérer ici.
+
+Cas d'utilisation courants :
+• Vérifier que des entrées utilisateur ont été transformées en int et non en str.
+• Illustrer que tous les petits entiers partagent le même type de base.
+
+Cas limites :
+• En CPython, beaucoup de petits entiers sont mis en cache, mais c'est un détail d'implémentation.
+• Les booléens True/False se comportent comme 1/0 en calcul, mais leur type reste bool.
+
+Considérations de performance :
+• Créer et manipuler des entiers est très rapide et courant en Python.
+• Les opérations sur int sont souvent plus simples que les flottants.
+
+Exemples :
+• type(1)          # <class 'int'>
+• type(2)          # <class 'int'>
+• type(1.0)        # <class 'float'>
+• type("1")        # <class 'str'>
+
+Remarques :
+• Il est inutile d'écrire int(1) : 1 est déjà un int.
+• Réserver ces vérifications de type aux phases d'apprentissage et de débogage.`,
   3: `Les entiers négatifs sont encore de type int.
 
 Débutant :
@@ -44,7 +132,52 @@ Intermédiaire :
 • Seule la présence d'une virgule décimale (ex. -5.0) fait d'une valeur un float.
 
 Expert :
-• type(-5) renvoie int. Pour le typage, utiliser isinstance(x, int) si on veut inclure les sous-classes (ex. bool).`,
+• type(-5) renvoie int. Pour le typage, utiliser isinstance(x, int) si on veut inclure les sous-classes (ex. bool).
+
+Concepts clés :
+• Le signe moins ne change pas le type : -5 reste un int.
+• Les entiers modélisent des quantités positives et négatives entières.
+
+Distinctions clés :
+• -5 vs -5.0 : même valeur mathématique, types différents (int vs float).
+• -5 vs "-5" : nombre négatif vs texte contenant le caractère '-'.
+
+Fonctionnement :
+• Python lit -5 comme l'opérateur unaire moins appliqué au littéral 5.
+• Le résultat de cette expression est toujours un objet int.
+• type(-5) inspecte cet objet et renvoie int.
+
+Exécution étape par étape :
+1. Python lit l'expression -5.
+2. Il construit d'abord l'entier 5.
+3. Il applique l'opérateur unaire - pour obtenir -5.
+4. type(-5) renvoie la classe de ce résultat : int.
+
+Ordre des opérations :
+• Le littéral 5 est créé en premier, puis le signe moins est appliqué.
+• Enfin, type() est appelé sur le résultat numérique.
+
+Cas d'utilisation courants :
+• Représenter des dettes, des températures négatives ou des déplacements vers la gauche.
+• Montrer que le signe affecte la valeur mais pas le type de base.
+
+Cas limites :
+• Les énormes entiers négatifs restent des int ; il n'existe pas de « type négatif » séparé.
+• Des expressions comme -True donnent -1 car bool hérite de int.
+
+Considérations de performance :
+• Négocier un int et vérifier son type sont des opérations en temps constant.
+• Les entiers négatifs sont gérés aussi efficacement que les positifs.
+
+Exemples :
+• type(-5)         # <class 'int'>
+• type(-1)         # <class 'int'>
+• type(-5.0)       # <class 'float'>
+• type("-5")       # <class 'str'>
+
+Remarques :
+• Le signe fait partie de la valeur, pas du type.
+• Utiliser isinstance(x, int) pour accepter de façon uniforme entiers positifs et négatifs.`,
   4: `Les nombres avec une virgule décimale sont des float.
 
 Débutant :
@@ -56,7 +189,51 @@ Intermédiaire :
 • La division (/) produit toujours un float en Python 3, donc 6 / 2 donne 3.0.
 
 Expert :
-• float implémente le flottant IEEE 754 ; type(3.0) est float. Pour l'arithmétique décimale exacte, voir le module decimal.`,
+• float implémente le flottant IEEE 754 ; type(3.0) est float. Pour l'arithmétique décimale exacte, voir le module decimal.
+
+Concepts clés :
+• Un point décimal dans un littéral numérique produit un float.
+• Les floats représentent des nombres réels avec partie fractionnaire en approximation binaire.
+
+Distinctions clés :
+• 3 (int) vs 3.0 (float) : même égalité, type et stockage interne différents.
+• Les floats peuvent représenter des fractions (0.5, 0.25) que les int ne peuvent pas coder directement.
+
+Fonctionnement :
+• Quand Python voit 3.0, il construit un objet float.
+• type(3.0) renvoie la classe float qui définit les opérations fractionnaires.
+
+Exécution étape par étape :
+1. Le littéral 3.0 est analysé comme un flottant.
+2. Python crée un objet float représentant approximativement 3.
+3. type(3.0) est appelé avec cet objet.
+4. type() renvoie <class 'float'>.
+
+Ordre des opérations :
+• Le littéral 3.0 est évalué, puis type() inspecte le résultat.
+• Dans une expression, les opérations arithmétiques s'exécuteraient avant l'appel à type().
+
+Cas d'utilisation courants :
+• Représenter des mesures (3,5 m), des prix (3,99 €) ou des probabilités.
+• Résultats de divisions et de fonctions mathématiques qui produisent des fractions.
+
+Cas limites :
+• Certains décimaux (0,1 par exemple) ne sont pas représentés exactement en binaire.
+• Des tests comme 0.1 + 0.2 == 0.3 peuvent renvoyer False à cause des arrondis.
+
+Considérations de performance :
+• Les calculs flottants sont un peu plus lents et plus complexes que les entiers purs.
+• Pour des charges lourdes, les floats restent le standard ; pour l'exactitude monétaire, utiliser decimal.
+
+Exemples :
+• type(3.0)        # <class 'float'>
+• type(3)          # <class 'int'>
+• type(1.5)        # <class 'float'>
+• type(0.0)        # <class 'float'>
+
+Remarques :
+• Utiliser round() ou decimal.Decimal quand on veut des résultats décimaux « propres » pour l'utilisateur.
+• Comprendre tôt le comportement des floats évite bien des surprises plus tard.`,
   5: `0.0 est un float à cause de la virgule décimale.
 
 Débutant :
@@ -68,7 +245,51 @@ Intermédiaire :
 • En Python 3, 0 == 0.0 est True (égalité de valeur), mais type(0) != type(0.0).
 
 Expert :
-• type(0.0) est float. Pour du code sensible au type, 0 et 0.0 peuvent se comporter différemment (ex. dans les annotations ou isinstance).`,
+• type(0.0) est float. Pour du code sensible au type, 0 et 0.0 peuvent se comporter différemment (ex. dans les annotations ou isinstance).
+
+Concepts clés :
+• Ajouter une virgule décimale change le type d'int vers float, même pour zéro.
+• Les floats représentent des valeurs pouvant avoir une partie fractionnaire, y compris 0.0.
+
+Distinctions clés :
+• 0 vs 0.0 : égaux en valeur, différents en type et en représentation.
+• 0.0 vs "0.0" : zéro numérique vs chaîne de caractères.
+
+Fonctionnement :
+• Python analyse 0.0 comme un littéral flottant.
+• type(0.0) inspecte l'objet créé et renvoie float.
+
+Exécution étape par étape :
+1. Python lit le littéral 0.0 et alloue un objet float.
+2. type(0.0) est appelé avec ce float.
+3. type() renvoie <class 'float'>.
+4. L'interpréteur affiche le type pour l'utilisateur.
+
+Ordre des opérations :
+• Le littéral est créé d'abord ; il n'y a pas d'autres opérateurs ici.
+• Dans des expressions plus longues, l'arithmétique serait évaluée avant type().
+
+Cas d'utilisation courants :
+• Initialiser des variables qui contiendront plus tard des valeurs flottantes non nulles.
+• Indiquer explicitement qu'un calcul se fait en float, même s'il commence à zéro.
+
+Cas limites :
+• 0.0 est égal à 0, mais isinstance(0.0, int) est False.
+• Selon le formatage, 0.0 peut s'afficher comme 0.0 ou simplement 0.
+
+Considérations de performance :
+• Utiliser 0.0 au lieu de 0 a un coût négligeable, mais rend l'intention (float) plus claire.
+• Une utilisation cohérente des floats peut simplifier la logique dans certaines parties du code.
+
+Exemples :
+• type(0.0)        # <class 'float'>
+• type(0)          # <class 'int'>
+• 0 == 0.0         # True
+• isinstance(0.0, float)  # True
+
+Remarques :
+• Préférer 0.0 quand une variable représente conceptuellement une quantité flottante.
+• Garder en tête que mélanger int et float dans les expressions produit généralement des floats.`,
   6: `La chaîne vide est encore une chaîne.
 
 Débutant :
@@ -80,7 +301,28 @@ Intermédiaire :
 • len('') vaut 0 ; bool('') est False (les chaînes vides sont falsy).
 
 Expert :
-• type('') est str. La chaîne vide est un objet de type singleton utilisé pour « pas de texte » ; ce n'est pas None (type NoneType).`,
+• type('') est str. La chaîne vide est un objet de type singleton utilisé pour « pas de texte » ; ce n'est pas None (type NoneType).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   7: `Python n'a pas de type caractère séparé ; un seul caractère est une chaîne.
 
 Débutant :
@@ -92,7 +334,28 @@ Intermédiaire :
 • Indexer une chaîne renvoie une chaîne : 'hello'[0] est 'h' (str), pas un type char.
 
 Expert :
-• En Python, str est une séquence de points de code Unicode. type('a') est str ; il n'y a pas de char. Pour des octets, utiliser bytes ou bytearray.`,
+• En Python, str est une séquence de points de code Unicode. type('a') est str ; il n'y a pas de char. Pour des octets, utiliser bytes ou bytearray.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   8: `True est une valeur booléenne.
 
 Débutant :
@@ -104,7 +367,28 @@ Intermédiaire :
 • Utiliser les booléens dans les conditions : if x:, while flag:, etc.
 
 Expert :
-• type(True) est bool ; isinstance(True, int) est True. Pour l'identité, True is True. Il n'existe qu'un seul objet True et un seul False.`,
+• type(True) est bool ; isinstance(True, int) est True. Pour l'identité, True is True. Il n'existe qu'un seul objet True et un seul False.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   9: `False est une valeur booléenne.
 
 Débutant :
@@ -116,7 +400,28 @@ Intermédiaire :
 • Les collections vides et zéro sont « falsy » ; bool(0) et bool('') sont False.
 
 Expert :
-• type(False) est bool. Utiliser « is False » pour les tests d'identité plutôt que == quand on vise le booléen False.`,
+• type(False) est bool. Utiliser « is False » pour les tests d'identité plutôt que == quand on vise le booléen False.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   10: `None représente « aucune valeur » ; son type est NoneType.
 
 Débutant :
@@ -128,7 +433,28 @@ Intermédiaire :
 • None n'est pas 0 ni False ; c'est un type à part.
 
 Expert :
-• type(None) est NoneType. None est un singleton. Ne pas utiliser == None de façon systématique ; préférer is None.`,
+• type(None) est NoneType. None est un singleton. Ne pas utiliser == None de façon systématique ; préférer is None.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   11: `Les crochets créent une liste. type([]) renvoie <class 'list'>.
 
 Débutant :
@@ -140,7 +466,28 @@ Intermédiaire :
 • len([]) vaut 0 ; on peut ajouter avec append, concaténer avec +.
 
 Expert :
-• type([]) est list. Les listes sont des tableaux dynamiques ; [] crée une nouvelle liste vide.`,
+• type([]) est list. Les listes sont des tableaux dynamiques ; [] crée une nouvelle liste vide.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   12: `Les parenthèses créent un tuple. type(()) renvoie <class 'tuple'>.
 
 Débutant :
@@ -152,7 +499,28 @@ Intermédiaire :
 • Les tuples sont hashables s'ils ne contiennent que des éléments hashables.
 
 Expert :
-• type(()) est tuple. () est le seul tuple vide ; les tuples sont immuables.`,
+• type(()) est tuple. () est le seul tuple vide ; les tuples sont immuables.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   13: `Les accolades vides créent un dictionnaire. type({}) renvoie <class 'dict'>.
 
 Débutant :
@@ -164,7 +532,28 @@ Intermédiaire :
 • dict est le type pour les paires clé-valeur ; {} est le dictionnaire vide.
 
 Expert :
-• type({}) est dict. Les dictionnaires sont des tables de hachage ; {} crée un dict vide.`,
+• type({}) est dict. Les dictionnaires sont des tables de hachage ; {} crée un dict vide.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   14: `set() crée un ensemble vide. type(set()) renvoie <class 'set'>.
 
 Débutant :
@@ -176,7 +565,28 @@ Intermédiaire :
 • Les ensembles sont non ordonnés et mutables ; les éléments doivent être hashables.
 
 Expert :
-• type(set()) est set. set() est le seul moyen d'obtenir un ensemble vide ({} est un dict).`,
+• type(set()) est set. set() est le seul moyen d'obtenir un ensemble vide ({} est un dict).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   15: `42 est un entier. type(42) renvoie <class 'int'>.
 
 Débutant :
@@ -188,7 +598,28 @@ Intermédiaire :
 • En Python 3, int a une précision arbitraire (pas de limite fixe comme en C).
 
 Expert :
-• type(42) est int. Les entiers Python sont des objets ; 42 est un littéral int.`,
+• type(42) est int. Les entiers Python sont des objets ; 42 est un littéral int.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   16: `100 est un entier. type(100) renvoie <class 'int'>.
 
 Débutant :
@@ -200,7 +631,28 @@ Intermédiaire :
 • 100, 0, -1 sont tous de type int.
 
 Expert :
-• type(100) est int. Les entiers en Python 3 sont de précision arbitraire.`,
+• type(100) est int. Les entiers en Python 3 sont de précision arbitraire.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   17: `1.5 est un float. type(1.5) renvoie <class 'float'>.
 
 Débutant :
@@ -212,7 +664,28 @@ Intermédiaire :
 • Les flottants suivent la norme IEEE 754 (imprécisions possibles en décimal).
 
 Expert :
-• type(1.5) est float. Pour une arithmétique décimale exacte, utiliser le module decimal.`,
+• type(1.5) est float. Pour une arithmétique décimale exacte, utiliser le module decimal.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   18: `Le texte entre guillemets est une chaîne. type('hello') renvoie <class 'str'>.
 
 Débutant :
@@ -224,7 +697,28 @@ Intermédiaire :
 • On peut indexer : 'hello'[0] vaut 'h', 'hello'[-1] vaut 'o'.
 
 Expert :
-• type('hello') est str. En Python 3, les chaînes sont des séquences de points de code Unicode.`,
+• type('hello') est str. En Python 3, les chaînes sont des séquences de points de code Unicode.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   19: `[1] est une liste avec un élément. type([1]) renvoie <class 'list'>.
 
 Débutant :
@@ -236,7 +730,28 @@ Intermédiaire :
 • On peut modifier : [1].append(2) donne [1, 2].
 
 Expert :
-• type([1]) est list. Une liste est une séquence mutable ; [1] contient une référence à l'entier 1.`,
+• type([1]) est list. Une liste est une séquence mutable ; [1] contient une référence à l'entier 1.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   20: `(1,) est un tuple ; la virgule est requise. type((1,)) renvoie <class 'tuple'>.
 
 Débutant :
@@ -248,7 +763,28 @@ Intermédiaire :
 • Les tuples sont immuables : on ne peut pas modifier (1,) après création.
 
 Expert :
-• type((1,)) est tuple. La virgule est la syntaxe pour un tuple à un élément ; () sans virgule est une expression groupée.`,
+• type((1,)) est tuple. La virgule est la syntaxe pour un tuple à un élément ; () sans virgule est une expression groupée.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   21: `{1: 2} est un dictionnaire. type({1: 2}) renvoie <class 'dict'>.
 
 Débutant :
@@ -260,7 +796,28 @@ Intermédiaire :
 • Accès : {1: 2}[1] vaut 2. Modifiable : on peut ajouter ou modifier des paires.
 
 Expert :
-• type({1: 2}) est dict. Les dict sont des tables de hachage ; l'ordre d'insertion est préservé (Python 3.7+).`,
+• type({1: 2}) est dict. Les dict sont des tables de hachage ; l'ordre d'insertion est préservé (Python 3.7+).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   22: `{1, 2} est un ensemble. type({1, 2}) renvoie <class 'set'>.
 
 Débutant :
@@ -272,7 +829,28 @@ Intermédiaire :
 • Pas d'indexation : les ensembles ne sont pas des séquences.
 
 Expert :
-• type({1, 2}) est set. Les sets sont des tables de hachage sans valeur associée ; l'ordre n'est pas garanti.`,
+• type({1, 2}) est set. Les sets sont des tables de hachage sans valeur associée ; l'ordre n'est pas garanti.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   23: `b'x' est de type bytes. type(b'x') renvoie <class 'bytes'>.
 
 Débutant :
@@ -284,7 +862,28 @@ Intermédiaire :
 • En Python 3, 'x' est str (Unicode) ; b'x' est bytes (octets bruts).
 
 Expert :
-• type(b'x') est bytes. bytes est une séquence immuable d'octets ; pour du binaire mutable, utiliser bytearray.`,
+• type(b'x') est bytes. bytes est une séquence immuable d'octets ; pour du binaire mutable, utiliser bytearray.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   24: `2 est un entier. type(2) renvoie <class 'int'>.
 
 Débutant :
@@ -296,7 +895,28 @@ Intermédiaire :
 • En conditions, 2 est truthy ; 2 == True est False (types différents), mais 2 == (1+1) est True.
 
 Expert :
-• type(2) est int. Les entiers sont des objets ; 2 est une instance de int.`,
+• type(2) est int. Les entiers sont des objets ; 2 est une instance de int.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   25: `10 est un entier. type(10) renvoie <class 'int'>.
 
 Débutant :
@@ -308,7 +928,28 @@ Intermédiaire :
 • 10 peut être utilisé dans toute opération arithmétique sur les int.
 
 Expert :
-• type(10) est int. En Python 3, int a une précision arbitraire.`,
+• type(10) est int. En Python 3, int a une précision arbitraire.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   26: `-1 est un int. type(-1) renvoie <class 'int'>.
 
 Débutant :
@@ -320,7 +961,28 @@ Intermédiaire :
 • -1 est truthy (tout nombre non nul l'est).
 
 Expert :
-• type(-1) est int. Les indices négatifs en Python désignent les éléments depuis la fin.`,
+• type(-1) est int. Les indices négatifs en Python désignent les éléments depuis la fin.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   27: `0.5 est un float. type(0.5) renvoie <class 'float'>.
 
 Débutant :
@@ -332,7 +994,28 @@ Intermédiaire :
 • En Python 3, 1/2 donne 0.5 (float) ; 1//2 donne 0 (int).
 
 Expert :
-• type(0.5) est float. Les flottants sont en base 2 ; certains décimaux ne sont pas représentables exactement.`,
+• type(0.5) est float. Les flottants sont en base 2 ; certains décimaux ne sont pas représentables exactement.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   28: `2.5 est un float. type(2.5) renvoie <class 'float'>.
 
 Débutant :
@@ -344,7 +1027,28 @@ Intermédiaire :
 • 2 + 2.5 donne 4.5 (float) à cause de la promotion de type.
 
 Expert :
-• type(2.5) est float. int + float donne toujours float en Python.`,
+• type(2.5) est float. int + float donne toujours float en Python.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   29: `Une chaîne d'un caractère est de type str. type('x') renvoie <class 'str'>.
 
 Débutant :
@@ -356,7 +1060,28 @@ Intermédiaire :
 • Les chaînes sont immuables : on ne peut pas modifier 'x' sur place.
 
 Expert :
-• type('x') est str. En Python 3, str est une séquence de points de code Unicode.`,
+• type('x') est str. En Python 3, str est une séquence de points de code Unicode.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   30: `Les guillemets doubles créent aussi une chaîne. type("") renvoie <class 'str'>.
 
 Débutant :
@@ -368,7 +1093,28 @@ Intermédiaire :
 • On utilise " quand la chaîne contient ', et inversement.
 
 Expert :
-• type("") est str. Les guillemets triples """ ou ''' permettent des chaînes sur plusieurs lignes.`,
+• type("") est str. Les guillemets triples """ ou ''' permettent des chaînes sur plusieurs lignes.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   31: `[0] est une liste. type([0]) renvoie <class 'list'>.
 
 Débutant :
@@ -380,7 +1126,28 @@ Intermédiaire :
 • bool([0]) est True car la liste est non vide (le contenu 0 ne change pas ça).
 
 Expert :
-• type([0]) est list. Une liste peut contenir n'importe quel type ; ici un int.`,
+• type([0]) est list. Une liste peut contenir n'importe quel type ; ici un int.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   32: `[1, 2] est une liste. type([1, 2]) renvoie <class 'list'>.
 
 Débutant :
@@ -392,7 +1159,28 @@ Intermédiaire :
 • On peut concaténer : [1, 2] + [3] donne [1, 2, 3].
 
 Expert :
-• type([1, 2]) est list. Les listes sont des séquences mutables ordonnées.`,
+• type([1, 2]) est list. Les listes sont des séquences mutables ordonnées.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   33: `(1, 2) est un tuple. type((1, 2)) renvoie <class 'tuple'>.
 
 Débutant :
@@ -404,7 +1192,28 @@ Intermédiaire :
 • Les tuples sont hashables si leurs éléments le sont ; utilisables comme clés de dict.
 
 Expert :
-• type((1, 2)) est tuple. Les tuples sont des séquences immuables ; souvent utilisés pour retourner plusieurs valeurs.`,
+• type((1, 2)) est tuple. Les tuples sont des séquences immuables ; souvent utilisés pour retourner plusieurs valeurs.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   34: `{'a': 1} est un dict. type({'a': 1}) renvoie <class 'dict'>.
 
 Débutant :
@@ -416,7 +1225,28 @@ Intermédiaire :
 • Les dictionnaires sont mutables ; on peut ajouter ou modifier des paires.
 
 Expert :
-• type({'a': 1}) est dict. Les clés doivent être hashables et uniques.`,
+• type({'a': 1}) est dict. Les clés doivent être hashables et uniques.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   35: `{0} est un ensemble à un élément. type({0}) renvoie <class 'set'>.
 
 Débutant :
@@ -428,7 +1258,28 @@ Intermédiaire :
 • {0} est différent de [] et (0,) : c'est un set, non ordonné.
 
 Expert :
-• type({0}) est set. Les éléments d'un set doivent être hashables.`,
+• type({0}) est set. Les éléments d'un set doivent être hashables.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   36: `7 est un entier. type(7) renvoie <class 'int'>.
 
 Débutant :
@@ -440,7 +1291,28 @@ Intermédiaire :
 • En boucle : range(7) produit 0, 1, 2, 3, 4, 5, 6.
 
 Expert :
-• type(7) est int. Les littéraux entiers en base 10 sont du type int.`,
+• type(7) est int. Les littéraux entiers en base 10 sont du type int.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   37: `99 est un entier. type(99) renvoie <class 'int'>.
 
 Débutant :
@@ -452,7 +1324,28 @@ Intermédiaire :
 • 99 est truthy ; 99 == True est False (types différents).
 
 Expert :
-• type(99) est int. Les entiers Python ont une précision arbitraire.`,
+• type(99) est int. Les entiers Python ont une précision arbitraire.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   38: `-10 est un int. type(-10) renvoie <class 'int'>.
 
 Débutant :
@@ -464,7 +1357,28 @@ Intermédiaire :
 • abs(-10) vaut 10 ; -10 // 3 vaut -4 (division entière vers -infini).
 
 Expert :
-• type(-10) est int. La division entière en Python tronque vers -infini, pas vers zéro.`,
+• type(-10) est int. La division entière en Python tronque vers -infini, pas vers zéro.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   39: `1.0 a une décimale, donc c'est un float. type(1.0) renvoie <class 'float'>.
 
 Débutant :
@@ -476,7 +1390,28 @@ Intermédiaire :
 • 1 + 1.0 donne 2.0, pas 2.
 
 Expert :
-• type(1.0) est float. La promotion de type en Python : int + float -> float.`,
+• type(1.0) est float. La promotion de type en Python : int + float -> float.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   40: `10.0 est un float. type(10.0) renvoie <class 'float'>.
 
 Débutant :
@@ -488,7 +1423,28 @@ Intermédiaire :
 • Pour le typage strict, 10 et 10.0 peuvent être traités différemment.
 
 Expert :
-• type(10.0) est float. En annotations de type, int et float sont distincts.`,
+• type(10.0) est float. En annotations de type, int et float sont distincts.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   41: `'0' entre guillemets est une chaîne, pas l'entier 0. type('0') renvoie <class 'str'>.
 
 Débutant :
@@ -500,7 +1456,28 @@ Intermédiaire :
 • '0' + '0' donne '00' ; 0 + 0 donne 0.
 
 Expert :
-• type('0') est str. str et int sont des types différents ; conversion explicite avec int() ou str().`,
+• type('0') est str. str et int sont des types différents ; conversion explicite avec int() ou str().
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   42: `'1' est une chaîne. type('1') renvoie <class 'str'>.
 
 Débutant :
@@ -512,7 +1489,28 @@ Intermédiaire :
 • En conditions, '1' est truthy (chaîne non vide).
 
 Expert :
-• type('1') est str. Ne pas confondre littéral chaîne et littéral entier.`,
+• type('1') est str. Ne pas confondre littéral chaîne et littéral entier.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   43: `15 est un entier. type(15) renvoie <class 'int'>.
 
 Débutant :
@@ -524,7 +1522,28 @@ Intermédiaire :
 • range(15) produit 0 à 14.
 
 Expert :
-• type(15) est int. Les entiers sont des objets de première classe en Python.`,
+• type(15) est int. Les entiers sont des objets de première classe en Python.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   44: `3 est un entier. type(3) renvoie <class 'int'>.
 
 Débutant :
@@ -536,7 +1555,28 @@ Intermédiaire :
 • En slice : 'abc'[0:3] ou 'abc'[:3] donne 'abc'.
 
 Expert :
-• type(3) est int. Les littéraux numériques sans point décimal sont des int.`,
+• type(3) est int. Les littéraux numériques sans point décimal sont des int.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   45: `4.0 est un float. type(4.0) renvoie <class 'float'>.
 
 Débutant :
@@ -548,7 +1588,28 @@ Intermédiaire :
 • En division : 8 / 2 donne 4.0 en Python 3 (toujours float).
 
 Expert :
-• type(4.0) est float. L'opérateur / en Python 3 renvoie toujours un float.`,
+• type(4.0) est float. L'opérateur / en Python 3 renvoie toujours un float.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   46: `'hi' est une chaîne. type('hi') renvoie <class 'str'>.
 
 Débutant :
@@ -560,7 +1621,28 @@ Intermédiaire :
 • 'hi' * 2 donne 'hihi'.
 
 Expert :
-• type('hi') est str. str est une séquence de caractères Unicode, immuable.`,
+• type('hi') est str. str est une séquence de caractères Unicode, immuable.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   47: `[1, 2, 3] est une liste. type([1, 2, 3]) renvoie <class 'list'>.
 
 Débutant :
@@ -572,7 +1654,28 @@ Intermédiaire :
 • sum([1, 2, 3]) vaut 6.
 
 Expert :
-• type([1, 2, 3]) est list. Les listes sont des séquences mutables ordonnées.`,
+• type([1, 2, 3]) est list. Les listes sont des séquences mutables ordonnées.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   48: `(0,) est un tuple à un élément. type((0,)) renvoie <class 'tuple'>.
 
 Débutant :
@@ -584,7 +1687,28 @@ Intermédiaire :
 • (0,)[0] vaut 0. Les tuples sont immuables.
 
 Expert :
-• type((0,)) est tuple. La virgule crée un tuple à un élément ; sans elle, les parenthèses ne font que grouper.`,
+• type((0,)) est tuple. La virgule crée un tuple à un élément ; sans elle, les parenthèses ne font que grouper.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   49: `range(3) est un objet range. type(range(3)) renvoie <class 'range'>.
 
 Débutant :
@@ -596,7 +1720,28 @@ Intermédiaire :
 • range est paresseux : il ne crée pas toute la liste en mémoire.
 
 Expert :
-• type(range(3)) est range. range est un type séquence immuable, souvent utilisé pour les index de boucle.`,
+• type(range(3)) est range. range est un type séquence immuable, souvent utilisé pour les index de boucle.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   50: `... est le littéral ellipsis (Ellipsis). type(...) renvoie <class 'ellipsis'>.
 
 Débutant :
@@ -608,7 +1753,28 @@ Intermédiaire :
 • En typage : Tuple[int, ...] signifie « tuple d'int de longueur quelconque ».
 
 Expert :
-• type(...) est ellipsis. ... est un littéral qui évalue à l'objet Ellipsis ; utilisé dans numpy et les annotations.`,
+• type(...) est ellipsis. ... est un littéral qui évalue à l'objet Ellipsis ; utilisé dans numpy et les annotations.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   51: `L'addition de deux entiers donne un entier. 1 + 1 = 2.
 
 Débutant :
@@ -620,7 +1786,28 @@ Intermédiaire :
 • Pour la concaténation de chaînes on utilise aussi + mais avec des str : '1' + '1' = '11'. Ici ce sont des nombres, donc 2.
 
 Expert :
-• int.__add__ ; 1 + 1 = 2. Le résultat est l'entier 2.`,
+• int.__add__ ; 1 + 1 = 2. Le résultat est l'entier 2.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   52: `Addition simple : 2 + 3 = 5.
 
 Débutant :
@@ -632,7 +1819,28 @@ Intermédiaire :
 • Même principe que 1 + 1 : int + int = int.
 
 Expert :
-• 2 + 3 = 5. Le résultat est 5.`,
+• 2 + 3 = 5. Le résultat est 5.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   53: `Soustraction : 10 - 3 = 7.
 
 Débutant :
@@ -644,7 +1852,28 @@ Intermédiaire :
 • L'opérateur - peut aussi désigner un nombre négatif (ex. -3) ou la différence d'ensembles. Ici c'est la soustraction.
 
 Expert :
-• int.__sub__ ; 10 - 3 = 7. Le résultat est l'entier 7.`,
+• int.__sub__ ; 10 - 3 = 7. Le résultat est l'entier 7.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   54: `Multiplication : 4 * 2 = 8.
 
 Débutant :
@@ -656,7 +1885,28 @@ Intermédiaire :
 • Avec des nombres, * est la multiplication. La réponse est 8.
 
 Expert :
-• int.__mul__ ; 4 * 2 = 8. Le résultat est l'entier 8.`,
+• int.__mul__ ; 4 * 2 = 8. Le résultat est l'entier 8.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   55: `En Python 3, l'opérateur / renvoie toujours un float.
 
 Débutant :
@@ -668,7 +1918,28 @@ Intermédiaire :
 • / renvoie toujours un float en Python 3. Donc 6 / 2 = 3.0.
 
 Expert :
-• __truediv__ ; en Python 3 / renvoie toujours un float. Le résultat est 3.0.`,
+• __truediv__ ; en Python 3 / renvoie toujours un float. Le résultat est 3.0.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   56: `// est la division entière (troncature vers le bas). 9 // 2 = 4.
 
 Débutant :
@@ -680,7 +1951,28 @@ Intermédiaire :
 • / donne un float en Python 3 (9/2 = 4.5), mais // donne le quotient entier. Donc 9 // 2 = 4.
 
 Expert :
-• int.__floordiv__ ; 9 // 2 = 4. Division entière ; le résultat est int quand les deux opérandes sont int.`,
+• int.__floordiv__ ; 9 // 2 = 4. Division entière ; le résultat est int quand les deux opérandes sont int.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   57: `% donne le reste de la division. 9 % 2 = 1.
 
 Débutant :
@@ -692,7 +1984,28 @@ Intermédiaire :
 • % renvoie toujours un résultat du même signe que le diviseur (en Python). Donc 9 % 2 = 1.
 
 Expert :
-• int.__mod__ ; 9 % 2 = 1. Reste de la division. divmod(9, 2) = (4, 1).`,
+• int.__mod__ ; 9 % 2 = 1. Reste de la division. divmod(9, 2) = (4, 1).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   58: `** est l'exponentiation. 2 ** 3 = 8.
 
 Débutant :
@@ -704,7 +2017,28 @@ Intermédiaire :
 • Donc 2 ** 4 = 16, 10 ** 2 = 100. La réponse est 8.
 
 Expert :
-• int.__pow__ ; 2 ** 3 = 8. Exponentiation. pow(2, 3) est équivalent.`,
+• int.__pow__ ; 2 ** 3 = 8. Exponentiation. pow(2, 3) est équivalent.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   59: `print() affiche la valeur sur la console. print(5) affiche 5.
 
 Débutant :
@@ -716,7 +2050,28 @@ Intermédiaire :
 • On peut passer plusieurs arguments : print(1, 2) affiche « 1 2 » (séparés par un espace).
 
 Expert :
-• print() appelle str() sur les arguments et écrit sur sys.stdout. C'est une fonction built-in.`,
+• print() appelle str() sur les arguments et écrit sur sys.stdout. C'est une fonction built-in.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   60: `print() affiche le contenu de la chaîne. print('hi') affiche hi sans les guillemets.
 
 Débutant :
@@ -728,7 +2083,28 @@ Intermédiaire :
 • Les chaînes entre guillemets sont des littéraux ; print affiche leur contenu.
 
 Expert :
-• print() convertit l'argument en str et écrit sur stdout. Les guillemets sont une notation du code source, pas une partie de la valeur.`,
+• print() convertit l'argument en str et écrit sur stdout. Les guillemets sont une notation du code source, pas une partie de la valeur.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   61: `Un nom de variable valide peut contenir lettres, chiffres et underscore ; il ne peut pas commencer par un chiffre.
 
 Débutant :
@@ -740,7 +2116,28 @@ Intermédiaire :
 • Les mots réservés (if, for, def, etc.) ne peuvent pas être utilisés comme noms de variables.
 
 Expert :
-• Les identifiants Python suivent la grammaire : (letter|"_")(letter|digit|"_")*. Pas d'espaces ni de caractères spéciaux.`,
+• Les identifiants Python suivent la grammaire : (letter|"_")(letter|digit|"_")*. Pas d'espaces ni de caractères spéciaux.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   62: `Les espaces ne sont pas autorisés dans les noms de variables.
 
 Débutant :
@@ -752,7 +2149,28 @@ Intermédiaire :
 • Les identifiants doivent être un seul mot (lettres, chiffres, underscore).
 
 Expert :
-• La grammaire des identifiants n'autorise pas les espaces. Les espaces sont des séparateurs de tokens.`,
+• La grammaire des identifiants n'autorise pas les espaces. Les espaces sont des séparateurs de tokens.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   63: `L'assignation stocke la valeur dans la variable. x = 7 assigne 7 à x.
 
 Débutant :
@@ -764,7 +2182,28 @@ Intermédiaire :
 • On peut réassigner : x = 8 ; alors x vaut 8. L'ancienne valeur 7 peut être récupérée par le garbage collector si plus référencée.
 
 Expert :
-• L'assignation lie un nom à un objet. Pas de « variable » au sens C : un nom dans un namespace qui pointe vers un objet.`,
+• L'assignation lie un nom à un objet. Pas de « variable » au sens C : un nom dans un namespace qui pointe vers un objet.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   64: `0 + 0 = 0.
 
 Débutant :
@@ -776,7 +2215,28 @@ Intermédiaire :
 • Donc 0 + 0 = 0.
 
 Expert :
-• 0 + 0 = 0. Le résultat est 0.`,
+• 0 + 0 = 0. Le résultat est 0.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   65: `Tout nombre multiplié par 0 donne 0. 1 * 0 = 0.
 
 Débutant :
@@ -788,7 +2248,28 @@ Intermédiaire :
 • Donc 1 * 0 = 0.
 
 Expert :
-• 1 * 0 = 0. Le résultat est 0.`,
+• 1 * 0 = 0. Le résultat est 0.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   66: `5 - 5 = 0.
 
 Débutant :
@@ -800,7 +2281,28 @@ Intermédiaire :
 • Donc 5 - 5 = 0.
 
 Expert :
-• 5 - 5 = 0. Le résultat est 0.`,
+• 5 - 5 = 0. Le résultat est 0.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   67: `Division entière : 8 // 4 = 2. // supprime la partie décimale.
 
 Débutant :
@@ -812,7 +2314,28 @@ Intermédiaire :
 • Donc 8 // 4 = 2.
 
 Expert :
-• 8 // 4 = 2. Division entière. Le résultat est 2.`,
+• 8 // 4 = 2. Division entière. Le résultat est 2.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   68: `Le reste lorsque 7 est divisé par 4. 7 = 1*4 + 3, donc 7 % 4 = 3.
 
 Débutant :
@@ -824,7 +2347,28 @@ Intermédiaire :
 • Donc 7 % 4 = 3. Utile pour pair/impair : n % 2 == 0 signifie pair.
 
 Expert :
-• 7 % 4 = 3. Reste. Le résultat est 3.`,
+• 7 % 4 = 3. Reste. Le résultat est 3.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   69: `3 au carré vaut 9. 3 ** 2 = 9.
 
 Débutant :
@@ -836,7 +2380,28 @@ Intermédiaire :
 • Donc 3 ** 2 = 9.
 
 Expert :
-• 3 ** 2 = 9. Exponentiation. Le résultat est 9.`,
+• 3 ** 2 = 9. Exponentiation. Le résultat est 9.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   70: `len() compte les caractères. La chaîne vide a une longueur 0.
 
 Débutant :
@@ -848,7 +2413,28 @@ Intermédiaire :
 • La chaîne vide a une longueur 0. Pareil pour la liste vide : len([]) = 0. La réponse est 0.
 
 Expert :
-• str.__len__ ; len('') = 0. La chaîne vide a zéro caractère. O(1) pour les types built-in.`,
+• str.__len__ ; len('') = 0. La chaîne vide a zéro caractère. O(1) pour les types built-in.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   71: `Un caractère a une longueur 1. len('A') = 1.
 
 Débutant :
@@ -860,7 +2446,28 @@ Intermédiaire :
 • Pour les chaînes, len() est le nombre de caractères. La réponse est 1.
 
 Expert :
-• len('A') = 1. Un caractère, longueur 1. O(1) pour str.`,
+• len('A') = 1. Un caractère, longueur 1. O(1) pour str.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   72: `Deux caractères ont une longueur 2. len('AB') = 2.
 
 Débutant :
@@ -872,7 +2479,28 @@ Intermédiaire :
 • Pour toute chaîne, len(s) est le nombre de caractères. La réponse est 2.
 
 Expert :
-• len('AB') = 2. Deux caractères. O(1) pour str.`,
+• len('AB') = 2. Deux caractères. O(1) pour str.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   73: `La liste vide a une longueur 0. len([]) = 0.
 
 Débutant :
@@ -884,7 +2512,28 @@ Intermédiaire :
 • Quand il n'y a aucun élément, len vaut 0. Donc len([]) = 0.
 
 Expert :
-• list.__len__ ; len([]) = 0. O(1) pour list.`,
+• list.__len__ ; len([]) = 0. O(1) pour list.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   74: `Une liste avec un élément a une longueur 1. len([5]) = 1.
 
 Débutant :
@@ -896,7 +2545,28 @@ Intermédiaire :
 • Pour les listes, len() est le nombre d'éléments. Donc len([5]) = 1.
 
 Expert :
-• len([5]) = 1. Un élément. O(1) pour list.`,
+• len([5]) = 1. Un élément. O(1) pour list.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   75: `Une liste avec deux éléments a une longueur 2. len([1, 2]) = 2.
 
 Débutant :
@@ -908,7 +2578,28 @@ Intermédiaire :
 • Pour les listes, len() est le nombre d'éléments. Donc len([1, 2]) = 2.
 
 Expert :
-• len([1, 2]) = 2. Deux éléments. O(1) pour list.`,
+• len([1, 2]) = 2. Deux éléments. O(1) pour list.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   76: `0 est falsy en Python. bool(0) est False.
 
 Débutant :
@@ -920,7 +2611,28 @@ Intermédiaire :
 • Les valeurs falsy incluent 0, 0.0, '', [], (), {}, None. Donc bool(0) est False.
 
 Expert :
-• bool(0) est False. 0 est falsy ; utilisé dans les tests de vérité. bool(0) renvoie False.`,
+• bool(0) est False. 0 est falsy ; utilisé dans les tests de vérité. bool(0) renvoie False.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   77: `Les nombres non nuls sont truthy. bool(1) est True.
 
 Débutant :
@@ -932,7 +2644,28 @@ Intermédiaire :
 • Les valeurs truthy incluent tout nombre non nul, chaîne non vide, liste non vide, etc. Donc bool(1) est True.
 
 Expert :
-• bool(1) est True. 1 est truthy. bool(1) renvoie True.`,
+• bool(1) est True. 1 est truthy. bool(1) renvoie True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   78: `La chaîne vide est falsy. bool('') est False.
 
 Débutant :
@@ -944,7 +2677,28 @@ Intermédiaire :
 • Une séquence vide ('', []) est falsy. Donc bool('') est False.
 
 Expert :
-• bool('') est False. La chaîne vide est falsy. bool('') renvoie False.`,
+• bool('') est False. La chaîne vide est falsy. bool('') renvoie False.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   79: `Une chaîne non vide est truthy. bool('a') est True.
 
 Débutant :
@@ -956,7 +2710,28 @@ Intermédiaire :
 • Les séquences non vides sont truthy. Donc bool('a') est True.
 
 Expert :
-• bool('a') est True. Une chaîne non vide est truthy. bool('a') renvoie True.`,
+• bool('a') est True. Une chaîne non vide est truthy. bool('a') renvoie True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   80: `int() tronque vers zéro. int(2.9) = 2.
 
 Débutant :
@@ -968,7 +2743,28 @@ Intermédiaire :
 • int(float) tronque. La réponse est 2.
 
 Expert :
-• int(2.9) tronque vers zéro ; le résultat est 2. int() supprime la partie fractionnaire. La réponse est 2.`,
+• int(2.9) tronque vers zéro ; le résultat est 2. int() supprime la partie fractionnaire. La réponse est 2.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   81: `float(3) donne 3.0. Conversion d'un int en float.
 
 Débutant :
@@ -980,7 +2776,28 @@ Intermédiaire :
 • Quand on a besoin d'un float (ex. pour la division), float(3) donne 3.0. La réponse est 3.0.
 
 Expert :
-• float(3) = 3.0. Conversion int vers float. Le résultat est le float 3.0.`,
+• float(3) = 3.0. Conversion int vers float. Le résultat est le float 3.0.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   82: `str(42) donne la chaîne '42'. Conversion d'un nombre en chaîne.
 
 Débutant :
@@ -992,7 +2809,28 @@ Intermédiaire :
 • Pour l'affichage ou la concaténation avec des chaînes, str(42) donne '42'. La réponse est '42'.
 
 Expert :
-• str(42) = '42'. Conversion int vers str. Le résultat est la chaîne '42'.`,
+• str(42) = '42'. Conversion int vers str. Le résultat est la chaîne '42'.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   83: `4 + 5 = 9. Addition.
 
 Débutant :
@@ -1004,7 +2842,28 @@ Intermédiaire :
 • Donc 4 + 5 = 9.
 
 Expert :
-• 4 + 5 = 9. Le résultat est 9.`,
+• 4 + 5 = 9. Le résultat est 9.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   84: `6 - 2 = 4. Soustraction.
 
 Débutant :
@@ -1016,7 +2875,28 @@ Intermédiaire :
 • Donc 6 - 2 = 4.
 
 Expert :
-• 6 - 2 = 4. Le résultat est 4.`,
+• 6 - 2 = 4. Le résultat est 4.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   85: `3 * 3 = 9. Multiplication.
 
 Débutant :
@@ -1028,7 +2908,28 @@ Intermédiaire :
 • Donc 3 * 3 = 9.
 
 Expert :
-• 3 * 3 = 9. Le résultat est 9.`,
+• 3 * 3 = 9. Le résultat est 9.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   86: `12 / 4 = 3.0 (float). La division renvoie un float.
 
 Débutant :
@@ -1040,7 +2941,28 @@ Intermédiaire :
 • / renvoie toujours un float en Python 3. Donc 12 / 4 = 3.0.
 
 Expert :
-• 12 / 4 = 3.0. __truediv__ ; en Python 3 / renvoie toujours un float. Le résultat est 3.0.`,
+• 12 / 4 = 3.0. __truediv__ ; en Python 3 / renvoie toujours un float. Le résultat est 3.0.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   87: `15 // 4 = 3 (division entière).
 
 Débutant :
@@ -1052,7 +2974,28 @@ Intermédiaire :
 • Donc 15 // 4 = 3.
 
 Expert :
-• 15 // 4 = 3. Division entière. Le résultat est 3.`,
+• 15 // 4 = 3. Division entière. Le résultat est 3.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   88: `5 % 2 = 1 (reste). Modulo.
 
 Débutant :
@@ -1064,7 +3007,28 @@ Intermédiaire :
 • Donc 5 % 2 = 1. Utile pour pair/impair : n % 2 == 0 signifie pair.
 
 Expert :
-• 5 % 2 = 1. Reste. Le résultat est 1.`,
+• 5 % 2 = 1. Reste. Le résultat est 1.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   89: `Tout nombre à la puissance 0 vaut 1. 10 ** 0 = 1.
 
 Débutant :
@@ -1076,7 +3040,28 @@ Intermédiaire :
 • Tout nombre à la puissance 0 vaut 1. Donc 10 ** 0 = 1.
 
 Expert :
-• 10 ** 0 = 1. Par convention a**0 = 1. Le résultat est 1.`,
+• 10 ** 0 = 1. Par convention a**0 = 1. Le résultat est 1.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   90: `L'opposé de -2 est 2. Double négation.
 
 Débutant :
@@ -1088,7 +3073,28 @@ Intermédiaire :
 • Donc -(-2) = 2.
 
 Expert :
-• -(-2) = 2. Double négation. Le résultat est 2.`,
+• -(-2) = 2. Double négation. Le résultat est 2.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   91: `abs() donne la valeur absolue. abs(-7) = 7.
 
 Débutant :
@@ -1100,7 +3106,28 @@ Intermédiaire :
 • abs() renvoie la magnitude (non négative). Donc abs(-7) = 7.
 
 Expert :
-• abs(-7) = 7. Valeur absolue. Le résultat est 7.`,
+• abs(-7) = 7. Valeur absolue. Le résultat est 7.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   92: `min() renvoie la plus petite valeur. min(5, 3) = 3.
 
 Débutant :
@@ -1112,7 +3139,28 @@ Intermédiaire :
 • Donc min(5, 3) = 3.
 
 Expert :
-• min(5, 3) = 3. Minimum. Le résultat est 3.`,
+• min(5, 3) = 3. Minimum. Le résultat est 3.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   93: `max() renvoie la plus grande valeur. max(5, 3) = 5.
 
 Débutant :
@@ -1124,7 +3172,28 @@ Intermédiaire :
 • Donc max(5, 3) = 5.
 
 Expert :
-• max(5, 3) = 5. Maximum. Le résultat est 5.`,
+• max(5, 3) = 5. Maximum. Le résultat est 5.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   94: `round() arrondit à l'entier le plus proche. round(2.4) = 2.
 
 Débutant :
@@ -1136,7 +3205,28 @@ Intermédiaire :
 • Donc round(2.4) = 2.
 
 Expert :
-• round(2.4) = 2. Arrondi. Le résultat est 2.`,
+• round(2.4) = 2. Arrondi. Le résultat est 2.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   95: `round(2.6) = 3. Arrondi à l'entier supérieur ici.
 
 Débutant :
@@ -1148,7 +3238,28 @@ Intermédiaire :
 • Donc round(2.6) = 3.
 
 Expert :
-• round(2.6) = 3. Arrondi. Le résultat est 3.`,
+• round(2.6) = 3. Arrondi. Le résultat est 3.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   96: `Le + concatène les chaînes. 'a' + 'b' = 'ab'.
 
 Débutant :
@@ -1160,7 +3271,28 @@ Intermédiaire :
 • Donc + concatène les chaînes. 'a' + 'b' = 'ab'.
 
 Expert :
-• 'a' + 'b' = 'ab'. str.__add__ ; concaténation. Le résultat est 'ab'.`,
+• 'a' + 'b' = 'ab'. str.__add__ ; concaténation. Le résultat est 'ab'.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   97: `Chaîne × nombre répète la chaîne. 'x' * 2 = 'xx'.
 
 Débutant :
@@ -1172,7 +3304,28 @@ Intermédiaire :
 • Donc 'x' * 2 = 'xx'.
 
 Expert :
-• 'x' * 2 = 'xx'. str.__mul__(int) ; répétition. Le résultat est 'xx'.`,
+• 'x' * 2 = 'xx'. str.__mul__(int) ; répétition. Le résultat est 'xx'.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   98: `Les listes se concatènent avec +. [1] + [2] = [1, 2].
 
 Débutant :
@@ -1184,7 +3337,28 @@ Intermédiaire :
 • Donc + concatène les listes. [1] + [2] = [1, 2].
 
 Expert :
-• [1] + [2] = [1, 2]. list.__add__ ; concaténation. Le résultat est [1, 2].`,
+• [1] + [2] = [1, 2]. list.__add__ ; concaténation. Le résultat est [1, 2].
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   99: `L'index 0 est le premier caractère. 'hi'[0] = 'h'.
 
 Débutant :
@@ -1196,7 +3370,28 @@ Intermédiaire :
 • Donc 'hi'[0] = 'h'.
 
 Expert :
-• 'hi'[0] = 'h'. Indexation str ; l'index 0 est le premier. Le résultat est 'h'.`,
+• 'hi'[0] = 'h'. Indexation str ; l'index 0 est le premier. Le résultat est 'h'.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   100: `L'index 1 est le deuxième caractère. 'hi'[1] = 'i'.
 
 Débutant :
@@ -1208,7 +3403,28 @@ Intermédiaire :
 • Donc 'hi'[1] = 'i'.
 
 Expert :
-• 'hi'[1] = 'i'. Indexation str. Le résultat est 'i'.`,
+• 'hi'[1] = 'i'. Indexation str. Le résultat est 'i'.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   101: `L'index -1 est le dernier caractère. L'index négatif compte depuis la fin.
 
 Débutant :
@@ -1220,7 +3436,28 @@ Intermédiaire :
 • Donc 'hi'[-1] = 'i'.
 
 Expert :
-• 'hi'[-1] = 'i'. Index négatif ; -1 est le dernier. Le résultat est 'i'.`,
+• 'hi'[-1] = 'i'. Index négatif ; -1 est le dernier. Le résultat est 'i'.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   102: `Premier élément de la liste. [10, 20][0] = 10.
 
 Débutant :
@@ -1232,7 +3469,28 @@ Intermédiaire :
 • Donc [10, 20][0] = 10.
 
 Expert :
-• [10, 20][0] = 10. Indexation de liste. Le résultat est 10.`,
+• [10, 20][0] = 10. Indexation de liste. Le résultat est 10.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   103: `Deuxième élément de la liste. [10, 20][1] = 20.
 
 Débutant :
@@ -1244,7 +3502,28 @@ Intermédiaire :
 • Donc [10, 20][1] = 20.
 
 Expert :
-• [10, 20][1] = 20. Indexation de liste. Le résultat est 20.`,
+• [10, 20][1] = 20. Indexation de liste. Le résultat est 20.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   104: `== teste l'égalité. 2 == 2 est True.
 
 Débutant :
@@ -1256,7 +3535,28 @@ Intermédiaire :
 • Donc == est l'égalité de valeur (pas l'identité). 2 == 2 est True.
 
 Expert :
-• 2 == 2 est True. Comparaison d'égalité. Le résultat est True.`,
+• 2 == 2 est True. Comparaison d'égalité. Le résultat est True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   105: `2 n'est pas égal à 3. 2 == 3 est False.
 
 Débutant :
@@ -1268,7 +3568,28 @@ Intermédiaire :
 • Donc 2 == 3 est False.
 
 Expert :
-• 2 == 3 est False. La comparaison d'égalité échoue. Le résultat est False.`,
+• 2 == 3 est False. La comparaison d'égalité échoue. Le résultat est False.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   106: `!= signifie « différent de ». 2 != 3 est True.
 
 Débutant :
@@ -1280,7 +3601,28 @@ Intermédiaire :
 • Donc != teste l'inégalité. 2 != 3 est True.
 
 Expert :
-• 2 != 3 est True. Inégalité. Le résultat est True.`,
+• 2 != 3 est True. Inégalité. Le résultat est True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   107: `2 est strictement inférieur à 3. 2 < 3 est True.
 
 Débutant :
@@ -1292,7 +3634,28 @@ Intermédiaire :
 • Donc 2 < 3 est True.
 
 Expert :
-• 2 < 3 est True. Comparaison « strictement inférieur ». Le résultat est True.`,
+• 2 < 3 est True. Comparaison « strictement inférieur ». Le résultat est True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   108: `3 est strictement supérieur à 2. 3 > 2 est True.
 
 Débutant :
@@ -1304,7 +3667,28 @@ Intermédiaire :
 • Donc 3 > 2 est True.
 
 Expert :
-• 3 > 2 est True. Comparaison « strictement supérieur ». Le résultat est True.`,
+• 3 > 2 est True. Comparaison « strictement supérieur ». Le résultat est True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   109: `<= signifie « inférieur ou égal ». 2 <= 2 est True.
 
 Débutant :
@@ -1316,7 +3700,28 @@ Intermédiaire :
 • Donc 2 <= 2 est True.
 
 Expert :
-• 2 <= 2 est True. Inférieur ou égal. Le résultat est True.`,
+• 2 <= 2 est True. Inférieur ou égal. Le résultat est True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   110: `>= signifie « supérieur ou égal ». 3 >= 3 est True.
 
 Débutant :
@@ -1328,7 +3733,28 @@ Intermédiaire :
 • Donc 3 >= 3 est True.
 
 Expert :
-• 3 >= 3 est True. Supérieur ou égal. Le résultat est True.`,
+• 3 >= 3 est True. Supérieur ou égal. Le résultat est True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   111: `not inverse le booléen. not False est True.
 
 Débutant :
@@ -1340,7 +3766,28 @@ Intermédiaire :
 • Donc not renvoie un bool. not False est True.
 
 Expert :
-• not False est True. Négation logique. Le résultat est True.`,
+• not False est True. Négation logique. Le résultat est True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   112: `not True vaut False. not inverse la valeur.
 
 Débutant :
@@ -1352,7 +3799,28 @@ Intermédiaire :
 • Donc not True est False.
 
 Expert :
-• not True est False. Négation logique. Le résultat est False.`,
+• not True est False. Négation logique. Le résultat est False.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   113: `and exige que les deux soient True. True and True = True.
 
 Débutant :
@@ -1364,7 +3832,28 @@ Intermédiaire :
 • Donc True and True est True.
 
 Expert :
-• True and True est True. Et logique. Le résultat est True.`,
+• True and True est True. Et logique. Le résultat est True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   114: `and est False si l'un est False. True and False = False.
 
 Débutant :
@@ -1376,7 +3865,28 @@ Intermédiaire :
 • Donc True and False est False.
 
 Expert :
-• True and False est False. Et logique. Le résultat est False.`,
+• True and False est False. Et logique. Le résultat est False.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   115: `or est True si l'un est True. True or False = True.
 
 Débutant :
@@ -1388,7 +3898,28 @@ Intermédiaire :
 • Donc True or False est True.
 
 Expert :
-• True or False est True. Ou logique. Le résultat est True.`,
+• True or False est True. Ou logique. Le résultat est True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   116: `or est False seulement si les deux sont False. False or False = False.
 
 Débutant :
@@ -1400,7 +3931,28 @@ Intermédiaire :
 • Donc False or False est False.
 
 Expert :
-• False or False est False. Ou logique. Le résultat est False.`,
+• False or False est False. Ou logique. Le résultat est False.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   117: `La multiplication est prioritaire sur l'addition. 2*3=6, 1+6=7.
 
 Débutant :
@@ -1412,7 +3964,28 @@ Intermédiaire :
 • Donc priorité des opérateurs : * avant +. Donc 1 + 2 * 3 = 7.
 
 Expert :
-• 1 + 2 * 3 = 7. La multiplication a une priorité plus élevée que l'addition. Le résultat est 7.`,
+• 1 + 2 * 3 = 7. La multiplication a une priorité plus élevée que l'addition. Le résultat est 7.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   118: `Les parenthèses ont la priorité. (1+2)*3 = 3*3 = 9.
 
 Débutant :
@@ -1424,7 +3997,28 @@ Intermédiaire :
 • Donc (1 + 2) * 3 = 9.
 
 Expert :
-• (1 + 2) * 3 = 9. Les parenthèses d'abord. Le résultat est 9.`,
+• (1 + 2) * 3 = 9. Les parenthèses d'abord. Le résultat est 9.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   119: `10 / 2 = 5.0.
 
 Débutant :
@@ -1436,7 +4030,28 @@ Intermédiaire :
 • Donc / renvoie toujours un float en Python 3. 10 / 2 = 5.0.
 
 Expert :
-• 10 / 2 = 5.0. __truediv__ ; en Python 3 / renvoie toujours un float. Le résultat est 5.0.`,
+• 10 / 2 = 5.0. __truediv__ ; en Python 3 / renvoie toujours un float. Le résultat est 5.0.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   120: `10 // 3 = 3. Division entière.
 
 Débutant :
@@ -1448,7 +4063,28 @@ Intermédiaire :
 • Donc 10 // 3 = 3.
 
 Expert :
-• 10 // 3 = 3. Division entière. Le résultat est 3.`,
+• 10 // 3 = 3. Division entière. Le résultat est 3.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   121: `10 % 3 = 1. Modulo.
 
 Débutant :
@@ -1460,7 +4096,28 @@ Intermédiaire :
 • Donc 10 % 3 = 1.
 
 Expert :
-• 10 % 3 = 1. Reste. Le résultat est 1.`,
+• 10 % 3 = 1. Reste. Le résultat est 1.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   122: `Tranche de l'index 1 à 2 (exclu). 'abc'[1:2] = 'b'.
 
 Débutant :
@@ -1472,7 +4129,28 @@ Intermédiaire :
 • Donc 'abc'[1:2] = 'b'.
 
 Expert :
-• 'abc'[1:2] = 'b'. Tranche ; début=1, fin=2, pas=1. Le résultat est 'b'.`,
+• 'abc'[1:2] = 'b'. Tranche ; début=1, fin=2, pas=1. Le résultat est 'b'.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   123: `Tranche du début jusqu'à l'index 2. 'abc'[:2] = 'ab'.
 
 Débutant :
@@ -1484,7 +4162,28 @@ Intermédiaire :
 • Donc 'abc'[:2] = 'ab'.
 
 Expert :
-• 'abc'[:2] = 'ab'. Tranche ; début par défaut 0. Le résultat est 'ab'.`,
+• 'abc'[:2] = 'ab'. Tranche ; début par défaut 0. Le résultat est 'ab'.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   124: `Tranche de l'index 1 jusqu'à la fin. 'abc'[1:] = 'bc'.
 
 Débutant :
@@ -1496,7 +4195,28 @@ Intermédiaire :
 • Donc 'abc'[1:] = 'bc'.
 
 Expert :
-• 'abc'[1:] = 'bc'. Tranche ; fin par défaut à la fin. Le résultat est 'bc'.`,
+• 'abc'[1:] = 'bc'. Tranche ; fin par défaut à la fin. Le résultat est 'bc'.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   125: `list() transforme chaque caractère en élément. list('ab') = ['a', 'b'].
 
 Débutant :
@@ -1508,7 +4228,28 @@ Intermédiaire :
 • Donc list('ab') = ['a', 'b'].
 
 Expert :
-• list('ab') = ['a', 'b']. list(itérable) ; str est itérable de caractères. Le résultat est ['a', 'b'].`,
+• list('ab') = ['a', 'b']. list(itérable) ; str est itérable de caractères. Le résultat est ['a', 'b'].
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   126: `tuple() convertit une liste en tuple. tuple([1, 2]) = (1, 2).
 
 Débutant :
@@ -1520,7 +4261,28 @@ Intermédiaire :
 • Donc tuple([1, 2]) = (1, 2).
 
 Expert :
-• tuple([1, 2]) = (1, 2). tuple(itérable) ; list est itérable. Le résultat est (1, 2).`,
+• tuple([1, 2]) = (1, 2). tuple(itérable) ; list est itérable. Le résultat est (1, 2).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   127: `set() supprime les doublons. set([1,1,2]) = {1, 2}.
 
 Débutant :
@@ -1532,7 +4294,28 @@ Intermédiaire :
 • Donc set([1, 1, 2]) = {1, 2}.
 
 Expert :
-• set([1, 1, 2]) = {1, 2}. set(itérable) ; les doublons sont supprimés. Le résultat est {1, 2}.`,
+• set([1, 1, 2]) = {1, 2}. set(itérable) ; les doublons sont supprimés. Le résultat est {1, 2}.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   128: `dict() crée un dictionnaire vide. dict() = {}.
 
 Débutant :
@@ -1544,7 +4327,28 @@ Intermédiaire :
 • Donc dict() = {}.
 
 Expert :
-• dict() = {}. Dictionnaire vide. Le résultat est {}.`,
+• dict() = {}. Dictionnaire vide. Le résultat est {}.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   129: `list() crée une liste vide. list() = [].
 
 Débutant :
@@ -1556,7 +4360,28 @@ Intermédiaire :
 • Donc list() = [].
 
 Expert :
-• list() = []. Liste vide. Le résultat est [].`,
+• list() = []. Liste vide. Le résultat est [].
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   130: `int() convertit une chaîne numérique en int. int('9') = 9.
 
 Débutant :
@@ -1568,7 +4393,28 @@ Intermédiaire :
 • Donc int('9') = 9.
 
 Expert :
-• int('9') = 9. int(chaîne) analyse. Le résultat est 9.`,
+• int('9') = 9. int(chaîne) analyse. Le résultat est 9.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   131: `float() convertit une chaîne en float. float('1.5') = 1.5.
 
 Débutant :
@@ -1580,7 +4426,28 @@ Intermédiaire :
 • Donc float('1.5') = 1.5.
 
 Expert :
-• float('1.5') = 1.5. float(chaîne) analyse. Le résultat est 1.5.`,
+• float('1.5') = 1.5. float(chaîne) analyse. Le résultat est 1.5.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   132: `'a' est une sous-chaîne de 'cat'. 'a' in 'cat' est True.
 
 Débutant :
@@ -1592,7 +4459,28 @@ Intermédiaire :
 • Donc in fonctionne pour l'appartenance dans les séquences (liste, tuple) et la sous-chaîne pour les str. 'a' in 'cat' est True.
 
 Expert :
-• str.__contains__ ; 'a' in 'cat' est True. Test de sous-chaîne. Le résultat est True.`,
+• str.__contains__ ; 'a' in 'cat' est True. Test de sous-chaîne. Le résultat est True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   133: `'x' n'est pas dans 'cat'. in vérifie l'appartenance.
 
 Débutant :
@@ -1604,7 +4492,28 @@ Intermédiaire :
 • Donc in pour les chaînes est l'appartenance à une sous-chaîne. 'x' in 'cat' est False.
 
 Expert :
-• 'x' in 'cat' est False. Le test de sous-chaîne échoue. Le résultat est False.`,
+• 'x' in 'cat' est False. Le test de sous-chaîne échoue. Le résultat est False.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   134: `1 est dans la liste. in fonctionne pour les listes.
 
 Débutant :
@@ -1616,7 +4525,28 @@ Intermédiaire :
 • Donc in fonctionne pour les listes, tuples, ensembles, dict (clés). 1 in [1, 2] est True.
 
 Expert :
-• list.__contains__ ; 1 in [1, 2] est True. Test d'appartenance. O(n) pour une liste. Le résultat est True.`,
+• list.__contains__ ; 1 in [1, 2] est True. Test d'appartenance. O(n) pour une liste. Le résultat est True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   135: `0 n'est pas dans la liste. Test d'appartenance.
 
 Débutant :
@@ -1628,7 +4558,28 @@ Intermédiaire :
 • Donc pour l'appartenance, 0 in [1, 2] est False.
 
 Expert :
-• 0 in [1, 2] est False. Le test d'appartenance échoue. Le résultat est False.`,
+• 0 in [1, 2] est False. Le test d'appartenance échoue. Le résultat est False.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   136: `Il n'existe qu'un seul None. None is None est True.
 
 Débutant :
@@ -1640,7 +4591,28 @@ Intermédiaire :
 • Donc None is None est True.
 
 Expert :
-• None is None est True. Test d'identité ; il n'y a qu'un seul singleton None. Le résultat est True.`,
+• None is None est True. Test d'identité ; il n'y a qu'un seul singleton None. Le résultat est True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   137: `2+2 = 4, un int. type(4) est int.
 
 Débutant :
@@ -1652,7 +4624,28 @@ Intermédiaire :
 • Donc type(2+2) est int.
 
 Expert :
-• type(2+2) est int. Donc int + int -> int. Le résultat est <class 'int'>.`,
+• type(2+2) est int. Donc int + int -> int. Le résultat est <class 'int'>.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   138: `int + float donne un float. type(2 + 2.0) est float.
 
 Débutant :
@@ -1664,7 +4657,28 @@ Intermédiaire :
 • Donc type(2+2.0) est float.
 
 Expert :
-• type(2+2.0) est float. Donc int + float -> float. Le résultat est <class 'float'>.`,
+• type(2+2.0) est float. Donc int + float -> float. Le résultat est <class 'float'>.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   139: `'a'*2 = 'aa', une chaîne. La répétition de chaîne donne une chaîne.
 
 Débutant :
@@ -1676,7 +4690,28 @@ Intermédiaire :
 • Donc str * int -> str ; list * int -> list. Le type du résultat suit le type de la séquence.
 
 Expert :
-• str.__mul__(int) renvoie str. Donc type('a'*2) est str. Le résultat est une nouvelle chaîne ; l'originale est inchangée (les chaînes sont immuables).`,
+• str.__mul__(int) renvoie str. Donc type('a'*2) est str. Le résultat est une nouvelle chaîne ; l'originale est inchangée (les chaînes sont immuables).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   140: `[1]*2 = [1, 1], une liste. La répétition de liste donne une liste.
 
 Débutant :
@@ -1688,7 +4723,28 @@ Intermédiaire :
 • Attention : [1]*2 donne deux références au même int. Pour [[1]]*2 on a deux références à la même liste (souvent un bug).
 
 Expert :
-• list.__mul__(int) renvoie une nouvelle liste avec la séquence répétée. Donc type([1]*2) est list. Copie superficielle : mêmes éléments répétés.`,
+• list.__mul__(int) renvoie une nouvelle liste avec la séquence répétée. Donc type([1]*2) est list. Copie superficielle : mêmes éléments répétés.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   141: `len() renvoie un entier. type(len('')) est int.
 
 Débutant :
@@ -1700,7 +4756,28 @@ Intermédiaire :
 • Donc on peut utiliser len() dans l'arithmétique : len('hi') + 1 vaut 3. Et type(len(x)) est toujours int pour les types built-in.
 
 Expert :
-• len() appelle __len__ et doit renvoyer un entier non négatif. Donc type(len('')) est int. Pour les classes personnalisées, __len__ doit renvoyer un int.`,
+• len() appelle __len__ et doit renvoyer un entier non négatif. Donc type(len('')) est int. Pour les classes personnalisées, __len__ doit renvoyer un int.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   142: `sum() additionne tous les nombres. sum([1,2,3]) = 6.
 
 Débutant :
@@ -1712,7 +4789,28 @@ Intermédiaire :
 • sum() fonctionne sur tout itérable de nombres : sum((1, 2, 3)) = 6. Itérable vide : sum([]) = 0.
 
 Expert :
-• sum(iterable, start=0) fait la somme de start + tous les éléments. Donc sum([1,2,3]) = 0+1+2+3 = 6. Pour les float, utiliser math.fsum() pour une meilleure précision.`,
+• sum(iterable, start=0) fait la somme de start + tous les éléments. Donc sum([1,2,3]) = 0+1+2+3 = 6. Pour les float, utiliser math.fsum() pour une meilleure précision.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   143: `La somme d'une liste vide est 0. sum([]) = 0.
 
 Débutant :
@@ -1724,7 +4822,28 @@ Intermédiaire :
 • Utile quand la liste peut être vide : total = sum(nombres) fonctionne même si nombres est [].
 
 Expert :
-• sum(iterable, start=0) ; quand l'itérable est vide, sum renvoie start. Donc sum([]) = 0. sum([]) ne lève jamais ; il renvoie 0.`,
+• sum(iterable, start=0) ; quand l'itérable est vide, sum renvoie start. Donc sum([]) = 0. sum([]) ne lève jamais ; il renvoie 0.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   144: `min() de plusieurs valeurs. min(3,1,2) = 1.
 
 Débutant :
@@ -1736,7 +4855,28 @@ Intermédiaire :
 • min() fonctionne avec tout type comparable (nombres, chaînes). Donc min(3, 1, 2) = 1.
 
 Expert :
-• min(*args ou iterable) renvoie le plus petit. Donc min(3, 1, 2) = 1. Argument key optionnel : min([-1, 2, -3], key=abs) = -1.`,
+• min(*args ou iterable) renvoie le plus petit. Donc min(3, 1, 2) = 1. Argument key optionnel : min([-1, 2, -3], key=abs) = -1.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   145: `max() de plusieurs valeurs. max(3,1,2) = 3.
 
 Débutant :
@@ -1748,7 +4888,28 @@ Intermédiaire :
 • max() fonctionne avec tout type comparable. Donc max(3, 1, 2) = 3.
 
 Expert :
-• max(*args ou iterable) renvoie le plus grand. Donc max(3, 1, 2) = 3. Argument key optionnel : max([-1, 2, -3], key=abs) = -3.`,
+• max(*args ou iterable) renvoie le plus grand. Donc max(3, 1, 2) = 3. Argument key optionnel : max([-1, 2, -3], key=abs) = -3.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   146: `pow(2, 4) = 2**4 = 16. pow(base, exp) est l'exponentiation.
 
 Débutant :
@@ -1760,7 +4921,28 @@ Intermédiaire :
 • Donc pow(a, b) vaut a**b. pow(a, b, m) vaut (a**b) % m (utilisé en cryptographie).
 
 Expert :
-• pow(base, exp[, mod]) renvoie base**exp, ou (base**exp) % mod si mod est donné. Donc pow(2, 4) = 16. La forme à trois arguments est efficace pour l'exponentiation modulaire.`,
+• pow(base, exp[, mod]) renvoie base**exp, ou (base**exp) % mod si mod est donné. Donc pow(2, 4) = 16. La forme à trois arguments est efficace pour l'exponentiation modulaire.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   147: `divmod renvoie (quotient, reste). divmod(7, 2) = (3, 1).
 
 Débutant :
@@ -1772,7 +4954,28 @@ Intermédiaire :
 • Donc quotient, reste = divmod(7, 2) donne quotient=3, reste=1. Marche avec les float : divmod(7.5, 2) = (3.0, 1.5).
 
 Expert :
-• divmod(a, b) renvoie (a//b, a%b). Donc divmod(7, 2) = (3, 1). Un seul appel au lieu de deux ; légèrement plus efficace. Pour b==0, ZeroDivisionError.`,
+• divmod(a, b) renvoie (a//b, a%b). Donc divmod(7, 2) = (3, 1). Un seul appel au lieu de deux ; légèrement plus efficace. Pour b==0, ZeroDivisionError.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   148: `0 à n'importe quelle puissance positive vaut 0. 0 ** 5 = 0.
 
 Débutant :
@@ -1784,7 +4987,28 @@ Intermédiaire :
 • Exposant négatif : 0 ** -1 serait 1/0 (ZeroDivisionError). Donc 0 à une puissance positive vaut 0.
 
 Expert :
-• 0 ** n pour n > 0 vaut 0. 0 ** 0 vaut 1 en Python. Donc 0 ** 5 = 0. Pour 0 ** négatif, ZeroDivisionError.`,
+• 0 ** n pour n > 0 vaut 0. 0 ** 0 vaut 1 en Python. Donc 0 ** 5 = 0. Pour 0 ** négatif, ZeroDivisionError.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   149: `Racine carrée de 4. 4 ** 0.5 = 2.0.
 
 Débutant :
@@ -1796,7 +5020,28 @@ Intermédiaire :
 • Donc 4 ** 0.5 = 2.0. Pour une base négative, 4 ** 0.5 fonctionne ; (-4) ** 0.5 donnerait un complexe.
 
 Expert :
-• Pour un exposant float, ** renvoie un float (ou complexe pour base négative et exposant non entier). Donc 4 ** 0.5 = 2.0. Utiliser math.sqrt(4) pour la clarté.`,
+• Pour un exposant float, ** renvoie un float (ou complexe pour base négative et exposant non entier). Donc 4 ** 0.5 = 2.0. Utiliser math.sqrt(4) pour la clarté.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   150: `or renvoie la première valeur truthy ou la dernière. 0 or 5 = 5.
 
 Débutant :
@@ -1808,757 +5053,3928 @@ Intermédiaire :
 • Court-circuit : si le premier est truthy, c'est lui qui est renvoyé et le second n'est pas évalué. Donc 3 or 5 vaut 3.
 
 Expert :
-• or renvoie le premier truthy ou le dernier. Donc 0 or 5 = 5. Utilisé pour les valeurs par défaut : x = entrée_utilisateur or "défaut". Évaluation en court-circuit.`,
+• or renvoie le premier truthy ou le dernier. Donc 0 or 5 = 5. Utilisé pour les valeurs par défaut : x = entrée_utilisateur or "défaut". Évaluation en court-circuit.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   151: `and renvoie la dernière valeur si les deux sont truthy. 3 and 4 = 4.
 
 Débutant : 3 and 4 : les deux sont truthy, donc on obtient la dernière valeur : 4. Résultat 4.
 Intermédiaire : and renvoie la première falsy ou la dernière. Ici les deux truthy → 4.
-Expert : and renvoie la dernière quand les deux truthy. 3 and 4 = 4.`,
+Expert : and renvoie la dernière quand les deux truthy. 3 and 4 = 4.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   152: `and court-circuite sur la première valeur falsy. 0 and 5 = 0.
 
 Débutant : 0 and 5 : 0 est falsy, donc le résultat est 0. Le 5 n'est pas évalué (court-circuit).
 Intermédiaire : and court-circuite : dès qu'on voit 0 (falsy), on renvoie 0.
-Expert : and court-circuite sur la première falsy. 0 and 5 = 0.`,
+Expert : and court-circuite sur la première falsy. 0 and 5 = 0.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   153: `Un tuple de deux éléments a une longueur 2. len((1, 2)) = 2.
 
 Débutant : (1, 2) a deux éléments, donc len((1, 2)) vaut 2. len() fonctionne sur les tuples.
 Intermédiaire : len((1, 2)) = 2. Tuple de deux éléments.
-Expert : tuple.__len__ ; len((1, 2)) = 2. O(1).`,
+Expert : tuple.__len__ ; len((1, 2)) = 2. O(1).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   154: `Un ensemble de deux éléments a une longueur 2. len({1, 2}) = 2.
 
 Débutant : {1, 2} a deux éléments, donc len({1, 2}) vaut 2. len() fonctionne sur les ensembles.
 Intermédiaire : len({1, 2}) = 2. Les ensembles n'ont pas de doublons ; chaque élément compte une fois.
-Expert : set.__len__ ; len({1, 2}) = 2. O(1).`,
+Expert : set.__len__ ; len({1, 2}) = 2. O(1).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   155: `Un dict avec une clé a une longueur 1. len({1: 2}) = 1.
 
 Débutant : {1: 2} a une paire clé-valeur, donc len({1: 2}) vaut 1. len() sur un dict compte les clés.
 Intermédiaire : len({1: 2}) = 1. Un dict à une clé a une longueur 1.
-Expert : dict.__len__ ; len({1: 2}) = 1. O(1).`,
+Expert : dict.__len__ ; len({1: 2}) = 1. O(1).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   156: `Les listes sont comparées par valeur. [1] == [1] est True.
 
 Débutant : [1] et [1] ont le même contenu (un élément, 1), donc ils sont égaux : [1] == [1] est True.
 Intermédiaire : == pour les listes compare élément par élément. [1] == [1] est True (même contenu, pas forcément même objet).
-Expert : list.__eq__ ; [1] == [1] compare les éléments. Pour l'identité utiliser « is ».`,
+Expert : list.__eq__ ; [1] == [1] compare les éléments. Pour l'identité utiliser « is ».
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   157: `Les chaînes égales sont ==. 'ab' == 'ab' est True.
 
 Débutant : Les deux chaînes 'ab' ont les mêmes caractères, donc 'ab' == 'ab' est True.
 Intermédiaire : == pour les chaînes compare caractère par caractère. Égalité de contenu.
-Expert : str.__eq__ ; 'ab' == 'ab' est True. Égalité de valeur.`,
+Expert : str.__eq__ ; 'ab' == 'ab' est True. Égalité de valeur.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   158: `Les tuples égaux sont ==. (1,) == (1,) est True.
 
 Débutant : Les deux tuples (1,) ont le même contenu, donc (1,) == (1,) est True.
 Intermédiaire : == pour les tuples compare élément par élément. (1,) == (1,) est True.
-Expert : tuple.__eq__ ; (1,) == (1,) est True. Égalité de valeur.`,
+Expert : tuple.__eq__ ; (1,) == (1,) est True. Égalité de valeur.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   159: `En Python, 1 == True (égalité de valeur). 1 == True est True.
 
 Débutant : En Python, 1 et True sont considérés égaux en valeur. Donc 1 == True est True. (Mais types différents : type(1) est int, type(True) est bool.)
 Intermédiaire : bool est une sous-classe de int ; True vaut 1. Donc 1 == True est True.
-Expert : bool sous-classe de int ; True a la valeur 1. 1 == True est True (égalité de valeur).`,
+Expert : bool sous-classe de int ; True a la valeur 1. 1 == True est True (égalité de valeur).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   160: `La chaîne vide n'est pas égale à False. '' == False est False.
 
 Débutant : '' et False ne sont pas la même valeur. '' == False est False. (Les deux sont « falsy » en conditions mais pas égaux.)
 Intermédiaire : Seuls certains falsy sont égaux : 0 == False, 1 == True. '' != False, [] != False.
-Expert : str et bool ; '' et False sont de types différents et non égaux. '' == False est False.`,
+Expert : str et bool ; '' et False sont de types différents et non égaux. '' == False est False.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   161: `not in teste l'absence. 0 not in [1, 2] est True.
 
 Débutant : « 0 not in [1, 2] » signifie « 0 n'est pas un élément de [1, 2] ». La liste contient 1 et 2, pas 0. Donc True.
 Intermédiaire : 0 in [1, 2] est False ; donc « not in » donne True. « x not in L » équivaut à « not (x in L) ».
-Expert : not in est la négation de in. 0 not in [1, 2] est True.`,
+Expert : not in est la négation de in. 0 not in [1, 2] est True.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   162: `Addition : 7 + 8 = 15.
 
 Débutant : 7 + 8 = 15. Additionner deux entiers donne 15. Résultat 15.
 Intermédiaire : 7 + 8 = 15. Les deux sont int, le résultat est int.
-Expert : 7 + 8 = 15. Le résultat est 15.`,
+Expert : 7 + 8 = 15. Le résultat est 15.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   163: `Soustraction : 20 - 7 = 13.
 
 Débutant : 20 - 7 = 13. Enlever 7 à 20 donne 13. Résultat 13.
 Intermédiaire : 20 - 7 = 13. Les deux sont int, le résultat est int.
-Expert : 20 - 7 = 13. Le résultat est 13.`,
+Expert : 20 - 7 = 13. Le résultat est 13.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   164: `Multiplication : 5 * 4 = 20.
 
 Débutant : 5 * 4 = 20. Multiplier 5 par 4 donne 20. Résultat 20.
 Intermédiaire : 5 * 4 = 20. Les deux sont int, le résultat est int.
-Expert : 5 * 4 = 20. Le résultat est 20.`,
+Expert : 5 * 4 = 20. Le résultat est 20.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   165: `16 / 4 = 4.0. La division en Python 3 renvoie un float.
 
 Débutant : 16 / 4 donne 4.0. En Python 3, / renvoie toujours un float. Résultat 4.0.
 Intermédiaire : 16 / 4 = 4.0. / renvoie un float. Pour le quotient entier : 16 // 4 = 4.
-Expert : En Python 3, / renvoie toujours un float. 16 / 4 = 4.0.`,
+Expert : En Python 3, / renvoie toujours un float. 16 / 4 = 4.0.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   166: `Division entière : 18 // 5 = 3.
 
 Débutant : 18 // 5 est la partie entière de 18 ÷ 5. 18 ÷ 5 = 3,6... ; on prend 3. Résultat 3.
 Intermédiaire : 18 // 5 = 3. 18 % 5 = 3. 18 = 3*5 + 3.
-Expert : Division entière ; 18 // 5 = 3.`,
+Expert : Division entière ; 18 // 5 = 3.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   167: `Reste : 18 % 5 = 3.
 
 Débutant : 18 % 5 est le reste de 18 ÷ 5. 18 = 3*5 + 3 ; le reste est 3. Résultat 3.
 Intermédiaire : 18 % 5 = 3. 18 // 5 = 3. 18 = 3*5 + 3.
-Expert : 18 % 5 = 3. Reste.`,
+Expert : 18 % 5 = 3. Reste.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   168: `4 ** 2 = 16. 4 au carré.
 
 Débutant : 4 ** 2 signifie 4 à la puissance 2 : 4*4 = 16. Résultat 16.
 Intermédiaire : 4 ** 2 = 16. 4 au carré.
-Expert : 4 ** 2 = 16. Exponentiation.`,
+Expert : 4 ** 2 = 16. Exponentiation.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   169: `len() compte les caractères dans une chaîne. 'hello' a 5 caractères.
 
 Débutant : 'hello' a 5 lettres, donc len('hello') vaut 5. len() sur une chaîne compte les caractères.
 Intermédiaire : len('hello') = 5. Cinq caractères.
-Expert : len('hello') = 5. Longueur de la chaîne. O(1).`,
+Expert : len('hello') = 5. Longueur de la chaîne. O(1).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   170: `len() renvoie le nombre d'éléments d'une liste. La liste a 3 éléments.
 
 Débutant : [1, 2, 3] a trois éléments, donc len([1, 2, 3]) vaut 3. len() sur une liste compte les éléments.
 Intermédiaire : len([1, 2, 3]) = 3. Trois éléments.
-Expert : len([1, 2, 3]) = 3. Longueur de la liste. O(1).`,
+Expert : len([1, 2, 3]) = 3. Longueur de la liste. O(1).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   171: `La liste vide est falsy en Python. bool([]) est False.
 
 Débutant : La liste vide [] est « falsy ». bool([]) renvoie False. Résultat False.
 Intermédiaire : bool([]) est False. Les séquences vides sont falsy.
-Expert : bool([]) est False. Liste vide = falsy.`,
+Expert : bool([]) est False. Liste vide = falsy.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   172: `Une liste non vide est truthy. bool([0]) est True.
 
 Débutant : [0] a un élément, donc la liste est « truthy ». bool([0]) est True. (C'est la liste qui est truthy, pas le 0 dedans.)
 Intermédiaire : bool([0]) est True. La liste a une longueur 1 ; la truthiness porte sur le conteneur.
-Expert : bool([0]) est True. Liste non vide = truthy.`,
+Expert : bool([0]) est True. Liste non vide = truthy.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   173: `int() tronque vers zéro. int(0.9) = 0.
 
 Débutant : int(0.9) enlève la partie décimale. On obtient 0 (pas 1 — Python tronque vers zéro). Résultat 0.
 Intermédiaire : int(0.9) = 0. int() tronque, n'arrondit pas. Pour arrondir : round(0.9) = 1.
-Expert : int(0.9) tronque vers zéro ; résultat 0.`,
+Expert : int(0.9) tronque vers zéro ; résultat 0.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   174: `str(0) = '0' (chaîne). str() convertit un nombre en chaîne.
 
 Débutant : str(0) convertit le nombre 0 en chaîne '0'. On obtient '0'. Résultat '0'.
 Intermédiaire : str(0) = '0'. Le résultat est une chaîne, pas un nombre.
-Expert : str(0) = '0'. Conversion int vers str.`,
+Expert : str(0) = '0'. Conversion int vers str.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   175: `+ concatène les chaînes. 'no' + 'te' = 'note'.
 
 Débutant : 'no' + 'te' assemble les deux chaînes : on obtient 'note'. Résultat 'note'.
 Intermédiaire : 'no' + 'te' = 'note'. Concaténation de chaînes.
-Expert : str.__add__ ; 'no' + 'te' = 'note'. Concaténation.`,
+Expert : str.__add__ ; 'no' + 'te' = 'note'. Concaténation.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   176: `'o' * 4 = 'oooo'. La répétition de chaîne.
 
 Débutant : 'o' * 4 répète 'o' quatre fois : 'oooo'. Résultat 'oooo'.
 Intermédiaire : 'o' * 4 = 'oooo'. str * int = répétition.
-Expert : 'o' * 4 = 'oooo'. str.__mul__(int).`,
+Expert : 'o' * 4 = 'oooo'. str.__mul__(int).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   177: `+ concatène les listes. [3] + [4] = [3, 4].
 
 Débutant : [3] + [4] assemble les deux listes : on obtient [3, 4]. Résultat [3, 4].
 Intermédiaire : [3] + [4] = [3, 4]. Concaténation de listes (nouvelle liste).
-Expert : list.__add__ ; [3] + [4] = [3, 4].`,
+Expert : list.__add__ ; [3] + [4] = [3, 4].
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   178: `Index 0 : premier caractère de 'dog', soit 'd'.
 
 Débutant : 'dog'[0] est le premier caractère : 'd'. L'indexation commence à 0. Résultat 'd'.
 Intermédiaire : 'dog'[0] = 'd'. Index 0 = premier caractère.
-Expert : 'dog'[0] = 'd'. Indexation str.`,
+Expert : 'dog'[0] = 'd'. Indexation str.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   179: `Index -1 : dernier caractère de 'dog', soit 'g'.
 
 Débutant : 'dog'[-1] est le dernier caractère : 'g'. L'index -1 compte depuis la fin. Résultat 'g'.
 Intermédiaire : 'dog'[-1] = 'g'. Index négatif = depuis la fin.
-Expert : 'dog'[-1] = 'g'. Dernier caractère.`,
+Expert : 'dog'[-1] = 'g'. Dernier caractère.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   180: `Dernier élément : [5, 6, 7][-1] = 7.
 
 Débutant : [5, 6, 7][-1] est le dernier élément : 7. L'index -1 = dernier. Résultat 7.
 Intermédiaire : [5, 6, 7][-1] = 7. Index négatif sur une liste.
-Expert : [5, 6, 7][-1] = 7. Dernier élément.`,
+Expert : [5, 6, 7][-1] = 7. Dernier élément.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   181: `4 == 4 est True. == teste l'égalité.
 
 Débutant : 4 == 4 demande : 4 est-il égal à 4 ? Oui. Résultat True.
 Intermédiaire : 4 == 4 est True. == compare les valeurs.
-Expert : 4 == 4 est True. Égalité.`,
+Expert : 4 == 4 est True. Égalité.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   182: `5 == 5 donc 5 != 5 est False.
 
 Débutant : 5 != 5 demande : 5 est-il différent de 5 ? Non. Résultat False.
 Intermédiaire : 5 == 5 est True, donc 5 != 5 est False.
-Expert : 5 != 5 est False. Inégalité.`,
+Expert : 5 != 5 est False. Inégalité.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   183: `1 < 10 est True.
 
 Débutant : 1 < 10 demande : 1 est-il inférieur à 10 ? Oui. Résultat True.
 Intermédiaire : 1 < 10 est True. Comparaison d'ordre.
-Expert : 1 < 10 est True. Strictement inférieur.`,
+Expert : 1 < 10 est True. Strictement inférieur.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   184: `10 > 1 est True.
 
 Débutant : 10 > 1 demande : 10 est-il supérieur à 1 ? Oui. Résultat True.
 Intermédiaire : 10 > 1 est True. Comparaison d'ordre.
-Expert : 10 > 1 est True. Strictement supérieur.`,
+Expert : 10 > 1 est True. Strictement supérieur.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   185: `5 <= 5 est True. <= inclut l'égalité.
 
 Débutant : 5 <= 5 demande : 5 est-il inférieur ou égal à 5 ? Oui (5 est égal à 5). Résultat True.
 Intermédiaire : 5 <= 5 est True. <= est True si < ou ==.
-Expert : 5 <= 5 est True. Inférieur ou égal.`,
+Expert : 5 <= 5 est True. Inférieur ou égal.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   186: `3 >= 4 est False. 3 n'est pas supérieur ou égal à 4.
 
 Débutant : 3 >= 4 demande : 3 est-il supérieur ou égal à 4 ? Non. Résultat False.
 Intermédiaire : 3 >= 4 est False. 3 est strictement inférieur à 4.
-Expert : 3 >= 4 est False. Supérieur ou égal.`,
+Expert : 3 >= 4 est False. Supérieur ou égal.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   187: `+ concatène les tuples. (1, 2) + (3,) = (1, 2, 3).
 
 Débutant : (1, 2) + (3,) assemble les deux tuples : on obtient (1, 2, 3). Résultat (1, 2, 3).
 Intermédiaire : (1, 2) + (3,) = (1, 2, 3). Concaténation de tuples (nouveau tuple).
-Expert : tuple.__add__ ; (1, 2) + (3,) = (1, 2, 3).`,
+Expert : tuple.__add__ ; (1, 2) + (3,) = (1, 2, 3).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   188: `Tranche [1:3] : caractères aux index 1 et 2. 'pie'[1:3] = 'ie'.
 
 Débutant : 'pie'[1:3] prend de l'index 1 à (sans inclure) 3. On obtient 'ie'. Résultat 'ie'.
 Intermédiaire : 'pie'[1:3] = 'ie'. Tranche [1:3] = index 1 et 2.
-Expert : 'pie'[1:3] = 'ie'. Tranche.`,
+Expert : 'pie'[1:3] = 'ie'. Tranche.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   189: `[:2] : du début à l'index 2 (exclu). 'pie'[:2] = 'pi'.
 
 Débutant : 'pie'[:2] prend du début jusqu'à (sans inclure) l'index 2. On obtient 'pi'. Résultat 'pi'.
 Intermédiaire : 'pie'[:2] = 'pi'. [:2] = deux premiers caractères.
-Expert : 'pie'[:2] = 'pi'. Tranche depuis le début.`,
+Expert : 'pie'[:2] = 'pi'. Tranche depuis le début.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   190: `[2:] : de l'index 2 à la fin. 'pie'[2:] = 'e'.
 
 Débutant : 'pie'[2:] prend de l'index 2 à la fin. On obtient 'e'. Résultat 'e'.
 Intermédiaire : 'pie'[2:] = 'e'. [2:] = de l'index 2 à la fin.
-Expert : 'pie'[2:] = 'e'. Tranche jusqu'à la fin.`,
+Expert : 'pie'[2:] = 'e'. Tranche jusqu'à la fin.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   191: `list([1, 2]) renvoie une nouvelle liste [1, 2].
 
 Débutant : list([1, 2]) crée une nouvelle liste avec les mêmes éléments : [1, 2]. Copie superficielle.
 Intermédiaire : list([1, 2]) = [1, 2]. list(itérable) sur une liste donne une nouvelle liste.
-Expert : list([1, 2]) = [1, 2]. Nouvelle liste (copie superficielle).`,
+Expert : list([1, 2]) = [1, 2]. Nouvelle liste (copie superficielle).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   192: `tuple((1,)) = (1,). tuple() sur un tuple renvoie une copie.
 
 Débutant : tuple((1,)) crée un nouveau tuple avec les mêmes éléments : (1,). Résultat (1,).
 Intermédiaire : tuple((1,)) = (1,). tuple(itérable) sur un tuple.
-Expert : tuple((1,)) = (1,). Nouveau tuple.`,
+Expert : tuple((1,)) = (1,). Nouveau tuple.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   193: `Les ensembles n'ont pas de doublons. set([2, 2, 3]) = {2, 3}.
 
 Débutant : set([2, 2, 3]) crée un ensemble ; les doublons sont supprimés. On obtient {2, 3}. Résultat {2, 3}.
 Intermédiaire : set([2, 2, 3]) = {2, 3}. Les ensembles ne contiennent que des éléments uniques.
-Expert : set([2, 2, 3]) = {2, 3}. Doublons supprimés.`,
+Expert : set([2, 2, 3]) = {2, 3}. Doublons supprimés.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   194: `Division entière : 11 // 2 = 5.
 
 Débutant : 11 // 2 est la partie entière de 11 ÷ 2. 11 ÷ 2 = 5,5 ; on prend 5. Résultat 5.
 Intermédiaire : 11 // 2 = 5. 11 % 2 = 1. 11 = 5*2 + 1.
-Expert : 11 // 2 = 5. Division entière.`,
+Expert : 11 // 2 = 5. Division entière.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   195: `Reste : 11 % 2 = 1.
 
 Débutant : 11 % 2 est le reste de 11 ÷ 2. 11 = 5*2 + 1 ; le reste est 1. Résultat 1.
 Intermédiaire : 11 % 2 = 1. 11 // 2 = 5. 11 = 5*2 + 1.
-Expert : 11 % 2 = 1. Reste.`,
+Expert : 11 % 2 = 1. Reste.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   196: `Addition de floats : 1.5 + 1.5 = 3.0.
 
 Débutant : 1.5 + 1.5 = 3.0. Additionner deux float donne un float. Résultat 3.0.
 Intermédiaire : 1.5 + 1.5 = 3.0. float + float = float.
-Expert : 1.5 + 1.5 = 3.0. Addition de float.`,
+Expert : 1.5 + 1.5 = 3.0. Addition de float.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   197: `Les nombres avec une virgule décimale sont des float. type(1.0) est float.
 
 Débutant : 1.0 a un point décimal, donc c'est un float. type(1.0) renvoie <class 'float'>.
 Intermédiaire : type(1.0) est float. Littéral avec point décimal = float.
-Expert : type(1.0) est float. Littéral float.`,
+Expert : type(1.0) est float. Littéral float.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   198: `La chaîne vide est toujours de type str. type('') est str.
 
 Débutant : '' est une chaîne vide, donc type('') est <class 'str'>. La chaîne vide reste une chaîne.
 Intermédiaire : type('') est str. Chaîne vide = str.
-Expert : type('') est str. Chaîne vide.`,
+Expert : type('') est str. Chaîne vide.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   199: `[[]] est une liste dont l'unique élément est une liste vide. type([[]]) est list.
 
 Débutant : [[]] est une liste qui contient un seul élément : la liste vide []. type([[]]) est <class 'list'>.
 Intermédiaire : type([[]]) est list. Les crochets extérieurs font une liste.
-Expert : type([[]]) est list. Liste contenant un élément (une liste).`,
+Expert : type([[]]) est list. Liste contenant un élément (une liste).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   200: `En Python, 0 et False sont égaux en valeur. 0 == False est True.
 
 Débutant : En Python, 0 == False est True. 0 et False sont égaux en valeur. Résultat True.
 Intermédiaire : bool est une sous-classe de int ; False vaut 0. Donc 0 == False est True.
-Expert : 0 == False est True. Égalité de valeur.`,
+Expert : 0 == False est True. Égalité de valeur.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   201: `in vérifie l'appartenance dans un tuple. 1 est dans (1, 2).
 
 Débutant : 1 in (1, 2) demande : 1 est-il dans le tuple ? Oui. Résultat True.
 Intermédiaire : in fonctionne sur les tuples. 1 in (1, 2) est True.
-Expert : 1 in (1, 2) est True. Test d'appartenance.`,
+Expert : 1 in (1, 2) est True. Test d'appartenance.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   202: `not in vérifie l'absence. 10 n'est pas dans (1, 2).
 
 Débutant : 10 not in (1, 2) demande : 10 n'est-il pas dans le tuple ? Oui — 10 n'est pas dans (1, 2). Résultat True.
 Intermédiaire : not in est True quand la valeur est absente. 10 not in (1, 2) est True.
-Expert : 10 not in (1, 2) est True. not in.`,
+Expert : 10 not in (1, 2) est True. not in.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   203: `abs(0) = 0.
 
 Débutant : abs(0) est la valeur absolue de 0. On obtient 0. Résultat 0.
 Intermédiaire : abs(0) = 0. La valeur absolue de zéro est zéro.
-Expert : abs(0) = 0. Valeur absolue.`,
+Expert : abs(0) = 0. Valeur absolue.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   204: `En Python 3, round(5.5) arrondit à 6.
 
 Débutant : round(5.5) arrondit 5.5 à l'entier le plus proche. En Python 3, 5.5 arrondit à 6. Résultat 6.
 Intermédiaire : round(5.5) = 6. Python 3 utilise l'arrondi « banquier » (demi vers pair) mais 5.5 → 6.
-Expert : round(5.5) = 6. Arrondi.`,
+Expert : round(5.5) = 6. Arrondi.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   205: `min() renvoie le plus petit argument. min(0, 1) = 0.
 
 Débutant : min(0, 1) renvoie le plus petit de 0 et 1 : 0. Résultat 0.
 Intermédiaire : min(0, 1) = 0. min() renvoie le minimum.
-Expert : min(0, 1) = 0. Minimum.`,
+Expert : min(0, 1) = 0. Minimum.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   206: `max() renvoie le plus grand argument. max(0, -1) = 0.
 
 Débutant : max(0, -1) renvoie le plus grand de 0 et -1 : 0. Résultat 0.
 Intermédiaire : max(0, -1) = 0. max() renvoie le maximum.
-Expert : max(0, -1) = 0. Maximum.`,
+Expert : max(0, -1) = 0. Maximum.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   207: `sum() additionne tous les éléments. sum([0, 1, 2]) = 3.
 
 Débutant : sum([0, 1, 2]) additionne 0 + 1 + 2 = 3. Résultat 3.
 Intermédiaire : sum([0, 1, 2]) = 3. sum() additionne tous les nombres de l'itérable.
-Expert : sum([0, 1, 2]) = 3. Somme.`,
+Expert : sum([0, 1, 2]) = 3. Somme.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   208: `pow(3, 2) = 3**2 = 9.
 
 Débutant : pow(3, 2) signifie 3 à la puissance 2 : 3*3 = 9. Résultat 9.
 Intermédiaire : pow(3, 2) = 9. Équivalent à 3 ** 2.
-Expert : pow(3, 2) = 9. Exponentiation.`,
+Expert : pow(3, 2) = 9. Exponentiation.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   209: `divmod renvoie (quotient, reste). divmod(10, 3) = (3, 1).
 
 Débutant : divmod(10, 3) donne quotient et reste. 10 = 3*3 + 1 ; on obtient (3, 1). Résultat (3, 1).
 Intermédiaire : divmod(10, 3) = (3, 1). 10 // 3 = 3 et 10 % 3 = 1.
-Expert : divmod(10, 3) = (3, 1). (quotient, reste).`,
+Expert : divmod(10, 3) = (3, 1). (quotient, reste).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   210: `or est True si au moins un opérande est True. True or True = True.
 
 Débutant : True or True : au moins un est True, donc le résultat est True.
 Intermédiaire : or est True quand au moins un opérande est True. True or True est True.
-Expert : True or True est True. Ou logique.`,
+Expert : True or True est True. Ou logique.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   211: `and est False si un opérande est False. False and True = False.
 
 Débutant : False and True : l'un est False, donc le résultat est False.
 Intermédiaire : and est False si l'un est False. False and True est False.
-Expert : False and True est False. Et logique.`,
+Expert : False and True est False. Et logique.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   212: `Priorité des opérateurs : * avant +. 2*3=6, 6+4=10.
 
 Débutant : 2 * 3 + 4 : on fait 2*3 d'abord (6), puis 6+4 = 10. Résultat 10.
 Intermédiaire : * a une priorité plus élevée que +. 2 * 3 + 4 = 10.
-Expert : 2 * 3 + 4 = 10. Priorité des opérateurs.`,
+Expert : 2 * 3 + 4 = 10. Priorité des opérateurs.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   213: `Les parenthèses ont la priorité. 3+4=7, 2*7=14.
 
 Débutant : 2 * (3 + 4) : on fait (3+4) d'abord (7), puis 2*7 = 14. Résultat 14.
 Intermédiaire : Les parenthèses l'emportent sur la priorité. 2 * (3 + 4) = 14.
-Expert : 2 * (3 + 4) = 14. Parenthèses.`,
+Expert : 2 * (3 + 4) = 14. Parenthèses.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   214: `not in est True quand la sous-chaîne est absente. 'a' not in 'bc' est True.
 
 Débutant : 'a' not in 'bc' demande : 'a' n'est-il pas dans 'bc' ? Oui — 'a' n'est pas dans 'bc'. Résultat True.
 Intermédiaire : not in pour les chaînes : True quand la sous-chaîne est absente. 'a' not in 'bc' est True.
-Expert : 'a' not in 'bc' est True. not in.`,
+Expert : 'a' not in 'bc' est True. not in.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   215: `Une tranche vide de liste donne []. [][:0] = [].
 
 Débutant : [][:0] est une tranche de la liste vide du début à l'index 0. On obtient []. Résultat [].
 Intermédiaire : Toute tranche de [] donne []. [][:0] = [].
-Expert : [][:0] = []. Tranche vide.`,
+Expert : [][:0] = []. Tranche vide.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   216: `L'index 0 est le premier élément d'un tuple. (1, 2)[0] = 1.
 
 Débutant : (1, 2)[0] est le premier élément du tuple : 1. L'index 0 = premier. Résultat 1.
 Intermédiaire : (1, 2)[0] = 1. Indexation de tuple.
-Expert : (1, 2)[0] = 1. Indexation tuple.`,
+Expert : (1, 2)[0] = 1. Indexation tuple.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   217: `type(False) renvoie <class 'bool'>.
 
 Débutant : False est une valeur booléenne. type(False) renvoie <class 'bool'>.
 Intermédiaire : type(False) est bool. False est de type bool.
-Expert : type(False) est bool. Type bool.`,
+Expert : type(False) est bool. Type bool.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   218: `type(None) renvoie <class 'NoneType'>.
 
 Débutant : None a son propre type : NoneType. type(None) renvoie <class 'NoneType'>.
 Intermédiaire : type(None) est NoneType. None n'est pas 0 ni False.
-Expert : type(None) est NoneType. Type None.`,
+Expert : type(None) est NoneType. Type None.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   219: `type([]) renvoie <class 'list'>. [] est une liste.
 
 Débutant : [] est une liste vide. type([]) renvoie <class 'list'>.
 Intermédiaire : type([]) est list. [] est une liste.
-Expert : type([]) est list. Type list.`,
+Expert : type([]) est list. Type list.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   220: `Les accolades vides créent un dict, pas un set. type({}) est dict.
 
 Débutant : {} est un dictionnaire vide. type({}) renvoie <class 'dict'>. (Pour un ensemble vide utiliser set().)
 Intermédiaire : type({}) est dict. {} est un dict ; set() est l'ensemble vide.
-Expert : type({}) est dict. Dict vide.`,
+Expert : type({}) est dict. Dict vide.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   221: `not inverse le booléen. not False est True.
 
 Débutant : not False signifie l'opposé de False. On obtient True.
 Intermédiaire : not inverse la valeur booléenne. not False est True.
-Expert : not False est True. Négation logique.`,
+Expert : not False est True. Négation logique.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   222: `not True est False.
 
 Débutant : not True signifie l'opposé de True. On obtient False.
 Intermédiaire : not inverse. not True est False.
-Expert : not True est False. Négation logique.`,
+Expert : not True est False. Négation logique.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   223: `True and True = True. Les deux sont True.
 
 Débutant : True and True : les deux sont True, donc le résultat est True.
 Intermédiaire : and est True seulement quand les deux sont True. True and True est True.
-Expert : True and True est True. Et logique.`,
+Expert : True and True est True. Et logique.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   224: `True and False = False. and est False si l'un est False.
 
 Débutant : True and False : l'un est False, donc le résultat est False.
 Intermédiaire : and est False si un opérande est False. True and False est False.
-Expert : True and False est False. Et logique.`,
+Expert : True and False est False. Et logique.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   225: `True or False = True. or est True si l'un est True.
 
 Débutant : True or False : au moins un est True, donc le résultat est True.
 Intermédiaire : or est True quand au moins un est True. True or False est True.
-Expert : True or False est True. Ou logique.`,
+Expert : True or False est True. Ou logique.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   226: `False or False = False. Les deux sont False.
 
 Débutant : False or False : les deux sont False, donc le résultat est False.
 Intermédiaire : or est False seulement quand les deux sont False. False or False est False.
-Expert : False or False est False. Ou logique.`,
+Expert : False or False est False. Ou logique.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   227: `En Python, 0 == False (égalité de valeur).
 
 Débutant : En Python, 0 == False est True. 0 et False sont égaux en valeur.
 Intermédiaire : bool est sous-classe de int ; False vaut 0. 0 == False est True.
-Expert : 0 == False est True. Égalité de valeur.`,
+Expert : 0 == False est True. Égalité de valeur.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   228: `1 == True est True. 1 et True sont égaux en valeur.
 
 Débutant : En Python, 1 == True est True. 1 et True sont égaux en valeur.
 Intermédiaire : bool est sous-classe de int ; True vaut 1. 1 == True est True.
-Expert : 1 == True est True. Égalité de valeur.`,
+Expert : 1 == True est True. Égalité de valeur.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   229: `La chaîne vide n'est pas égale à False. '' == False est False.
 
 Débutant : '' == False demande : la chaîne vide est-elle égale à False ? Non. (Les deux sont falsy mais pas égaux.)
 Intermédiaire : Seuls 0==False et 1==True ; '' n'est pas égal à False.
-Expert : str et bool ; '' et False sont de types différents, non égaux. '' == False est False.`,
+Expert : str et bool ; '' et False sont de types différents, non égaux. '' == False est False.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   230: `Il n'existe qu'un seul None.
 
 Débutant : Il n'y a qu'un seul objet None en Python. None is None est True.
 Intermédiaire : None est un singleton. Pour tester : if x is None.
-Expert : Un seul objet None. Test d'identité avec « is ».`,
+Expert : Un seul objet None. Test d'identité avec « is ».
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   231: `Multiplication avant addition : 1 + 2*3 = 7.
 
 Débutant : 1 + 2*3 : la multiplication d'abord. 2*3 = 6, puis 1+6 = 7. Résultat 7.
 Intermédiaire : * a priorité sur +. 1 + 2*3 = 7.
-Expert : 1 + 2*3 = 7. Priorité.`,
+Expert : 1 + 2*3 = 7. Priorité.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   232: `Les parenthèses d'abord : (1+2)*3 = 9.
 
 Débutant : (1+2)*3 : les parenthèses d'abord. 1+2 = 3, puis 3*3 = 9. Résultat 9.
 Intermédiaire : Les parenthèses l'emportent. (1+2)*3 = 9.
-Expert : (1+2)*3 = 9. Parenthèses.`,
+Expert : (1+2)*3 = 9. Parenthèses.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   233: `10 / 2 = 5.0.
 
 Débutant : 10 / 2 donne 5.0. En Python 3, / renvoie toujours un float. Résultat 5.0.
 Intermédiaire : 10 / 2 = 5.0. / = division flottante.
-Expert : 10 / 2 = 5.0. / renvoie float.`,
+Expert : 10 / 2 = 5.0. / renvoie float.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   234: `10 // 3 = 3. Division entière.
 
 Débutant : 10 // 3 est la partie entière de 10 ÷ 3. 10 ÷ 3 = 3,33... ; on prend 3. Résultat 3.
 Intermédiaire : 10 // 3 = 3. 10 % 3 = 1. 10 = 3*3 + 1.
-Expert : 10 // 3 = 3. Division entière.`,
+Expert : 10 // 3 = 3. Division entière.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   235: `10 % 3 = 1. Reste.
 
 Débutant : 10 % 3 est le reste de 10 ÷ 3. 10 = 3*3 + 1 ; le reste est 1. Résultat 1.
 Intermédiaire : 10 % 3 = 1. 10 // 3 = 3. 10 = 3*3 + 1.
-Expert : 10 % 3 = 1. Reste.`,
+Expert : 10 % 3 = 1. Reste.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   236: `Tranche 'abc'[1:2] = 'b'.
 
 Débutant : 'abc'[1:2] prend une tranche de l'index 1 à (sans inclure) 2. On obtient 'b'. Résultat 'b'.
 Intermédiaire : [1:2] = un seul caractère (index 1). 'abc'[1:2] = 'b'.
-Expert : 'abc'[1:2] = 'b'. Tranche.`,
+Expert : 'abc'[1:2] = 'b'. Tranche.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   237: `'abc'[:2] = 'ab'. Du début à l'index 2 (exclu).
 
 Débutant : 'abc'[:2] prend du début jusqu'à (sans inclure) l'index 2. On obtient 'ab'. Résultat 'ab'.
 Intermédiaire : [:2] = indices 0 et 1. 'abc'[:2] = 'ab'.
-Expert : 'abc'[:2] = 'ab'. Tranche depuis le début.`,
+Expert : 'abc'[:2] = 'ab'. Tranche depuis le début.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   238: `'abc'[1:] = 'bc'. De l'index 1 à la fin.
 
 Débutant : 'abc'[1:] prend de l'index 1 à la fin. On obtient 'bc'. Résultat 'bc'.
 Intermédiaire : [1:] = indices 1 et 2. 'abc'[1:] = 'bc'.
-Expert : 'abc'[1:] = 'bc'. Tranche jusqu'à la fin.`,
+Expert : 'abc'[1:] = 'bc'. Tranche jusqu'à la fin.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   239: `list('ab') = ['a', 'b'].
 
 Débutant : list('ab') transforme la chaîne 'ab' en liste de caractères : ['a', 'b']. Résultat ['a', 'b'].
 Intermédiaire : list(itérable) sur une str donne une liste de caractères. list('ab') = ['a', 'b'].
-Expert : list('ab') = ['a', 'b']. str est itérable de caractères.`,
+Expert : list('ab') = ['a', 'b']. str est itérable de caractères.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   240: `tuple([1, 2]) = (1, 2).
 
 Débutant : tuple([1, 2]) transforme la liste [1, 2] en tuple (1, 2). Résultat (1, 2).
 Intermédiaire : tuple(itérable) convertit l'itérable en tuple. tuple([1, 2]) = (1, 2).
-Expert : tuple([1, 2]) = (1, 2). Conversion list → tuple.`,
+Expert : tuple([1, 2]) = (1, 2). Conversion list → tuple.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   241: `set supprime les doublons : {1, 2}.
 
 Débutant : set([1, 1, 2]) crée un ensemble ; les doublons sont supprimés. On obtient {1, 2}. Résultat {1, 2}.
 Intermédiaire : Les ensembles n'ont que des éléments uniques. set([1, 1, 2]) = {1, 2}.
-Expert : set([1, 1, 2]) = {1, 2}. Doublons supprimés.`,
+Expert : set([1, 1, 2]) = {1, 2}. Doublons supprimés.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   242: `dict() crée un dictionnaire vide.
 
 Débutant : dict() crée un dictionnaire vide. On obtient {}. Résultat {}.
 Intermédiaire : dict() = {}. Dictionnaire vide. {} aussi.
-Expert : dict() = {}. Dict vide.`,
+Expert : dict() = {}. Dict vide.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   243: `list() crée une liste vide.
 
 Débutant : list() crée une liste vide. On obtient []. Résultat [].
 Intermédiaire : list() = []. Liste vide. [] aussi.
-Expert : list() = []. Liste vide.`,
+Expert : list() = []. Liste vide.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   244: `int('9') = 9. int() convertit une chaîne numérique en int.
 
 Débutant : int('9') convertit la chaîne '9' en entier 9. Résultat 9.
 Intermédiaire : int(chaîne) analyse la chaîne. int('9') = 9.
-Expert : int('9') = 9. Conversion str → int.`,
+Expert : int('9') = 9. Conversion str → int.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   245: `Addition : 7 + 8 = 15.
 
 Débutant : 7 + 8 = 15. Addition. Résultat 15.
 Intermédiaire : 7 + 8 = 15. Les deux sont int.
-Expert : 7 + 8 = 15. Le résultat est 15.`,
+Expert : 7 + 8 = 15. Le résultat est 15.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   246: `Soustraction : 20 - 7 = 13.
 
 Débutant : 20 - 7 = 13. Soustraction. Résultat 13.
 Intermédiaire : 20 - 7 = 13. Les deux sont int.
-Expert : 20 - 7 = 13. Le résultat est 13.`,
+Expert : 20 - 7 = 13. Le résultat est 13.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   247: `Multiplication : 5 * 4 = 20.
 
 Débutant : 5 * 4 = 20. Multiplication. Résultat 20.
 Intermédiaire : 5 * 4 = 20. Les deux sont int.
-Expert : 5 * 4 = 20. Le résultat est 20.`,
+Expert : 5 * 4 = 20. Le résultat est 20.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   248: `16 / 4 = 4.0. En Python 3 la division renvoie un float.
 
 Débutant : 16 / 4 donne 4.0. En Python 3, / renvoie toujours un float. Résultat 4.0.
 Intermédiaire : 16 / 4 = 4.0. / = division flottante.
-Expert : 16 / 4 = 4.0. / renvoie float.`,
+Expert : 16 / 4 = 4.0. / renvoie float.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   249: `Division entière : 18 // 5 = 3.
 
 Débutant : 18 // 5 est la partie entière de 18 ÷ 5. 18 ÷ 5 = 3,6... ; on prend 3. Résultat 3.
 Intermédiaire : 18 // 5 = 3. 18 % 5 = 3.
-Expert : 18 // 5 = 3. Division entière.`,
+Expert : 18 // 5 = 3. Division entière.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   250: `Reste : 18 % 5 = 3.
 
 Débutant : 18 % 5 est le reste de 18 ÷ 5. 18 = 3*5 + 3 ; le reste est 3. Résultat 3.
 Intermédiaire : 18 % 5 = 3. 18 // 5 = 3. 18 = 3*5 + 3.
-Expert : 18 % 5 = 3. Reste.`,
+Expert : 18 % 5 = 3. Reste.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   251: `4 ** 2 = 16. 4 au carré.
 
 Débutant : 4 ** 2 signifie 4 à la puissance 2 : 4*4 = 16. Résultat 16.
 Intermédiaire : 4 ** 2 = 16. 4 au carré.
-Expert : 4 ** 2 = 16. Exponentiation.`,
+Expert : 4 ** 2 = 16. Exponentiation.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   252: `'hello' a 5 caractères. len() compte les caractères.
 
 Débutant : 'hello' a 5 lettres, donc len('hello') vaut 5. len() compte les caractères d'une chaîne.
 Intermédiaire : len('hello') = 5. Cinq caractères.
-Expert : len('hello') = 5. Longueur str.`,
+Expert : len('hello') = 5. Longueur str.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   253: `La liste a 3 éléments. len() renvoie le nombre d'éléments.
 
 Débutant : [1, 2, 3] a trois éléments, donc len([1, 2, 3]) vaut 3. len() sur une liste compte les éléments.
 Intermédiaire : len([1, 2, 3]) = 3. Trois éléments.
-Expert : len([1, 2, 3]) = 3. Longueur list.`,
+Expert : len([1, 2, 3]) = 3. Longueur list.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   254: `La liste vide est falsy. bool([]) est False.
 
 Débutant : La liste vide [] est « falsy ». bool([]) renvoie False.
 Intermédiaire : bool([]) est False. Les séquences vides sont falsy.
-Expert : bool([]) est False. Liste vide = falsy.`,
+Expert : bool([]) est False. Liste vide = falsy.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   255: `Une liste non vide est truthy. bool([0]) est True.
 
 Débutant : [0] a un élément, donc la liste est « truthy ». bool([0]) est True.
 Intermédiaire : bool([0]) est True. La liste est non vide (le 0 dedans ne change pas ça).
-Expert : bool([0]) est True. Liste non vide = truthy.`,
+Expert : bool([0]) est True. Liste non vide = truthy.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   256: `int(0.9) = 0. int() tronque vers zéro.
 
 Débutant : int(0.9) supprime la partie décimale. On obtient 0 (pas 1). Résultat 0.
 Intermédiaire : int(0.9) = 0. int() tronque, n'arrondit pas.
-Expert : int(0.9) = 0. Troncature vers zéro.`,
+Expert : int(0.9) = 0. Troncature vers zéro.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   257: `str(0) = '0' (chaîne). str() convertit un nombre en chaîne.
 
 Débutant : str(0) convertit le nombre 0 en chaîne '0'. Résultat '0'.
 Intermédiaire : str(0) = '0'. Le résultat est une chaîne.
-Expert : str(0) = '0'. Conversion int → str.`,
+Expert : str(0) = '0'. Conversion int → str.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   258: `Concaténation : 'no' + 'te' = 'note'.
 
 Débutant : 'no' + 'te' assemble les deux chaînes : 'note'. Résultat 'note'.
 Intermédiaire : 'no' + 'te' = 'note'. Concaténation.
-Expert : 'no' + 'te' = 'note'. str.__add__.`,
+Expert : 'no' + 'te' = 'note'. str.__add__.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   259: `'o' * 4 = 'oooo'. Répétition de chaîne.
 
 Débutant : 'o' * 4 répète 'o' quatre fois : 'oooo'. Résultat 'oooo'.
 Intermédiaire : 'o' * 4 = 'oooo'. str * int = répétition.
-Expert : 'o' * 4 = 'oooo'. str.__mul__.`,
+Expert : 'o' * 4 = 'oooo'. str.__mul__.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   260: `[3] + [4] = [3, 4]. Concaténation de listes.
 
 Débutant : [3] + [4] assemble les deux listes : [3, 4]. Résultat [3, 4].
 Intermédiaire : [3] + [4] = [3, 4]. Concaténation de listes.
-Expert : [3] + [4] = [3, 4]. list.__add__.`,
+Expert : [3] + [4] = [3, 4]. list.__add__.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   261: `Premier caractère de 'dog' : 'd'. Index 0.
 
 Débutant : 'dog'[0] est le premier caractère : 'd'. Index 0 = premier. Résultat 'd'.
 Intermédiaire : 'dog'[0] = 'd'. Premier caractère.
-Expert : 'dog'[0] = 'd'. Indexation str.`,
+Expert : 'dog'[0] = 'd'. Indexation str.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   262: `Dernier caractère de 'dog' : 'g'. Index -1.
 
 Débutant : 'dog'[-1] est le dernier caractère : 'g'. Index -1 = dernier. Résultat 'g'.
 Intermédiaire : 'dog'[-1] = 'g'. Dernier caractère.
-Expert : 'dog'[-1] = 'g'. Index négatif.`,
+Expert : 'dog'[-1] = 'g'. Index négatif.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   263: `Dernier élément : [5, 6, 7][-1] = 7.
 
 Débutant : [5, 6, 7][-1] est le dernier élément : 7. Résultat 7.
 Intermédiaire : [5, 6, 7][-1] = 7. Index -1 = dernier.
-Expert : [5, 6, 7][-1] = 7. Dernier élément.`,
+Expert : [5, 6, 7][-1] = 7. Dernier élément.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   264: `4 == 4 est True. == teste l'égalité.
 
 Débutant : 4 == 4 demande : 4 est-il égal à 4 ? Oui. Résultat True.
 Intermédiaire : 4 == 4 est True. == compare les valeurs.
-Expert : 4 == 4 est True. Égalité.`,
+Expert : 4 == 4 est True. Égalité.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   265: `5 != 5 est False. 5 est égal à 5.
 
 Débutant : 5 != 5 demande : 5 est-il différent de 5 ? Non. Résultat False.
 Intermédiaire : 5 == 5, donc 5 != 5 est False.
-Expert : 5 != 5 est False. Inégalité.`,
+Expert : 5 != 5 est False. Inégalité.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   266: `1 < 10 est True.
 
 Débutant : 1 < 10 demande : 1 est-il inférieur à 10 ? Oui. Résultat True.
 Intermédiaire : 1 < 10 est True. Comparaison.
-Expert : 1 < 10 est True. Strictement inférieur.`,
+Expert : 1 < 10 est True. Strictement inférieur.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   267: `10 > 1 est True.
 
 Débutant : 10 > 1 demande : 10 est-il supérieur à 1 ? Oui. Résultat True.
 Intermédiaire : 10 > 1 est True. Comparaison.
-Expert : 10 > 1 est True. Strictement supérieur.`,
+Expert : 10 > 1 est True. Strictement supérieur.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   268: `5 <= 5 est True. <= inclut l'égalité.
 
 Débutant : 5 <= 5 demande : 5 est-il inférieur ou égal à 5 ? Oui (5 = 5). Résultat True.
 Intermédiaire : 5 <= 5 est True. <= inclut l'égalité.
-Expert : 5 <= 5 est True. Inférieur ou égal.`,
+Expert : 5 <= 5 est True. Inférieur ou égal.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   269: `3 >= 4 est False.
 
 Débutant : 3 >= 4 demande : 3 est-il supérieur ou égal à 4 ? Non. Résultat False.
 Intermédiaire : 3 >= 4 est False. 3 est inférieur à 4.
-Expert : 3 >= 4 est False. Supérieur ou égal.`,
+Expert : 3 >= 4 est False. Supérieur ou égal.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   270: `Concaténation de tuples : (1, 2) + (3,) = (1, 2, 3).
 
 Débutant : (1, 2) + (3,) assemble les deux tuples : (1, 2, 3). Résultat (1, 2, 3).
 Intermédiaire : (1, 2) + (3,) = (1, 2, 3). Concaténation de tuples.
-Expert : (1, 2) + (3,) = (1, 2, 3). tuple.__add__.`,
+Expert : (1, 2) + (3,) = (1, 2, 3). tuple.__add__.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   271: `'pie'[1:3] = 'ie'. Tranche des index 1 et 2.
 
 Débutant : 'pie'[1:3] prend de l'index 1 à (sans inclure) 3. On obtient 'ie'. Résultat 'ie'.
 Intermédiaire : 'pie'[1:3] = 'ie'. Tranche [1:3] = index 1 et 2.
-Expert : 'pie'[1:3] = 'ie'. Tranche.`,
+Expert : 'pie'[1:3] = 'ie'. Tranche.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   272: `'pie'[:2] = 'pi'. Deux premiers caractères.
 
 Débutant : 'pie'[:2] prend du début jusqu'à (sans inclure) l'index 2. On obtient 'pi'. Résultat 'pi'.
 Intermédiaire : 'pie'[:2] = 'pi'. Deux premiers caractères.
-Expert : 'pie'[:2] = 'pi'. Tranche depuis le début.`,
+Expert : 'pie'[:2] = 'pi'. Tranche depuis le début.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   273: `'pie'[2:] = 'e'. De l'index 2 à la fin.
 
 Débutant : 'pie'[2:] prend de l'index 2 à la fin. On obtient 'e'. Résultat 'e'.
 Intermédiaire : 'pie'[2:] = 'e'. De l'index 2 à la fin.
-Expert : 'pie'[2:] = 'e'. Tranche jusqu'à la fin.`,
+Expert : 'pie'[2:] = 'e'. Tranche jusqu'à la fin.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   274: `list([1, 2]) renvoie une liste. list() sur une liste renvoie une copie.
 
 Débutant : list([1, 2]) crée une nouvelle liste [1, 2]. Résultat [1, 2].
 Intermédiaire : list([1, 2]) = [1, 2]. list(itérable) sur une liste = copie superficielle.
-Expert : list([1, 2]) = [1, 2]. Nouvelle liste.`,
+Expert : list([1, 2]) = [1, 2]. Nouvelle liste.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   275: `tuple((1,)) = (1,).
 
 Débutant : tuple((1,)) crée un nouveau tuple (1,). Résultat (1,).
 Intermédiaire : tuple((1,)) = (1,). tuple() sur un tuple = copie.
-Expert : tuple((1,)) = (1,). Nouveau tuple.`,
+Expert : tuple((1,)) = (1,). Nouveau tuple.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   276: `set([2, 2, 3]) = {2, 3}. Les ensembles suppriment les doublons.
 
 Débutant : set([2, 2, 3]) crée un ensemble ; les doublons sont supprimés. On obtient {2, 3}.
 Intermédiaire : set([2, 2, 3]) = {2, 3}. Ensembles = éléments uniques.
-Expert : set([2, 2, 3]) = {2, 3}. Doublons supprimés.`,
+Expert : set([2, 2, 3]) = {2, 3}. Doublons supprimés.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   277: `11 // 2 = 5. Division entière.
 
 Débutant : 11 // 2 est la partie entière de 11 ÷ 2. 11 ÷ 2 = 5,5 ; on prend 5. Résultat 5.
 Intermédiaire : 11 // 2 = 5. 11 % 2 = 1.
-Expert : 11 // 2 = 5. Division entière.`,
+Expert : 11 // 2 = 5. Division entière.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   278: `11 % 2 = 1. Reste.
 
 Débutant : 11 % 2 est le reste de 11 ÷ 2. 11 = 5*2 + 1 ; le reste est 1. Résultat 1.
 Intermédiaire : 11 % 2 = 1. 11 // 2 = 5.
-Expert : 11 % 2 = 1. Reste.`,
+Expert : 11 % 2 = 1. Reste.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   279: `Addition de floats : 1.5 + 1.5 = 3.0.
 
 Débutant : 1.5 + 1.5 = 3.0. Addition de deux float donne un float. Résultat 3.0.
 Intermédiaire : 1.5 + 1.5 = 3.0. float + float = float.
-Expert : 1.5 + 1.5 = 3.0. Addition float.`,
+Expert : 1.5 + 1.5 = 3.0. Addition float.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   280: `1.0 est un float. Les nombres avec virgule sont des float.
 
 Débutant : 1.0 a un point décimal, donc c'est un float. type(1.0) est <class 'float'>.
 Intermédiaire : type(1.0) est float. Littéral avec virgule = float.
-Expert : type(1.0) est float. Littéral float.`,
+Expert : type(1.0) est float. Littéral float.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   281: `La chaîne vide est toujours de type str. type('') est str.
 
 Débutant : '' est une chaîne vide, donc type('') est <class 'str'>.
 Intermédiaire : type('') est str. Chaîne vide = str.
-Expert : type('') est str. Chaîne vide.`,
+Expert : type('') est str. Chaîne vide.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   282: `[[]] est une liste contenant une liste. type([[]]) est list.
 
 Débutant : [[]] est une liste qui contient un élément : la liste vide []. type([[]]) est <class 'list'>.
 Intermédiaire : type([[]]) est list. Liste contenant une liste.
-Expert : type([[]]) est list. Liste à un élément (une liste).`,
+Expert : type([[]]) est list. Liste à un élément (une liste).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   283: `En Python, 0 == False (égalité de valeur).
 
 Débutant : En Python, 0 == False est True. 0 et False sont égaux en valeur.
 Intermédiaire : bool sous-classe de int ; False vaut 0. 0 == False est True.
-Expert : 0 == False est True. Égalité de valeur.`,
+Expert : 0 == False est True. Égalité de valeur.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   284: `1 est dans le tuple (1, 2). in vérifie l'appartenance.
 
 Débutant : 1 in (1, 2) demande : 1 est-il dans le tuple ? Oui. Résultat True.
 Intermédiaire : in fonctionne sur les tuples. 1 in (1, 2) est True.
-Expert : 1 in (1, 2) est True. Appartenance.`,
+Expert : 1 in (1, 2) est True. Appartenance.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   285: `10 n'est pas dans (1, 2). not in vérifie l'absence.
 
 Débutant : 10 not in (1, 2) demande : 10 n'est-il pas dans le tuple ? Oui. Résultat True.
 Intermédiaire : not in est True quand la valeur est absente. 10 not in (1, 2) est True.
-Expert : 10 not in (1, 2) est True. not in.`,
+Expert : 10 not in (1, 2) est True. not in.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   286: `abs(0) = 0.
 
 Débutant : abs(0) est la valeur absolue de 0. On obtient 0. Résultat 0.
 Intermédiaire : abs(0) = 0. Valeur absolue de zéro = 0.
-Expert : abs(0) = 0. Valeur absolue.`,
+Expert : abs(0) = 0. Valeur absolue.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   287: `round(5.5) = 6. En Python 3, round(5.5) arrondit à 6.
 
 Débutant : round(5.5) arrondit 5.5 à l'entier le plus proche. En Python 3, on obtient 6. Résultat 6.
 Intermédiaire : round(5.5) = 6. Arrondi en Python 3.
-Expert : round(5.5) = 6. Arrondi.`,
+Expert : round(5.5) = 6. Arrondi.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   288: `min(0, 1) = 0. min() renvoie le plus petit.
 
 Débutant : min(0, 1) renvoie le plus petit de 0 et 1 : 0. Résultat 0.
 Intermédiaire : min(0, 1) = 0. min() = minimum.
-Expert : min(0, 1) = 0. Minimum.`,
+Expert : min(0, 1) = 0. Minimum.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   289: `max(0, -1) = 0. max() renvoie le plus grand.
 
 Débutant : max(0, -1) renvoie le plus grand de 0 et -1 : 0. Résultat 0.
 Intermédiaire : max(0, -1) = 0. max() = maximum.
-Expert : max(0, -1) = 0. Maximum.`,
+Expert : max(0, -1) = 0. Maximum.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   290: `sum([0, 1, 2]) = 3. sum() additionne les éléments.
 
 Débutant : sum([0, 1, 2]) additionne 0 + 1 + 2 = 3. Résultat 3.
 Intermédiaire : sum([0, 1, 2]) = 3. sum() additionne tous les éléments.
-Expert : sum([0, 1, 2]) = 3. Somme.`,
+Expert : sum([0, 1, 2]) = 3. Somme.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   291: `pow(3, 2) = 9. pow(3, 2) = 3**2.
 
 Débutant : pow(3, 2) signifie 3 à la puissance 2 : 3*3 = 9. Résultat 9.
 Intermédiaire : pow(3, 2) = 9. Équivalent à 3 ** 2.
-Expert : pow(3, 2) = 9. Exponentiation.`,
+Expert : pow(3, 2) = 9. Exponentiation.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   292: `divmod(10, 3) = (3, 1). divmod renvoie (quotient, reste).
 
 Débutant : divmod(10, 3) donne quotient et reste. 10 = 3*3 + 1 ; on obtient (3, 1). Résultat (3, 1).
 Intermédiaire : divmod(10, 3) = (3, 1). 10 // 3 = 3, 10 % 3 = 1.
-Expert : divmod(10, 3) = (3, 1). (quotient, reste).`,
+Expert : divmod(10, 3) = (3, 1). (quotient, reste).
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   293: `True or True = True. or est True si l'un est True.
 
 Débutant : True or True : au moins un est True, donc le résultat est True.
 Intermédiaire : or est True quand au moins un opérande est True. True or True est True.
-Expert : True or True est True. Ou logique.`,
+Expert : True or True est True. Ou logique.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   294: `La multiplication d'abord : 2*3=6, 6+4=10. Priorité des opérateurs.
 
 Débutant : 2 * 3 + 4 : on fait 2*3 d'abord (6), puis 6+4 = 10. Résultat 10.
 Intermédiaire : * a priorité sur +. 2 * 3 + 4 = 10.
-Expert : 2 * 3 + 4 = 10. Priorité.`,
+Expert : 2 * 3 + 4 = 10. Priorité.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   295: `Parenthèses d'abord : 3+4=7, 2*7=14.
 
 Débutant : 2 * (3 + 4) : on fait (3+4) d'abord (7), puis 2*7 = 14. Résultat 14.
 Intermédiaire : Les parenthèses l'emportent. 2 * (3 + 4) = 14.
-Expert : 2 * (3 + 4) = 14. Parenthèses.`,
+Expert : 2 * (3 + 4) = 14. Parenthèses.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   296: `'a' n'est pas dans 'bc'. not in est True si la sous-chaîne est absente.
 
 Débutant : 'a' not in 'bc' demande : 'a' n'est-il pas dans 'bc' ? Oui. Résultat True.
 Intermédiaire : not in pour les chaînes : True quand la sous-chaîne est absente. 'a' not in 'bc' est True.
-Expert : 'a' not in 'bc' est True. not in.`,
+Expert : 'a' not in 'bc' est True. not in.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   297: `Une tranche vide de liste donne []. [][:0] = [].
 
 Débutant : [][:0] est une tranche de la liste vide. On obtient []. Résultat [].
 Intermédiaire : Toute tranche de [] donne []. [][:0] = [].
-Expert : [][:0] = []. Tranche vide.`,
+Expert : [][:0] = []. Tranche vide.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   298: `Premier élément du tuple : (1, 2)[0] = 1. Index 0.
 
 Débutant : (1, 2)[0] est le premier élément du tuple : 1. Index 0 = premier. Résultat 1.
 Intermédiaire : (1, 2)[0] = 1. Indexation de tuple.
-Expert : (1, 2)[0] = 1. Premier élément.`,
+Expert : (1, 2)[0] = 1. Premier élément.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   299: `False est de type bool. type(False) renvoie <class 'bool'>.
 
 Débutant : False est une valeur booléenne. type(False) renvoie <class 'bool'>.
 Intermédiaire : type(False) est bool. False est de type bool.
-Expert : type(False) est bool. Type bool.`,
+Expert : type(False) est bool. Type bool.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   300: `None a le type NoneType. type(None) renvoie <class 'NoneType'>.
 
 Débutant : None a son propre type : NoneType. type(None) renvoie <class 'NoneType'>.
 Intermédiaire : type(None) est NoneType. None est un singleton.
-Expert : type(None) est NoneType. Type None.`,
+Expert : type(None) est NoneType. Type None.
+
+Concepts clés :
+• Voir les sections Débutant et Expert pour les idées principales.
+Distinctions clés :
+• Comparer avec les types proches (int vs float, str vs bytes) comme en Expert.
+Fonctionnement :
+• Python évalue le littéral ou l'expression, puis type() renvoie sa classe.
+Exécution étape par étape :
+• 1. Évaluer l'expression. 2. Appeler type(...). 3. type() renvoie la classe. 4. Le REPL l'affiche.
+Ordre des opérations :
+• Littéraux et sous-expressions d'abord ; puis type() est appliqué.
+Cas d'utilisation courants :
+• Vérifier les types dans le REPL ; enseigner les différences de types ; valider une entrée.
+Cas limites :
+• Voir la section Expert (None, collections vides, sous-classes).
+Considérations de performance :
+• type() est peu coûteux ; la création de littéraux est très optimisée.
+Exemples :
+• Voir les sections Expert et Intermédiaire ; essayer le même motif avec des valeurs proches.
+Remarques :
+• Utiliser isinstance(x, Type) pour accepter les sous-classes.`,
   301: `La fonction range(n) crée une séquence de nombres de 0 à n-1 (n exclus). range(5) génère les nombres 0, 1, 2, 3, 4, ce qui signifie qu'une boucle utilisant range(5) itérera 5 fois. Comprendre range() est fondamental pour les boucles Python.
 
 Comportement de range(n) :

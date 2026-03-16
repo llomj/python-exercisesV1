@@ -1,7 +1,10 @@
 import { PersonaStage, LevelInfo, RandomModeStats } from './types';
 
-/** App version (sync with package.json when releasing). */
-export const APP_VERSION = '1.0.5';
+/** App version: from window.__APP_BUILD__ (injected into index.html at build time). If you see 1.0.5, the loaded HTML was cached (e.g. phone PWA). */
+export const APP_VERSION =
+  typeof window !== 'undefined' && (window as unknown as { __APP_BUILD__?: string }).__APP_BUILD__
+    ? (window as unknown as { __APP_BUILD__: string }).__APP_BUILD__
+    : '1.0.5';
 
 export const XP_PER_QUESTION = 10;
 export const QUESTIONS_PER_SUBLEVEL = 100;

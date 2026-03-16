@@ -71,5 +71,18 @@ if (!swContent.includes(placeholder)) {
 }
 swContent = swContent.replace(placeholder, replacement);
 
+// Bump cache name per build so the new SW purges old caches and the phone PWA gets updates
+const buildId = String(Date.now());
+const cacheNamePlaceholder = "const CACHE_NAME = 'python-exercises-learn-offline-BUILD_ID'; // Replaced by inject-precache.js";
+const cacheNameReplacement = `const CACHE_NAME = 'python-exercises-learn-offline-${buildId}';`;
+if (swContent.includes(cacheNamePlaceholder)) {
+  swContent = swContent.replace(cacheNamePlaceholder, cacheNameReplacement);
+}
+
 fs.writeFileSync(distSw, swContent, 'utf8');
 console.log('Injected', precacheList.length, 'precache URLs into dist/sw.js');
+
+// Inject build id into index.html so the app can show it (phone PWA: if you see v1.0.5, the loaded HTML was cached)
+const htmlWithBuild = html.replace('</body>', `<script>window.__APP_BUILD__="${buildId}";</script>\n</body>`);
+fs.writeFileSync(distIndex, htmlWithBuild, 'utf8');
+console.log('Injected build id into dist/index.html');

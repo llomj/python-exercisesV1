@@ -241,6 +241,8 @@ export const translations = {
       previewWrongSound: "Preview wrong answer",
       refreshApp: "Refresh App",
       appVersion: "v{version}",
+      openInBrowser: "Open in browser",
+      openInBrowserHint: "Get latest version (opens in new tab)",
       resetApp: "Reset App",
     },
     
@@ -266,7 +268,7 @@ export const translations = {
       starsTitle: "Stars",
       starsBody: "Level mode: each level has 0–5 stars based on your accuracy on that level (correct answers out of 300). 1★ ≥10%, 2★ ≥30%, 3★ ≥50%, 4★ ≥70%, 5★ ≥90%. Random mode: stars are based on % of the full 3300-question set answered correctly (harder). 5 stars in Random = God Mode.",
       countTitle: "Answer count",
-      countBody: "The number next to the # icon is your total number of questions answered (across all levels and sessions). It does not reset.",
+      countBody: "In Level Mode, the number next to the # icon is your total number of questions answered (across all levels and sessions). In Random Mode, it shows how many questions you have answered in Random Mode only.",
       close: "Got it",
     },
     
@@ -580,6 +582,8 @@ export const translations = {
       previewWrongSound: "Écouter le son mauvaise réponse",
       refreshApp: "Actualiser l'App",
       appVersion: "v{version}",
+      openInBrowser: "Ouvrir dans le navigateur",
+      openInBrowserHint: "Obtenir la dernière version (ouvre dans un nouvel onglet)",
       resetApp: "Réinitialiser l'App",
     },
     
@@ -604,8 +608,8 @@ export const translations = {
       pointsBody: "Vous gagnez 10 XP par bonne réponse. En Mode Niveau, les XP s'affichent dans la barre et servent à votre stade d'évolution. En Mode Aléatoire, un total d'XP séparé est utilisé. Les deux modes enregistrent la progression indépendamment.",
       starsTitle: "Étoiles",
       starsBody: "Mode niveau : chaque niveau a 0–5 étoiles selon votre précision sur ce niveau (bonnes réponses sur 300). 1★ ≥10 %, 2★ ≥30 %, 3★ ≥50 %, 4★ ≥70 %, 5★ ≥90 %. Mode aléatoire : les étoiles sont basées sur le % des 3300 questions répondues correctement (plus difficile). 5 étoiles en Aléatoire = Mode Dieu.",
-      countTitle: "Nombre de réponses",
-      countBody: "Le chiffre à côté de l'icône # est le nombre total de questions auxquelles vous avez répondu (tous niveaux et sessions). Il ne se réinitialise pas.",
+      countTitle: "Compteur de réponses",
+      countBody: "En Mode Niveau, le chiffre à côté de l'icône # est le nombre total de questions auxquelles vous avez répondu (tous niveaux et sessions). En Mode Aléatoire, il indique uniquement combien de questions vous avez répondu en Mode Aléatoire.",
       close: "Compris",
     },
     

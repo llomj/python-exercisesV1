@@ -354,6 +354,22 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
                       </span>
                     </button>
                   )}
+                  {/* Open in browser: can get fresh copy when PWA is stuck on cached build */}
+                  <a
+                    href={typeof window !== 'undefined' ? `${window.location.origin}${(window.location.pathname || '/').replace(/\?.*$/, '')}?nocache=${Date.now()}` : '#'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={withHaptic(() => onClose())}
+                    className="w-full flex flex-col items-start gap-0.5 px-4 py-3 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
+                  >
+                    <span className="flex items-center gap-3 w-full">
+                      <i className="fas fa-external-link-alt text-sm w-5 flex-shrink-0"></i>
+                      <span className="text-sm font-medium">{t('settings.openInBrowser')}</span>
+                    </span>
+                    <span className="text-[10px] text-slate-500 pl-8">
+                      {t('settings.openInBrowserHint')}
+                    </span>
+                  </a>
                 </>
               )}
             </>

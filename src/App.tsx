@@ -428,21 +428,23 @@ const App: React.FC = () => {
   };
 
   const handleRefreshApp = () => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function (regs) {
-        for (let reg of regs) {
-          reg.unregister();
-        }
-        if ('caches' in window) {
-          caches.keys().then(function (names) {
-            for (let name of names) caches.delete(name);
-          });
-        }
-        window.location.href = window.location.pathname + '?t=' + Date.now();
-      });
-    } else {
-      window.location.href = window.location.pathname + '?t=' + Date.now();
+    const redirect = () => {
+      const path = window.location.pathname.replace(/\?.*$/, '') || '/';
+      const url = window.location.origin + path + '?t=' + Date.now();
+      window.location.replace(url);
+    };
+    if (!('serviceWorker' in navigator)) {
+      redirect();
+      return;
     }
+    Promise.all([
+      navigator.serviceWorker.getRegistrations().then((regs) =>
+        Promise.all(regs.map((reg) => reg.unregister()))
+      ),
+      'caches' in window ? caches.keys().then((names) => Promise.all(names.map((n) => caches.delete(n)))) : Promise.resolve(),
+    ])
+      .then(() => redirect())
+      .catch(() => redirect());
   };
 
   const toggleLanguage = () => {
@@ -738,13 +740,22 @@ const App: React.FC = () => {
             >
               <i className="fas fa-circle-info text-sm"></i>
             </button>
-            <div
-              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10"
-              title="Answer Count"
-            >
-              <i className="fas fa-hashtag text-slate-400 text-sm"></i>
-              <span className="text-sm font-bold text-slate-200">{(stats.totalAttempts ?? stats.history.length).toLocaleString()}</span>
-            </div>
+            {(() => {
+              const answerCount = randomMode
+                ? (stats.randomModeStats?.totalAnswered ?? 0)
+                : (stats.totalAttempts ?? stats.history.length);
+              return (
+                <div
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10"
+                  title="Answer Count"
+                >
+                  <i className="fas fa-hashtag text-slate-400 text-sm"></i>
+                  <span className="text-sm font-bold text-slate-200">
+                    {answerCount.toLocaleString()}
+                  </span>
+                </div>
+              );
+            })()}
           </div>
         </div>
 

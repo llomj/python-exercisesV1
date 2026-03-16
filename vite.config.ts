@@ -6,9 +6,13 @@ export default defineConfig(({ mode }) => {
   const repo = process.env.VITE_BASE_REPO || 'python-exercisesV1';
   const base = mode === 'production' ? `/${repo}/` : '/';
   
+  const buildId = mode === 'production' ? String(Date.now()) : 'dev';
   return {
     plugins: [react()],
     base,
+    define: {
+      __SW_VERSION__: JSON.stringify(buildId),
+    },
     build: {
       rollupOptions: {
         output: {
