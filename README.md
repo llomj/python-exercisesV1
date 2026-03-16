@@ -1,8 +1,9 @@
-#deployment
-https://llomj.github.io/python-exercisesV1/
+# Tjump
 
-#App type(offline).
+Philosophy app on Tjump DNA metric — offline-first PWA for exploring TJump's debates and arguments.
 
-#This phone app is a python exercise app multiple-choice where user can level up 10 levels learning python.
+## Deployment
 
-#AI agent tools used to build app. Cursor, Codex, opencode.
+https://llomj.github.io/Tjump/
+
+Install on your phone: open the URL in Safari (iOS) or Chrome (Android), then use **Add to Home Screen** to use as an app.
