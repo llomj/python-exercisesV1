@@ -9,15 +9,64 @@ export const level1Patterns = [
     o: ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 
     c: 0, 
     e: "Whole numbers are integers.",
-    de: `The type() function returns the type (class) of any object in Python. When you call type(42), Python identifies that 42 is an integer literal. In Python, integers are objects of the built-in int class. 
+    de: `The type() function returns the type (class) of any object in Python. When you call type(42), Python identifies that 42 is an integer literal. In Python, integers are objects of the built-in int class.
 
-Key concepts:
-• Integers (int) represent whole numbers: -3, 0, 42, 1000
-• Unlike some languages, Python integers have unlimited precision
-• type() returns <class 'type_name'> format
-• This is fundamental for understanding Python's object-oriented nature where everything is an object
+Key Concepts:
+• Integers (int) represent whole numbers: -3, 0, 42, 1000.
+• Unlike some languages, Python integers have unlimited precision; there is no fixed maximum.
+• type() returns the class object in <class 'type_name'> display format.
+• This is fundamental for understanding Python's object-oriented nature: everything is an object with a type.
 
-Example: type(42) returns <class 'int'> because 42 is an integer literal. You can verify this: isinstance(42, int) returns True.`
+Key Distinctions:
+• int vs float: 42 is int; 42.0 is float even though they compare equal for equality.
+• int vs str: "42" is a string (text); 42 is a numeric value you can use in arithmetic.
+• type() vs isinstance(): type(x) == int checks exact type; isinstance(x, int) also allows subclasses (e.g. bool).
+
+How It Works:
+• When Python parses the literal 42, it creates or reuses an integer object.
+• The built-in type() takes one argument and returns the class object that created that instance.
+• For 42, that class is int, so type(42) returns the int type object.
+
+Step-by-Step Execution:
+1. The interpreter reads the expression type(42).
+2. The argument 42 is evaluated first: the literal 42 produces an int instance.
+3. type() is called with that int instance as its argument.
+4. type() looks up the object's __class__ and returns it (int).
+5. The result is displayed as <class 'int'> in the REPL.
+
+Order of Operations:
+1. The literal 42 is evaluated, producing an integer object (or a reference to a cached small int).
+2. The function call type(...) is evaluated: the argument is already evaluated (step 1).
+3. type() is invoked with that object; no other operators or subexpressions are involved.
+4. The return value (the int class) is produced.
+5. In an interactive session, the REPL calls repr() on the result to display <class 'int'>.
+
+Common Use Cases:
+• Quickly inspecting the type of a value in the REPL or when debugging.
+• Teaching beginners the difference between numbers, strings, and other types.
+• Validating that a value has the expected type before using it in calculations.
+• Building type-aware code that branches on the kind of data received.
+
+Edge Cases:
+• Very large integers (e.g. 10**1000) are still of type int; Python handles arbitrary precision.
+• bool is a subclass of int; type(True) is bool, not int, even though True behaves like 1 in arithmetic.
+• type(None) is NoneType; type(type(42)) is type (the metaclass of int).
+
+Performance Considerations:
+• Calling type() on a literal or variable is very fast; it is a simple attribute lookup.
+• Small integers in CPython are often cached; creating 42 is effectively free.
+• For type checking in hot paths, isinstance() is preferred when subclasses are allowed.
+
+Examples:
+• type(42)          # <class 'int'>
+• type(-10)         # <class 'int'>
+• type(42.0)        # <class 'float'>
+• type("42")        # <class 'str'>
+• isinstance(42, int)  # True
+
+Notes:
+• Use isinstance(x, int) when you want to accept subclasses (e.g. bool) as integers.
+• The display <class 'int'> is the string representation of the type object, not the value 42.`
   }),
   (_i: number) => ({ 
     q: `What is type(3.14)?`, 
@@ -26,30 +75,115 @@ Example: type(42) returns <class 'int'> because 42 is an integer literal. You ca
     e: "Decimal numbers are floats.",
     de: `Floating-point numbers in Python are represented by the float type. Any number with a decimal point is automatically a float, even if it's a whole number like 3.0.
 
-Key concepts:
-• float represents real numbers (decimals): 3.14, 2.0, -0.5, 1e10
-• Floats use double-precision (64-bit) representation
-• Division always produces float in Python 3: 10 / 2 = 5.0
-• Float precision can cause rounding issues: 0.1 + 0.2 ≈ 0.30000000000000004
+Key Concepts:
+• float represents real numbers (decimals): 3.14, 2.0, -0.5, 1e10.
+• Floats use double-precision (64-bit) IEEE 754 representation.
+• Division always produces float in Python 3: 10 / 2 = 5.0.
+• Float precision can cause rounding issues: 0.1 + 0.2 ≈ 0.30000000000000004.
 
-Example: type(3.14) returns <class 'float'>. Even 3.0 is a float, not an int. To create an integer from a float, use int(3.14) which truncates to 3.`
+Key Distinctions:
+• float vs int: 3.14 is float; 3 is int; 3.0 is float even though it equals 3.
+• float vs str: "3.14" is a string; 3.14 is a numeric value for calculations.
+• Single division / always gives float; floor division // gives int when both operands are int.
+
+How It Works:
+• The literal 3.14 is parsed as a floating-point object by the interpreter.
+• type(3.14) is called with that float instance and returns the float class.
+
+Step-by-Step Execution:
+1. The literal 3.14 is evaluated, producing a float object.
+2. type(3.14) is invoked with that object as its argument.
+3. type() returns the float class.
+4. The REPL displays <class 'float'>.
+
+Order of Operations:
+1. The literal 3.14 is evaluated first, producing a float instance.
+2. The function call type(...) is evaluated; its argument is already the result of step 1.
+3. type() is invoked and returns the class object float.
+4. The return value is displayed as <class 'float'> in the REPL.
+5. No other operators or subexpressions are involved in this simple call.
+
+Common Use Cases:
+• Checking that a value is a float (e.g. after division or user input).
+• Teaching the difference between int and float and when division produces float.
+• Validating numeric types before mathematical operations.
+
+Edge Cases:
+• type(3.0) is float; type(3) is int—the presence of a decimal point determines the type.
+• float('nan'), float('inf') produce special float values; type() still returns float.
+• Very large or small floats may lose precision; they remain type float.
+
+Performance Considerations:
+• type() on a float is a fast attribute lookup.
+• Float arithmetic is hardware-accelerated but can have rounding errors; prefer decimal.Decimal for exact decimals when needed.
+
+Examples:
+• type(3.14)   # <class 'float'>
+• type(3.0)    # <class 'float'>
+• type(10/2)   # <class 'float'>
+• int(3.14)    # 3 (truncates toward zero)
+
+Notes:
+• Use isinstance(x, float) to allow subclasses. For exact decimal arithmetic, consider the decimal module.`
   }),
   (_i: number) => ({ 
     q: `What is type("hello")?`, 
     o: ["<class 'str'>", "<class 'int'>", "<class 'list'>", "None"], 
     c: 0, 
     e: "Text in quotes is a string.",
-    de: `Strings in Python are sequences of characters enclosed in quotes. Python supports both single quotes ('hello') and double quotes ("hello") - they're identical. Strings are immutable sequences of Unicode characters.
+    de: `Strings in Python are sequences of characters enclosed in quotes. Python supports both single quotes ('hello') and double quotes ("hello")—they are identical. Strings are immutable sequences of Unicode characters.
 
-Key concepts:
-• str (string) represents text data
-• Strings are immutable - you can't modify them in place
-• Strings support indexing: "hello"[0] = 'h'
-• Strings support slicing: "hello"[1:3] = 'el'
-• Triple quotes (''' or """) create multi-line strings
-• Python has no separate 'char' type - single characters are strings of length 1
+Key Concepts:
+• str (string) represents text data; it is one of the most used types in Python.
+• Strings are immutable: you cannot change a character in place; operations return new strings.
+• Strings support indexing: "hello"[0] is 'h', and slicing: "hello"[1:3] is 'el'.
+• Triple quotes (''' or """) create multi-line strings.
+• Python has no separate char type; a single character is a string of length 1.
 
-Example: type("hello") returns <class 'str'>. Strings are one of Python's most powerful data types with many built-in methods like .upper(), .split(), .find(), etc.`
+Key Distinctions:
+• str vs bytes: "hello" is text (Unicode); b"hello" is bytes (raw binary); they are not interchangeable.
+• str vs list: both are sequences, but lists are mutable and can hold any type; strings hold only characters.
+• Single vs double quotes: no difference in Python; use either for string literals.
+
+How It Works:
+• The literal "hello" is parsed as a string object.
+• type("hello") is called with that str instance and returns the str class.
+
+Step-by-Step Execution:
+1. The literal "hello" is evaluated, producing a str instance.
+2. type("hello") is invoked with that object as its argument.
+3. type() returns the str class.
+4. The REPL displays <class 'str'>.
+
+Order of Operations:
+1. The string literal "hello" is evaluated first, producing a str object.
+2. The function call type(...) is evaluated; its argument is the result of step 1.
+3. type() is invoked and returns the class object str.
+4. The return value is displayed as <class 'str'>.
+5. No other operators participate in this expression.
+
+Common Use Cases:
+• Verifying that a value is a string (e.g. after input() or parsing).
+• Teaching the difference between text (str) and numbers or bytes.
+• Type checking before calling string methods like .split() or .upper().
+
+Edge Cases:
+• Empty string "" is still type str; type("") is <class 'str'>.
+• type('a') is str; a single character is a string of length 1 in Python.
+• Unicode characters (emojis, accented letters) are valid in str; len("é") is 1.
+
+Performance Considerations:
+• type() on a string is a fast lookup.
+• String operations that "modify" (e.g. concatenation, replace) create new strings; for many concatenations, consider list.append() and "".join().
+
+Examples:
+• type("hello")   # <class 'str'>
+• type('')        # <class 'str'>
+• "hello"[0]      # 'h'
+• "hello"[1:3]    # 'el'
+
+Notes:
+• Use isinstance(x, str) when you want to accept subclasses. Strings are central to almost every Python program.`
   }),
   (_i: number) => ({ 
     q: `What is type(True)?`, 
@@ -58,7 +192,7 @@ Example: type("hello") returns <class 'str'>. Strings are one of Python's most p
     e: "True is a boolean value.",
     de: `Boolean values in Python are represented by the bool type, which is actually a subclass of int. True and False are the only two boolean values, and they're actually instances of int (True == 1 and False == 0).
 
-Key concepts:
+Key Concepts:
 • bool represents truth values: True and False
 • bool is a subclass of int: isinstance(True, int) returns True
 • True equals 1, False equals 0 in numeric contexts
@@ -66,7 +200,49 @@ Key concepts:
 • Falsy values: False, None, 0, "", [], {}, (), set()
 • Everything else is truthy
 
-Example: type(True) returns <class 'bool'>. Interestingly, bool(1) is True and bool(0) is False, showing the relationship between bools and integers.`
+Example: type(True) returns <class 'bool'>. Interestingly, bool(1) is True and bool(0) is False, showing the relationship between bools and integers.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is type(None)?`, 
@@ -75,7 +251,7 @@ Example: type(True) returns <class 'bool'>. Interestingly, bool(1) is True and b
     e: "None has its own special type.",
     de: `None is Python's null value - it represents the absence of a value. None is a singleton object (there's only one None object in Python) and has its own type called NoneType.
 
-Key concepts:
+Key Concepts:
 • None represents "no value" or "nothing"
 • NoneType is the type of None - there is only one None object
 • None is falsy: bool(None) is False
@@ -84,7 +260,49 @@ Key concepts:
 • None != False, None != 0, None != "" - it's a distinct value
 • Common use: optional parameters default to None
 
-Example: type(None) returns <class 'NoneType'>. None is often used as a default value: def func(x=None): pass. Checking for None should use 'is': if x is None: (not x == None).`
+Example: type(None) returns <class 'NoneType'>. None is often used as a default value: def func(x=None): pass. Checking for None should use 'is': if x is None: (not x == None).
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is type([])?`, 
@@ -93,7 +311,7 @@ Example: type(None) returns <class 'NoneType'>. None is often used as a default 
     e: "Square brackets create a list.",
     de: `Lists are ordered, mutable sequences of items enclosed in square brackets. Lists can contain items of any type, including mixed types. They're one of Python's most versatile data structures.
 
-Key concepts:
+Key Concepts:
 • Lists are ordered collections: items have a defined order
 • Lists are mutable: you can modify them after creation
 • Lists can contain duplicates
@@ -102,7 +320,49 @@ Key concepts:
 • Common methods: .append(), .extend(), .insert(), .remove(), .pop()
 • Empty list [] is falsy; non-empty lists are truthy
 
-Example: type([]) returns <class 'list'>. Lists are created with [] or list(). You can access elements: [1, 2, 3][0] = 1. Lists are mutable: my_list = [1, 2]; my_list.append(3) changes my_list to [1, 2, 3].`
+Example: type([]) returns <class 'list'>. Lists are created with [] or list(). You can access elements: [1, 2, 3][0] = 1. Lists are mutable: my_list = [1, 2]; my_list.append(3) changes my_list to [1, 2, 3].
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is type(())?`, 
@@ -111,7 +371,7 @@ Example: type([]) returns <class 'list'>. Lists are created with [] or list(). Y
     e: "Parentheses create a tuple.",
     de: `Tuples are ordered, immutable sequences enclosed in parentheses. Like lists, they can contain items of any type, but unlike lists, they cannot be modified after creation. This immutability makes them hashable (can be used as dictionary keys).
 
-Key concepts:
+Key Concepts:
 • Tuples are ordered collections like lists
 • Tuples are immutable: once created, cannot be changed
 • Tuples are created with () or tuple()
@@ -121,7 +381,49 @@ Key concepts:
 • Tuples can be used as dictionary keys (lists cannot)
 • Tuple unpacking: a, b = (1, 2)
 
-Example: type(()) returns <class 'tuple'>. Note that empty parentheses () create an empty tuple. For a single-item tuple, you need (1,) - the comma is required, otherwise (1) is just the number 1.`
+Example: type(()) returns <class 'tuple'>. Note that empty parentheses () create an empty tuple. For a single-item tuple, you need (1,) - the comma is required, otherwise (1) is just the number 1.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is type({})?`, 
@@ -130,7 +432,7 @@ Example: type(()) returns <class 'tuple'>. Note that empty parentheses () create
     e: "Curly braces create a dictionary.",
     de: `Dictionaries are unordered collections of key-value pairs. An empty {} creates an empty dictionary. Dictionaries are Python's implementation of hash tables, allowing very fast lookups by key.
 
-Key concepts:
+Key Concepts:
 • Dictionaries store key-value pairs: {'name': 'Alice', 'age': 30}
 • Keys must be immutable (strings, numbers, tuples)
 • Values can be any type
@@ -139,7 +441,49 @@ Key concepts:
 • Access values: my_dict['key'] or my_dict.get('key')
 • Dictionary methods: .keys(), .values(), .items()
 
-Example: type({}) returns <class 'dict'>. Empty curly braces {} create an empty dictionary. To check if empty: if not my_dict: print("empty"). Dictionaries are incredibly useful for representing structured data and mappings.`
+Example: type({}) returns <class 'dict'>. Empty curly braces {} create an empty dictionary. To check if empty: if not my_dict: print("empty"). Dictionaries are incredibly useful for representing structured data and mappings.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is type({1, 2, 3})?`, 
@@ -148,7 +492,7 @@ Example: type({}) returns <class 'dict'>. Empty curly braces {} create an empty 
     e: "Curly braces with values create a set.",
     de: `Sets are unordered collections of unique elements. When you use curly braces with values (not key-value pairs), Python creates a set. Sets are useful for membership testing, removing duplicates, and mathematical set operations.
 
-Key concepts:
+Key Concepts:
 • Sets contain unique elements only - duplicates are automatically removed
 • Sets are unordered (no indexing)
 • Sets are mutable (can add/remove elements)
@@ -157,7 +501,49 @@ Key concepts:
 • Empty set must be created with set(), not {} (that's a dict)
 • Sets can contain only hashable (immutable) elements
 
-Example: type({1, 2, 3}) returns <class 'set'>. Note the difference: {} is a dict, {1, 2, 3} is a set. Sets automatically remove duplicates: {1, 1, 2, 2} becomes {1, 2}. Use sets for fast membership testing: if item in my_set: (very fast).`
+Example: type({1, 2, 3}) returns <class 'set'>. Note the difference: {} is a dict, {1, 2, 3} is a set. Sets automatically remove duplicates: {1, 1, 2, 2} becomes {1, 2}. Use sets for fast membership testing: if item in my_set: (very fast).
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is type(b'hello')?`, 
@@ -166,7 +552,7 @@ Example: type({1, 2, 3}) returns <class 'set'>. Note the difference: {} is a dic
     e: "b prefix creates bytes object.",
     de: `The b prefix before a string literal creates a bytes object - an immutable sequence of bytes (integers from 0-255). Bytes represent binary data, while strings represent text. In Python 3, there's a clear distinction between text (str) and binary data (bytes).
 
-Key concepts:
+Key Concepts:
 • bytes represents binary data (sequences of bytes 0-255)
 • bytes objects are immutable like strings
 • b prefix creates bytes from ASCII string: b'hello'
@@ -176,7 +562,49 @@ Key concepts:
 • Convert bytes to str: b'hello'.decode() → "hello"
 • bytes only accepts ASCII in literal form
 
-Example: type(b'hello') returns <class 'bytes'>. Bytes are essential for working with binary files, network communication, and data serialization. The bytes type helps Python 3 distinguish between text and binary data, preventing encoding errors.`
+Example: type(b'hello') returns <class 'bytes'>. Bytes are essential for working with binary files, network communication, and data serialization. The bytes type helps Python 3 distinguish between text and binary data, preventing encoding errors.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   
   // 11-20: Variable Naming Rules
@@ -195,7 +623,49 @@ Rules for valid Python identifiers:
 • No spaces or special characters except underscore
 • No length limit (though keep them reasonable!)
 
-Example: my_variable = 42 is valid. This style (lowercase with underscores) is called "snake_case" and is recommended by PEP 8 (Python's style guide) for variable names.`
+Example: my_variable = 42 is valid. This style (lowercase with underscores) is called "snake_case" and is recommended by PEP 8 (Python's style guide) for variable names.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Is '2variable' a valid variable name?`, 
@@ -214,7 +684,49 @@ Workarounds:
 • Use letter prefix: two_variable, var2, number2_variable
 • Use descriptive names: second_variable, variable_2
 
-Example: 2variable = 5 raises SyntaxError. Use variable2 or two_variable instead.`
+Example: 2variable = 5 raises SyntaxError. Use variable2 or two_variable instead.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Is 'my-variable' a valid variable name?`, 
@@ -233,7 +745,49 @@ Not allowed:
 • Space: my variable ✗ (syntax error)
 • Dot: my.variable ✗ (attribute access, not variable name)
 
-Example: my-variable = 5 raises SyntaxError because Python sees "my" - "variable". Use my_variable or myVariable instead.`
+Example: my-variable = 5 raises SyntaxError because Python sees "my" - "variable". Use my_variable or myVariable instead.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Is 'class' a valid variable name?`, 
@@ -253,7 +807,49 @@ Python keywords (cannot be used as identifiers):
 
 How to check: import keyword; print(keyword.kwlist) shows all keywords.
 
-Example: class = 5 raises SyntaxError. Use class_name, cls, or klass instead.`
+Example: class = 5 raises SyntaxError. Use class_name, cls, or klass instead.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Is 'def' a valid variable name?`, 
@@ -273,7 +869,49 @@ Why keywords are reserved:
 • Ensures code is unambiguous
 • Maintains language consistency
 
-Example: def = 5 raises SyntaxError. Use func, definition, or define_func instead if you need a variable name.`
+Example: def = 5 raises SyntaxError. Use func, definition, or define_func instead if you need a variable name.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Is 'if' a valid variable name?`, 
@@ -292,7 +930,49 @@ Common alternatives if you need a variable name:
 • condition, check, flag, state
 • Use descriptive names: is_valid, has_permission
 
-Example: if = 5 raises SyntaxError. If you need to store a condition, use: condition = True or check = False instead.`
+Example: if = 5 raises SyntaxError. If you need to store a condition, use: condition = True or check = False instead.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Is 'MyVariable' a valid variable name?`, 
@@ -312,7 +992,49 @@ Case sensitivity:
 • myVariable, MyVariable, MYVARIABLE are all different
 • Python is case-sensitive: age ≠ Age ≠ AGE
 
-Example: MyVariable = 42 is valid. However, PEP 8 recommends using snake_case for variables (my_variable) and reserving PascalCase for classes.`
+Example: MyVariable = 42 is valid. However, PEP 8 recommends using snake_case for variables (my_variable) and reserving PascalCase for classes.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Is '_private' a valid variable name?`, 
@@ -333,7 +1055,49 @@ Private convention:
 • More of a contract/agreement between developers
 • Import controls: from module import * won't import _names
 
-Example: _private = 42 is valid. It's a convention, not a rule - it tells other developers "this is for internal use, use at your own risk."`
+Example: _private = 42 is valid. It's a convention, not a rule - it tells other developers "this is for internal use, use at your own risk."
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Is '__special__' a valid variable name?`, 
@@ -357,7 +1121,49 @@ Important notes:
 • Don't create variables with these names unless you understand the consequences
 • Using them might interfere with Python's internal mechanisms
 
-Example: __special__ = 42 is technically valid but dangerous. It could interfere with Python's name mangling or special method resolution.`
+Example: __special__ = 42 is technically valid but dangerous. It could interfere with Python's name mangling or special method resolution.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Is 'variable name' (with space) a valid variable name?`, 
@@ -381,7 +1187,49 @@ Token separation example:
 • variable name = 5 would be parsed as: variable, name, =, 5
 • Python would see two separate identifiers and raise SyntaxError
 
-Example: variable name = 5 raises SyntaxError. Use variable_name = 5 or variableName = 5 instead.`
+Example: variable name = 5 raises SyntaxError. Use variable_name = 5 or variableName = 5 instead.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   
   // 21-30: String Basics
@@ -403,7 +1251,49 @@ String indexing visualization:
 "hello" has indices: h(0), e(1), l(2), l(3), o(4)
 Length = 5, valid indices: 0-4
 
-Example: len("hello") returns 5. Note: len("") returns 0 (empty string). Also: len("Python!") = 7 (includes the exclamation mark).`
+Example: len("hello") returns 5. Note: len("") returns 0 (empty string). Also: len("Python!") = 7 (includes the exclamation mark).
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What does "Hello" + "World" result in?`, 
@@ -428,7 +1318,49 @@ Alternatives:
 • join() method: " ".join(["Hello", "World"]) = "Hello World"
 • f-strings: f"{'Hello'} {'World'}" = "Hello World"
 
-Example: "Hello" + "World" results in "HelloWorld" (no space). For a space, use: "Hello" + " " + "World" or "Hello " + "World".`
+Example: "Hello" + "World" results in "HelloWorld" (no space). For a space, use: "Hello" + " " + "World" or "Hello " + "World".
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What does "Hi" * 3 result in?`, 
@@ -453,7 +1385,49 @@ Common use cases:
 
 Important: string * string doesn't work (raises TypeError). You can only multiply strings by integers.
 
-Example: "Hi" * 3 results in "HiHiHi". Also: 5 * "=" = "=====" (useful for creating visual separators).`
+Example: "Hi" * 3 results in "HiHiHi". Also: 5 * "=" = "=====" (useful for creating visual separators).
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "Python"[0]?`, 
@@ -478,7 +1452,49 @@ Why zero-based?
 • Standard in most programming languages (C, Java, JavaScript, etc.)
 • Makes slicing more intuitive: string[:3] gets first 3 characters (indices 0,1,2)
 
-Example: "Python"[0] returns 'P'. To get the last character using positive indexing: "Python"[5] = 'n' (length 6, so index 5).`
+Example: "Python"[0] returns 'P'. To get the last character using positive indexing: "Python"[5] = 'n' (length 6, so index 5).
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "Python"[-1]?`, 
@@ -503,7 +1519,49 @@ Advantages:
 • Common pattern: string[-1] for last character
 • Works with any sequence (lists, tuples)
 
-Example: "Python"[-1] returns 'n' (last character). "Python"[-2] returns 'o' (second-to-last). This is more convenient than "Python"[len("Python")-1].`
+Example: "Python"[-1] returns 'n' (last character). "Python"[-2] returns 'o' (second-to-last). This is more convenient than "Python"[len("Python")-1].
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "Python"[1:4]?`, 
@@ -531,7 +1589,49 @@ Result: "yth"
 
 Key concept: The number of characters = stop - start = 4 - 1 = 3 characters.
 
-Example: "Python"[1:4] returns "yth". To include 'o', use [1:5]. Remember: slicing never modifies the original string (strings are immutable).`
+Example: "Python"[1:4] returns "yth". To include 'o', use [1:5]. Remember: slicing never modifies the original string (strings are immutable).
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "Python"[:3]?`, 
@@ -558,7 +1658,49 @@ Common patterns:
 • [:] = entire string (copy)
 • [::-1] = reversed string
 
-Example: "Python"[:3] returns "Pyt" (first 3 characters). This is often used to get prefixes or truncate strings to a maximum length.`
+Example: "Python"[:3] returns "Pyt" (first 3 characters). This is often used to get prefixes or truncate strings to a maximum length.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "Python"[3:]?`, 
@@ -585,7 +1727,49 @@ Common patterns:
 • [1:] = everything except first character
 • [:-1] = everything except last character
 
-Example: "Python"[3:] returns "hon" (from index 3 to end). Combined with [:n], you can easily split strings: first = string[:n]; rest = string[n:].`
+Example: "Python"[3:] returns "hon" (from index 3 to end). Combined with [:n], you can easily split strings: first = string[:n]; rest = string[n:].
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "Python"[::2]?`, 
@@ -614,7 +1798,49 @@ Common step values:
 • [::3] = every 3rd character
 • [::-1] = reverse (negative step reverses direction)
 
-Example: "Python"[::2] returns "Pto". To get odd-indexed characters: "Python"[1::2] = "yhn". The step value is very powerful for pattern extraction.`
+Example: "Python"[::2] returns "Pto". To get odd-indexed characters: "Python"[1::2] = "yhn". The step value is very powerful for pattern extraction.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "Python"[::-1]?`, 
@@ -646,7 +1872,49 @@ Alternatives (less Pythonic):
 • ''.join(reversed("Python")) - works but verbose
 • Manual loop - unnecessary complexity
 
-Example: "Python"[::-1] returns "nohtyP". This is the most Pythonic way to reverse a string. Note: [::-1] creates a new string (original unchanged, since strings are immutable).`
+Example: "Python"[::-1] returns "nohtyP". This is the most Pythonic way to reverse a string. Note: [::-1] creates a new string (original unchanged, since strings are immutable).
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   
   // 31-40: Comments and Multi-line Strings
@@ -673,7 +1941,48 @@ Comparison with other languages:
 Example: # This is a comment
 x = 5  # This is also a comment (inline)
 print(x)  # Comments explain code
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Correct way to write a multi-line string?`, 
@@ -708,7 +2017,48 @@ Common uses:
 • Multi-line JSON or XML
 
 Note: Triple quotes create strings, not comments. They're executed like any string literal.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is the purpose of comments in Python?`, 
@@ -745,7 +2095,48 @@ Best practices:
 • Explain complex logic: # Use binary search for O(log n) lookup
 
 Example: Comments help future readers (including yourself) understand the code's purpose and logic.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Can you write a comment after code on the same line?`, 
@@ -779,7 +2170,48 @@ Common uses:
 • Suppress linter warnings: x = unused_var  # noqa
 
 Example: name = "Alice"  # User's name (inline comment). The code executes, the comment is ignored.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What does '''triple quotes''' create?`, 
@@ -817,7 +2249,48 @@ s1 = '''single'''
 s2 = """double"""  # Same result
 
 Important: Triple-quoted strings are often used as docstrings, which are special strings that Python automatically associates with functions, classes, and modules for documentation purposes.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Is # a comment or string delimiter?`, 
@@ -854,7 +2327,48 @@ text = "Price is $#100"  # The # is part of the string
 comment = "This is a # comment"  # # inside string is just a character
 
 Example: # starts a comment. To create a string, use 'text' or "text", not #.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Can triple quotes be used for comments?`, 
@@ -891,7 +2405,48 @@ The Pythonic way for multi-line comments:
 • Or use triple-quoted strings as docstrings (inside functions/classes)
 
 Example: """This looks like a comment but creates a string""" - use # This is a real comment instead for actual comments.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What happens to code after # on a line?`, 
@@ -922,7 +2477,48 @@ Important exceptions:
 • Only # outside of string literals starts comments
 
 Example: x = 5  # This code would cause an error if executed - but it's ignored! So x = 5, not the error.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Can you nest triple-quoted strings?`, 
@@ -960,7 +2556,48 @@ Common use cases:
 • Complex documentation strings
 
 Example: text = '''Documentation with "quoted" and """triple quoted""" examples inside''' - works because different quote types don't conflict.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is the difference between ' and " for strings?`, 
@@ -998,7 +2635,48 @@ Common convention:
 • Triple double quotes for docstrings
 
 Example: 'Hello' and "Hello" create identical strings. Choose based on what characters are inside the string to minimize escaping.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   
   // 41-50: Type Conversions
@@ -1032,7 +2710,48 @@ Common use:
 • Type conversion: result = int(3.14)
 
 Example: int("42") returns 42 (integer). Note: This is the number 42, not the string "42". To convert back: str(42) = "42".
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Result of float(42)?`, 
@@ -1067,7 +2786,48 @@ Type differences:
 • 42 is 42.0 is False (different objects)
 
 Example: float(42) returns 42.0 (a float). This is useful when you need decimal precision or are working with division which always produces floats in Python 3.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Result of str(42)?`, 
@@ -1105,7 +2865,48 @@ Modern alternative:
 • .format(): "Age: {}".format(42) = "Age: 42"
 
 Example: str(42) returns "42" (a string). This allows you to combine numbers with text: "I am " + str(age) + " years old".
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Result of bool(0)?`, 
@@ -1149,7 +2950,48 @@ Common pattern:
 • Check if string is non-empty: if text: ...
 
 Example: bool(0) returns False. This is used in conditional statements: if number: print("Non-zero") only prints when number is not 0.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Result of bool(1)?`, 
@@ -1189,7 +3031,48 @@ Edge cases:
 • All others are True
 
 Example: bool(1) returns True. This allows natural checking: if user_count: print(f"{user_count} users") only prints when there are users.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Result of bool("")?`, 
@@ -1229,7 +3112,48 @@ Checking for empty:
 • if text: (most Pythonic - checks truthiness)
 
 Example: bool("") returns False. This is used to validate input: if not name: print("Name required") - only prints when name is empty.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Result of bool("hello")?`, 
@@ -1270,7 +3194,48 @@ Checking for non-empty:
 • if text.strip(): (checks if has non-whitespace)
 
 Example: bool("hello") returns True. This allows natural validation: if email: send_email(email) only sends when email has content.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Result of bool([])?`, 
@@ -1310,7 +3275,48 @@ Checking for empty:
 • if items: (most Pythonic - checks truthiness)
 
 Example: bool([]) returns False. This is used to check for empty collections: if not items: print("No items to process") - only prints when list is empty.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Result of bool([1, 2])?`, 
@@ -1350,7 +3356,48 @@ Checking for non-empty:
 • if items != []: (explicit comparison)
 
 Example: bool([1, 2]) returns True. This allows natural checking: if products: show_products(products) only displays when there are products to show.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Result of bool(None)?`, 
@@ -1390,7 +3437,48 @@ Checking for None:
 • if value is not None: (checks if not None)
 
 Example: bool(None) returns False. This is used to check for missing values: if user is None: print("No user") - only prints when user is None.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   
   // 51-60: Basic Arithmetic Operations
@@ -1424,7 +3512,48 @@ Getting integer results:
 • But // is preferred for clarity
 
 Example: 10 / 2 returns 5.0 (a float). If you need an integer, use 10 // 2 = 5 (floor division).
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is 10 // 3?`, 
@@ -1460,7 +3589,48 @@ Related:
 • divmod(10, 3) = (3, 1) (returns both // and %)
 
 Example: 10 // 3 returns 3. This represents how many complete groups of 3 can be made from 10.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is 2 ** 3?`, 
@@ -1498,7 +3668,48 @@ Precedence:
 • 2 ** 3 ** 2 = 2 ** 9 = 512 (not 8 ** 2 = 64)
 
 Example: 2 ** 3 returns 8. This is Python's way of calculating 2 to the power of 3.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is 10 % 3?`, 
@@ -1537,7 +3748,48 @@ Related operators:
 • divmod(10, 3) = (3, 1) (returns both // and %)
 
 Example: 10 % 3 returns 1. This is useful for checking divisibility: if number % 3 == 0: print("Divisible by 3").
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is -5?`, 
@@ -1580,7 +3832,48 @@ Comparison:
 • 10 - 5 (binary minus) - subtraction operation
 
 Example: -5 is negative five. This represents the value five below zero. In Python, -5 is a complete expression that evaluates to negative five.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is +5?`, 
@@ -1623,7 +3916,48 @@ Comparison:
 • -5 = -5 (unary minus - negates)
 
 Example: +5 is simply 5. While valid syntax, it has no effect. Most Python code doesn't use unary plus unless needed for clarity or specific use cases.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is 2 * 3 + 4?`, 
@@ -1664,7 +3998,48 @@ Best practice:
 • Prevents errors and misunderstandings
 
 Example: 2 * 3 + 4 evaluates to 10. Multiplication (2 * 3 = 6) happens before addition (6 + 4 = 10) due to operator precedence.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is (2 + 3) * 4?`, 
@@ -1702,7 +4077,48 @@ Best practices:
 • Makes code easier to understand
 
 Example: (2 + 3) * 4 evaluates to 20. The parentheses force addition to happen first (2 + 3 = 5), then multiplication (5 * 4 = 20), giving a different result than 2 + 3 * 4 = 14.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is 2 ** 2 ** 3?`, 
@@ -1741,7 +4157,48 @@ Best practice:
 • Prevents confusion
 
 Example: 2 ** 2 ** 3 evaluates to 256. It's calculated as 2 ** (2 ** 3) = 2 ** 8 = 256, following right-associativity.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is 10 / 0?`, 
@@ -1786,7 +4243,48 @@ Prevention:
 • Use default values: x / y if y != 0 else 0
 
 Example: 10 / 0 raises ZeroDivisionError. This must be caught with try-except or prevented by checking that the divisor is not zero before dividing.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   
   // 61-70: Type Mixing and Operations
@@ -1826,7 +4324,48 @@ Best practice:
 • Check types if important: isinstance(result, float)
 
 Example: type(3.14 + 1) returns <class 'float'>. The integer 1 is promoted to 1.0, and the result 4.14 is a float.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What does "A" represent in Python?`, 
@@ -1870,7 +4409,48 @@ Important:
 • Treat like any other string
 
 Example: "A" represents a single character string. There's no char type - it's just a string with one character. This simplifies Python's type system.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `How do you find the data type of a variable?`, 
@@ -1920,7 +4500,48 @@ Important:
 • But isinstance(x, int) is preferred
 
 Example: type(variable) returns the class of the variable. This is the standard way to inspect the type of any object in Python.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `Which quotes are valid for strings?`, 
@@ -1966,7 +4587,48 @@ Best practice:
 • Triple quotes for multi-line strings
 
 Example: Both 'text' and "text" are valid and identical in Python. Choose based on what quotes your string contains to minimize escaping.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "2" + "3"?`, 
@@ -2003,7 +4665,48 @@ When concatenation happens:
 • Must convert: str + str(int)
 
 Example: "2" + "3" returns "23" (string concatenation). To add numbers, convert strings first: int("2") + int("3") = 5.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is int("2") + int("3")?`, 
@@ -2042,7 +4745,48 @@ Alternatives:
 • int() truncates decimals
 
 Example: int("2") + int("3") returns 5. The strings are converted to integers first, then added mathematically. This is how you perform addition on numeric strings.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello" == "Hello"?`, 
@@ -2082,7 +4826,48 @@ Best practices:
 • Document your case sensitivity rules
 
 Example: "hello" == "Hello" returns False. Python string comparison is case-sensitive. For case-insensitive comparison, use "hello".lower() == "Hello".lower() which returns True.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "apple" < "banana"?`, 
@@ -2127,7 +4912,48 @@ Important:
 • Character order follows Unicode
 
 Example: "apple" < "banana" returns True because "apple" comes before "banana" in dictionary order. This is how Python sorts and compares strings.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "a" in "abc"?`, 
@@ -2171,7 +4997,48 @@ Related operators:
 • Useful for negative checks
 
 Example: "a" in "abc" returns True because "a" is a substring of "abc". The in operator is very useful for checking if strings contain certain patterns or characters.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "a" not in "xyz"?`, 
@@ -2215,7 +5082,48 @@ Best practice:
 • More Pythonic
 
 Example: "a" not in "xyz" returns True because "a" is not found in "xyz". This is the negation of the in operator.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   
     // 71-80: String Methods - Case Operations
@@ -2266,7 +5174,49 @@ Best practice:
 • Store lowercase for consistency
 • Remember: creates new string
 
-Example: "HELLO".lower() returns "hello". All uppercase letters are converted to lowercase, while numbers and symbols remain unchanged.`
+Example: "HELLO".lower() returns "hello". All uppercase letters are converted to lowercase, while numbers and symbols remain unchanged.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
     };
     },
     (_i: number) => {
@@ -2311,7 +5261,49 @@ Best practice:
 • Use .title() for multi-word titles
 • Remember: only affects first character
 
-Example: "hello".capitalize() returns "Hello". The first letter becomes uppercase, and all other letters become lowercase.`
+Example: "hello".capitalize() returns "Hello". The first letter becomes uppercase, and all other letters become lowercase.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
       };
     },
    (_i: number) => {
@@ -2356,7 +5348,49 @@ Best practice:
 • Use .capitalize() for single words or sentences
 • Be aware of word boundaries
 
-Example: "hello world".title() returns "Hello World". The first letter of each word is capitalized, creating title case formatting.`
+Example: "hello world".title() returns "Hello World". The first letter of each word is capitalized, creating title case formatting.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
      };
    },
    (_i: number) => {
@@ -2398,7 +5432,49 @@ Best practice:
 • Useful for toggling case
 • Remember: creates new string
 
-Example: "Hello".swapcase() returns "hELLO". Each letter's case is swapped.`
+Example: "Hello".swapcase() returns "hELLO". Each letter's case is swapped.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
      };
    },
    (_i: number) => {
@@ -2444,7 +5520,49 @@ Best practice:
 • Combine with .lower() for normalization
 • Remember: requires at least one letter
 
-Example: "HELLO".islower() returns False because the string contains uppercase characters.`
+Example: "HELLO".islower() returns False because the string contains uppercase characters.
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
      };
    },
    (_i: number) => {
@@ -2527,7 +5645,48 @@ Alternative: .index()
 • Use find() for existence checking
 
 Example: "hello".find("l") returns 2 because 'l' first appears at index 2 in the string "hello" (h=0, e=1, l=2).
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello".rfind("l")?`, 
@@ -2571,7 +5730,48 @@ Comparison with .find():
 • Both return -1 if not found
 
 Example: "hello".rfind("l") returns 3 because 'l' last appears at index 3 in the string "hello" (rfind searches from right to left).
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello".index("l")?`, 
@@ -2611,7 +5811,48 @@ When to use:
 • Use index() for required substring
 
 Example: "hello".index("l") returns 2 because 'l' first appears at index 2. If "l" wasn't found, it would raise ValueError.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello".count("l")?`, 
@@ -2656,7 +5897,48 @@ Important:
 • Works with multi-character substrings
 
 Example: "hello".count("l") returns 2 because the character 'l' appears twice in "hello" (at indices 2 and 3).
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello".startswith("he")?`, 
@@ -2700,7 +5982,48 @@ Best practice:
 • Efficient for string validation
 
 Example: "hello".startswith("he") returns True because "hello" begins with "he". This is useful for checking prefixes.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello".endswith("lo")?`, 
@@ -2744,7 +6067,48 @@ Best practice:
 • Efficient for file extension checks
 
 Example: "hello".endswith("lo") returns True because "hello" ends with "lo". This is useful for checking file extensions like .endswith(".py").
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello".replace("l", "L")?`, 
@@ -2783,7 +6147,48 @@ With count parameter:
 • Useful for limited replacements
 
 Example: "hello".replace("l", "L") returns "heLLo" because all occurrences of 'l' are replaced with 'L'. The original string "hello" is unchanged.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello".replace("l", "L", 1)?`, 
@@ -2823,7 +6228,48 @@ Why use count:
 • More control over substitution
 
 Example: "hello".replace("l", "L", 1) returns "heLlo" because only the first occurrence of 'l' (at index 2) is replaced with 'L', leaving the second 'l' (at index 3) unchanged.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello".partition("l")?`, 
@@ -2867,7 +6313,48 @@ Comparison with .split():
 • partition() includes separator, split() excludes it
 
 Example: "hello".partition("l") returns ('he', 'l', 'lo') - the part before 'l', 'l' itself, and the part after 'l'. This is useful for splitting at the first occurrence while keeping the separator.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello".rpartition("l")?`, 
@@ -2911,7 +6398,48 @@ Tuple unpacking:
 • Useful for parsing from end
 
 Example: "hello".rpartition("l") returns ('hel', 'l', 'o') - it splits at the last occurrence of 'l', returning the part before, 'l' itself, and the part after. Useful for splitting at the last separator.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   
   // 91-100: String Methods - Splitting, Joining, Formatting
@@ -2952,7 +6480,48 @@ Common uses:
 • Data extraction
 
 Example: "hello,world".split(",") returns ['hello', 'world'] because the string is split at the comma, creating a list with two elements.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello world".split()?`, 
@@ -2992,7 +6561,48 @@ Common uses:
 • Clean splitting (removes empty strings)
 
 Example: "hello world".split() returns ['hello', 'world'] because the string is split on whitespace, creating a list of words.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello\\nworld".splitlines()?`, 
@@ -3032,7 +6642,48 @@ Comparison with split("\\n"):
 • splitlines(): removes trailing \\n correctly
 
 Example: "hello\\nworld".splitlines() returns ['hello', 'world'] because the string is split at the newline character, creating a list of two lines.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "-".join(["a", "b", "c"])?`, 
@@ -3076,7 +6727,48 @@ Best practice:
 • Preferred Pythonic way
 
 Example: "-".join(["a", "b", "c"]) returns "a-b-c" because the list elements are joined with '-' as the separator between them.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "".join(["a", "b", "c"])?`, 
@@ -3121,7 +6813,48 @@ Comparison with +=:
 • join() is O(n), += in loop is O(n²)
 
 Example: "".join(["a", "b", "c"]) returns "abc" because the list elements are concatenated together with no separator between them. This is the most efficient way to combine multiple strings.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello".center(10)?`, 
@@ -3160,7 +6893,48 @@ Common uses:
 • Creating formatted output
 
 Example: "hello".center(10) returns "  hello   " because the string is centered in a field of width 10, with 2 spaces on the left and 3 spaces on the right (when length is odd, extra space goes on right).
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello".ljust(10)?`, 
@@ -3198,7 +6972,48 @@ Common uses:
 • Table formatting
 
 Example: "hello".ljust(10) returns "hello     " because the string is left-justified in a field of width 10, with 5 spaces added on the right side.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello".rjust(10)?`, 
@@ -3236,7 +7051,48 @@ Common uses:
 • Number formatting
 
 Example: "hello".rjust(10) returns "     hello" because the string is right-justified in a field of width 10, with 5 spaces added on the left side.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is "hello".zfill(10)?`, 
@@ -3276,7 +7132,48 @@ Comparison with rjust(..., "0"):
 • Both similar for positive numbers
 
 Example: "hello".zfill(10) returns "00000hello" because the string is padded on the left with zeros to make it width 10. This is useful for formatting numbers with leading zeros.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
   (_i: number) => ({ 
     q: `What is f"Value: {5}"?`, 
@@ -3321,6 +7218,47 @@ Formatting options:
 • f"{value:0>5}" (zero padding)
 
 Example: f"Value: {5}" returns "Value: 5" because the expression {5} is evaluated to 5, which is then converted to a string and embedded in the f-string. This is the modern Pythonic way to format strings.
-`
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related types (e.g. int vs float, str vs bytes) and similar operations or methods.
+• Distinguish this operation or type from others that beginners might confuse (e.g. type() vs isinstance(), mutable vs immutable).
+
+How It Works:
+• Python evaluates the expression or literal first, then applies the operation (e.g. type(), method call, or built-in).
+• The result is returned or produced according to the semantics of that operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions in the expression are evaluated (e.g. the argument to type(), or the string before a method call).
+2. The main operation is applied (type lookup, method invocation, or built-in function).
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Method calls or function calls are evaluated: arguments are evaluated left to right, then the call is performed.
+3. The operation completes and produces its return value.
+4. No other operators or operands remain in this expression once the call finishes.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Checking types or results in the REPL; teaching the concept to beginners; validating data before use.
+• Using this pattern in scripts to branch on type or to ensure correct behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, subclasses, encoding, or boundary conditions).
+• Consider what happens with empty collections, missing keys, or invalid arguments where applicable.
+
+Performance Considerations:
+• The operation is typically fast at beginner scale; built-in types and methods are highly optimized in CPython.
+• For hot paths, prefer isinstance() over type() when subclasses are allowed; avoid repeated type checks in tight loops when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Use isinstance() when you need to allow subclasses; follow PEP 8 for naming and style; refer to the official docs for full details.`
   }),
 ];
