@@ -1,4 +1,4 @@
-const CACHE_NAME = 'python-exercises-learn-offline-v26';
+const CACHE_NAME = 'tjump-philosophy-offline-v1';
 
 // Injected at build by scripts/inject-precache.js (from dist/index.html)
 const PRECACHE_ASSETS = []; // BUILD_INJECT
@@ -16,7 +16,7 @@ function getBasePath() {
     if (!pathname.endsWith('/')) pathname += '/';
     return pathname;
   } catch (_) {
-    return '/python-exercisesV1/';
+    return '/Tjump/';
   }
 }
 
