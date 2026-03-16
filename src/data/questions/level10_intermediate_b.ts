@@ -31,7 +31,48 @@ list(chain(range(3), range(3,6)))  # [0, 1, 2, 3, 4, 5]
 Common uses:
 • Combining multiple sequences without copying
 • Flattening a known number of iterables
-• Processing items from multiple sources as one stream`
+• Processing items from multiple sources as one stream
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 51. chain.from_iterable — flatten an iterable of iterables
   (_i: number) => ({
@@ -64,7 +105,48 @@ list(chain(*nested))  # same result but requires unpacking
 Common uses:
 • Flattening a list of lists
 • Processing dynamically generated groups of items
-• More memory-efficient than chain(*big_list) for large inputs`
+• More memory-efficient than chain(*big_list) for large inputs
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 52. product — Cartesian product
   (_i: number) => ({
@@ -99,7 +181,48 @@ list(product("AB", "CD", "EF"))
 Common uses:
 • Generating all combinations of parameters
 • Replacing nested loops
-• Testing all input combinations`
+• Testing all input combinations
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 53. permutations — count of arrangements
   (_i: number) => ({
@@ -132,7 +255,48 @@ list(permutations("ABC", 2))
 Common uses:
 • Generating all possible orderings
 • Solving combinatorial problems
-• Brute-force search over arrangements`
+• Brute-force search over arrangements
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 54. combinations — choosing subsets
   (_i: number) => ({
@@ -165,7 +329,48 @@ list(combinations("ABCD", 3))
 Common uses:
 • Choosing subsets from a collection
 • Lottery number combinations
-• Testing pairs of items`
+• Testing pairs of items
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 55. combinations_with_replacement — subsets with repeats allowed
   (_i: number) => ({
@@ -196,7 +401,48 @@ list(combinations_with_replacement("ABC", 2))
 Common uses:
 • Multisets and bags
 • Dice rolls (where order doesn't matter)
-• Sampling with replacement`
+• Sampling with replacement
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 56. repeat — finite repetition
   (_i: number) => ({
@@ -228,7 +474,48 @@ list(repeat([1,2], 2))  # [[1,2], [1,2]] — same object repeated
 Common uses:
 • Providing constant values to map/zip
 • Creating fixed-length sequences of the same value
-• Default fill values in algorithms`
+• Default fill values in algorithms
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 57. count — infinite counter with step
   (_i: number) => ({
@@ -260,7 +547,48 @@ list(islice(count(0, -1), 4)) # [0, -1, -2, -3]
 Common uses:
 • Generating sequential IDs
 • Creating arithmetic progressions
-• Pairing with zip for enumeration alternatives`
+• Pairing with zip for enumeration alternatives
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 58. cycle — infinite cycling
   (_i: number) => ({
@@ -291,7 +619,48 @@ list(islice(colors, 7))
 Common uses:
 • Round-robin scheduling
 • Alternating between states
-• Repeating patterns in data processing`
+• Repeating patterns in data processing
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 59. islice — slicing iterators
   (_i: number) => ({
@@ -324,7 +693,48 @@ list(islice(range(20), 0, 20, 4)) # [0, 4, 8, 12, 16]
 Common uses:
 • Taking first N items from an infinite iterator
 • Skipping items at the start
-• Sampling every Nth item from a stream`
+• Sampling every Nth item from a stream
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 60. accumulate with custom function (multiplication)
   (_i: number) => ({
@@ -357,7 +767,48 @@ list(accumulate([3,1,4,1,5], max))         # [3, 3, 4, 4, 5] — running max
 Common uses:
 • Running totals and cumulative sums
 • Running products
-• Running max/min values`
+• Running max/min values
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 61. takewhile — take while predicate is true
   (_i: number) => ({
@@ -388,7 +839,48 @@ list(takewhile(lambda x: x > 0, [3, 2, 1, 0, -1, 5]))  # [3, 2, 1]
 Common uses:
 • Reading data until a sentinel value
 • Processing sorted data up to a threshold
-• Taking a prefix that satisfies a condition`
+• Taking a prefix that satisfies a condition
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 62. dropwhile — skip while predicate is true
   (_i: number) => ({
@@ -419,7 +911,48 @@ list(dropwhile(lambda x: x > 0, [3, 2, 0, -1, 5]))  # [0, -1, 5]
 Common uses:
 • Skipping headers in data files
 • Ignoring leading whitespace or noise
-• Finding the first element that doesn't match a condition`
+• Finding the first element that doesn't match a condition
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 63. compress — selective filtering with selectors
   (_i: number) => ({
@@ -453,7 +986,48 @@ list(compress(data, selectors))  # [0, 3, 5, 8]
 Common uses:
 • Applying a boolean mask to data
 • Selecting elements based on external criteria
-• Filtering with precomputed conditions`
+• Filtering with precomputed conditions
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 64. zip_longest — zip with fill value
   (_i: number) => ({
@@ -488,7 +1062,48 @@ list(zip_longest([1], [2,3], [4,5,6]))
 Common uses:
 • Aligning data of different lengths
 • Parallel iteration where all elements matter
-• Matrix operations with uneven rows`
+• Matrix operations with uneven rows
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 65. starmap — map with unpacked arguments
   (_i: number) => ({
@@ -519,7 +1134,48 @@ list(starmap(str.replace, [("hello", "l", "L"), ("world", "o", "0")]))
 Common uses:
 • Applying functions with multiple arguments to data
 • Processing rows of a table/matrix
-• Replacing loops that unpack tuples`
+• Replacing loops that unpack tuples
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 66. json.dumps with indent — pretty-printing
   (_i: number) => ({
@@ -558,7 +1214,48 @@ print(json.dumps(data, indent=4))
 Common uses:
 • Writing human-readable JSON config files
 • Debugging JSON data
-• Logging structured data`
+• Logging structured data
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 67. json.dumps with sort_keys
   (_i: number) => ({
@@ -588,7 +1285,48 @@ json.dumps(data, sort_keys=False)  # '{"z": 1, "m": 2, "a": 3}'
 Common uses:
 • Deterministic serialization for hashing or comparison
 • Clean diffs in version control
-• Canonical JSON representation`
+• Canonical JSON representation
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 68. json.dumps with a list
   (_i: number) => ({
@@ -618,7 +1356,48 @@ type(json.dumps([1, 2, 3]))  # <class 'str'>
 Common uses:
 • Serializing data for APIs
 • Storing structured data as strings
-• Sending data over network protocols`
+• Sending data over network protocols
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 69. json.dumps with None
   (_i: number) => ({
@@ -652,7 +1431,48 @@ json.loads('null')  # None (reverse mapping)
 Common uses:
 • Representing absent values in JSON APIs
 • Serializing optional fields
-• Interoperability between Python and JSON`
+• Interoperability between Python and JSON
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 70. json.dumps with True
   (_i: number) => ({
@@ -684,7 +1504,48 @@ json.loads('false')        # False
 Common uses:
 • Boolean fields in API responses
 • Configuration files
-• Feature flags in JSON`
+• Feature flags in JSON
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 71. json.loads with "null"
   (_i: number) => ({
@@ -718,7 +1579,48 @@ json.loads('{"a": 1}')       # {'a': 1}
 Common uses:
 • Parsing API responses
 • Reading JSON configuration files
-• Deserializing stored data`
+• Deserializing stored data
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 72. json.loads with "true"
   (_i: number) => ({
@@ -748,7 +1650,48 @@ json.loads("false")  # False
 Common uses:
 • Parsing boolean values from JSON APIs
 • Processing feature flags
-• Handling boolean configuration values`
+• Handling boolean configuration values
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 73. json.loads with an array string
   (_i: number) => ({
@@ -780,7 +1723,48 @@ type(json.loads("[1, 2, 3]"))     # <class 'list'>
 Common uses:
 • Parsing list data from JSON APIs
 • Processing array-format configuration
-• Converting stored JSON arrays back to Python lists`
+• Converting stored JSON arrays back to Python lists
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 74. json.dumps with a set — TypeError
   (_i: number) => ({
@@ -819,7 +1803,48 @@ json.dumps({1, 2, 3}, cls=SetEncoder)  # '[1, 2, 3]'
 Common uses:
 • Understanding JSON type limitations
 • Building custom JSON encoders for non-standard types
-• Converting data before serialization`
+• Converting data before serialization
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 75. json.dumps with compact separators
   (_i: number) => ({
@@ -850,7 +1875,48 @@ json.dumps(data, separators=(",", ":"))   # '{"a":1,"b":[2,3]}'
 Common uses:
 • Minimizing JSON payload size for APIs
 • Reducing bandwidth in network communication
-• Compact storage format`
+• Compact storage format
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 76. Path.name — last component
   (_i: number) => ({
@@ -881,7 +1947,48 @@ Path("/").name              # ''
 Common uses:
 • Extracting filename from a full path
 • Getting the last directory in a path
-• File management and processing`
+• File management and processing
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 77. Path.suffix — file extension
   (_i: number) => ({
@@ -912,7 +2019,48 @@ Path(".hidden").suffix         # '' (dotfile, not extension)
 Common uses:
 • Checking file types by extension
 • Filtering files by type
-• Conditional processing based on file format`
+• Conditional processing based on file format
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 78. Path.stem — filename without extension
   (_i: number) => ({
@@ -944,7 +2092,48 @@ Path("/home/user/file.py").stem # 'file'
 Common uses:
 • Getting base filename for renaming
 • Creating output filenames with different extensions
-• Processing files without caring about their type`
+• Processing files without caring about their type
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 79. Path / operator — joining paths
   (_i: number) => ({
@@ -977,7 +2166,48 @@ Path("a/b") / "/c"             # Path('/c')
 Common uses:
 • Building file paths dynamically
 • Constructing paths in a readable way
-• Cross-platform path construction`
+• Cross-platform path construction
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 80. Path.parent — parent directory
   (_i: number) => ({
@@ -1011,7 +2241,48 @@ list(p.parents)  # [Path('/a/b/c'), Path('/a/b'), Path('/a'), Path('/')]
 Common uses:
 • Navigating directory hierarchies
 • Creating sibling files
-• Finding project root directories`
+• Finding project root directories
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 81. Path.parts — tuple of path components
   (_i: number) => ({
@@ -1041,7 +2312,48 @@ Path("file.txt").parts         # ('file.txt',)
 Common uses:
 • Inspecting individual path components
 • Checking if a specific directory is in the path
-• Reconstructing paths from parts`
+• Reconstructing paths from parts
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 82. Path.suffixes — all file extensions
   (_i: number) => ({
@@ -1072,7 +2384,48 @@ Path("my.backup.2024.zip").suffixes  # ['.backup', '.2024', '.zip']
 Common uses:
 • Detecting compound extensions like .tar.gz
 • Processing files with multiple extensions
-• Stripping all extensions from a filename`
+• Stripping all extensions from a filename
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 83. os.path.join — joining path components
   (_i: number) => ({
@@ -1102,7 +2455,48 @@ os.path.join("a", "/b", "c")             # '/b/c' (absolute resets)
 Common uses:
 • Building file paths in a cross-platform way
 • Older alternative to pathlib.Path / operator
-• Working with os module functions that expect string paths`
+• Working with os module functions that expect string paths
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 84. os.path.splitext — split extension
   (_i: number) => ({
@@ -1134,7 +2528,48 @@ os.path.splitext("/path/to/file.py") # ('/path/to/file', '.py')
 Common uses:
 • Extracting file extensions
 • Changing file extensions
-• Checking file types`
+• Checking file types
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 85. os.path.basename — filename from path
   (_i: number) => ({
@@ -1164,7 +2599,48 @@ os.path.basename("file.py")      # 'file.py'
 Common uses:
 • Extracting filenames from full paths
 • Logging just the filename
-• File processing pipelines`
+• File processing pipelines
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 86. os.path.dirname — directory from path
   (_i: number) => ({
@@ -1199,7 +2675,48 @@ os.path.dirname(path) + "/" + os.path.basename(path)
 Common uses:
 • Extracting the directory of a file
 • Navigating to parent directories
-• Constructing sibling file paths`
+• Constructing sibling file paths
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 87. os.sep — path separator on Unix
   (_i: number) => ({
@@ -1233,7 +2750,48 @@ path = os.path.join("a", "b")  # 'a/b' (more portable)
 Common uses:
 • Understanding OS-specific path behavior
 • Splitting paths manually (prefer os.path.split instead)
-• Cross-platform path utilities`
+• Cross-platform path utilities
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 88. Path.with_suffix — change extension
   (_i: number) => ({
@@ -1264,7 +2822,48 @@ Path("noext").with_suffix(".py")         # Path('noext.py') — adds extension
 Common uses:
 • Converting file formats (change extension before saving)
 • Creating output files with different extensions
-• Generating companion files (.py → .pyc)`
+• Generating companion files (.py → .pyc)
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 89. string.ascii_lowercase
   (_i: number) => ({
@@ -1295,7 +2894,48 @@ len(string.ascii_lowercase)  # 26
 Common uses:
 • Validating that a string contains only lowercase letters
 • Generating random strings
-• Character rotation ciphers (Caesar cipher, ROT13)`
+• Character rotation ciphers (Caesar cipher, ROT13)
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 90. string.ascii_uppercase
   (_i: number) => ({
@@ -1325,7 +2965,48 @@ len(string.ascii_uppercase)  # 26
 Common uses:
 • Validating uppercase input
 • Password strength checking
-• Encoding/decoding algorithms`
+• Encoding/decoding algorithms
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 91. string.digits
   (_i: number) => ({
@@ -1359,7 +3040,48 @@ all(c in string.digits for c in "123a5")  # False
 Common uses:
 • Validating numeric strings
 • Generating random PINs or codes
-• Stripping non-digit characters`
+• Stripping non-digit characters
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 92. string.punctuation — punctuation characters
   (_i: number) => ({
@@ -1391,7 +3113,48 @@ len(string.punctuation)  # 32
 Common uses:
 • Stripping punctuation from text
 • Password validation (checking for special characters)
-• Text preprocessing for NLP`
+• Text preprocessing for NLP
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 93. len(string.ascii_letters) — combined letters
   (_i: number) => ({
@@ -1423,7 +3186,48 @@ len(string.ascii_letters)  # 52
 Common uses:
 • Validating alphabetic input
 • Generating random alphanumeric strings (with string.digits)
-• Character classification`
+• Character classification
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 94. string.hexdigits — hexadecimal digits
   (_i: number) => ({
@@ -1459,7 +3263,48 @@ all(c in string.hexdigits for c in "1g2h")    # False
 Common uses:
 • Validating hexadecimal strings
 • Parsing color codes (#FF0000)
-• Working with hex-encoded data`
+• Working with hex-encoded data
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 95. string.whitespace — whitespace characters
   (_i: number) => ({
@@ -1494,7 +3339,48 @@ all(c in string.whitespace for c in " \\t\\n")  # True
 Common uses:
 • Custom whitespace stripping
 • Tokenization and parsing
-• Detecting whitespace-only strings`
+• Detecting whitespace-only strings
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 96. textwrap.wrap — wrapping text to a width
   (_i: number) => ({
@@ -1531,7 +3417,48 @@ textwrap.fill("hello world foo bar", width=10)
 Common uses:
 • Formatting text for terminal output
 • Creating fixed-width text displays
-• Email formatting`
+• Email formatting
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 97. textwrap.dedent — remove common leading whitespace
   (_i: number) => ({
@@ -1568,7 +3495,48 @@ print(textwrap.dedent(s))
 Common uses:
 • Cleaning up multi-line strings defined in indented code
 • Formatting docstrings
-• Template processing`
+• Template processing
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
   // 98. string.Template — variable substitution
   (_i: number) => ({
@@ -1605,6 +3573,47 @@ Common uses:
 • User-defined templates (safer than eval/exec)
 • Simple mail merge operations
 • Configuration file templates
-• Cases where f-strings or .format are too powerful/risky`
+• Cases where f-strings or .format are too powerful/risky
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations, types, or patterns and similar constructs.
+• Distinguish this from others that learners might confuse.
+
+How It Works:
+• Python evaluates or executes the construct according to its semantics.
+• The result or side effect is produced as defined for that construct.
+
+Step-by-Step Execution:
+1. Any subexpressions or prerequisites are evaluated or executed first.
+2. The main operation or construct is applied.
+3. The operation completes and returns a value or produces a side effect (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
+2. Function or method calls are evaluated: arguments left to right, then the call is performed.
+3. The operation completes and produces its return value or effect.
+4. No other operators or operands remain in this expression once the call or construct finishes.
+5. Display or use of the result happens after the full expression or statement has been evaluated.
+
+Common Use Cases:
+• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
+• Consider what happens with invalid or boundary inputs where applicable.
+
+Performance Considerations:
+• Built-in operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+
+Notes:
+• Follow PEP 8 and best practices; refer to the official docs for full details.`
   }),
 ];

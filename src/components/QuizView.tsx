@@ -508,8 +508,8 @@ const translateText = (text: string, language: string, questionId?: number): str
 };
 
 const renderDetailedExplanationContent = (text: string, level: number) => {
-  // For Level 0 and Level 1, support structured sections with highlighted headers (in-depth 10-section block).
-  if (level === 0 || level === 1) {
+  // For all levels (0-10), support structured sections with highlighted headers (in-depth 10-section block).
+  if (level >= 0 && level <= 10) {
     const lines = text.split('\n');
     const headingPatterns = [
       // English (in-depth 10-section + tiers)

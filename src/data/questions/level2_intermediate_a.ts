@@ -23,7 +23,48 @@ Example:
 >>> math.sqrt(16)
 4.0
 >>> type(math.sqrt(16))
-<class 'float'>`
+<class 'float'>
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q2: math.sqrt — float approximation for irrational results
   (_i: number) => ({
@@ -44,7 +85,48 @@ Example:
 >>> math.sqrt(2)
 1.4142135623730951
 >>> math.sqrt(2) ** 2 == 2
-False`
+False
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q3: math.floor — positive float
   (_i: number) => ({
@@ -66,7 +148,48 @@ Example:
 >>> math.floor(3.7)
 3
 >>> type(math.floor(3.7))
-<class 'int'>`
+<class 'int'>
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q4: math.floor — negative float (floors toward negative infinity)
   (_i: number) => ({
@@ -87,7 +210,48 @@ Example:
 >>> math.floor(-3.7)
 -4
 >>> int(-3.7)
--3`
+-3
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q5: math.ceil — positive float
   (_i: number) => ({
@@ -108,7 +272,48 @@ Example:
 >>> math.ceil(3.2)
 4
 >>> math.ceil(3.0)
-3`
+3
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q6: math.ceil — negative float
   (_i: number) => ({
@@ -129,7 +334,48 @@ Example:
 >>> math.ceil(-3.2)
 -3
 >>> math.floor(-3.2)
--4`
+-4
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q7: math.trunc — positive float (truncate toward zero)
   (_i: number) => ({
@@ -150,7 +396,48 @@ Example:
 >>> math.trunc(3.7)
 3
 >>> int(3.7)
-3`
+3
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q8: math.trunc — negative float (toward zero, unlike floor)
   (_i: number) => ({
@@ -170,7 +457,48 @@ Key concepts:
 Comparison table:
    x    | trunc(x) | floor(x) | ceil(x)
   3.7   |    3     |    3     |    4
- -3.7   |   -3     |   -4     |   -3`
+ -3.7   |   -3     |   -4     |   -3
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q9: math.floor vs int() — same result for positive numbers
   (_i: number) => ({
@@ -193,7 +521,48 @@ True
 >>> math.floor(3.7)
 3
 >>> int(3.7)
-3`
+3
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q10: math.floor vs int() — different for negative numbers
   (_i: number) => ({
@@ -213,7 +582,48 @@ Key concepts:
 Why it matters:
 • Python's // operator uses floor division, not truncation
 • -17 // 5 = -4 (not -3), because Python floors toward negative infinity
-• C/Java integer division truncates: -17 / 5 = -3`
+• C/Java integer division truncates: -17 / 5 = -3
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q11: math.pi — approximate value
   (_i: number) => ({
@@ -235,7 +645,48 @@ Example:
 >>> math.pi
 3.141592653589793
 >>> math.pi * 1  # radius 1 circle circumference / 2
-3.141592653589793`
+3.141592653589793
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q12: math.e — Euler's number
   (_i: number) => ({
@@ -256,7 +707,48 @@ Example:
 >>> math.e
 2.718281828459045
 >>> math.log(math.e)
-1.0`
+1.0
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q13: math.inf — positive infinity
   (_i: number) => ({
@@ -279,7 +771,48 @@ Example:
 >>> type(math.inf)
 <class 'float'>
 >>> type(math.inf).__name__
-'float'`
+'float'
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q14: math.inf > any large number
   (_i: number) => ({
@@ -301,7 +834,48 @@ Example:
 >>> math.inf > 10 ** 100
 True
 >>> math.inf > 10 ** 1000
-True`
+True
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q15: -math.inf less than any negative number
   (_i: number) => ({
@@ -323,7 +897,48 @@ Example:
 >>> -math.inf < -10 ** 100
 True
 >>> -math.inf < -10 ** 10000
-True`
+True
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q16: math.nan — what type is it?
   (_i: number) => ({
@@ -345,7 +960,48 @@ Example:
 >>> type(math.nan)
 <class 'float'>
 >>> type(math.nan).__name__
-'float'`
+'float'
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q17: math.nan equality — NaN is not equal to itself
   (_i: number) => ({
@@ -370,7 +1026,48 @@ Example:
 False
 >>> x = math.nan
 >>> x == x
-False`
+False
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q18: math.isnan — proper way to check for NaN
   (_i: number) => ({
@@ -392,7 +1089,48 @@ Example:
 >>> math.isnan(math.nan)
 True
 >>> math.isnan(42.0)
-False`
+False
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q19: math.isinf — check for infinity
   (_i: number) => ({
@@ -416,7 +1154,48 @@ True
 >>> math.isinf(-math.inf)
 True
 >>> math.isinf(999999)
-False`
+False
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q20: math.isfinite — True for normal numbers
   (_i: number) => ({
@@ -438,7 +1217,48 @@ Example:
 >>> math.isfinite(3.14)
 True
 >>> math.isfinite(math.inf)
-False`
+False
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q21: math.isfinite — False for infinity
   (_i: number) => ({
@@ -459,7 +1279,48 @@ Example:
 >>> math.isfinite(math.inf)
 False
 >>> math.isfinite(-math.inf)
-False`
+False
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q22: math.log — natural logarithm of 1
   (_i: number) => ({
@@ -481,7 +1342,48 @@ Example:
 >>> math.log(1)
 0.0
 >>> math.log(math.e)
-1.0`
+1.0
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q23: math.log — natural logarithm of e
   (_i: number) => ({
@@ -502,7 +1404,48 @@ Example:
 >>> math.log(math.e)
 1.0
 >>> math.log(math.e ** 3)
-3.0000000000000004`
+3.0000000000000004
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q24: math.log10 — base-10 logarithm
   (_i: number) => ({
@@ -523,7 +1466,48 @@ Example:
 >>> math.log10(100)
 2.0
 >>> math.log10(1)
-0.0`
+0.0
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q25: math.log2 — base-2 logarithm
   (_i: number) => ({
@@ -544,7 +1528,48 @@ Example:
 >>> math.log2(8)
 3.0
 >>> math.log2(256)
-8.0`
+8.0
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q26: math.factorial — 5!
   (_i: number) => ({
@@ -568,7 +1593,48 @@ Example:
 >>> math.factorial(0)
 1
 >>> math.factorial(10)
-3628800`
+3628800
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q27: math.gcd — greatest common divisor
   (_i: number) => ({
@@ -590,7 +1656,48 @@ Example:
 >>> math.gcd(12, 8)
 4
 >>> math.gcd(15, 25)
-5`
+5
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q28: math.lcm — least common multiple (Python 3.9+)
   (_i: number) => ({
@@ -613,7 +1720,48 @@ Example:
 >>> math.lcm(4, 6)
 12
 >>> math.lcm(3, 5)
-15`
+15
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q29: math.comb — combinations
   (_i: number) => ({
@@ -636,7 +1784,48 @@ Example:
 >>> math.comb(5, 2)
 10
 >>> math.comb(10, 3)
-120`
+120
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q30: math.perm — permutations
   (_i: number) => ({
@@ -659,7 +1848,48 @@ Example:
 >>> math.perm(5, 2)
 20
 >>> math.perm(5, 2) == math.comb(5, 2) * math.factorial(2)
-True`
+True
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q31: divmod — positive division
   (_i: number) => ({
@@ -682,7 +1912,48 @@ Example:
 (3, 2)
 >>> q, r = divmod(17, 5)
 >>> 5 * q + r == 17
-True`
+True
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q32: divmod — negative dividend (floors toward negative infinity)
   (_i: number) => ({
@@ -703,7 +1974,48 @@ Key concepts:
 Why -4 and not -3?
 • -17 / 5 = -3.4
 • floor(-3.4) = -4 (floor goes toward negative infinity)
-• Remainder: -17 - (5 × -4) = -17 + 20 = 3`
+• Remainder: -17 - (5 × -4) = -17 + 20 = 3
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q33: divmod — negative divisor
   (_i: number) => ({
@@ -725,7 +2037,48 @@ Example:
 >>> divmod(17, -5)
 (-4, -3)
 >>> -5 * (-4) + (-3) == 17
-True`
+True
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q34: round with floating point representation issue
   (_i: number) => ({
@@ -748,7 +2101,48 @@ Example:
 2.67
 >>> from decimal import Decimal
 >>> round(Decimal('2.675'), 2)
-Decimal('2.68')`
+Decimal('2.68')
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q35: round to negative decimal places (round to hundreds)
   (_i: number) => ({
@@ -770,7 +2164,48 @@ Example:
 >>> round(1234, -2)
 1200
 >>> round(1234, -1)
-1230`
+1230
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q36: round — banker's rounding to hundreds
   (_i: number) => ({
@@ -792,7 +2227,48 @@ Example:
 >>> round(1250, -2)
 1200
 >>> round(1350, -2)
-1400`
+1400
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q37: round — banker's rounding rounds to even (1350 → 1400)
   (_i: number) => ({
@@ -813,7 +2289,48 @@ Comparison:
 • round(1250, -2) → 1200 (12 even ✓)
 • round(1350, -2) → 1400 (14 even ✓)
 • round(1450, -2) → 1400 (14 even ✓)
-• round(1550, -2) → 1600 (16 even ✓)`
+• round(1550, -2) → 1600 (16 even ✓)
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q38: round fixes float imprecision
   (_i: number) => ({
@@ -835,7 +2352,48 @@ Example:
 >>> 0.1 + 0.2
 0.30000000000000004
 >>> round(0.1 + 0.2, 1)
-0.3`
+0.3
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q39: math.fsum — more accurate than sum
   (_i: number) => ({
@@ -857,7 +2415,48 @@ Example:
 >>> sum([0.1, 0.2, 0.3])
 0.6000000000000001
 >>> math.fsum([0.1, 0.2, 0.3])
-0.6`
+0.6
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q40: math.copysign — copy sign from one number to another
   (_i: number) => ({
@@ -882,7 +2481,48 @@ Example:
 >>> math.copysign(3.14, -1)
 -3.14
 >>> math.copysign(-7, 2)
-7.0`
+7.0
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q41: pow with large exponent
   (_i: number) => ({
@@ -904,7 +2544,48 @@ Example:
 >>> pow(2, 10)
 1024
 >>> 2 ** 10
-1024`
+1024
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q42: pow with negative exponent
   (_i: number) => ({
@@ -927,7 +2608,48 @@ Example:
 >>> pow(2, -1)
 0.5
 >>> pow(5, -1)
-0.2`
+0.2
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q43: pow with fractional exponent (square root via pow)
   (_i: number) => ({
@@ -949,7 +2671,48 @@ Example:
 >>> pow(2, 0.5)
 1.4142135623730951
 >>> math.sqrt(2)
-1.4142135623730951`
+1.4142135623730951
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q44: math.pow always returns float
   (_i: number) => ({
@@ -970,7 +2733,48 @@ Key concepts:
 Comparison:
 >>> math.pow(2, 3)    # → 8.0 (float)
 >>> pow(2, 3)          # → 8 (int)
->>> 2 ** 3             # → 8 (int)`
+>>> 2 ** 3             # → 8 (int)
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q45: 2 ** 0.5 vs math.sqrt(2) — same result
   (_i: number) => ({
@@ -994,7 +2798,48 @@ Example:
 >>> math.sqrt(2)
 1.4142135623730951
 >>> 2 ** 0.5 == math.sqrt(2)
-True`
+True
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q46: math.isclose — comparing floats safely
   (_i: number) => ({
@@ -1016,7 +2861,48 @@ Example:
 >>> 0.1 + 0.2 == 0.3
 False
 >>> math.isclose(0.1 + 0.2, 0.3)
-True`
+True
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q47: math.isclose with abs_tol
   (_i: number) => ({
@@ -1038,7 +2924,48 @@ Example:
 >>> math.isclose(1.0, 1.001, abs_tol=0.01)
 True
 >>> math.isclose(1.0, 1.02, abs_tol=0.01)
-False`
+False
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q48: math.degrees — radians to degrees
   (_i: number) => ({
@@ -1061,7 +2988,48 @@ Example:
 >>> math.degrees(math.pi)
 180.0
 >>> math.degrees(math.pi / 2)
-90.0`
+90.0
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q49: math.radians — degrees to radians
   (_i: number) => ({
@@ -1083,7 +3051,48 @@ Example:
 >>> math.radians(180)
 3.141592653589793
 >>> math.radians(180) == math.pi
-True`
+True
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
   // Q50: math.hypot — hypotenuse of a right triangle
   (_i: number) => ({
@@ -1107,6 +3116,47 @@ Example:
 >>> math.hypot(5, 12)
 13.0
 >>> math.hypot(1, 1)
-1.4142135623730951`
+1.4142135623730951
+
+Key Concepts:
+• See the key concepts and explanation above for the main ideas and bullet points.
+
+Key Distinctions:
+• Compare with related operations (e.g. / vs //, ** vs *, PEMDAS) and similar expressions.
+• Distinguish this operation or expression from others that learners might confuse.
+
+How It Works:
+• Python evaluates the expression according to operator precedence and associativity.
+• The result is returned or produced according to the semantics of the operation.
+
+Step-by-Step Execution:
+1. Any literals or subexpressions are evaluated (parentheses first, then exponents, then * / // %, then + -, etc.).
+2. The main operation is applied in the correct order of operations.
+3. The operation completes and returns a value (or None, if applicable).
+4. In the REPL or in an assignment, the result is displayed or stored.
+
+Order of Operations:
+1. Literals and innermost subexpressions (including parentheses) are evaluated first.
+2. Exponents (**) are evaluated next (right to left if chained).
+3. Multiplication, division, floor division, and modulo (* / // %) are evaluated left to right.
+4. Addition and subtraction (+ -) are evaluated left to right.
+5. Display or use of the result happens after the full expression has been evaluated.
+
+Common Use Cases:
+• Writing correct arithmetic and expressions; teaching PEMDAS and operator precedence; validating expressions.
+
+Edge Cases:
+• See the explanation above for edge cases (e.g. division by zero, overflow, type of result).
+• Consider what happens with mixed types, parentheses, and chained operators.
+
+Performance Considerations:
+• Arithmetic operations are highly optimized in CPython.
+• For hot paths, avoid repeated heavy computation; consider caching or simplifying expressions when possible.
+
+Examples:
+• See the example(s) above; try the same pattern with related values or similar expressions to reinforce understanding.
+
+Notes:
+• Follow PEMDAS; use parentheses to make order explicit when in doubt; refer to the official docs for full precedence tables.`
   }),
 ];
