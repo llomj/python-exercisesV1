@@ -89,6 +89,9 @@ export const MindMapView: React.FC<MindMapViewProps> = ({ root, onBack, onSelect
   const [scale, setScale] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [activePointers, setActivePointers] = useState<Map<number, { x: number; y: number }>>(new Map());
+  const [pinchInitialDistance, setPinchInitialDistance] = useState<number | null>(null);
+  const [pinchInitialScale, setPinchInitialScale] = useState<number | null>(null);
 
   const layout = useMemo(() => useLayout(root, expanded), [root, expanded]);
   const edges = useMemo(() => getEdges(root, expanded, layout), [root, expanded, layout]);
@@ -128,21 +131,80 @@ export const MindMapView: React.FC<MindMapViewProps> = ({ root, onBack, onSelect
   );
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
-    if ((e.target as SVGElement).closest('g[data-node]')) return;
-    setIsDragging(true);
-    setDragStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
-  }, [pan]);
+    const targetIsNode = (e.target as SVGElement).closest('g[data-node]');
+    // Track this pointer for potential pinch gesture
+    setActivePointers(prev => {
+      const next = new Map(prev);
+      next.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (next.size === 2) {
+        const points = Array.from(next.values());
+        const dx = points[0].x - points[1].x;
+        const dy = points[0].y - points[1].y;
+        const dist = Math.hypot(dx, dy) || 1;
+        setPinchInitialDistance(dist);
+        setPinchInitialScale(scale);
+      }
+      return next;
+    });
+
+    // If user touched background (not a node) with a single finger, start panning
+    if (!targetIsNode && activePointers.size <= 1) {
+      setIsDragging(true);
+      setDragStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
+    }
+  }, [activePointers.size, pan, scale]);
 
   const handlePointerMove = useCallback(
     (e: React.PointerEvent) => {
-      if (!isDragging) return;
-      setPan({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y });
+      setActivePointers(prev => {
+        if (!prev.has(e.pointerId)) return prev;
+        const next = new Map(prev);
+        next.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+        // Pinch zoom when two fingers are active
+        if (next.size === 2 && pinchInitialDistance && pinchInitialScale) {
+          const points = Array.from(next.values());
+          const dx = points[0].x - points[1].x;
+          const dy = points[0].y - points[1].y;
+          const dist = Math.hypot(dx, dy) || 1;
+          const factor = dist / pinchInitialDistance;
+          const nextScale = Math.min(3, Math.max(0.3, pinchInitialScale * factor));
+          setScale(nextScale);
+          return next;
+        }
+
+        // Single-finger drag pan
+        if (isDragging && next.size === 1) {
+          setPan({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y });
+        }
+
+        return next;
+      });
     },
-    [isDragging, dragStart]
+    [isDragging, dragStart, pinchInitialDistance, pinchInitialScale]
   );
 
-  const handlePointerUp = useCallback(() => setIsDragging(false), []);
-  const handlePointerLeave = useCallback(() => setIsDragging(false), []);
+  const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    setActivePointers(prev => {
+      const next = new Map(prev);
+      next.delete(e.pointerId);
+      if (next.size < 2) {
+        setPinchInitialDistance(null);
+        setPinchInitialScale(null);
+      }
+      return next;
+    });
+    if (activePointers.size <= 1) {
+      setIsDragging(false);
+    }
+  }, [activePointers.size]);
+
+  const handlePointerLeave = useCallback(() => {
+    setIsDragging(false);
+    setActivePointers(new Map());
+    setPinchInitialDistance(null);
+    setPinchInitialScale(null);
+  }, []);
 
   const resetView = useCallback(() => {
     setPan({ x: 0, y: 0 });

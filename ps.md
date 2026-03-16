@@ -166,6 +166,15 @@ When in doubt:
 
 ## 4.1 NotebookLM-style Mind Map UX (Touch + Explanations)
 
+Status legend for this section:
+- ✓ = implemented and confirmed working in browser + phone PWA
+- ✗ = not yet implemented or broken, must be fixed
+
+Current status:
+- ✗ Touch pinch zoom on phone (map must scale smoothly with two-finger pinch)
+- ✗ In-map explanation panel (NotebookLM-style side/bottom sheet) instead of navigating away
+- ✓ Mouse scroll zoom + drag pan in desktop browser
+
 The Philosophy Explorer mind map must behave like the NotebookLM mind map as closely as possible while staying fully offline and using only static content.
 
 - **Touch zoom and pan**

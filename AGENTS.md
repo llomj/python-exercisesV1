@@ -47,6 +47,9 @@
 - **Pre-Change Check**: Agents must always consult `ps.md` and `planning.md` before making changes.
 - **Debugging Reference**: Agents must always consult `ps.md` for debugging information and urgent issues.
 
+**Mind map rule link**:
+- Before changing anything related to the mind map, agents **must** read the **“4.1 NotebookLM-style Mind Map UX (Touch + Explanations)”** section in `ps.md` and respect its ✓ / ✗ status markers.
+
 ## F. Testing and Deployment Rules (Philosophy Explorer)
 
 - **Testing Requirement**: Agents must always run tests before telling the user that the app should deploy successfully.
