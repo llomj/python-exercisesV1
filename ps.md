@@ -1,4 +1,215 @@
-# Python Exercises Learn - Problem Solving & Debugging Guide
+# TJump Philosophy Explorer – Problem Solving, Authoring & Debugging Guide
+
+## 1. Philosophy Content Authoring Workflow
+
+The TJump Philosophy Explorer is built entirely from **static content** (markdown + JSON) that is generated outside the app. Use this workflow whenever you add or update philosophical material.
+
+### 1.1 End-to-end pipeline (8 steps)
+
+1. **Download YouTube transcripts**
+   - Export raw transcripts for the relevant TJump debates/lectures.
+   - Preserve video ID, title, date, and approximate topic.
+2. **Clean transcripts**
+   - Remove repetition, filler, and obvious transcription errors.
+   - Normalise speaker labels if needed, but keep enough context to see who says what.
+3. **Segment into topics**
+   - Split each transcript into thematic segments (epistemology, specific arguments, methods, humour, etc.).
+   - For each segment, record:
+     - `timestamp` (HH:MM:SS),
+     - short `context` sentence,
+     - cleaned `text`.
+4. **Generate transcript markdown files (`content/transcripts/*.md`)**
+   - For each debate/lecture, create a markdown file with sections like:
+     - `# Video Title`
+     - `## Topic`
+     - `## Timestamp`
+     - `## Transcript Segment`
+     - `## Context`
+   - Ensure there is a stable **ID** that can be referenced from concept and argument pages.
+5. **Create structured concept pages (`content/knowledge/<topic>/*.md`)**
+   - For each philosophical idea, create a page matching the `ConceptPage` shape in `src/types.ts`:
+     - `## Concept`
+     - `## TJump Position`
+     - `## Transcript Example(s)` (with video + timestamp)
+     - `## Debate Context`
+   - Keep TJump’s actual statements and reasoning central; avoid importing external positions unless explicitly flagged.
+6. **Create argument analysis pages (`content/arguments/*.md`)**
+   - For each major argument (cosmological, fine-tuning, moral, etc.):
+     - `Opponent Claim`
+     - `Premise Structure` (P1, P2, C…)
+     - `TJump Response` (point-by-point)
+     - `Counterarguments` (from other perspectives, clearly labelled).
+   - Make sure the premise structure matches the examples used in transcripts.
+7. **Author logical evaluations and fallacy analyses (`content/analysis/**`)**
+   - For each argument, write:
+     - Logical Evaluation (validity, soundness, coherence, evidence strength, debate strength, rhetorical clarity) as both numbers (0–10) and short explanations.
+     - Fallacy analysis (e.g. ad hominem, strawman, burden of proof shift) with simple `present` / `none` plus a one-sentence justification.
+   - These must always be **static** and factored into the content; the app never computes them dynamically.
+8. **Update index and mind map (`content/index.json`, `content/meta/mindmap.json`)**
+   - Regenerate a small index JSON listing all content items with:
+     - `id`, `title`, `summary`, `file`, `tags` (see `PhilosophyTags` in `src/types.ts`).
+   - Update the mind map JSON to:
+     - Add new nodes for concepts/arguments,
+     - Link nodes to their markdown files by `file` path,
+     - Preserve stable `id` values for existing nodes.
+
+### 1.2 File naming conventions
+
+- Transcripts: `content/transcripts/debate_YYYYMMDD_topic_slug.md`
+- Concepts: `content/knowledge/epistemology/foundationalism.md`, etc.
+- Arguments: `content/arguments/cosmological_argument.md`, `content/arguments/fine_tuning_argument.md`
+- Evaluations: `content/analysis/evaluations/cosmological_argument_eval.md`
+- Fallacies: `content/analysis/fallacies/cosmological_argument_fallacies.md`
+
+Names don’t have to be perfect, but they must be:
+- Stable (no casual renaming),
+- Unique,
+- Predictable enough that tools can map between argument IDs and their evaluation/fallacy files.
+
+### 1.2a Video & transcript tracking (videos.md)
+
+- **Master list**: See **`videos.md`** for all TJump channel videos in **number format** (1, 2, 3, …), with **✅** (green check mark) for videos whose transcript is recorded (i.e. `.md` exists under `content/transcripts/<subject>/`).
+- Work in **batches of 100**; transcript `.md` files are organised **by subject** under `content/transcripts/<subject>/`.
+
+### 1.2b Downloading transcripts (first 100 videos)
+
+A script in the repo can fetch transcripts for the first 100 videos (or fewer) from a YouTube channel and write one markdown file per video under `content/transcripts/` (organise by subject as in `videos.md`).
+
+**With YouTube Data API key (for channel listing):**
+```bash
+npm install
+export YOUTUBE_API_KEY=your_key   # from Google Cloud Console, YouTube Data API v3 enabled
+npm run transcripts -- "https://youtube.com/@TJump" --limit 100
+```
+Or: `node scripts/download-transcripts.js "https://youtube.com/@TJump" --limit 100`
+
+**Without API key (paste video IDs into a file):**
+- Create a text file with one video ID per line (e.g. `video-ids.txt`).
+- Run: `node scripts/download-transcripts.js --videos-file video-ids.txt --limit 100`
+
+**Options:** `--out content/transcripts` (default), `--delay 1500` (ms between requests), `--limit 100` (default). The script skips videos that already have a transcript file (resumable). Output files are named `{videoId}_{title_slug}.md` and include **Segments** (timestamp + text) and **Full transcript**. For offline/PWA: ensure `content/transcripts/**` is included in precache (see AGENTS.md and `scripts/inject-precache.js`).
+
+### 1.2c Where we're at with URL transcripts
+
+- **Source (YouTube URL → transcript)**  
+  - **Done**: Script `scripts/download-transcripts.js` can pull transcripts from a channel URL (`https://youtube.com/@TJump`) or from a file of video IDs. Run with `YOUTUBE_API_KEY` for channel listing, or `--videos-file` for a list of IDs. Output goes to `content/transcripts/` (or per-subject subdirs if you move files).
+- **Content on disk**  
+  - **Current**: `content/transcripts/` exists; only `.gitkeep` is present. No transcript `.md` files have been downloaded yet. Track progress in **`videos.md`** (batches of 100, ✅ when transcript is recorded).
+- **App consumption (URL / path to transcript content)**  
+  - **Current**: The app does **not** load transcript content from URLs or from `content/` at runtime. Epistemology, Arguments, Debates, Mind map, and Transcript Library are all fed from **hardcoded** data in `src/data/philosophyData.ts` (SECTION_ITEMS, MIND_MAP_ROOT). Transcript Library is a placeholder entry there.
+  - **To evolve**: When transcript `.md` files exist under `content/transcripts/<subject>/`, either (1) add a build step that reads them and injects into the app bundle, or (2) ship `content/` as static assets and have the app load index + markdown from paths (e.g. `content/index.json` listing transcript files); then wire Epistemology, Arguments, Debates, and Mind map to use that content so all panels evolve as transcripts are added (see AGENTS.md “Continuous improvement”).
+
+### 1.3 Bilingual content workflow
+
+- For each new English page (concept, argument, evaluation, fallacy analysis):
+  - Plan a corresponding French file with identical structure.
+  - Track EN ↔ FR pairing in your content tooling or documentation.
+- When adding or changing structure (new section, new metric), update **both** languages so EN/FR stay mirrored.
+
+---
+
+## 2. Tagging & Indexing (PhilosophyTags)
+
+### 2.1 Tag schema
+
+Use `PhilosophyTags` from `src/types.ts`:
+
+- `topic`: `epistemology`, `metaphysics`, `ethics`, `logic`, `arguments`, `debate_methods`, `humor_style`, `other`
+- `argument_type`: `cosmological`, `teleological`, `moral`, `epistemic`, `metaphysical`, `pragmatic`, `other`
+- `debate_mode`: `deductive`, `inductive`, `abductive`, `bayesian`, `probabilistic_reasoning`, `socratic`, `other`
+- `tone`: `serious`, `sarcastic`, `playful`, `dry`, `neutral`
+- `methodology`: `bayesian_analysis`, `thought_experiment`, `intuition_pump`, `model_comparison`, `conceptual_analysis`, `other`
+- Optional metadata: `source_video_id`, `source_video_title`, `year`
+
+Tags should reflect how TJump is actually arguing in that segment, not what an external textbook would say.
+
+### 2.2 Index generation
+
+- At authoring time, generate `content/index.json` with entries like:
+  - `id`, `title`, `summary`, `file`, `tags`.
+- The app uses this JSON to:
+  - Populate section lists (Epistemology, Arguments, Debates, Transcript Library, Logic Evaluations),
+  - Filter by topic, argument type, debate mode, tone, or methodology.
+- Do **not** make the app walk every markdown file at runtime; keep parsing in the content pipeline, not on-device.
+
+---
+
+## 3. Offline & PWA Debugging (Philosophy Explorer)
+
+Offline behaviour is critical and must stay intact:
+
+- See `AGENTS.md` “CRITICAL: Full Offline Support” for non-negotiable rules.
+- Key points when debugging:
+  - New content under `content/**` and `mindmap/**` must be picked up by `scripts/inject-precache.js`.
+  - When offline, the app should:
+    - Load the shell,
+    - Render existing sections, mind map, and any content that was present at last online visit.
+  - If new content appears online but not in an installed PWA, suspect **stale service worker cache** first, not UI layout.
+
+When in doubt:
+- Rebuild: `vite build && node scripts/inject-precache.js`
+- Serve and perform a full offline test:
+  - Open app online → navigate enough to warm caches → go offline → reopen → confirm everything loads.
+
+---
+
+## 4. Bilingual Content Coherence
+
+- UI text is controlled via `translations.ts`. Any new labels or panels you add for philosophy must have:
+  - English entries under `translations.en`,
+  - French entries under `translations.fr`, with matching structure.
+- For **content** (markdown / JSON):
+  - Ensure EN and FR pages have the same sections and ordering.
+  - When revising structure (e.g. adding “Edge cases” to a concept), update both languages in the same commit or documented batch.
+
+---
+
+## 4.1 NotebookLM-style Mind Map UX (Touch + Explanations)
+
+The Philosophy Explorer mind map must behave like the NotebookLM mind map as closely as possible while staying fully offline and using only static content.
+
+- **Touch zoom and pan**
+  - Users must be able to **increase or decrease the map with touch gestures**:
+    - Pinch-out to zoom in, pinch-in to zoom out.
+    - Drag with one finger to pan the map.
+  - Mouse/trackpad users must be able to zoom with the scroll wheel and pan by dragging the background.
+  - Zoom and pan must never break or hide the root node; always keep a way to reset view (e.g. “Reset view” control).
+
+- **NotebookLM-style explanations**
+  - When the user **taps/clicks on a node label** (text), the **text explanation for that topic must appear without leaving the mind map**, similar to how NotebookLM shows a side panel:
+    - The explanation content must come from the static philosophy content (e.g. `SECTION_ITEMS` / markdown files), never from live AI.
+    - The map should remain visible while the explanation is open (e.g. side drawer or bottom sheet), and the user must be able to close the explanation to continue exploring the map.
+    - All explanation UI, labels, and helper text must be fully bilingual (EN/FR) via `translations.ts`.
+
+- **Offline and static content constraints**
+  - Mind map interactions (zoom, pan, expand/collapse, explanation panels) must work **entirely offline** and only read from pre-generated JSON/markdown (e.g. `mindmap/**`, `content/**`).
+  - Do not add any live model calls, network fetches, or runtime RAG to the mind map; it only visualises and surfaces existing static content.
+
+Whenever you change the mind map implementation, update this section to keep the intended NotebookLM-style UX explicit.
+
+---
+
+## 4a. Syntax Highlighting & Theme Consistency (Philosophy Explorer)
+
+- **Single Source of Truth**: All code and markdown syntax highlighting in the Philosophy Explorer must use a theme that visually matches the existing **black/yellow, dark-glass UI**.
+- **Highlighting Library**: When using `react-syntax-highlighter` (or any replacement), prefer dark themes close to the current shell (e.g. `oneDark`) and adjust colors only in ways that preserve:
+  - Dark background (no bright/white code panes),
+  - High contrast, readable tokens,
+  - Accents that harmonise with the existing yellow/amber/indigo palette.
+- **Panels & Markdown**:
+  - Any philosophy panels that render markdown (e.g. `MarkdownDetailView` for Foundationalism and other concept pages) **must style code blocks and inline code in a way that visually fits the main app theme**.
+  - Do not introduce separate, clashing themes (e.g. white backgrounds, neon palettes, or pastel-light schemes) inside these panels.
+- **Future Changes**:
+  - If the syntax highlighting theme is updated, always verify:
+    - The background and border colors still look like part of the same black/yellow shell.
+    - Links, headings, and code tokens remain legible in both light and dark parts of the UI.
+  - Document any theme changes here so future agents know which highlighting theme is canonical for the Philosophy Explorer.
+
+---
+
+## 5. Legacy: Python Exercises Learn – Question Bank Debugging
+
+The remainder of this file documents the original Python question-bank project. It is kept so older branches and data can still be understood and debugged. The active app logic is now philosophy-focused; treat everything below as **legacy context**.
 
 ## CRITICAL RULE: Question Uniqueness
 

@@ -2,8 +2,8 @@ export const translations = {
   en: {
     // Navigation & App
     app: {
-      title: "PYTHON",
-      subtitle: "EXERCISES",
+      title: "TJump ",
+      subtitle: "Philosophy Explorer",
       rank: "Rank",
       glossary: "Glossary",
       learningLog: "Learning Log",
@@ -160,10 +160,22 @@ export const translations = {
       expertExplanation: "Expert",
       stepByStepDetail: "Step-by-step",
     },
-    
+
+    mindMap: {
+      title: "Philosophy Map",
+      back: "Back",
+      expandAll: "Expand all",
+      collapseAll: "Collapse all",
+      zoomIn: "Zoom in",
+      zoomOut: "Zoom out",
+      resetView: "Reset view",
+      tapNode: "Tap a node to open topic",
+      noContent: "No content for this topic yet.",
+    },
+
     // Footer
     footer: {
-      copyright: "© 2024 Python Exercises Learn. Interactive Learning Platform.",
+      copyright: "© 2024 TJump Philosophy Explorer.",
     },
     
     // Methods view
@@ -341,8 +353,8 @@ export const translations = {
   fr: {
     // Navigation & App
     app: {
-      title: "PYTHON",
-      subtitle: "EXERCICES",
+      title: "TJump ",
+      subtitle: "Explorateur Philosophie",
       rank: "Rang",
       glossary: "Glossaire",
       learningLog: "Journal d'apprentissage",
@@ -499,10 +511,22 @@ export const translations = {
       expertExplanation: "Expert",
       stepByStepDetail: "Étape par étape",
     },
-    
+
+    mindMap: {
+      title: "Carte Philosophique",
+      back: "Retour",
+      expandAll: "Tout développer",
+      collapseAll: "Tout réduire",
+      zoomIn: "Zoom avant",
+      zoomOut: "Zoom arrière",
+      resetView: "Réinitialiser la vue",
+      tapNode: "Appuyez sur un nœud pour ouvrir le sujet",
+      noContent: "Pas encore de contenu pour ce sujet.",
+    },
+
     // Footer
     footer: {
-      copyright: "© 2024 Python Exercises Learn. Plateforme d'Apprentissage Interactive.",
+      copyright: "© 2024 Explorateur de Philosophie TJump.",
     },
     
     // Methods view

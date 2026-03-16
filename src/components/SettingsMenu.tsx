@@ -100,30 +100,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     children?: Array<{ icon: string; label: string; onClick: () => void }>;
   }> = [];
 
-  // Core items: Random Mode on top, Select Level under it, then Rules, then logs.
-  if (onToggleRandomMode) {
-    menuItems.push({
-      icon: 'fa-shuffle',
-      label: randomMode ? t('settings.switchToLevelMode') : t('settings.switchToRandomMode'),
-      onClick: () => {
-        onToggleRandomMode();
-        onClose();
-      }
-    });
-  }
-
-  if (onShowLevelSelector) {
-    menuItems.push({
-      icon: 'fa-layer-group',
-      label: t('settings.selectLevel'),
-      onClick: () => {
-        onShowLevelSelector();
-        onClose();
-      }
-    });
-  }
-
-  // Rules (under Select Level): expandable — Flow, Glossary, Methods, Operations & Math (alphabetical)
+  // Rules: expandable — Flow, Glossary, Methods, Operations & Math (alphabetical)
   if (onShowMethods || onShowFlow || onShowOperations || onShowGlossary) {
     const rulesChildren: Array<{ icon: string; label: string; onClick: () => void }> = [];
     if (onShowFlow) rulesChildren.push({ icon: 'fa-diagram-project', label: t('app.flow'), onClick: () => { onShowFlow(); onClose(); } });
