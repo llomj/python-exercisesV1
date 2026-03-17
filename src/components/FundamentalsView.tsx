@@ -6,6 +6,7 @@ import {
   type FundamentalsSectionId,
   type FundamentalsSectionContent,
 } from '../data/fundamentalsData';
+import { FUNDAMENTALS_SECTIONS_FR } from '../data/fundamentalsDataFr';
 
 interface FundamentalsViewProps {
   onBack: () => void;
@@ -21,17 +22,19 @@ const SECTION_ICONS: Record<FundamentalsSectionId, string> = {
 };
 
 export const FundamentalsView: React.FC<FundamentalsViewProps> = ({ onBack, initialSection }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { playCutSound } = useSound();
   const [selectedSection, setSelectedSection] = useState<FundamentalsSectionContent | null>(null);
+
+  const sections = language === 'fr' ? FUNDAMENTALS_SECTIONS_FR : FUNDAMENTALS_SECTIONS;
 
   // Open the requested section once when we have initialSection (e.g. from Settings or Level Selector).
   useEffect(() => {
     if (initialSection) {
-      const section = FUNDAMENTALS_SECTIONS.find((s) => s.id === initialSection);
+      const section = sections.find((s) => s.id === initialSection);
       if (section) setSelectedSection(section);
     }
-  }, [initialSection]);
+  }, [initialSection, sections]);
 
   const handleSelect = (section: FundamentalsSectionContent) => {
     playCutSound();
@@ -145,7 +148,7 @@ export const FundamentalsView: React.FC<FundamentalsViewProps> = ({ onBack, init
       <p className="text-slate-400 text-sm mb-6">{t('fundamentals.intro')}</p>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        {FUNDAMENTALS_SECTIONS.map((section) => (
+        {sections.map((section) => (
           <button
             key={section.id}
             onClick={() => handleSelect(section)}
