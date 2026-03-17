@@ -8,7 +8,7 @@ import { useSound } from '../contexts/SoundContext';
 interface SettingsMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  view: 'hub' | 'quiz' | 'log' | 'glossary' | 'methods' | 'flow' | 'concepts';
+  view: 'hub' | 'quiz' | 'log' | 'glossary' | 'methods' | 'flow' | 'concepts' | 'fundamentals';
   randomMode?: boolean;
   anchorBottom?: boolean; // When true, menu opens near top-right (mobile-friendly placement)
   onToggleRandomMode?: () => void;
@@ -20,6 +20,7 @@ interface SettingsMenuProps {
   onShowOperations?: () => void;
   onShowMethods?: () => void;
   onShowFlow?: () => void;
+  onShowFundamentals?: (section: 'builtins' | 'syntax' | 'errors' | 'datatypes' | 'logic') => void;
   onShowLevelSelector?: () => void;
   onToggleLanguage?: () => void;
   soundEnabled?: boolean;
@@ -48,6 +49,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onShowOperations,
   onShowMethods,
   onShowFlow,
+  onShowFundamentals,
   onShowLevelSelector,
   onToggleLanguage,
   soundEnabled = true,
@@ -63,12 +65,14 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   const { t, language } = useLanguage();
   const { playCutSound } = useSound();
   const [rulesExpanded, setRulesExpanded] = useState(false);
+  const [fundamentalsExpanded, setFundamentalsExpanded] = useState(false);
   const [logExpanded, setLogExpanded] = useState(false);
   const [settingsExpanded, setSettingsExpanded] = useState(false);
   const [themeExpanded, setThemeExpanded] = useState(false);
   useEffect(() => {
     if (!isOpen) {
       setRulesExpanded(false);
+      setFundamentalsExpanded(false);
       setLogExpanded(false);
       setSettingsExpanded(false);
       setThemeExpanded(false);
@@ -137,6 +141,19 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     menuItems.push({ icon: 'fa-book', label: t('levelSelector.rules'), type: 'expandable', children: rulesChildren });
   }
 
+  // Fundamentals: expandable — Built-ins, Syntax, Common errors, Data types, Logic
+  if (onShowFundamentals) {
+    const fundamentalsChildren: Array<{ icon: string; label: string; onClick: () => void }> = [
+      { icon: 'fa-bolt', label: t('fundamentals.sectionTitle.builtins'), onClick: () => { onShowFundamentals('builtins'); onClose(); } },
+      { icon: 'fa-braille', label: t('fundamentals.sectionTitle.syntax'), onClick: () => { onShowFundamentals('syntax'); onClose(); } },
+      { icon: 'fa-triangle-exclamation', label: t('fundamentals.sectionTitle.errors'), onClick: () => { onShowFundamentals('errors'); onClose(); } },
+      { icon: 'fa-cubes', label: t('fundamentals.sectionTitle.datatypes'), onClick: () => { onShowFundamentals('datatypes'); onClose(); } },
+      { icon: 'fa-code-branch', label: t('fundamentals.sectionTitle.logic'), onClick: () => { onShowFundamentals('logic'); onClose(); } },
+    ];
+    fundamentalsChildren.sort((a, b) => a.label.localeCompare(b.label));
+    menuItems.push({ icon: 'fa-graduation-cap', label: t('app.fundamentals'), type: 'expandable', children: fundamentalsChildren });
+  }
+
   // Log group: expandable wrapper for Search by ID, ID Log, Learning Log
   if (onShowIdSearch || onShowIdLog || onShowLearningLog) {
     const logChildren: Array<{ icon: string; label: string; onClick: () => void }> = [];
@@ -193,6 +210,8 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
                   onClick={withHaptic(() => {
                     if (item.label === t('levelSelector.rules')) {
                       setRulesExpanded(prev => !prev);
+                    } else if (item.label === t('app.fundamentals')) {
+                      setFundamentalsExpanded(prev => !prev);
                     } else if (item.label === 'Log') {
                       setLogExpanded(prev => !prev);
                     }
@@ -204,6 +223,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
                   <i
                     className={`fas fa-chevron-down text-xs text-slate-500 transition-transform ${
                       (item.label === t('levelSelector.rules') && rulesExpanded) ||
+                      (item.label === t('app.fundamentals') && fundamentalsExpanded) ||
                       (item.label === 'Log' && logExpanded)
                         ? 'rotate-180'
                         : ''
@@ -211,6 +231,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
                   ></i>
                 </button>
                 {((item.label === t('levelSelector.rules') && rulesExpanded) ||
+                  (item.label === t('app.fundamentals') && fundamentalsExpanded) ||
                   (item.label === 'Log' && logExpanded)) && (
                   <div className="pl-4 pb-1 space-y-0.5 border-l-2 border-white/10 ml-3">
                     {item.children.map((child, i) => (

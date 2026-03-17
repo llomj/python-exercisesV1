@@ -9,6 +9,7 @@ import { LevelSelectorModal } from './components/LevelSelectorModal';
 import { MethodsView } from './components/MethodsView';
 import { FlowView } from './components/FlowView';
 import { ConceptsView } from './components/ConceptsView';
+import { FundamentalsView } from './components/FundamentalsView';
 import { UserStats, PersonaStage, QuestionAttempt } from './types';
 import { EvolutionHub } from './components/EvolutionHub';
 import { FallingStars } from './components/FallingStars';
@@ -367,7 +368,8 @@ const ViewLoading: React.FC = () => (
 const App: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
   const [stats, setStats] = useState<UserStats>(INITIAL_STATS);
-  const [view, setView] = useState<'hub' | 'quiz' | 'log' | 'glossary' | 'methods' | 'flow' | 'concepts'>('hub');
+  const [view, setView] = useState<'hub' | 'quiz' | 'log' | 'glossary' | 'methods' | 'flow' | 'concepts' | 'fundamentals'>('hub');
+  const [fundamentalsInitialSection, setFundamentalsInitialSection] = useState<string | null>(null);
   const [showResult, setShowResult] = useState<{
     score: number;
     total: number;
@@ -788,6 +790,7 @@ const App: React.FC = () => {
         onShowConcepts={() => { setOpenSettingsOnBack(true); setView('concepts'); }}
         onShowFlow={() => { setOpenSettingsOnBack(true); setView('flow'); }}
         onShowOperations={() => { setOpenSettingsOnBack(true); setShowOperations(true); }}
+        onShowFundamentals={(section) => { setOpenSettingsOnBack(true); setFundamentalsInitialSection(section); setView('fundamentals'); }}
         onToggleLanguage={toggleLanguage}
         soundEnabled={soundEnabled}
         hapticEnabled={hapticEnabled}
@@ -857,6 +860,13 @@ const App: React.FC = () => {
                 randomModeStats: stats.randomModeStats,
                 randomMode: stats.randomMode,
               }}
+            />
+          </Suspense>
+        ) : view === 'fundamentals' ? (
+          <Suspense fallback={<ViewLoading />}>
+            <FundamentalsView
+              onBack={() => { setView('hub'); if (openSettingsOnBack) { setShowSettingsMenu(true); setOpenSettingsOnBack(false); } }}
+              initialSection={fundamentalsInitialSection as 'builtins' | 'syntax' | 'errors' | 'datatypes' | 'logic' | null}
             />
           </Suspense>
         ) : showResult ? (
@@ -1143,6 +1153,7 @@ const App: React.FC = () => {
             onShowFlow={() => { setShowLevelSelector(false); setOpenSettingsOnBack(true); setView('flow'); }}
             onShowOperations={() => { setShowLevelSelector(false); setOpenSettingsOnBack(true); setShowOperations(true); }}
             onShowGlossary={() => { setShowLevelSelector(false); setOpenSettingsOnBack(true); setView('glossary'); }}
+            onShowFundamentals={(section) => { setShowLevelSelector(false); setOpenSettingsOnBack(true); setFundamentalsInitialSection(section); setView('fundamentals'); }}
           />
         </Suspense>
       )}

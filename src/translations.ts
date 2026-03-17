@@ -11,6 +11,7 @@ export const translations = {
       operations: "Operations & Math",
       methods: "Methods",
       flow: "Flow",
+      fundamentals: "Fundamentals",
     },
     
     // Evolution Hub
@@ -298,6 +299,7 @@ export const translations = {
     levelSelector: {
       selectLevel: "Select Level",
       rules: "Rules",
+      fundamentals: "Fundamentals",
       level: "Level {level}",
       currentLevel: "Current Level",
       highestUnlocked: "Highest Unlocked",
@@ -346,6 +348,21 @@ export const translations = {
       continueEvolution: "CONTINUE EVOLUTION",
     },
     
+    // Fundamentals view
+    fundamentals: {
+      title: "FUNDAMENTALS",
+      intro: "Core Python reference: built-in functions, syntax rules, common errors, data types, and logic. Tap a card for details.",
+      keyConcepts: "Key Concepts",
+      examples: "Examples",
+      sectionTitle: {
+        builtins: "Built-ins",
+        syntax: "Syntax & Grammar",
+        errors: "Common Errors",
+        datatypes: "Data Types",
+        logic: "Logic & Conditions",
+      },
+    },
+
     // Level Descriptions
     levels: {
       level0: "Your very first steps in Python. Learn what Python is, print(), variables, and basic types.",
@@ -374,6 +391,7 @@ export const translations = {
       operations: "Opérations et Mathématiques",
       methods: "Méthodes",
       flow: "Flux",
+      fundamentals: "Fondements",
     },
     
     // Evolution Hub
@@ -661,6 +679,7 @@ export const translations = {
     levelSelector: {
       selectLevel: "Sélectionner le Niveau",
       rules: "Règles",
+      fundamentals: "Fondements",
       level: "Niveau {level}",
       currentLevel: "Niveau Actuel",
       highestUnlocked: "Plus Haut Débloqué",
@@ -709,6 +728,21 @@ export const translations = {
       continueEvolution: "CONTINUER L'ÉVOLUTION",
     },
     
+    // Fundamentals view
+    fundamentals: {
+      title: "FONDEMENTS",
+      intro: "Référence Python essentielle : fonctions intégrées, règles de syntaxe, erreurs courantes, types de données et logique. Touchez une carte pour les détails.",
+      keyConcepts: "Concepts clés",
+      examples: "Exemples",
+      sectionTitle: {
+        builtins: "Fonctions intégrées",
+        syntax: "Syntaxe et grammaire",
+        errors: "Erreurs courantes",
+        datatypes: "Types de données",
+        logic: "Logique et conditions",
+      },
+    },
+
     // Level Descriptions
     levels: {
       level0: "Vos tout premiers pas en Python. Découvrez ce qu'est Python, print(), les variables et les types de base.",

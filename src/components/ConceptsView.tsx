@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useSound } from '../contexts/SoundContext';
 import { CONCEPTS_SECTIONS, ConceptEntry, ConceptSection } from '../data/conceptsData';
+import { getConceptTextFr } from '../data/conceptsDataFr';
 
 /** Theme class for concept terms (syntax-highlight style). */
 const CONCEPT_TERM_CLASS = 'text-indigo-400 font-semibold';
@@ -12,12 +13,40 @@ interface ConceptsViewProps {
 
 type Tier = 'beginner' | 'intermediate' | 'expert';
 
+/** Localize section title and concept texts for display (FR when language is fr). */
+function localizeSections(
+  sections: ConceptSection[],
+  language: string
+): ConceptSection[] {
+  const isFr = language === 'fr';
+  return sections.map(sec => ({
+    ...sec,
+    title: isFr && sec.titleFr ? sec.titleFr : sec.title,
+    concepts: sec.concepts.map(c => {
+      if (!isFr) return c;
+      const fr = getConceptTextFr(c.term);
+      return {
+        ...c,
+        term: fr?.termFr ?? c.term,
+        beginner: fr?.beginnerFr ?? c.beginner,
+        intermediate: fr?.intermediateFr ?? c.intermediate,
+        expert: fr?.expertFr ?? c.expert,
+      };
+    }),
+  }));
+}
+
 export const ConceptsView: React.FC<ConceptsViewProps> = ({ onBack }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { playCutSound } = useSound();
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<ConceptEntry | null>(null);
   const [tier, setTier] = useState<Tier>('beginner');
+
+  const sectionsLocalized = useMemo(
+    () => localizeSections(CONCEPTS_SECTIONS, language),
+    [language]
+  );
 
   useEffect(() => {
     if (selected) {
@@ -33,7 +62,7 @@ export const ConceptsView: React.FC<ConceptsViewProps> = ({ onBack }) => {
 
   const searchLower = search.toLowerCase().trim();
   const sections: ConceptSection[] = searchLower
-    ? CONCEPTS_SECTIONS.map(sec => ({
+    ? sectionsLocalized.map(sec => ({
         ...sec,
         concepts: sec.concepts.filter(c =>
           c.term.toLowerCase().includes(searchLower) ||
@@ -42,7 +71,7 @@ export const ConceptsView: React.FC<ConceptsViewProps> = ({ onBack }) => {
           c.expert.toLowerCase().includes(searchLower)
         ),
       })).filter(sec => sec.concepts.length > 0)
-    : CONCEPTS_SECTIONS;
+    : sectionsLocalized;
 
   const tierLabel = (tierKey: Tier) => {
     switch (tierKey) {

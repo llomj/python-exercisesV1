@@ -18,6 +18,7 @@ interface LevelSelectorModalProps {
   onShowFlow?: () => void;
   onShowOperations?: () => void;
   onShowGlossary?: () => void;
+  onShowFundamentals?: (section: 'builtins' | 'syntax' | 'errors' | 'datatypes' | 'logic') => void;
 }
 
 export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
@@ -32,7 +33,8 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
   onShowMethods,
   onShowFlow,
   onShowOperations,
-  onShowGlossary
+  onShowGlossary,
+  onShowFundamentals
 }) => {
   const { t } = useLanguage();
   const { playCutSound } = useSound();
@@ -44,6 +46,16 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
     onShowOperations && { icon: 'fa-calculator', label: t('app.operations'), onClick: onShowOperations },
   ].filter(Boolean) as Array<{ icon: string; label: string; onClick: () => void }>;
   rulesItems.sort((a, b) => a.label.localeCompare(b.label));
+
+  const fundamentalsItems = onShowFundamentals
+    ? [
+        { icon: 'fa-bolt', label: t('fundamentals.sectionTitle.builtins'), section: 'builtins' as const },
+        { icon: 'fa-braille', label: t('fundamentals.sectionTitle.syntax'), section: 'syntax' as const },
+        { icon: 'fa-triangle-exclamation', label: t('fundamentals.sectionTitle.errors'), section: 'errors' as const },
+        { icon: 'fa-cubes', label: t('fundamentals.sectionTitle.datatypes'), section: 'datatypes' as const },
+        { icon: 'fa-code-branch', label: t('fundamentals.sectionTitle.logic'), section: 'logic' as const },
+      ].sort((a, b) => a.label.localeCompare(b.label))
+    : [];
 
   // Helper function to get translated persona name
   const getPersonaName = (persona: string): string => {
@@ -161,6 +173,27 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
                 <button
                   key={i}
                   onClick={() => { playCutSound(); item.onClick(); onClose(); }}
+                  className="flex items-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-slate-300 hover:text-white transition-all text-left"
+                >
+                  <i className={`fas ${item.icon} text-indigo-400`}></i>
+                  <span className="text-sm font-medium">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Fundamentals: Built-ins, Syntax, Common errors, Data types, Logic */}
+        {fundamentalsItems.length > 0 && onShowFundamentals && (
+          <div className="pt-4 border-t border-white/10 space-y-3">
+            <h3 className="text-sm font-bold text-slate-400 flex items-center gap-2">
+              <i className="fas fa-graduation-cap text-indigo-400"></i> {t('levelSelector.fundamentals')}
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {fundamentalsItems.map((item, i) => (
+                <button
+                  key={i}
+                  onClick={() => { playCutSound(); onShowFundamentals(item.section); onClose(); }}
                   className="flex items-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-slate-300 hover:text-white transition-all text-left"
                 >
                   <i className={`fas ${item.icon} text-indigo-400`}></i>
