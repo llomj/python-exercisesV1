@@ -842,7 +842,16 @@ const App: React.FC = () => {
           </Suspense>
         ) : view === 'flow' ? (
           <Suspense fallback={<ViewLoading />}>
-            <FlowView onBack={() => { setView('hub'); if (openSettingsOnBack) { setShowSettingsMenu(true); setOpenSettingsOnBack(false); } }} />
+            <FlowView
+              onBack={() => { setView('hub'); if (openSettingsOnBack) { setShowSettingsMenu(true); setOpenSettingsOnBack(false); } }}
+              stats={{
+                levelProgress: stats.levelProgress,
+                levelCorrect: stats.levelCorrect,
+                highestUnlockedLevel: stats.highestUnlockedLevel,
+                randomModeStats: stats.randomModeStats,
+                randomMode: stats.randomMode,
+              }}
+            />
           </Suspense>
         ) : showResult ? (
           <div className="max-w-md mx-auto p-10 glass rounded-3xl text-center space-y-6 animate-in zoom-in duration-500 shadow-2xl relative overflow-hidden">

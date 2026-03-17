@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { LEVELS } from '../constants';
+import { LEVELS, QUESTIONS_PER_LEVEL, getStarsForLevel } from '../constants';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useSound } from '../contexts/SoundContext';
 import { PersonaStage } from '../types';
 import { PersonaIcon } from './PersonaIcon';
+import { formatTranslation } from '../translations';
 
 /** Map PersonaStage to translation key (personas.xxx) */
 const PERSONA_I18N_KEYS: Record<PersonaStage, string> = {
@@ -22,8 +23,17 @@ const PERSONA_I18N_KEYS: Record<PersonaStage, string> = {
   [PersonaStage.GOD_WHALE]: 'godWhale',
 };
 
+export interface FlowViewStats {
+  levelProgress?: Record<number, number>;
+  levelCorrect?: Record<number, number>;
+  highestUnlockedLevel?: number;
+  randomModeStats?: { totalAnswered: number; totalCorrect: number };
+  randomMode?: boolean;
+}
+
 interface FlowViewProps {
   onBack: () => void;
+  stats?: FlowViewStats | null;
 }
 
 const codeBlockStyle = {
@@ -41,9 +51,19 @@ const codeTagStyle = {
   display: 'block',
 };
 
-export const FlowView: React.FC<FlowViewProps> = ({ onBack }) => {
+export const FlowView: React.FC<FlowViewProps> = ({ onBack, stats }) => {
   const { t } = useLanguage();
   const { playCutSound } = useSound();
+  const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
+
+  const highestUnlocked = stats?.highestUnlockedLevel ?? 0;
+  const levelProgress = stats?.levelProgress ?? {};
+  const levelCorrect = stats?.levelCorrect ?? {};
+
+  const handleLevelDetail = (level: number) => {
+    playCutSound();
+    setSelectedLevel(level);
+  };
 
   return (
     <div className="relative min-h-[400px] animate-in slide-in-from-left duration-300 pb-12">
@@ -63,21 +83,116 @@ export const FlowView: React.FC<FlowViewProps> = ({ onBack }) => {
         {t('flow.levelProgression')}
       </p>
       <div className="flex flex-col gap-3 mb-8">
-        {LEVELS.map((info, i) => (
-          <div key={info.level} className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-200 flex-shrink-0">
-              <PersonaIcon persona={info.persona} size="sm" />
+        {LEVELS.map((info) => {
+          const unlocked = info.level <= highestUnlocked;
+          const progress = levelProgress[info.level] ?? 0;
+          const correct = levelCorrect[info.level] ?? 0;
+          return (
+            <div key={info.level} className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-200 flex-shrink-0">
+                <PersonaIcon persona={info.persona} size="sm" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <span className="font-bold text-white">{t('flow.levelLabel')} {info.level}</span>
+                <span className="text-slate-400 ml-2">{t(`personas.${PERSONA_I18N_KEYS[info.persona]}`)}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleLevelDetail(info.level)}
+                className="flex-shrink-0 p-2 rounded-lg text-slate-500 hover:text-indigo-400 hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                title={t('flow.viewLevelDetail')}
+                aria-label={t('flow.viewLevelDetail')}
+              >
+                <i className="fas fa-chevron-down text-xs"></i>
+              </button>
             </div>
-            <div className="flex-1 min-w-0">
-              <span className="font-bold text-white">{t('flow.levelLabel')} {info.level}</span>
-              <span className="text-slate-400 ml-2">{t(`personas.${PERSONA_I18N_KEYS[info.persona]}`)}</span>
-            </div>
-            {i < LEVELS.length - 1 && (
-              <i className="fas fa-chevron-down text-slate-500 text-xs flex-shrink-0"></i>
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
+
+      {/* Level detail modal */}
+      {selectedLevel !== null && (() => {
+        const info = LEVELS.find(l => l.level === selectedLevel);
+        if (!info) return null;
+        const unlocked = selectedLevel <= highestUnlocked;
+        const progress = levelProgress[selectedLevel] ?? 0;
+        const correct = levelCorrect[selectedLevel] ?? 0;
+        const stars = unlocked ? getStarsForLevel(correct) : 0;
+        const accuracy = progress > 0 ? Math.round((correct / progress) * 100) : 0;
+        const status = !unlocked
+          ? t('flow.levelStatusLocked')
+          : progress >= QUESTIONS_PER_LEVEL
+            ? t('flow.levelStatusCompleted')
+            : t('flow.levelStatusInProgress');
+        return (
+          <div
+            className="fixed inset-0 z-[90] flex items-center justify-center p-4 bg-black/60"
+            onClick={() => { playCutSound(); setSelectedLevel(null); }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="flow-level-detail-title"
+          >
+            <div
+              className="glass rounded-2xl p-6 max-w-sm w-full border border-white/10 shadow-xl animate-in zoom-in duration-200"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-slate-700 flex items-center justify-center">
+                    <PersonaIcon persona={info.persona} size="sm" />
+                  </div>
+                  <div>
+                    <h3 id="flow-level-detail-title" className="text-lg font-bold text-white">
+                      {formatTranslation(t('flow.levelDetailTitle'), { level: selectedLevel })}
+                    </h3>
+                    <p className="text-slate-400 text-sm">{t(`personas.${PERSONA_I18N_KEYS[info.persona]}`)}</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => { playCutSound(); setSelectedLevel(null); }}
+                  className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                  aria-label={t('flow.close')}
+                >
+                  <i className="fas fa-times"></i>
+                </button>
+              </div>
+              <p className="text-amber-400/90 font-medium text-sm mb-4">{status}</p>
+              <div className="space-y-4 mb-4">
+                <div>
+                  <h4 className="text-indigo-300 text-sm font-semibold mb-2">{t('flow.levelModeSection')}</h4>
+                  <p className="text-slate-400 text-xs mb-3">{t('flow.levelModeSectionDesc')}</p>
+                  <dl className="grid grid-cols-2 gap-2 text-sm">
+                    <dt className="text-slate-500">{t('flow.levelProgressLabel')}</dt>
+                    <dd className="text-white text-right">{progress} / {QUESTIONS_PER_LEVEL}</dd>
+                    <dt className="text-slate-500">{t('flow.levelCorrectLabel')}</dt>
+                    <dd className="text-white text-right">{correct}</dd>
+                    <dt className="text-slate-500">{t('flow.levelAccuracyLabel')}</dt>
+                    <dd className="text-white text-right">{progress > 0 ? `${accuracy}%` : '—'}</dd>
+                    <dt className="text-slate-500">{t('flow.levelStarsLabel')}</dt>
+                    <dd className="text-amber-400 text-right">
+                      {unlocked ? [...Array(5)].map((_, i) => (
+                        <i key={i} className={`fas fa-star text-xs ${i < stars ? 'opacity-100' : 'opacity-30'}`}></i>
+                      )) : '—'}
+                    </dd>
+                  </dl>
+                </div>
+                <div>
+                  <h4 className="text-indigo-300 text-sm font-semibold mb-2">{t('flow.randomModeSection')}</h4>
+                  <p className="text-slate-400 text-xs">{t('flow.randomModeSectionDesc')}</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => { playCutSound(); setSelectedLevel(null); }}
+                className="w-full py-2 rounded-xl bg-white/10 hover:bg-white/15 text-slate-200 font-medium text-sm transition-colors"
+              >
+                {t('flow.close')}
+              </button>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Comprehensive Flow & Precedence Reference */}
       <div className="border-t border-white/10 pt-6">
