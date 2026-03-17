@@ -5,6 +5,7 @@ export const translations = {
       title: "PYTHON",
       subtitle: "EXERCISES",
       rank: "Rank",
+      concepts: "Concepts",
       glossary: "Glossary",
       learningLog: "Learning Log",
       operations: "Operations & Math",
@@ -135,6 +136,13 @@ export const translations = {
       incorrect: "Incorrect",
     },
     
+    // Concepts View
+    concepts: {
+      intro: "Python concepts by section. Tap a term for Beginner, Intermediate, and Expert explanations.",
+      searchPlaceholder: "Search concepts...",
+      noResults: "No concepts found matching your search.",
+    },
+
     // Glossary View
     glossary: {
       searchPlaceholder: "Search glossary...",
@@ -360,6 +368,7 @@ export const translations = {
       title: "PYTHON",
       subtitle: "EXERCICES",
       rank: "Rang",
+      concepts: "Concepts",
       glossary: "Glossaire",
       learningLog: "Journal d'apprentissage",
       operations: "Opérations et Mathématiques",
@@ -488,6 +497,13 @@ export const translations = {
       level: "Niveau",
       correct: "Correct",
       incorrect: "Incorrect",
+    },
+
+    // Concepts View
+    concepts: {
+      intro: "Concepts Python par section. Touchez un terme pour les explications Débutant, Intermédiaire et Expert.",
+      searchPlaceholder: "Rechercher des concepts...",
+      noResults: "Aucun concept trouvé pour votre recherche.",
     },
     
     // Glossary View

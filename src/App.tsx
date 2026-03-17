@@ -8,6 +8,7 @@ import { IdLogView } from './components/IdLogView';
 import { LevelSelectorModal } from './components/LevelSelectorModal';
 import { MethodsView } from './components/MethodsView';
 import { FlowView } from './components/FlowView';
+import { ConceptsView } from './components/ConceptsView';
 import { UserStats, PersonaStage, QuestionAttempt } from './types';
 import { EvolutionHub } from './components/EvolutionHub';
 import { FallingStars } from './components/FallingStars';
@@ -366,7 +367,7 @@ const ViewLoading: React.FC = () => (
 const App: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
   const [stats, setStats] = useState<UserStats>(INITIAL_STATS);
-  const [view, setView] = useState<'hub' | 'quiz' | 'log' | 'glossary' | 'methods' | 'flow'>('hub');
+  const [view, setView] = useState<'hub' | 'quiz' | 'log' | 'glossary' | 'methods' | 'flow' | 'concepts'>('hub');
   const [showResult, setShowResult] = useState<{
     score: number;
     total: number;
@@ -784,6 +785,7 @@ const App: React.FC = () => {
         onShowLearningLog={() => { setOpenSettingsOnBack(true); setView('log'); }}
         onShowLevelSelector={() => setShowLevelSelector(true)}
         onShowMethods={() => { setOpenSettingsOnBack(true); setView('methods'); }}
+        onShowConcepts={() => { setOpenSettingsOnBack(true); setView('concepts'); }}
         onShowFlow={() => { setOpenSettingsOnBack(true); setView('flow'); }}
         onShowOperations={() => { setOpenSettingsOnBack(true); setShowOperations(true); }}
         onToggleLanguage={toggleLanguage}
@@ -839,6 +841,10 @@ const App: React.FC = () => {
         ) : view === 'methods' ? (
           <Suspense fallback={<ViewLoading />}>
             <MethodsView onBack={() => { setView('hub'); if (openSettingsOnBack) { setShowSettingsMenu(true); setOpenSettingsOnBack(false); } }} />
+          </Suspense>
+        ) : view === 'concepts' ? (
+          <Suspense fallback={<ViewLoading />}>
+            <ConceptsView onBack={() => { setView('hub'); if (openSettingsOnBack) { setShowSettingsMenu(true); setOpenSettingsOnBack(false); } }} />
           </Suspense>
         ) : view === 'flow' ? (
           <Suspense fallback={<ViewLoading />}>
@@ -1132,6 +1138,7 @@ const App: React.FC = () => {
             levelCorrect={stats.levelCorrect}
             levelProgress={stats.levelProgress}
             randomMode={randomMode}
+            onShowConcepts={() => { setShowLevelSelector(false); setOpenSettingsOnBack(true); setView('concepts'); }}
             onShowMethods={() => { setShowLevelSelector(false); setOpenSettingsOnBack(true); setView('methods'); }}
             onShowFlow={() => { setShowLevelSelector(false); setOpenSettingsOnBack(true); setView('flow'); }}
             onShowOperations={() => { setShowLevelSelector(false); setOpenSettingsOnBack(true); setShowOperations(true); }}

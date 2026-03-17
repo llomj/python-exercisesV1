@@ -13,6 +13,7 @@ interface LevelSelectorModalProps {
   levelCorrect?: Record<number, number>;
   levelProgress?: Record<number, number>;
   randomMode?: boolean;
+  onShowConcepts?: () => void;
   onShowMethods?: () => void;
   onShowFlow?: () => void;
   onShowOperations?: () => void;
@@ -27,6 +28,7 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
   levelCorrect = {},
   levelProgress = {},
   randomMode = false,
+  onShowConcepts,
   onShowMethods,
   onShowFlow,
   onShowOperations,
@@ -35,6 +37,7 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
   const { t } = useLanguage();
   const { playCutSound } = useSound();
   const rulesItems = [
+    onShowConcepts && { icon: 'fa-lightbulb', label: t('app.concepts'), onClick: onShowConcepts },
     onShowFlow && { icon: 'fa-diagram-project', label: t('app.flow'), onClick: onShowFlow },
     onShowGlossary && { icon: 'fa-circle-info', label: t('app.glossary'), onClick: onShowGlossary },
     onShowMethods && { icon: 'fa-code', label: t('app.methods'), onClick: onShowMethods },
