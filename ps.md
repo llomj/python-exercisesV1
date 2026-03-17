@@ -58,8 +58,7 @@ Before moving to the next level:
 **Fix (implemented)**:
 1. **Build id in HTML**: The post-build script `inject-precache.js` injects `window.__APP_BUILD__ = "<timestamp>"` into `dist/index.html` (inline script before `</body>`). So every deploy produces different HTML. The app reads `APP_VERSION` from `window.__APP_BUILD__` so the version shown is **whatever the loaded HTML says**. If you see v1.0.5, the HTML that loaded did not have `__APP_BUILD__` (cached old HTML).
 2. **Refresh flow**: Unregister all service workers and delete all caches, **then** redirect to `origin + path + '?t=' + Date.now()` so the next load is a unique URL and should hit the network.
-3. **"Open in browser"**: In Settings, a link that opens the app URL in a new tab. On some devices this opens in the system browser (not the PWA shell), which can get a fresh copy; user can then re-add to home screen.
-4. **SW bypasses HTTP cache for HTML**: In `sw.js`, navigation/document requests use `fetch(request, { cache: 'no-store' })` so the browser does **not** serve cached index.html when online. After this SW is installed, every app open gets fresh HTML from the server and the build id (e.g. v1773699188652) will show. **You must get this new SW installed once** (see below); after that, Refresh and normal opens will show the latest version.
+3. **SW bypasses HTTP cache for HTML**: In `sw.js`, navigation/document requests use `fetch(request, { cache: 'no-store' })` so the browser does **not** serve cached index.html when online. After this SW is installed, every app open gets fresh HTML from the server and the build id (e.g. v1773699188652) will show. **You must get this new SW installed once** (see below); after that, Refresh and normal opens will show the latest version.
 
 **If phone still shows v1.0.5** — do this **once** after deploying the build that has `cache: 'no-store'` in the SW:
 1. **Deploy** the latest code (push to main) so GitHub Pages serves the new SW and HTML.
@@ -70,7 +69,7 @@ Before moving to the next level:
 
 After that one-time reset, the new service worker is installed. Every time you open the app (or tap Refresh), the SW will fetch index.html with `cache: 'no-store'`, so you get fresh HTML and the correct build id.
 
-**Do not remove**: The inject step that writes `window.__APP_BUILD__` into `dist/index.html`; the APP_VERSION read from `window.__APP_BUILD__` in `constants.ts`; the Refresh button waiting for unregister + cache clear before redirect; the "Open in browser" option in Settings.
+**Do not remove**: The inject step that writes `window.__APP_BUILD__` into `dist/index.html`; the APP_VERSION read from `window.__APP_BUILD__` in `constants.ts`; the Refresh button waiting for unregister + cache clear before redirect.
 
 ---
 
