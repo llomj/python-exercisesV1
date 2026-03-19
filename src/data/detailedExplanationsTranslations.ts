@@ -7507,7 +7507,56 @@ Intermédiaire :
 • Donc pour l'appartenance, 0 in [1, 2] est False.
 
 Expert :
-• 0 in [1, 2] est False. Le test d'appartenance échoue. Le résultat est False.`,
+• 0 in [1, 2] est False. Le test d'appartenance échoue. Le résultat est False.
+
+Concepts clés :
+• L’opérateur in teste l’appartenance : « la valeur de gauche est-elle contenue dans le conteneur de droite ? ».
+• Pour une liste, in cherche un élément égal (==) à la valeur testée.
+• Ici, on teste si l’entier 0 est présent dans la liste [1, 2].
+
+Distinctions clés :
+• Appartenance (in) vs égalité (==) : 0 == 1 est une comparaison directe, alors que 0 in [1, 2] cherche 0 parmi plusieurs éléments.
+• Liste vs chaîne : dans une chaîne, in teste une sous-chaîne ; dans une liste, in compare aux éléments.
+• Valeur fausse (0) vs conteneur non vide : 0 est « falsy », mais cela n’a rien à voir avec l’appartenance. Ce qui compte, c’est la présence dans la liste.
+
+Fonctionnement :
+• Python évalue 0 et la liste [1, 2], puis vérifie si la liste « contient » 0.
+• La liste parcourt ses éléments et compare 0 à 1 puis 0 à 2 avec ==.
+• Comme aucune comparaison ne correspond, le résultat est False.
+
+Exécution étape par étape :
+1. Évaluer l’opérande gauche : 0.
+2. Évaluer l’opérande droite : [1, 2].
+3. Comparer 0 au premier élément (1) → pas égal.
+4. Comparer 0 au second élément (2) → pas égal.
+5. Fin de liste sans match → renvoyer False.
+
+Ordre des opérations :
+• Les deux opérandes sont évalués d’abord, puis in applique la logique d’appartenance.
+• in a une priorité d’opérateur comparable aux autres comparaisons (comme ==, <, >).
+
+Cas d'utilisation courants :
+• Vérifier si une valeur est autorisée : if x in [1, 2]: ...
+• Filtrer : garder uniquement les éléments qui appartiennent à une liste de valeurs permises.
+• Contrôler une entrée utilisateur après conversion (ex. int(input(...))).
+
+Cas limites :
+• 0 in [] est False (liste vide).
+• 0 in [0, 1, 2] est True (match dès le premier élément).
+• L’appartenance utilise == : si la liste contient False, alors 0 in [False] est True car 0 == False est True.
+
+Considérations de performance :
+• Pour une liste, le test d’appartenance est O(n) dans le pire cas (ici n=2, donc négligeable).
+• Si vous faites beaucoup de tests, un set peut être plus rapide (O(1) en moyenne), mais il ne garde pas l’ordre.
+
+Exemples :
+• 0 in [1, 2]      # False
+• 2 in [1, 2]      # True
+• 0 in [0, 1, 2]   # True
+• 0 in [False]     # True (car 0 == False)
+
+Remarques :
+• Pour éviter les surprises avec 0/False, soyez conscient que l’égalité entre bool et int existe ; si vous voulez des booléens purs, évitez de mélanger ces types dans vos listes.`,
   136: `Il n'existe qu'un seul None. None is None est True.
 
 Débutant :
