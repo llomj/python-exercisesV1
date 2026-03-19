@@ -5133,7 +5133,70 @@ Notes:
        o: ["HELLO", "Error", "None", "False"],
        c: 0,
        e: "upper() converts string to uppercase.",
-        de: 'The upper() method converts all characters in a string to uppercase. "hello".upper() returns "HELLO" by converting all lowercase letters to uppercase.'
+        de: `The upper() method returns a new string where all cased letters have been converted to uppercase. Since strings are immutable, "hello" is not modified; instead a new string "HELLO" is produced.
+
+Beginner:
+• "hello" is lowercase text.
+• .upper() makes letters uppercase.
+• So "hello".upper() becomes "HELLO".
+
+Intermediate:
+• upper() maps each lowercase letter to its uppercase form.
+• Non-letters (digits, spaces, punctuation) stay the same.
+• It returns a new string because strings cannot be changed in place.
+
+Expert:
+• upper() is Unicode-aware: it performs case conversion based on Unicode casing rules.
+• The result can affect matching/comparisons; for case-insensitive comparisons, casefold() is often more robust than upper()/lower().
+
+Key Concepts:
+• Strings are immutable: methods like upper() return a new string.
+• Case conversion affects only cased letters; other characters are preserved.
+• The result is a normal str that can be stored, printed, or compared.
+
+Key Distinctions:
+• upper() vs lower(): upper makes letters uppercase; lower makes them lowercase.
+• upper() vs title(): title() capitalizes word starts; upper() capitalizes every cased letter.
+• upper() vs casefold(): casefold() is designed for caseless matching across languages; upper() is mainly for display/normalization.
+
+How It Works:
+• Python walks the string and applies Unicode uppercase mapping to each character.
+• A new string object is constructed from the converted characters.
+• The original "hello" remains unchanged.
+
+Step-by-Step Execution:
+1. Evaluate the string literal "hello".
+2. Look up the bound method upper on that string object.
+3. Call upper() with no arguments.
+4. Convert each character: 'h'→'H', 'e'→'E', 'l'→'L', 'l'→'L', 'o'→'O'.
+5. Return the new string "HELLO".
+
+Order of Operations:
+• The string literal is evaluated first.
+• Then the attribute lookup for .upper happens.
+• Then the method call executes and returns a value.
+
+Common Use Cases:
+• Normalizing input before comparison (when you control the character set).
+• Producing display text (headers, labels).
+• Implementing simple, case-insensitive checks (paired with .lower() or .upper()).
+
+Edge Cases:
+• Some Unicode characters have special casing rules; results can be surprising in certain locales/languages.
+• Empty string: "".upper() returns "".
+• Digits/punctuation are unchanged: "hi!2".upper() → "HI!2".
+
+Performance Considerations:
+• upper() is O(n) in the length of the string because each character is visited.
+• For short strings like "hello", the cost is negligible.
+
+Examples:
+• "hello".upper()        # "HELLO"
+• "Hello World!".upper() # "HELLO WORLD!"
+• "".upper()             # ""
+
+Notes:
+• If you need robust case-insensitive matching across languages, prefer s.casefold() for comparisons.`
       };
     },
    (_i: number) => {
@@ -5571,7 +5634,72 @@ Notes:
       o: ["True", "False", "Error", "None"],
       c: 1,
       e: "isupper() checks if all characters are uppercase.",
-      de: 'The isupper() method returns True if all alphabetic characters in the string are uppercase and there is at least one alphabetic character. It returns False otherwise. Non-alphabetic characters are ignored in the check.\n\nisupper() method:\n• "hello".isupper() = False (has lowercase characters)\n• Returns boolean (True/False)\n• Ignores non-alphabetic characters\n• Requires at least one alphabetic character\n\nHow it works:\n• Checks if all \'A\'-\'Z\' characters exist (uppercase)\n• Ignores numbers, symbols, spaces\n• Returns False if no alphabetic characters\n• Returns False if any \'a\'-\'z\' exists\n\nExamples:\n• "hello".isupper() = False (has lowercase)\n• "HELLO".isupper() = True (all uppercase)\n• "HELLO123".isupper() = True (numbers ignored)\n• "123".isupper() = False (no alphabetic characters)\n• "".isupper() = False (empty string)\n\nEdge cases:\n• "HELLO world".isupper() = False (has lowercase)\n• "123".isupper() = False (no letters)\n• "HELLO!".isupper() = True (symbols ignored)\n\nCommon uses:\n• Validation: check if string is all uppercase\n• Input validation\n• Format checking (e.g., acronyms)\n• Data validation\n\nBest practice:\n• Use for validation checks\n• Combine with .upper() for normalization\n• Remember: requires at least one letter\n\nExample: "hello".isupper() returns False because the string contains lowercase characters.'
+      de: `The isupper() method returns True only if all cased letters in the string are uppercase and there is at least one cased letter. Since "hello" contains lowercase letters, the result is False.
+
+Beginner:
+• isupper() asks: “Are the letters uppercase?”
+• "hello" is lowercase, so it’s not uppercase.
+• Result: False.
+
+Intermediate:
+• isupper() ignores non-letter characters, but it still requires at least one letter.
+• It returns True only if every cased letter is uppercase.
+• Because "hello" has lowercase letters, it returns False.
+
+Expert:
+• isupper() is Unicode-aware: it uses Unicode character properties to decide what counts as cased and uppercase.
+• A string like "123" returns False because it has no cased letters, even though there are no lowercase letters either.
+
+Key Concepts:
+• Predicate method: isupper() returns a boolean.
+• “All uppercase” means: all cased letters are uppercase AND at least one cased letter exists.
+• Non-cased characters (digits, punctuation) don’t make it fail.
+
+Key Distinctions:
+• isupper() vs upper(): isupper() checks; upper() transforms and returns a new string.
+• isupper() vs islower(): opposite casing test.
+• "HELLO123".isupper() can be True, but "123".isupper() is False (no letters).
+
+How It Works:
+• Python scans the string, classifying characters as cased/uncased.
+• If it finds a lowercase cased letter, it returns False.
+• If it finds no cased letters at all, it returns False.
+
+Step-by-Step Execution:
+1. Evaluate the string literal "hello".
+2. Call the bound method isupper().
+3. Inspect characters: 'h', 'e', 'l', 'l', 'o' are cased letters and they are lowercase.
+4. Since a cased letter is not uppercase, conclude “not all uppercase”.
+5. Return False.
+
+Order of Operations:
+• Evaluate the string literal first.
+• Then execute the method call .isupper().
+• Produce the boolean result.
+
+Common Use Cases:
+• Validating that an input is an “all caps” code (e.g., "ABC123").
+• Checking formatting rules for acronyms or identifiers.
+• Guard clauses: if not s.isupper(): ...
+
+Edge Cases:
+• "" (empty string) → False (no cased letters).
+• "123" → False (no cased letters).
+• "HELLO!" → True (punctuation ignored).
+• Mixed case: "HeLLo" → False.
+
+Performance Considerations:
+• isupper() is O(n) in string length; it may stop early when it finds a failing lowercase letter.
+• For short strings, the overhead is negligible.
+
+Examples:
+• "hello".isupper()      # False
+• "HELLO".isupper()      # True
+• "HELLO123".isupper()   # True
+• "123".isupper()        # False
+
+Notes:
+• If your definition of “uppercase” should treat no-letter strings as valid, implement that custom rule instead of using isupper() directly.`
      };
    },
    (_i: number) => {
@@ -5580,7 +5708,72 @@ Notes:
       o: ["True", "False", "Error", "None"],
       c: 1,
       e: "istitle() checks if string is titlecased.",
-      de: 'The istitle() method returns True if the string is in title case (each word starts with an uppercase letter and the rest are lowercase). It returns False otherwise. A string is titlecased if uppercase characters may only follow uncased characters and lowercase characters may only follow cased characters.\n\nistitle() method:\n• "hello".istitle() = False (not title case - all lowercase)\n• Returns boolean (True/False)\n• Checks if each word starts with uppercase\n• Rest of each word must be lowercase\n\nHow it works:\n• Checks if first letter of each word is uppercase\n• Checks if rest of each word is lowercase\n• Word boundaries are whitespace or non-alphabetic\n• Returns False if any word doesn\'t match\n\nExamples:\n• "hello".istitle() = False (all lowercase)\n• "Hello world".istitle() = False ("world" not capitalized)\n• "HELLO WORLD".istitle() = False (all uppercase)\n• "Hello-World".istitle() = True\n• "123 Hello".istitle() = True\n\nEdge cases:\n• "".istitle() = False (empty string)\n• "Hello123".istitle() = True\n• "Hello WORLD".istitle() = False\n\nCommon uses:\n• Validation: check if string is properly titlecased\n• Format validation\n• Title checking\n• Data validation\n\nBest practice:\n• Use for title format validation\n• Combine with .title() for formatting\n• Understand word boundaries\n\nExample: "hello".istitle() returns False because the string is not in title case (all lowercase).'
+      de: `The istitle() method returns True if the string is in “title case”: each word starts with an uppercase letter and the rest of the letters in that word are lowercase. Since "hello" starts with a lowercase 'h', it is not title-cased, so the result is False.
+
+Beginner:
+• Title case looks like "Hello" (first letter uppercase).
+• "hello" starts with a lowercase letter.
+• So "hello".istitle() is False.
+
+Intermediate:
+• istitle() checks each word: the first cased character must be uppercase, and the remaining cased characters must be lowercase.
+• Word boundaries are determined by uncased characters like spaces, punctuation, or digits.
+• Because the first character 'h' is lowercase, the title-case rule fails.
+
+Expert:
+• istitle() is Unicode-aware and uses character categories (cased/uncased), not just ASCII.
+• Hyphens and punctuation can split words (e.g., "Hello-World" may be title-cased).
+• Empty strings or strings with no letters return False.
+
+Key Concepts:
+• Predicate method: istitle() returns True/False.
+• Title case is a word-level casing pattern.
+• Boundaries matter: punctuation/digits can separate words.
+
+Key Distinctions:
+• istitle() vs title(): istitle() checks; title() transforms.
+• istitle() vs isupper(): title case is not “all caps”.
+• "Hello World".istitle() can be True, but "HELLO WORLD".istitle() is False.
+
+How It Works:
+• Python scans the string and identifies word segments separated by uncased characters.
+• For each word, it requires uppercase for the first cased letter and lowercase for subsequent cased letters.
+• Any violation returns False.
+
+Step-by-Step Execution:
+1. Evaluate the string literal "hello".
+2. Call .istitle().
+3. The first cased letter is 'h' and it is lowercase.
+4. The title-case requirement is violated immediately.
+5. Return False.
+
+Order of Operations:
+• Evaluate the string literal.
+• Execute the method call and compute the boolean.
+
+Common Use Cases:
+• Validating headings or names that must follow a title-case convention.
+• Flagging inconsistent casing in imported data.
+• Guard checks before display formatting.
+
+Edge Cases:
+• "" → False (no cased letters).
+• "Hello-World" → True (hyphen splits words).
+• "123 Hello" → True (digits are uncased; "Hello" satisfies title-case).
+• "Hello world" → False ("world" starts lowercase).
+
+Performance Considerations:
+• istitle() is O(n) in string length and may exit early when it detects a violation.
+
+Examples:
+• "hello".istitle()          # False
+• "Hello".istitle()          # True
+• "Hello World".istitle()    # True
+• "Hello world".istitle()    # False
+• "Hello-World".istitle()    # True
+
+Notes:
+• title case rules are algorithmic; human name/title casing can be more nuanced than istitle() captures.`
      };
    },
    (_i: number) => {
@@ -5589,7 +5782,69 @@ Notes:
       o: ["hello", "Error", "None", "False"],
       c: 0,
       e: "casefold() returns casefolded string for caseless matching.",
-      de: 'The casefold() method returns a casefolded copy of the string. Casefolding is similar to lowercasing but more aggressive - it\'s designed for caseless matching. It converts all characters to lowercase and handles special Unicode characters correctly.\n\ncasefold() method:\n• "HELLO".casefold() = "hello"\n• More aggressive than .lower()\n• Handles Unicode special cases\n• Returns new string for caseless matching\n\nHow it works:\n• Similar to .lower() but more aggressive\n• Handles special Unicode characters\n• Converts to lowercase for comparison\n• Better for internationalization\n\nExamples:\n• "HELLO".casefold() = "hello"\n• "HELLO WORLD".casefold() = "hello world"\n• "ß".casefold() = "ss" (special Unicode handling)\n• "Hello".casefold() = "hello"\n\nDifference from .lower():\n• Most cases: same as .lower()\n• Unicode: handles special characters better\n• German ß → ss (casefold), ß (lower)\n• Better for caseless matching\n\nCommon uses:\n• Caseless string comparison\n• Internationalization (i18n)\n• Unicode-aware matching\n• Better than .lower() for some languages\n\nBest practice:\n• Use for caseless matching (recommended)\n• Better than .lower() for Unicode\n• Use .lower() for display formatting\n• Prefer over .lower() for comparisons\n\nExample: "HELLO".casefold() returns "hello". For most English strings, it\'s similar to .lower(), but it handles Unicode special characters better for international caseless matching.'
+      de: `The casefold() method returns a “case-folded” copy of the string for caseless comparisons. For plain ASCII text, it behaves much like lower(), so "HELLO".casefold() becomes "hello".
+
+Beginner:
+• casefold() makes text lowercase for matching.
+• "HELLO" becomes "hello".
+• Result: "hello".
+
+Intermediate:
+• casefold() is designed for case-insensitive comparisons across languages.
+• It returns a new string (strings are immutable).
+• For normal English letters, casefold() and lower() often produce the same output.
+
+Expert:
+• casefold() can change certain Unicode characters in a way that lower() does not (e.g., German ß may become "ss").
+• This makes it a better choice when you need true caseless equality checks across many scripts.
+
+Key Concepts:
+• casefold() is a normalization step for case-insensitive matching.
+• It returns a new str; the original string is unchanged.
+• Unicode matters: casefolding is not always a simple “to lowercase” mapping.
+
+Key Distinctions:
+• casefold() vs lower(): casefold() is more aggressive and intended for comparisons.
+• casefold() vs upper(): upper() is typically for display; casefold() is for matching.
+• Transforming vs checking: casefold() transforms; methods like islower()/isupper() check.
+
+How It Works:
+• Python applies Unicode case-folding rules to each character.
+• The output string is built from the folded characters.
+• For "HELLO", the folded characters are 'h', 'e', 'l', 'l', 'o'.
+
+Step-by-Step Execution:
+1. Evaluate "HELLO".
+2. Call .casefold().
+3. Apply case-folding to each character.
+4. Construct and return "hello".
+
+Order of Operations:
+• The string literal is evaluated first.
+• Then the method call executes and returns its result.
+
+Common Use Cases:
+• Case-insensitive equality checks: a.casefold() == b.casefold().
+• Normalizing user input before lookup (usernames, tags, keys).
+• Comparing text from different locales where simple lowercasing is insufficient.
+
+Edge Cases:
+• Some Unicode characters expand into multiple characters when casefolded (e.g., "ß" → "ss").
+• Empty string: "".casefold() → "".
+• For ASCII-only data, lower() and casefold() may be equivalent.
+
+Performance Considerations:
+• casefold() is O(n) in the string length.
+• It can allocate a larger result if characters expand (rare in beginner strings).
+
+Examples:
+• "HELLO".casefold()        # "hello"
+• "Hello".casefold()        # "hello"
+• "ß".casefold()            # "ss"
+• "CAFÉ".casefold()         # "café"
+
+Notes:
+• For reliable case-insensitive comparisons, prefer casefold() over lower().`
      };
    },
    (_i: number) => {
@@ -5598,7 +5853,71 @@ Notes:
       o: ["True", "False", "Error", "None"],
       c: 1,
       e: "isascii() checks if all characters are ASCII.",
-      de: 'The isascii() method returns True if all characters in the string are ASCII characters. ASCII characters have codes in the range 0-127. This is useful for checking if a string contains only standard ASCII characters without Unicode or extended characters.\n\nisascii() method:\n• "café".isascii() = False (contains é which is non-ASCII)\n• Returns boolean (True/False)\n• Checks if all characters are ASCII (0-127)\n• ASCII = American Standard Code for Information Interchange\n\nASCII range:\n• Characters with codes 0-127\n• Includes letters (a-z, A-Z), digits (0-9)\n• Includes punctuation, spaces, control characters\n• No extended Unicode characters\n\nExamples:\n• "café".isascii() = False (é is non-ASCII)\n• "Hello123!".isascii() = True\n• "Hello 世界".isascii() = False (contains Chinese)\n• "Hello café".isascii() = False (contains é)\n• "".isascii() = True (empty string is ASCII)\n\nCommon ASCII characters:\n• Letters: a-z, A-Z\n• Digits: 0-9\n• Punctuation: !@#$%^&*()\n• Spaces, tabs, newlines\n• Control characters\n\nNon-ASCII characters:\n• Unicode characters: é, ñ, ü, 世界\n• Extended Latin: à, è, ì, ò, ù\n• Emojis: 😀, ❤️\n• Non-Latin scripts: 中文, العربية\n\nCommon uses:\n• Validation: ensure ASCII-only strings\n• Compatibility checking\n• Legacy system integration\n• Network protocols (some require ASCII)\n\nBest practice:\n• Use when you need ASCII-only strings\n• Check before encoding/transmission\n• Be aware of Unicode support\n\nExample: "café".isascii() returns False because the character é is not in the ASCII range (0-127).'
+      de: `The isascii() method returns True only if every character in the string is an ASCII character (code point 0–127). The string "café" contains "é", which is not ASCII, so the result is False.
+
+Beginner:
+• ASCII is a small set of basic characters.
+• "é" is an accented letter, not basic ASCII.
+• So "café".isascii() is False.
+
+Intermediate:
+• isascii() checks each character and verifies its code point is in the range 0–127.
+• It returns a boolean and does not modify the string.
+• Because "é" has a code point above 127, the test fails.
+
+Expert:
+• ASCII is a 7-bit character set; Unicode includes ASCII plus many more characters.
+• This method helps when working with systems that only accept ASCII (legacy protocols, strict identifiers).
+• Beware look-alikes: some characters are not ASCII even if they resemble ASCII letters.
+
+Key Concepts:
+• Predicate method returning True/False.
+• ASCII range is 0–127.
+• Any non-ASCII character makes the result False.
+
+Key Distinctions:
+• isascii() vs isalpha(): isalpha() checks “is a letter”; isascii() checks “is within ASCII range”.
+• isascii() vs encode('ascii'): encoding would raise an error for non-ASCII unless configured; isascii() just returns False.
+• Unicode strings can contain ASCII; ASCII is a subset of Unicode.
+
+How It Works:
+• Python scans the string and checks the code point of each character.
+• If any character is outside 0–127, it returns False immediately.
+• Otherwise, it returns True after checking all characters.
+
+Step-by-Step Execution:
+1. Evaluate the string literal "café".
+2. Call .isascii().
+3. Check 'c', 'a', 'f' (all ASCII).
+4. Check 'é' (non-ASCII) → fail.
+5. Return False.
+
+Order of Operations:
+• Evaluate the string literal first.
+• Then the method call executes and returns a boolean.
+
+Common Use Cases:
+• Validating identifiers that must be ASCII-only.
+• Filtering/sanitizing input for legacy systems.
+• Checking whether encoding to ASCII will be safe.
+
+Edge Cases:
+• "" (empty string) → True (no non-ASCII characters exist).
+• "Hello123!" → True (all ASCII).
+• "Hello 世界" → False (contains non-ASCII characters).
+
+Performance Considerations:
+• isascii() is O(n) and may stop early on the first non-ASCII character.
+• For short strings, the cost is negligible.
+
+Examples:
+• "café".isascii()       # False
+• "cafe".isascii()       # True
+• "".isascii()           # True
+• "Hello123!".isascii()  # True
+
+Notes:
+• If you need ASCII-only output from user text, you’ll need a separate normalization/transliteration strategy (app-specific).`
      };
      },
 
