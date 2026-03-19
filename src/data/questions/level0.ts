@@ -18,51 +18,7 @@ Intermediate:
 
 Expert:
 • type(x) returns the class object; for 0 that's int. type(0) == int is True.
-• The display <class 'int'> is the string representation of the type object.
-
-Key Concepts:
-• Integers represent whole-number quantities (no fractional part).
-• Every literal like 0, 1, -5 is an instance of the built-in int type.
-
-Key Distinctions:
-• int vs float: 0 is int, 0.0 is float even though 0 == 0.0.
-• int vs str: "0" is text, 0 is a numeric value you can do math with.
-
-How It Works:
-• When Python reads the literal 0, it parses it as an integer object.
-• type(0) asks the runtime for the underlying class of that object (int).
-
-Step-by-Step Execution:
-1. Python evaluates the literal 0 and creates (or reuses) an int object.
-2. type(0) is called with that object as its argument.
-3. type() returns the class int.
-4. The REPL prints this as <class 'int'>.
-
-Order of Operations:
-• Literals are constructed first, then type() is applied to the result.
-• There are no operators here, just a function call around a literal.
-
-Common Use Cases:
-• Quickly checking what kind of value you are working with in the REPL.
-• Teaching beginners the difference between numbers and strings.
-
-Edge Cases:
-• Very large integers are still type int; Python automatically handles big values.
-• bool is a subclass of int, but type(True) is bool, not int.
-
-Performance Considerations:
-• Calling type() on a literal like 0 is effectively free at beginner scale.
-• Creating and inspecting small ints is heavily optimized by CPython.
-
-Examples:
-• type(0)          # <class 'int'>
-• type(-10)        # <class 'int'>
-• type(0.0)        # <class 'float'>
-• type("0")        # <class 'str'>
-
-Notes:
-• Use isinstance(x, int) when you want to allow int subclasses like bool.
-• Remember that <class 'int'> is just the string representation of the int type.`),
+• The display <class 'int'> is the string representation of the type object.`),
   mk("What is type(1)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "1 is an integer.", `type(1) returns <class 'int'>.
 
 Beginner:
@@ -74,50 +30,7 @@ Intermediate:
 • type() tells you what kind of value you have so you can use it correctly.
 
 Expert:
-• int is a built-in type; type(1) is the same object as int. In arithmetic, True behaves like 1 (bool is a subclass of int).
-
-Key Concepts:
-• Integer literals like 1, 2, 3 are all instances of int.
-• The type() function reveals the class behind any Python object.
-
-Key Distinctions:
-• 1 is an int, while 1.0 is a float and "1" is a string.
-• Arithmetic with ints stays exact; floats can introduce rounding error.
-
-How It Works:
-• Python parses 1 as an integer object.
-• type(1) returns the int class that defines integer behavior.
-
-Step-by-Step Execution:
-1. Evaluate the literal 1 → an int object.
-2. Call type(1).
-3. type() looks up the object's class and returns int.
-4. The interactive shell prints <class 'int'> to represent that type.
-
-Order of Operations:
-• As with 0, there are no operators to sequence; the literal is created, then passed into type().
-
-Common Use Cases:
-• Verifying that numeric input has been parsed as an int and not as a string.
-• Demonstrating that small integer literals all share the same underlying type.
-
-Edge Cases:
-• In CPython, many small ints like 1 are interned (cached), but this is an implementation detail.
-• bool values behave like 1 and 0 in arithmetic, even though their type is bool.
-
-Performance Considerations:
-• Using integer literals and checking their type is extremely cheap and common.
-• int operations are generally faster and more predictable than float math.
-
-Examples:
-• type(1)          # <class 'int'>
-• type(2)          # <class 'int'>
-• type(1.0)        # <class 'float'>
-• type("1")        # <class 'str'>
-
-Notes:
-• You almost never need to call int(1); it is already an int.
-• Type checks like this are mainly for learning and quick debugging in simple scripts.`),
+• int is a built-in type; type(1) is the same object as int. In arithmetic, True behaves like 1 (bool is a subclass of int).`),
   mk("What is type(-5)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "Negative whole numbers are int.", `Negative integers are still type int.
 
 Beginner:
@@ -129,52 +42,7 @@ Intermediate:
 • Only the presence of a decimal point (e.g. -5.0) makes a value a float.
 
 Expert:
-• type(-5) returns int. For type checking, use isinstance(x, int) if you want to include subclasses (e.g. bool).
-
-Key Concepts:
-• The minus sign does not change the underlying type: -5 is still an int.
-• Integers model both positive and negative whole-number quantities.
-
-Key Distinctions:
-• -5 vs -5.0: same mathematical value, different types (int vs float).
-• -5 vs "-5": numeric vs textual representation.
-
-How It Works:
-• Python parses the literal -5 as applying the unary minus operator to 5.
-• The result of that expression is still an int object.
-• type(-5) inspects that resulting object and returns int.
-
-Step-by-Step Execution:
-1. Python reads -5 as the expression unary-minus applied to 5.
-2. It builds the int 5, then applies the negation to produce -5.
-3. type(-5) receives that int object.
-4. type() returns the int class.
-
-Order of Operations:
-• The literal 5 is constructed first, then the unary minus is applied.
-• Finally, type() is called on the evaluated numeric result.
-
-Common Use Cases:
-• Representing debts, temperatures below zero, or offsets to the left.
-• Teaching that signs affect value, not the underlying numeric type.
-
-Edge Cases:
-• Very large negative integers are still int; there is no separate negative type.
-• Expressions like -True evaluate to -1 because bool subclasses int.
-
-Performance Considerations:
-• Negating an int and checking its type are both constant-time operations.
-• Negative ints are handled as efficiently as positive ones.
-
-Examples:
-• type(-5)         # <class 'int'>
-• type(-1)         # <class 'int'>
-• type(-5.0)       # <class 'float'>
-• type("-5")       # <class 'str'>
-
-Notes:
-• Remember that the sign is part of the value, not the type.
-• Use isinstance(x, int) to accept both positive and negative whole numbers.`),
+• type(-5) returns int. For type checking, use isinstance(x, int) if you want to include subclasses (e.g. bool).`),
   mk("What is type(3.0)?", ["<class 'float'>", "<class 'int'>", "<class 'str'>", "None"], 0, "Numbers with a decimal point are float.", `Numbers with a decimal point are floats.
 
 Beginner:
@@ -186,51 +54,7 @@ Intermediate:
 • Division (/) always produces a float in Python 3, so 6 / 2 gives 3.0.
 
 Expert:
-• float implements IEEE 754 floating-point; type(3.0) is float. For exact decimal arithmetic, see the decimal module.
-
-Key Concepts:
-• A decimal point in a numeric literal produces a float value.
-• Floats represent real numbers with a fractional part using binary approximation.
-
-Key Distinctions:
-• 3 (int) vs 3.0 (float): same equality, different type and internal storage.
-• Floats can represent fractions like 0.5 that ints cannot store directly.
-
-How It Works:
-• When Python sees 3.0, it constructs a float object.
-• type(3.0) returns the float class that defines operations like division with fractions.
-
-Step-by-Step Execution:
-1. The literal 3.0 is parsed as a floating-point value.
-2. Python creates a float object representing approximately three.
-3. type(3.0) is called with that float.
-4. type() returns <class 'float'>.
-
-Order of Operations:
-• Literal evaluation (3.0) happens first, then type() inspects the result.
-• In expressions, arithmetic and other operators would run before type() is applied.
-
-Common Use Cases:
-• Representing measurements like 3.5 meters, prices like 3.99, or probabilities.
-• Results of division and many math functions naturally produce floats.
-
-Edge Cases:
-• Some decimals (like 0.1) cannot be represented exactly as binary floats.
-• Comparisons like 0.1 + 0.2 == 0.3 can be False due to rounding.
-
-Performance Considerations:
-• Float arithmetic is slightly slower and more complex than pure integer math.
-• For heavy numeric work, using floats is standard; for exact money, use decimal.
-
-Examples:
-• type(3.0)        # <class 'float'>
-• type(3)          # <class 'int'>
-• type(1.5)        # <class 'float'>
-• type(0.0)        # <class 'float'>
-
-Notes:
-• Use round() or decimal.Decimal when you need user-friendly decimal results.
-• Understanding float behavior early helps avoid surprise rounding bugs later.`),
+• float implements IEEE 754 floating-point; type(3.0) is float. For exact decimal arithmetic, see the decimal module.`),
   mk("What is type(0.0)?", ["<class 'float'>", "<class 'int'>", "<class 'str'>", "None"], 0, "0.0 is a float.", `0.0 is a float because of the decimal point.
 
 Beginner:
@@ -242,51 +66,7 @@ Intermediate:
 • In Python 3, 0 == 0.0 is True (value equality), but type(0) != type(0.0).
 
 Expert:
-• type(0.0) is float. For type-sensitive code, 0 and 0.0 can behave differently (e.g. in type hints or isinstance checks).
-
-Key Concepts:
-• Adding a decimal point changes the type from int to float, even for zero.
-• Floats represent numeric values with potential fractional parts, including 0.0.
-
-Key Distinctions:
-• 0 vs 0.0: equal in value, different in type and representation.
-• 0.0 vs "0.0": numeric zero vs a textual string.
-
-How It Works:
-• Python parses 0.0 as a floating-point literal.
-• type(0.0) inspects the resulting object and reports float.
-
-Step-by-Step Execution:
-1. Python reads the literal 0.0 and allocates a float object for it.
-2. type(0.0) is called with that float as the argument.
-3. type() returns <class 'float'>.
-4. The shell prints the type information.
-
-Order of Operations:
-• The literal is created first; there are no additional operators here.
-• In more complex expressions, arithmetic would execute before type() is applied.
-
-Common Use Cases:
-• Writing code that always uses floats for numeric calculations, even for zero.
-• Initializing variables that will later hold non-zero float values (e.g. running totals).
-
-Edge Cases:
-• 0.0 compares equal to 0, but isinstance(0.0, int) is False.
-• When formatting output, 0.0 may display as 0.0 or 0 depending on formatting rules.
-
-Performance Considerations:
-• Using 0.0 instead of 0 has negligible cost, but can clarify intent (float math).
-• Consistency (always using floats in certain parts of the code) can make logic simpler.
-
-Examples:
-• type(0.0)        # <class 'float'>
-• type(0)          # <class 'int'>
-• 0 == 0.0         # True
-• isinstance(0.0, float)  # True
-
-Notes:
-• Prefer 0.0 when you know a variable represents a float quantity, even if it starts at zero.
-• Keep in mind that mixing ints and floats in expressions generally produces floats.`),
+• type(0.0) is float. For type-sensitive code, 0 and 0.0 can behave differently (e.g. in type hints or isinstance checks).`),
   mk("What is type('')?", ["<class 'str'>", "<class 'list'>", "<class 'NoneType'>", "None"], 0, "Empty quotes make a string.", `The empty string is still a string.
 
 Beginner:
@@ -298,50 +78,7 @@ Intermediate:
 • len('') is 0; bool('') is False (empty strings are falsy).
 
 Expert:
-• type('') is str. The empty string is a singleton-like object used to represent "no text"; it's not None (which has type NoneType).
-
-Key Concepts:
-• The empty string '' is a valid str with length zero; it still has type str.
-• type('') returns the str class; '' is the identity for string concatenation.
-
-Key Distinctions:
-• '' vs None: '' is a string meaning "no characters"; None means "no value."
-• '' vs " ": the first has zero characters, the second has one (a space).
-
-How It Works:
-• Python parses '' as a string literal with no characters between the quotes.
-• type('') inspects that object and returns str.
-
-Step-by-Step Execution:
-1. The literal '' is evaluated, producing the empty string object.
-2. type('') is called with that object.
-3. type() returns <class 'str'>.
-4. The REPL displays the type.
-
-Order of Operations:
-• Literal '' is created first; then type() is applied. No other operators.
-
-Common Use Cases:
-• Default or placeholder text; identity for join/concatenation ('' + s == s).
-• Representing "no input" or "empty result" when a string is expected.
-
-Edge Cases:
-• len('') is 0; bool('') is False (falsy). '' is not None.
-• '' in '' is True; every string contains the empty string.
-
-Performance Considerations:
-• The empty string is often interned; creating '' is very cheap.
-• Using '' as a default or sentinel is idiomatic and fast.
-
-Examples:
-• type('')          # <class 'str'>
-• len('')           # 0
-• '' + 'hi'         # 'hi'
-• bool('')          # False
-
-Notes:
-• Prefer '' over None when the semantic meaning is "no text" rather than "missing value."
-• '' is the only string that is falsy in a boolean context.`),
+• type('') is str. The empty string is a singleton-like object used to represent "no text"; it's not None (which has type NoneType).`),
   mk("What is type('a')?", ["<class 'str'>", "<class 'int'>", "<class 'char'>", "None"], 0, "Single characters are strings in Python.", `Python has no separate character type; single characters are strings.
 
 Beginner:
@@ -353,49 +90,7 @@ Intermediate:
 • Indexing a string returns a string: 'hello'[0] is 'h' (a str), not a separate char type.
 
 Expert:
-• Python's str is a sequence of Unicode code points. type('a') is str; there is no char. For bytes, use bytes or bytearray.
-
-Key Concepts:
-• In Python there is no separate character type; a single character is a str of length 1.
-• type('a') returns str; indexing a string also returns str (e.g. 'hello'[0] is 'h').
-
-Key Distinctions:
-• 'a' (str) vs C/Java char: Python uses one-character strings instead of a char type.
-• 'a' vs b'a': the first is Unicode text, the second is a bytes object (integer 97).
-
-How It Works:
-• The literal 'a' is parsed as a string of one character.
-• type('a') returns the str class.
-
-Step-by-Step Execution:
-1. Python reads 'a' and creates a one-character string.
-2. type('a') is called.
-3. type() returns <class 'str'>.
-4. The shell prints the type.
-
-Order of Operations:
-• The literal is evaluated first; type() is then applied. No other operators.
-
-Common Use Cases:
-• Storing single characters (e.g. from user input or indexing into a string).
-• Building strings character by character or checking single-character values.
-
-Edge Cases:
-• len('a') is 1. Some Unicode "characters" may take multiple code points (e.g. emoji).
-• type('a') is the same as type('hello')—both are str.
-
-Performance Considerations:
-• Single-character strings are common and well optimized.
-• For bulk byte-level work, bytes or bytearray may be more appropriate.
-
-Examples:
-• type('a')        # <class 'str'>
-• type('hello'[0]) # <class 'str'>
-• len('a')         # 1
-• ord('a')         # 97
-
-Notes:
-• There is no char type; use a one-character str. For raw bytes, use bytes or bytearray.`),
+• Python's str is a sequence of Unicode code points. type('a') is str; there is no char. For bytes, use bytes or bytearray.`),
   mk("What is type(True)?", ["<class 'bool'>", "<class 'int'>", "<class 'str'>", "None"], 0, "True is a boolean.", `True is a boolean value.
 
 Beginner:
@@ -407,49 +102,7 @@ Intermediate:
 • Use booleans in conditions: if x:, while flag:, etc.
 
 Expert:
-• type(True) is bool; isinstance(True, int) is True. For identity, True is True. There is only one True and one False object.
-
-Key Concepts:
-• True is one of two boolean literals (True and False); type(True) is bool.
-• Booleans represent truth values; they are used in conditions and logic.
-
-Key Distinctions:
-• True (bool) vs 1 (int): same truth value, different type. bool is a subclass of int.
-• True vs "True": the first is a boolean, the second is a string.
-
-How It Works:
-• Python recognizes True as the boolean true value.
-• type(True) returns the bool class.
-
-Step-by-Step Execution:
-1. The literal True is evaluated (singleton bool object).
-2. type(True) is called.
-3. type() returns <class 'bool'>.
-4. The REPL displays the type.
-
-Order of Operations:
-• Literal True is evaluated first; then type() is applied.
-
-Common Use Cases:
-• Conditions: if flag:, while True:, return True for success.
-• Boolean logic: and, or, not combine bool values.
-
-Edge Cases:
-• True + True is 2 because bool is a subclass of int (True is 1, False is 0).
-• There is only one True object; True is True is always True.
-
-Performance Considerations:
-• Using True/False in conditions is fundamental and very fast.
-• Prefer "if x:" over "if x == True:" for clarity and flexibility.
-
-Examples:
-• type(True)       # <class 'bool'>
-• True + True      # 2
-• isinstance(True, int)  # True
-• True is True     # True
-
-Notes:
-• Use "is True" only when you need to distinguish True from other truthy values.`),
+• type(True) is bool; isinstance(True, int) is True. For identity, True is True. There is only one True and one False object.`),
   mk("What is type(False)?", ["<class 'bool'>", "<class 'int'>", "<class 'str'>", "None"], 0, "False is a boolean.", `False is a boolean value.
 
 Beginner:
@@ -461,49 +114,7 @@ Intermediate:
 • Empty collections and zero are "falsy"; bool(0) and bool('') are False.
 
 Expert:
-• type(False) is bool. Use "is False" for identity checks rather than == when you specifically mean the boolean False.
-
-Key Concepts:
-• False is one of two boolean literals; type(False) is bool.
-• False represents "no" or "off" in logic; it is falsy in conditions.
-
-Key Distinctions:
-• False (bool) vs 0 (int): both are falsy; False has type bool, 0 has type int.
-• False vs None: both are falsy; False is bool, None is NoneType.
-
-How It Works:
-• Python recognizes False as the boolean false value.
-• type(False) returns the bool class.
-
-Step-by-Step Execution:
-1. The literal False is evaluated (singleton bool object).
-2. type(False) is called.
-3. type() returns <class 'bool'>.
-4. The shell prints the type.
-
-Order of Operations:
-• The literal False is evaluated first; then type() is applied.
-
-Common Use Cases:
-• Conditions: if not flag:, while not done:, return False for failure.
-• Default or initial state for flags and switches.
-
-Edge Cases:
-• False + False is 0; False * 10 is 0 (bool subclasses int).
-• Empty collections and 0 are also falsy; use "is False" only when you need the exact boolean.
-
-Performance Considerations:
-• Using False is as cheap as True; both are singletons.
-• Prefer "if not x:" over "if x == False:" for idiomatic Python.
-
-Examples:
-• type(False)      # <class 'bool'>
-• False + False    # 0
-• bool('')         # False
-• False is False   # True
-
-Notes:
-• Use "is False" when you need to distinguish False from 0 or other falsy values.`),
+• type(False) is bool. Use "is False" for identity checks rather than == when you specifically mean the boolean False.`),
   mk("What is type(None)?", ["<class 'NoneType'>", "<class 'null'>", "<class 'str'>", "None"], 0, "None has type NoneType.", `None represents "no value"; its type is NoneType.
 
 Beginner:
@@ -515,50 +126,7 @@ Intermediate:
 • Use "x is None" to check for None (preferred over x == None).
 
 Expert:
-• None is a singleton; there is only one None object. type(None) is NoneType. Use identity (is None) for checks to avoid custom __eq__ behavior.
-
-Key Concepts:
-• None means "no value" or "absent"; it has its own type, NoneType.
-• There is exactly one None object in the entire program; type(None) is NoneType.
-
-Key Distinctions:
-• None vs 0 or False: None is not a number or boolean; it is its own type.
-• None vs "": None means "no value"; "" means "empty string."
-
-How It Works:
-• Python provides None as a built-in singleton.
-• type(None) returns the NoneType class (the type of the None object).
-
-Step-by-Step Execution:
-1. The name None is resolved to the singleton None object.
-2. type(None) is called.
-3. type() returns <class 'NoneType'>.
-4. The REPL displays the type.
-
-Order of Operations:
-• None is a literal-like name; type(None) then inspects it. No arithmetic.
-
-Common Use Cases:
-• Default return value for functions that don't explicitly return.
-• Optional values: "no result yet," "not found," "unset."
-• Sentinel for "missing" or "not applicable."
-
-Edge Cases:
-• None is falsy; bool(None) is False. None == None is True, but prefer "x is None."
-• Python has no "null"; use None.
-
-Performance Considerations:
-• None is a singleton; identity checks (is None) are very fast.
-• Using None as a default argument or return value is idiomatic and cheap.
-
-Examples:
-• type(None)       # <class 'NoneType'>
-• None is None     # True
-• bool(None)       # False
-• def f(): pass    # f() returns None
-
-Notes:
-• Always use "x is None" and "x is not None" for checks; avoid "x == None."`),
+• None is a singleton; there is only one None object. type(None) is NoneType. Use identity (is None) for checks to avoid custom __eq__ behavior.`),
   mk("What is type([])?", ["<class 'list'>", "<class 'tuple'>", "<class 'dict'>", "None"], 0, "Square brackets create a list.", `Square brackets create a list.
 
 Beginner:
@@ -570,49 +138,7 @@ Intermediate:
 • Lists are mutable: you can append, remove, and change elements.
 
 Expert:
-• type([]) is list. list is a built-in mutable sequence type. For immutable sequences, use tuple; for key-value storage, use dict.
-
-Key Concepts:
-• Square brackets [] create a list; type([]) is list. Lists are ordered, mutable sequences.
-• [] is the empty list; [1, 2, 3] is a list of three elements.
-
-Key Distinctions:
-• [] (list) vs () (tuple): lists are mutable, tuples are immutable.
-• [] vs {}: [] is list, {} is dict (empty set requires set()).
-
-How It Works:
-• Python parses [] as a list literal with no elements.
-• type([]) returns the list class.
-
-Step-by-Step Execution:
-1. The literal [] is evaluated, creating a new empty list object.
-2. type([]) is called with that list.
-3. type() returns <class 'list'>.
-4. The shell displays the type.
-
-Order of Operations:
-• [] is constructed first; then type() is applied.
-
-Common Use Cases:
-• Storing ordered collections of items; building lists with append, extend.
-• Default mutable container; [] is often used in loops to collect results.
-
-Edge Cases:
-• Each [] creates a new list object; [] is [] is False.
-• Lists can hold any mix of types; they are mutable (can change in place).
-
-Performance Considerations:
-• Creating an empty list is cheap. Appending is amortized O(1).
-• For fixed-size sequences, consider tuple for immutability and slightly less overhead.
-
-Examples:
-• type([])        # <class 'list'>
-• len([])         # 0
-• [] + [1]        # [1]
-• [].append(1)    # list becomes [1], returns None
-
-Notes:
-• For immutable sequences use tuple; for key-value pairs use dict.`),
+• type([]) is list. list is a built-in mutable sequence type. For immutable sequences, use tuple; for key-value storage, use dict.`),
   mk("What is type(())?", ["<class 'tuple'>", "<class 'list'>", "<class 'dict'>", "None"], 0, "Parentheses create a tuple.", `Empty parentheses create the empty tuple.
 
 Beginner:
@@ -624,49 +150,7 @@ Intermediate:
 • Tuples are immutable: you cannot add, remove, or change elements.
 
 Expert:
-• type(()) is tuple. The empty tuple () is a singleton in CPython. Tuples are hashable when their elements are hashable.
-
-Key Concepts:
-• Parentheses () create a tuple; type(()) is tuple. Tuples are ordered, immutable sequences.
-• () is the empty tuple; (1,) is a one-element tuple (comma required).
-
-Key Distinctions:
-• () (tuple) vs [] (list): tuples are immutable, lists are mutable.
-• () vs (1): () is empty tuple; (1) is just the integer 1 in parentheses.
-
-How It Works:
-• Python parses () as the empty tuple literal.
-• type(()) returns the tuple class.
-
-Step-by-Step Execution:
-1. The literal () is evaluated (in CPython, often the singleton empty tuple).
-2. type(()) is called.
-3. type() returns <class 'tuple'>.
-4. The REPL prints the type.
-
-Order of Operations:
-• () is evaluated first; then type() is applied.
-
-Common Use Cases:
-• Returning multiple values from a function; fixed-size records (e.g. (x, y)).
-• Using as dictionary keys or set elements (tuples are hashable when elements are).
-
-Edge Cases:
-• (1,) is a one-element tuple; (1) is just 1. The comma makes it a tuple.
-• Empty tuple () is hashable and can be used as a dict key.
-
-Performance Considerations:
-• Tuples are slightly more memory-efficient than lists for fixed data.
-• Immutability allows optimizations (e.g. caching, use as keys).
-
-Examples:
-• type(())        # <class 'tuple'>
-• len(())         # 0
-• (1,) + (2,)     # (1, 2)
-• () is ()        # True (CPython singleton)
-
-Notes:
-• Use (1,) not (1) for a single-element tuple. Tuples are immutable.`),
+• type(()) is tuple. The empty tuple () is a singleton in CPython. Tuples are hashable when their elements are hashable.`),
   mk("What is type({})?", ["<class 'dict'>", "<class 'set'>", "<class 'list'>", "None"], 0, "Curly braces create a dict.", `Empty curly braces create a dictionary, not a set.
 
 Beginner:
@@ -678,49 +162,7 @@ Intermediate:
 • To create an empty set, you must use set().
 
 Expert:
-• type({}) is dict. In Python 3.7+, dict preserves insertion order. For an empty set, use set() because {} is ambiguous (it's a dict).
-
-Key Concepts:
-• Curly braces {} with no content create an empty dictionary; type({}) is dict.
-• Dictionaries map keys to values; {} has no key-value pairs.
-
-Key Distinctions:
-• {} (dict) vs set(): empty braces are dict; empty set must be set().
-• {} vs {1: 2}: first is empty dict, second is dict with one pair.
-
-How It Works:
-• Python parses {} as a dict literal (empty). No colons means no key:value pairs yet.
-• type({}) returns the dict class.
-
-Step-by-Step Execution:
-1. The literal {} is evaluated, creating a new empty dict.
-2. type({}) is called.
-3. type() returns <class 'dict'>.
-4. The shell displays the type.
-
-Order of Operations:
-• {} is constructed first; then type() is applied.
-
-Common Use Cases:
-• Building mappings from keys to values; storing configuration or lookup tables.
-• Default empty dict; often used to accumulate counts or groups.
-
-Edge Cases:
-• {} is not a set; {1, 2} (no colons) is a set. Only empty {} is unambiguously dict.
-• In Python 3.7+, dicts preserve insertion order.
-
-Performance Considerations:
-• Dict creation and lookup are highly optimized (hash table).
-• Empty dict is cheap; use {} or dict() for initializing.
-
-Examples:
-• type({})        # <class 'dict'>
-• len({})         # 0
-• {} == {}        # True
-• set()           # for empty set
-
-Notes:
-• For an empty set you must use set(); {} always means empty dict.`),
+• type({}) is dict. In Python 3.7+, dict preserves insertion order. For an empty set, use set() because {} is ambiguous (it's a dict).`),
   mk("What is type(set())?", ["<class 'set'>", "<class 'dict'>", "<class 'list'>", "None"], 0, "set() creates an empty set.", `set() creates an empty set.
 
 Beginner:
@@ -732,49 +174,7 @@ Intermediate:
 • Sets are mutable; they support add, remove, and membership tests (in).
 
 Expert:
-• type(set()) is set. Sets are unordered, mutable, and require hashable elements. For a frozen set use frozenset().
-
-Key Concepts:
-• set() is the constructor for sets; type(set()) is set. Sets hold unique, unordered elements.
-• You cannot use {} for an empty set—that creates a dict. Use set() for empty set.
-
-Key Distinctions:
-• set() (set) vs {} (dict): set() gives a set; {} gives a dict.
-• set vs list: sets have no order and no duplicates; lists are ordered and can have duplicates.
-
-How It Works:
-• set() with no arguments creates a new empty set object.
-• type(set()) returns the set class.
-
-Step-by-Step Execution:
-1. set() is called, creating an empty set.
-2. type(set()) is called with that set.
-3. type() returns <class 'set'>.
-4. The REPL displays the type.
-
-Order of Operations:
-• set() is evaluated first (creates the set); then type() is applied.
-
-Common Use Cases:
-• Removing duplicates from a sequence: set([1,2,2,3]) → {1, 2, 3}.
-• Fast membership testing (in); mathematical set operations (union, intersection).
-
-Edge Cases:
-• Set elements must be hashable (no lists or dicts as set elements).
-• Empty set has no literal syntax; set() is the only way.
-
-Performance Considerations:
-• Membership in a set is O(1) on average; in a list it is O(n).
-• Use sets when you need uniqueness or fast "in" checks.
-
-Examples:
-• type(set())     # <class 'set'>
-• len(set())      # 0
-• set([1,1,2])    # {1, 2}
-• 1 in set()      # False
-
-Notes:
-• For an immutable set use frozenset(). Sets are unordered.`),
+• type(set()) is set. Sets are unordered, mutable, and require hashable elements. For a frozen set use frozenset().`),
   mk("What is type(42)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "42 is an integer.", `42 is an integer literal.
 
 Beginner:
@@ -786,49 +186,7 @@ Intermediate:
 • type(42) returns the same type object as type(0) or type(100).
 
 Expert:
-• type(42) is int. Small integers are cached in CPython (e.g. -5 to 256), so id(42) may be the same across uses.
-
-Key Concepts:
-• 42 is an integer literal; type(42) is int. Integers are whole numbers with no fractional part.
-• int in Python has arbitrary precision (no fixed maximum size).
-
-Key Distinctions:
-• 42 (int) vs 42.0 (float): same value, different type. 42 vs "42": number vs string.
-• int vs long: Python 3 has only int; it grows as needed.
-
-How It Works:
-• Python parses 42 as an integer literal and creates (or reuses) an int object.
-• type(42) returns the int class.
-
-Step-by-Step Execution:
-1. The literal 42 is evaluated (possibly a cached small int in CPython).
-2. type(42) is called.
-3. type() returns <class 'int'>.
-4. The shell prints the type.
-
-Order of Operations:
-• Literal 42 is evaluated first; then type() is applied.
-
-Common Use Cases:
-• Counting, indexing, arithmetic; any whole-number quantity.
-• 42 is often used in examples; same type as 0, 1, 100, etc.
-
-Edge Cases:
-• Very large integers (e.g. 10**1000) are still type int; no overflow.
-• In CPython, small ints (-5 to 256) may be cached; id(42) can be the same in different places.
-
-Performance Considerations:
-• Integer operations are fast and exact. Use int when you don't need fractions.
-• Arbitrary precision means very large ints use more memory and time.
-
-Examples:
-• type(42)        # <class 'int'>
-• type(42.0)      # <class 'float'>
-• 42 + 1          # 43
-• isinstance(42, int)  # True
-
-Notes:
-• Python 3 unifies int and long; there is only int.`),
+• type(42) is int. Small integers are cached in CPython (e.g. -5 to 256), so id(42) may be the same across uses.`),
   mk("What is type(100)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "100 is an integer.", `100 is an integer.
 
 Beginner:
@@ -840,48 +198,7 @@ Intermediate:
 • 100, 1000, and 10**100 are all type int.
 
 Expert:
-• type(100) is int. Python 3 has a single integer type (no long); integers have arbitrary precision.
-
-Key Concepts:
-• 100 is an integer literal; type(100) is int. Same rules as 0, 1, 42: no decimal point means int.
-• Integer literals in base 10 are int regardless of magnitude (within memory).
-
-Key Distinctions:
-• 100 (int) vs 100.0 (float): different types. 100 vs "100": number vs string.
-• All of 0, 1, 100, 10**100 are type int in Python 3.
-
-How It Works:
-• Python parses 100 as an integer and creates an int object.
-• type(100) returns the int class.
-
-Step-by-Step Execution:
-1. Literal 100 is evaluated.
-2. type(100) is called.
-3. type() returns <class 'int'>.
-4. The REPL displays the type.
-
-Order of Operations:
-• Literal first; then type(). No other operators.
-
-Common Use Cases:
-• Quantities, counts, indices; any whole number. 100 is common in examples and loops.
-• type(100) same as type(0), type(42)—all int.
-
-Edge Cases:
-• 100, 1000, 10**100 are all int. No overflow; arbitrary precision.
-• In CPython, 100 may be in the small-int cache; id(100) can be reused.
-
-Performance Considerations:
-• Integer creation and type() are very fast. int is the default for whole numbers.
-• Large ints use more memory; operations scale with digit count.
-
-Examples:
-• type(100)       # <class 'int'>
-• type(100.0)     # <class 'float'>
-• 100 == 100.0    # True (value); type(100) != type(100.0)
-
-Notes:
-• Python 3 has one integer type; it grows as needed.`),
+• type(100) is int. Python 3 has a single integer type (no long); integers have arbitrary precision.`),
   mk("What is type(1.5)?", ["<class 'float'>", "<class 'int'>", "<class 'str'>", "None"], 0, "1.5 is a float.", `Numbers with a decimal point are floats.
 
 Beginner:
@@ -893,49 +210,7 @@ Intermediate:
 • For money or exact decimals, consider the decimal module.
 
 Expert:
-• type(1.5) is float. Floats are IEEE 754 double precision. Use math.isclose() for approximate comparison.
-
-Key Concepts:
-• 1.5 has a decimal point, so it is a float; type(1.5) is float. Floats approximate real numbers.
-• Floats use binary representation; some decimals (e.g. 0.1) cannot be stored exactly.
-
-Key Distinctions:
-• 1.5 (float) vs 1 (int): 1.5 has a fractional part. 1.5 vs "1.5": number vs string.
-• float vs decimal.Decimal: float is binary; Decimal is decimal (exact for money).
-
-How It Works:
-• Python parses 1.5 as a float literal and creates a float object.
-• type(1.5) returns the float class.
-
-Step-by-Step Execution:
-1. The literal 1.5 is evaluated (stored as IEEE 754 double).
-2. type(1.5) is called.
-3. type() returns <class 'float'>.
-4. The shell prints the type.
-
-Order of Operations:
-• Literal 1.5 is evaluated first; then type() is applied.
-
-Common Use Cases:
-• Measurements, ratios, averages; any value that may have a fractional part.
-• Result of division (e.g. 3/2 is 1.5) and many math functions.
-
-Edge Cases:
-• 1.5 cannot be represented exactly in binary; tiny rounding errors may appear.
-• Use math.isclose(a, b) or decimal for exact comparisons when needed.
-
-Performance Considerations:
-• Float operations are fast but subject to rounding. Use int when you don't need fractions.
-• For financial or exact decimal math, prefer the decimal module.
-
-Examples:
-• type(1.5)       # <class 'float'>
-• type(1)         # <class 'int'>
-• 3 / 2           # 1.5 (float)
-• math.isclose(0.1+0.2, 0.3)  # True
-
-Notes:
-• Floats are approximate. For exact decimals use decimal.Decimal.`),
+• type(1.5) is float. Floats are IEEE 754 double precision. Use math.isclose() for approximate comparison.`),
   mk("What is type('hello')?", ["<class 'str'>", "<class 'int'>", "<class 'list'>", "None"], 0, "Text in quotes is a string.", `Text in quotes is a string.
 
 Beginner:
@@ -947,49 +222,7 @@ Intermediate:
 • Strings are immutable; operations like replace return new strings.
 
 Expert:
-• type('hello') is str. str holds Unicode code points; for bytes use the b'' prefix or encode().
-
-Key Concepts:
-• Text in quotes is a string; type('hello') is str. Strings are sequences of Unicode characters.
-• Strings are immutable; operations like replace or upper return new strings.
-
-Key Distinctions:
-• 'hello' (str) vs ['h','e','l','l','o'] (list): one string vs list of one-char strings.
-• 'hello' vs b'hello': str is Unicode; bytes is raw bytes (integers 0-255).
-
-How It Works:
-• Python parses 'hello' as a string literal of five characters.
-• type('hello') returns the str class.
-
-Step-by-Step Execution:
-1. The literal 'hello' is evaluated, creating a str object.
-2. type('hello') is called.
-3. type() returns <class 'str'>.
-4. The REPL displays the type.
-
-Order of Operations:
-• Literal first; then type(). No other operators here.
-
-Common Use Cases:
-• Storing text: names, messages, file contents. Indexing and slicing: 'hello'[0], 'hello'[1:4].
-• String methods: .upper(), .split(), .replace(), etc.
-
-Edge Cases:
-• len('hello') is 5. Some Unicode chars take more than one code point; len may exceed "visible" length.
-• Strings are immutable; 'hello'[0] = 'H' would raise an error.
-
-Performance Considerations:
-• String creation and indexing are fast. Concatenating many strings: use ''.join(list_of_str).
-• For binary data or I/O, consider bytes/bytearray.
-
-Examples:
-• type('hello')   # <class 'str'>
-• len('hello')    # 5
-• 'hello'[0]      # 'h'
-• 'hello'.upper() # 'HELLO'
-
-Notes:
-• Single or double quotes both create str. Use triple quotes for multi-line strings.`),
+• type('hello') is str. str holds Unicode code points; for bytes use the b'' prefix or encode().`),
   mk("What is type([1])?", ["<class 'list'>", "<class 'tuple'>", "<class 'int'>", "None"], 0, "[1] is a list with one item.", `[1] is a list containing one element.
 
 Beginner:
@@ -1001,49 +234,7 @@ Intermediate:
 • [1] is different from 1 (a list vs an int).
 
 Expert:
-• type([1]) is list. The list contains a reference to the int 1; lists are mutable and ordered.
-
-Key Concepts:
-• [1] is a list with one element (the integer 1); type([1]) is list. Lists are ordered, mutable sequences.
-• [1] is different from 1: the first is a container, the second is the value itself.
-
-Key Distinctions:
-• [1] (list) vs (1,) (tuple): list is mutable, tuple is immutable. [1] vs 1: container vs element.
-• [1] vs [1,]: both are lists; the trailing comma in [1,] is optional for lists (required for (1,)).
-
-How It Works:
-• Python parses [1] as a list literal containing one element.
-• type([1]) returns the list class.
-
-Step-by-Step Execution:
-1. The literal [1] is evaluated; a new list is created with one item (the int 1).
-2. type([1]) is called.
-3. type() returns <class 'list'>.
-4. The shell displays the type.
-
-Order of Operations:
-• The list [1] is built first; then type() is applied.
-
-Common Use Cases:
-• Storing a single value in a list so you can append more later; [x] as a one-element list.
-• Lists can hold any types; [1] could become [1, 'a', None] after mutations.
-
-Edge Cases:
-• [1][0] is 1. [1] is not the same object as 1; type([1]) is list, type(1) is int.
-• Each [1] creates a new list; [1] is [1] is False.
-
-Performance Considerations:
-• Creating [1] is cheap. Appending to a list is amortized O(1).
-• Use a list when you need to change the sequence; use tuple when it's fixed.
-
-Examples:
-• type([1])       # <class 'list'>
-• len([1])        # 1
-• [1][0]          # 1
-• [1].append(2)   # list becomes [1, 2]
-
-Notes:
-• [1] is a list containing the integer 1. Lists are mutable.`),
+• type([1]) is list. The list contains a reference to the int 1; lists are mutable and ordered.`),
   mk("What is type((1,))?", ["<class 'tuple'>", "<class 'list'>", "<class 'int'>", "None"], 0, "(1,) is a tuple. The comma is required.", `A one-element tuple needs a trailing comma.
 
 Beginner:
@@ -1055,49 +246,7 @@ Intermediate:
 • Tuples are immutable: (1,) cannot be changed after creation.
 
 Expert:
-• type((1,)) is tuple. The trailing comma is necessary for single-element tuple literals; (1,) creates a tuple, (1) does not.
-
-Key Concepts:
-• (1,) is a tuple with one element; the comma distinguishes it from (1) which is just the integer 1.
-• type((1,)) is tuple. Tuples are immutable, ordered sequences.
-
-Key Distinctions:
-• (1,) (tuple) vs (1) (int): the comma is required for a one-element tuple. (1,) vs [1]: tuple vs list.
-• (1, 2) is a two-element tuple; (1,) is a one-element tuple.
-
-How It Works:
-• Python parses (1,) as a tuple literal. The comma tells Python it's a tuple, not a grouped expression.
-• type((1,)) returns the tuple class.
-
-Step-by-Step Execution:
-1. The literal (1,) is evaluated; a tuple containing the int 1 is created.
-2. type((1,)) is called.
-3. type() returns <class 'tuple'>.
-4. The REPL prints the type.
-
-Order of Operations:
-• (1,) is evaluated first (tuple creation); then type() is applied.
-
-Common Use Cases:
-• Returning a single value "in a tuple" from a function; (x,) for one-element records.
-• Using as dict key or set element (tuples are hashable if elements are).
-
-Edge Cases:
-• (1) is just 1; (1,) is a tuple. Always use the trailing comma for one-element tuples.
-• (1,) is immutable; you cannot change its elements after creation.
-
-Performance Considerations:
-• Tuples are slightly more efficient than lists for fixed data; they're immutable and hashable when elements are.
-• Use (1,) when you need a single-item tuple (e.g. for consistency with (a, b) returns).
-
-Examples:
-• type((1,))      # <class 'tuple'>
-• (1)             # 1 (integer)
-• (1,)            # (1,) (tuple)
-• len((1,))       # 1
-
-Notes:
-• The comma in (1,) is required. Without it, (1) is just the number 1.`),
+• type((1,)) is tuple. The trailing comma is necessary for single-element tuple literals; (1,) creates a tuple, (1) does not.`),
   mk("What is type({1: 2})?", ["<class 'dict'>", "<class 'set'>", "<class 'list'>", "None"], 0, "{1: 2} is a dictionary.", `Curly braces with key: value pairs create a dict.
 
 Beginner:
@@ -1109,49 +258,7 @@ Intermediate:
 • {1: 2} has one pair; len({1: 2}) is 1.
 
 Expert:
-• type({1: 2}) is dict. Dicts are mutable mappings. Keys are unique; later assignments overwrite. In 3.7+, insertion order is preserved.
-
-Key Concepts:
-• Curly braces with key: value pairs create a dict; type({1: 2}) is dict. Keys must be hashable; values can be any type.
-• {1: 2} maps key 1 to value 2; len({1: 2}) is 1.
-
-Key Distinctions:
-• {1: 2} (dict) vs {1, 2} (set): dict has key:value; set has only values. {1: 2} vs []: mapping vs sequence.
-• Keys are unique; assigning again overwrites: {1: 2, 1: 3} is {1: 3}.
-
-How It Works:
-• Python parses {1: 2} as a dict literal with one key-value pair.
-• type({1: 2}) returns the dict class.
-
-Step-by-Step Execution:
-1. The literal {1: 2} is evaluated; a dict is created with key 1 and value 2.
-2. type({1: 2}) is called.
-3. type() returns <class 'dict'>.
-4. The shell displays the type.
-
-Order of Operations:
-• Dict literal is built first; then type() is applied.
-
-Common Use Cases:
-• Lookup tables; storing named or keyed data. d[1] gives 2; d[1] = 3 mutates.
-• Configurations, caches, counting (e.g. {char: count}).
-
-Edge Cases:
-• Dict keys must be hashable (no lists or dicts as keys). Values can be anything.
-• In Python 3.7+, iteration order is insertion order.
-
-Performance Considerations:
-• Dict lookup and insert are O(1) on average. Use dicts for fast key-based access.
-• Empty dict {} is cheap; building with many pairs is efficient.
-
-Examples:
-• type({1: 2})    # <class 'dict'>
-• {1: 2}[1]      # 2
-• len({1: 2})    # 1
-• {1: 2, 1: 3}   # {1: 3}
-
-Notes:
-• Use {} or {k: v} for dicts; use set() or {a, b} (no colons) for sets.`),
+• type({1: 2}) is dict. Dicts are mutable mappings. Keys are unique; later assignments overwrite. In 3.7+, insertion order is preserved.`),
   mk("What is type({1, 2})?", ["<class 'set'>", "<class 'dict'>", "<class 'list'>", "None"], 0, "{1, 2} is a set.", `Curly braces with only values (no colons) create a set.
 
 Beginner:
@@ -1163,49 +270,7 @@ Intermediate:
 • Sets are mutable; use frozenset for an immutable set.
 
 Expert:
-• type({1, 2}) is set. Set elements must be hashable. Sets support in, add, remove, and set operations (union, intersection).
-
-Key Concepts:
-• Curly braces with only values (no colons) create a set; type({1, 2}) is set. Sets hold unique, unordered elements.
-• {1, 2} has two elements; duplicates are removed (e.g. {1, 1, 2} is {1, 2}).
-
-Key Distinctions:
-• {1, 2} (set) vs {1: 2} (dict): set has no colons; dict has key: value. {1, 2} vs [1, 2]: unordered, unique vs ordered, can duplicate.
-• Sets are mutable; for immutable use frozenset({1, 2}).
-
-How It Works:
-• Python parses {1, 2} as a set literal (no colons, so not a dict).
-• type({1, 2}) returns the set class.
-
-Step-by-Step Execution:
-1. The literal {1, 2} is evaluated; a set containing 1 and 2 is created.
-2. type({1, 2}) is called.
-3. type() returns <class 'set'>.
-4. The REPL displays the type.
-
-Order of Operations:
-• Set literal is built first; then type() is applied.
-
-Common Use Cases:
-• Removing duplicates; fast membership (1 in {1, 2}); set math (union, intersection).
-• When you need unique items and don't care about order.
-
-Edge Cases:
-• Set elements must be hashable (no lists or dicts). {1, 2} order is not guaranteed.
-• Empty set cannot be {} (that's dict); use set().
-
-Performance Considerations:
-• Membership in a set is O(1) average; in a list it's O(n). Use sets for large "in" checks.
-• Building a set from a list removes duplicates in one pass.
-
-Examples:
-• type({1, 2})    # <class 'set'>
-• len({1, 2})    # 2
-• 1 in {1, 2}    # True
-• {1,1,2}        # {1, 2}
-
-Notes:
-• No colons in set literals. Empty set is set(), not {}.`),
+• type({1, 2}) is set. Set elements must be hashable. Sets support in, add, remove, and set operations (union, intersection).`),
   mk("What is type(b'x')?", ["<class 'bytes'>", "<class 'str'>", "<class 'list'>", "None"], 0, "b'x' is bytes.", `The b prefix creates a bytes literal.
 
 Beginner:
@@ -1217,49 +282,7 @@ Intermediate:
 • Use .decode() to get a str from bytes; use .encode() to get bytes from str.
 
 Expert:
-• type(b'x') is bytes. bytes is an immutable sequence of integers in 0–255. For mutable binary data use bytearray.
-
-Key Concepts:
-• The b prefix creates a bytes literal; type(b'x') is bytes. Bytes are raw 8-bit values (0–255), immutable.
-• b'x'[0] is 120 (ord('x')); each element is an int in range(0, 256).
-
-Key Distinctions:
-• b'x' (bytes) vs 'x' (str): bytes are raw integers; str is Unicode text. b'x' vs [120]: bytes vs list of ints.
-• bytes is immutable; for mutable binary use bytearray.
-
-How It Works:
-• Python parses b'x' as a bytes literal (ASCII 'x' is byte 120).
-• type(b'x') returns the bytes class.
-
-Step-by-Step Execution:
-1. The literal b'x' is evaluated; a bytes object of length 1 (value 120) is created.
-2. type(b'x') is called.
-3. type() returns <class 'bytes'>.
-4. The shell displays the type.
-
-Order of Operations:
-• Literal b'x' is evaluated first; then type() is applied.
-
-Common Use Cases:
-• Binary I/O; network data; encoding/decoding (b'hi'.decode(), 'hi'.encode()).
-• When you need exact byte values rather than Unicode characters.
-
-Edge Cases:
-• b'x'[0] is 120, not 'x'. Indexing bytes returns an int 0–255.
-• Only ASCII in b'...' is simple; other bytes use escape sequences (e.g. b'\\xff').
-
-Performance Considerations:
-• bytes is efficient for binary data. Use str for text; use bytes for raw data.
-• .decode() and .encode() convert between str and bytes.
-
-Examples:
-• type(b'x')      # <class 'bytes'>
-• b'x'[0]        # 120
-• b'hi'.decode()  # 'hi'
-• 'hi'.encode()   # b'hi'
-
-Notes:
-• For mutable byte sequences use bytearray. bytes is immutable.`),
+• type(b'x') is bytes. bytes is an immutable sequence of integers in 0–255. For mutable binary data use bytearray.`),
   mk("What is type(2)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "2 is an integer.", `2 is an integer.
 
 Beginner:
@@ -1271,49 +294,7 @@ Intermediate:
 • 2 and 2.0 have the same numeric value but different types.
 
 Expert:
-• type(2) is int. In expressions, 2 is used as an int until mixed with float, then type promotion may occur.
-
-Key Concepts:
-• 2 is an integer literal; type(2) is int. Same as 0, 1, 42: no decimal point means int.
-• Small integers like 2 are commonly used in arithmetic and indexing.
-
-Key Distinctions:
-• 2 (int) vs 2.0 (float): different types. 2 vs "2": number vs string. 2 is not a boolean (but 2 is truthy).
-• type(2) is the same as type(0) and type(100)—all int.
-
-How It Works:
-• Python parses 2 as an integer literal. type(2) returns the int class.
-• In CPython, 2 is in the small-int cache range.
-
-Step-by-Step Execution:
-1. Literal 2 is evaluated (possibly cached).
-2. type(2) is called.
-3. type() returns <class 'int'>.
-4. The REPL prints the type.
-
-Order of Operations:
-• Literal first; then type(). No other operators.
-
-Common Use Cases:
-• Counting, indexing (e.g. [0], [1], [2]); arithmetic. 2 is the first prime and common in examples.
-• type(2) confirms the value is an integer, not a float or string.
-
-Edge Cases:
-• 2 + 2.0 is 4.0 (float); mixing int and float promotes to float. 2 is truthy; if 2: runs.
-• Small ints may be interned; id(2) can be the same across uses.
-
-Performance Considerations:
-• Integer 2 is as cheap as 0 or 1. Use int for whole-number math.
-• type(2) is a trivial call; no performance concern at beginner scale.
-
-Examples:
-• type(2)        # <class 'int'>
-• 2 + 2          # 4
-• type(2.0)      # <class 'float'>
-• isinstance(2, int)  # True
-
-Notes:
-• 2 is an int. In division, 2/1 is 2.0 in Python 3; use 2//1 for int result.`),
+• type(2) is int. In expressions, 2 is used as an int until mixed with float, then type promotion may occur.`),
   mk("What is type(10)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "10 is an integer.", `10 is an integer.
 
 Beginner:
@@ -1325,49 +306,7 @@ Intermediate:
 • type(10) returns the int class object.
 
 Expert:
-• type(10) is int. Small integers in CPython are interned; 10 may share identity with other uses of 10.
-
-Key Concepts:
-• 10 is an integer literal; type(10) is int. Base-10 integer literals are int regardless of size.
-• 10 is commonly used in loops (range(10)), examples, and place value.
-
-Key Distinctions:
-• 10 (int) vs 10.0 (float): different types. 10 vs "10": number vs string.
-• type(10) is int; same as type(0), type(1), type(100).
-
-How It Works:
-• Python parses 10 as an integer. type(10) returns the int class.
-• In CPython, 10 is typically in the small-int cache (-5 to 256).
-
-Step-by-Step Execution:
-1. Literal 10 is evaluated.
-2. type(10) is called.
-3. type() returns <class 'int'>.
-4. The shell displays the type.
-
-Order of Operations:
-• Literal 10 first; then type(). No other operators.
-
-Common Use Cases:
-• range(10); counting by tens; decimal base. 10 is ubiquitous in examples.
-• Verifying that a value is an int (e.g. after input or parsing).
-
-Edge Cases:
-• 10**100 is still type int; Python supports arbitrarily large integers. 10.0 is float.
-• id(10) may equal id(10) elsewhere due to interning (implementation detail).
-
-Performance Considerations:
-• 10 is a small int; creation and type() are trivial. Use int for whole numbers.
-• For very large ints, operations scale with number of digits.
-
-Examples:
-• type(10)       # <class 'int'>
-• range(10)      # 0..9
-• 10.0           # float
-• 10 == 10.0     # True
-
-Notes:
-• Python 3 has a single int type; no separate "long." 10 is always int.`),
+• type(10) is int. Small integers in CPython are interned; 10 may share identity with other uses of 10.`),
   mk("What is type(-1)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "Negative integers are int.", `Negative whole numbers are still int.
 
 Beginner:
@@ -1379,49 +318,7 @@ Intermediate:
 • For type checking, isinstance(-1, int) is True.
 
 Expert:
-• type(-1) is int. In CPython, small integers (e.g. -5 to 256) are cached; -1 is typically the same object across the program.
-
-Key Concepts:
-• -1 is a negative integer literal; type(-1) is int. The minus sign does not change the type.
-• -1 is often used for "last index" (e.g. s[-1]), sentinel values, and decrementing.
-
-Key Distinctions:
-• -1 (int) vs -1.0 (float): same value, different type. -1 vs "-1": number vs string.
-• type(-1) is int; negative whole numbers are still int.
-
-How It Works:
-• Python parses -1 as unary minus applied to 1; the result is an int.
-• type(-1) returns the int class.
-
-Step-by-Step Execution:
-1. Literal 1 is evaluated, then unary minus produces -1 (int).
-2. type(-1) is called.
-3. type() returns <class 'int'>.
-4. The REPL displays the type.
-
-Order of Operations:
-• 1 is evaluated, then unary -, then type().
-
-Common Use Cases:
-• Negative indices: 'hello'[-1] is 'o'. Counting backward; "not found" or error sentinel.
-• type(-1) confirms the value is an integer.
-
-Edge Cases:
-• -1 is in the small-int cache in CPython; id(-1) is often the same everywhere.
-• -1 is truthy in Python (non-zero); only 0 is falsy among numbers.
-
-Performance Considerations:
-• -1 is as cheap as 1. Negative indexing (s[-1]) is O(1) and common.
-• No performance concern for type(-1) at beginner scale.
-
-Examples:
-• type(-1)       # <class 'int'>
-• 'hi'[-1]       # 'i'
-• -1 + 1         # 0
-• isinstance(-1, int)  # True
-
-Notes:
-• -1 is the conventional "last element" index in sequences.`),
+• type(-1) is int. In CPython, small integers (e.g. -5 to 256) are cached; -1 is typically the same object across the program.`),
   mk("What is type(0.5)?", ["<class 'float'>", "<class 'int'>", "<class 'str'>", "None"], 0, "0.5 is a float.", `0.5 has a decimal point, so it's a float.
 
 Beginner:
@@ -1433,49 +330,7 @@ Intermediate:
 • type(0.5) is float; type(1/2) is also float because / returns float in Python 3.
 
 Expert:
-• type(0.5) is float. Literal 0.5 is a float; division / also produces floats, so 1/2 is 0.5 (float).
-
-Key Concepts:
-• 0.5 has a decimal point, so it is a float; type(0.5) is float. Half is a common fractional value.
-• Division (/) in Python 3 always returns a float; 1/2 is 0.5, not 0.
-
-Key Distinctions:
-• 0.5 (float) vs 0 (int): 0.5 has a fractional part. 0.5 vs "0.5": number vs string.
-• 0.5 cannot be stored exactly in binary float; 0.5 is represented as closely as possible.
-
-How It Works:
-• Python parses 0.5 as a float literal (IEEE 754).
-• type(0.5) returns the float class.
-
-Step-by-Step Execution:
-1. The literal 0.5 is evaluated (stored as a float).
-2. type(0.5) is called.
-3. type() returns <class 'float'>.
-4. The REPL displays the type.
-
-Order of Operations:
-• Literal 0.5 first; then type(). In 1/2, division runs first and produces 0.5 (float).
-
-Common Use Cases:
-• Fractions, percentages (0.5 = 50%), probabilities; result of division.
-• 1/2, 1/4, 3/4 all produce floats in Python 3.
-
-Edge Cases:
-• 0.5 is one of the few decimals that can be represented exactly in binary float.
-• For exact decimal math (e.g. money), use the decimal module.
-
-Performance Considerations:
-• Float 0.5 is as cheap as other small floats. Use floats when you need fractions.
-• Comparing floats: prefer math.isclose() rather than == for reliability.
-
-Examples:
-• type(0.5)       # <class 'float'>
-• 1/2             # 0.5
-• type(1/2)       # <class 'float'>
-• 0.5 == 1/2      # True
-
-Notes:
-• In Python 3, / always gives float. Use // for integer division (e.g. 1//2 is 0).`),
+• type(0.5) is float. Literal 0.5 is a float; division / also produces floats, so 1/2 is 0.5 (float).`),
   mk("What is type(2.5)?", ["<class 'float'>", "<class 'int'>", "<class 'str'>", "None"], 0, "2.5 is a float.", `2.5 is a float.
 
 Beginner:
@@ -1487,28 +342,7 @@ Intermediate:
 • type(2.5) returns the float class.
 
 Expert:
-• type(2.5) is float. For exact decimal representation (e.g. currency), decimal.Decimal is often preferred.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type(2.5) is float. For exact decimal representation (e.g. currency), decimal.Decimal is often preferred.`),
   mk("What is type('x')?", ["<class 'str'>", "<class 'int'>", "<class 'char'>", "None"], 0, "Single-character string.", `A single character is still a string.
 
 Beginner:
@@ -1520,28 +354,7 @@ Intermediate:
 • type('x') is the same as type('hello')—both are str.
 
 Expert:
-• type('x') is str. There is no char type; use a one-character str. For byte-oriented single "characters" use bytes or ord()/chr().
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type('x') is str. There is no char type; use a one-character str. For byte-oriented single "characters" use bytes or ord()/chr().`),
   mk("What is type(\"\")?", ["<class 'str'>", "<class 'list'>", "<class 'NoneType'>", "None"], 0, "Double quotes also make a string.", `Double quotes create a string too.
 
 Beginner:
@@ -1553,28 +366,7 @@ Intermediate:
 • Use the other quote type to include a quote in the string: "it's" or 'say "hi"'.
 
 Expert:
-• type("") is str. Triple quotes (''' or """) allow multi-line string literals; "" is just another way to write the empty string.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type("") is str. Triple quotes (''' or """) allow multi-line string literals; "" is just another way to write the empty string.`),
   mk("What is type([0])?", ["<class 'list'>", "<class 'tuple'>", "<class 'int'>", "None"], 0, "[0] is a list.", `[0] is a list containing the integer 0.
 
 Beginner:
@@ -1586,28 +378,7 @@ Intermediate:
 • type([0]) is list; the element 0 is type int.
 
 Expert:
-• type([0]) is list. The list holds a reference to the int 0. Lists are mutable; [0].append(1) changes the list in place.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type([0]) is list. The list holds a reference to the int 0. Lists are mutable; [0].append(1) changes the list in place.`),
   mk("What is type([1, 2])?", ["<class 'list'>", "<class 'tuple'>", "<class 'dict'>", "None"], 0, "[1, 2] is a list.", `[1, 2] is a list of two integers.
 
 Beginner:
@@ -1619,28 +390,7 @@ Intermediate:
 • Lists are mutable: you can change, append, or remove elements.
 
 Expert:
-• type([1, 2]) is list. Lists are ordered, mutable sequences. They can contain mixed types and duplicates.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type([1, 2]) is list. Lists are ordered, mutable sequences. They can contain mixed types and duplicates.`),
   mk("What is type((1, 2))?", ["<class 'tuple'>", "<class 'list'>", "<class 'dict'>", "None"], 0, "(1, 2) is a tuple.", `(1, 2) is a tuple of two elements.
 
 Beginner:
@@ -1652,28 +402,7 @@ Intermediate:
 • (1, 2)[0] is 1, (1, 2)[1] is 2. Use tuples for fixed sequences.
 
 Expert:
-• type((1, 2)) is tuple. Tuples are immutable and hashable when all elements are hashable; they're often used as dict keys or in return values.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type((1, 2)) is tuple. Tuples are immutable and hashable when all elements are hashable; they're often used as dict keys or in return values.`),
   mk("What is type({'a': 1})?", ["<class 'dict'>", "<class 'set'>", "<class 'list'>", "None"], 0, "{'a': 1} is a dict.", `{'a': 1} is a dictionary with one key-value pair.
 
 Beginner:
@@ -1685,28 +414,7 @@ Intermediate:
 • {'a': 1}['a'] is 1. Dicts are mutable.
 
 Expert:
-• type({'a': 1}) is dict. Dicts are mutable mappings. From Python 3.7+, dict maintains insertion order.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type({'a': 1}) is dict. Dicts are mutable mappings. From Python 3.7+, dict maintains insertion order.`),
   mk("What is type({0})?", ["<class 'set'>", "<class 'dict'>", "<class 'list'>", "None"], 0, "{0} is a set with one element.", `{0} is a set containing one element.
 
 Beginner:
@@ -1718,28 +426,7 @@ Intermediate:
 • 0 is hashable, so it can be a set element. Sets are unordered.
 
 Expert:
-• type({0}) is set. Sets require hashable elements. {0} has one element; len({0}) is 1. For an empty set use set().
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type({0}) is set. Sets require hashable elements. {0} has one element; len({0}) is 1. For an empty set use set().`),
   mk("What is type(7)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "7 is an integer.", `7 is an integer.
 
 Beginner:
@@ -1751,28 +438,7 @@ Intermediate:
 • In CPython, small integers like 7 are cached for efficiency.
 
 Expert:
-• type(7) is int. Integer literals are parsed as int; 0o7 and 0x7 are also int (octal and hex).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type(7) is int. Integer literals are parsed as int; 0o7 and 0x7 are also int (octal and hex).`),
   mk("What is type(99)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "99 is an integer.", `99 is an integer.
 
 Beginner:
@@ -1784,28 +450,7 @@ Intermediate:
 • type(99) returns the same int class as type(1) or type(42).
 
 Expert:
-• type(99) is int. Python 3 has unified int (arbitrary precision); there is no separate long type.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type(99) is int. Python 3 has unified int (arbitrary precision); there is no separate long type.`),
   mk("What is type(-10)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "Negative integers are int.", `-10 is an integer.
 
 Beginner:
@@ -1817,28 +462,7 @@ Intermediate:
 • -10 is falsy in a boolean context (it's non-zero but often used in conditions).
 
 Expert:
-• type(-10) is int. Negative integers are first-class; they're not stored in a special way. Unary minus is part of the literal.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type(-10) is int. Negative integers are first-class; they're not stored in a special way. Unary minus is part of the literal.`),
   mk("What is type(1.0)?", ["<class 'float'>", "<class 'int'>", "<class 'str'>", "None"], 0, "1.0 has a decimal point, so float.", `1.0 is a float because of the decimal point.
 
 Beginner:
@@ -1850,28 +474,7 @@ Intermediate:
 • Division / always gives float, so 2/2 is 1.0.
 
 Expert:
-• type(1.0) is float. The decimal point makes it a float literal. For type hints, use int vs float explicitly.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type(1.0) is float. The decimal point makes it a float literal. For type hints, use int vs float explicitly.`),
   mk("What is type(10.0)?", ["<class 'float'>", "<class 'int'>", "<class 'str'>", "None"], 0, "10.0 is a float.", `10.0 is a float.
 
 Beginner:
@@ -1883,28 +486,7 @@ Intermediate:
 • type(10.0) is float; int(10.0) is 10.
 
 Expert:
-• type(10.0) is float. Float literals can use exponent form: 1e1 is 10.0.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type(10.0) is float. Float literals can use exponent form: 1e1 is 10.0.`),
   mk("What is type('0')?", ["<class 'str'>", "<class 'int'>", "<class 'float'>", "None"], 0, "'0' in quotes is a string.", `'0' in quotes is a string, not the number 0.
 
 Beginner:
@@ -1916,28 +498,7 @@ Intermediate:
 • You often see '0' when reading input or from files; convert with int() for math.
 
 Expert:
-• type('0') is str. str and int are distinct; use int('0') for conversion. Leading zeros in numeric strings can matter for parsing (e.g. int('010', 8) for octal).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type('0') is str. str and int are distinct; use int('0') for conversion. Leading zeros in numeric strings can matter for parsing (e.g. int('010', 8) for octal).`),
   mk("What is type('1')?", ["<class 'str'>", "<class 'int'>", "<class 'float'>", "None"], 0, "'1' is a string.", `'1' is a string of one character.
 
 Beginner:
@@ -1949,28 +510,7 @@ Intermediate:
 • type('1') is str; type(1) is int. They're different types.
 
 Expert:
-• type('1') is str. For numeric conversion, int('1') and float('1') work; for single-character semantics, '1'[0] is '1'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type('1') is str. For numeric conversion, int('1') and float('1') work; for single-character semantics, '1'[0] is '1'.`),
   mk("What is type(15)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "15 is an integer.", `15 is an integer.
 
 Beginner:
@@ -1982,28 +522,7 @@ Intermediate:
 • 15 is truthy; bool(15) is True.
 
 Expert:
-• type(15) is int. Literals are parsed at compile time; 15 is stored as an int object.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type(15) is int. Literals are parsed at compile time; 15 is stored as an int object.`),
   mk("What is type(3)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "3 is an integer.", `3 is an integer.
 
 Beginner:
@@ -2015,28 +534,7 @@ Intermediate:
 • 3 and 3.0 have the same numeric value but different types.
 
 Expert:
-• type(3) is int. In expressions, 3 stays int until combined with a float, then result is float.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type(3) is int. In expressions, 3 stays int until combined with a float, then result is float.`),
   mk("What is type(4.0)?", ["<class 'float'>", "<class 'int'>", "<class 'str'>", "None"], 0, "4.0 is a float.", `4.0 is a float.
 
 Beginner:
@@ -2048,28 +546,7 @@ Intermediate:
 • int(4.0) is 4; they're equal in value but not in type.
 
 Expert:
-• type(4.0) is float. Float literals with .0 are exact for that value; 4.0 is represented exactly in IEEE 754.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type(4.0) is float. Float literals with .0 are exact for that value; 4.0 is represented exactly in IEEE 754.`),
   mk("What is type('hi')?", ["<class 'str'>", "<class 'list'>", "<class 'int'>", "None"], 0, "'hi' is a string.", `'hi' is a string of two characters.
 
 Beginner:
@@ -2081,28 +558,7 @@ Intermediate:
 • Strings are immutable; 'hi'.upper() returns a new string 'HI'.
 
 Expert:
-• type('hi') is str. str is a sequence type; indexing returns a str of length 1. Concatenation with + creates new strings.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type('hi') is str. str is a sequence type; indexing returns a str of length 1. Concatenation with + creates new strings.`),
   mk("What is type([1, 2, 3])?", ["<class 'list'>", "<class 'tuple'>", "<class 'dict'>", "None"], 0, "[1,2,3] is a list.", `[1, 2, 3] is a list of three integers.
 
 Beginner:
@@ -2114,28 +570,7 @@ Intermediate:
 • type([1, 2, 3]) is list; the elements are ints.
 
 Expert:
-• type([1, 2, 3]) is list. Lists are mutable sequences; they support in-place operations like .append() and .sort().
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type([1, 2, 3]) is list. Lists are mutable sequences; they support in-place operations like .append() and .sort().`),
   mk("What is type((0,))?", ["<class 'tuple'>", "<class 'list'>", "<class 'int'>", "None"], 0, "(0,) is a one-element tuple.", `(0,) is a single-element tuple.
 
 Beginner:
@@ -2147,28 +582,7 @@ Intermediate:
 • Tuples are immutable, so (0,) cannot be changed.
 
 Expert:
-• type((0,)) is tuple. The comma is the tuple constructor in single-element case; (0,) creates a tuple, (0) does not.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type((0,)) is tuple. The comma is the tuple constructor in single-element case; (0,) creates a tuple, (0) does not.`),
   mk("What is type(range(3))?", ["<class 'range'>", "<class 'list'>", "<class 'tuple'>", "None"], 0, "range(3) is a range object.", `range(3) creates a range object.
 
 Beginner:
@@ -2180,28 +594,7 @@ Intermediate:
 • list(range(3)) is [0, 1, 2]. range is memory-efficient for large ranges.
 
 Expert:
-• type(range(3)) is range. range is a sequence type; it supports in, indexing, and slicing. It does not store all values in memory.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type(range(3)) is range. range is a sequence type; it supports in, indexing, and slicing. It does not store all values in memory.`),
   mk("What is type(...)?", ["<class 'ellipsis'>", "<class 'NoneType'>", "<class 'str'>", "None"], 0, "... is the ellipsis literal.", `... is the Ellipsis literal; its type is ellipsis.
 
 Beginner:
@@ -2213,28 +606,7 @@ Intermediate:
 • There's only one Ellipsis object; ... is Ellipsis is True.
 
 Expert:
-• type(...) is type(Ellipsis), which is ellipsis. The literal ... is syntactic sugar for Ellipsis. Used in typing (e.g. Tuple[int, ...]) and in extended slicing.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`),
+• type(...) is type(Ellipsis), which is ellipsis. The literal ... is syntactic sugar for Ellipsis. Used in typing (e.g. Tuple[int, ...]) and in extended slicing.`),
 ];
 
 // 51-150: unique simple expressions (no repetitive a+b or v*1)
@@ -2250,28 +622,7 @@ Intermediate:
 • Python supports arbitrary-precision integers, so 1+1 is just 2.
 
 Expert:
-• int.__add__ is used; the result is an int. For mixed types (int + float), the result is float (type promotion).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__add__ is used; the result is an int. For mixed types (int + float), the result is float (type promotion).`],
   ["What is 2 + 3?", ["5", "6", "23", "Error"], 0, "2 + 3 = 5.", `Basic addition: 2 + 3 = 5.
 
 Beginner:
@@ -2283,28 +634,7 @@ Intermediate:
 • You can chain addition: 2 + 3 + 4 = 9.
 
 Expert:
-• Addition of two ints returns int. For int + float, the int is promoted to float and the result is float.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• Addition of two ints returns int. For int + float, the int is promoted to float and the result is float.`],
   ["What is 10 - 3?", ["7", "13", "30", "Error"], 0, "10 - 3 = 7.", `Subtraction: 10 - 3 = 7.
 
 Beginner:
@@ -2316,28 +646,7 @@ Intermediate:
 • - is also used as unary minus (e.g. -5).
 
 Expert:
-• int.__sub__ is used. For int - float, the result is float. Subtraction is not commutative.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__sub__ is used. For int - float, the result is float. Subtraction is not commutative.`],
   ["What is 4 * 2?", ["8", "6", "42", "Error"], 0, "4 * 2 = 8.", `Multiplication: 4 * 2 = 8.
 
 Beginner:
@@ -2349,28 +658,7 @@ Intermediate:
 • type(4*2) is int; type(4*2.0) is float.
 
 Expert:
-• int.__mul__ is used. For sequences, * with an int repeats the sequence. Operator overloading allows different behavior per type.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__mul__ is used. For sequences, * with an int repeats the sequence. Operator overloading allows different behavior per type.`],
   ["What is 6 / 2?", ["3.0", "3", "2.0", "Error"], 0, "Division gives float in Python 3.", `In Python 3, / always gives a float.
 
 Beginner:
@@ -2382,28 +670,7 @@ Intermediate:
 • In Python 2, / behaved differently (integer division for two ints). Python 3 unified to always float for /.
 
 Expert:
-• float.__truediv__ or int.__truediv__; int/int promotes to float in 3. Use // for floor division when you need an int result.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• float.__truediv__ or int.__truediv__; int/int promotes to float in 3. Use // for floor division when you need an int result.`],
   ["What is 9 // 2?", ["4", "4.5", "5", "Error"], 0, "// is integer division (floor).", `9 // 2 = 4 (floor division).
 
 Beginner:
@@ -2415,28 +682,7 @@ Intermediate:
 • For positive numbers, // truncates toward zero; for negative numbers it floors toward negative infinity.
 
 Expert:
-• int.__floordiv__; result type matches the operands (int//int=int). divmod(9,2) returns (4, 1) in one call.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__floordiv__; result type matches the operands (int//int=int). divmod(9,2) returns (4, 1) in one call.`],
   ["What is 9 % 2?", ["1", "0", "4", "Error"], 0, "% is the remainder.", `9 % 2 = 1 (remainder).
 
 Beginner:
@@ -2448,28 +694,7 @@ Intermediate:
 • % works with floats too: 9.5 % 2 = 1.5.
 
 Expert:
-• int.__mod__; result has the same sign as the divisor in Python. Used for wraparound (e.g. index % len) and even/odd checks.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__mod__; result has the same sign as the divisor in Python. Used for wraparound (e.g. index % len) and even/odd checks.`],
   ["What is 2 ** 3?", ["8", "6", "9", "Error"], 0, "** is exponentiation.", `2 ** 3 = 8 (2 to the power of 3).
 
 Beginner:
@@ -2481,28 +706,7 @@ Intermediate:
 • ** is right-associative: 2 ** 3 ** 2 = 2 ** (3**2) = 2 ** 9 = 512.
 
 Expert:
-• int.__pow__ or float.__pow__; pow(2, 3) is equivalent. For pow(a, b, m) see modular exponentiation.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__pow__ or float.__pow__; pow(2, 3) is equivalent. For pow(a, b, m) see modular exponentiation.`],
   ["What does print(5) display?", ["5", "print(5)", "None", "Error"], 0, "print(5) shows 5 on screen.", `print(5) outputs 5 to the console.
 
 Beginner:
@@ -2514,28 +718,7 @@ Intermediate:
 • print(5) returns None; the 5 is a side effect (output). You can pass multiple arguments: print(1, 2) prints "1 2".
 
 Expert:
-• print(*objects, sep=' ', end='\\n', file=sys.stdout, flush=False). print is a built-in function; it does not return the value printed.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• print(*objects, sep=' ', end='\\n', file=sys.stdout, flush=False). print is a built-in function; it does not return the value printed.`],
   ["What does print('hi') display?", ["hi", "'hi'", "print('hi')", "Error"], 0, "print('hi') shows hi without quotes.", `print('hi') displays hi (without the quotes).
 
 Beginner:
@@ -2547,28 +730,7 @@ Intermediate:
 • To print the quotes, use print("'hi'") or print('"hi"'). print('hi', 'there') prints "hi there" with a space.
 
 Expert:
-• print sends the string representation to sys.stdout. The repr() of a string includes quotes; print uses the string value itself.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• print sends the string representation to sys.stdout. The repr() of a string includes quotes; print uses the string value itself.`],
   ["Which is a valid variable name?", ["my_var", "2nd", "my-var", "class"], 0, "Names can use letters, numbers, underscore; cannot start with a number.", `my_var is valid; 2nd and my-var are not.
 
 Beginner:
@@ -2580,28 +742,7 @@ Intermediate:
 • Use descriptive names: my_var not x. Convention: snake_case for variables.
 
 Expert:
-• See the language reference for full identifier syntax. Unicode letters are allowed in names. Reserved keywords are fixed.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• See the language reference for full identifier syntax. Unicode letters are allowed in names. Reserved keywords are fixed.`],
   ["Which is NOT a valid variable name?", ["first name", "first_name", "firstName", "firstname"], 0, "Spaces are not allowed in variable names.", `first name has a space.
 
 Beginner:
@@ -2613,28 +754,7 @@ Intermediate:
 • If you need multiple words, join them with _ (snake_case) or use camelCase.
 
 Expert:
-• Lexical analysis: identifiers are a continuous sequence of allowed characters. A space terminates the token.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• Lexical analysis: identifiers are a continuous sequence of allowed characters. A space terminates the token.`],
   ["What is x after x = 7?", ["7", "x", "None", "Error"], 0, "Assignment stores the value in the variable.", `x = 7 assigns 7 to x.
 
 Beginner:
@@ -2646,28 +766,7 @@ Intermediate:
 • You can reassign: x = 8; now x is 8. Variables are just names for values.
 
 Expert:
-• Assignment is a statement; it does not return a value. Reference binding: the name x references the int object 7.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• Assignment is a statement; it does not return a value. Reference binding: the name x references the int object 7.`],
   ["What is the result of 0 + 0?", ["0", "00", "None", "Error"], 0, "0 + 0 = 0.", `Adding zeros: 0 + 0 = 0.
 
 Beginner:
@@ -2679,28 +778,7 @@ Intermediate:
 • Useful in loops when you start a sum at 0 and add to it.
 
 Expert:
-• int.__add__(0, 0) returns 0. Zero is the additive identity. For floats, 0.0 + 0.0 = 0.0.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__add__(0, 0) returns 0. Zero is the additive identity. For floats, 0.0 + 0.0 = 0.0.`],
   ["What is 1 * 0?", ["0", "1", "None", "Error"], 0, "Any number times 0 is 0.", `1 * 0 = 0.
 
 Beginner:
@@ -2712,28 +790,7 @@ Intermediate:
 • Useful when initializing products or when a count is zero.
 
 Expert:
-• int.__mul__; multiplication by zero short-circuits to zero. For sequences, [] * n or '' * n gives empty sequence.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__mul__; multiplication by zero short-circuits to zero. For sequences, [] * n or '' * n gives empty sequence.`],
   ["What is 5 - 5?", ["0", "10", "5", "Error"], 0, "5 - 5 = 0.", `5 - 5 = 0.
 
 Beginner:
@@ -2745,28 +802,7 @@ Intermediate:
 • Useful for checking if two values are equal (a - b == 0 means a == b for numbers).
 
 Expert:
-• int.__sub__; x - x = 0 for any numeric x. For floats, 5.0 - 5.0 = 0.0.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__sub__; x - x = 0 for any numeric x. For floats, 5.0 - 5.0 = 0.0.`],
   ["What is 8 // 4?", ["2", "2.0", "4", "Error"], 0, "Integer division: 8 // 4 = 2.", `8 // 4 = 2 (floor division).
 
 Beginner:
@@ -2778,28 +814,7 @@ Intermediate:
 • For positive numbers, // truncates toward zero. For negative numbers, it floors toward negative infinity.
 
 Expert:
-• int.__floordiv__; (a // b) * b + (a % b) == a when b != 0. Result type matches the operands.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__floordiv__; (a // b) * b + (a % b) == a when b != 0. Result type matches the operands.`],
   ["What is 7 % 4?", ["3", "1", "2", "Error"], 0, "Remainder when 7 is divided by 4.", `7 % 4 = 3 (remainder).
 
 Beginner:
@@ -2811,28 +826,7 @@ Intermediate:
 • divmod(7, 4) returns (1, 3) in one call. Useful for wrapping indices: index % length.
 
 Expert:
-• int.__mod__; Python's % sign follows the divisor. Used for cyclic patterns and even/odd (n % 2).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__mod__; Python's % sign follows the divisor. Used for cyclic patterns and even/odd (n % 2).`],
   ["What is 3 ** 2?", ["9", "6", "8", "Error"], 0, "3 squared is 9.", `3 ** 2 = 9 (3 squared).
 
 Beginner:
@@ -2844,28 +838,7 @@ Intermediate:
 • ** is right-associative: 2 ** 3 ** 2 = 2 ** 9 = 512.
 
 Expert:
-• int.__pow__; pow(3, 2) is equivalent. For very large exponents, Python uses efficient algorithms.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__pow__; pow(3, 2) is equivalent. For very large exponents, Python uses efficient algorithms.`],
   ["What is len('')?", ["0", "1", "None", "Error"], 0, "Empty string has length 0.", `len() counts characters; empty string has length 0.
 
 Beginner:
@@ -2877,28 +850,7 @@ Intermediate:
 • bool('') is False (empty strings are falsy). So if s: ... skips empty strings.
 
 Expert:
-• len() calls __len__; for str it returns the number of Unicode code points. O(1) for built-in types.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• len() calls __len__; for str it returns the number of Unicode code points. O(1) for built-in types.`],
   ["What is len('A')?", ["1", "0", "A", "Error"], 0, "One character has length 1.", `len('A') = 1.
 
 Beginner:
@@ -2910,28 +862,7 @@ Intermediate:
 • 'A'[0] returns 'A'; indexing a string returns a string (of length 1).
 
 Expert:
-• str.__len__ returns the number of elements in the sequence. For ASCII, one char = one byte; for Unicode, one "character" may be one or more code points.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str.__len__ returns the number of elements in the sequence. For ASCII, one char = one byte; for Unicode, one "character" may be one or more code points.`],
   ["What is len('AB')?", ["2", "1", "AB", "Error"], 0, "Two characters have length 2.", `len('AB') = 2.
 
 Beginner:
@@ -2943,28 +874,7 @@ Intermediate:
 • Strings are sequences; len works on any sequence (list, tuple, range, etc.).
 
 Expert:
-• len('AB') is 2; each index 0 and 1 is valid. Negative indices: 'AB'[-1] is 'B', 'AB'[-2] is 'A'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• len('AB') is 2; each index 0 and 1 is valid. Negative indices: 'AB'[-1] is 'B', 'AB'[-2] is 'A'.`],
   ["What is len([])?", ["0", "1", "None", "Error"], 0, "Empty list has length 0.", `len([]) = 0.
 
 Beginner:
@@ -2976,28 +886,7 @@ Intermediate:
 • [] is the identity for list concatenation: [] + L == L.
 
 Expert:
-• list.__len__; O(1) for lists (length is stored). Empty list is a singleton in some contexts.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list.__len__; O(1) for lists (length is stored). Empty list is a singleton in some contexts.`],
   ["What is len([5])?", ["1", "0", "5", "Error"], 0, "One item in the list.", `len([5]) = 1.
 
 Beginner:
@@ -3009,28 +898,7 @@ Intermediate:
 • A list can hold any type; here the single element is an int.
 
 Expert:
-• list.__len__ returns the number of elements. [5] is a list of one int; len is 1 regardless of the value.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list.__len__ returns the number of elements. [5] is a list of one int; len is 1 regardless of the value.`],
   ["What is len([1, 2])?", ["2", "1", "3", "Error"], 0, "Two items in the list.", `len([1, 2]) = 2.
 
 Beginner:
@@ -3042,28 +910,7 @@ Intermediate:
 • Lists are ordered and mutable; you can change, append, or remove elements.
 
 Expert:
-• list.__len__; length is stored, so len() is O(1). The list contains references to two int objects.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list.__len__; length is stored, so len() is O(1). The list contains references to two int objects.`],
   ["What is bool(0)?", ["False", "True", "0", "Error"], 0, "0 is falsy in Python.", `bool(0) is False.
 
 Beginner:
@@ -3075,28 +922,7 @@ Intermediate:
 • For numbers, zero is falsy; all other numbers are truthy.
 
 Expert:
-• bool calls __bool__ (or __len__ for some types). 0 is one of the built-in falsy values. Use "if x is None" when you mean None specifically.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• bool calls __bool__ (or __len__ for some types). 0 is one of the built-in falsy values. Use "if x is None" when you mean None specifically.`],
   ["What is bool(1)?", ["True", "False", "1", "Error"], 0, "Non-zero numbers are truthy.", `bool(1) is True.
 
 Beginner:
@@ -3108,28 +934,7 @@ Intermediate:
 • For numbers, only 0 (and 0.0) are falsy; everything else is truthy.
 
 Expert:
-• int.__bool__ returns False for 0, True otherwise. True and 1 are equal in value but type(True) is bool.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__bool__ returns False for 0, True otherwise. True and 1 are equal in value but type(True) is bool.`],
   ["What is bool('')?", ["False", "True", "''", "Error"], 0, "Empty string is falsy.", `bool('') is False.
 
 Beginner:
@@ -3141,28 +946,7 @@ Intermediate:
 • Empty sequence/collection types are generally falsy: '', [], {}, () (and 0, None, False).
 
 Expert:
-• str.__bool__ (or __len__) — empty string has length 0, so it's falsy. Use "if not s" to check for empty string.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str.__bool__ (or __len__) — empty string has length 0, so it's falsy. Use "if not s" to check for empty string.`],
   ["What is bool('a')?", ["True", "False", "1", "Error"], 0, "Non-empty string is truthy.", `bool('a') is True.
 
 Beginner:
@@ -3174,28 +958,7 @@ Intermediate:
 • Even a string of spaces '   ' is truthy (it's not empty).
 
 Expert:
-• str.__bool__ returns True when len(s) > 0. So any string with one or more characters is truthy.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str.__bool__ returns True when len(s) > 0. So any string with one or more characters is truthy.`],
   ["What is int(2.9)?", ["2", "3", "2.0", "Error"], 0, "int() truncates toward zero.", `int(2.9) = 2.
 
 Beginner:
@@ -3207,28 +970,7 @@ Intermediate:
 • So int() truncates toward zero; // (floor division) floors toward negative infinity for negatives.
 
 Expert:
-• int() truncates toward zero; for float x, int(x) is the same as x//1 for positive x. Use math.floor or math.ceil when you need different rounding.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int() truncates toward zero; for float x, int(x) is the same as x//1 for positive x. Use math.floor or math.ceil when you need different rounding.`],
   ["What is float(3)?", ["3.0", "3", "3.00", "Error"], 0, "float(3) gives 3.0.", `Converts int to float: float(3) = 3.0.
 
 Beginner:
@@ -3240,28 +982,7 @@ Intermediate:
 • float('3.14') also works—it parses a string to a float. Invalid strings raise ValueError.
 
 Expert:
-• float() with one argument converts to float; with two arguments (e.g. float(1, 2)) it's not valid. float from int is exact for integers within precision.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• float() with one argument converts to float; with two arguments (e.g. float(1, 2)) it's not valid. float from int is exact for integers within precision.`],
   ["What is str(42)?", ["'42'", "42", "42.0", "Error"], 0, "str(42) is the string '42'.", `Converts number to string: str(42) = '42'.
 
 Beginner:
@@ -3273,28 +994,7 @@ Intermediate:
 • str() works on any type; it returns a human-readable representation.
 
 Expert:
-• str() calls __str__; for int it returns the decimal representation. For custom classes, define __str__ for readable output. repr() often gives a more technical representation.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str() calls __str__; for int it returns the decimal representation. For custom classes, define __str__ for readable output. repr() often gives a more technical representation.`],
   ["What is 4 + 5?", ["9", "45", "1", "Error"], 0, "4 + 5 = 9.", `4 + 5 = 9.
 
 Beginner:
@@ -3306,28 +1006,7 @@ Intermediate:
 • For strings, + concatenates: '4' + '5' = '45' (different from 4 + 5).
 
 Expert:
-• int.__add__; result is int. For int + float, the int is promoted to float and the result is float.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__add__; result is int. For int + float, the int is promoted to float and the result is float.`],
   ["What is 6 - 2?", ["4", "8", "12", "Error"], 0, "6 - 2 = 4.", `6 - 2 = 4.
 
 Beginner:
@@ -3339,28 +1018,7 @@ Intermediate:
 • The - operator is also unary minus: -(-2) = 2.
 
 Expert:
-• int.__sub__; for mixed types, result is float. Subtraction is the inverse of addition.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__sub__; for mixed types, result is float. Subtraction is the inverse of addition.`],
   ["What is 3 * 3?", ["9", "6", "33", "Error"], 0, "3 * 3 = 9.", `3 * 3 = 9.
 
 Beginner:
@@ -3372,28 +1030,7 @@ Intermediate:
 • type(3*3) is int. 3 * 3.0 = 9.0 (float).
 
 Expert:
-• int.__mul__; for int * int the result is int. For str * int or list * int, the sequence is repeated (int must be non-negative).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__mul__; for int * int the result is int. For str * int or list * int, the sequence is repeated (int must be non-negative).`],
   ["What is 12 / 4?", ["3.0", "3", "4.0", "Error"], 0, "12 / 4 = 3.0 (float).", `Division returns float: 12 / 4 = 3.0.
 
 Beginner:
@@ -3405,28 +1042,7 @@ Intermediate:
 • This avoids confusion: / always means "divide and get a float" in Python 3.
 
 Expert:
-• float.__truediv__; int/int in Python 3 returns float. Use // when you need an integer quotient.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• float.__truediv__; int/int in Python 3 returns float. Use // when you need an integer quotient.`],
   ["What is 15 // 4?", ["3", "3.75", "4", "Error"], 0, "15 // 4 = 3 (floor division).", `15 // 4 = 3 (floor division).
 
 Beginner:
@@ -3438,28 +1054,7 @@ Intermediate:
 • For negative numbers, // floors toward negative infinity: -15 // 4 = -4.
 
 Expert:
-• int.__floordiv__; (a // b) * b + (a % b) == a when b != 0. Result type matches the operands.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__floordiv__; (a // b) * b + (a % b) == a when b != 0. Result type matches the operands.`],
   ["What is 5 % 2?", ["1", "2", "0", "Error"], 0, "5 % 2 = 1 (remainder).", `5 % 2 = 1 (modulo / remainder).
 
 Beginner:
@@ -3471,28 +1066,7 @@ Intermediate:
 • Used for wraparound: index % length keeps an index in range. Also for cycles (e.g. days of the week).
 
 Expert:
-• int.__mod__; Python's % sign follows the divisor. For negative numbers, result sign matches divisor. Used in hashing and cyclic patterns.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__mod__; Python's % sign follows the divisor. For negative numbers, result sign matches divisor. Used in hashing and cyclic patterns.`],
   ["What is 10 ** 0?", ["1", "0", "10", "Error"], 0, "Any number to the power 0 is 1.", `10 ** 0 = 1.
 
 Beginner:
@@ -3504,28 +1078,7 @@ Intermediate:
 • So 10**0 = 1, 10**1 = 10, 10**2 = 100.
 
 Expert:
-• int.__pow__; for a**0 Python returns 1 for all a (including 0**0 = 1 in Python). Mathematically, 0**0 is sometimes defined as 1 for convenience.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__pow__; for a**0 Python returns 1 for all a (including 0**0 = 1 in Python). Mathematically, 0**0 is sometimes defined as 1 for convenience.`],
   ["What is -(-2)?", ["2", "-2", "0", "Error"], 0, "Negative of -2 is 2.", `Double negative: -(-2) = 2.
 
 Beginner:
@@ -3537,28 +1090,7 @@ Intermediate:
 • Useful when you have a variable that might be negative and you want the positive value (or use abs()).
 
 Expert:
-• int.__neg__; unary minus returns the additive inverse. -(-x) == x for any numeric x. No overflow for Python int.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__neg__; unary minus returns the additive inverse. -(-x) == x for any numeric x. No overflow for Python int.`],
   ["What is abs(-7)?", ["7", "-7", "0", "Error"], 0, "abs() gives the absolute value.", `abs(-7) = 7.
 
 Beginner:
@@ -3570,28 +1102,7 @@ Intermediate:
 • Works with int and float. For complex numbers, abs() returns the magnitude.
 
 Expert:
-• abs() calls __abs__; for int and float it's the mathematical absolute value. For complex, abs(a+bj) = sqrt(a**2 + b**2).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• abs() calls __abs__; for int and float it's the mathematical absolute value. For complex, abs(a+bj) = sqrt(a**2 + b**2).`],
   ["What is min(5, 3)?", ["3", "5", "4", "Error"], 0, "min() returns the smaller value.", `min(5, 3) = 3.
 
 Beginner:
@@ -3603,28 +1114,7 @@ Intermediate:
 • Works with any comparable types (numbers, strings by lexicographic order).
 
 Expert:
-• min() can take a key function: min([-1, 2, -3], key=abs) = -1. Default is identity. For multiple args, returns the smallest; for one iterable, returns the smallest element.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• min() can take a key function: min([-1, 2, -3], key=abs) = -1. Default is identity. For multiple args, returns the smallest; for one iterable, returns the smallest element.`],
   ["What is max(5, 3)?", ["5", "3", "4", "Error"], 0, "max() returns the larger value.", `max(5, 3) = 5.
 
 Beginner:
@@ -3636,28 +1126,7 @@ Intermediate:
 • Works with any comparable types. For strings, comparison is lexicographic.
 
 Expert:
-• max() can take a key function: max([-1, 2, -3], key=abs) = -3. Default is identity. For one iterable, returns the largest element.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• max() can take a key function: max([-1, 2, -3], key=abs) = -3. Default is identity. For one iterable, returns the largest element.`],
   ["What is round(2.4)?", ["2", "2.0", "3", "Error"], 0, "round(2.4) = 2 (rounds down here).", `round(2.4) = 2.
 
 Beginner:
@@ -3669,28 +1138,7 @@ Intermediate:
 • round() can take a second argument (number of decimal places): round(2.456, 2) = 2.46.
 
 Expert:
-• round() uses round half to even to reduce bias. round(2.4) returns 2 (int when no second arg). For Decimal, rounding modes can be specified.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• round() uses round half to even to reduce bias. round(2.4) returns 2 (int when no second arg). For Decimal, rounding modes can be specified.`],
   ["What is round(2.6)?", ["3", "2", "2.0", "Error"], 0, "round(2.6) = 3.", `round(2.6) = 3.
 
 Beginner:
@@ -3702,28 +1150,7 @@ Intermediate:
 • round(x, n) rounds to n decimal places: round(2.678, 2) = 2.68.
 
 Expert:
-• round(2.6) returns 3 (int). Banker's rounding: round half to even. So 0.5 rounds to 0 or 2 depending on the integer part. Reduces cumulative rounding bias.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• round(2.6) returns 3 (int). Banker's rounding: round half to even. So 0.5 rounds to 0 or 2 depending on the integer part. Reduces cumulative rounding bias.`],
   ["What is 'a' + 'b'?", ["'ab'", "'a b'", "'ba'", "Error"], 0, "Strings concatenate with +.", `'a' + 'b' = 'ab'.
 
 Beginner:
@@ -3735,28 +1162,7 @@ Intermediate:
 • You can chain: 'a' + 'b' + 'c' = 'abc'. Only strings can be concatenated with + (no string + int without converting).
 
 Expert:
-• str.__add__; each + creates a new string object. For building long strings in a loop, use a list and str.join() to avoid O(n^2) behavior.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str.__add__; each + creates a new string object. For building long strings in a loop, use a list and str.join() to avoid O(n^2) behavior.`],
   ["What is 'x' * 2?", ["'xx'", "'x x'", "2", "Error"], 0, "String times number repeats the string.", `'x' * 2 = 'xx'.
 
 Beginner:
@@ -3768,28 +1174,7 @@ Intermediate:
 • list * int also works: [1, 2] * 2 = [1, 2, 1, 2]. The sequence is repeated, not the elements multiplied.
 
 Expert:
-• str.__mul__; the int must be >= 0 (negative gives ''). For sequences, * with int repeats the sequence; it's shallow (same references).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str.__mul__; the int must be >= 0 (negative gives ''). For sequences, * with int repeats the sequence; it's shallow (same references).`],
   ["What is [1] + [2]?", ["[1, 2]", "[3]", "[2, 1]", "Error"], 0, "Lists concatenate with +.", `[1] + [2] = [1, 2].
 
 Beginner:
@@ -3801,28 +1186,7 @@ Intermediate:
 • Like strings, + concatenates. So [1, 2] + [3, 4] = [1, 2, 3, 4]. For in-place extend, use .extend().
 
 Expert:
-• list.__add__ returns a new list; the two operands are unchanged. For repeated concatenation in a loop, extend() or += is more efficient than repeated +.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list.__add__ returns a new list; the two operands are unchanged. For repeated concatenation in a loop, extend() or += is more efficient than repeated +.`],
   ["What is 'hi'[0]?", ["'h'", "'i'", "0", "Error"], 0, "Index 0 is the first character.", `'hi'[0] = 'h'.
 
 Beginner:
@@ -3834,28 +1198,7 @@ Intermediate:
 • There is no separate "char" type in Python; 'h' is a string of length 1.
 
 Expert:
-• str.__getitem__; indexing returns a str of length 1. For bytes, indexing returns an int (0-255). Negative indices: 'hi'[-1] = 'i'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str.__getitem__; indexing returns a str of length 1. For bytes, indexing returns an int (0-255). Negative indices: 'hi'[-1] = 'i'.`],
   ["What is 'hi'[1]?", ["'i'", "'h'", "1", "Error"], 0, "Index 1 is the second character.", `'hi'[1] = 'i'.
 
 Beginner:
@@ -3867,28 +1210,7 @@ Intermediate:
 • You can use negative indices: 'hi'[-1] is the last character ('i'), 'hi'[-2] is the second-to-last ('h').
 
 Expert:
-• Sequence indexing; index 1 is the second element. Slicing 'hi'[1:2] also gives 'i'. IndexError for out-of-range.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• Sequence indexing; index 1 is the second element. Slicing 'hi'[1:2] also gives 'i'. IndexError for out-of-range.`],
   ["What is 'hi'[-1]?", ["'i'", "'h'", "-1", "Error"], 0, "Index -1 is the last character.", `'hi'[-1] = 'i' (negative index: last character).
 
 Beginner:
@@ -3900,28 +1222,7 @@ Intermediate:
 • Works for any sequence: lists, tuples. So [10, 20, 30][-1] = 30.
 
 Expert:
-• Negative indices are converted to positive: -1 becomes len(s)-1. So s[-1] is s[len(s)-1]. No special type for "last".
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• Negative indices are converted to positive: -1 becomes len(s)-1. So s[-1] is s[len(s)-1]. No special type for "last".`],
   ["What is [10, 20][0]?", ["10", "20", "0", "Error"], 0, "First element of the list.", `[10, 20][0] = 10.
 
 Beginner:
@@ -3933,28 +1234,7 @@ Intermediate:
 • Lists are mutable: L[0] = 99 would change the first element to 99.
 
 Expert:
-• list.__getitem__; indexing returns the object at that position (by reference). Assignment L[i] = x mutates the list.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list.__getitem__; indexing returns the object at that position (by reference). Assignment L[i] = x mutates the list.`],
   ["What is [10, 20][1]?", ["20", "10", "1", "Error"], 0, "Second element of the list.", `[10, 20][1] = 20.
 
 Beginner:
@@ -3966,28 +1246,7 @@ Intermediate:
 • Indexing works the same for lists, tuples, and strings (all sequences).
 
 Expert:
-• Sequence indexing; O(1) for list. The returned value is the object at that index (reference, not copy for mutable elements).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• Sequence indexing; O(1) for list. The returned value is the object at that index (reference, not copy for mutable elements).`],
   ["What is 2 == 2?", ["True", "False", "1", "Error"], 0, "== checks equality.", `2 == 2 is True.
 
 Beginner:
@@ -3999,28 +1258,7 @@ Intermediate:
 • Use == for value equality. Use "is" for identity (same object in memory)—e.g. x is None.
 
 Expert:
-• == calls __eq__; default is identity for object, but int/float/str override for value equality. 2 == 2.0 is True; type(2) != type(2.0).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• == calls __eq__; default is identity for object, but int/float/str override for value equality. 2 == 2.0 is True; type(2) != type(2.0).`],
   ["What is 2 == 3?", ["False", "True", "0", "Error"], 0, "2 is not equal to 3.", `2 == 3 is False.
 
 Beginner:
@@ -4032,28 +1270,7 @@ Intermediate:
 • Comparison operators return bool. Chaining is allowed: 1 < 2 < 3 is True (same as 1 < 2 and 2 < 3).
 
 Expert:
-• __eq__ returns False. For custom classes, define __eq__ for meaningful equality. Don't use == to compare to None; use "is None".
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• __eq__ returns False. For custom classes, define __eq__ for meaningful equality. Don't use == to compare to None; use "is None".`],
   ["What is 2 != 3?", ["True", "False", "1", "Error"], 0, "!= is 'not equal'.", `2 != 3 is True.
 
 Beginner:
@@ -4065,28 +1282,7 @@ Intermediate:
 • Same as not (2 == 3). For "not None", prefer "x is not None" over "x != None".
 
 Expert:
-• != calls __ne__; default is not __eq__. So a != b is typically not (a == b). Override __eq__ and __ne__ together for consistency.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• != calls __ne__; default is not __eq__. So a != b is typically not (a == b). Override __eq__ and __ne__ together for consistency.`],
   ["What is 2 < 3?", ["True", "False", "1", "Error"], 0, "2 is less than 3.", `2 < 3 is True.
 
 Beginner:
@@ -4098,28 +1294,7 @@ Intermediate:
 • For strings, < uses lexicographic (dictionary) order: 'a' < 'b' is True.
 
 Expert:
-• int.__lt__; rich comparison. For mixed int and float, they compare by value. Chained comparisons (a < b < c) are evaluated as a < b and b < c (b evaluated once).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__lt__; rich comparison. For mixed int and float, they compare by value. Chained comparisons (a < b < c) are evaluated as a < b and b < c (b evaluated once).`],
   ["What is 3 > 2?", ["True", "False", "1", "Error"], 0, "3 is greater than 2.", `3 > 2 is True.
 
 Beginner:
@@ -4131,28 +1306,7 @@ Intermediate:
 • Works for any comparable types (numbers, strings by order).
 
 Expert:
-• int.__gt__; part of rich comparison. For sorting, key functions can transform values before comparison.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__gt__; part of rich comparison. For sorting, key functions can transform values before comparison.`],
   ["What is 2 <= 2?", ["True", "False", "1", "Error"], 0, "<= means less than or equal.", `2 <= 2 is True.
 
 Beginner:
@@ -4164,28 +1318,7 @@ Intermediate:
 • Useful for ranges: 0 <= i < len(L) checks that i is a valid index for list L.
 
 Expert:
-• int.__le__; a <= b is equivalent to (a < b) or (a == b). For consistency, implement all of <, <=, >, >=, ==, != together.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__le__; a <= b is equivalent to (a < b) or (a == b). For consistency, implement all of <, <=, >, >=, ==, != together.`],
   ["What is 3 >= 3?", ["True", "False", "1", "Error"], 0, ">= means greater than or equal.", `3 >= 3 is True.
 
 Beginner:
@@ -4197,28 +1330,7 @@ Intermediate:
 • Chaining: 1 <= 2 <= 3 is True. So 1 <= 2 and 2 <= 3.
 
 Expert:
-• int.__ge__; a >= b is (a > b) or (a == b). For sorting and bounds checking, <= and >= are standard.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__ge__; a >= b is (a > b) or (a == b). For sorting and bounds checking, <= and >= are standard.`],
   ["What is not False?", ["True", "False", "None", "Error"], 0, "not flips the boolean.", `not False is True.
 
 Beginner:
@@ -4230,28 +1342,7 @@ Intermediate:
 • So not 0 is True, not '' is True. not returns a boolean (True or False).
 
 Expert:
-• not has lower precedence than comparison; so not a == b is not (a == b). not is a unary operator; use "is not" for identity.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• not has lower precedence than comparison; so not a == b is not (a == b). not is a unary operator; use "is not" for identity.`],
   ["What is not True?", ["False", "True", "None", "Error"], 0, "not True is False.", `not inverts the value: not True is False.
 
 Beginner:
@@ -4263,28 +1354,7 @@ Intermediate:
 • not always returns a bool (True or False). So not 5 is False (5 is truthy).
 
 Expert:
-• not calls __bool__ then inverts. So not x is equivalent to False if x else True. Precedence: not a and b is (not a) and b.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• not calls __bool__ then inverts. So not x is equivalent to False if x else True. Precedence: not a and b is (not a) and b.`],
   ["What is True and True?", ["True", "False", "None", "Error"], 0, "Both must be True for and.", `True and True = True.
 
 Beginner:
@@ -4296,28 +1366,7 @@ Intermediate:
 • For non-boolean values, and returns the first falsy or the last value: 3 and 4 is 4 (both truthy, return last).
 
 Expert:
-• and returns the first falsy operand or the last operand. So 0 and 5 is 0; 3 and 4 is 4. Short-circuit evaluation: second operand not evaluated if first is falsy.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• and returns the first falsy operand or the last operand. So 0 and 5 is 0; 3 and 4 is 4. Short-circuit evaluation: second operand not evaluated if first is falsy.`],
   ["What is True and False?", ["False", "True", "None", "Error"], 0, "And is False if one is False.", `True and False = False.
 
 Beginner:
@@ -4329,28 +1378,7 @@ Intermediate:
 • So and returns the first falsy value, or the last if all are truthy. So True and False returns False.
 
 Expert:
-• and returns the first falsy or the last. So True and False is False (the first falsy). Used for guard clauses: x and x.method().
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• and returns the first falsy or the last. So True and False is False (the first falsy). Used for guard clauses: x and x.method().`],
   ["What is True or False?", ["True", "False", "None", "Error"], 0, "Or is True if one is True.", `True or False = True.
 
 Beginner:
@@ -4362,28 +1390,7 @@ Intermediate:
 • For non-boolean values, or returns the first truthy or the last: 0 or 5 is 5 (first is falsy, return second).
 
 Expert:
-• or returns the first truthy operand or the last. So True or False is True (first truthy). 0 or 5 is 5. Short-circuit: second not evaluated if first is truthy.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• or returns the first truthy operand or the last. So True or False is True (first truthy). 0 or 5 is 5. Short-circuit: second not evaluated if first is truthy.`],
   ["What is False or False?", ["False", "True", "None", "Error"], 0, "Both must be False for or to be False.", `False or False = False.
 
 Beginner:
@@ -4395,28 +1402,7 @@ Intermediate:
 • So or returns the first truthy or the last. Here both are falsy, so the result is the last: False.
 
 Expert:
-• or returns the first truthy or the last. False or False returns False (no truthy, so last). Used for defaults: x = user_input or "default".
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• or returns the first truthy or the last. False or False returns False (no truthy, so last). Used for defaults: x = user_input or "default".`],
   ["What is 1 + 2 * 3?", ["7", "9", "5", "Error"], 0, "Multiplication before addition.", `2*3=6, 1+6=7. Operator precedence.
 
 Beginner:
@@ -4428,28 +1414,7 @@ Intermediate:
 • Use parentheses to change order: (1 + 2) * 3 = 9.
 
 Expert:
-• Python follows standard precedence; * and / before + and -. So 1+2*3 is 7. Use parentheses for clarity when in doubt.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• Python follows standard precedence; * and / before + and -. So 1+2*3 is 7. Use parentheses for clarity when in doubt.`],
   ["What is (1 + 2) * 3?", ["9", "7", "6", "Error"], 0, "Parentheses first.", `(1+2)*3 = 3*3 = 9.
 
 Beginner:
@@ -4461,28 +1426,7 @@ Intermediate:
 • Use () whenever you want to force a different order of evaluation.
 
 Expert:
-• Parentheses have the highest precedence. So (1+2)*3 evaluates the subexpression first. Essential for readability and correct logic.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• Parentheses have the highest precedence. So (1+2)*3 evaluates the subexpression first. Essential for readability and correct logic.`],
   ["What is 10 / 2?", ["5.0", "5", "5.00", "Error"], 0, "Division gives float.", `10 / 2 = 5.0.
 
 Beginner:
@@ -4494,28 +1438,7 @@ Intermediate:
 • type(5.0) is float. So 10/2 is 5.0, and 10//2 is 5.
 
 Expert:
-• In Python 3, / is always float division. int/int returns float. Use // for integer quotient. So 10/2 is 5.0.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• In Python 3, / is always float division. int/int returns float. Use // for integer quotient. So 10/2 is 5.0.`],
   ["What is 10 // 3?", ["3", "3.0", "4", "Error"], 0, "10 // 3 = 3.", `Integer division: 10 // 3 = 3.
 
 Beginner:
@@ -4527,28 +1450,7 @@ Intermediate:
 • So 10//3 is 3; -10//3 is -4 (not -3).
 
 Expert:
-• int.__floordiv__; (a//b)*b + (a%b) == a when b != 0. Result type matches operands. 10//3 is 3.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__floordiv__; (a//b)*b + (a%b) == a when b != 0. Result type matches operands. 10//3 is 3.`],
   ["What is 10 % 3?", ["1", "0", "3", "Error"], 0, "10 % 3 = 1 (remainder).", `Modulo: 10 % 3 = 1.
 
 Beginner:
@@ -4560,28 +1462,7 @@ Intermediate:
 • Used for cycles: day % 7 for day of week, index % len(list) for wraparound.
 
 Expert:
-• int.__mod__; Python's % sign follows the divisor. So -10 % 3 = 2 (not -1). Used in hashing and cyclic arithmetic.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__mod__; Python's % sign follows the divisor. So -10 % 3 = 2 (not -1). Used in hashing and cyclic arithmetic.`],
   ["What is 'abc'[1:2]?", ["'b'", "'ab'", "'bc'", "Error"], 0, "Slice from index 1 to 2 (exclusive).", `'abc'[1:2] = 'b'. Slice [start:end] is end-exclusive.
 
 Beginner:
@@ -4593,28 +1474,7 @@ Intermediate:
 • Slicing never raises IndexError; out-of-range gives empty or shorter result. So 'abc'[10:20] = ''.
 
 Expert:
-• slice(1, 2); s[1:2] returns s.__getitem__(slice(1, 2)). For str, returns new str. End is exclusive; step defaults to 1.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• slice(1, 2); s[1:2] returns s.__getitem__(slice(1, 2)). For str, returns new str. End is exclusive; step defaults to 1.`],
   ["What is 'abc'[:2]?", ["'ab'", "'abc'", "'a'", "Error"], 0, "From start to index 2.", `'abc'[:2] = 'ab'. Missing start means 0.
 
 Beginner:
@@ -4626,28 +1486,7 @@ Intermediate:
 • Useful for prefixes: 'hello'[:2] = 'he'. Negative indices work in slices: 'abc'[:-1] = 'ab' (all but last).
 
 Expert:
-• slice(None, 2); start defaults to 0. So s[:2] is s[0:2]. Same for lists and any sequence. O(n) for slice length.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• slice(None, 2); start defaults to 0. So s[:2] is s[0:2]. Same for lists and any sequence. O(n) for slice length.`],
   ["What is 'abc'[1:]?", ["'bc'", "'ab'", "'abc'", "Error"], 0, "From index 1 to end.", `'abc'[1:] = 'bc'. Missing end means "to the end".
 
 Beginner:
@@ -4659,28 +1498,7 @@ Intermediate:
 • Useful for suffixes and "rest of sequence". Same for lists: [1, 2, 3][1:] = [2, 3].
 
 Expert:
-• slice(1, None); end None means len(s). So s[1:] is s[1:len(s)]. Returns new sequence; does not modify original.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• slice(1, None); end None means len(s). So s[1:] is s[1:len(s)]. Returns new sequence; does not modify original.`],
   ["What is list('ab')?", ["['a', 'b']", "'ab'", "['ab']", "Error"], 0, "list() turns each character into an element.", `list('ab') = ['a', 'b'].
 
 Beginner:
@@ -4692,28 +1510,7 @@ Intermediate:
 • The reverse: ''.join(['a','b']) = 'ab'. So list() and join() convert between str and list of characters.
 
 Expert:
-• list(iterable) builds a list from any iterable. For str, iterating yields single-character strings. So list('ab') creates a new list with two elements.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list(iterable) builds a list from any iterable. For str, iterating yields single-character strings. So list('ab') creates a new list with two elements.`],
   ["What is tuple([1, 2])?", ["(1, 2)", "[1, 2]", "(2, 1)", "Error"], 0, "tuple() converts list to tuple.", `tuple([1, 2]) = (1, 2).
 
 Beginner:
@@ -4725,28 +1522,7 @@ Intermediate:
 • Tuples are hashable when their elements are hashable; so (1, 2) can be a dict key. Lists cannot.
 
 Expert:
-• tuple(iterable) builds a tuple from the iterable. So tuple([1,2]) creates (1, 2). Tuples are immutable; use for fixed data or dict keys.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• tuple(iterable) builds a tuple from the iterable. So tuple([1,2]) creates (1, 2). Tuples are immutable; use for fixed data or dict keys.`],
   ["What is set([1, 1, 2])?", ["{1, 2}", "[1, 2]", "{1, 1, 2}", "Error"], 0, "set() removes duplicates.", `set([1,1,2]) = {1, 2}.
 
 Beginner:
@@ -4758,28 +1534,7 @@ Intermediate:
 • Sets are unordered and mutable. Use for membership tests (in) and removing duplicates.
 
 Expert:
-• set(iterable) builds a set; duplicates are removed (set has unique elements). Hashability required. So set([1,1,2]) = {1, 2}.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• set(iterable) builds a set; duplicates are removed (set has unique elements). Hashability required. So set([1,1,2]) = {1, 2}.`],
   ["What is dict()?", ["{}", "[]", "None", "Error"], 0, "dict() creates an empty dictionary.", `dict() = {}.
 
 Beginner:
@@ -4791,28 +1546,7 @@ Intermediate:
 • dict() is useful when building a dict in a loop: d = dict(); d['key'] = value.
 
 Expert:
-• dict() with no arguments returns a new empty dict. dict is a mapping type; from Python 3.7+ it preserves insertion order.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• dict() with no arguments returns a new empty dict. dict is a mapping type; from Python 3.7+ it preserves insertion order.`],
   ["What is list()?", ["[]", "()", "None", "Error"], 0, "list() creates an empty list.", `list() = [].
 
 Beginner:
@@ -4824,28 +1558,7 @@ Intermediate:
 • Common pattern: result = list(); for x in items: result.append(f(x)). Or use a list comprehension.
 
 Expert:
-• list() with no arguments returns a new empty list. list(iterable) consumes the iterable and builds a list. O(n) for length n.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list() with no arguments returns a new empty list. list(iterable) consumes the iterable and builds a list. O(n) for length n.`],
   ["What is int('9')?", ["9", "'9'", "9.0", "Error"], 0, "int() converts a numeric string to int.", `int('9') = 9.
 
 Beginner:
@@ -4857,28 +1570,7 @@ Intermediate:
 • int('9', 10) is base 10 (default). int('ff', 16) = 255. So you can parse different number bases.
 
 Expert:
-• int(string, base=10) parses a string to an int. ValueError for invalid input. Optional base 2-36. So int('9') = 9.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int(string, base=10) parses a string to an int. ValueError for invalid input. Optional base 2-36. So int('9') = 9.`],
   ["What is float('1.5')?", ["1.5", "1", "'1.5'", "Error"], 0, "float() converts string to float.", `float('1.5') = 1.5.
 
 Beginner:
@@ -4890,28 +1582,7 @@ Intermediate:
 • float() also works with int: float(3) = 3.0. So float('1.5') gives 1.5 (type float).
 
 Expert:
-• float(string_or_number) converts to float. 'inf', '-inf', 'nan' are valid. So float('1.5') = 1.5. Precision is IEEE 754.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• float(string_or_number) converts to float. 'inf', '-inf', 'nan' are valid. So float('1.5') = 1.5. Precision is IEEE 754.`],
   ["What is 'a' in 'cat'?", ["True", "False", "1", "Error"], 0, "'a' is a substring of 'cat'.", `'a' in 'cat' is True.
 
 Beginner:
@@ -4923,28 +1594,7 @@ Intermediate:
 • Case matters: 'A' in 'cat' is False. So 'a' in 'cat' is True.
 
 Expert:
-• str.__contains__; for strings, in checks substring membership. So 'a' in 'cat' is True. O(n) for str. For sets/dicts, in is O(1) average.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str.__contains__; for strings, in checks substring membership. So 'a' in 'cat' is True. O(n) for str. For sets/dicts, in is O(1) average.`],
   ["What is 'x' in 'cat'?", ["False", "True", "0", "Error"], 0, "'x' is not in 'cat'.", `'x' in 'cat' is False. in checks membership.
 
 Beginner:
@@ -4956,28 +1606,7 @@ Intermediate:
 • For strings, in is substring: 'at' in 'cat' is True. So single char or longer substring both work.
 
 Expert:
-• in calls __contains__. For str, it's substring search. So 'x' in 'cat' is False. Use not in for "not present".
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• in calls __contains__. For str, it's substring search. So 'x' in 'cat' is False. Use not in for "not present".`],
   ["What is 1 in [1, 2, 3]?", ["True", "False", "1", "Error"], 0, "1 is in the list.", `1 in [1, 2, 3] is True. in works for lists.
 
 Beginner:
@@ -4989,28 +1618,7 @@ Intermediate:
 • So for frequent membership tests, use a set instead of a list for speed.
 
 Expert:
-• list.__contains__; in does equality check (==) on each element. So 1 in [1, 2, 3] is True. For large lists, consider set for O(1) lookup.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list.__contains__; in does equality check (==) on each element. So 1 in [1, 2, 3] is True. For large lists, consider set for O(1) lookup.`],
   ["What is 0 in [1, 2]?", ["False", "True", "0", "Error"], 0, "0 is not in the list.", `0 in [1, 2] is False. Membership test.
 
 Beginner:
@@ -5022,28 +1630,7 @@ Intermediate:
 • in works for any iterable that supports membership: list, tuple, set, dict (keys), str (substring).
 
 Expert:
-• in returns False when the value is not found. So 0 in [1, 2] is False. For dict, in checks keys: 0 in {1: 2} is False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• in returns False when the value is not found. So 0 in [1, 2] is False. For dict, in checks keys: 0 in {1: 2} is False.`],
   ["What is None is None?", ["True", "False", "None", "Error"], 0, "There is only one None.", `None is None is True.
 
 Beginner:
@@ -5055,28 +1642,7 @@ Intermediate:
 • Use "is None" and "is not None" for None checks. Don't use == None (can be overridden by __eq__).
 
 Expert:
-• is checks object identity. None is a singleton, so None is None is always True. Use "is" for None, True, False; use == for value equality.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• is checks object identity. None is a singleton, so None is None is always True. Use "is" for None, True, False; use == for value equality.`],
   ["What is type(2 + 2)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "2+2 is 4, an int.", `type(2+2) is int; 2+2=4.
 
 Beginner:
@@ -5088,28 +1654,7 @@ Intermediate:
 • type() tells you the type of the value that an expression produces.
 
 Expert:
-• type(2+2) is int. The expression 2+2 is evaluated first (4), then type(4) is int. For mixed arithmetic, int + float -> float.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• type(2+2) is int. The expression 2+2 is evaluated first (4), then type(4) is int. For mixed arithmetic, int + float -> float.`],
   ["What is type(2 + 2.0)?", ["<class 'float'>", "<class 'int'>", "<class 'str'>", "None"], 0, "int + float gives float.", `type(2 + 2.0) is float. Mixed arithmetic promotes to float.
 
 Beginner:
@@ -5121,28 +1666,7 @@ Intermediate:
 • So whenever you mix int and float in an operation, the result is float.
 
 Expert:
-• Arithmetic type promotion: int + float -> float. So type(2+2.0) is float. The int is converted to float for the operation.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• Arithmetic type promotion: int + float -> float. So type(2+2.0) is float. The int is converted to float for the operation.`],
   ["What is type('a' * 2)?", ["<class 'str'>", "<class 'int'>", "<class 'list'>", "None"], 0, "'a'*2 = 'aa', a string.", `String repetition gives a string. type('a'*2) is str.
 
 Beginner:
@@ -5154,28 +1678,7 @@ Intermediate:
 • So str * int -> str; list * int -> list. The type of the result matches the sequence type.
 
 Expert:
-• str.__mul__(int) returns str. So type('a'*2) is str. The result is a new string; the original is unchanged (strings are immutable).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str.__mul__(int) returns str. So type('a'*2) is str. The result is a new string; the original is unchanged (strings are immutable).`],
   ["What is type([1] * 2)?", ["<class 'list'>", "<class 'tuple'>", "<class 'int'>", "None"], 0, "[1]*2 = [1, 1], a list.", `List repetition gives a list. type([1]*2) is list.
 
 Beginner:
@@ -5187,28 +1690,7 @@ Intermediate:
 • Beware: [1]*2 gives two references to the same int. For [[1]]*2 you get two references to the same list (often a bug).
 
 Expert:
-• list.__mul__(int) returns a new list with the sequence repeated. So type([1]*2) is list. Shallow copy: same elements repeated.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list.__mul__(int) returns a new list with the sequence repeated. So type([1]*2) is list. Shallow copy: same elements repeated.`],
   ["What is type(len(''))?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "len() returns an integer.", `type(len('')) is int. len() always returns an int.
 
 Beginner:
@@ -5220,28 +1702,7 @@ Intermediate:
 • So you can use len() in arithmetic: len('hi') + 1 is 3. And type(len(x)) is always int for built-in types.
 
 Expert:
-• len() calls __len__ and must return a non-negative integer. So type(len('')) is int. For custom classes, __len__ should return an int.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• len() calls __len__ and must return a non-negative integer. So type(len('')) is int. For custom classes, __len__ should return an int.`],
   ["What is sum([1, 2, 3])?", ["6", "5", "7", "Error"], 0, "sum() adds all numbers.", `sum([1, 2, 3]) = 6.
 
 Beginner:
@@ -5253,28 +1714,7 @@ Intermediate:
 • sum() works on any iterable of numbers: sum((1, 2, 3)) = 6. Empty iterable: sum([]) = 0.
 
 Expert:
-• sum(iterable, start=0) sums start + all elements. So sum([1,2,3]) = 0+1+2+3 = 6. For floats, use math.fsum() for better precision.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• sum(iterable, start=0) sums start + all elements. So sum([1,2,3]) = 0+1+2+3 = 6. For floats, use math.fsum() for better precision.`],
   ["What is sum([])?", ["0", "None", "Error", "1"], 0, "sum of empty list is 0.", `sum([]) = 0.
 
 Beginner:
@@ -5286,28 +1726,7 @@ Intermediate:
 • Useful when you might have an empty list: total = sum(numbers) works even when numbers is [].
 
 Expert:
-• sum(iterable, start=0); when iterable is empty, sum returns start. So sum([]) = 0. So sum([]) never raises; it returns 0.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• sum(iterable, start=0); when iterable is empty, sum returns start. So sum([]) = 0. So sum([]) never raises; it returns 0.`],
   ["What is min(3, 1, 2)?", ["1", "2", "3", "Error"], 0, "min() of several values.", `min(3, 1, 2) = 1.
 
 Beginner:
@@ -5319,28 +1738,7 @@ Intermediate:
 • min() works with any comparable types (numbers, strings). So min(3, 1, 2) = 1.
 
 Expert:
-• min(*args or iterable) returns the smallest. So min(3, 1, 2) = 1. Optional key: min([-1, 2, -3], key=abs) = -1.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• min(*args or iterable) returns the smallest. So min(3, 1, 2) = 1. Optional key: min([-1, 2, -3], key=abs) = -1.`],
   ["What is max(3, 1, 2)?", ["3", "2", "1", "Error"], 0, "max() of several values.", `max(3, 1, 2) = 3.
 
 Beginner:
@@ -5352,28 +1750,7 @@ Intermediate:
 • max() works with any comparable types. So max(3, 1, 2) = 3.
 
 Expert:
-• max(*args or iterable) returns the largest. So max(3, 1, 2) = 3. Optional key: max([-1, 2, -3], key=abs) = -3.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• max(*args or iterable) returns the largest. So max(3, 1, 2) = 3. Optional key: max([-1, 2, -3], key=abs) = -3.`],
   ["What is pow(2, 4)?", ["16", "8", "6", "Error"], 0, "pow(2, 4) = 2**4 = 16.", `pow(base, exp) is exponentiation. pow(2, 4) = 16.
 
 Beginner:
@@ -5385,28 +1762,7 @@ Intermediate:
 • So pow(a, b) is a**b. pow(a, b, m) is (a**b) % m (used in cryptography).
 
 Expert:
-• pow(base, exp[, mod]) returns base**exp, or (base**exp) % mod if mod is given. So pow(2, 4) = 16. Three-argument form is efficient for modular exponentiation.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• pow(base, exp[, mod]) returns base**exp, or (base**exp) % mod if mod is given. So pow(2, 4) = 16. Three-argument form is efficient for modular exponentiation.`],
   ["What is divmod(7, 2)?", ["(3, 1)", "(3.5, 0)", "(4, 1)", "Error"], 0, "divmod gives (quotient, remainder).", `divmod(7, 2) = (3, 1).
 
 Beginner:
@@ -5418,28 +1774,7 @@ Intermediate:
 • So quotient, remainder = divmod(7, 2) gives quotient=3, remainder=1. Works with floats too: divmod(7.5, 2) = (3.0, 1.5).
 
 Expert:
-• divmod(a, b) returns (a//b, a%b). So divmod(7, 2) = (3, 1). One function call instead of two; can be slightly more efficient. For b==0, ZeroDivisionError.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• divmod(a, b) returns (a//b, a%b). So divmod(7, 2) = (3, 1). One function call instead of two; can be slightly more efficient. For b==0, ZeroDivisionError.`],
   ["What is 0 ** 5?", ["0", "1", "5", "Error"], 0, "0 to any positive power is 0.", `0 ** 5 = 0.
 
 Beginner:
@@ -5451,28 +1786,7 @@ Intermediate:
 • Negative exponent: 0 ** -1 would be 1/0 (ZeroDivisionError). So 0 to a positive power is 0.
 
 Expert:
-• 0 ** n for n > 0 is 0. 0 ** 0 is 1 in Python. So 0 ** 5 = 0. For 0 ** negative, ZeroDivisionError.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 0 ** n for n > 0 is 0. 0 ** 0 is 1 in Python. So 0 ** 5 = 0. For 0 ** negative, ZeroDivisionError.`],
   ["What is 4 ** 0.5?", ["2.0", "2", "0.5", "Error"], 0, "Square root of 4.", `4 ** 0.5 = 2.0.
 
 Beginner:
@@ -5484,28 +1798,7 @@ Intermediate:
 • So 4 ** 0.5 = 2.0. For negative base, 4 ** 0.5 works; (-4) ** 0.5 would give a complex number.
 
 Expert:
-• For float exponent, ** returns float (or complex for negative base and non-integer exponent). So 4 ** 0.5 = 2.0. Use math.sqrt(4) for clarity.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• For float exponent, ** returns float (or complex for negative base and non-integer exponent). So 4 ** 0.5 = 2.0. Use math.sqrt(4) for clarity.`],
   ["What is 0 or 5?", ["5", "0", "True", "Error"], 0, "or returns first truthy or last.", `0 or 5 = 5.
 
 Beginner:
@@ -5517,28 +1810,7 @@ Intermediate:
 • Short-circuit: if the first is truthy, that's returned and the second is not evaluated. So 3 or 5 is 3.
 
 Expert:
-• or returns first truthy or last. So 0 or 5 = 5. Used for defaults: x = user_input or "default". Short-circuit evaluation.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• or returns first truthy or last. So 0 or 5 = 5. Used for defaults: x = user_input or "default". Short-circuit evaluation.`],
   ["What is 3 and 4?", ["4", "3", "True", "Error"], 0, "and returns last value if both truthy.", `3 and 4 = 4.
 
 Beginner:
@@ -5550,28 +1822,7 @@ Intermediate:
 • Short-circuit: if the first is falsy, that's returned. So 0 and 4 is 0. So 3 and 4 = 4.
 
 Expert:
-• and returns first falsy or last. So 3 and 4 = 4. Used for guard: x and x.method() returns x.method() if x is truthy, else x.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• and returns first falsy or last. So 3 and 4 = 4. Used for guard: x and x.method() returns x.method() if x is truthy, else x.`],
   ["What is 0 and 5?", ["0", "5", "False", "Error"], 0, "and short-circuits on first falsy.", `0 and 5 = 0.
 
 Beginner:
@@ -5583,28 +1834,7 @@ Intermediate:
 • So and returns the first falsy or the last. Here the first is falsy, so we return 0.
 
 Expert:
-• and short-circuits on first falsy. So 0 and 5 = 0. The second operand is not evaluated. Used for safe access: x and x[0].
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• and short-circuits on first falsy. So 0 and 5 = 0. The second operand is not evaluated. Used for safe access: x and x[0].`],
   ["What is len((1, 2))?", ["2", "1", "3", "Error"], 0, "Tuple has 2 elements.", `len((1, 2)) = 2.
 
 Beginner:
@@ -5616,28 +1846,7 @@ Intermediate:
 • So for a tuple of n elements, len() is n. (1, 2)[0] is 1, (1, 2)[1] is 2. Valid indices 0 and 1.
 
 Expert:
-• tuple.__len__; len((1, 2)) = 2. O(1) for built-in types. So the tuple has two elements; len returns 2.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• tuple.__len__; len((1, 2)) = 2. O(1) for built-in types. So the tuple has two elements; len returns 2.`],
   ["What is len({1, 2})?", ["2", "1", "3", "Error"], 0, "Set has 2 elements.", `len({1, 2}) = 2.
 
 Beginner:
@@ -5649,28 +1858,7 @@ Intermediate:
 • So for sets, len() is the number of unique elements. So len({1, 2}) = 2.
 
 Expert:
-• set.__len__; len({1, 2}) = 2. O(1) for set. So the set has two elements; len returns 2. Sets are unordered.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• set.__len__; len({1, 2}) = 2. O(1) for set. So the set has two elements; len returns 2. Sets are unordered.`],
   ["What is len({1: 2})?", ["1", "2", "0", "Error"], 0, "Dict with one key has length 1.", `len({1: 2}) = 1.
 
 Beginner:
@@ -5682,28 +1870,7 @@ Intermediate:
 • So for a dict, len() is the number of key-value pairs. So len({1: 2, 3: 4}) = 2.
 
 Expert:
-• dict.__len__; len({1: 2}) = 1. O(1). So the number of keys (or pairs) is 1. So len returns 1.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• dict.__len__; len({1: 2}) = 1. O(1). So the number of keys (or pairs) is 1. So len returns 1.`],
   ["What is [1] == [1]?", ["True", "False", "1", "Error"], 0, "Lists are equal by value.", `[1] == [1] is True.
 
 Beginner:
@@ -5715,28 +1882,7 @@ Intermediate:
 • So == for lists is not "same object"—it's "same content". So [1] == [1] is True even if they are two different list objects.
 
 Expert:
-• list.__eq__; [1] == [1] compares elements. So [1] == [1] is True. For identity use "is": [1] is [1] is False (different objects).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list.__eq__; [1] == [1] compares elements. So [1] == [1] is True. For identity use "is": [1] is [1] is False (different objects).`],
   ["What is 'ab' == 'ab'?", ["True", "False", "1", "Error"], 0, "Equal strings.", `'ab' == 'ab' is True.
 
 Beginner:
@@ -5748,28 +1894,7 @@ Intermediate:
 • So == for strings is content equality. So 'ab' == 'ab' is True. Case matters: 'Ab' == 'ab' is False.
 
 Expert:
-• str.__eq__; 'ab' == 'ab' is True. So content equality. For identity use "is": 'ab' is 'ab' may be True due to interning. Prefer == for value.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str.__eq__; 'ab' == 'ab' is True. So content equality. For identity use "is": 'ab' is 'ab' may be True due to interning. Prefer == for value.`],
   ["What is (1,) == (1,)?", ["True", "False", "1", "Error"], 0, "Equal tuples.", `(1,) == (1,) is True.
 
 Beginner:
@@ -5781,28 +1906,7 @@ Intermediate:
 • So == for tuples is content equality. So (1,) == (1,) is True. Tuples are immutable, so equality is straightforward.
 
 Expert:
-• tuple.__eq__; (1,) == (1,) is True. So value equality. For identity, (1,) is (1,) may be False (different objects). Use == for value.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• tuple.__eq__; (1,) == (1,) is True. So value equality. For identity, (1,) is (1,) may be False (different objects). Use == for value.`],
   ["What is 1 == True?", ["True", "False", "None", "Error"], 0, "In Python, 1 equals True (value).", `1 == True is True.
 
 Beginner:
@@ -5814,28 +1918,7 @@ Intermediate:
 • So in conditions, 1 and True behave the same (both truthy). But type(1) != type(True). So 1 == True is True.
 
 Expert:
-• bool is subclass of int; True has value 1. So 1 == True is True. For type check use isinstance. So 1 == True is True (value equality).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• bool is subclass of int; True has value 1. So 1 == True is True. For type check use isinstance. So 1 == True is True (value equality).`],
   ["What is '' == False?", ["False", "True", "None", "Error"], 0, "Empty string is not equal to False.", `'' == False is False.
 
 Beginner:
@@ -5847,28 +1930,7 @@ Intermediate:
 • So only certain falsy values compare equal: 0 == False, 1 == True. But '' != False, [] != False. So '' == False is False.
 
 Expert:
-• str and bool; '' and False are different types and not equal. So '' == False is False. Use "is" for None/True/False identity. So '' == False is False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str and bool; '' and False are different types and not equal. So '' == False is False. Use "is" for None/True/False identity. So '' == False is False.`],
   ["What is 0 not in [1, 2]?", ["True", "False", "1", "Error"], 0, "0 is not in the list.", `0 not in [1, 2] is True. not in checks absence.
 
 Beginner:
@@ -5880,28 +1942,7 @@ Intermediate:
 • So not in checks that the value is absent. So 0 not in [1, 2] is True. Useful for "if x not in seen: ...".
 
 Expert:
-• not in is the negation of in. So 0 not in [1, 2] is True. Equivalent to not (0 in [1, 2]). So 0 not in [1, 2] is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• not in is the negation of in. So 0 not in [1, 2] is True. Equivalent to not (0 in [1, 2]). So 0 not in [1, 2] is True.`],
 ];
 beginnerMid.forEach(([q, o, c, e, de]) => level0Patterns.push(mk(q, o, c, e, de)));
 
@@ -5918,28 +1959,7 @@ Intermediate:
 • For string concatenation you also use + but with strings: '1' + '1' = '11'. Here we have numbers, so 2.
 
 Expert:
-• int.__add__; 1 + 1 = 2. So the result is the int 2.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__add__; 1 + 1 = 2. So the result is the int 2.`],
   ["What is 2 * 3?", ["6", "5", "8", "1"], 0, "2 * 3 = 6.", `Multiplication: 2 times 3 is 6.
 
 Beginner:
@@ -5951,28 +1971,7 @@ Intermediate:
 • So with numbers, * is multiplication. So the answer is 6.
 
 Expert:
-• int.__mul__; 2 * 3 = 6. So the result is the int 6.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__mul__; 2 * 3 = 6. So the result is the int 6.`],
   ["What is 10 - 4?", ["6", "5", "14", "40"], 0, "10 - 4 = 6.", `Subtraction: 10 minus 4 is 6.
 
 Beginner:
@@ -5984,28 +1983,7 @@ Intermediate:
 • The - operator can also denote negative numbers (e.g. -4) or set difference. Here it's subtraction.
 
 Expert:
-• int.__sub__; 10 - 4 = 6. So the result is the int 6.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__sub__; 10 - 4 = 6. So the result is the int 6.`],
   ["What is 8 // 2?", ["4", "4.0", "3", "Error"], 0, "Integer division: 8 // 2 = 4.", `// is floor division; 8 // 2 = 4.
 
 Beginner:
@@ -6017,28 +1995,7 @@ Intermediate:
 • So / gives a float in Python 3 (8/2 = 4.0), but // gives the integer quotient. So 8 // 2 = 4.
 
 Expert:
-• int.__floordiv__; 8 // 2 = 4. So floor division; result is int when both operands are int.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__floordiv__; 8 // 2 = 4. So floor division; result is int when both operands are int.`],
   ["What is 9 % 4?", ["1", "2", "3", "0"], 0, "Remainder: 9 % 4 = 1.", `% returns the remainder; 9 % 4 = 1.
 
 Beginner:
@@ -6050,28 +2007,7 @@ Intermediate:
 • So % always returns a result with the same sign as the divisor (in Python). So 9 % 4 = 1.
 
 Expert:
-• int.__mod__; 9 % 4 = 1. So remainder of 9 divided by 4. divmod(9, 4) = (2, 1).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__mod__; 9 % 4 = 1. So remainder of 9 divided by 4. divmod(9, 4) = (2, 1).`],
   ["What is 2 ** 3?", ["8", "6", "9", "5"], 0, "2 ** 3 = 8 (2 to the power of 3).", `** is exponentiation; 2**3 = 8.
 
 Beginner:
@@ -6083,28 +2019,7 @@ Intermediate:
 • So 2 ** 4 = 16, 10 ** 2 = 100. So the answer is 8.
 
 Expert:
-• int.__pow__; 2 ** 3 = 8. So exponentiation. pow(2, 3) is equivalent.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int.__pow__; 2 ** 3 = 8. So exponentiation. pow(2, 3) is equivalent.`],
   ["What is len('')?", ["0", "1", "None", "Error"], 0, "Empty string has length 0.", `len() counts characters; empty string has 0.
 
 Beginner:
@@ -6116,28 +2031,7 @@ Intermediate:
 • So empty string has length 0. Same for empty list: len([]) = 0. So the answer is 0.
 
 Expert:
-• str.__len__; len('') = 0. So the empty string has zero characters. O(1) for built-in types.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str.__len__; len('') = 0. So the empty string has zero characters. O(1) for built-in types.`],
   ["What is len('a')?", ["1", "0", "2", "Error"], 0, "One character has length 1.", `len('a') = 1.
 
 Beginner:
@@ -6149,28 +2043,7 @@ Intermediate:
 • So for strings, len() is the number of characters. So the answer is 1.
 
 Expert:
-• len('a') = 1. So one character, length 1. O(1) for str.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• len('a') = 1. So one character, length 1. O(1) for str.`],
   ["What is len('ab')?", ["2", "1", "3", "Error"], 0, "Two characters have length 2.", `len('ab') = 2.
 
 Beginner:
@@ -6182,28 +2055,7 @@ Intermediate:
 • So for any string, len(s) is the number of characters. So the answer is 2.
 
 Expert:
-• len('ab') = 2. So two characters. O(1) for str.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• len('ab') = 2. So two characters. O(1) for str.`],
   ["What is len([])?", ["0", "1", "None", "Error"], 0, "Empty list has length 0.", `len([]) = 0.
 
 Beginner:
@@ -6215,28 +2067,7 @@ Intermediate:
 • So when you have no elements, len is 0. So len([]) = 0.
 
 Expert:
-• list.__len__; len([]) = 0. O(1) for list.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list.__len__; len([]) = 0. O(1) for list.`],
   ["What is len([1])?", ["1", "0", "2", "Error"], 0, "List with one item has length 1.", `len([1]) = 1.
 
 Beginner:
@@ -6248,28 +2079,7 @@ Intermediate:
 • So len() for lists is the number of elements. So len([1]) = 1.
 
 Expert:
-• len([1]) = 1. So one element. O(1) for list.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• len([1]) = 1. So one element. O(1) for list.`],
   ["What is len([1, 2])?", ["2", "1", "3", "Error"], 0, "List with two items has length 2.", `len([1, 2]) = 2.
 
 Beginner:
@@ -6281,28 +2091,7 @@ Intermediate:
 • So for lists, len() is the number of elements. So len([1, 2]) = 2.
 
 Expert:
-• len([1, 2]) = 2. So two elements. O(1) for list.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• len([1, 2]) = 2. So two elements. O(1) for list.`],
   ["What is bool(0)?", ["False", "True", "0", "Error"], 0, "0 is falsy.", `In Python, 0 is falsy; bool(0) is False.
 
 Beginner:
@@ -6314,28 +2103,7 @@ Intermediate:
 • Falsy values include 0, 0.0, '', [], (), {}, None. So bool(0) is False.
 
 Expert:
-• bool(0) is False. So 0 is falsy; used in truth testing. So bool(0) returns False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• bool(0) is False. So 0 is falsy; used in truth testing. So bool(0) returns False.`],
   ["What is bool(1)?", ["True", "False", "1", "Error"], 0, "Non-zero numbers are truthy.", `bool(1) is True.
 
 Beginner:
@@ -6347,28 +2115,7 @@ Intermediate:
 • Truthy values include any non-zero number, non-empty string, non-empty list, etc. So bool(1) is True.
 
 Expert:
-• bool(1) is True. So 1 is truthy. So bool(1) returns True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• bool(1) is True. So 1 is truthy. So bool(1) returns True.`],
   ["What is bool('')?", ["False", "True", "''", "Error"], 0, "Empty string is falsy.", `bool('') is False.
 
 Beginner:
@@ -6380,28 +2127,7 @@ Intermediate:
 • So empty sequence ('' or []) is falsy. So bool('') is False.
 
 Expert:
-• bool('') is False. So empty string is falsy. So bool('') returns False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• bool('') is False. So empty string is falsy. So bool('') returns False.`],
   ["What is bool('x')?", ["True", "False", "1", "Error"], 0, "Non-empty string is truthy.", `bool('x') is True.
 
 Beginner:
@@ -6413,28 +2139,7 @@ Intermediate:
 • So non-empty sequences are truthy. So bool('x') is True.
 
 Expert:
-• bool('x') is True. So non-empty string is truthy. So bool('x') returns True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• bool('x') is True. So non-empty string is truthy. So bool('x') returns True.`],
   ["What is bool([])?", ["False", "True", "[]", "Error"], 0, "Empty list is falsy.", `bool([]) is False.
 
 Beginner:
@@ -6446,28 +2151,7 @@ Intermediate:
 • So empty list is falsy. So bool([]) is False.
 
 Expert:
-• bool([]) is False. So empty list is falsy. So bool([]) returns False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• bool([]) is False. So empty list is falsy. So bool([]) returns False.`],
   ["What is bool([1])?", ["True", "False", "1", "Error"], 0, "Non-empty list is truthy.", `bool([1]) is True.
 
 Beginner:
@@ -6479,28 +2163,7 @@ Intermediate:
 • So non-empty list is truthy (even [0] or [False]). So bool([1]) is True.
 
 Expert:
-• bool([1]) is True. So non-empty list is truthy. So bool([1]) returns True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• bool([1]) is True. So non-empty list is truthy. So bool([1]) returns True.`],
   ["What is int(3.7)?", ["3", "4", "3.7", "Error"], 0, "int() truncates toward zero.", `int(3.7) = 3; int() drops the decimal part.
 
 Beginner:
@@ -6512,28 +2175,7 @@ Intermediate:
 • So int(float) truncates. So the answer is 3.
 
 Expert:
-• int(3.7) truncates toward zero; result is 3. So int() drops the fractional part. So the answer is 3.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int(3.7) truncates toward zero; result is 3. So int() drops the fractional part. So the answer is 3.`],
   ["What is float(2)?", ["2.0", "2", "2.00", "Error"], 0, "float(2) is 2.0.", `float(2) converts int to float 2.0.
 
 Beginner:
@@ -6545,28 +2187,7 @@ Intermediate:
 • So when you need a float (e.g. for division), float(2) gives 2.0. So the answer is 2.0.
 
 Expert:
-• float(2) = 2.0. So int to float conversion. So the result is the float 2.0.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• float(2) = 2.0. So int to float conversion. So the result is the float 2.0.`],
   ["What is str(5)?", ["'5'", "5", "5.0", "Error"], 0, "str(5) converts to string '5'.", `str(5) = '5'.
 
 Beginner:
@@ -6578,28 +2199,7 @@ Intermediate:
 • So for display or concatenation with strings, str(5) gives '5'. So the answer is '5'.
 
 Expert:
-• str(5) = '5'. So int to str conversion. So the result is the string '5'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str(5) = '5'. So int to str conversion. So the result is the string '5'.`],
   ["What is 5 + 5?", ["10", "55", "5", "Error"], 0, "5 + 5 = 10.", `Addition. 5 + 5 = 10.
 
 Beginner:
@@ -6608,28 +2208,7 @@ Beginner:
 
 Intermediate:
 • 5 + 5 = 10. Both are ints, so the result is int. So the answer is 10.
-• So 5 + 5 = 10.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• So 5 + 5 = 10.`],
   ["What is 3 * 4?", ["12", "7", "81", "Error"], 0, "3 * 4 = 12.", `Multiplication. 3 * 4 = 12.
 
 Beginner:
@@ -6638,28 +2217,7 @@ Beginner:
 
 Intermediate:
 • 3 * 4 = 12. Both are ints, so the result is int. So the answer is 12.
-• So 3 * 4 = 12.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• So 3 * 4 = 12.`],
   ["What is 20 // 5?", ["4", "4.0", "5", "Error"], 0, "20 // 5 = 4.", `Integer division. 20 // 5 = 4.
 
 Beginner:
@@ -6668,28 +2226,7 @@ Beginner:
 
 Intermediate:
 • 20 // 5 = 4. So the quotient is 4. So 20 % 5 = 0. So the answer is 4.
-• So 20 // 5 = 4.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• So 20 // 5 = 4.`],
   ["What is 7 % 2?", ["1", "3", "2", "0"], 0, "7 % 2 = 1 (remainder).", `7 = 3*2 + 1; remainder is 1.
 
 Beginner:
@@ -6698,28 +2235,7 @@ Beginner:
 
 Intermediate:
 • 7 % 2 = 1. So 7 // 2 = 3 and 7 % 2 = 1. So 7 = 3*2 + 1. So the answer is 1.
-• So 7 % 2 = 1. Useful for even/odd: n % 2 == 0 means even.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• So 7 % 2 = 1. Useful for even/odd: n % 2 == 0 means even.`],
   ["What is 2 ** 4?", ["16", "8", "6", "Error"], 0, "2 ** 4 = 16.", `2 to the power of 4 = 16.
 
 Beginner:
@@ -6728,28 +2244,7 @@ Beginner:
 
 Intermediate:
 • 2 ** 4 = 16. So 2**0 = 1, 2**1 = 2, 2**4 = 16. So the answer is 16.
-• So 2 ** 4 = 16.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• So 2 ** 4 = 16.`],
   ["What is -(-3)?", ["3", "-3", "0", "Error"], 0, "Negative of -3 is 3.", `Double negative gives positive.
 
 Beginner:
@@ -6758,28 +2253,7 @@ Beginner:
 
 Intermediate:
 • -(-3) = 3. So the unary - flips the sign. So -(-3) is 3. So the answer is 3.
-• So -(-3) = 3.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• So -(-3) = 3.`],
   ["What is abs(-4)?", ["4", "-4", "0", "Error"], 0, "abs(-4) = 4.", `abs() returns absolute value.
 
 Beginner:
@@ -6788,28 +2262,7 @@ Beginner:
 
 Intermediate:
 • abs(-4) = 4. So abs(x) is x if x >= 0, and -x if x < 0. So abs(4) = 4, abs(-4) = 4. So the answer is 4.
-• So abs() returns the magnitude (non-negative). So abs(-4) = 4.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• So abs() returns the magnitude (non-negative). So abs(-4) = 4.`],
   ["What is min(1, 2)?", ["1", "2", "0", "Error"], 0, "min(1, 2) = 1.", `min() returns the smaller value.
 
 Beginner:
@@ -6818,28 +2271,7 @@ Beginner:
 
 Intermediate:
 • min(1, 2) = 1. So min() can take two or more arguments. So min(3, 1, 2) = 1. So the answer is 1.
-• So min(1, 2) = 1.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• So min(1, 2) = 1.`],
   ["What is max(1, 2)?", ["2", "1", "0", "Error"], 0, "max(1, 2) = 2.", `max() returns the larger value.
 
 Beginner:
@@ -6848,28 +2280,7 @@ Beginner:
 
 Intermediate:
 • max(1, 2) = 2. So max() can take two or more arguments. So max(3, 1, 2) = 3. So the answer is 2.
-• So max(1, 2) = 2.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• So max(1, 2) = 2.`],
   ["What is round(3.2)?", ["3", "3.0", "4", "Error"], 0, "round(3.2) = 3.", `round() rounds to nearest integer.
 
 Beginner:
@@ -6878,28 +2289,7 @@ Beginner:
 
 Intermediate:
 • round(3.2) = 3. So round(3.5) in Python 3 uses "banker's rounding" (round half to even). So round(3.2) = 3. So the answer is 3.
-• So round(3.2) = 3.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• So round(3.2) = 3.`],
   ["What is round(3.8)?", ["4", "3", "4.0", "Error"], 0, "round(3.8) = 4.", `round(3.8) = 4.
 
 Beginner:
@@ -6908,28 +2298,7 @@ Beginner:
 
 Intermediate:
 • round(3.8) = 4. So round() rounds to the nearest integer. So the answer is 4.
-• So round(3.8) = 4.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• So round(3.8) = 4.`],
   ["What is 'a' in 'abc'?", ["True", "False", "1", "Error"], 0, "'a' is in 'abc'.", `The 'in' operator checks substring membership.
 
 Beginner:
@@ -6941,28 +2310,7 @@ Intermediate:
 • So in works for membership in sequences (list, tuple) and substring for strings. So 'a' in 'abc' is True.
 
 Expert:
-• str.__contains__; 'a' in 'abc' is True. So substring test. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str.__contains__; 'a' in 'abc' is True. So substring test. So the result is True.`],
   ["What is 'd' in 'abc'?", ["False", "True", "0", "Error"], 0, "'d' is not in 'abc'.", `'d' is not a substring of 'abc'.
 
 Beginner:
@@ -6974,28 +2322,7 @@ Intermediate:
 • So in for strings is substring membership. So 'd' in 'abc' is False.
 
 Expert:
-• 'd' in 'abc' is False. So substring test fails. So the result is False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'd' in 'abc' is False. So substring test fails. So the result is False.`],
   ["What is 1 in [1, 2]?", ["True", "False", "1", "Error"], 0, "1 is in the list.", `in checks list membership.
 
 Beginner:
@@ -7007,28 +2334,7 @@ Intermediate:
 • So in works for lists, tuples, sets, dicts (keys). So 1 in [1, 2] is True.
 
 Expert:
-• list.__contains__; 1 in [1, 2] is True. So membership test. O(n) for list. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list.__contains__; 1 in [1, 2] is True. So membership test. O(n) for list. So the result is True.`],
   ["What is 3 in [1, 2]?", ["False", "True", "0", "Error"], 0, "3 is not in the list.", `3 is not in [1, 2].
 
 Beginner:
@@ -7040,28 +2346,7 @@ Intermediate:
 • So for membership, 3 in [1, 2] is False.
 
 Expert:
-• 3 in [1, 2] is False. So membership test fails. So the result is False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 3 in [1, 2] is False. So membership test fails. So the result is False.`],
   ["What is 2 == 2?", ["True", "False", "1", "Error"], 0, "2 equals 2.", `== tests equality; 2 == 2 is True.
 
 Beginner:
@@ -7073,28 +2358,7 @@ Intermediate:
 • So == is value equality (not identity). So 2 == 2 is True.
 
 Expert:
-• 2 == 2 is True. So equality comparison. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 2 == 2 is True. So equality comparison. So the result is True.`],
   ["What is 2 == 3?", ["False", "True", "0", "Error"], 0, "2 does not equal 3.", `2 == 3 is False.
 
 Beginner:
@@ -7106,28 +2370,7 @@ Intermediate:
 • So 2 == 3 is False.
 
 Expert:
-• 2 == 3 is False. So equality comparison fails. So the result is False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 2 == 3 is False. So equality comparison fails. So the result is False.`],
   ["What is 2 != 3?", ["True", "False", "1", "Error"], 0, "2 is not equal to 3.", `!= is 'not equal'; 2 != 3 is True.
 
 Beginner:
@@ -7139,28 +2382,7 @@ Intermediate:
 • So != checks inequality. So 2 != 3 is True.
 
 Expert:
-• 2 != 3 is True. So inequality. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 2 != 3 is True. So inequality. So the result is True.`],
   ["What is 2 < 3?", ["True", "False", "1", "Error"], 0, "2 is less than 3.", `2 < 3 is True.
 
 Beginner:
@@ -7172,28 +2394,7 @@ Intermediate:
 • So 2 < 3 is True.
 
 Expert:
-• 2 < 3 is True. So less-than comparison. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 2 < 3 is True. So less-than comparison. So the result is True.`],
   ["What is 3 > 2?", ["True", "False", "1", "Error"], 0, "3 is greater than 2.", `3 > 2 is True.
 
 Beginner:
@@ -7205,28 +2406,7 @@ Intermediate:
 • So 3 > 2 is True.
 
 Expert:
-• 3 > 2 is True. So greater-than comparison. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 3 > 2 is True. So greater-than comparison. So the result is True.`],
   ["What is 2 <= 2?", ["True", "False", "1", "Error"], 0, "2 is less than or equal to 2.", `<= includes equality; 2 <= 2 is True.
 
 Beginner:
@@ -7238,28 +2418,7 @@ Intermediate:
 • So 2 <= 2 is True.
 
 Expert:
-• 2 <= 2 is True. So less-than-or-equal. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 2 <= 2 is True. So less-than-or-equal. So the result is True.`],
   ["What is 3 >= 3?", ["True", "False", "1", "Error"], 0, "3 is greater than or equal to 3.", `>= includes equality.
 
 Beginner:
@@ -7271,28 +2430,7 @@ Intermediate:
 • So 3 >= 3 is True.
 
 Expert:
-• 3 >= 3 is True. So greater-than-or-equal. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 3 >= 3 is True. So greater-than-or-equal. So the result is True.`],
   ["What is not False?", ["True", "False", "None", "Error"], 0, "not False is True.", `not inverts the boolean.
 
 Beginner:
@@ -7304,28 +2442,7 @@ Intermediate:
 • So not returns a bool. So not False is True.
 
 Expert:
-• not False is True. So logical negation. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• not False is True. So logical negation. So the result is True.`],
   ["What is not True?", ["False", "True", "None", "Error"], 0, "not True is False.", `not True is False.
 
 Beginner:
@@ -7337,28 +2454,7 @@ Intermediate:
 • So not True is False.
 
 Expert:
-• not True is False. So logical negation. So the result is False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• not True is False. So logical negation. So the result is False.`],
   ["What is True and True?", ["True", "False", "None", "Error"], 0, "Both true.", `and is True only when both operands are True.
 
 Beginner:
@@ -7370,28 +2466,7 @@ Intermediate:
 • So True and True is True.
 
 Expert:
-• True and True is True. So logical and. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• True and True is True. So logical and. So the result is True.`],
   ["What is True and False?", ["False", "True", "None", "Error"], 0, "And is false if one is false.", `True and False is False.
 
 Beginner:
@@ -7403,28 +2478,7 @@ Intermediate:
 • So True and False is False.
 
 Expert:
-• True and False is False. So logical and. So the result is False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• True and False is False. So logical and. So the result is False.`],
   ["What is True or False?", ["True", "False", "None", "Error"], 0, "Or is true if one is true.", `or is True if at least one operand is True.
 
 Beginner:
@@ -7436,28 +2490,7 @@ Intermediate:
 • So True or False is True.
 
 Expert:
-• True or False is True. So logical or. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• True or False is True. So logical or. So the result is True.`],
   ["What is False or False?", ["False", "True", "None", "Error"], 0, "Both false.", `False or False is False.
 
 Beginner:
@@ -7469,28 +2502,7 @@ Intermediate:
 • So False or False is False.
 
 Expert:
-• False or False is False. So logical or. So the result is False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• False or False is False. So logical or. So the result is False.`],
   ["What is 0 == False?", ["True", "False", "None", "Error"], 0, "In Python, 0 == False is True (value equality).", `0 and False compare equal in value.
 
 Beginner:
@@ -7502,28 +2514,7 @@ Intermediate:
 • So value equality: 0 and False compare equal. So 0 == False is True.
 
 Expert:
-• 0 == False is True. So bool is subclass of int; False == 0. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 0 == False is True. So bool is subclass of int; False == 0. So the result is True.`],
   ["What is 1 == True?", ["True", "False", "None", "Error"], 0, "1 == True is True.", `1 and True compare equal in value.
 
 Beginner:
@@ -7535,28 +2526,7 @@ Intermediate:
 • So value equality: 1 and True compare equal. So 1 == True is True.
 
 Expert:
-• 1 == True is True. So bool is subclass of int; True == 1. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 1 == True is True. So bool is subclass of int; True == 1. So the result is True.`],
   ["What is '' == False?", ["False", "True", "None", "Error"], 0, "Empty string is not equal to False.", `'' == False is False.
 
 Beginner:
@@ -7568,28 +2538,7 @@ Intermediate:
 • So '' == False is False.
 
 Expert:
-• '' == False is False. So str and bool; different types, not equal. So the result is False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• '' == False is False. So str and bool; different types, not equal. So the result is False.`],
   ["What is None is None?", ["True", "False", "None", "Error"], 0, "None is the only None.", `There is only one None; 'is' checks identity.
 
 Beginner:
@@ -7601,28 +2550,7 @@ Intermediate:
 • So None is None is True.
 
 Expert:
-• None is None is True. So identity check; there is one None singleton. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• None is None is True. So identity check; there is one None singleton. So the result is True.`],
   ["What is 1 + 2 * 3?", ["7", "9", "5", "Error"], 0, "Multiplication before addition: 2*3=6, 1+6=7.", `Operator precedence: * before +.
 
 Beginner:
@@ -7634,28 +2562,7 @@ Intermediate:
 • So operator precedence: * before +. So 1 + 2 * 3 = 7.
 
 Expert:
-• 1 + 2 * 3 = 7. So multiplication has higher precedence than addition. So the result is 7.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 1 + 2 * 3 = 7. So multiplication has higher precedence than addition. So the result is 7.`],
   ["What is (1 + 2) * 3?", ["9", "7", "6", "Error"], 0, "Parentheses first: 1+2=3, 3*3=9.", `Parentheses override precedence.
 
 Beginner:
@@ -7667,28 +2574,7 @@ Intermediate:
 • So (1 + 2) * 3 = 9.
 
 Expert:
-• (1 + 2) * 3 = 9. So parentheses first. So the result is 9.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• (1 + 2) * 3 = 9. So parentheses first. So the result is 9.`],
   ["What is 10 / 2?", ["5.0", "5", "5.00", "Error"], 0, "Division in Python 3 gives float: 5.0.", `In Python 3, / always returns a float.
 
 Beginner:
@@ -7700,28 +2586,7 @@ Intermediate:
 • So / always returns float in Python 3. So 10 / 2 = 5.0.
 
 Expert:
-• 10 / 2 = 5.0. So __truediv__; in Python 3 / always returns float. So the result is 5.0.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 10 / 2 = 5.0. So __truediv__; in Python 3 / always returns float. So the result is 5.0.`],
   ["What is 10 // 3?", ["3", "3.0", "4", "Error"], 0, "Integer division: 10 // 3 = 3.", `10 // 3 = 3 (floor division).
 
 Beginner:
@@ -7733,28 +2598,7 @@ Intermediate:
 • So 10 // 3 = 3.
 
 Expert:
-• 10 // 3 = 3. So floor division. So the result is 3.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 10 // 3 = 3. So floor division. So the result is 3.`],
   ["What is 10 % 3?", ["1", "0", "3", "Error"], 0, "Remainder: 10 % 3 = 1.", `10 = 3*3 + 1; remainder is 1.
 
 Beginner:
@@ -7766,28 +2610,7 @@ Intermediate:
 • So 10 % 3 = 1.
 
 Expert:
-• 10 % 3 = 1. So remainder. So the result is 1.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 10 % 3 = 1. So remainder. So the result is 1.`],
   ["What is 'a' + 'b'?", ["'ab'", "'a b'", "'ba'", "Error"], 0, "String concatenation: 'a' + 'b' = 'ab'.", `+ concatenates strings.
 
 Beginner:
@@ -7799,28 +2622,7 @@ Intermediate:
 • So + concatenates strings. So 'a' + 'b' = 'ab'.
 
 Expert:
-• 'a' + 'b' = 'ab'. So str.__add__; concatenation. So the result is 'ab'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'a' + 'b' = 'ab'. So str.__add__; concatenation. So the result is 'ab'.`],
   ["What is 'x' * 3?", ["'xxx'", "'x x x'", "3", "Error"], 0, "String repetition: 'x' * 3 = 'xxx'.", `String * int repeats the string.
 
 Beginner:
@@ -7832,28 +2634,7 @@ Intermediate:
 • So 'x' * 3 = 'xxx'.
 
 Expert:
-• 'x' * 3 = 'xxx'. So str.__mul__(int); repetition. So the result is 'xxx'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'x' * 3 = 'xxx'. So str.__mul__(int); repetition. So the result is 'xxx'.`],
   ["What is [1] + [2]?", ["[1, 2]", "[3]", "[2, 1]", "Error"], 0, "List concatenation: [1] + [2] = [1, 2].", `+ concatenates lists.
 
 Beginner:
@@ -7865,28 +2646,7 @@ Intermediate:
 • So + concatenates lists. So [1] + [2] = [1, 2].
 
 Expert:
-• [1] + [2] = [1, 2]. So list.__add__; concatenation. So the result is [1, 2].
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• [1] + [2] = [1, 2]. So list.__add__; concatenation. So the result is [1, 2].`],
   ["What is (1,) + (2,)?", ["(1, 2)", "(3)", "(2, 1)", "Error"], 0, "Tuple concatenation: (1,) + (2,) = (1, 2).", `+ concatenates tuples.
 
 Beginner:
@@ -7898,28 +2658,7 @@ Intermediate:
 • So + concatenates tuples. So (1,) + (2,) = (1, 2).
 
 Expert:
-• (1,) + (2,) = (1, 2). So tuple.__add__; concatenation. So the result is (1, 2).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• (1,) + (2,) = (1, 2). So tuple.__add__; concatenation. So the result is (1, 2).`],
   ["What is 'hi'[0]?", ["'h'", "'i'", "0", "Error"], 0, "First character: 'hi'[0] = 'h'.", `Index 0 is the first character.
 
 Beginner:
@@ -7931,28 +2670,7 @@ Intermediate:
 • So 'hi'[0] = 'h'.
 
 Expert:
-• 'hi'[0] = 'h'. So str indexing; index 0 is first. So the result is 'h'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'hi'[0] = 'h'. So str indexing; index 0 is first. So the result is 'h'.`],
   ["What is 'hi'[1]?", ["'i'", "'h'", "1", "Error"], 0, "Second character: 'hi'[1] = 'i'.", `Index 1 is the second character.
 
 Beginner:
@@ -7964,28 +2682,7 @@ Intermediate:
 • So 'hi'[1] = 'i'.
 
 Expert:
-• 'hi'[1] = 'i'. So str indexing. So the result is 'i'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'hi'[1] = 'i'. So str indexing. So the result is 'i'.`],
   ["What is 'hi'[-1]?", ["'i'", "'h'", "-1", "Error"], 0, "Last character: 'hi'[-1] = 'i'.", `Index -1 is the last character.
 
 Beginner:
@@ -7997,28 +2694,7 @@ Intermediate:
 • So 'hi'[-1] = 'i'.
 
 Expert:
-• 'hi'[-1] = 'i'. So negative index; -1 is last. So the result is 'i'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'hi'[-1] = 'i'. So negative index; -1 is last. So the result is 'i'.`],
   ["What is [10, 20][0]?", ["10", "20", "0", "Error"], 0, "First element: [10, 20][0] = 10.", `Index 0 is the first list element.
 
 Beginner:
@@ -8030,28 +2706,7 @@ Intermediate:
 • So [10, 20][0] = 10.
 
 Expert:
-• [10, 20][0] = 10. So list indexing. So the result is 10.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• [10, 20][0] = 10. So list indexing. So the result is 10.`],
   ["What is [10, 20][1]?", ["20", "10", "1", "Error"], 0, "Second element: [10, 20][1] = 20.", `Index 1 is the second element.
 
 Beginner:
@@ -8063,28 +2718,7 @@ Intermediate:
 • So [10, 20][1] = 20.
 
 Expert:
-• [10, 20][1] = 20. So list indexing. So the result is 20.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• [10, 20][1] = 20. So list indexing. So the result is 20.`],
   ["What is [5, 6, 7][-1]?", ["7", "5", "6", "Error"], 0, "Last element: [5,6,7][-1] = 7.", `Index -1 is the last element.
 
 Beginner:
@@ -8096,28 +2730,7 @@ Intermediate:
 • So [5, 6, 7][-1] = 7.
 
 Expert:
-• [5, 6, 7][-1] = 7. So negative index; -1 is last. So the result is 7.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• [5, 6, 7][-1] = 7. So negative index; -1 is last. So the result is 7.`],
   ["What is 'abc'[1:2]?", ["'b'", "'ab'", "'bc'", "Error"], 0, "Slice: 'abc'[1:2] = 'b'.", `Slice [1:2] is from index 1 up to (not including) 2.
 
 Beginner:
@@ -8129,28 +2742,7 @@ Intermediate:
 • So 'abc'[1:2] = 'b'.
 
 Expert:
-• 'abc'[1:2] = 'b'. So slice; start=1, stop=2, step=1. So the result is 'b'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'abc'[1:2] = 'b'. So slice; start=1, stop=2, step=1. So the result is 'b'.`],
   ["What is 'abc'[:2]?", ["'ab'", "'abc'", "'a'", "Error"], 0, "From start: 'abc'[:2] = 'ab'.", `[:2] means from start to index 2 (exclusive).
 
 Beginner:
@@ -8162,28 +2754,7 @@ Intermediate:
 • So 'abc'[:2] = 'ab'.
 
 Expert:
-• 'abc'[:2] = 'ab'. So slice; start defaults to 0. So the result is 'ab'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'abc'[:2] = 'ab'. So slice; start defaults to 0. So the result is 'ab'.`],
   ["What is 'abc'[1:]?", ["'bc'", "'ab'", "'abc'", "Error"], 0, "To end: 'abc'[1:] = 'bc'.", `[1:] means from index 1 to end.
 
 Beginner:
@@ -8195,28 +2766,7 @@ Intermediate:
 • So 'abc'[1:] = 'bc'.
 
 Expert:
-• 'abc'[1:] = 'bc'. So slice; stop defaults to end. So the result is 'bc'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'abc'[1:] = 'bc'. So slice; stop defaults to end. So the result is 'bc'.`],
   ["What is list('ab')?", ["['a', 'b']", "'ab'", "['ab']", "Error"], 0, "list('ab') = ['a', 'b'].", `list() turns each character into a list element.
 
 Beginner:
@@ -8228,28 +2778,7 @@ Intermediate:
 • So list('ab') = ['a', 'b'].
 
 Expert:
-• list('ab') = ['a', 'b']. So list(iterable); str is iterable of characters. So the result is ['a', 'b'].
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list('ab') = ['a', 'b']. So list(iterable); str is iterable of characters. So the result is ['a', 'b'].`],
   ["What is tuple([1, 2])?", ["(1, 2)", "[1, 2]", "(2, 1)", "Error"], 0, "tuple([1, 2]) = (1, 2).", `tuple() converts a list to a tuple.
 
 Beginner:
@@ -8261,28 +2790,7 @@ Intermediate:
 • So tuple([1, 2]) = (1, 2).
 
 Expert:
-• tuple([1, 2]) = (1, 2). So tuple(iterable); list is iterable. So the result is (1, 2).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• tuple([1, 2]) = (1, 2). So tuple(iterable); list is iterable. So the result is (1, 2).`],
   ["What is set([1, 1, 2])?", ["{1, 2}", "[1, 2]", "{1, 1, 2}", "Error"], 0, "set removes duplicates: {1, 2}.", `Sets have no duplicates; set([1,1,2]) = {1, 2}.
 
 Beginner:
@@ -8294,28 +2802,7 @@ Intermediate:
 • So set([1, 1, 2]) = {1, 2}.
 
 Expert:
-• set([1, 1, 2]) = {1, 2}. So set(iterable); duplicates removed. So the result is {1, 2}.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• set([1, 1, 2]) = {1, 2}. So set(iterable); duplicates removed. So the result is {1, 2}.`],
   ["What is dict()?", ["{}", "[]", "None", "Error"], 0, "dict() creates an empty dict.", `dict() returns an empty dictionary.
 
 Beginner:
@@ -8327,28 +2814,7 @@ Intermediate:
 • So dict() = {}.
 
 Expert:
-• dict() = {}. So empty dict. So the result is {}.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• dict() = {}. So empty dict. So the result is {}.`],
   ["What is list()?", ["[]", "()", "None", "Error"], 0, "list() creates an empty list.", `list() returns an empty list.
 
 Beginner:
@@ -8360,28 +2826,7 @@ Intermediate:
 • So list() = [].
 
 Expert:
-• list() = []. So empty list. So the result is [].
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• list() = []. So empty list. So the result is [].`],
   ["What is str(10)?", ["'10'", "10", "10.0", "Error"], 0, "str(10) = '10'.", `str() converts a number to a string.
 
 Beginner:
@@ -8393,28 +2838,7 @@ Intermediate:
 • So str(10) = '10'.
 
 Expert:
-• str(10) = '10'. So int to str. So the result is '10'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str(10) = '10'. So int to str. So the result is '10'.`],
   ["What is int('5')?", ["5", "'5'", "5.0", "Error"], 0, "int('5') = 5.", `int() converts a numeric string to int.
 
 Beginner:
@@ -8426,28 +2850,7 @@ Intermediate:
 • So int('5') = 5.
 
 Expert:
-• int('5') = 5. So int(string) parses. So the result is 5.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int('5') = 5. So int(string) parses. So the result is 5.`],
   ["What is float('2.5')?", ["2.5", "2", "'2.5'", "Error"], 0, "float('2.5') = 2.5.", `float() converts a string to float.
 
 Beginner:
@@ -8459,28 +2862,7 @@ Intermediate:
 • So float('2.5') = 2.5.
 
 Expert:
-• float('2.5') = 2.5. So float(string) parses. So the result is 2.5.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• float('2.5') = 2.5. So float(string) parses. So the result is 2.5.`],
   ["What is 4 ** 0.5?", ["2.0", "2", "0.5", "Error"], 0, "Square root of 4 is 2.0.", `4 ** 0.5 is the square root of 4.
 
 Beginner:
@@ -8492,28 +2874,7 @@ Intermediate:
 • So 4 ** 0.5 = 2.0.
 
 Expert:
-• 4 ** 0.5 = 2.0. So float exponent gives float result. So the result is 2.0.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 4 ** 0.5 = 2.0. So float exponent gives float result. So the result is 2.0.`],
   ["What is 0 ** 5?", ["0", "1", "5", "Error"], 0, "0 to any positive power is 0.", `0 ** n = 0 for n > 0.
 
 Beginner:
@@ -8525,28 +2886,7 @@ Intermediate:
 • So 0 to any positive power is 0. So 0 ** 5 = 0.
 
 Expert:
-• 0 ** 5 = 0. So 0 ** n for n > 0 is 0. So the result is 0.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 0 ** 5 = 0. So 0 ** n for n > 0 is 0. So the result is 0.`],
   ["What is 5 ** 0?", ["1", "0", "5", "Error"], 0, "Any number to power 0 is 1.", `For any number a, a**0 = 1.
 
 Beginner:
@@ -8558,28 +2898,7 @@ Intermediate:
 • So any number to the power 0 is 1. So 5 ** 0 = 1.
 
 Expert:
-• 5 ** 0 = 1. So by convention a**0 = 1. So the result is 1.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 5 ** 0 = 1. So by convention a**0 = 1. So the result is 1.`],
   ["What is 2 < 5?", ["True", "False", "1", "Error"], 0, "2 is less than 5.", `2 < 5 is True.
 
 Beginner:
@@ -8591,28 +2910,7 @@ Intermediate:
 • So 2 < 5 is True.
 
 Expert:
-• 2 < 5 is True. So less-than comparison. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 2 < 5 is True. So less-than comparison. So the result is True.`],
   ["What is 5 > 2?", ["True", "False", "1", "Error"], 0, "5 is greater than 2.", `5 > 2 is True.
 
 Beginner:
@@ -8624,28 +2922,7 @@ Intermediate:
 • So 5 > 2 is True.
 
 Expert:
-• 5 > 2 is True. So greater-than comparison. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 5 > 2 is True. So greater-than comparison. So the result is True.`],
   ["What is 3 <= 3?", ["True", "False", "1", "Error"], 0, "3 <= 3 is True.", `<= means less than or equal.
 
 Beginner:
@@ -8657,28 +2934,7 @@ Intermediate:
 • So 3 <= 3 is True.
 
 Expert:
-• 3 <= 3 is True. So less-than-or-equal. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 3 <= 3 is True. So less-than-or-equal. So the result is True.`],
   ["What is 4 >= 5?", ["False", "True", "0", "Error"], 0, "4 >= 5 is False.", `4 is not greater than or equal to 5.
 
 Beginner:
@@ -8690,28 +2946,7 @@ Intermediate:
 • So 4 >= 5 is False.
 
 Expert:
-• 4 >= 5 is False. So greater-than-or-equal fails. So the result is False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 4 >= 5 is False. So greater-than-or-equal fails. So the result is False.`],
   ["What is 1 != 1?", ["False", "True", "0", "Error"], 0, "1 equals 1, so 1 != 1 is False.", `!= is 'not equal'; 1 == 1 so 1 != 1 is False.
 
 Beginner:
@@ -8723,28 +2958,7 @@ Intermediate:
 • So 1 != 1 is False.
 
 Expert:
-• 1 != 1 is False. So inequality fails. So the result is False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 1 != 1 is False. So inequality fails. So the result is False.`],
   ["What is 0 or 5?", ["5", "0", "True", "Error"], 0, "0 or 5: first falsy, so 5.", `or returns first truthy or last value; 0 is falsy, so 5.
 
 Beginner:
@@ -8756,28 +2970,7 @@ Intermediate:
 • So 0 or 5 = 5.
 
 Expert:
-• 0 or 5 = 5. So or returns first truthy or last. So the result is 5.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 0 or 5 = 5. So or returns first truthy or last. So the result is 5.`],
   ["What is 3 or 0?", ["3", "0", "True", "Error"], 0, "3 or 0: first truthy, so 3.", `3 is truthy, so or returns 3.
 
 Beginner:
@@ -8789,28 +2982,7 @@ Intermediate:
 • So 3 or 0 = 3.
 
 Expert:
-• 3 or 0 = 3. So or returns first truthy. So the result is 3.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 3 or 0 = 3. So or returns first truthy. So the result is 3.`],
   ["What is 0 and 5?", ["0", "5", "False", "Error"], 0, "0 and 5: short-circuit to 0.", `and short-circuits on first falsy; 0 is falsy.
 
 Beginner:
@@ -8822,28 +2994,7 @@ Intermediate:
 • So 0 and 5 = 0.
 
 Expert:
-• 0 and 5 = 0. So and returns first falsy. So the result is 0.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 0 and 5 = 0. So and returns first falsy. So the result is 0.`],
   ["What is 3 and 4?", ["4", "3", "True", "Error"], 0, "3 and 4: both truthy, returns last: 4.", `and returns last value when both are truthy.
 
 Beginner:
@@ -8855,28 +3006,7 @@ Intermediate:
 • So 3 and 4 = 4.
 
 Expert:
-• 3 and 4 = 4. So and returns last when both truthy. So the result is 4.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 3 and 4 = 4. So and returns last when both truthy. So the result is 4.`],
   ["What is len((1, 2))?", ["2", "1", "3", "Error"], 0, "Tuple of two elements has length 2.", `len((1, 2)) = 2.
 
 Beginner:
@@ -8888,28 +3018,7 @@ Intermediate:
 • So len((1, 2)) = 2.
 
 Expert:
-• len((1, 2)) = 2. So tuple length. So the result is 2.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• len((1, 2)) = 2. So tuple length. So the result is 2.`],
   ["What is len({1, 2})?", ["2", "1", "3", "Error"], 0, "Set of two elements has length 2.", `len({1, 2}) = 2.
 
 Beginner:
@@ -8921,28 +3030,7 @@ Intermediate:
 • So len({1, 2}) = 2.
 
 Expert:
-• len({1, 2}) = 2. So set length. So the result is 2.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• len({1, 2}) = 2. So set length. So the result is 2.`],
   ["What is len({1: 2})?", ["1", "2", "0", "Error"], 0, "Dict with one key has length 1.", `len(dict) returns the number of key-value pairs.
 
 Beginner:
@@ -8954,28 +3042,7 @@ Intermediate:
 • So len({1: 2}) = 1.
 
 Expert:
-• len({1: 2}) = 1. So dict length is number of keys. So the result is 1.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• len({1: 2}) = 1. So dict length is number of keys. So the result is 1.`],
   ["What is sum([1, 2, 3])?", ["6", "5", "7", "Error"], 0, "sum([1, 2, 3]) = 6.", `sum() adds all numbers in the iterable.
 
 Beginner:
@@ -8987,28 +3054,7 @@ Intermediate:
 • So sum([1, 2, 3]) = 6.
 
 Expert:
-• sum([1, 2, 3]) = 6. So sum of iterable. So the result is 6.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• sum([1, 2, 3]) = 6. So sum of iterable. So the result is 6.`],
   ["What is sum([])?", ["0", "None", "Error", "1"], 0, "sum([]) = 0.", `Sum of empty list is 0.
 
 Beginner:
@@ -9020,28 +3066,7 @@ Intermediate:
 • So sum([]) = 0.
 
 Expert:
-• sum([]) = 0. So empty sum is 0. So the result is 0.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• sum([]) = 0. So empty sum is 0. So the result is 0.`],
   ["What is min(3, 1, 2)?", ["1", "2", "3", "Error"], 0, "min(3, 1, 2) = 1.", `min() returns the smallest argument.
 
 Beginner:
@@ -9053,28 +3078,7 @@ Intermediate:
 • So min(3, 1, 2) = 1.
 
 Expert:
-• min(3, 1, 2) = 1. So minimum. So the result is 1.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• min(3, 1, 2) = 1. So minimum. So the result is 1.`],
   ["What is max(3, 1, 2)?", ["3", "2", "1", "Error"], 0, "max(3, 1, 2) = 3.", `max() returns the largest argument.
 
 Beginner:
@@ -9086,28 +3090,7 @@ Intermediate:
 • So max(3, 1, 2) = 3.
 
 Expert:
-• max(3, 1, 2) = 3. So maximum. So the result is 3.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• max(3, 1, 2) = 3. So maximum. So the result is 3.`],
   ["What is abs(5)?", ["5", "-5", "0", "Error"], 0, "abs(5) = 5.", `abs() of a positive number is that number.
 
 Beginner:
@@ -9119,28 +3102,7 @@ Intermediate:
 • So abs(5) = 5.
 
 Expert:
-• abs(5) = 5. So absolute value. So the result is 5.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• abs(5) = 5. So absolute value. So the result is 5.`],
   ["What is pow(2, 3)?", ["8", "6", "9", "Error"], 0, "pow(2, 3) = 8.", `pow(2, 3) is 2**3 = 8.
 
 Beginner:
@@ -9152,28 +3114,7 @@ Intermediate:
 • So pow(2, 3) = 8.
 
 Expert:
-• pow(2, 3) = 8. So exponentiation. So the result is 8.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• pow(2, 3) = 8. So exponentiation. So the result is 8.`],
   ["What is divmod(7, 2)?", ["(3, 1)", "(3.5, 0)", "(4, 1)", "Error"], 0, "divmod(7, 2) = (3, 1): quotient and remainder.", `divmod(a, b) returns (a//b, a%b).
 
 Beginner:
@@ -9185,28 +3126,7 @@ Intermediate:
 • So divmod(7, 2) = (3, 1).
 
 Expert:
-• divmod(7, 2) = (3, 1). So (quotient, remainder). So the result is (3, 1).
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• divmod(7, 2) = (3, 1). So (quotient, remainder). So the result is (3, 1).`],
   ["What is 3 in (1, 2, 3)?", ["True", "False", "1", "Error"], 0, "3 is in the tuple.", `in checks membership in tuple.
 
 Beginner:
@@ -9218,28 +3138,7 @@ Intermediate:
 • So 3 in (1, 2, 3) is True.
 
 Expert:
-• 3 in (1, 2, 3) is True. So membership. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 3 in (1, 2, 3) is True. So membership. So the result is True.`],
   ["What is 0 not in [1, 2]?", ["True", "False", "1", "Error"], 0, "0 is not in [1, 2].", `not in checks absence.
 
 Beginner:
@@ -9251,28 +3150,7 @@ Intermediate:
 • So 0 not in [1, 2] is True.
 
 Expert:
-• 0 not in [1, 2] is True. So not in. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 0 not in [1, 2] is True. So not in. So the result is True.`],
   ["What is 'ab' == 'ab'?", ["True", "False", "1", "Error"], 0, "Equal strings.", `== compares strings by content.
 
 Beginner:
@@ -9284,28 +3162,7 @@ Intermediate:
 • So 'ab' == 'ab' is True.
 
 Expert:
-• 'ab' == 'ab' is True. So content equality. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'ab' == 'ab' is True. So content equality. So the result is True.`],
   ["What is [1] == [1]?", ["True", "False", "1", "Error"], 0, "Equal lists (by value).", `== compares lists by value.
 
 Beginner:
@@ -9317,28 +3174,7 @@ Intermediate:
 • So [1] == [1] is True.
 
 Expert:
-• [1] == [1] is True. So value equality. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• [1] == [1] is True. So value equality. So the result is True.`],
   ["What is (1,) == (1,)?", ["True", "False", "1", "Error"], 0, "Equal tuples.", `== compares tuples by value.
 
 Beginner:
@@ -9350,28 +3186,7 @@ Intermediate:
 • So (1,) == (1,) is True.
 
 Expert:
-• (1,) == (1,) is True. So value equality. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• (1,) == (1,) is True. So value equality. So the result is True.`],
   ["What is type(2 + 2)?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "2 + 2 is 4, an int.", `2+2=4; type(4) is int.
 
 Beginner:
@@ -9383,28 +3198,7 @@ Intermediate:
 • So type(2+2) is int.
 
 Expert:
-• type(2+2) is int. So int + int -> int. So the result is <class 'int'>.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• type(2+2) is int. So int + int -> int. So the result is <class 'int'>.`],
   ["What is type(2 + 2.0)?", ["<class 'float'>", "<class 'int'>", "<class 'str'>", "None"], 0, "int + float gives float.", `Mixed arithmetic: int + float promotes to float.
 
 Beginner:
@@ -9416,28 +3210,7 @@ Intermediate:
 • So type(2+2.0) is float.
 
 Expert:
-• type(2+2.0) is float. So int + float -> float. So the result is <class 'float'>.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• type(2+2.0) is float. So int + float -> float. So the result is <class 'float'>.`],
   ["What is type(2.0 + 2.0)?", ["<class 'float'>", "<class 'int'>", "<class 'str'>", "None"], 0, "float + float is float.", `type(4.0) is float.
 
 Beginner:
@@ -9449,28 +3222,7 @@ Intermediate:
 • So type(2.0+2.0) is float.
 
 Expert:
-• type(2.0+2.0) is float. So float + float -> float. So the result is <class 'float'>.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• type(2.0+2.0) is float. So float + float -> float. So the result is <class 'float'>.`],
   ["What is type('a' * 2)?", ["<class 'str'>", "<class 'int'>", "<class 'list'>", "None"], 0, "'a' * 2 = 'aa', a string.", `String repetition gives a string.
 
 Beginner:
@@ -9482,28 +3234,7 @@ Intermediate:
 • So type('a'*2) is str.
 
 Expert:
-• type('a'*2) is str. So str * int -> str. So the result is <class 'str'>.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• type('a'*2) is str. So str * int -> str. So the result is <class 'str'>.`],
   ["What is type([1] * 2)?", ["<class 'list'>", "<class 'tuple'>", "<class 'int'>", "None"], 0, "[1] * 2 = [1, 1], a list.", `List repetition gives a list.
 
 Beginner:
@@ -9515,28 +3246,7 @@ Intermediate:
 • So type([1]*2) is list.
 
 Expert:
-• type([1]*2) is list. So list * int -> list. So the result is <class 'list'>.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• type([1]*2) is list. So list * int -> list. So the result is <class 'list'>.`],
   ["What is type(True + True)?", ["<class 'int'>", "<class 'bool'>", "<class 'str'>", "None"], 0, "True + True = 2 (bool is subclass of int).", `In arithmetic, True becomes 1; 1+1=2, type int.
 
 Beginner:
@@ -9548,28 +3258,7 @@ Intermediate:
 • So type(True+True) is int.
 
 Expert:
-• type(True+True) is int. So bool is subclass of int; arithmetic yields int. So the result is <class 'int'>.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• type(True+True) is int. So bool is subclass of int; arithmetic yields int. So the result is <class 'int'>.`],
   ["What is type(len(''))?", ["<class 'int'>", "<class 'float'>", "<class 'str'>", "None"], 0, "len() returns an integer.", `len() always returns an int.
 
 Beginner:
@@ -9581,28 +3270,7 @@ Intermediate:
 • So type(len('')) is int.
 
 Expert:
-• type(len('')) is int. So len returns int. So the result is <class 'int'>.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• type(len('')) is int. So len returns int. So the result is <class 'int'>.`],
   ["What is type(3.14)?", ["<class 'float'>", "<class 'int'>", "<class 'str'>", "None"], 0, "3.14 is a float.", `type(3.14) is float.
 
 Beginner:
@@ -9614,28 +3282,7 @@ Intermediate:
 • So type(3.14) is float.
 
 Expert:
-• type(3.14) is float. So float literal. So the result is <class 'float'>.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• type(3.14) is float. So float literal. So the result is <class 'float'>.`],
   ["What is type('3.14')?", ["<class 'str'>", "<class 'float'>", "<class 'int'>", "None"], 0, "'3.14' is a string.", `Quotes make it a string, not a number.
 
 Beginner:
@@ -9647,28 +3294,7 @@ Intermediate:
 • So type('3.14') is str.
 
 Expert:
-• type('3.14') is str. So string literal. So the result is <class 'str'>.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• type('3.14') is str. So string literal. So the result is <class 'str'>.`],
   ["What is type(0)?", ["<class 'int'>", "<class 'float'>", "<class 'bool'>", "None"], 0, "0 is an int.", `type(0) is int.
 
 Beginner:
@@ -9680,28 +3306,7 @@ Intermediate:
 • So type(0) is int.
 
 Expert:
-• type(0) is int. So int literal. So the result is <class 'int'>.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• type(0) is int. So int literal. So the result is <class 'int'>.`],
   ["What is type(1)?", ["<class 'int'>", "<class 'float'>", "<class 'bool'>", "None"], 0, "1 is an int.", `type(1) is int.
 
 Beginner:
@@ -9713,28 +3318,7 @@ Intermediate:
 • So type(1) is int.
 
 Expert:
-• type(1) is int. So int literal. So the result is <class 'int'>.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• type(1) is int. So int literal. So the result is <class 'int'>.`],
   // 244-300: more unique beginner questions
   ["What is 7 + 8?", ["15", "78", "1", "Error"], 0, "7 + 8 = 15.", `Addition: 7 + 8 = 15.
 
@@ -9747,28 +3331,7 @@ Intermediate:
 • So 7 + 8 = 15.
 
 Expert:
-• 7 + 8 = 15. So the result is 15.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 7 + 8 = 15. So the result is 15.`],
   ["What is 20 - 7?", ["13", "27", "14", "Error"], 0, "20 - 7 = 13.", `Subtraction: 20 - 7 = 13.
 
 Beginner:
@@ -9780,28 +3343,7 @@ Intermediate:
 • So 20 - 7 = 13.
 
 Expert:
-• 20 - 7 = 13. So the result is 13.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 20 - 7 = 13. So the result is 13.`],
   ["What is 5 * 4?", ["20", "9", "54", "Error"], 0, "5 * 4 = 20.", `Multiplication. 5 * 4 = 20.
 
 Beginner:
@@ -9813,28 +3355,7 @@ Intermediate:
 • So 5 * 4 = 20.
 
 Expert:
-• 5 * 4 = 20. So the result is 20.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 5 * 4 = 20. So the result is 20.`],
   ["What is 16 / 4?", ["4.0", "4", "12", "Error"], 0, "16 / 4 = 4.0.", `Division in Python 3 returns float.
 
 Beginner:
@@ -9846,28 +3367,7 @@ Intermediate:
 • So 16 / 4 = 4.0.
 
 Expert:
-• 16 / 4 = 4.0. So / returns float. So the result is 4.0.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 16 / 4 = 4.0. So / returns float. So the result is 4.0.`],
   ["What is 18 // 5?", ["3", "3.6", "4", "Error"], 0, "18 // 5 = 3.", `Integer division; 18 // 5 = 3.
 
 Beginner:
@@ -9879,28 +3379,7 @@ Intermediate:
 • So 18 // 5 = 3.
 
 Expert:
-• 18 // 5 = 3. So floor division. So the result is 3.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 18 // 5 = 3. So floor division. So the result is 3.`],
   ["What is 18 % 5?", ["3", "0", "4", "Error"], 0, "18 % 5 = 3.", `Remainder when 18 is divided by 5.
 
 Beginner:
@@ -9912,28 +3391,7 @@ Intermediate:
 • So 18 % 5 = 3.
 
 Expert:
-• 18 % 5 = 3. So remainder. So the result is 3.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 18 % 5 = 3. So remainder. So the result is 3.`],
   ["What is 4 ** 2?", ["16", "8", "6", "Error"], 0, "4 ** 2 = 16.", `4 squared is 16.
 
 Beginner:
@@ -9945,28 +3403,7 @@ Intermediate:
 • So 4 ** 2 = 16.
 
 Expert:
-• 4 ** 2 = 16. So exponentiation. So the result is 16.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 4 ** 2 = 16. So exponentiation. So the result is 16.`],
   ["What is len('hello')?", ["5", "4", "6", "Error"], 0, "'hello' has 5 characters.", `len() counts characters in a string.
 
 Beginner:
@@ -9978,28 +3415,7 @@ Intermediate:
 • So len('hello') = 5.
 
 Expert:
-• len('hello') = 5. So str length. So the result is 5.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• len('hello') = 5. So str length. So the result is 5.`],
   ["What is len([1, 2, 3])?", ["3", "2", "4", "Error"], 0, "List has 3 elements.", `len() returns the number of items in a list.
 
 Beginner:
@@ -10011,28 +3427,7 @@ Intermediate:
 • So len([1, 2, 3]) = 3.
 
 Expert:
-• len([1, 2, 3]) = 3. So list length. So the result is 3.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• len([1, 2, 3]) = 3. So list length. So the result is 3.`],
   ["What is bool([])?", ["False", "True", "[]", "Error"], 0, "Empty list is falsy.", `Empty list is falsy in Python.
 
 Beginner:
@@ -10044,28 +3439,7 @@ Intermediate:
 • So bool([]) is False.
 
 Expert:
-• bool([]) is False. So empty list is falsy. So the result is False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• bool([]) is False. So empty list is falsy. So the result is False.`],
   ["What is bool([0])?", ["True", "False", "0", "Error"], 0, "Non-empty list is truthy.", `Non-empty list is truthy even if it contains 0.
 
 Beginner:
@@ -10077,28 +3451,7 @@ Intermediate:
 • So bool([0]) is True.
 
 Expert:
-• bool([0]) is True. So non-empty list is truthy. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• bool([0]) is True. So non-empty list is truthy. So the result is True.`],
   ["What is int(0.9)?", ["0", "1", "0.0", "Error"], 0, "int() truncates: int(0.9) = 0.", `int() truncates toward zero.
 
 Beginner:
@@ -10110,28 +3463,7 @@ Intermediate:
 • So int(0.9) = 0.
 
 Expert:
-• int(0.9) = 0. So truncate toward zero. So the result is 0.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• int(0.9) = 0. So truncate toward zero. So the result is 0.`],
   ["What is str(0)?", ["'0'", "0", "0.0", "Error"], 0, "str(0) = '0' (string).", `str() converts a number to a string.
 
 Beginner:
@@ -10143,28 +3475,7 @@ Intermediate:
 • So str(0) = '0'.
 
 Expert:
-• str(0) = '0'. So int to str. So the result is '0'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• str(0) = '0'. So int to str. So the result is '0'.`],
   ["What is 'no' + 'te'?", ["'note'", "'no te'", "'teno'", "Error"], 0, "String concatenation.", `+ concatenates strings: 'no' + 'te' = 'note'.
 
 Beginner:
@@ -10176,28 +3487,7 @@ Intermediate:
 • So 'no' + 'te' = 'note'.
 
 Expert:
-• 'no' + 'te' = 'note'. So concatenation. So the result is 'note'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'no' + 'te' = 'note'. So concatenation. So the result is 'note'.`],
   ["What is 'o' * 4?", ["'oooo'", "'o o o o'", "4", "Error"], 0, "'o' * 4 = 'oooo'.", `String * int repeats the string.
 
 Beginner:
@@ -10209,28 +3499,7 @@ Intermediate:
 • So 'o' * 4 = 'oooo'.
 
 Expert:
-• 'o' * 4 = 'oooo'. So str * int. So the result is 'oooo'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'o' * 4 = 'oooo'. So str * int. So the result is 'oooo'.`],
   ["What is [3] + [4]?", ["[3, 4]", "[7]", "[4, 3]", "Error"], 0, "List concatenation.", `+ concatenates lists.
 
 Beginner:
@@ -10242,28 +3511,7 @@ Intermediate:
 • So [3] + [4] = [3, 4].
 
 Expert:
-• [3] + [4] = [3, 4]. So list concatenation. So the result is [3, 4].
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• [3] + [4] = [3, 4]. So list concatenation. So the result is [3, 4].`],
   ["What is 'dog'[0]?", ["'d'", "'o'", "'g'", "Error"], 0, "First character of 'dog'.", `Index 0 is the first character.
 
 Beginner:
@@ -10275,28 +3523,7 @@ Intermediate:
 • So 'dog'[0] = 'd'.
 
 Expert:
-• 'dog'[0] = 'd'. So first character. So the result is 'd'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'dog'[0] = 'd'. So first character. So the result is 'd'.`],
   ["What is 'dog'[-1]?", ["'g'", "'d'", "'o'", "Error"], 0, "Last character of 'dog'.", `Index -1 is the last character.
 
 Beginner:
@@ -10308,28 +3535,7 @@ Intermediate:
 • So 'dog'[-1] = 'g'.
 
 Expert:
-• 'dog'[-1] = 'g'. So last character. So the result is 'g'.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 'dog'[-1] = 'g'. So last character. So the result is 'g'.`],
   ["What is [5, 6, 7][-1]?", ["7", "5", "6", "Error"], 0, "Last element of list.", `Index -1 is the last element.
 
 Beginner:
@@ -10341,28 +3547,7 @@ Intermediate:
 • So [5, 6, 7][-1] = 7.
 
 Expert:
-• [5, 6, 7][-1] = 7. So last element. So the result is 7.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• [5, 6, 7][-1] = 7. So last element. So the result is 7.`],
   ["What is 4 == 4?", ["True", "False", "1", "Error"], 0, "4 equals 4.", `== tests equality.
 
 Beginner:
@@ -10374,28 +3559,7 @@ Intermediate:
 • So 4 == 4 is True.
 
 Expert:
-• 4 == 4 is True. So equality. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 4 == 4 is True. So equality. So the result is True.`],
   ["What is 5 != 5?", ["False", "True", "0", "Error"], 0, "5 is not unequal to 5.", `5 == 5 so 5 != 5 is False.
 
 Beginner:
@@ -10407,28 +3571,7 @@ Intermediate:
 • So 5 != 5 is False.
 
 Expert:
-• 5 != 5 is False. So inequality. So the result is False.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 5 != 5 is False. So inequality. So the result is False.`],
   ["What is 1 < 10?", ["True", "False", "1", "Error"], 0, "1 is less than 10.", `1 < 10 is True.
 
 Beginner:
@@ -10440,28 +3583,7 @@ Intermediate:
 • So 1 < 10 is True.
 
 Expert:
-• 1 < 10 is True. So less-than. So the result is True.
-
-Key Concepts:
-• See Beginner and Expert sections above for the main ideas.
-Key Distinctions:
-• Compare with related types (e.g. int vs float, str vs bytes) as in Expert.
-How It Works:
-• Python evaluates the literal or expression, then type() returns its class.
-Step-by-Step Execution:
-• 1. Evaluate the expression. 2. Call type(...). 3. type() returns the class. 4. REPL displays it.
-Order of Operations:
-• Literals and subexpressions first; then type() is applied.
-Common Use Cases:
-• Checking types in the REPL; teaching type differences; validating input.
-Edge Cases:
-• See Expert section for edge cases (e.g. None, empty collections, subclasses).
-Performance Considerations:
-• type() is cheap; creating literals is highly optimized at beginner scale.
-Examples:
-• See Expert and Intermediate sections; try the same pattern with related values.
-Notes:
-• Use isinstance(x, Type) when you want to allow subclasses.`],
+• 1 < 10 is True. So less-than. So the result is True.`],
   ["What is 10 > 1?", ["True", "False", "1", "Error"], 0, "10 is greater than 1.", `10 > 1 is True.
 
 Beginner:

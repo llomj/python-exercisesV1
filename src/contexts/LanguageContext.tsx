@@ -18,13 +18,23 @@ import { translations } from '../translations';
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
-    const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY);
-    return (saved === 'fr' ? 'fr' : 'en') as Language;
+    // In some preview/headless contexts `localStorage` can be unavailable or throw.
+    // If that happens, fall back to English so the app can still render.
+    try {
+      const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+      return (saved === 'fr' ? 'fr' : 'en') as Language;
+    } catch {
+      return 'en';
+    }
   });
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
+    try {
+      localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
+    } catch {
+      // Ignore storage errors; language state is still kept in-memory for this session.
+    }
   };
 
   const t = (key: string): string => {

@@ -755,11 +755,17 @@ When the user selects French, the "description approfondie" (detailed explanatio
 
 **Detailed explanations revision task (IDs 1-500)**:
 - French translations must structurally match English exactly
-- Include all sections: Key concepts, How it works, Example(s), Common uses, Edge cases, etc.
+- Include all 10 sections: Key Concepts → Key Distinctions → How It Works → Step-by-Step Execution → Order of Operations → Common Use Cases → Edge Cases → Performance Considerations → Examples → Notes (French: Concepts clés … Remarques)
 - Sample revisions done for IDs 22, 23. Pattern: compare English `de` structure, add any missing French sections
-- Remaining: IDs 1-21 (may already match), IDs 24-500 need review/expansion
 
-**Batch process**: Add 50 translations at a time. See comments in detailedExplanationsTranslations.ts for instructions.
+**Level 0 (IDs 1-300) — French 10-section progress (do not repeat)**:
+- **Done**: IDs 1-290 verified/expanded with full 10-section French. Expanded from 3-tier: … 261-275, 276-290.
+- **Next batch**: Verify/expand IDs **291-300** (last Level 0 batch). Work in batches of ~15; only expand entries that lack "Concepts clés" / full block.
+- Always update this "Next batch" line after each session so the next agent continues from the right place.
+
+**Levels 1-10 (IDs 301-3300)**: Same 10-section parity applies; track per-level or in batches of 50. IDs 301-500 need review/expansion after Level 0 is complete.
+
+**Batch process**: Add 50 translations at a time (or ~15 for Level 0). See comments in detailedExplanationsTranslations.ts for instructions.
 
 ### Notes:
 - The translation button is positioned under the XP score icon in the nav

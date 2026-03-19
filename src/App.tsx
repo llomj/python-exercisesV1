@@ -1,13 +1,7 @@
-import React, { useState, useEffect, Suspense } from 'react';
-import { QuizView } from './components/QuizView';
-import { HistoryLog } from './components/HistoryLog';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { GlossaryView } from './components/GlossaryView';
 import { OperationsView } from './components/OperationsView';
-import { IdSearchModal } from './components/IdSearchModal';
-import { IdLogView } from './components/IdLogView';
 import { LevelSelectorModal } from './components/LevelSelectorModal';
-import { MethodsView } from './components/MethodsView';
-import { FlowView } from './components/FlowView';
 import { ConceptsView } from './components/ConceptsView';
 import { FundamentalsView } from './components/FundamentalsView';
 import { UserStats, PersonaStage, QuestionAttempt } from './types';
@@ -20,6 +14,18 @@ import { LEVELS, XP_PER_QUESTION, QUESTIONS_PER_LEVEL, getStarsForLevel, getStar
 import { useLanguage } from './contexts/LanguageContext';
 import { SoundProvider, playCutSoundIfEnabled } from './contexts/SoundContext';
 import { formatTranslation } from './translations';
+
+// Lazy-load QuizView so its heavy dependencies (e.g. syntax highlighter)
+// don't block the initial hub render.
+const QuizView = lazy(() => import('./components/QuizView').then(m => ({ default: m.QuizView })));
+
+// Also lazy-load other syntax-highlighter views. Even if they are not currently
+// visible, their module evaluation can prevent the app from mounting.
+const HistoryLog = lazy(() => import('./components/HistoryLog').then(m => ({ default: m.HistoryLog })));
+const IdSearchModal = lazy(() => import('./components/IdSearchModal').then(m => ({ default: m.IdSearchModal })));
+const IdLogView = lazy(() => import('./components/IdLogView').then(m => ({ default: m.IdLogView })));
+const MethodsView = lazy(() => import('./components/MethodsView').then(m => ({ default: m.MethodsView })));
+const FlowView = lazy(() => import('./components/FlowView').then(m => ({ default: m.FlowView })));
 
 const LOCAL_STORAGE_KEY = 'python_exercises_learn_stats_v3_offline';
 
