@@ -117006,2632 +117006,4000 @@ Exemples :
 
 Remarques :
 • Réponse : ['A', 'B'] (1re option).`,
-  2751: `C'est a simple decorator qui retourne la fonction originale inchangés. The @decorator syntax applies the decorator to the function definition. Since the decorator just returns func, the decorated function behaves exactly like la fonction originale. C'est essentially a no-op decorator, useful for testing or as a template.
-
-Simple decorator that ne fait rien:
-• def decorator(func): return func - returns function inchangés
-• @decorator - applies decorator to function below
-• Decorated function has same type and behavior
-• type(func) returns <class 'function'> (original function type)
-• Useful as template or for conditional decoration
-
-Comment ça fonctionne : • @decorator appliqué à def func(): pass
-• decorator(func) appelé with function object
-• decorator returns func inchangés
-• func assigned la fonction originale
-• No change in behavior or type
-
-Exemple : def simple_decorator(func):
-    return func  # Return inchangés
-
-@simple_decorator
-def my_function():
-    pass
-
-type(my_function)  # <class 'function'> - inchangés
-
-Usages courants : • Template for more complex decorators
-• Conditional decoration
-• Debugging decorator framework
-• Testing decorator application
-
-Exemple : def decorator(func): return func crée un decorator qui retourne the function inchangés, so type(func) is still <class 'function'>.`,
-  2752: `Ce décorateur replaces la fonction originale with a fonction wrapper. Le fonction wrapper calls la fonction originale and returns its result. When func() est appelé, c'est en fait le wrapper, which then appelle l'originale func() and returns 1. Le wrapper preserves la fonction originale's behavior while permettant une logique supplémentaire to be added.
-
-Décorateur de wrapping de fonction :
-• def decorator(func): def wrapper(): return func(); return wrapper
-• @decorator remplace func par wrapper
-• wrapper() calls original func() and returns result
-• func() appelle maintenant wrapper, qui calls original
-• Résultat is same as original function
-
-Comment ça fonctionne : • @decorator appliqué à def func(): return 1
-• decorator(func) appelé, returns fonction wrapper
-• func assigned fonction wrapper
-• func() appelle wrapper()
-• wrapper() calls original func(), obtient 1
-• wrapper() returns 1
-
-Exemple : def logging_decorator(func):
-    def wrapper(*args, **kwargs):
-        print(f"Calling {func.__name__}")
-        return func(*args, **kwargs)
-    return wrapper
-
-@logging_decorator
-def my_function():
-    return 42
-
-my_function()  # Prints "Calling my_function", returns 42
-
-Usages courants : • Ajouter du comportement sans modifier function code
-• Journalisation, chronométrage, validation
-• Préoccupations transversales
-• Logique de wrapper réutilisable
-
-Exemple : Le décorateur wraps la fonction originale, so func() appelle wrapper(), which appelle l'originale func() and returns 1.`,
-  2753: `Ce décorateur crée un wrapper that accepts any arguments (*args, **kwargs) and les passe à la fonction originale. Cela permet the decorator de fonctionner avec des fonctions ayant toute signature. Le wrapper préserve tous les arguments et arguments nommés, en faisant un modèle de décorateur générique.
-
-Wrapper générique avec arguments préservés :
-• def wrapper(*args, **kwargs): return func(*args, **kwargs)
-• *args collecte les arguments positionnels en tuple
-• **kwargs collecte les arguments nommés en dictionnaire
-• Tous les arguments sont passés à la fonction originale inchangés
-• Fonctionne avec toute signature de fonction
-
-Comment ça fonctionne : • @decorator appliqué à def add(x, y): return x + y
-• decorator(add) returns generic wrapper
-• add est assignée au wrapper générique
-• add(1, 2) appelle wrapper(1, 2)
-• wrapper appelle l'originale add(1, 2) → 3
-• wrapper returns 3
-
-Exemple : def generic_decorator(func):
-    def wrapper(*args, **kwargs):
-        print(f"Calling {func.__name__} with {args} {kwargs}")
-        return func(*args, **kwargs)
-    return wrapper
-
-@generic_decorator
-def multiply(a, b, factor=1):
-    return a * b * factor
-
-multiply(3, 4, factor=2)  # Works with any args
-
-Usages courants : • Fonctionne avec toute signature de fonction
-• Preserves all argument types
-• Generic decorator template
-• No signature assumptions
-
-Exemple : wrapper(*args, **kwargs) preserves all arguments, so add(1, 2) works and returns 3 from l'originale add function.`,
-  2754: `@wraps is a decorator from functools that copies metadata from la fonction originale to the fonction wrapper. Without @wraps, the fonction wrapper would have its own __name__, __doc__, etc. With @wraps, le wrapper appears to have le même metadata as la fonction originale, which is important for debugging, documentation, and tools that inspect function metadata.
-
-@wraps preserves function metadata:
-• @wraps(func) copies __name__, __doc__, __module__, etc.
-• Wrapper appears as original function to introspection
-• Essential for decorators to not break function identity
-• Prevents __name__ from being 'wrapper'
-• Maintains documentation and debugging info
-
-Comment ça fonctionne : • @wraps(func) appliqué à fonction wrapper
-• Copies metadata from func to wrapper
-• wrapper.__name__ becomes func.__name__
-• wrapper.__doc__ becomes func.__doc__
-• Preserves function identity for tools
-
-Exemple : from functools import wraps
-
-def my_decorator(func):
-    @wraps(func)  # Preserves metadata
-    def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
-    return wrapper
-
-@my_decorator
-def original_function():
-    """C'est l'originale docstring."""
-    pass
-
-print(original_function.__name__)   # 'original_function' (not 'wrapper')
-print(original_function.__doc__)    # 'C'est l'originale docstring.'
-
-Usages courants : • Preserves function identity
-• Better debugging (stack traces show correct names)
-• Documentation tools work correctly
-• Introspection works as expected
-• Essential for professional decorators
-
-Exemple : @wraps(func) copies metadata, so func.__name__ returns 'func' instead of 'wrapper'.`,
-  2755: `C'est a decorator factory - a function that takes arguments and retourne un decorator. @decorator(1) calls decorator(1), which retourne une lambda function that acts as the actual decorator. The lambda takes the function and returns it inchangés. Ce pattern allows decorators to be configured with parameters.
-
-Decorator factory pattern:
-• def decorator(arg): return lambda func: func
-• @decorator(1) calls decorator(1)
-• Retourne lambda that acts as decorator
-• Lambda takes function and returns it
-• Allows parameterized decorators
-
-Comment ça fonctionne : • @decorator(1) executes decorator(1)
-• decorator(1) returns lambda func: func
-• Lambda becomes the actual decorator
-• @ (lambda func: func) appliqué à def func()
-• lambda returns func inchangés
-
-Exemple : def repeat(times):
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            for _ in range(times):
-                result = func(*args, **kwargs)
-            return result
-        return wrapper
-    return decorator
-
-@repeat(3)  # Decorator factory with argument
-def say_hello():
-    print("Hello!")
-
-say_hello()  # Prints "Hello!" 3 times
-
-Usages courants : • Configurable decorators
-• Reusable with different parameters
-• Flexible decorator behavior
-• Clean syntax for configuration
-
-Exemple : @decorator(1) calls decorator(1), which retourne une lambda that acts as the decorator for the function.`,
-  2756: `C'est a class-based decorator that uses the __call__ method. The @Decorator syntax crée un Decorator instance with the function as argument. When the decorated function est appelé, c'est en fait the Decorator instance's __call__ method, which then calls la fonction originale. C'est an alternative to function-based decorators.
-
-Class-based decorator with __call__:
-• class Decorator: def __init__(self, func): self.func = func
-• @Decorator creates Decorator instance with function
-• Instance stored as func
-• func() calls instance.__call__()
-• __call__ calls original function
-
-Comment ça fonctionne : • @Decorator appliqué à def func(): return 1
-• Decorator(func) creates instance with func stored
-• func assigned Decorator instance
-• func() calls instance.__call__()
-• __call__() calls self.func() → 1
-• Retourne 1
-
-Exemple : class TimingDecorator:
-    def __init__(self, func):
-        self.func = func
-        self.call_count = 0
-
-    def __call__(self, *args, **kwargs):
-        self.call_count += 1
-        import time
-        start = time.time()
-        result = self.func(*args, **kwargs)
-        end = time.time()
-        print(f"{self.func.__name__} took {end-start:.3f}s (called {self.call_count} times)")
-        return result
-
-@TimingDecorator
-def slow_function():
-    import time
-    time.sleep(0.1)
-    return "done"
-
-slow_function()
-
-Usages courants : • Can store state between calls
-• More complex logic than function decorators
-• Instance variables for configuration
-• Inheritance support
-
-Exemple : Class-based decorator uses __call__ method, so func() calls the Decorator instance qui returns self.func() = 1.`,
-  2757: `@staticmethod is a built-en Python decorator qui crée une méthode statique. Les méthodes statiques ne reçoivent pas self ni cls comme premier argument and peut être appelé on the class without an instance. They are utility methods that n'a pas besoin access to instance or class state. Static methods are bound to the class, not instances.
-
-@staticmethod creates static method:
-• @staticmethod marks method as static
-• No self or cls parameter required
-• Can be called on class: Class.method()
-• Cannot access instance (self) or class (cls) attributes
-• Utility functions related to class
-
-Comment ça fonctionne : • @staticmethod appliqué à method
-• Method becomes static (no implicit first argument)
-• Accessible via class or instance
-• No access to self or cls
-• Behaves like regular function in class context
-
-Exemple : class MathUtils:
-    @staticmethod
-    def add(a, b):  # No self needed
-        return a + b
-
-    @staticmethod
-    def multiply(a, b):
-        return a * b
-
-# Can call on class
-result = MathUtils.add(3, 4)  # 7
-
-# Can also call on instance
-utils = MathUtils()
-result = utils.multiply(3, 4)  # 12
-
-Usages courants : • Utility functions in classes
-• No instance required
-• Cleaner API for helper functions
-• Group related functions in class
-
-Exemple : @staticmethod crée un static method that peut être appelé without an instance, like a utility function in a class.`,
-  2758: `@classmethod is a built-en Python decorator qui crée a class method. Les méthodes de classe reçoivent la classe (cls) comme premier argument instead of an instance (self). They can access class attributes and create new instances. Class methods are commonly utilisé pour factory methods and alternative constructors.
-
-@classmethod creates class method:
-• @classmethod marks method as class method
-• Receives cls instead of self
-• Can access class attributes and methods
-• Can create new instances of class
-• Bound to class, not instance
-
-Comment ça fonctionne : • @classmethod appliqué à method
-• Method receives class as first argument (cls)
-• Can access class variables and methods
-• Often utilisé pour factory methods
-• Accessible via class or instance
-
-Exemple : class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    @classmethod
-    def from_birth_year(cls, name, birth_year):
-        age = 2024 - birth_year  # Calculate age
-        return cls(name, age)    # Create instance
-
-# Factory method
-person = Person.from_birth_year("Alice", 1990)
-print(person.age)  # 34
-
-Usages courants : • Factory methods for object creation
-• Alternative constructors
-• Class-level operations
-• Access to class state
-
-Exemple : @classmethod crée un class method that receives cls as first argument and can access class-level attributes and create instances.`,
-  2759: `@property is a built-en Python decorator qui crée a property - a method that can be accessed like an attribute. Properties allow controlled access to instance attributes, enabling getter/setter behavior without changing the external API. Properties are computed on access and can include validation or computation.
-
-@property creates property (getter):
-• @property marks method as property
-• Method becomes attribute-like access
-• obj.x calls method instead of accessing attribute
-• Enables computed properties
-• Foundation for getters/setters
-
-Comment ça fonctionne : • @property appliqué à method
-• Method becomes property descriptor
-• Access obj.x calls the method
-• Retourne computed value
-• Can be extended with @x.setter for assignment
-
-Exemple : class Circle:
-    def __init__(self, radius):
-        self._radius = radius
-
-    @property
-    def radius(self):
-        return self._radius
-
-    @property
-    def area(self):
-        return 3.14159 * self._radius ** 2
-
-    @property
-    def circumference(self):
-        return 2 * 3.14159 * self._radius
-
-circle = Circle(5)
-print(circle.radius)        # 5 (property access)
-print(circle.area)          # 78.53975 (computed property)
-print(circle.circumference) # 31.4159 (computed property)
-
-Usages courants : • Encapsulation with simple syntax
-• Computed properties
-• Validation on access
-• Backward compatibility
-• Clean API design
-
-Exemple : @property turns a method into a property that can be accessed like an attribute, computing values on demand.`,
-  2760: `Multiple decorators can be stacked on a single function. They are applied from bottom to top - the decorator closest to the function definition is applied first. Each decorator receives le résultat of the previous decorator application. Cela permet combining multiple behaviors.
-
-Multiple decorators stack bottom-to-top:
-• @decorator1; @decorator2; def func()
-• Decorators applied bottom to top
-• @decorator2 applied first to original function
-• @decorator1 appliqué à result of @decorator2
-• Rightmost decorator is outermost
-
-Comment ça fonctionne : • def func(): pass defined
-• @decorator2 applied first: func = decorator2(func)
-• @decorator1 applied second: func = decorator1(func)
-• Final func is decorator1(decorator2(original_func))
-• Execution order: decorator1 → decorator2 → original
-
-Exemple : def logging_decorator(func):
-    def wrapper(*args, **kwargs):
-        print(f"Logging: calling {func.__name__}")
-        return func(*args, **kwargs)
-    return wrapper
-
-def timing_decorator(func):
-    def wrapper(*args, **kwargs):
-        import time
-        start = time.time()
-        result = func(*args, **kwargs)
-        end = time.time()
-        print(f"Timing: {end-start:.3f}s")
-        return result
-    return wrapper
-
-@logging_decorator  # Applied second (outermost)
-@timing_decorator   # Applied first (innermost)
-def my_function():
-    return "done"
-
-my_function()
-# Output: Logging: calling my_function
-#         Timing: 0.000s
-
-Usages courants : • Combine multiple behaviors
-• Modular decorator design
-• Reusable decorator combinations
-• Clean separation of concerns
-
-Exemple : Multiple decorators are applied bottom-to-top, so @decorator1 @decorator2 means decorator1(decorator2(func)).`,
-  2761: `Le Singleton pattern ensures only one instance of a classe exists. By overriding __new__, we control objet creation and renvoyer le même instance every time. obj1 is obj2 retourne True car they reference le même objet.
-
-Singleton pattern implementation:
-• classe Singleton: defines singleton classe
-• _instance = None: classe variable to store single instance
-• __new__(cls): controls instance creation
-• if cls._instance is None: creates instance only once
-• renvoyer cls._instance: retourne same instance always
-• obj1 is obj2: True (same objet identity)
-
-Comment ça fonctionne : • First Singleton() call creates new instance
-• Instance stored in cls._instance
-• Subsequent calls renvoyer existing instance
-• All instances are identical (obj1 is obj2)
-• Only one objet exists in memory
-
-Exemple : classe Singleton:
-    _instance = None
-
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        renvoyer cls._instance
-
-obj1 = Singleton()
-obj2 = Singleton()
-print(obj1 is obj2)  # True - same instance
-
-Usages courants : • Ensures single instance
-• Global access point
-• Memory efficiency
-• Controlled instantiation
-
-Exemple : Singleton.__new__ ensures only one instance exists, so obj1 is obj2 retourne True.`,
-  2762: `Le Factory pattern fournit un way to create objets sans specifying the exact classe. The create méthode takes a type and instantiates it, returning the created objet. Factory.create(liste) retourne [] car liste() creates an empty liste.
-
-Factory pattern implementation:
-• classe Factory: defines factory classe
-• @staticmethod def create(type): static factory méthode
-• renvoyer type(): instantiates the passed type
-• obj = Factory.create(liste): creates liste instance
-• Factory.create(liste) retourne [] (empty liste)
-
-Comment ça fonctionne : • Factory.create(liste) calls create méthode
-• type parameter is liste classe
-• renvoyer type() creates liste() → []
-• obj assigned the created objet
-• Retourne new instance each time
-
-Exemple : classe Factory:
-    @staticmethod
-    def create(obj_type):
-        renvoyer obj_type()
-
-# Create different types
-my_list = Factory.create(liste)      # []
-my_dict = Factory.create(dict)      # {}
-my_set = Factory.create(set)        # set()
-
-Usages courants : • Centralized objet creation
-• Decouples client from specific classes
-• Easy to extend avec new types
-• Consistent creation interface
-
-Exemple : Factory.create(liste) retourne [] car the factory instantiates the liste type, creating an empty liste.`,
-  2763: `Le Observer pattern allows objets to be notified when another objet changes. A subject maintains a liste of observers and notifies them when its state changes. [o.update() for o in self._observers] itère sur all observers and calls their update méthode.
-
-Observer pattern structure:
-• classe Observer: defines observer classe
-• self._observers = []: liste to store observers
-• attach(observer): adds observer to liste
-• notify(): itère sur observers
-• [o.update() for o in self._observers]: calls update on each
-
-Comment ça fonctionne : • Subject maintains liste of observers
-• attach() adds observers to liste
-• When subject changes, notify() est appelé
-• notify() calls update() on each observer
-• Observers react to the change
-
-Exemple : classe NewsPublisher:
-    def __init__(self):
-        self._subscribers = []
-
-    def subscribe(self, subscriber):
-        self._subscribers.append(subscriber)
-
-    def notify(self, news):
-        for subscriber in self._subscribers:
-            subscriber.update(news)
-
-classe Subscriber:
-    def update(self, news):
-        print(f"Received news: {news}")
-
-Usages courants : • Loose coupling entre objets
-• Automatic notifications
-• Extensible observer system
-• Event-driven architecture
-
-Exemple : Observer pattern where notify() itère sur observers and calls o.update() on each one.`,
-  2764: `Le Strategy pattern defines a family of algorithms and makes them interchangeable. StrategyA and StrategyB implement different versions of the execute méthode, allowing clients to choose different algorithms at runtime.
-
-Strategy pattern structure:
-• classe Strategy: defines strategy interface
-• def execute(self): pass: abstract méthode
-• classe StrategyA(Strategy): implements strategy A
-• classe StrategyB(Strategy): implements strategy B
-• execute() retourne different results for each strategy
-
-Comment ça fonctionne : • Base Strategy classe defines interface
-• Concrete strategies implement execute differently
-• Client can switch strategies at runtime
-• Each strategy encapsulates different algorithm
-• Polymorphism allows interchangeable use
-
-Exemple : classe SortStrategy:
-    def sort(self, data):
-        pass
-
-classe BubbleSort(SortStrategy):
-    def sort(self, data):
-        # Bubble sort implementation
-        renvoyer sorted(data)  # simplified
-
-classe QuickSort(SortStrategy):
-    def sort(self, data):
-        # Quick sort implementation
-        renvoyer sorted(data)  # simplified
-
-Usages courants : • Interchangeable algorithms
-• Runtime strategy selection
-• Clean separation of concerns
-• Easy to add new strategies
-
-Exemple : Strategy pattern avec StrategyA.execute() returning 'A' and StrategyB.execute() returning 'B' - different algorithms for same interface.`,
-  2765: `Le Adapter pattern allows classes avec incompatible interfaces to work together. The Adapter wraps an objet and provides the expected interface by calling the wrapped objet's méthodes. méthode() calls self.obj.other_method(), adapting the interface.
-
-Adapter pattern structure:
-• classe Adapter: adapts incompatible interfaces
-• def __init__(self, obj): stores wrapped objet
-• def méthode(self): provides expected interface
-• renvoyer self.obj.other_method(): calls wrapped objet's méthode
-• Translates interface calls
-
-Comment ça fonctionne : • Adapter wraps incompatible objet
-• Provides expected interface to client
-• Translates méthode calls to wrapped objet
-• méthode() → other_method() translation
-• Client uses adapter as if it were compatible
-
-Exemple : classe OldSystem:
-    def old_method(self):
-        renvoyer "old result"
-
-classe Adapter:
-    def __init__(self, old_system):
-        self.old_system = old_system
-
-    def new_method(self):  # Expected interface
-        renvoyer self.old_system.old_method()  # Adapts call
-
-old = OldSystem()
-adapter = Adapter(old)
-result = adapter.new_method()  # Works avec new interface
-
-Usages courants : • Interface compatibility
-• Legacy system integration
-• Clean API adaptation
-• Third-party library integration
-
-Exemple : Adapter adapts interfaces by wrapping objets and translating méthode calls - méthode() calls self.obj.other_method().`,
-  2766: `Le Builder pattern separates the construction of complex objets from their representation. The builder accumulates parts and then builds the final objet. add() retourne self for méthode chaining, and build() assembles the final result.
-
-Builder pattern structure:
-• classe Builder: constructs complex objets
-• self.parts = []: accumulates objet parts
-• add(part): adds part and retourne self for chaining
-• renvoyer self: enables méthode chaining
-• build(): assembles final objet from parts
-
-Comment ça fonctionne : • Builder accumulates parts step by step
-• add() adds parts to internal liste
-• Retourne self for méthode chaining
-• build() combines all parts
-• ''.join(self.parts) creates final string
-
-Exemple : classe StringBuilder:
-    def __init__(self):
-        self.parts = []
-
-    def add(self, part):
-        self.parts.append(part)
-        renvoyer self  # Enable chaining
-
-    def build(self):
-        renvoyer ''.join(self.parts)
-
-builder = StringBuilder()
-result = builder.add('Hello').add(' ').add('World').build()
-# result = 'Hello World'
-
-Usages courants : • Step-by-step construction
-• Method chaining
-• Complex objet assembly
-• Clean construction API
-
-Exemple : Builder accumulates parts avec add() and assembles them in build() using ''.join(self.parts).`,
-  2767: `Le pattern Prototype creates new objects by copying existing ones. clone() crée un new instance of le même type using type(self)() constructor. Cela évite expensive initialization and allows creating variations from prototypes.
-
-Prototype pattern structure:
-• class Prototype: defines prototype class
-• def clone(self): creates copy of self
-• return type(self)(): creates new instance of same type
-• clone() returns new object with same structure
-• Allows creating variations from base prototype
-
-Comment ça fonctionne : • Prototype defines clone method
-• clone() creates new instance using type(self)()
-• type(self) gets the class of current instance
-• () creates new instance with default values
-• Retourne cloned object
-
-Exemple : class Document:
-    def __init__(self, title="", content=""):
-        self.title = title
-        self.content = content
-
-    def clone(self):
-        return type(self)(self.title, self.content)
-
-doc = Document("Original", "Content")
-copy = doc.clone()  # Creates new Document with same values
-
-Usages courants : • Avoid expensive object creation
-• Create variations from prototypes
-• Runtime object creation
-• Simplified cloning logic
-
-Exemple : Prototype.clone() creates new instance using type(self)(), cloning the object's structure and initial values.`,
-  2768: `Le Facade pattern fournit un simplified interface to a complex system. The facade hides the complexity of multiple subsystems and fournit un single operation() méthode that coordinates calls to subsystem1.méthode() and subsystem2.méthode().
-
-Facade pattern structure:
-• classe Facade: provides simplified interface
-• self.subsystem1 = Subsystem1(): initializes subsystems
-• self.subsystem2 = Subsystem2(): initializes more subsystems
-• def operation(self): single méthode for complex operations
-• renvoyer self.subsystem1.méthode() + self.subsystem2.méthode(): coordinates subsystems
-
-Comment ça fonctionne : • Facade wraps multiple complex subsystems
-• Provides single operation() méthode
-• operation() calls multiple subsystem méthodes
-• Client uses simple facade interface
-• Complexity hidden behind facade
-
-Exemple : classe DatabaseFacade:
-    def __init__(self):
-        self.connection = DatabaseConnection()
-        self.query_builder = QueryBuilder()
-        self.result_formatter = ResultFormatter()
-
-    def get_user_data(self, user_id):
-        # Complex operations hidden
-        query = self.query_builder.build_select(user_id)
-        raw_data = self.connection.execute(query)
-        renvoyer self.result_formatter.format(raw_data)
-
-# Simple interface for complex system
-facade = DatabaseFacade()
-user_data = facade.get_user_data(123)
-
-Usages courants : • Simplified interface to complex systems
-• Reduced coupling to subsystems
-• Easier to use and maintain
-• Encapsulates system complexity
-
-Exemple : Facade provides simplified operation() that coordinates self.subsystem1.méthode() + self.subsystem2.méthode().`,
-  2769: `Le pattern Command encapsulates requests as objects, allowing parameterization and queuing of operations. L'Invoker stocke a command and calls its execute() method si nécessaire. Cela découple the requester de l'opération réelle.
-
-Command pattern structure:
-• class Command: defines command interface
-• def execute(self): pass: abstract execute method
-• class Invoker: stores and executes commands
-• self.command = None: stores current command
-• set_command(cmd): sets command to execute
-• execute(): calls self.command.execute()
-
-Comment ça fonctionne : • Command objects encapsulate operations
-• Invoker stores command object
-• set_command() assigns command to execute
-• execute() calls command.execute()
-• Decouples operation from invocation
-
-Exemple : class Light:
-    def on(self): print("Light on")
-    def off(self): print("Light off")
-
-class LightOnCommand:
-    def __init__(self, light):
-        self.light = light
-
-    def execute(self):
-        self.light.on()
-
-class RemoteControl:
-    def __init__(self):
-        self.command = None
-
-    def set_command(self, command):
-        self.command = command
-
-    def press_button(self):
-        self.command.execute()
-
-Usages courants : • Decouples caller from operation
-• Commands can be queued and logged
-• Undo/redo functionality possible
-• Parameterized operations
-
-Exemple : Command pattern where Invoker.set_command(cmd) stores command and Invoker.execute() calls self.command.execute().`,
-  2770: `Le pattern Composite permet de traiter les objets individuels and compositions of objects uniformly. operation() appelle la même method on all children, qu'ils soient des objets individuels objects or other composites. Cela crée un tree structure where operations propagate through the hierarchy.
-
-Composite pattern structure:
-• class Composite: defines composite class
-• self.children = []: stores child components
-• add(child): adds child to composition
-• operation(): performs operation on self and children
-• [c.operation() for c in self.children]: calls operation on each child
-
-Comment ça fonctionne : • Composite contains list of children
-• add() adds components to composition
-• operation() performs work and delegates to children
-• Children can be individual objects or other composites
-• Creates recursive tree structure
-
-Exemple : class FileSystemComponent:
-    def operation(self):
-        pass
-
-class File(FileSystemComponent):
-    def operation(self):
-        print("Processing file")
-
-class Directory(FileSystemComponent):
-    def __init__(self):
-        self.children = []
-
-    def add(self, component):
-        self.children.append(component)
-
-    def operation(self):
-        print("Processing directory")
-        for child in self.children:
-            child.operation()
-
-Usages courants : • Uniform treatment of objects and compositions
-• Recursive operations on tree structures
-• Easy to add new component types
-• Complex hierarchies simplified
-
-Exemple : Composite.operation() calls [c.operation() for c in self.children], recursively processing all components in the composition.`,
-  2771: `Le metaclass parameter allows you to specify a custom metaclass for a classe. If classe Meta(type): pass; classe MyClass(metaclass=Meta): pass; type(MyClass), then type(MyClass) retourne <classe '__main__.Meta'> car MyClass was created using Meta as its metaclass, so type(MyClass) retourne Meta (the classe's metaclass), not the default type. Classes are instances of their metaclass, so MyClass is an instance of Meta, making type(MyClass) renvoyer Meta.
-
-Custom metaclass:
-• type(MyClass) retourne <classe '__main__.Meta'>
-• MyClass created avec metaclass=Meta
-• Classes are instances of their metaclass
-• MyClass is instance of Meta
-• type() retourne classe's metaclass
-• Retourne : <classe '__main__.Meta'>
-
-Comment ça fonctionne : • classe MyClass(metaclass=Meta): specifies metaclass
-• Python uses Meta instead of type to create classe
-• MyClass created as instance of Meta
-• type(MyClass) checks classe's metaclass
-• Retourne : Meta (not type)
-
-Exemple : classe Meta(type): pass
-classe MyClass(metaclass=Meta): pass
-type(MyClass)              # <classe '__main__.Meta'> (metaclass)
-type(MyClass())            # <classe '__main__.MyClass'> (classe)
-
-Usages courants : • Custom metaclasses: classe MyClass(metaclass=Meta): (custom classe creation)
-• Metaprogramming: control how classes are created
-• Metaclasses
-• Advanced Python
-
-Exemple : If classe Meta(type): pass; classe MyClass(metaclass=Meta): pass; type(MyClass), then type(MyClass) retourne <classe '__main__.Meta'> car the metaclass parameter sets the classe's metaclass, making MyClass an instance of Meta.
-`,
-  2772: `A metaclass's __new__ method controls class creation. If class Meta(type): def __new__(cls, name, bases, dct): return super().__new__(cls, name, bases, dct); class MyClass(metaclass=Meta): pass, then MyClass est créé using the custom metaclass because Meta.__new__ est appelé when MyClass is being created. The __new__ method reçoit le class name, base classes, and class dictionary, and retourne le created class. Cela permet you to modify or validate the class during creation.
-
-Metaclass __new__:
-• MyClass created with custom metaclass
-• Meta.__new__() called during class creation
-• __new__ receives: cls (Meta), name ('MyClass'), bases (()), dct (class dict)
-• __new__ creates and retourne le class
-• Allows customization during class creation
-
-Comment ça fonctionne : • class MyClass(metaclass=Meta): triggers class creation
-• Python appelle Meta.__new__(Meta, 'MyClass', (), {...})
-• __new__ creates the class object
-• Retourne created class (MyClass)
-• MyClass is instance of Meta
-
-Exemple : class Meta(type):
-    def __new__(cls, name, bases, dct):
-        print(f"Creating class {name}")
-        return super().__new__(cls, name, bases, dct)
-class MyClass(metaclass=Meta): pass  # Prints "Creating class MyClass"
-
-Usages courants : • Class customization: __new__ can modify class during creation
-• Validation: check class definition before creation
-• Metaprogramming: dynamically modify classes
-• Metaclasses
-
-Exemple : If class Meta(type): def __new__(cls, name, bases, dct): return super().__new__(cls, name, bases, dct); class MyClass(metaclass=Meta): pass, then MyClass est créé using the custom metaclass because Meta.__new__ controls class creation.
-`,
-  2773: `A metaclass's __init__ method can add attributes to the class after it's created. If class Meta(type): def __init__(cls, name, bases, dct): cls.custom_attr = 1; class MyClass(metaclass=Meta): pass; MyClass.custom_attr, then MyClass.custom_attr returns 1 because Meta.__init__ est appelé après le class est créé, and it sets cls.custom_attr = 1 on the class. Cela permet metaclasses to add class attributes automatically.
-
-Metaclass __init__:
-• MyClass.custom_attr returns 1
-• Meta.__init__() called after class creation
-• __init__ receives: cls (MyClass), name, bases, dct
-• Sets cls.custom_attr = 1
-• Attribute added to class
-• Retourne : 1
-
-Comment ça fonctionne : • class MyClass(metaclass=Meta): triggers class creation
-• Meta.__new__() creates the class
-• Meta.__init__(MyClass, 'MyClass', (), {...}) called
-• __init__ sets MyClass.custom_attr = 1
-• Attribute available on class
-• Retourne : 1
-
-Exemple : class Meta(type):
-    def __init__(cls, name, bases, dct):
-        cls.custom_attr = 1  # Add attribute to class
-class MyClass(metaclass=Meta): pass
-MyClass.custom_attr        # 1 (added by metaclass)
-
-Usages courants : • Automatic attributes: metaclass can add attributes to classes
-• Class initialization: __init__ can set up class
-• Metaprogramming: modify classes after creation
-• Metaclasses
-
-Exemple : If class Meta(type): def __init__(cls, name, bases, dct): cls.custom_attr = 1; class MyClass(metaclass=Meta): pass; MyClass.custom_attr, then MyClass.custom_attr returns 1 because the metaclass __init__ can add attributes to the class after it's created.
-`,
-  2774: `A metaclass's __call__ method controls instance creation (when you call the class like MyClass()). If class Meta(type): def __call__(cls, *args, **kwargs): return super().__call__(*args, **kwargs); class MyClass(metaclass=Meta): pass; type(MyClass()), then type(MyClass()) returns <class '__main__.MyClass'> because Meta.__call__ est appelé when MyClass() is invoked, and il crée an instance of MyClass. The __call__ method allows you to customize instance creation, such as implementing singleton patterns or adding validation.
-
-Metaclass __call__:
-• type(MyClass()) returns <class '__main__.MyClass'>
-• MyClass() calls Meta.__call__()
-• __call__ receives: cls (MyClass), *args, **kwargs
-• __call__ creates instance using super().__call__()
-• Instance is of MyClass class
-• Retourne : <class '__main__.MyClass'>
-
-Comment ça fonctionne : • MyClass() calls the class (instance creation)
-• Python appelle Meta.__call__(MyClass, *args, **kwargs)
-• __call__ executes: return super().__call__(*args, **kwargs)
-• Creates instance of MyClass
-• type(MyClass()) returns MyClass
-• Retourne : <class '__main__.MyClass'>
-
-Exemple : class Meta(type):
-    def __call__(cls, *args, **kwargs):
-        print(f"Creating instance of {cls.__name__}")
-        return super().__call__(*args, **kwargs)
-class MyClass(metaclass=Meta): pass
-obj = MyClass()            # Prints "Creating instance of MyClass"
-
-Usages courants : • Instance creation control: __call__ can customize instance creation
-• Singleton patterns: metaclass can ensure single instance
-• Validation: check arguments before instance creation
-• Metaclasses
-
-Exemple : If class Meta(type): def __call__(cls, *args, **kwargs): return super().__call__(*args, **kwargs); class MyClass(metaclass=Meta): pass; type(MyClass()), then type(MyClass()) returns <class '__main__.MyClass'> because the metaclass __call__ controls instance creation, creating an instance of MyClass.
-`,
-  2775: `A metaclass can implement the Singleton pattern by controlling instance creation in its __call__ method. If class SingletonMeta(type): _instances = {}; def __call__(cls, *args, **kwargs): if cls not in cls._instances: cls._instances[cls] = super().__call__(*args, **kwargs); return cls._instances[cls]; class MyClass(metaclass=SingletonMeta): pass; MyClass() is MyClass(), then MyClass() is MyClass() returns True because SingletonMeta.__call__ ensures only one instance exists - it stocke le first instance in _instances and returns that same instance for all subsequent calls.
-
-Metaclass Singleton:
-• MyClass() is MyClass() returns True
-• SingletonMeta.__call__() controls instance creation
-• First call creates instance, stores in _instances[cls]
-• Subsequent calls return existing instance
-• Only one instance exists
-• Retourne : True
-
-Comment ça fonctionne : • MyClass() calls SingletonMeta.__call__(MyClass)
-• __call__ checks if MyClass in _instances (not found)
-• Creates instance: super().__call__(*args, **kwargs)
-• Stores in _instances[MyClass]
-• Next MyClass() call finds existing instance
-• Retourne same instance (obj1 is obj2)
-
-Exemple : class SingletonMeta(type):
-    _instances = {}
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super().__call__(*args, **kwargs)
-        return cls._instances[cls]
-class MyClass(metaclass=SingletonMeta): pass
-obj1 = MyClass()
-obj2 = MyClass()
-obj1 is obj2              # True (same instance)
-
-Usages courants : • Singleton pattern: metaclass ensures single instance
-• Instance control: __call__ manages instance creation
-• Metaprogramming: implement design patterns with metaclasses
-• Metaclasses
-
-Exemple : If class SingletonMeta(type): _instances = {}; def __call__(cls, *args, **kwargs): if cls not in cls._instances: cls._instances[cls] = super().__call__(*args, **kwargs); return cls._instances[cls]; class MyClass(metaclass=SingletonMeta): pass; MyClass() is MyClass(), then MyClass() is MyClass() returns True because the metaclass implements the Singleton pattern, ensuring only one instance exists.
-`,
-  2776: `Le __slots__ attribute restricts which attributes can be set on instances. If classe MyClass: __slots__ = ['x']; obj = MyClass(); obj.x = 1; obj.y = 2, then obj.y = 2 raises an AttributeError car __slots__ only allows 'x' as an instance attribute. Toute tentative de définir an attribute absent de __slots__ raises an AttributeError. Cela économise la mémoire en évitant la création of __dict__ for instances.
-
-__slots__ restriction:
-• obj.y = 2 raises AttributeError
-• __slots__ = ['x'] restricts allowed attributes
-• Only 'x' allowed
-• 'y' absent de __slots__
-• Raises AttributeError
-
-Comment ça fonctionne : • obj.x = 1 works (x in __slots__)
-• obj.y = 2 attempts to set 'y'
-• 'y' absent de __slots__ = ['x']
-• Attribute not allowed
-• Raises AttributeError: 'MyClass' objet n'a pas attribute 'y'
-
-Exemple : classe MyClass:
-    __slots__ = ['x', 'y']
-obj = MyClass()
-obj.x = 1                    # Works (x in __slots__)
-obj.y = 2                    # Works (y in __slots__)
-obj.z = 3                    # AttributeError (z absent de __slots__)
-
-Usages courants : • Memory optimization: __slots__ = ['attr1', 'attr2'] (saves memory)
-• Attribute restriction: prevent dynamic attributes
-• Class optimization
-• Memory efficiency
-
-Exemple : If classe MyClass: __slots__ = ['x']; obj = MyClass(); obj.x = 1; obj.y = 2, then obj.y = 2 raises an AttributeError car __slots__ restricts instance attributes to only those listed, and 'y' is absent de __slots__.
-`,
-  2777: `Using __slots__ removes the __dict__ attribute from instances, saving memory. If class MyClass: __slots__ = ['x']; obj = MyClass(); '__dict__' in dir(obj), then '__dict__' in dir(obj) returns False because __slots__ prevents the creation of __dict__ for instances. dir() lists all attributes, and since instances with __slots__ n'a pas __dict__, it's not in the list. C'est the memory-saving benefit of __slots__ - instances n'a pas besoin a dictionary to store attributes.
-
-__slots__ removes __dict__:
-• '__dict__' in dir(obj) returns False
-• __slots__ prevents __dict__ creation
-• Instances n'a pas __dict__
-• dir() n'inclut pas __dict__
-• Retourne : False
-
-Comment ça fonctionne : • obj.x = 1 sets attribute (stored in slots, not __dict__)
-• dir(obj) lists attributes
-• Instance n'a pas __dict__ (__slots__ prevents it)
-• '__dict__' not in dir(obj)
-• Retourne : False
-
-Exemple : class MyClass:
-    __slots__ = ['x']
-obj = MyClass()
-obj.x = 1
-'__dict__' in dir(obj)      # False (no __dict__)
-# vs
-class MyClass:
-    pass  # No __slots__
-obj = MyClass()
-'__dict__' in dir(obj)      # True (has __dict__)
-
-Usages courants : • Memory optimization: __slots__ removes __dict__ (saves memory)
-• Fixed attributes: __slots__ = ['attr1', 'attr2'] (no dynamic attributes)
-• Class optimization
-• Memory efficiency
-
-Exemple : If class MyClass: __slots__ = ['x']; obj = MyClass(); '__dict__' in dir(obj), then '__dict__' in dir(obj) returns False because __slots__ removes __dict__ from instances, preventing dynamic attribute creation and saving memory.
-`,
-  2778: `Le __getattribute__ méthode intercepts all attribute access (both existing and missing attributes). If classe MyClass: def __getattribute__(self, name): renvoyer super().__getattribute__(name); obj = MyClass(); obj.x, then obj.x raises an AttributeError car __getattribute__ est appelé for all attribute access, even if the attribute n'existe pas. In this case, it calls super().__getattribute__(name), which uses the default behavior and raises AttributeError for missing attributes. __getattribute__ est appelé avant __getattr__, so it intercepts all attribute access.
-
-__getattribute__ intercepts all access:
-• obj.x raises AttributeError
-• __getattribute__ appelé for all attribute access
-• Checks if attribute exists
-• obj n'a pas attribute 'x'
-• super().__getattribute__('x') raises AttributeError
-• Raises AttributeError
-
-Comment ça fonctionne : • obj.x accesses attribute 'x'
-• Python appelle obj.__getattribute__('x')
-• __getattribute__ executes: renvoyer super().__getattribute__('x')
-• Default __getattribute__ searches for 'x'
-• 'x' not found on obj
-• Raises AttributeError: 'MyClass' objet n'a pas attribute 'x'
-
-Exemple : classe MyClass:
-    def __getattribute__(self, name):
-        print(f"Accessing {name}")
-        renvoyer super().__getattribute__(name)
-obj = MyClass()
-obj.x                    # Prints "Accessing x", then AttributeError
-
-Usages courants : • Attribute access control: __getattribute__ can log, validate, or modify access
-• Intercept all access: __getattribute__ catches all attribute access
-• Attribute access hooks
-• Special méthodes
-
-Exemple : If classe MyClass: def __getattribute__(self, name): renvoyer super().__getattribute__(name); obj = MyClass(); obj.x, then obj.x raises an AttributeError car __getattribute__ intercepts all attribute access, and since 'x' n'existe pas, it raises AttributeError.
-`,
-  2779: `Le __getattr__ méthode est appelé uniquement quand an attribute is not found through the normal lookup process (not in __dict__, not a descriptor, not a classe attribute). If classe MyClass: def __getattr__(self, name): renvoyer f'Missing: {name}'; obj = MyClass(); obj.x, then obj.x retourne 'Missing: x' car 'x' n'existe pas, so Python appelle __getattr__('x'), qui retourne le string 'Missing: x'. C'est different from __getattribute__, which est appelé for all attribute access - __getattr__ is only appelé as a fallback for missing attributes.
-
-__getattr__ fallback:
-• obj.x retourne 'Missing: x'
-• Normal attribute lookup fails (x n'existe pas)
-• Python appelle __getattr__('x') as fallback
-• __getattr__ retourne f'Missing: x'
-• Retourne : 'Missing: x'
-
-Comment ça fonctionne : • obj.x accesses attribute 'x'
-• Python searches: obj.__dict__ (not found) → MyClass.__dict__ (not found)
-• Normal lookup fails
-• Python appelle obj.__getattr__('x')
-• __getattr__ retourne f'Missing: x'
-• Retourne : 'Missing: x'
-
-Exemple : classe MyClass:
-    def __getattr__(self, name):
-        renvoyer f'Missing: {name}'
-obj = MyClass()
-obj.x                    # 'Missing: x' (fallback for missing attribute)
-obj.y                    # 'Missing: y' (fallback)
-
-Usages courants : • Default valeurs: __getattr__ can provide defaults for missing attributes
-• Dynamic attributes: create attributes on the fly
-• Attribute fallback: handle missing attributes gracefully
-• Special méthodes
-
-Exemple : If classe MyClass: def __getattr__(self, name): renvoyer f'Missing: {name}'; obj = MyClass(); obj.x, then obj.x retourne 'Missing: x' car __getattr__ est appelé uniquement quand an attribute is not found, providing a fallback valeur.
-`,
-  2780: `Le __setattr__ méthode intercepts all attribute assignment (setting attributes). If classe MyClass: def __setattr__(self, name, valeur): super().__setattr__(name, valeur * 2); obj = MyClass(); obj.x = 5; obj.x, then obj.x retourne 10 car __setattr__ intercepts the assignment obj.x = 5, transforms the valeur (valeur * 2 = 5 * 2 = 10), and stores 10. Every attribute assignment goes through __setattr__, allowing you to validate, transform, or log assignments.
-
-__setattr__ intercepts assignment:
-• obj.x = 5 calls __setattr__('x', 5)
-• __setattr__ transforms: valeur * 2 = 5 * 2 = 10
-• Stores transformed valeur: obj.x = 10
-• obj.x retourne 10
-• Retourne : 10
-
-Comment ça fonctionne : • obj.x = 5 attempts to set attribute
-• Python appelle obj.__setattr__('x', 5)
-• __setattr__ executes: super().__setattr__(name, valeur * 2)
-• Evaluates: 5 * 2 = 10
-• Stores: obj.x = 10
-• obj.x retourne 10
-
-Exemple : classe MyClass:
-    def __setattr__(self, name, valeur):
-        if valeur < 0:
-            raise ValueError("Value must be non-negative")
-        super().__setattr__(name, valeur * 2)
-obj = MyClass()
-obj.x = 5                    # Stores 10 (5 * 2)
-obj.x                        # 10 (transformed valeur)
-
-Usages courants : • Value transformation: __setattr__ can transform valeurs avant storing
-• Validation: __setattr__ can validate assignments
-• Assignment hooks: intercept all attribute assignments
-• Special méthodes
-
-Exemple : If classe MyClass: def __setattr__(self, name, valeur): super().__setattr__(name, valeur * 2); obj = MyClass(); obj.x = 5; obj.x, then obj.x retourne 10 car __setattr__ intercepts all attribute assignment, transforming the valeur avant storing it (5 * 2 = 10).
-`,
-  2781: `PEP 8 (Python Enhancement Proposal 8) is the official style guide for Python code. It provides conventions for writing readable, consistent Python code, including naming conventions, code layout, whitespace usage, line length, comments, and more. Following PEP 8 makes code easier to read and maintain, and it's widely adopted in the Python community. While not enforced by the language, PEP 8 is considered best practice and many tools (like linters) can check code against PEP 8 standards.
-
-PEP 8 style guide:
-• PEP 8 is Python style guide
-• Provides conventions for readable code
-• Covers naming, layout, whitespace, etc.
-• Widely adopted en Python community
-• Best practice for Python code
-
-Comment ça fonctionne : • PEP 8 defines style conventions
-• Exemple : snake_case for functions, CapitalCase for classes
-• 4 spaces pour l'indentation (not tabs)
-• Maximum 79 caractères per line
-• Clear naming conventions
-
-Exemple : # PEP 8 compliant
-def my_function():  # snake_case, 4 spaces
-    my_variable = 1  # snake_case
-    return my_variable
-
-class MyClass:  # CapitalCase
-    pass
-
-Usages courants : • Code style: follow PEP 8 conventions
-• Readability: consistent, readable code
-• Team standards: shared style guide
-• Best practices
-
-Exemple : PEP 8 is the Python style guide - a set of conventions for writing readable, consistent Python code, covering naming, layout, whitespace, and more.
-`,
-  2782: `Type hints (PEP 484) specify expected types for function parameters and return values. If def func(x: int) -> int: return x * 2, then x: int specifies that parameter x should be an int, and -> int specifies that la fonction retourne an int. Type hints are optional annotations that provide information about types for documentation, IDE support, and static type checkers like mypy. They n'affecte pas runtime behavior but help catch type errors before execution.
-
-Type hints:
-• x: int specifies parameter type
-• -> int specifies return type
-• Optional annotations (n'affecte pas runtime)
-• Help with IDE support and type checking
-• PEP 484 standard
-
-Comment ça fonctionne : • def func(x: int) -> int: defines function with type hints
-• x: int indicates x should be int
-• -> int indicates function returns int
-• Type hints stored in __annotations__
-• Static type checkers use them
-
-Exemple : def func(x: int) -> int:
-    return x * 2
-func(5)                    # 10 (type hints n'applique pas at runtime)
-func('5')                  # Still works (no runtime check)
-# But mypy would warn about wrong type
-
-Usages courants : • Type documentation: def func(x: int) -> int (document types)
-• IDE support: better autocomplete and error detection
-• Static type checking: tools like mypy check types
-• Best practices
-
-Exemple : def func(x: int) -> int: return x * 2 uses type hints (PEP 484) to specify that x is an int and la fonction retourne an int - these are optional annotations that help with documentation and type checking.
-`,
-  2783: `Le typing module provides generic types for type hints. If from typing import List, Dict; def func(x: List[int]) -> Dict[str, int]: renvoyer {}, then List[int] specifies a liste containing integers, and Dict[str, int] specifies a dictionnaire avec string keys and integer valeurs. The typing module provides generic versions of built-in types (like List, Dict, Tuple, Set) that allow you to specify the types of their contents, enabling more precise type hints.
-
-Generic type hints:
-• List[int] specifies liste of integers
-• Dict[str, int] specifies dict avec str keys, int valeurs
-• typing module provides generic types
-• More precise type information
-• Better type checking
-
-Comment ça fonctionne : • from typing import List, Dict imports generic types
-• List[int] indicates liste containing ints
-• Dict[str, int] indicates dict avec str keys, int valeurs
-• Generic types allow precise type hints
-• Type checkers use them for validation
-
-Exemple : from typing import List, Dict
-def func(x: List[int]) -> Dict[str, int]:
-    renvoyer {}
-func([1, 2, 3])           # Works (liste of ints)
-func(['1', '2'])          # Type checker would warn
-
-Usages courants : • Generic types: List[T], Dict[K, V], Tuple[T, ...]
-• Precise type hints: specify contents of collections
-• Type checking: better type validation
-• Best practices
-
-Exemple : from typing import List, Dict; def func(x: List[int]) -> Dict[str, int]: renvoyer {} uses generic type hints from the typing module to specify that x is a liste of integers and la fonction retourne a dictionnaire avec string keys and integer valeurs.
-`,
-  2784: `Type hints fonctionner avec default parameters - you can specify both the type and the default value. If def func(x: int = 1) -> int: return x, then x: int = 1 specifies that parameter x should be an int with a default value of 1. The type hint comes avant le default value, allowing you to document the expected type while providing a default. C'est a common pattern en Python functions.
-
-Type hints with defaults:
-• x: int = 1 specifies type and default
-• Type hint comes before default value
-• Works with default parameters
-• Documents expected type
-• Provides default value
-
-Comment ça fonctionne : • def func(x: int = 1) -> int: defines function
-• x: int specifies type (int)
-• = 1 provides default value
-• Type hint and default peut être utilisé together
-• Type checker validates against hint
-
-Exemple : def func(x: int = 1) -> int:
-    return x
-func()                  # 1 (uses default)
-func(5)                 # 5 (explicit value)
-func('5')               # Type checker would warn
-
-Usages courants : • Default parameters: def func(x: int = 1) (type and default)
-• Type documentation: document types even with defaults
-• Type checking: validate types for default parameters
-• Best practices
-
-Exemple : def func(x: int = 1) -> int: return x uses type hints with default parameters - x: int = 1 spécifie le type (int) and default value (1) together.
-`,
-  2785: `String type hints allow forward references to types that haven't been defined yet. If def func(x: 'MyClass') -> None: pass, then 'MyClass' is a forward reference - the class name is in quotes because MyClass may not be defined yet quand la fonction is defined. Cela permet you to reference classes before they're defined, which is useful for type hints in cases where classes reference each other or when the type is defined later in the file.
-
-Forward references:
-• 'MyClass' is string type hint
-• Allows reference before class defined
-• Useful for circular references
-• Type checker resolves string later
-• Prevents NameError
-
-Comment ça fonctionne : • def func(x: 'MyClass') -> None: uses string type hint
-• 'MyClass' in quotes (forward reference)
-• La classe n'a pas besoin to exist yet
-• Type checker resolves string si nécessaire
-• Prevents NameError if class not defined
-
-Exemple : def func(x: 'MyClass') -> None:  # Forward reference
-    pass
-
-class MyClass:
-    pass
-
-func(MyClass())          # Works (forward reference resolved)
-
-Usages courants : • Forward references: 'ClassName' (reference before definition)
-• Circular references: classes that reference each other
-• Type hints: use strings for forward references
-• Best practices
-
-Exemple : def func(x: 'MyClass') -> None: pass uses a string type hint ('MyClass') to allow forward reference - referencing a class that may not be defined yet.
-`,
-  2786: `Optional[T] du module typing signifie le type peut être T ou None. If from typing import Optional; def func(x: Optional[int]) -> int: return x or 0, then Optional[int] means x can be an int or None. C'est equivalent to Union[int, None] or int | None (Python 3.10+), but Optional[int] is more concise and clearly expresses that None is an allowed value. La function returns x or 0, handling the case where x is None.
-
-Optional type hint:
-• Optional[int] means int or None
-• Equivalent to Union[int, None]
-• Clearly expresses None is allowed
-• Type checker understands None handling
-• Common pattern for nullable values
-
-Comment ça fonctionne : • from typing import Optional imports Optional
-• Optional[int] indicates x can be int or None
-• return x or 0 handles None case
-• If x is None, returns 0
-• If x is int, returns x
-
-Exemple : from typing import Optional
-def func(x: Optional[int]) -> int:
-    return x or 0
-func(5)                  # 5 (int provided)
-func(None)               # 0 (None handled)
-
-Usages courants : • Nullable types: Optional[T] (can be T or None)
-• Type hints: clearly express None is allowed
-• Type checking: validate Optional types
-• Best practices
-
-Exemple : from typing import Optional; def func(x: Optional[int]) -> int: return x or 0 uses Optional[int] to indicate that x can be an int or None, with the function handling None by returning 0.
-`,
-  2787: `Union[T, U] from the typing module means the type can be T or U. If from typing import Union; def func(x: Union[int, str]) -> int: return 1, then Union[int, str] means x can be an int or a str. Cela permet a function to accept multiple types, providing flexibility while still documenting the allowed types. Union types are useful when a function needs to fonctionner avec multiple types, and type checkers can validate that the correct types are used.
-
-Union type hint:
-• Union[int, str] means int or str
-• Allows multiple types
-• Type checker validates against union
-• Documents allowed types
-• Flexible type hints
-
-Comment ça fonctionne : • from typing import Union imports Union
-• Union[int, str] indicates x can be int or str
-• Function accepts either type
-• Type checker validates against union
-• Documents allowed types
-
-Exemple : from typing import Union
-def func(x: Union[int, str]) -> int:
-    return len(str(x))  # Works with both int and str
-func(5)                  # Works (int)
-func('hello')            # Works (str)
-
-Usages courants : • Multiple types: Union[T, U] (can be T or U)
-• Type hints: document multiple allowed types
-• Type checking: validate against union
-• Best practices
-
-Exemple : from typing import Union; def func(x: Union[int, str]) -> int: return 1 uses Union[int, str] to indicate that x can be an int or a str, allowing flexibility while documenting allowed types.
-`,
-  2788: `Callable from the typing module provides type hints for functions. If from typing import Callable; def func(f: Callable[[int], int]) -> int: return f(1), then Callable[[int], int] specifies that f is a function that takes one int argument and retourne un int. The first list contient le argument types, and the second value is the return type. Cela permet you to type hint functions that take other functions as parameters.
-
-Callable type hint:
-• Callable[[int], int] means function (int) -> int
-• First list: argument types
-• Second value: return type
-• Documents function type
-• Type checker validates function signatures
-
-Comment ça fonctionne : • from typing import Callable imports Callable
-• Callable[[int], int] indicates function type
-• [int] is argument types (one int parameter)
-• int is return type
-• Type checker validates function matches signature
-
-Exemple : from typing import Callable
-def func(f: Callable[[int], int]) -> int:
-    return f(1)
-def square(x: int) -> int:
-    return x * x
-func(square)             # 1 (calls square(1))
-
-Usages courants : • Function types: Callable[[args], return] (type hint for functions)
-• Higher-order functions: type hint functions that take functions
-• Type checking: validate function signatures
-• Best practices
-
-Exemple : from typing import Callable; def func(f: Callable[[int], int]) -> int: return f(1) uses Callable[[int], int] to specify that f is a function that takes one int argument and retourne un int.
-`,
-  2789: `Le @dataclass decorator génère automatiquement common méthodes like __init__, __repr__, __eq__, and more basé sur les attributs de la classe. If from dataclasses import dataclass; @dataclass; classe Point: x: int; y: int; Point(1, 2), then Point(1, 2) crée un Point instance car @dataclass génère automatiquement __init__ basé sur les attributs de la classe (x: int and y: int). Cela élimine boilerplate code for classes that primarily store data, les rendant plus concis and maintainable.
-
-@dataclass decorator:
-• Point(1, 2) creates Point instance
-• @dataclass generates __init__ automatically
-• __init__ takes x and y as arguments
-• Also generates __repr__, __eq__, etc.
-• Reduces boilerplate code
-
-Comment ça fonctionne : • @dataclass decorates Point classe
-• Analyzes classe attributes (x: int, y: int)
-• Generates __init__(self, x: int, y: int)
-• Generates __repr__, __eq__, etc.
-• Point(1, 2) uses generated __init__
-• Retourne : Point instance
-
-Exemple : from dataclasses import dataclass
-@dataclass
-classe Point:
-    x: int
-    y: int
-p = Point(1, 2)          # Uses generated __init__
-print(p)                 # Point(x=1, y=2) (uses generated __repr__)
-p == Point(1, 2)         # True (uses generated __eq__)
-
-Usages courants : • Data classes: @dataclass classe Point: x: int; y: int (automatic méthodes)
-• Reduce boilerplate: automatic __init__, __repr__, __eq__
-• Clean code: concise classe definitions
-• Best practices
-
-Exemple : from dataclasses import dataclass; @dataclass; classe Point: x: int; y: int; Point(1, 2) uses @dataclass to automatically generate __init__ and other méthodes, allowing Point(1, 2) to create a Point instance avec x=1 and y=2.
-`,
-  2790: `Enum from the enum module creates enumerations - a set of named constants. If from enum import Enum; class Color(Enum): RED = 1; GREEN = 2; Color.RED, then Color.RED returns <Color.RED: 1> because Enum creates named constant objects. Each enum member (like Color.RED) is an instance of the enum class with a name and value. Enum members have both a name (RED) and a value (1), and they can be compared by identity (is) or equality (==).
-
-Enum enumeration:
-• Color.RED returns <Color.RED: 1>
-• Enum creates named constants
-• Each member is Color instance with name and value
-• RED has name 'RED' and value 1
-• Members are comparable and iterable
-
-Comment ça fonctionne : • class Color(Enum): defines enum class
-• RED = 1 creates enum member
-• Color.RED is Color instance with name='RED', value=1
-• Retourne enum member object
-• Retourne : <Color.RED: 1>
-
-Exemple : from enum import Enum
-class Color(Enum):
-    RED = 1
-    GREEN = 2
-Color.RED                # <Color.RED: 1> (enum member)
-Color.RED.name           # 'RED' (member name)
-Color.RED.value          # 1 (member value)
-Color.RED == Color.RED   # True (comparable)
-
-Usages courants : • Named constants: class Color(Enum): RED = 1 (named constants)
-• Type safety: enum prevents invalid values
-• Readable code: use Color.RED instead of 1
-• Best practices
-
-Exemple : from enum import Enum; class Color(Enum): RED = 1; GREEN = 2; Color.RED returns <Color.RED: 1> because Enum creates named constants - Color.RED is an enum member with name 'RED' and value 1.
-`,
-  2791: `sys.argv is a list containing command line arguments passé à a Python script. If import sys; sys.argv, then sys.argv retourne un list with command line arguments because sys.argv[0] is the script name, and sys.argv[1:] contient le arguments passé à the script. Cela permet Python scripts to accept command line arguments, making them interactive and configurable. sys.argv is useful for scripts that need input from the command line.
-
-sys.argv:
-• sys.argv contains command line arguments
-• sys.argv[0] is script name
-• sys.argv[1:] contains arguments
-• List of strings
-• Allows scripts to accept arguments
-
-Comment ça fonctionne : • Python populates sys.argv when script runs
-• sys.argv[0] is script name (path to script)
-• sys.argv[1:] contains arguments
-• All arguments are strings
-• Can be accessed and parsed by script
-
-Exemple : # script.py
-import sys
-print(sys.argv)          # ['script.py', 'arg1', 'arg2'] if run: python script.py arg1 arg2
-print(sys.argv[0])       # 'script.py' (script name)
-print(sys.argv[1:])      # ['arg1', 'arg2'] (arguments)
-
-Usages courants : • Command line arguments: sys.argv (access arguments)
-• Script configuration: accept arguments from command line
-• Interactive scripts: make scripts configurable
-• Best practices
-
-Exemple : import sys; sys.argv retourne un list containing command line arguments - sys.argv[0] is the script name, and sys.argv[1:] contient le arguments passé à the script.
-`,
-  2792: `os.environ is a dictionary-like object containing environment variables. If import os; os.environ, then os.environ retourne un dictionary of environment variables because os.environ is a mapping of environment variable names to their values. Vous pouvez accéder environment variables like os.environ['PATH'] or os.environ.get('PATH'), and you can modify them (though changes only affect the current process). Environment variables are typically set by the operating system or parent process.
-
-os.environ:
-• os.environ contains environment variables
-• Dictionary-like object (mapping)
-• Keys are variable names, values are variable values
-• Can access with os.environ['VAR'] or os.environ.get('VAR')
-• Can modify (affects current process only)
-
-Comment ça fonctionne : • os.environ is mapping of environment variables
-• os.environ['VAR'] accesses environment variable
-• os.environ.get('VAR') gets with default
-• Changes affect current process only
-• Inherited from parent process
-
-Exemple : import os
-os.environ              # Mapping of environment variables
-os.environ.get('PATH')  # Path value (if exists)
-os.environ['MY_VAR'] = 'value'  # Set variable (current process)
-
-Usages courants : • Environment variables: os.environ (access environment)
-• Configuration: read config from environment variables
-• System integration: interact with system environment
-• Best practices
-
-Exemple : import os; os.environ retourne un dictionary-like object containing environment variables, allowing you to access and modify environment variables.
-`,
-  2793: `json.dumps() converts a Python object (like a dictionary) to a JSON string. If import json; json.dumps({'a': 1}), then json.dumps({'a': 1}) returns '{"a": 1}' because dumps() serializes the dictionary to a JSON-formatted string. C'est useful for sending data over networks, storing data in files, or exchanging data between systems. The JSON format is language-independent and widely supported.
-
-json.dumps():
-• json.dumps({'a': 1}) returns '{"a": 1}'
-• Converts Python object to JSON string
-• Serializes dictionary to JSON format
-• Retourne string representation
-• Retourne : '{"a": 1}'
-
-Comment ça fonctionne : • json.dumps({'a': 1}) serializes dictionary
-• Converts Python dict to JSON string
-• JSON uses double quotes (not single)
-• Retourne JSON-formatted string
-• Retourne : '{"a": 1}'
-
-Exemple : import json
-json.dumps({'a': 1})    # '{"a": 1}' (JSON string)
-json.dumps([1, 2, 3])   # '[1, 2, 3]' (JSON string)
-json.dumps('hello')     # '"hello"' (JSON string)
-
-Usages courants : • Data serialization: json.dumps(obj) (convert to JSON string)
-• Network communication: send JSON data over HTTP
-• File storage: save data as JSON
-• Best practices
-
-Exemple : import json; json.dumps({'a': 1}) returns '{"a": 1}' because json.dumps() converts a Python dictionary to a JSON-formatted string.
-`,
-  2794: `json.loads() converts a JSON string to a Python object (like a dictionary). If import json; json.loads('{"a": 1}'), then json.loads('{"a": 1}') returns {'a': 1} because loads() deserializes the JSON string to a Python dictionary. C'est the inverse of json.dumps() - it parses a JSON string and creates the corresponding Python object. C'est useful for receiving data from networks, reading data from files, or parsing JSON responses.
-
-json.loads():
-• json.loads('{"a": 1}') returns {'a': 1}
-• Converts JSON string to Python object
-• Deserializes JSON string to dictionary
-• Retourne Python object
-• Retourne : {'a': 1}
-
-Comment ça fonctionne : • json.loads('{"a": 1}') parses JSON string
-• Converts JSON string to Python dict
-• JSON keys become dict keys
-• JSON values become dict values
-• Retourne : {'a': 1}
-
-Exemple : import json
-json.loads('{"a": 1}')  # {'a': 1} (Python dict)
-json.loads('[1, 2, 3]') # [1, 2, 3] (Python list)
-json.loads('"hello"')   # 'hello' (Python string)
-
-Usages courants : • Data deserialization: json.loads(json_str) (convert from JSON string)
-• Network communication: parse JSON responses
-• File reading: load JSON data from files
-• Best practices
-
-Exemple : import json; json.loads('{"a": 1}') returns {'a': 1} because json.loads() converts a JSON string to a Python dictionary.
-`,
-  2795: `pickle.dumps() serializes a Python object to a bytes object. If import pickle; pickle.dumps([1, 2, 3]), then pickle.dumps([1, 2, 3]) retourne un bytes object because dumps() converts the Python object to a byte stream. Pickle is Python's native serialization format - it can serialize almost any Python object, including custom classes, functions, and complex nested structures. The serialized data is binary (bytes), not human-readable like JSON.
-
-pickle.dumps():
-• pickle.dumps([1, 2, 3]) returns bytes object
-• Converts Python object to bytes
-• Serializes object to binary format
-• Retourne bytes representation
-• Retourne : bytes object
-
-Comment ça fonctionne : • pickle.dumps([1, 2, 3]) serializes list
-• Converts Python object to bytes
-• Creates binary representation
-• Retourne bytes object
-• Can be stored or transmitted
-
-Exemple : import pickle
-data = pickle.dumps([1, 2, 3])  # bytes object
-type(data)                       # <class 'bytes'>
-# Can be saved to file or sent over network
-
-Usages courants : • Python serialization: pickle.dumps(obj) (convert to bytes)
-• Object persistence: save Python objects to files
-• Inter-process communication: send objects between processes
-• Best practices
-
-Exemple : import pickle; pickle.dumps([1, 2, 3]) retourne un bytes object because pickle.dumps() serializes a Python object to a binary byte stream.
-`,
-  2796: `pickle.loads() deserializes a bytes object back to a Python object. If import pickle; data = pickle.dumps([1, 2, 3]); pickle.loads(data), then pickle.loads(data) returns [1, 2, 3] because loads() converts the pickled bytes back to l'originale Python object. C'est the inverse of pickle.dumps() - it reconstructs the Python object de sa pickled representation. C'est useful for loading objects from files or receiving objects over networks.
-
-pickle.loads():
-• pickle.loads(data) returns [1, 2, 3]
-• Converts bytes to Python object
-• Deserializes pickled bytes to original object
-• Retourne reconstructed Python object
-• Retourne : [1, 2, 3]
-
-Comment ça fonctionne : • data = pickle.dumps([1, 2, 3]) serializes list to bytes
-• pickle.loads(data) deserializes bytes
-• Reconstructs original Python object
-• Retourne original list: [1, 2, 3]
-• Retourne : [1, 2, 3]
-
-Exemple : import pickle
-data = pickle.dumps([1, 2, 3])  # Serialize to bytes
-original = pickle.loads(data)   # Deserialize back
-original                         # [1, 2, 3] (original object restored)
-
-Usages courants : • Python deserialization: pickle.loads(bytes) (convert from bytes)
-• Object loading: load Python objects from files
-• Inter-process communication: receive objects between processes
-• Best practices
-
-Exemple : import pickle; data = pickle.dumps([1, 2, 3]); pickle.loads(data) returns [1, 2, 3] because pickle.loads() deserializes the pickled bytes back to l'originale Python object.
-`,
-  2797: `namedtuple de collections crée une sous-classe de tuple avec des champs nommés. Si from collections import namedtuple; Point = namedtuple('Point', ['x', 'y']); Point(1, 2), then Point(1, 2) returns Point(x=1, y=2) because namedtuple crée un class avec des champs nommés, allowing you to access elements by name (point.x) instead of index (point[0]). namedtuple combines the memory efficiency of tuples with the readability of named attributes.
-
-namedtuple:
-• Point(1, 2) returns Point(x=1, y=2)
-• namedtuple creates tuple subclass avec des champs nommés
-• Access by name: point.x, point.y
-• Access by index: point[0], point[1]
-• Immutable like tuples
-
-Comment ça fonctionne : • namedtuple('Point', ['x', 'y']) creates Point class
-• Point class is tuple subclass avec des champs nommés
-• Point(1, 2) creates instance
-• Fields accessible by name: x=1, y=2
-• Retourne : Point(x=1, y=2)
-
-Exemple : from collections import namedtuple
-Point = namedtuple('Point', ['x', 'y'])
-p = Point(1, 2)
-p.x                        # 1 (access by name)
-p.y                        # 2 (access by name)
-p[0]                       # 1 (access by index)
-p[1]                       # 2 (access by index)
-
-Usages courants : • Named tuples: namedtuple('Name', ['field1', 'field2']) (tuple with names)
-• Readable tuples: access by name instead of index
-• Memory efficient: like tuples but avec des champs nommés
-• Best practices
-
-Exemple : from collections import namedtuple; Point = namedtuple('Point', ['x', 'y']); Point(1, 2) returns Point(x=1, y=2) because namedtuple crée une sous-classe de tuple avec des champs nommés, allowing access by name.
-`,
-  2798: `defaultdict de collections crée automatiquement des valeurs par défaut pour les clés manquantes. Si from collections import defaultdict; d = defaultdict(list); d['key'], then d['key'] returns [] because defaultdict(list) crée un dictionary where accessing a missing key automatically crée un default value using the factory function (list). Instead of raising KeyError, defaultdict calls the factory function (list()) and returns le résultat (empty list []), then stores it for future access.
-
-defaultdict:
-• d['key'] returns []
-• defaultdict(list) uses list as factory
-• Missing key triggers list() → []
-• No KeyError pour les clés manquantes
-• Factory function creates default values
-
-Comment ça fonctionne : • defaultdict(list) creates dict with list factory
-• d['key'] accesses missing key
-• defaultdict calls factory: list()
-• Retourne empty list: []
-• Stores [] in dict for future access
-• Retourne : []
-
-Exemple : from collections import defaultdict
-d = defaultdict(list)
-d['key']                  # [] (automatic default, no KeyError)
-d['key'].append(1)        # Works (d['key'] is now [1])
-d['key']                  # [1] (stored for future)
-
-Usages courants : • Default values: defaultdict(list) (automatic defaults)
-• Grouping: group items by key with defaultdict(list)
-• No KeyError: automatic default creation
-• Best practices
-
-Exemple : from collections import defaultdict; d = defaultdict(list); d['key'] returns [] because defaultdict crée automatiquement des valeurs par défaut pour les clés manquantes using the factory function (list in this case).
-
-defaultdict features:
-• from collections import defaultdict: imports defaultdict
-• defaultdict(list): creates dict with list factory
-• d['key']: accesses missing key, gets [] (empty list)
-• No KeyError pour les clés manquantes
-• Factory function creates default values
-
-Comment ça fonctionne : • defaultdict takes factory function (list)
-• When clé absente, calls factory() to create value
-• d['key'] triggers list() → []
-• Value stored for future access
-• Subsequent access returns same object
-
-Exemple : from collections import defaultdict
-
-# Create defaultdict with list factory
-d = defaultdict(list)
-
-# Access missing key - gets empty list
-items = d['missing_key']  # items = []
-print(items)  # []
-
-# List is now stored
-d['missing_key'].append('item')
-print(d['missing_key'])  # ['item']
-
-Usages courants : • No KeyError pour les clés manquantes
-• Automatic value creation
-• Cleaner code than dict.get() or manual checks
-• Useful for grouping and counting operations
-
-Exemple : defaultdict(list) creates dict where missing keys return [] instead of KeyError.`,
-  2799: `Counter from collections counts occurrences of elements in an iterable. Counter([1, 1, 2, 2, 2]) returns Counter({2: 3, 1: 2}) because 1 appears twice and 2 appears three times.
-
-Counter functionality:
-• from collections import Counter: imports Counter
-• Counter(iterable): counts element frequencies
-• Counter([1, 1, 2, 2, 2]): counts 1→2, 2→3
-• Retourne Counter object: Counter({2: 3, 1: 2})
-• Dictionary-like with extra methods
-
-Comment ça fonctionne : • Counter itère sur [1, 1, 2, 2, 2]
-• Counts chaque élément's frequency
-• 1 appears twice: 1: 2
-• 2 appears three times: 2: 3
-• Creates Counter({2: 3, 1: 2})
-
-Exemple : from collections import Counter
-
-data = [1, 1, 2, 2, 2]
-counter = Counter(data)
-print(counter)  # Counter({2: 3, 1: 2})
-
-# Access counts
-print(counter[1])  # 2
-print(counter[2])  # 3
-print(counter[3])  # 0 (missing keys return 0)
-
-Usages courants : • Easy frequency counting
-• Most common elements: counter.most_common()
-• Mathematical operations between counters
-• Missing keys return 0 (not KeyError)
-
-Exemple : Counter([1, 1, 2, 2, 2]) returns Counter({2: 3, 1: 2}) because 1 appears twice and 2 appears three times.`,
-  2800: `@lru_cache is a decorator that caches function results to avoid redundant computations. For fib(10), it caches intermediate results, making recursive Fibonacci much faster by avoiding recalculations.
-
-@lru_cache features:
-• from functools import lru_cache: imports decorator
-• @lru_cache(maxsize=128): applies caching with max 128 entries
-• Caches fib(n) results to avoid recomputation
-• fib(10) returns 55 (Fibonacci sequence)
-• Subsequent calls with same args use cached result
-
-Comment ça fonctionne : • @lru_cache wraps fib function
-• First call to fib(10) computes recursively
-• Intermediate results cached: fib(9), fib(8), etc.
-• Second call to fib(10) returns cached 55
-• Dramatically faster for repeated calls
-
-Exemple : from functools import lru_cache
-
-@lru_cache(maxsize=128)
-def fib(n):
-    if n < 2:
-        return n
-    return fib(n-1) + fib(n-2)
-
-result = fib(10)  # 55
-# Second call is instant (cached)
-
-Usages courants : • Eliminates redundant computations
-• Speeds up recursive functions dramatically
-• Configurable cache size
-• Transparent to calling code
-• Memory vs speed tradeoff
-
-Exemple : @lru_cache enables fib(10) to return 55 quickly by caching intermediate Fibonacci calculations.`,
-  2801: `Metaclasses are classes that create classes. isinstance(MyClass, Meta) returns True because MyClass is an instance of the Meta metaclass. Meta is the metaclass that created MyClass.
-
-Metaclass relationship:
-• class Meta(type): metaclass definition
-• metaclass=Meta: uses Meta to create MyClass
-• Meta is the class of MyClass
-• isinstance(MyClass, Meta): True
-• type(MyClass): <class '__main__.Meta'>
-
-Comment ça fonctionne : • metaclass=Meta tells Python to use Meta for class creation
-• Meta.__new__() creates the class object
-• Meta.__init__() initializes the class
-• MyClass becomes instance of Meta
-• isinstance(MyClass, Meta) confirms relationship
-
-Exemple : class Meta(type):
-    def __new__(cls, name, bases, dct):
-        print(f"Creating class {name}")
-        return super().__new__(cls, name, bases, dct)
-
-class MyClass(metaclass=Meta):
-    pass
-
-print(isinstance(MyClass, Meta))  # True
-print(type(MyClass))              # <class '__main__.Meta'>
-
-Usages courants : • Class creation customization
-• Automatic class modification
-• Singleton classes, ORM mapping
-• Advanced class behaviors
-
-Exemple : isinstance(MyClass, Meta) returns True because Meta is the metaclass that created MyClass.`,
-  2802: `__slots__ restricts instance attributes to a fixed set, preventing __dict__ creation. Cela économise la mémoire by avoiding the dynamic attribute dictionary. hasattr(obj, '__dict__') returns False because __slots__ eliminates the __dict__.
-
-__slots__ memory optimization:
-• __slots__ = ['x', 'y']: restricts attributes to listed names
-• No __dict__ created for instances
-• Saves memory (no attribute dictionary)
-• Faster attribute access
-• hasattr(obj, '__dict__'): False
-
-Comment ça fonctionne : • __slots__ defines allowed attribute names
-• Python doesn't create __dict__ for instances
-• Attributes stored in fixed memory layout
-• Cannot add arbitrary attributes
-• Memory efficient for many instances
-
-Exemple : class Point:
-    __slots__ = ['x', 'y']
-
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-p = Point(1, 2)
-print(hasattr(p, '__dict__'))  # False
-p.z = 3  # AttributeError - absent de __slots__
-
-Usages courants : • Memory savings (no __dict__)
-• Faster attribute access
-• Prevents accidental attribute creation
-• Better memory usage for large numbers of instances
-
-Exemple : hasattr(obj, '__dict__') returns False because __slots__ prevents __dict__ creation for memory efficiency.`,
-  2803: `Type hints sont stockés in the __annotations__ attribute as a dictionary. process.__annotations__ contient le parameter and return type annotations. Cela permet runtime inspection of type hints.
-
-Type annotations storage:
-• def process(data: List[int]) -> Dict[str, int]: function with type hints
-• __annotations__ stores type information
-• {'data': List[int], 'return': Dict[str, int]}
-• Runtime accessible type information
-• Used by type checkers and documentation tools
-
-Comment ça fonctionne : • Type hints added to function definition
-• Python stores hints in __annotations__
-• Accessible at runtime
-• Not enforced by Python (hints only)
-• Used by mypy, IDEs, documentation
-
-Exemple : from typing import List, Dict
-
-def process(data: List[int]) -> Dict[str, int]:
-    return {'count': len(data), 'sum': sum(data)}
-
-print(process.__annotations__)
-# {'data': typing.List[int], 'return': typing.Dict[str, int]}
-
-Usages courants : • Runtime type information access
-• Documentation and IDE support
-• Type checking tools
-• API introspection
-• Development tooling
-
-Exemple : process.__annotations__ returns {'data': List[int], 'return': Dict[str, int]} contenant les function's type hints.`,
-  2804: `asyncio.run() executes an async function and returns its result. async def defines a coroutine function. asyncio.run(fetch()) runs the coroutine and returns 'data'.
-
-Async/await execution:
-• async def fetch(): defines coroutine function
-• return 'data': coroutine returns value
-• asyncio.run(fetch()): executes coroutine
-• Retourne 'data' (the coroutine's return value)
-• Handles event loop management
-
-Comment ça fonctionne : • async def creates coroutine function
-• Calling fetch() creates coroutine object
-• asyncio.run() executes coroutine
-• Event loop manages execution
-• Retourne final result
-
-Exemple : import asyncio
-
-async def fetch():
-    await asyncio.sleep(0.1)  # Simulate async operation
-    return 'data'
-
-result = asyncio.run(fetch())  # 'data'
-print(result)
-
-Usages courants : • Non-blocking I/O operations
-• Concurrent execution
-• Better resource utilization
-• Scalable network applications
-• Simplified async code with async/await
-
-Exemple : asyncio.run(fetch()) exécute le async function and returns 'data', le résultat of the coroutine.`,
-  2805: `Le "r" mode in open() opens a file for reading only. C'est the default mode, so open("file.txt") and open("file.txt", "r") are equivalent. If the file does not exist, a FileNotFoundError is raised.
-
-Concepts clés : • "r" stands for read mode
-• It is the default mode when no mode is specified
-• The file must already exist or FileNotFoundError is raised
-• The file pointer is placed at the beginning of the file
-• You can only read from the file, not write to it
-
-Comment ça fonctionne : • open("file.txt", "r") opens file.txt for reading
-• Retourne a file objet you can call read(), readline(), or readlines() on
-• The file is opened in text mode by default
-
-Exemple : f = open("file.txt", "r")
-content = f.read()
-f.close()
-
-Usages courants : • Reading configuration files
-• Loading data from text files
-• Processing log files
-• Reading user input from files`,
-  2806: `Le mode "w" ouvre un fichier en écriture. Si le fichier existe déjà, son contenu est complètement effacé (truncated to zero length). If the file does not exist, a new file est créé.
-
-Concepts clés : • "w" stands for write mode
-• Creates the file if it n'existe pas
-• Truncates (erases) the file if it already exists
-• The file pointer is placed at the beginning
-• You can only write to the file, not read from it
-
-Comment ça fonctionne : • open("file.txt", "w") opens or creates file.txt for writing
-• Any existing content is immediately erased
-• Retourne a file object you can call write() or writelines() on
-
-Exemple : f = open("file.txt", "w")
-f.write("Hello, World!")
-f.close()
-
-Cas limites : • Be careful: "w" mode will destroy existing file contents without warning
-• Use "a" mode if you want to add to existing content
-• Use "x" mode if you want to avoid overwriting`,
-  2807: `Le "a" mode opens a file for appending. The file pointer is placed at the end of the file, so any new data written is added après le existing content. If the file does not exist, a new file est créé.
-
-Concepts clés : • "a" stands for append mode
-• Writes new data at the end of the file
-• Does not erase existing content
-• Creates the file if it n'existe pas
-• The file pointer starts at the end
-
-Comment ça fonctionne : • open("file.txt", "a") opens file.txt for appending
-• Existing content is preserved
-• New writes go to the end of the file
-
-Exemple : f = open("log.txt", "a")
-f.write("New log entry\\\\n")
-f.close()
-
-Usages courants : • Writing to log files
-• Appending records to data files
-• Adding entries to configuration files`,
-  2808: `Le "x" mode is for exclusive creation. It crée un new file and opens it for writing, but raises a FileExistsError if the file already exists. C'est useful when you want to ensure you're not accidentally overwriting an existing file.
-
-Concepts clés : • "x" stands for exclusive creation mode
-• Creates a new file for writing
-• Raises FileExistsError if the file already exists
-• Useful for safely creating new files sans overwriting
-
-Comment ça fonctionne : • open("file.txt", "x") creates file.txt uniquement si it n'existe pas
-• If file.txt already exists, FileExistsError is raised
-• Otherwise, behaves like "w" mode for writing
-
-Exemple : try:
-    f = open("new_file.txt", "x")
-    f.write("Brand new content")
-    f.close()
-except FileExistsError:
-    print("File already exists!")
-
-Usages courants : • Creating unique output files
-• Preventing accidental data loss
-• Atomic file creation patterns`,
-  2809: `Le "rb" mode opens a file for reading in binary mode. Instead of returning text strings, read operations renvoyer bytes objets. No encoding/decoding or newline translation is performed.
-
-Concepts clés : • "rb" = read + binary
-• Retourne bytes objets instead of str objets
-• No character encoding/decoding is applied
-• No newline translation occurs
-• Essential for non-text files (images, audio, etc.)
-
-Comment ça fonctionne : • open("file.txt", "rb") opens the file in binary read mode
-• f.read() retourne un bytes objet like b"Hello"
-• No universal newline translation
-
-Exemple : f = open("image.png", "rb")
-data = f.read()  # Retourne bytes objet
-print(type(data))  # <classe 'bytes'>
-f.close()
-
-Usages courants : • Reading image, audio, or video files
-• Working avec binary protocols
-• Reading files where encoding is unknown
-• Handling serialized binary data`,
-  2810: `Le read() méthode on a file objet reads the entire file contents and retourne them as a single string (in text mode) or bytes objet (in binary mode). After calling read(), the file pointer is at the end of the file.
-
-Concepts clés : • read() retourne le entire file as one string
-• The file pointer moves to the end après reading
-• Can pass an optional size argument: read(n) reads n characters
-• Calling read() again retourne un empty string (pointer at end)
-
-Comment ça fonctionne : • f.read() reads from current position to end of file
-• Retourne everything as a single string
-• Includes newline characters (\\\\n)
-• f.read(10) reads seulement le first 10 characters
-
-Exemple : f = open("file.txt", "r")
-content = f.read()     # "Hello\\\\nWorld\\\\n"
-more = f.read()        # "" (pointer at end)
-f.close()
-
-Cas limites : • On large files, read() loads everything into memory
-• Use readline() or iterate for large files`,
-  2811: `Le readline() méthode reads a single line from the file, including the trailing newline character (\\\\n). Each subsequent call to readline() retourne le next line. When the end of the file is reached, readline() retourne un empty string.
-
-Concepts clés : • Retourne one line including the \\\\n at the end
-• Successive calls renvoyer successive lines
-• Retourne "" (empty string) at end of file
-• The last line may or may not ont un trailing \\\\n
-
-Comment ça fonctionne : • f.readline() reads from current position to the next \\\\n
-• Includes the \\\\n in the returned string
-• Moves the file pointer to the start of the next line
-
-Exemple : # file.txt contains "Hello\\\\nWorld\\\\n"
-f = open("file.txt", "r")
-line1 = f.readline()  # "Hello\\\\n"
-line2 = f.readline()  # "World\\\\n"
-line3 = f.readline()  # "" (end of file)
-f.close()
-
-Cas limites : • Empty line retourne "\\\\n"
-• End of file retourne ""
-• Last line sans newline retourne le text sans \\\\n`,
-  2812: `Le readlines() méthode reads all remaining lines from the file and retourne them as a liste of strings. Each string in the liste includes the trailing newline character (\\\\n), except possibly the last line.
-
-Concepts clés : • Retourne a liste of strings, one per line
-• Each string includes the trailing \\\\n
-• Reads from current position to end of file
-• Equivalent to liste(f)
-
-Comment ça fonctionne : • f.readlines() reads all lines and retourne un liste
-• Each element is a line avec its newline character
-• The liste préserve le order of lines
-
-Exemple : # file.txt contains "Hello\\\\nWorld\\\\nPython\\\\n"
-f = open("file.txt", "r")
-lines = f.readlines()
-# ["Hello\\\\n", "World\\\\n", "Python\\\\n"]
-f.close()
-
-Usages courants : • Processing all lines of a file at once
-• Quand vous need random access to lines by index
-• Filtering or transforming lines`,
-  2813: `Le write() méthode writes a string to the file and retourne le number of characters written. In binary mode, it writes bytes and retourne le number of bytes written.
-
-Concepts clés : • Retourne an integer: the number of characters written
-• Does not automatically add a newline
-• In text mode, writes str objets
-• In binary mode, writes bytes objets
-
-Comment ça fonctionne : • f.write("Hello") writes "Hello" and retourne 5
-• The renvoyer valeur is the character count of the written string
-• You must add \\\\n yourself if you want newlines
-
-Exemple : f = open("file.txt", "w")
-n = f.write("Hello")
-print(n)  # 5
-n = f.write("World\\\\n")
-print(n)  # 6 (5 chars + newline)
-f.close()
-
-Cas limites : • write("") writes nothing et retourne 0
-• The renvoyer valeur matches len() of the string written`,
-  2814: `Le writelines() méthode writes a liste (or any iterable) of strings to the file. It does NOT add newline characters or any separator entre the strings. Each string is written exactly as-is, concatenated together. You must include \\\\n in each string yourself if you want separate lines.
-
-Concepts clés : • writelines() does NOT add newlines automatically
-• Writes each string exactly as provided
-• Accepts any iterable of strings
-• Retourne None (not the number of characters)
-
-Comment ça fonctionne : • f.writelines(["a\\\\n", "b\\\\n"]) writes "a\\\\nb\\\\n" to the file
-• f.writelines(["a", "b"]) writes "ab" (no newlines!)
-• Each string from the iterable is written in order
-
-Exemple : f = open("file.txt", "w")
-f.writelines(["Hello\\\\n", "World\\\\n"])
-# File contains: Hello\\\\nWorld\\\\n
-f.writelines(["No", "Newlines"])
-# Appends: NoNewlines
-f.close()
-
-Cas limites : • writelines([]) writes nothing
-• The name is misleading — it doesn't write "lines", just strings`,
-  2815: `Le avec instruction (context manager) assure que le fichier est fermé automatiquement quand le bloc se termine, qu'il se termine normalement or due to an exception. Without avec, you must manually call f.close(), and if an exception occurs avant close(), the file may remain open.
-
-Concepts clés : • avec guarantees the file is closed when the block ends
-• Handles exceptions: file is closed even if an error occurs
-• No need to call f.close() manually
-• Cleaner and safer than manual open/close
-
-Comment ça fonctionne : • avec open("f.txt") as f: opens the file
-• The file objet is assigned to f
-• When the avec block ends (normally or via exception), f.close() est appelé automatically
-
-Exemple : # Safe approach:
-avec open("f.txt") as f:
-    data = f.read()
-# File is automatically closed here
-
-# Risky approach:
-f = open("f.txt")
-data = f.read()  # If this raises, f stays open!
-f.close()
-
-Usages courants : • Always prefer avec for file operations
-• Works avec any context manager (not just files)
-• Prevents resource leaks`,
-  2816: `Le seek() méthode moves the file pointer (the current read/write position) to a specified position. seek(0) moves the pointer to the very beginning of the file, allowing you to re-read or re-process the file from the start.
-
-Concepts clés : • seek(offset) moves the file pointer to the given position
-• seek(0) moves to the beginning of the file
-• seek(0, 2) moves to the end of the file
-• In text mode, only seek(0) and seek(f.tell()) are reliable
-
-Comment ça fonctionne : • The file pointer tracks where the next read/write will occur
-• seek(0) resets it to the start
-• After f.read(), the pointer is at the end; seek(0) lets you read again
-
-Exemple : f = open("file.txt", "r")
-content = f.read()     # Reads everything, pointer at end
-f.seek(0)              # Move pointer back to start
-content2 = f.read()    # Read everything again
-f.close()
-
-Cas limites : • In text mode, seek avec non-zero offset from current/end position may not work as expected
-• In binary mode, seek fonctionne avec any offset`,
-  2817: `Le tell() méthode retourne le current position of the file pointer as an integer. Cela indique where the next read or write operation will occur. At the start of a file, tell() retourne 0.
-
-Concepts clés : • Retourne an integer representing the current position
-• Position 0 means the beginning of the file
-• After reading n characters in text mode, tell() may not equal n (encoding-dependent)
-• In binary mode, tell() retourne le exact byte offset
-
-Comment ça fonctionne : • f.tell() retourne where the file pointer currently is
-• After opening a file, tell() retourne 0
-• After f.read(), tell() retourne le position at the end
-
-Exemple : f = open("file.txt", "r")
-print(f.tell())  # 0 (beginning)
-f.read(5)
-print(f.tell())  # 5 (après reading 5 chars)
-f.read()
-print(f.tell())  # End of file position
-f.close()
-
-Usages courants : • Tracking read progress
-• Saving and restoring file positions
-• Checking if at end of file`,
-  2818: `Le closed attribute on a file objet is a boolean that indicates whether the file has been closed. It retourne True if the file is closed and False if it is still open.
-
-Concepts clés : • f.closed is a property, not a méthode (no parentheses)
-• Retourne True if the file has been closed
-• Retourne False if the file is still open
-• Useful for checking file state avant operations
-
-Comment ça fonctionne : • After opening a file, f.closed is False
-• After calling f.close(), f.closed becomes True
-• After a avec block exits, f.closed is True
-
-Exemple : f = open("file.txt", "r")
-print(f.closed)  # False
-f.close()
-print(f.closed)  # True
-
-avec open("file.txt") as f:
-    print(f.closed)  # False
-print(f.closed)      # True (après avec block)
-
-Cas limites : • You can still access f.closed après closing (it's just a property)
-• Attempting to read/write on a closed file raises ValueError`,
-  2819: `Specifying encoding="utf-8" in open() ensures the file is read and written using UTF-8 encoding, regardless of the operating system's default encoding. Without it, Python uses the platform's default encoding, which varies (e.g., UTF-8 on macOS/Linux, cp1252 on Windows).
-
-Concepts clés : • Default encoding varies by platform
-• UTF-8 is the most common and widely compatible encoding
-• Prevents encoding errors when sharing files across platforms
-• PEP 597 recommends always specifying encoding
-
-Comment ça fonctionne : • open("file.txt", encoding="utf-8") forces UTF-8 encoding
-• Prevents platform-dependent behavior
-• Raises UnicodeDecodeError if file contains invalid UTF-8
-
-Exemple : # Consistent across all platforms:
-with open("file.txt", "r", encoding="utf-8") as f:
-    content = f.read()
-
-# Platform-dependent (risky):
-with open("file.txt", "r") as f:
-    content = f.read()  # Uses system default encoding
-
-Usages courants : • Working with multilingual text
-• Ensuring cross-platform compatibility
-• Processing web content (usually UTF-8)`,
-  2820: `Quand vous call open("file.txt") without specifying a mode, Python defaults to "r" (read text mode). This means the file is opened for reading only, in text mode (as opposed to binary mode).
-
-Concepts clés : • open("file.txt") est équivalent à open("file.txt", "r")
-• Default is read-only, text mode
-• The file must exist or FileNotFoundError is raised
-• Text mode performs newline translation and encoding/decoding
-
-Comment ça fonctionne : • open("file.txt") opens for reading in text mode
-• Retourne strings when you read from it
-• File pointer starts at position 0
-
-Exemple : # These are equivalent:
-f1 = open("file.txt")
-f2 = open("file.txt", "r")
-f3 = open("file.txt", "rt")  # "t" for text is also default
-
-Cas limites : • "r" mode raises FileNotFoundError if file n'existe pas
-• "t" (text) is the default sub-mode, so "r" equals "rt"`,
-  2821: `File objects en Python are iterable. You can use a for loop to iterate over a file object line by line. C'est the most memory-efficient way to read a file because it reads one line at a time instead of loading the entire file into memory.
-
-Concepts clés : • File objects support iteration protocol
-• Each iteration yields one line (including \\n)
-• Memory-efficient: only one line in memory at a time
-• The preferred way to process files line by line
-
-Comment ça fonctionne : • for line in f: reads one line per iteration
-• Each line includes the trailing newline character
-• Iteration stops at end of file
-• Equivalent to calling readline() repeatedly
-
-Exemple : with open("file.txt", "r") as f:
-    for line in f:
-        print(line.strip())  # strip() removes \\n
-
-Usages courants : • Processing large files without loading into memory
-• Line-by-line text processing
-• Filtering or transforming file contents`,
-  2822: `Le truncate() méthode resizes the file to at most the specified size. When appelé sans arguments, it truncates the file at the current file pointer position, removing everything après that point. When appelé avec a size argument, it truncates to that many bytes.
-
-Concepts clés : • truncate() removes content après le current position
-• truncate(n) truncates the file to n bytes
-• The file must be opened in a writable mode
-• The file pointer position is not changed by truncate
-
-Comment ça fonctionne : • f.truncate() cuts the file at the current pointer position
-• f.truncate(0) empties the file completely
-• f.truncate(10) keeps seulement le first 10 bytes
-
-Exemple : f = open("file.txt", "r+")
-f.read(5)        # Read 5 chars, pointer at position 5
-f.truncate()     # Everything après position 5 is removed
-f.close()
-
-# To empty a file:
-f = open("file.txt", "w")  # "w" mode truncates automatically
-f.close()
-
-Cas limites : • Requires writable mode ("r+", "w", "a", etc.)
-• If size is larger than current file, behavior is platform-dependent`,
-  2823: `Le date.today() classe méthode retourne le current local date as a datetime.date objet. It contient le year, month, and day, but no time information.
-
-Concepts clés : • Retourne a date objet (not a string, not a datetime)
-• Contains year, month, day attributes
-• Based on the local system clock
-• No time zone information
-
-Comment ça fonctionne : • date.today() queries the system clock
-• Retourne a date objet avec today's year, month, day
-• Different from datetime.now() which includes time
-
-Exemple : from datetime import date
-today = date.today()
-print(today)        # e.g., 2024-01-15
-print(type(today))  # <classe 'datetime.date'>
-print(today.year)   # e.g., 2024
-
-Usages courants : • Getting the current date for comparisons
-• Date arithmetic avec timedelta
-• Logging and timestamps`,
-  2824: `Le datetime.now() classe méthode retourne le current local date and time as a datetime.datetime objet. It contains year, month, day, hour, minute, second, and microsecond.
-
-Concepts clés : • Retourne a datetime objet (date + time combined)
-• Includes year, month, day, hour, minute, second, microsecond
-• Based on the local system clock
-• Can accept an optional timezone argument
-
-Comment ça fonctionne : • datetime.now() queries the system clock
-• Retourne a datetime objet avec full date and time
-• Microsecond precision
-
-Exemple : from datetime import datetime
-now = datetime.now()
-print(now)          # e.g., 2024-01-15 10:30:45.123456
-print(type(now))    # <classe 'datetime.datetime'>
-print(now.hour)     # e.g., 10
-print(now.minute)   # e.g., 30
-
-Usages courants : • Timestamps for logging
-• Measuring elapsed time
-• Scheduling and time-based logic`,
-  2825: `Le .year attribute on a date or datetime objet retourne le year as an integer. Date objets store year, month, and day as separate attributes.
-
-Concepts clés : • date(year, month, day) crée un date objet
-• .year retourne le year as an integer
-• .month retourne le month (1-12)
-• .day retourne le day (1-31)
-
-Comment ça fonctionne : • date(2024, 1, 15) creates January 15, 2024
-• .year accesses the year component: 2024
-• These are read-only attributes (date objets are immutable)
-
-Exemple : from datetime import date
-d = date(2024, 1, 15)
-print(d.year)   # 2024
-print(d.month)  # 1
-print(d.day)    # 15`,
-  2826: `Le .month attribute retourne le month component of a date objet as an integer from 1 to 12, where 1 is January and 12 is December.
-
-Concepts clés : • .month retourne un integer, not a string name
-• Range is 1-12 (January=1, December=12)
-• Date objets are immutable
-
-Comment ça fonctionne : • date(2024, 1, 15) creates January 15, 2024
-• .month retourne 1 (January)
-
-Exemple : from datetime import date
-d = date(2024, 1, 15)
-print(d.month)  # 1
-d2 = date(2024, 12, 25)
-print(d2.month)  # 12`,
-  2827: `Le .day attribute retourne le day-of-month component of a date objet as an integer. The valid range depends on the month (1-28, 1-29, 1-30, or 1-31).
-
-Concepts clés : • .day retourne le day of the month as an integer
-• Range varies by month (e.g., 1-31 for January)
-• Leap year affects February's range
-
-Comment ça fonctionne : • date(2024, 1, 15) creates January 15, 2024
-• .day retourne 15
-
-Exemple : from datetime import date
-d = date(2024, 1, 15)
-print(d.day)  # 15
-d2 = date(2024, 2, 29)  # 2024 is a leap year
-print(d2.day)  # 29`,
-  2828: `Le .hour attribute retourne le hour component of a datetime objet as an integer from 0 to 23 (24-hour format).
-
-Concepts clés : • datetime(year, month, day, hour, minute) crée un datetime
-• .hour retourne le hour as an integer (0-23)
-• 0 = midnight, 12 = noon, 23 = 11 PM
-
-Comment ça fonctionne : • datetime(2024, 1, 15, 10, 30) creates Jan 15, 2024 at 10:30
-• .hour retourne 10
-
-Exemple : from datetime import datetime
-dt = datetime(2024, 1, 15, 10, 30)
-print(dt.hour)    # 10
-print(dt.minute)  # 30
-print(dt.second)  # 0 (default)`,
-  2829: `Le .minute attribute retourne le minute component of a datetime objet as an integer from 0 to 59.
-
-Concepts clés : • .minute retourne le minute as an integer (0-59)
-• Defaults to 0 if not specified in the constructor
-
-Comment ça fonctionne : • datetime(2024, 1, 15, 10, 30) creates Jan 15, 2024 at 10:30
-• .minute retourne 30
-
-Exemple : from datetime import datetime
-dt = datetime(2024, 1, 15, 10, 30, 45)
-print(dt.minute)  # 30
-print(dt.second)  # 45`,
-  2830: `Le timedelta objet represents a duration. The .days attribute retourne le days component as an integer. Internally, timedelta stores only days, seconds, and microseconds.
-
-Concepts clés : • timedelta(days=5) crée un 5-day duration
-• .days retourne le days component
-• timedelta normalizes all valeurs into days, seconds, microseconds
-• Can be created avec weeks, days, hours, minutes, seconds, milliseconds, microseconds
-
-Comment ça fonctionne : • timedelta(days=5) crée un duration of 5 days
-• .days retourne 5
-• .seconds retourne remaining seconds (après full days)
-• .microseconds retourne remaining microseconds
-
-Exemple : from datetime import timedelta
-td = timedelta(days=5)
-print(td.days)         # 5
-print(td.seconds)      # 0
-print(td.total_seconds())  # 432000.0`,
-  2831: `You can add a timedelta to a date object to get a new date. The + operator crée un new date shifted forward by the duration specified in the timedelta.
-
-Concepts clés : • date + timedelta = new date (shifted forward)
-• date - timedelta = new date (shifted backward)
-• date - date = timedelta (duration between two dates)
-• The result is a new date object (dates are immutable)
-
-Comment ça fonctionne : • date(2024, 1, 15) is January 15, 2024
-• timedelta(days=10) represents 10 days
-• January 15 + 10 days = January 25
-• Retourne date(2024, 1, 25)
-
-Exemple : from datetime import date, timedelta
-d = date(2024, 1, 15)
-future = d + timedelta(days=10)
-print(future)  # 2024-01-25
-past = d - timedelta(days=10)
-print(past)    # 2024-01-05`,
-  2832: `Subtracting one date from another retourne un timedelta object representing the duration between them. The .days attribute gives the number of days difference.
-
-Concepts clés : • date - date = timedelta
-• The result can be positive or negative
-• .days gives the integer number of days
-• Later date - earlier date = positive days
-
-Comment ça fonctionne : • date(2024, 1, 15) - date(2024, 1, 10) = timedelta(days=5)
-• .days returns 5
-• If reversed: date(2024, 1, 10) - date(2024, 1, 15) = timedelta(days=-5)
-
-Exemple : from datetime import date
-d1 = date(2024, 1, 15)
-d2 = date(2024, 1, 10)
-diff = d1 - d2
-print(diff.days)  # 5
-print(type(diff))  # <class 'datetime.timedelta'>`,
-  2833: `Le strftime() méthode formats a date or datetime objet as a string according to the specified format codes. %Y = 4-digit year, %m = 2-digit month, %d = 2-digit day.
-
-Concepts clés : • strftime = "string format time"
-• %Y = 4-digit year (2024)
-• %m = zero-padded month (01-12)
-• %d = zero-padded day (01-31)
-• The separator characters (-, /, etc.) are literal
-
-Comment ça fonctionne : • datetime(2024, 1, 15) is January 15, 2024
-• strftime("%Y-%m-%d") formats as "2024-01-15"
-• Each %X code is replaced by the corresponding component
-
-Exemple : from datetime import datetime
-dt = datetime(2024, 1, 15)
-print(dt.strftime("%Y-%m-%d"))    # "2024-01-15"
-print(dt.strftime("%d/%m/%Y"))    # "15/01/2024"
-print(dt.strftime("%B %d, %Y"))   # "January 15, 2024"`,
-  2834: `Le format string "%d/%m/%Y" uses day-month-year order avec forward slashes as separators. C'est the common European date format.
-
-Concepts clés : • %d = zero-padded day (01-31)
-• %m = zero-padded month (01-12)
-• %Y = 4-digit year
-• / characters are literal separators
-
-Comment ça fonctionne : • datetime(2024, 1, 15) is January 15, 2024
-• %d = "15", %m = "01", %Y = "2024"
-• Résultat : "15/01/2024"
-
-Exemple : from datetime import datetime
-dt = datetime(2024, 1, 15)
-print(dt.strftime("%d/%m/%Y"))    # "15/01/2024"
-print(dt.strftime("%m/%d/%Y"))    # "01/15/2024" (US format)
-print(dt.strftime("%Y/%m/%d"))    # "2024/01/15" (ISO-like)`,
-  2835: `Le strptime() classe méthode parses a string into a datetime objet according to a format string. It is the inverse of strftime(). After parsing, you can access .day, .month, .year, etc.
-
-Concepts clés : • strptime = "string parse time"
-• First argument: the date string to parse
-• Second argument: the format string matching the input
-• Retourne a datetime objet
-• Inverse of strftime()
-
-Comment ça fonctionne : • datetime.strptime("2024-01-15", "%Y-%m-%d") parses the string
-• Creates datetime(2024, 1, 15, 0, 0)
-• .day retourne 15
-
-Exemple : from datetime import datetime
-dt = datetime.strptime("2024-01-15", "%Y-%m-%d")
-print(dt.day)    # 15
-print(dt.month)  # 1
-print(dt.year)   # 2024
-print(type(dt))  # <classe 'datetime.datetime'>
-
-Cas limites : • Raises ValueError if the string doesn't match the format
-• Time components default to 0 when not specified`,
-  2836: `Le weekday() méthode retourne le day of the week as an integer, where Monday is 0 and Sunday is 6. January 15, 2024 was a Monday, so weekday() retourne 0.
-
-Concepts clés : • Monday = 0, Tuesday = 1, ..., Sunday = 6
-• Different from isoweekday() where Monday = 1 and Sunday = 7
-• Retourne an integer, not a string
-
-Comment ça fonctionne : • date(2024, 1, 15) is January 15, 2024, which is a Monday
-• weekday() retourne 0 (Monday = 0)
-
-Exemple : from datetime import date
-d = date(2024, 1, 15)  # Monday
-print(d.weekday())      # 0
-print(d.isoweekday())   # 1 (ISO: Monday=1)
-
-d2 = date(2024, 1, 14)  # Sunday
-print(d2.weekday())     # 6
-print(d2.isoweekday())  # 7`,
-  2837: `Le isoformat() méthode retourne le date as a string in ISO 8601 format (YYYY-MM-DD). C'est le même format produced by str(date_obj).
-
-Concepts clés : • Retourne a string in ISO 8601 format
-• Format is always YYYY-MM-DD
-• Equivalent to str(date_obj) for date objets
-• For datetime objets, includes time: YYYY-MM-DDTHH:MM:SS
-
-Comment ça fonctionne : • date(2024, 1, 15).isoformat() retourne "2024-01-15"
-• Always zero-padded (month 1 becomes "01")
-
-Exemple : from datetime import date, datetime
-d = date(2024, 1, 15)
-print(d.isoformat())  # "2024-01-15"
-print(str(d))          # "2024-01-15" (same)
-
-dt = datetime(2024, 1, 15, 10, 30)
-print(dt.isoformat())  # "2024-01-15T10:30:00"`,
-  2838: `Quand creating a timedelta avec hours=25, Python normalizes the valeur internally. Since 25 hours = 1 day + 1 hour, the .days attribute retourne 1. The remaining 1 hour (3600 seconds) is stored in .seconds.
-
-Concepts clés : • timedelta normalizes all valeurs to days, seconds, microseconds
-• 25 hours = 1 day + 1 hour
-• .days retourne seulement le full days component
-• .seconds retourne le remaining seconds (not total seconds)
-
-Comment ça fonctionne : • timedelta(hours=25) is normalized to 1 day + 3600 seconds
-• .days retourne 1
-• .seconds retourne 3600 (1 hour in seconds)
-• .total_seconds() retourne 90000.0 (25 * 3600)
-
-Exemple : from datetime import timedelta
-td = timedelta(hours=25)
-print(td.days)            # 1
-print(td.seconds)         # 3600
-print(td.total_seconds()) # 90000.0`,
-  2839: `Le .seconds attribute of a timedelta retourne le remaining seconds après accounting for full days. For timedelta(hours=25), that's 25 hours = 1 day + 1 hour, so .seconds retourne 3600 (1 hour = 3600 seconds). Note: .seconds is NOT total_seconds().
-
-Concepts clés : • .seconds retourne remaining seconds après removing full days
-• Different from .total_seconds() qui retourne le entire duration in seconds
-• .seconds is always in range [0, 86400) (0 to 24 hours)
-• timedelta stores only: days, seconds, microseconds
-
-Comment ça fonctionne : • timedelta(hours=25) normalizes to 1 day + 3600 seconds
-• .days = 1
-• .seconds = 3600 (remaining après 1 full day)
-• .total_seconds() = 90000.0 (25 * 3600)
-
-Exemple : from datetime import timedelta
-td = timedelta(hours=25)
-print(td.seconds)          # 3600 (remaining après days)
-print(td.total_seconds())  # 90000.0 (total)
-
-td2 = timedelta(days=2, hours=3)
-print(td2.seconds)  # 10800 (3 hours in seconds)`,
-  2840: `re.match() tries to match the pattern at the beginning of the string. The pattern \\d+ matches one or more digits. Since "123abc" starts with digits, it matches "123". The .group() method retourne le matched text.
-
-Concepts clés : • re.match() only checks at the start of the string
-• \\d matches any digit (0-9)
-• + means "one or more" of the preceding pattern
-• .group() retourne le full matched string
-• Retourne None if no match at the start
-
-Comment ça fonctionne : • r"\\d+" is a raw string pattern for one or more digits
-• "123abc" starts with "123" which matches \\d+
-• The match stops at "a" (not a digit)
-• .group() returns "123"
-
-Exemple : import re
-m = re.match(r"\\d+", "123abc")
-print(m.group())   # "123"
-print(m.span())    # (0, 3)
-m2 = re.match(r"\\d+", "abc123")
-print(m2)          # None (no digits at start)`,
-  2841: `re.search() scans through the entire string looking for the first location where the pattern matches. Unlike re.match(), it doesn't require the match to be at the beginning of the string.
-
-Concepts clés : • re.search() searches anywhere in the string
-• Retourne the first match found
-• \\d+ matches one or more digits
-• Retourne None if no match is found anywhere
-• .group() retourne le matched text
-
-Comment ça fonctionne : • r"\\d+" looks for one or more digits
-• "abc123def" — skips "abc", finds "123", stops at "d"
-• .group() returns "123"
-
-Exemple : import re
-m = re.search(r"\\d+", "abc123def")
-print(m.group())   # "123"
-print(m.start())   # 3 (position where match starts)
-print(m.end())     # 6 (position after match ends)`,
-  2842: `re.match() and re.search() are similar but differ in where they look for the pattern. match() only tries to match at the beginning of the string, while search() scans through the entire string to find the first occurrence.
-
-Concepts clés : • re.match() checks only at position 0 (start of string)
-• re.search() scans through the entire string
-• Both return a Match object or None
-• re.match(pattern, string) est équivalent à re.search("^" + pattern, string) approximately
-
-Comment ça fonctionne : • re.match(r"\\d+", "abc123") retourne None (no digits at start)
-• re.search(r"\\d+", "abc123") returns match for "123" (found at position 3)
-• re.match(r"\\d+", "123abc") returns match for "123" (digits at start)
-
-Exemple : import re
-print(re.match(r"\\d+", "abc123"))   # None
-print(re.search(r"\\d+", "abc123"))  # <re.Match object; span=(3, 6), match='123'>
-
-Usages courants : • Use match() when you expect the pattern at the start
-• Use search() when the pattern can be anywhere`,
-  2843: `re.findall() retourne un list of all non-overlapping matches of the pattern in the string. Unlike match() and search() which return Match objects, findall() retourne un list of strings.
-
-Concepts clés : • Retourne a list of all matching strings
-• Finds all non-overlapping matches
-• Retourne strings, not Match objects
-• If pattern has groups, returns list of groups instead
-
-Comment ça fonctionne : • r"\\d+" matches one or more digits
-• In "a1b2c3": finds "1", then "2", then "3"
-• Retourne ["1", "2", "3"]
-
-Exemple : import re
-print(re.findall(r"\\d+", "a1b2c3"))      # ["1", "2", "3"]
-print(re.findall(r"\\d+", "abc"))          # [] (no matches)
-print(re.findall(r"\\d+", "a12b34c56"))    # ["12", "34", "56"]
-
-Cas limites : • Retourne empty list if no matches found
-• With groups: re.findall(r"(\\d)(\\w)", "1a2b") returns [("1", "a"), ("2", "b")]`,
-  2844: `re.sub() replaces all occurrences of the pattern in the string with the replacement string. It retourne un new string with all substitutions made.
-
-Concepts clés : • re.sub(pattern, replacement, string) replaces matches
-• Replaces ALL non-overlapping matches by default
-• Retourne a new string (original is inchangés)
-• Can specify count parameter to limit replacements
-• Replacement can be a string or a function
-
-Comment ça fonctionne : • r"\\d" matches any single digit
-• In "a1b2c3": replaces "1" with "X", "2" with "X", "3" with "X"
-• Résultat : "aXbXcX"
-
-Exemple : import re
-print(re.sub(r"\\d", "X", "a1b2c3"))       # "aXbXcX"
-print(re.sub(r"\\d+", "X", "a12b34c56"))   # "aXbXcX"
-print(re.sub(r"\\d", "X", "a1b2", count=1)) # "aXb2" (only first)`,
-  2845: `re.split() splits a string by the occurrences of a pattern. Unlike str.split(), it can split on regex patterns, making it more flexible for complex delimiters.
-
-Concepts clés : • re.split(pattern, string) splits at each pattern match
-• \\s+ matches one or more whitespace characters
-• Retourne a list of strings
-• More powerful than str.split() for complex patterns
-• Can specify maxsplit parameter
-
-Comment ça fonctionne : • r"\\s+" matches one or more whitespace characters
-• "hello  world  python" has multi-space gaps
-• Split at each whitespace group: ["hello", "world", "python"]
-• Unlike "hello  world".split(" "), re.split handles multiple spaces cleanly
-
-Exemple : import re
-print(re.split(r"\\s+", "hello  world  python"))
-# ["hello", "world", "python"]
-print(re.split(r"[,;]", "a,b;c"))
-# ["a", "b", "c"]`,
-  2846: `Le pattern ^\\\\d+$ anchors the match to the entire string: ^ means start of string, \\\\d+ means one or more digits, and $ means end of string. "12345" consists entirely of digits, so the pattern matches.
-
-Concepts clés : • ^ anchors to the start of the string
-• $ anchors to the end of the string
-• ^\\\\d+$ means "entire string is digits"
-• bool(match_object) is True; bool(None) is False
-
-Comment ça fonctionne : • re.match(r"^\\\\d+$", "12345") checks if "12345" is all digits
-• "12345" matches: starts avec digits and ends avec digits
-• Retourne a Match objet (truthy)
-• bool(Match objet) is True
-
-Exemple : import re
-print(bool(re.match(r"^\\\\d+$", "12345")))  # True
-print(bool(re.match(r"^\\\\d+$", "123a5")))  # False
-print(bool(re.match(r"^\\\\d+$", "")))        # False (+ needs at least one)`,
-  2847: `Le pattern ^\\\\d+$ requires the entire string to consist of only digits. "123a5" contient le letter "a", which is not a digit, so the pattern does not match. re.match() retourne None, and bool(None) is False.
-
-Concepts clés : • ^\\\\d+$ requires every character to be a digit
-• "a" is not a digit, so the match fails
-• re.match() retourne None when there is no match
-• bool(None) is False
-
-Comment ça fonctionne : • re.match(r"^\\\\d+$", "123a5") tries to match
-• \\\\d+ matches "123", but then "a" is not a digit
-• The $ anchor requires digits to go all the way to the end
-• Match fails, retourne None
-• bool(None) is False
-
-Exemple : import re
-print(bool(re.match(r"^\\\\d+$", "123a5")))  # False
-print(bool(re.match(r"^\\\\d+$", "12345")))  # True
-print(bool(re.match(r"^\\\\d+$", " 123")))   # False (space isn't a digit)`,
-  2848: `Le character classe [aeiou] matches any single character that is a, e, i, o, or u. re.findall() retourne all matches, so il trouve every vowel in the string.
-
-Concepts clés : • [aeiou] is a character classe matching any vowel
-• Character classes match a single character from the set
-• findall retourne all non-overlapping matches
-• Case-sensitive: [aeiou] does not match "A", "E", etc.
-
-Comment ça fonctionne : • In "hello world": h-e-l-l-o-space-w-o-r-l-d
-• "e" at position 1: match
-• "o" at position 4: match
-• "o" at position 7: match
-• Résultat : ["e", "o", "o"]
-
-Exemple : import re
-print(re.findall(r"[aeiou]", "hello world"))   # ["e", "o", "o"]
-print(re.findall(r"[aeiou]", "rhythm"))         # [] (no vowels)
-print(re.findall(r"[aeiouAEIOU]", "Hello"))     # ["e", "o"]`,
-  2849: `Le pattern \\\\b\\\\w+\\\\b matches complete words. \\\\b is a word boundary (zero-width assertion entre a word character and a non-word character), and \\\\w+ matches one or more word characters (letters, digits, underscore).
-
-Concepts clés : • \\\\b matches a word boundary (zero-width)
-• \\\\w matches any word character [a-zA-Z0-9_]
-• \\\\w+ matches one or more word characters
-• \\\\b\\\\w+\\\\b matches complete words
-
-Comment ça fonctionne : • In "hello world": two words separated by a space
-• First \\\\b\\\\w+\\\\b matches "hello"
-• Second \\\\b\\\\w+\\\\b matches "world"
-• Résultat : ["hello", "world"]
-
-Exemple : import re
-print(re.findall(r"\\\\b\\\\w+\\\\b", "hello world"))
-# ["hello", "world"]
-print(re.findall(r"\\\\b\\\\w+\\\\b", "hello, world!"))
-# ["hello", "world"]`,
-  2850: `Parentheses in regex create capturing groups. The pattern (\\w+)@(\\w+) has two groups: the part before @ and the part after. The .groups() method returns all captured groups as a tuple.
-
-Concepts clés : • (pattern) crée un capturing group
-• \\w+ matches one or more word characters
-• .groups() retourne un tuple of all captured group strings
-• .group(0) retourne le entire match
-• .group(1) retourne le first group, .group(2) the second
-
-Comment ça fonctionne : • (\\w+) before @ captures "user" as group 1
-• (\\w+) after @ captures "host" as group 2
-• .groups() returns ("user", "host")
-
-Exemple : import re
-m = re.match(r"(\\w+)@(\\w+)", "user@host")
-print(m.groups())   # ("user", "host")
-print(m.group(0))   # "user@host" (full match)
-print(m.group(1))   # "user"
-print(m.group(2))   # "host"`,
+  2751: `obj.__x après self.__x = 1 dans MyClass
+
+Débutant :
+• AttributeError : depuis l'extérieur, __x n'est pas le vrai nom d'attribut.
+
+Intermédiaire :
+• Le préfixe double underscore sur un attribut d'instance déclenche le name mangling : stockage sous _MyClass__x.
+
+Expert :
+• Ce n'est pas du vrai private C++ ; c'est une protection contre les collisions de noms entre sous-classes.
+
+Concepts clés :
+• Mangling lié au nom de la classe définissant l'assignation.
+
+Distinctions clés :
+• _x (un seul underscore) ne mangle pas ; __x__ des deux côtés suit d'autres règles (méthodes spéciales).
+
+Fonctionnement :
+• L'accès obj.__x cherche un attribut non manglé et échoue.
+
+Exécution étape par étape :
+• __init__ écrit _MyClass__x ; lecture obj.__x ne le retrouve pas.
+
+Ordre des opérations :
+• Création instance puis accès attribut.
+
+Cas d'utilisation courants :
+• Attributs « internes » à une classe dans une hiérarchie.
+
+Cas limites :
+• Accès volontaire via getattr(obj, '_MyClass__x', ...) si besoin de debug (à éviter en prod).
+
+Considérations de performance :
+• Coût négligeable ; surtout une question de sémantique.
+
+Exemples :
+• obj._MyClass__x vaut 1 alors que obj.__x lève.
+
+Remarques :
+• Réponse : AttributeError (1re option).`,
+  2752: `obj._MyClass__x après self.__x = 1
+
+Débutant :
+• 1 : on utilise exactement le nom manglé produit par Python.
+
+Intermédiaire :
+• Le mangling est déterministe : _ + nom de classe + __ + suffixe.
+
+Expert :
+• Contourner le mangling brise l'encapsulation intentionnelle ; à réserver aux tests ou interop rare.
+
+Concepts clés :
+• Le mangling est une transformation de nom, pas une suppression de l'attribut.
+
+Distinctions clés :
+• Diffère d'un attribut public self.x sans transformation.
+
+Fonctionnement :
+• Le même objet expose _MyClass__x dans __dict__ (souvent).
+
+Exécution étape par étape :
+• Lecture directe du slot manglé renvoie la valeur stockée.
+
+Ordre des opérations :
+• Instanciation puis accès au nom complet.
+
+Cas d'utilisation courants :
+• Comprendre les tracebacks et la désérialisation d'objets.
+
+Cas limites :
+• Renommer la classe ne renomme pas rétroactivement les attributs déjà créés sur d'anciennes instances.
+
+Considérations de performance :
+• Identique à tout accès attribut.
+
+Exemples :
+• print(obj._MyClass__x) affiche 1.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2753: `MyClass.__x avec __x = 1 au niveau classe
+
+Débutant :
+• 1 : attribut de classe nommé __x reste accessible tel quel sur la classe.
+
+Intermédiaire :
+• Le mangling automatique cible surtout self.__nom dans les méthodes, pas les simples variables de classe __x (hors règles spéciales).
+
+Expert :
+• Éviter de surcharger la signification de __ : préférer des noms explicites pour les constantes de classe.
+
+Concepts clés :
+• Attribut de classe vs attribut d'instance.
+
+Distinctions clés :
+• self.__x (instance) vs MyClass.__x (namespace de classe) ne suivent pas la même story pédagogique ici.
+
+Fonctionnement :
+• MyClass.__x résout dans le dictionnaire de la classe.
+
+Exécution étape par étape :
+• Accès direct sur la classe retourne 1.
+
+Ordre des opérations :
+• Après exécution du corps de class.
+
+Cas d'utilisation courants :
+• Données partagées par défaut (avec prudence si mutable).
+
+Cas limites :
+• Mélanger __x classe et self.__x crée de la confusion pour les débutants.
+
+Considérations de performance :
+• Lecture O(1) sur le dict de classe.
+
+Exemples :
+• MyClass.__x vaut 1 sans passer par le mangling instance de la question 2751.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2754: `obj._x avec self._x = 1
+
+Débutant :
+• 1 : un seul underscore est une convention « protégé », pas une règle d'accès.
+
+Intermédiaire :
+• Aucun renommage : _x reste _x dans __dict__.
+
+Expert :
+• PEP 8 : signal aux développeurs, pas barrière technique.
+
+Concepts clés :
+• Convention d'API vs enforcement runtime.
+
+Distinctions clés :
+• Contrairement à __x seul côté instance, pas de _Classe__x ici.
+
+Fonctionnement :
+• Lecture attribut normale sur l'instance.
+
+Exécution étape par étape :
+• obj._x lit la valeur 1.
+
+Ordre des opérations :
+• __init__ puis accès extérieur.
+
+Cas d'utilisation courants :
+• Champs internes documentés mais utilisables par sous-classes.
+
+Cas limites :
+• from module import * n'importe pas les noms commençant par _ (autre nuance du underscore).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Sous-classe peut lire self._x sans magie.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2755: `Child().method() qui fait return self.__x alors que Parent a self.__x = 1
+
+Débutant :
+• AttributeError : dans Child, __x aurait été _Child__x, pas l'attribut _Parent__x du parent.
+
+Intermédiaire :
+• Le mangling est par classe lexicale où l'identifiant __x apparaît.
+
+Expert :
+• Exposer un getter Parent ou un nom protégé _x évite ce piège.
+
+Concepts clés :
+• Deux classes → deux espaces de noms manglés distincts.
+
+Distinctions clés :
+• Hériter ne « mappe » pas automatiquement __x enfant vers __x parent.
+
+Fonctionnement :
+• Recherche d'attribut pour _Child__x échoue sur l'instance.
+
+Exécution étape par étape :
+• Parent.__init__ a créé _Parent__x ; la méthode enfant ne le touche pas avec __x.
+
+Ordre des opérations :
+• Construction puis appel method.
+
+Cas d'utilisation courants :
+• API parent avec get_balance() plutôt que balance interne __.
+
+Cas limites :
+• Accès explicite self._Parent__x (fragile) si vraiment nécessaire.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Même idée que 2796 mais ici focus Parent/Child explicite.
+
+Remarques :
+• Réponse : AttributeError (1re option).`,
+  2756: `Child().method() avec return self._Parent__x
+
+Débutant :
+• 1 : on lit volontairement le vrai nom manglé du parent.
+
+Intermédiaire :
+• Ça prouve que le mangling n'est pas une barrière de sécurité.
+
+Expert :
+• Pattern rare ; mieux vaut API publique ou protected _ sur le parent.
+
+Concepts clés :
+• Nom explicite _Parent__x aligné sur la règle de mangling.
+
+Distinctions clés :
+• Diffère de self.__x dans l'enfant (2755).
+
+Fonctionnement :
+• Attribut présent sur l'instance après Parent.__init__.
+
+Exécution étape par étape :
+• method retourne la valeur 1 stockée sous _Parent__x.
+
+Ordre des opérations :
+• Instanciation Child → chaîne d'init parent.
+
+Cas d'utilisation courants :
+• Pédagogie sur le mangling et la maintenance.
+
+Cas limites :
+• Si la classe parent est renommée, le code utilisant _Parent__x casse.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Accès réussi au backing field manglé.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2757: `obj.__x__ avec self.__x__ = 1
+
+Débutant :
+• 1 : les noms avec __ des deux côtés ne suivent pas la règle de mangling « __suffixe ».
+
+Intermédiaire :
+• Réservés aux méthodes spéciales ; ici c'est un attribut utilisateur peu idiomatique mais valide.
+
+Expert :
+• Ne pas abuser : choisir un nom normal pour éviter la confusion avec le protocole data model.
+
+Concepts clés :
+• Exception à la règle __foo sur instances.
+
+Distinctions clés :
+• __x une seule paire de underscores mangle ; __x__ non (pour cette question).
+
+Fonctionnement :
+• Accès direct __x__ sur l'instance.
+
+Exécution étape par étape :
+• Retourne 1.
+
+Ordre des opérations :
+• __init__ puis lecture.
+
+Cas d'utilisation courants :
+• Quiz pédagogique plutôt que style de code réel.
+
+Cas limites :
+• Nommer __init__ autrement casserait la classe ; pas le cas ici.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• obj.__x__ lisible sans _MyClass__ préfixe.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2758: `obj.get_x() avec self._x = 1
+
+Débutant :
+• 1 : méthode getter classique qui lit _x.
+
+Intermédiaire :
+• Alternative à @property pour contrôler l'accès.
+
+Expert :
+• Permet d'ajouter plus tard logs, cache, validation sans changer la signature get_x().
+
+Concepts clés :
+• Interface méthode explicite vs attribut calculé.
+
+Distinctions clés :
+• get_x() vs accès direct _x (toujours possible).
+
+Fonctionnement :
+• Appel de méthode lié à l'instance.
+
+Exécution étape par étape :
+• get_x retourne self._x.
+
+Ordre des opérations :
+• MyClass() puis get_x().
+
+Cas d'utilisation courants :
+• Code legacy Java-esque ou APIs stables.
+
+Cas limites :
+• Oublier les parenthèses si on écrit obj.get_x sans call.
+
+Considérations de performance :
+• Un saut de fonction de plus qu'une propriété.
+
+Exemples :
+• Valeur 1 retournée.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2759: `obj.get_x() avec self.__x = 1 dans la classe
+
+Débutant :
+• 1 : à l'intérieur de MyClass, __x se résout vers _MyClass__x automatiquement.
+
+Intermédiaire :
+• Le compilateur transforme les références __x dans les méthodes de MyClass.
+
+Expert :
+• Cohérent avec l'échec d'accès externe obj.__x (2751).
+
+Concepts clés :
+• Portée lexicale + mangling pour les méthodes de la même classe.
+
+Distinctions clés :
+• Méthode enfant sur __x (2755) n'a pas ce mapping vers le parent.
+
+Fonctionnement :
+• get_x lit le slot manglé via la forme __x dans MyClass.
+
+Exécution étape par étape :
+• return self.__x → valeur 1.
+
+Ordre des opérations :
+• Instanciation ; pas d'accès externe à __x.
+
+Cas d'utilisation courants :
+• Encapsulation avec getter public.
+
+Cas limites :
+• Sous-classe redéfinissant get_x doit resuper() ou utiliser API stable.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• get_x() fonctionne alors que obj.__x échouerait.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2760: `set_x(2) puis get_x ou _MyClass__x
+
+Débutant :
+• 2 : le setter interne réécrit le champ manglé.
+
+Intermédiaire :
+• hasattr get_x gère le cas où seul _MyClass__x compte après mutation.
+
+Expert :
+• Montre que setter + getter maintiennent l'invariant sans exposer __x.
+
+Concepts clés :
+• Méthodes de classe voient les mêmes noms manglés que __init__.
+
+Distinctions clés :
+• Si get_x manquait, _MyClass__x afficherait encore 2.
+
+Fonctionnement :
+• set_x(2) assigne via self.__x = val dans MyClass.
+
+Exécution étape par étape :
+• Passage à 2 ; lecture suivante renvoie 2.
+
+Ordre des opérations :
+• set puis expression conditionnelle de lecture.
+
+Cas d'utilisation courants :
+• Mutateur validant avant stockage.
+
+Cas limites :
+• Oublier d'implémenter set_x laisserait la valeur initiale 1.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• État cohérent 2 après set.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2761: `@property def x retourne self._x — obj.x ?
+
+Débutant :
+• 1 : lecture d'attribut déclenche le getter du descripteur property.
+
+Intermédiaire :
+• property transforme une méthode en accès style attribut.
+
+Expert :
+• Permet migration progressive de attribut public → attribut privé + getter sans casser les appelants.
+
+Concepts clés :
+• Descripteur property sur la classe ; accès sur l'instance.
+
+Distinctions clés :
+• obj.x sans () vs méthode get_x().
+
+Fonctionnement :
+• __get__ du property appelle la fonction x(self).
+
+Exécution étape par étape :
+• obj.x → return self._x → 1.
+
+Ordre des opérations :
+• __init__ pose _x ; accès utilise le getter.
+
+Cas d'utilisation courants :
+• Modèles ORM, dataclasses avec validation à la lecture.
+
+Cas limites :
+• Sans setter, assignation obj.x = ... échouera (voir 2767).
+
+Considérations de performance :
+• Très léger ; un appel Python de plus.
+
+Exemples :
+• Interface fluide obj.x.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2762: `@x.setter avec self._x = val * 2 puis obj.x = 5
+
+Débutant :
+• 10 : le setter multiplie avant stockage.
+
+Intermédiaire :
+• L'assignation obj.x = 5 n'écrit pas 5 brut si la logique métier transforme.
+
+Expert :
+• Pattern utile pour unités (pieds → pouces) ou normalisation.
+
+Concepts clés :
+• Couple getter/setter sur le même nom logique.
+
+Distinctions clés :
+• Diffère d'une simple affectation self._x = 5 sans property.
+
+Fonctionnement :
+• __set__ du property invoque le setter avec val=5.
+
+Exécution étape par étape :
+• _x devient 10 ; lecture obj.x renvoie 10.
+
+Ordre des opérations :
+• Affectation puis interrogation.
+
+Cas d'utilisation courants :
+• Validation et transformation centralisées.
+
+Cas limites :
+• Double application si on multiplie déjà ailleurs.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• 5 * 2 = 10 visible via getter.
+
+Remarques :
+• Réponse : 10 (1re option).`,
+  2763: `property sur __x manglé — obj.x ?
+
+Débutant :
+• 1 : le getter voit __x depuis l'intérieur de MyClass.
+
+Intermédiaire :
+• L'utilisateur lit x public alors que le stockage reste manglé.
+
+Expert :
+• Meilleure façade que d'exposer _MyClass__x.
+
+Concepts clés :
+• Composition de property + mangling.
+
+Distinctions clés :
+• obj.x OK ; obj.__x toujours interdit depuis l'extérieur.
+
+Fonctionnement :
+• getter x utilise self.__x résolu en _MyClass__x.
+
+Exécution étape par étape :
+• Retour 1.
+
+Ordre des opérations :
+• Création instance ; lecture property.
+
+Cas d'utilisation courants :
+• Champs privés « Pythoniques » avec API propre.
+
+Cas limites :
+• Sous-classe redéfinissant x sans super peut casser l'invariant.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Pattern façade courant.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2764: `setter avec corps pass après obj.x = 5
+
+Débutant :
+• 1 : le setter ne modifie rien ; le getter continue de retourner 1.
+
+Intermédiaire :
+• L'affectation appelle quand même le setter (effet no-op).
+
+Expert :
+• Peut servir à ignorer silencieusement les écritures (souvent mauvais style ; préférer AttributeError ou log).
+
+Concepts clés :
+• Écriture via property sans stockage ne change pas _backing field inexistant ici.
+
+Distinctions clés :
+• Diffère d'un setter qui ferait self._hidden = val.
+
+Fonctionnement :
+• __set__ terminé ; état getter inchangé (return 1 constant dans l'exemple).
+
+Exécution étape par étape :
+• obj.x = 5 puis obj.x lit toujours 1.
+
+Ordre des opérations :
+• Assignation puis lecture.
+
+Cas d'utilisation courants :
+• Illustrer pièges pédagogiques.
+
+Cas limites :
+• Confusion utilisateur si l'écriture semble réussir.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Simule property « read-mostly » mal documentée.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2765: `x = property(get_x, set_x) puis obj.x = 5
+
+Débutant :
+• 5 : forme fonctionnelle équivalente aux décorateurs.
+
+Intermédiaire :
+• property(getter, setter) attache les deux callables au même nom.
+
+Expert :
+• Utile quand les fonctions existent déjà sans décorateur.
+
+Concepts clés :
+• Descripteur créé à l'exécution du corps de classe.
+
+Distinctions clés :
+• Même sémantique que @property + @x.setter.
+
+Fonctionnement :
+• set_x(5) assigne _x ; get_x lit _x.
+
+Exécution étape par étape :
+• Après assignation, obj.x vaut 5.
+
+Ordre des opérations :
+• Instanciation ; écriture ; lecture.
+
+Cas d'utilisation courants :
+• Portage de code Python 2 style ou génération dynamique.
+
+Cas limites :
+• Noms get_x/set_x doivent être définis avant l'affectation à x.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Style alternatif documenté dans la doc property.
+
+Remarques :
+• Réponse : 5 (1re option).`,
+  2766: `del obj.x avec @x.deleter supprimant self._x — hasattr(obj, '_x') ?
+
+Débutant :
+• False : l'attribut privé conventionnel a été effacé.
+
+Intermédiaire :
+• del sur le nom public route vers le deleter du property.
+
+Expert :
+• Bon endroit pour fermer fichiers ou invalider cache.
+
+Concepts clés :
+• del déclenche __delete__ du descripteur si défini.
+
+Distinctions clés :
+• del self._x direct sans property serait autre chose.
+
+Fonctionnement :
+• deleter exécute del self._x.
+
+Exécution étape par étape :
+• hasattr voit plus _x sur l'instance.
+
+Ordre des opérations :
+• Création ; suppression ; test.
+
+Cas d'utilisation courants :
+• Nettoyage contrôlé d'attributs calculés.
+
+Cas limites :
+• Relire obj.x après del lève si pas de valeur par défaut.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Pattern lifecycle court sur ressource.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2767: `property sans setter — obj.x = 2 ?
+
+Débutant :
+• AttributeError : pas de __set__ fourni pour ce nom.
+
+Intermédiaire :
+• Message du type can't set attribute sur property read-only.
+
+Expert :
+• Pour rendre writable, ajouter @x.setter ou utiliser setattr sur _x en interne seulement.
+
+Concepts clés :
+• Lecture seule par défaut si un seul bloc @property.
+
+Distinctions clés :
+• Diffère d'un simple attribut self.x assignable.
+
+Fonctionnement :
+• Tentative d'assignation échoue au niveau du descripteur.
+
+Exécution étape par étape :
+• Exception avant modification de _x.
+
+Ordre des opérations :
+• Lecture OK ; écriture bloquée.
+
+Cas d'utilisation courants :
+• Exposer surface immuable pour données dérivées.
+
+Cas limites :
+• On peut toujours contourner avec obj._x = ... (convention).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Empêche typos silencieuses sur API publique.
+
+Remarques :
+• Réponse : AttributeError (1re option).`,
+  2768: `getter return self._x if self._x > 0 else 0 après _x = -1 direct
+
+Débutant :
+• 0 : la lecture passe par le getter même si _x a été forcé.
+
+Intermédiaire :
+• Montre que l'écriture directe _x contourne le setter mais pas le getter à la lecture.
+
+Expert :
+• Pour des invariants forts, éviter l'exposition de _x ou utiliser __slots__ + API stricte.
+
+Concepts clés :
+• Getter comme point de contrôle à la lecture.
+
+Distinctions clés :
+• Si on avait mis obj.x = -1 avec setter validant, l'histoire diffère.
+
+Fonctionnement :
+• Condition sur _x au moment de l'accès obj.x.
+
+Exécution étape par étape :
+• -1 > 0 faux → 0.
+
+Ordre des opérations :
+• Mutation directe ; accès property.
+
+Cas d'utilisation courants :
+• Normalisation (clamp) à l'affichage.
+
+Cas limites :
+• État interne -1 mais surface 0 : documenter.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Garde-fou minimal sur valeurs négatives.
+
+Remarques :
+• Réponse : 0 (1re option).`,
+  2769: `setter if val < 0: raise ValueError — obj.x = -1
+
+Débutant :
+• ValueError : la validation dans le setter lève avant stockage.
+
+Intermédiaire :
+• Pattern défensif pour domaines non négatifs (prix, taille).
+
+Expert :
+• Compléter par __repr__ clair et tests unitaires sur les bornes.
+
+Concepts clés :
+• Setter comme garde-fou à l'écriture.
+
+Distinctions clés :
+• Diffère du getter qui transforme (2768).
+
+Fonctionnement :
+• __set__ exécute if et lève.
+
+Exécution étape par étape :
+• Pas d'assignation de _x si exception.
+
+Ordre des opérations :
+• Tentative d'assignation.
+
+Cas d'utilisation courants :
+• Dataclasses field avec validation custom.
+
+Cas limites :
+• val exactement 0 : ici accepté si seul < 0 testé.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Entrée utilisateur rejetée tôt.
+
+Remarques :
+• Réponse : ValueError (1re option).`,
+  2770: `@classmethod puis @property sur def x(cls)
+
+Débutant :
+• TypeError : combinaison refusée (ordre des descripteurs incompatible).
+
+Intermédiaire :
+• property attend un callable instance ; classmethod change la nature du callable.
+
+Expert :
+• Pour « property de classe », patterns avancés (metaclass, custom descriptor) hors scope débutant.
+
+Concepts clés :
+• Empilement de décorateurs n'est pas toujours commutatif ni légal.
+
+Distinctions clés :
+• @property sur méthode normale OK ; pas ainsi avec @classmethod classique.
+
+Fonctionnement :
+• Échec à la définition de la classe (ou à l'accès selon version — ici quiz attend TypeError).
+
+Exécution étape par étape :
+• Python signale l'incompatibilité.
+
+Ordre des opérations :
+• Décorateurs appliqués au moment du class body.
+
+Cas d'utilisation courants :
+• Utiliser @classmethod simple sans property pour accès classe.
+
+Cas limites :
+• Python 3.12+ a évolué certains cas ; suivre la version cible du quiz (comportement standard ABC du bank).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Préférer MyClass.get_x() @classmethod.
+
+Remarques :
+• Réponse : TypeError (1re option).`,
+  2771: `MyClass(ABC) avec @abstractmethod — MyClass() ?
+
+Débutant :
+• TypeError : on ne peut pas instancier une classe encore abstraite.
+
+Intermédiaire :
+• ABCMeta enregistre les méthodes abstraites dans __abstractmethods__.
+
+Expert :
+• Permet définir des interfaces sans implémentation partielle livrée par erreur.
+
+Concepts clés :
+• Instanciation bloquée tant qu'une méthode abstraite subsiste.
+
+Distinctions clés :
+• issubclass peut être True même si instanciation interdite (autre question).
+
+Fonctionnement :
+• __call__ de la métaclasse vérifie avant de créer l'objet.
+
+Exécution étape par étape :
+• MyClass() lève avec message sur method abstraite.
+
+Ordre des opérations :
+• Définition classe puis tentative ().
+
+Cas d'utilisation courants :
+• Plugins, stratégies, parsers à sous-classer.
+
+Cas limites :
+• abstractproperty historique ; aujourd'hui property + abstractmethod.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Créer Concrete(MyClass) avec def method.
+
+Remarques :
+• Réponse : TypeError (1re option).`,
+  2772: `Child(Parent ABC) sans implémenter method — Child() ?
+
+Débutant :
+• TypeError : l'abstraction se transmet par héritage.
+
+Intermédiaire :
+• Child reste abstrait tant que method est abstrait dans la hiérarchie.
+
+Expert :
+• Peut être voulu pour une couche intermédiaire Template Method.
+
+Concepts clés :
+• __abstractmethods__ fusionné le long du MRO.
+
+Distinctions clés :
+• issubclass(Child, Parent) True malgré tout (voir 2779).
+
+Fonctionnement :
+• Même garde-fou que 2771 sur Child().
+
+Exécution étape par étape :
+• Échec instanciation.
+
+Ordre des opérations :
+• Définir classes ; appeler Child().
+
+Cas d'utilisation courants :
+• Forcer implémentation dans feuilles concrètes.
+
+Cas limites :
+• Enregistrer une classe virtuelle via ABC.register hors sujet ici.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Deux niveaux d'ABC avant concrete.
+
+Remarques :
+• Réponse : TypeError (1re option).`,
+  2773: `Child implémente method → Child().method() ?
+
+Débutant :
+• 1 : la classe devient concrète ; l'appel utilise l'implémentation enfant.
+
+Intermédiaire :
+• __abstractmethods__ vide pour Child.
+
+Expert :
+• super().method() possible si extension du parent concret partiel.
+
+Concepts clés :
+• Satisfaction du contrat abstrait.
+
+Distinctions clés :
+• Diffère de Child qui repasse @abstractmethod (2774).
+
+Fonctionnement :
+• Résolution MRO trouve Child.method.
+
+Exécution étape par étape :
+• Retourne 1.
+
+Ordre des opérations :
+• Instanciation puis appel.
+
+Cas d'utilisation courants :
+• API FileReader avec read() abstrait.
+
+Cas limites :
+• Oublier super dans __init__ hiérarchique (autre quiz).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Pattern strategy concrète.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2774: `Child redéfinit method avec @abstractmethod encore
+
+Débutant :
+• TypeError : la méthode reste abstraite dans Child.
+
+Intermédiaire :
+• Le décorateur réapplique le statut abstrait même si un corps pass existe.
+
+Expert :
+• Sert à repousser l'implémentation à une sous-classe plus basse.
+
+Concepts clés :
+• Abstraction multi-niveaux.
+
+Distinctions clés :
+• 2773 concret vs 2774 toujours abstrait.
+
+Fonctionnement :
+• Child() bloqué.
+
+Exécution étape par étape :
+• Tentative instanciation échoue.
+
+Ordre des opérations :
+• Définition Child ; ().
+
+Cas d'utilisation courants :
+• Hiérarchies profondes d'adaptateurs.
+
+Cas limites :
+• Mélangé avec métaclasses custom peut surprendre.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• GrandChild devra enlever abstract.
+
+Remarques :
+• Réponse : TypeError (1re option).`,
+  2775: `MyClass.__abstractmethods__ avec une méthode abstract
+
+Débutant :
+• frozenset({'method'}) : ensemble immuable des noms encore abstraits.
+
+Intermédiaire :
+• frozenset empêche mutation accidentelle par l'utilisateur.
+
+Expert :
+• Introspection pour frameworks générant du code.
+
+Concepts clés :
+• Nom exact de la méthode dans le set.
+
+Distinctions clés :
+• Après implémentation enfant, frozenset() vide (2776).
+
+Fonctionnement :
+• ABCMeta calcule à la fin du corps de classe.
+
+Exécution étape par étape :
+• Inspection attribut classe.
+
+Ordre des opérations :
+• Après définition MyClass.
+
+Cas d'utilisation courants :
+• Tests vérifiant qu'une classe est bien abstraite.
+
+Cas limites :
+• Plusieurs abstractmethods → plusieurs noms dans le set.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• print(MyClass.__abstractmethods__).
+
+Remarques :
+• Réponse : frozenset({'method'}) (1re option).`,
+  2776: `Child.__abstractmethods__ après implémentation de method
+
+Débutant :
+• frozenset() vide : plus aucune méthode abstraite sur Child.
+
+Intermédiaire :
+• Python retire les noms au fur et à mesure des implémentations concrètes.
+
+Expert :
+• Si une nouvelle abstractmethod apparaît dans une sous-classe, le set se repeuple.
+
+Concepts clés :
+• État concret vs abstrait exposé sur la classe.
+
+Distinctions clés :
+• Contraste avec Parent encore abstrait si non touché.
+
+Fonctionnement :
+• Algorithme ABCMeta met à jour __abstractmethods__ à chaque classe créée.
+
+Exécution étape par étape :
+• Child définit method → set vide → Child() OK.
+
+Ordre des opérations :
+• Définir Parent ; Child ; inspecter Child.
+
+Cas d'utilisation courants :
+• Vérifier qu'une couche intermédiaire a tout implémenté.
+
+Cas limites :
+• Méthode abstraite avec @classmethod compte aussi (2777).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• bool(Child.__abstractmethods__) est False.
+
+Remarques :
+• Réponse : frozenset() / frozenset vide (1re option).`,
+  2777: `MyClass avec @abstractmethod @classmethod method — MyClass() ?
+
+Débutant :
+• TypeError : une méthode de classe peut être abstraite aussi.
+
+Intermédiaire :
+• L'ordre des décorateurs : @abstractmethod au-dessus de @classmethod selon usage du module abc.
+
+Expert :
+• Sous-classe devra fournir @classmethod def method concrète.
+
+Concepts clés :
+• ABC couvre instance, classmethod et staticmethod.
+
+Distinctions clés :
+• Diffère d'une classmethod pure non abstract instanciable.
+
+Fonctionnement :
+• __abstractmethods__ contient 'method' jusqu'à implémentation.
+
+Exécution étape par étape :
+• MyClass() échoue.
+
+Ordre des opérations :
+• Définition ; instanciation.
+
+Cas d'utilisation courants :
+• Fabriques ou parsers par sous-classe au niveau classe.
+
+Cas limites :
+• Oublier @classmethod dans l'enfant crée une méthode instance (erreur de contrat).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Implémenter method(cls) dans Concrete.
+
+Remarques :
+• Réponse : TypeError (1re option).`,
+  2778: `MyClass avec @abstractmethod @staticmethod method — MyClass() ?
+
+Débutant :
+• TypeError : static abstraite bloque aussi l'instanciation.
+
+Intermédiaire :
+• Utile pour utilitaires devant être fournis par chaque sous-classe.
+
+Expert :
+• Souvent préférer fonction module ou protocol typing à static abstrait.
+
+Concepts clés :
+• abstractmethod s'applique au callable décoré, pas seulement self.
+
+Distinctions clés :
+• 2777 cls vs 2778 pas d'arguments implicites.
+
+Fonctionnement :
+• Garde-fou identique : classe non concrète.
+
+Exécution étape par étape :
+• MyClass() lève.
+
+Ordre des opérations :
+• Définition ; ().
+
+Cas d'utilisation courants :
+• Jeux de tests imposant constantes ou helpers par sous-classe.
+
+Cas limites :
+• staticmethod abstrait moins idiomatique en Python moderne.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Concrete définit def method(): return 1.
+
+Remarques :
+• Réponse : TypeError (1re option).`,
+  2779: `issubclass(Child, Parent) avec Child abstrait
+
+Débutant :
+• True : la relation de sous-type ne dépend pas de la concrétude.
+
+Intermédiaire :
+• Seule l'instanciation est bloquée ; l'arbre de types reste correct.
+
+Expert :
+• combine avec typing pour protocols séparément.
+
+Concepts clés :
+• Subtyping (classes) vs instanciation (objets).
+
+Distinctions clés :
+• isinstance nécessite un objet ; ici on compare classes.
+
+Fonctionnement :
+• issubclass parcourt __bases__ / MRO.
+
+Exécution étape par étape :
+• Retour True même si Child() interdit.
+
+Ordre des opérations :
+• Définir hiérarchie ; appeler issubclass.
+
+Cas d'utilisation courants :
+• Enregistrement de plugins par classe avant instanciation différée.
+
+Cas limites :
+• Child enregistré virtuellement via ABC.register : autre mécanisme.
+
+Considérations de performance :
+• O(hauteur MRO) négligeable.
+
+Exemples :
+• assert issubclass(Child, Parent).
+
+Remarques :
+• Réponse : True (1re option).`,
+  2780: `isinstance(MyClass(), MyClass) avec MyClass ABC abstract
+
+Débutant :
+• TypeError (impossible d'instancier) : MyClass() échoue avant isinstance.
+
+Intermédiaire :
+• isinstance n'est jamais atteint avec une instance valide ici.
+
+Expert :
+• Tester avec Concrete(MyClass) puis isinstance(Concrete(), MyClass) → True.
+
+Concepts clés :
+• Ordre d'évaluation des arguments.
+
+Distinctions clés :
+• Diffère de issubclass sur classes sans créer d'objet.
+
+Fonctionnement :
+• Constructeur abstrait lève.
+
+Exécution étape par étape :
+• Évaluation MyClass() dans l'appel isinstance.
+
+Ordre des opérations :
+• Appel isinstance ; premier argument échoue d'abord.
+
+Cas d'utilisation courants :
+• Éviter les tests isinstance sur ABC non implémentées.
+
+Cas limites :
+• None ou objets proxy : hors sujet.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Pattern test avec sous-classe concrète anonyme.
+
+Remarques :
+• Réponse : TypeError (ne peut pas instancier) (1re option).`,
+  2781: `isinstance(Child(), Parent)
+
+Débutant :
+• True : l'enfant « est-un » parent pour isinstance.
+
+Intermédiaire :
+• isinstance consulte la MRO de type(obj).
+
+Expert :
+• Préférer souvent duck typing ; isinstance utile pour fichiers, exceptions.
+
+Concepts clés :
+• Polymorphisme nominal en Python.
+
+Distinctions clés :
+• type(Child()) is Parent est False alors que isinstance True.
+
+Fonctionnement :
+• Vérifie si Parent apparaît dans la chaîne.
+
+Exécution étape par étape :
+• Child instance → oui sous-type de Parent.
+
+Ordre des opérations :
+• Child() puis isinstance.
+
+Cas d'utilisation courants :
+• Traiter liste mixte avec branche selon base.
+
+Cas limites :
+• Classes dupliquées par reload : surprises rares.
+
+Considérations de performance :
+• isinstance optimisé pour types built-in.
+
+Exemples :
+• File-like handlers.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2782: `isinstance(Child(), Child)
+
+Débutant :
+• True : tout objet est instance de sa propre classe.
+
+Intermédiaire :
+• Toujours vrai pour une instance directe non proxy.
+
+Expert :
+• Avec sous-classe de types dynamiques, vérifier __class__.
+
+Concepts clés :
+• Cas de base du test isinstance.
+
+Distinctions clés :
+• Peut être True pour plusieurs classes (parent + enfant).
+
+Fonctionnement :
+• Premier check : type exact puis ancêtres.
+
+Exécution étape par étape :
+• Match immédiat sur Child.
+
+Ordre des opérations :
+• Instanciation ; test.
+
+Cas d'utilisation courants :
+• Dispatch fin sur type le plus dérivé.
+
+Cas limites :
+• object : isinstance(x, object) toujours True pour instances classiques.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance(3, int) True.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2783: `isinstance(Child(), (Parent, str))
+
+Débutant :
+• True : le tuple signifie « l'un ou l'autre ».
+
+Intermédiaire :
+• Court-circuit interne dès premier match.
+
+Expert :
+• Équivalent à or chaîné de isinstance plus lisible.
+
+Concepts clés :
+• Deuxième argument tuple de types.
+
+Distinctions clés :
+• Un seul type dans le tuple reste valide.
+
+Fonctionnement :
+• Teste Parent : succès.
+
+Exécution étape par étape :
+• Retour True sans tester str.
+
+Ordre des opérations :
+• Création instance ; isinstance.
+
+Cas d'utilisation courants :
+• Normaliser str | BytesPath.
+
+Cas limites :
+• Tuple vide ? non supporté logiquement.
+
+Considérations de performance :
+• Léger sur petite liste de types.
+
+Exemples :
+• isinstance(x, (list, tuple)).
+
+Remarques :
+• Réponse : True (1re option).`,
+  2784: `isinstance(Parent(), Child)
+
+Débutant :
+• False : la relation ne remonte pas des parents vers enfants.
+
+Intermédiaire :
+• Seuls les ancêtres du type réel comptent.
+
+Expert :
+• Modélisation LSP : pas tout Parent est Child.
+
+Concepts clés :
+• Direction de la hiérarchie.
+
+Distinctions clés :
+• Inverse de 2781.
+
+Fonctionnement :
+• Child absent du MRO de Parent.
+
+Exécution étape par étape :
+• Retour False.
+
+Ordre des opérations :
+• Parent() ; isinstance vers Child.
+
+Cas d'utilisation courants :
+• Éviter les faux positifs sur API étroite.
+
+Cas limites :
+• ABC.register peut élargir : hors hiérarchie classique.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance(object(), int) False.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2785: `issubclass(Child, Parent)
+
+Débutant :
+• True : Child dérive explicitement de Parent.
+
+Intermédiaire :
+• issubclass(Child, Child) est True aussi (réflexivité).
+
+Expert :
+• Utile dans les métaclasses et plugins.
+
+Concepts clés :
+• Test sur objets type, pas instances.
+
+Distinctions clés :
+• Ne pas confondre avec isinstance.
+
+Fonctionnement :
+• Parcourt __subclasscheck__ possible (hooks).
+
+Exécution étape par étape :
+• Succès direct.
+
+Ordre des opérations :
+• Après définition des classes.
+
+Cas d'utilisation courants :
+• Registres de handlers par base.
+
+Cas limites :
+• Types non classes (None) lèvent TypeError.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• issubclass(bool, int) True en Python.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2786: `issubclass(Parent, Child)
+
+Débutant :
+• False : l'arête d'héritage va Child → Parent.
+
+Intermédiaire :
+• Pas de relation inverse automatique.
+
+Expert :
+• Graphe de classes orienté.
+
+Concepts clés :
+• Anti-symétrie sauf égalité de classes.
+
+Distinctions clés :
+• Inverse de 2785.
+
+Fonctionnement :
+• Parent n'est pas sous-classe de Child.
+
+Exécution étape par étape :
+• False.
+
+Ordre des opérations :
+• Classes définies ; test.
+
+Cas d'utilisation courants :
+• Validation d'ordre dans frameworks.
+
+Cas limites :
+• Diamond MRO : toujours sous-type de tous ancêtres, pas l'inverse.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Analogie ensembles inclusion.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2787: `issubclass(Child, (Parent, str))
+
+Débutant :
+• True : tuple de bases possibles pour le second argument.
+
+Intermédiaire :
+• Child sous-classe Parent donc match.
+
+Expert :
+• Généralise à unions de types statiques (typing.Union) conceptuellement.
+
+Concepts clés :
+• OR sur classes cibles.
+
+Distinctions clés :
+• Diffère de isinstance qui prend instance en premier.
+
+Fonctionnement :
+• Premier membre du tuple suffit.
+
+Exécution étape par étape :
+• True.
+
+Ordre des opérations :
+• Définition ; issubclass.
+
+Cas d'utilisation courants :
+• Vérifier enregistrement dans plusieurs bases mixins.
+
+Cas limites :
+• str final : Child typiquement ne sous-classe pas str ici.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Plugin héritant d'une ABC ou d'un mixin alternatif.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2788: `Chaîne A → B → C — issubclass(C, A)
+
+Débutant :
+• True : transitivité de la relation sous-classe.
+
+Intermédiaire :
+• Pas besoin d'être enfant direct.
+
+Expert :
+• MRO linéaire garantit la cohérence C3.
+
+Concepts clés :
+• Héritage multi-niveaux.
+
+Distinctions clés :
+• issubclass(C, B) aussi True.
+
+Fonctionnement :
+• Remonte la chaîne des bases.
+
+Exécution étape par étape :
+• Trouve A comme ancêtre de C.
+
+Ordre des opérations :
+• Déclarer trois classes ; test.
+
+Cas d'utilisation courants :
+• Frameworks UI profonds.
+
+Cas limites :
+• Héritage multiple : toujours vrai si A dans MRO(C).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Modèle Animal → Mammal → Dog.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2789: `Même chaîne — isinstance(C(), A)
+
+Débutant :
+• True : l'instance suit tout le MRO de C.
+
+Intermédiaire :
+• Parallèle exact de 2788 côté objets.
+
+Expert :
+• isinstance plus idiomatique que type(x) == pour APIs ouvertes.
+
+Concepts clés :
+• « Est instance de » inclut ancêtres.
+
+Distinctions clés :
+• type(C()) is A est False si C intermédiaire existe.
+
+Fonctionnement :
+• Même algorithme de recherche.
+
+Exécution étape par étape :
+• C() puis isinstance vers A : True.
+
+Ordre des opérations :
+• Instanciation ; test.
+
+Cas d'utilisation courants :
+• Traiter Dog comme Animal.
+
+Cas limites :
+• __class__ monkey-patch change les règles.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• File-like sur io.BytesIO vs bytes.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2790: `class C(A, B) — issubclass(C, A) and issubclass(C, B)
+
+Débutant :
+• True : héritage multiple rend C sous-type des deux.
+
+Intermédiaire :
+• Les deux tests doivent réussir pour que and soit True.
+
+Expert :
+• Résolution MRO fixe l'ordre de recherche d'attributs (C3).
+
+Concepts clés :
+• Multi-bases dans une seule déclaration.
+
+Distinctions clés :
+• Diffère de hiérarchies linéaires seules.
+
+Fonctionnement :
+• C enregistre tuple (A, B) dans __bases__.
+
+Exécution étape par étape :
+• Chaque issubclass True → and True.
+
+Ordre des opérations :
+• Définir A, B, C ; expression booléenne.
+
+Cas d'utilisation courants :
+• Mixins + ABC concrète.
+
+Cas limites :
+• Diamond problème résolu par C3 linearization.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Tk mixin styles.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2791: `[obj.x, obj.y] avec super().__init__ puis self.y = 2
+
+Débutant :
+• [1, 2] : le parent pose x, l'enfant pose y.
+
+Intermédiaire :
+• Sans super().__init__, x manquerait souvent (sauf si object).
+
+Expert :
+• En héritage multiple, super suit le MRO linéaire.
+
+Concepts clés :
+• Chaînage d'initialiseurs.
+
+Distinctions clés :
+• Child().__init__ seul sans super laisserait x absent.
+
+Fonctionnement :
+• super().__init__() résout vers MyClass.__init__.
+
+Exécution étape par étape :
+• x=1 puis y=2 sur self unique.
+
+Ordre des opérations :
+• Child() déclenche Child.__init__.
+
+Cas d'utilisation courants :
+• Widgets dérivés initialisant la base GUI.
+
+Cas limites :
+• Signatures différentes : passer kwargs patterns.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Modèle données parent + métadonnées enfant.
+
+Remarques :
+• Réponse : [1, 2] (1re option).`,
+  2792: `super().__init__(x) avec MyClass(x) et Child(x,y)
+
+Débutant :
+• Child(1,2).x vaut 1 : l'argument x est relayé au parent.
+
+Intermédiaire :
+• self partagé : le parent écrit self.x avant y côté enfant.
+
+Expert :
+• En Python 3, super() sans args dans méthode utilise __class__ et self automatiquement.
+
+Concepts clés :
+• Pass-through des paramètres constructeur.
+
+Distinctions clés :
+• Diffère de super() sans arguments vers parent sans params.
+
+Fonctionnement :
+• Child.__init__ appelle MyClass.__init__(self, x).
+
+Exécution étape par étape :
+• x=1, y=2 sur l'instance.
+
+Ordre des opérations :
+• Appel Child(1,2).
+
+Cas d'utilisation courants :
+• Modèles Person → Employee avec champs supplémentaires.
+
+Cas limites :
+• Oublier *args/**kwargs casse extensions.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• super().__init__(name) puis self.id = id.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2793: `GrandChild.x — MyClass.x = 1, Child.x = 2, class GrandChild(Child)
+
+Débutant :
+• 2 : résolution sur la première classe du MRO qui définit x.
+
+Intermédiaire :
+• GrandChild lit l'attribut de classe via Child avant MyClass.
+
+Expert :
+• Si GrandChild redéfinissait x=3, ce serait 3.
+
+Concepts clés :
+• Shadowing d'attributs de classe.
+
+Distinctions clés :
+• Pas d'instance.__dict__ requis pour attribut de classe.
+
+Fonctionnement :
+• MRO : GrandChild, Child, MyClass, object.
+
+Exécution étape par étape :
+• Trouve x dans Child.
+
+Ordre des opérations :
+• Accès GrandChild.x (classe).
+
+Cas d'utilisation courants :
+• Defaults hiérarchiques sur compteurs ou constantes.
+
+Cas limites :
+• Instance avec même nom masque classe sur l'objet.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Thème UI surchargé par sous-thème.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2794: `Child.method avec return super().method() + 1
+
+Débutant :
+• 2 : extension au lieu de remplacement pur.
+
+Intermédiaire :
+• super() choisit la méthode suivante dans le MRO après Child.
+
+Expert :
+• Collaborative inheritance avec héritage multiple.
+
+Concepts clés :
+• Réutilisation du comportement parent.
+
+Distinctions clés :
+• Sans super, retour 1 seulement si on dupliquait mal.
+
+Fonctionnement :
+• super().method() → 1 ; +1 → 2.
+
+Exécution étape par étape :
+• Appel sur instance Child().
+
+Ordre des opérations :
+• Résolution méthode ; corps.
+
+Cas d'utilisation courants :
+• Logging autour d'une méthode parent.
+
+Cas limites :
+• super() mal utilisé en static context lève.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Template Method avec crochet.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2795: `__str__ sur Child et Parent — str(Child())
+
+Débutant :
+• 'Child' : la méthode spéciale la plus dérivée gagne.
+
+Intermédiaire :
+• Même règle que méthodes normales pour résolution sur l'instance.
+
+Expert :
+• repr vs str : ici str() appelle __str__.
+
+Concepts clés :
+• Polymorphisme sur dunder methods.
+
+Distinctions clés :
+• str() n'appelle pas __str__ du parent si enfant définit la sienne.
+
+Fonctionnement :
+• type(obj).__str__(obj) via slot.
+
+Exécution étape par étape :
+• Retour chaîne Child.
+
+Ordre des opérations :
+• Instanciation ; str().
+
+Cas d'utilisation courants :
+• Messages d'erreur personnalisés.
+
+Cas limites :
+• Si __str__ manque, fallback sur __repr__ puis défaut.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• print(model) debug.
+
+Remarques :
+• Réponse : 'Child' (1re option).`,
+  2796: `Child.method return self.__x alors que parent a créé __x
+
+Débutant :
+• AttributeError : même piège mangling que 2755 sur Parent/Child.
+
+Intermédiaire :
+• __x dans Child viserait _Child__x inexistant.
+
+Expert :
+• Solution : API parent protégée ou accès coordonné.
+
+Concepts clés :
+• Mangling par classe lexicale de la méthode.
+
+Distinctions clés :
+• 2797 avec _x fonctionne.
+
+Fonctionnement :
+• Échec attribut.
+
+Exécution étape par étape :
+• method() lève.
+
+Ordre des opérations :
+• Child() ; method().
+
+Cas d'utilisation courants :
+• Rappel pédagogique après chapitre encapsulation.
+
+Cas limites :
+• Nom exact exception peut varier légèrement selon version.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Préférer self._Parent__x rarement ou self._x convention.
+
+Remarques :
+• Réponse : AttributeError (1re option).`,
+  2797: `Child.method return self._x avec parent self._x = 1
+
+Débutant :
+• 1 : underscore simple partagé sans mangling.
+
+Intermédiaire :
+• Convention protected respectée entre parent et enfant.
+
+Expert :
+• Documenter que sous-classes peuvent casser invariants si elles écrivent _x.
+
+Concepts clés :
+• Même nom d'attribut physique sur l'instance.
+
+Distinctions clés :
+• Contraste fort avec 2796.
+
+Fonctionnement :
+• Héritage d'attribut d'instance.
+
+Exécution étape par étape :
+• Retour 1.
+
+Ordre des opérations :
+• Parent.__init__ puis method enfant.
+
+Cas d'utilisation courants :
+• Champs internes partagés hiérarchie.
+
+Cas limites :
+• Si enfant réassigne _x sans appeler parent init.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Template avec _state dict.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2798: `@classmethod def method(cls): return cls — Child.method()
+
+Débutant :
+• La classe Child est retournée, pas MyClass.
+
+Intermédiaire :
+• cls est lié au type réellement utilisé pour l'appel.
+
+Expert :
+• Pattern alternate constructor : from_config(cls).
+
+Concepts clés :
+• Late binding du receveur classe.
+
+Distinctions clés :
+• MyClass.method() donnerait MyClass.
+
+Fonctionnement :
+• Descripteur classmethod injecte Child comme premier arg.
+
+Exécution étape par étape :
+• return cls → Child.
+
+Ordre des opérations :
+• Appel sur Child.
+
+Cas d'utilisation courants :
+• Fabriques polymorphes.
+
+Cas limites :
+• Appel sur instance : cls reste la vraie classe.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• datetime.fromtimestamp style.
+
+Remarques :
+• Réponse : classe Child / repr Child (1re option).`,
+  2799: `@staticmethod hérité — Child.method()
+
+Débutant :
+• 1 : staticmethod ne reçoit ni self ni cls ; même code que parent.
+
+Intermédiaire :
+• Pas de polymorphisme automatique : le même function object sert.
+
+Expert :
+• Si besoin de spécialiser, redéfinir dans l'enfant ou utiliser classmethod.
+
+Concepts clés :
+• Héritage de descripteur statique.
+
+Distinctions clés :
+• 2798 cls change ; ici pas de cls.
+
+Fonctionnement :
+• Appel via Child.method() résout le descriptor hérité.
+
+Exécution étape par étape :
+• return 1.
+
+Ordre des opérations :
+• Référence Child ; appel.
+
+Cas d'utilisation courants :
+• Utilitaires sans état liés au concept classe.
+
+Cas limites :
+• staticmethod peu extensible pour hooks sous-classes.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• parse_int helper dans hiérarchie.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2800: `@property x hérité — Child().x
+
+Débutant :
+• 1 : le descripteur property est un attribut de classe hérité comme les autres.
+
+Intermédiaire :
+• Child() instance a accès au même getter que MyClass.
+
+Expert :
+• Surcharge dans Child possible en redéfinissant property.
+
+Concepts clés :
+• Descripteur dans __dict__ de la classe parent visible MRO.
+
+Distinctions clés :
+• Comportement identique à appel sur MyClass() sauf override.
+
+Fonctionnement :
+• property.__get__(instance, Child).
+
+Exécution étape par étape :
+• Getter parent exécuté avec self = instance Child.
+
+Ordre des opérations :
+• Instanciation Child ; lecture x.
+
+Cas d'utilisation courants :
+• Réutiliser champs calculés dans sous-classes sans recopier.
+
+Cas limites :
+• property + slots + override : attention ordre définition.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Surface publique stable sur hiérarchie ORM.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2801: `print(A.__mro__) avec class A: pass
+
+Débutant :
+• Tuple (A, object) : toute classe hérite implicitement de object.
+
+Intermédiaire :
+• __mro__ est le même ordre que la résolution d'attributs ; mro() renvoie une liste équivalente.
+
+Expert :
+• C3 linéarise même les hiérarchies simples ; ici pas de conflit.
+
+Concepts clés :
+• Ordre de recherche des méthodes/attributs sur la classe.
+
+Distinctions clés :
+• __mro__ sur la classe, pas sur l'instance ; type(obj).__mro__ pour l'instance.
+
+Fonctionnement :
+• Création de A enregistre object comme base implicite.
+
+Exécution étape par étape :
+• Accès A.__mro__ retourne le tuple figé à la définition.
+
+Ordre des opérations :
+• Après exécution du corps de class.
+
+Cas d'utilisation courants :
+• Debug MRO, frameworks introspectifs.
+
+Cas limites :
+• Métaclasses et bases dynamiques : MRO recalculé à la création de classe.
+
+Considérations de performance :
+• Tuple en cache sur le type.
+
+Exemples :
+• len(A.__mro__) vaut 2 ici.
+
+Remarques :
+• Réponse : (A, object) — 1re option (forme affichée avec <class '...'> en Python).`,
+  2802: `print(B.__mro__) avec B(A)
+
+Débutant :
+• Chaîne B → A → object.
+
+Intermédiaire :
+• La classe courante est toujours en tête de son propre __mro__.
+
+Expert :
+• Même logique que pour toute chaîne d'héritage simple.
+
+Concepts clés :
+• Linéarisation des ancêtres pour une seule branche.
+
+Distinctions clés :
+• Ne pas inverser A et B : B est la plus dérivée pour B.__mro__.
+
+Fonctionnement :
+• Fusion C3 dégénère en concaténation ordonnée ici.
+
+Exécution étape par étape :
+• B.__mro__[0] est B.
+
+Ordre des opérations :
+• Héritage déclaré dans B(A).
+
+Cas d'utilisation courants :
+• Prévoir quel parent.f sera invoqué avant object.
+
+Cas limites :
+• Diamond : voir questions suivantes.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• B.mro() liste la même séquence que le tuple.
+
+Remarques :
+• Réponse : (B, A, object) — 1re option.`,
+  2803: `print(C.__mro__) avec C(B), B(A)
+
+Débutant :
+• C, B, A, object en file indienne.
+
+Intermédiaire :
+• Chaque classe n'apparaît qu'une fois ; object toujours en queue.
+
+Expert :
+• Prépare la lecture des diamants où C3 évite les doublons d'ancêtre commun.
+
+Concepts clés :
+• MRO = ordre de la dérivation la plus spécifique → racine.
+
+Distinctions clés :
+• Ce n'est pas un parcours largeur d'abord.
+
+Fonctionnement :
+• C3 merge les MRO des bases avec la liste des parents.
+
+Exécution étape par étape :
+• C puis linéarisation de B puis A.
+
+Ordre des opérations :
+• Définitions de A, B, C puis inspection.
+
+Cas d'utilisation courants :
+• Hiérarchies profondes de modèles ou d'exceptions.
+
+Cas limites :
+• Ordre des bases multiple change tout (Q4–5).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Vérifier C.__mro__.index(A) > index(B).
+
+Remarques :
+• Réponse : (C, B, A, object) — 1re option.`,
+  2804: `print(C.__mro__) avec C(A, B), A et B sans lien
+
+Débutant :
+• C, A, B, object : l'ordre des bases dans la définition compte.
+
+Intermédiaire :
+• Précédence locale : premier parent listé visité avant le second.
+
+Expert :
+• C3 préserve l'ordre local des bases quand c'est cohérent.
+
+Concepts clés :
+• Héritage multiple non lié = priorité gauche-droite dans la liste.
+
+Distinctions clés :
+• Diffère de C(B, A) (question suivante).
+
+Fonctionnement :
+• A et B sont tous deux sous object ; fusion simple.
+
+Exécution étape par étape :
+• Résolution C.x cherchera A avant B si les deux définissent x.
+
+Ordre des opérations :
+• class C(A, B) fixe la priorité.
+
+Cas d'utilisation courants :
+• Mixins + classe principale (voir aussi Q40).
+
+Cas limites :
+• Si A et B partagent un ancêtre non trivial, C3 peut réordonner au-delà de la liste naive.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Comparer avec C(B, A) pour C.x.
+
+Remarques :
+• Réponse : (C, A, B, object) — 1re option.`,
+  2805: `print(C.__mro__) avec C(B, A)
+
+Débutant :
+• B avant A dans le tuple après C.
+
+Intermédiaire :
+• Inverser (A, B) en (B, A) inverse la priorité de recherche.
+
+Expert :
+• Décision de design : quel mixin ou parent domine en cas de conflit de noms.
+
+Concepts clés :
+• Même mécanisme C3, autre ordre local.
+
+Distinctions clés :
+• Symétrie avec 2804 en échangeant A et B.
+
+Fonctionnement :
+• C.__mro__ commence par C puis B.
+
+Exécution étape par étape :
+• Attribut homonyme : version de B gagne sur A.
+
+Ordre des opérations :
+• Définition class C(B, A).
+
+Cas d'utilisation courants :
+• Contrôler quel default méthode est hérité.
+
+Cas limites :
+• Branches qui se rejoignent : C3 peut imposer des contraintes supplémentaires.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Deux classes avec x différent : C.x suit B.
+
+Remarques :
+• Réponse : (C, B, A, object) — 1re option.`,
+  2806: `Algorithme du MRO en Python
+
+Débutant :
+• C3 linearization : réponse attendue du quiz.
+
+Intermédiaire :
+• Préserve ordre local et monotonie ; sinon TypeError à la définition.
+
+Expert :
+• Ni DFS naïf ni simple tri topologique générique : règles C3 spécifiques.
+
+Concepts clés :
+• Nom officiel dans la doc data model.
+
+Distinctions clés :
+• Pas « parcours en largeur » générique pour le MRO.
+
+Fonctionnement :
+• Implémenté dans l'algorithme de construction de type.
+
+Exécution étape par étape :
+• Échec → exception à class body, pas à l'usage.
+
+Cas d'utilisation courants :
+• Comprendre erreurs MRO en héritage multiple.
+
+Cas limites :
+• Hiérarchies impossibles : message explicite CPython.
+
+Considérations de performance :
+• MRO calculé une fois par classe.
+
+Exemples :
+• Diamond D(B,C) avec B(A), C(A).
+
+Remarques :
+• Réponse : C3 linearization — 1re option.`,
+  2807: `Diamond D(B,C), B(A), C(A) — print(D.__mro__)
+
+Débutant :
+• D, B, C, A, object : A une seule fois après B et C.
+
+Intermédiaire :
+• Ordre des bases de D : B avant C → B avant C dans le MRO avant A.
+
+Expert :
+• Cœur pédagogique du « diamant » : ancêtre commun unique en queue.
+
+Concepts clés :
+• Fusion des deux branches sous une racine partagée.
+
+Distinctions clés :
+• Pas (D, B, A, C, object) : A ne peut pas précéder C.
+
+Fonctionnement :
+• C3 merge MRO(B), MRO(C), [B, C].
+
+Exécution étape par étape :
+• D().method suit ce chemin pour la résolution.
+
+Ordre des opérations :
+• Définition des quatre classes.
+
+Cas d'utilisation courants :
+• super() coopératif dans __init__ (Q16).
+
+Cas limites :
+• Inverser B et C dans D(B,C) change l'ordre B/C mais garde A final.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Tracer D.__mro__ sur papier.
+
+Remarques :
+• Réponse : (D, B, C, A, object) — 1re option.`,
+  2808: `D().f() avec diamond, B sans f, C définit f, A définit f
+
+Débutant :
+• Chaîne "C" : on trouve f dans C avant A.
+
+Intermédiaire :
+• B listé avant C mais ne masque pas C si B n'a pas f.
+
+Expert :
+• Illustre que « première base » ne signifie pas « ignore l'autre branche » pour une méthode absente.
+
+Concepts clés :
+• Recherche le long du MRO complet.
+
+Distinctions clés :
+• Contraste avec Q12 où B et C ont tous deux f : alors B gagne.
+
+Fonctionnement :
+• D → B (pas f) → C (f) → stop.
+
+Exécution étape par étape :
+• Liaison au moment de l'appel sur l'instance D.
+
+Ordre des opérations :
+• Création instance puis f().
+
+Cas d'utilisation courants :
+• Mixins optionnels qui n'écrasent que si définis.
+
+Cas limites :
+•staticmethod/classmethod : même MRO, autre binding.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Comparer avec Q12 pour ancrage mental.
+
+Remarques :
+• Réponse : C (chaîne) — 1re option.`,
+  2809: `Le calcul du MRO peut-il échouer ?
+
+Débutant :
+• Oui : TypeError si ordre incohérent (C3 impossible).
+
+Intermédiaire :
+• À la création de la classe, pas au premier accès attribut.
+
+Expert :
+• Message du type « Cannot create a consistent method resolution order ».
+
+Concepts clés :
+• Graphe de bases contradictoire.
+
+Distinctions clés :
+• Pas ValueError/RuntimeError comme réponse canon du quiz.
+
+Fonctionnement :
+• Échec du merge C3.
+
+Exécution étape par étape :
+• class statement lève avant d'assigner la classe.
+
+Ordre des opérations :
+• Analyse des __bases__.
+
+Cas d'utilisation courants :
+• Refactoring multiple inheritance raté.
+
+Cas limites :
+• Exemple classique C(A,B) avec B(A) (Q10).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Corriger en C(B,A) quand B sous-classe A.
+
+Remarques :
+• Réponse : Oui, TypeError — 1re option.`,
+  2810: `class C(A, B) avec B(A) — définition de C
+
+Débutant :
+• TypeError MRO incohérent : la classe C n'est pas créée.
+
+Intermédiaire :
+• Liste de bases [A, B] exige A avant B alors que B force déjà B avant A.
+
+Expert :
+• Montre pourquoi super() et l'ordre des bases ne sont pas décoratifs.
+
+Concepts clés :
+• Contraintes cumulées incompatibles.
+
+Distinctions clés :
+• Pas « C créée avec un MRO bizarre » : échec net.
+
+Fonctionnement :
+• C3 détecte la contradiction à la compilation de la classe.
+
+Exécution étape par étape :
+• Exception avant assignation du nom C.
+
+Ordre des opérations :
+• Troisième class exécutée.
+
+Cas d'utilisation courants :
+• Anti-pattern copié-collé de bases.
+
+Cas limites :
+• C(B, A) fonctionne (Q11 fix).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Relire l'explication « A avant B vs MRO de B ».
+
+Remarques :
+• Réponse : TypeError MRO incohérent — 1re option.`,
+  2811: `Pourquoi C(A, B) échoue si B(A) ?
+
+Débutant :
+• Les bases demandent A avant B alors que B impose B avant A dans sa linéarisation.
+
+Intermédiaire :
+• Deux sources de vérité sur l'ordre relatif A/B.
+
+Expert :
+• C3 exige monotonie + préservation locale : ici impossible.
+
+Concepts clés :
+• Lecture des contraintes comme un système d'équations.
+
+Distinctions clés :
+• Ce n'est pas une interdiction d'avoir deux parents.
+
+Fonctionnement :
+• Merge échoue faute de tête valide.
+
+Exécution étape par étape :
+• N/A classe créée.
+
+Cas d'utilisation courants :
+• Pédagogie obligatoire avant héritage multiple réel.
+
+Cas limites :
+• Renommer ou réordonner bases résout souvent le problème.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• C(B, A) pour débloquer.
+
+Remarques :
+• Réponse : contradiction A avant B vs MRO de B — 1re option.`,
+  2812: `D().f() diamond avec B et C surchargeant toutes deux f
+
+Débutant :
+• "B" : B précède C dans le MRO de D.
+
+Intermédiaire :
+• Dès qu'une classe définit f, la recherche s'arrête.
+
+Expert :
+• Compare à Q8 : même diamond, autre présence de méthodes.
+
+Concepts clés :
+• Shadowing par position MRO, pas par « profondeur » seule.
+
+Distinctions clés :
+• C.f jamais appelé via lookup normal sur D.
+
+Fonctionnement :
+• D → B → f trouvée.
+
+Exécution étape par étape :
+• Binding à B.f.
+
+Ordre des opérations :
+• D(B,C) fixe B avant C.
+
+Cas d'utilisation courants :
+• Choix explicite de branche prioritaire.
+
+Cas limites :
+• Appel explicite C.f(instance) contourne le MRO.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Afficher D.__mro__ à côté du résultat.
+
+Remarques :
+• Réponse : B — 1re option.`,
+  2813: `super() suit quoi pour résoudre les méthodes ?
+
+Débutant :
+• Le MRO du type réel de l'instance (classe qui commence la recherche).
+
+Intermédiaire :
+• Pas « le parent direct textuel » : crucial en diamant.
+
+Expert :
+• Proxy super : suivant = entrée après la classe courante dans ce MRO.
+
+Concepts clés :
+• Coopération multi-héritage.
+
+Distinctions clés :
+• Diffère de Parent.method(self) figé.
+
+Fonctionnement :
+• __class__ + instance passés implicitement (Python 3).
+
+Exécution étape par étape :
+• Chaque super().m() avance d'un cran dans la chaîne.
+
+Ordre des opérations :
+• Appel de méthode sur self.
+
+Cas d'utilisation courants :
+• Chaînes __init__ et hooks template method.
+
+Cas limites :
+• staticmethod sans self/cls : super() sans forme explicite échoue (Q31).
+
+Considérations de performance :
+• Léger proxy.
+
+Exemples :
+• Q14 ACB mémorisable.
+
+Remarques :
+• Réponse : le MRO de la classe appelante / instance — 1re option.`,
+  2814: `print(D().f()) coopératif diamond — chaîne ACB
+
+Débutant :
+• Résultat ACB : super dans B appelle C, pas A directement.
+
+Intermédiaire :
+• Ordre d'exécution : B.f → C.f → A.f puis remontée des concaténations.
+
+Expert :
+• Preuve que super n'est pas « syntaxe parent direct ».
+
+Concepts clés :
+• File MRO D,B,C,A pour type(self).
+
+Distinctions clés :
+• Pas ABC ni CAB pour ce code exact.
+
+Fonctionnement :
+• Chaque f ajoute son suffixe après le retour de super().
+
+Exécution étape par étape :
+• A retourne "A" ; C retourne "A"+"C" ; B retourne "AC"+"B".
+
+Ordre des opérations :
+• Appel D().f().
+
+Cas d'utilisation courants :
+• Logging empilé, construction de pipelines.
+
+Cas limites :
+• Oublier un super casse la chaîne ou duplique A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Réécrire avec print pour voir l'ordre d'entrée.
+
+Remarques :
+• Réponse : ACB — 1re option.`,
+  2815: `B().a après super().__init__ dans B
+
+Débutant :
+• "A" : A.__init__ a posé self.a avant self.b.
+
+Intermédiaire :
+• Un seul self partagé ; ordre d'appel super contrôle l'initialisation.
+
+Expert :
+• Pattern de base avant d'aborder le diamant complet (Q16).
+
+Concepts clés :
+• Chaînage constructeurs.
+
+Distinctions clés :
+• Sans super, a pourrait manquer si B remplace totalement __init__.
+
+Fonctionnement :
+• B.__init__ appelle A.__init__ puis complète.
+
+Exécution étape par étape :
+• Attribut a présent sur l'instance.
+
+Ordre des opérations :
+• B() déclenche B.__init__.
+
+Cas d'utilisation courants :
+• Modèles ORM, widgets.
+
+Cas limites :
+• Signatures incompatibles entre __init__ : besoin *args/**kwargs coopératifs.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• print(B().b) aussi "B".
+
+Remarques :
+• Réponse : A — 1re option.`,
+  2816: `Diamond : super().__init__ partout garantit quoi ?
+
+Débutant :
+• Chaque __init__ de la chaîne MRO s'exécute une seule fois.
+
+Intermédiaire :
+• Évite double appel à l'ancêtre commun si on appelait A.__init__ à la main deux fois.
+
+Expert :
+• Nécessite que tout le graphe coopère (super jusqu'à object).
+
+Concepts clés :
+• Initialisation coopérative.
+
+Distinctions clés :
+• Pas « seulement le premier parent » ni double ancêtre.
+
+Fonctionnement :
+• super saute à la prochaine classe du MRO unifié de l'instance.
+
+Exécution étape par étape :
+• Séquence D,B,C,A,object vue en prints (exemple du cours).
+
+Ordre des opérations :
+• Construction depuis la feuille.
+
+Cas d'utilisation courants :
+• Tkinter-like, plugins multiples.
+
+Cas limites :
+• Un maillon qui n'appelle pas super brise la coopération.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• D() avec prints dans chaque __init__.
+
+Remarques :
+• Réponse : chaque __init__ exactement une fois — 1re option.`,
+  2817: `print(D.x) avec x sur B et A, C hérite de A sans x propre
+
+Débutant :
+• 2 : B définit x avant qu'on n'atteigne A dans le MRO.
+
+Intermédiaire :
+• D → B trouve x ; on ne lit pas A.x=1.
+
+Expert :
+• Montre interaction entre branches du diamond.
+
+Concepts clés :
+• Attribut de classe résolu comme méthode via MRO.
+
+Distinctions clés :
+• C.x pourrait différer si C redéfinissait x.
+
+Fonctionnement :
+• Tuple (D,B,C,A,object) pour la recherche.
+
+Exécution étape par étape :
+• Stop à B.x.
+
+Ordre des opérations :
+• Accès D.x sur la classe.
+
+Cas d'utilisation courants :
+• Defaults hiérarchiques.
+
+Cas limites :
+• Instance.__dict__ masque attribut de classe homonyme.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Comparer D.x vs C.x du même schéma.
+
+Remarques :
+• Réponse : 2 — 1re option.`,
+  2818: `print(D.x) avec B sans x, C.x=3, A.x=1
+
+Débutant :
+• 3 : après B vide on tombe sur C avant A.
+
+Intermédiaire :
+• MRO n'est pas « toujours profondeur stricte sans regarder frères ».
+
+Expert :
+• B.x hérité de A ne court-circuite pas C qui est avant A.
+
+Concepts clés :
+• Frère C entre B et A dans la linéarisation.
+
+Distinctions clés :
+• Diffère d'un arbre où B serait seule feuille.
+
+Fonctionnement :
+• D,B sans x ; C a x.
+
+Exécution étape par étape :
+• Retour 3.
+
+Ordre des opérations :
+• D(B,C).
+
+Cas d'utilisation courants :
+• Réglages par défaut sur mixin après branche vide.
+
+Cas limites :
+• Si C n'avait pas x, alors 1 via A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Dessiner le losange A en haut, B et C milieu, D bas.
+
+Remarques :
+• Réponse : 3 — 1re option.`,
+  2819: `list.__mro__
+
+Débutant :
+• (list, object) : pas de parent Python intermédiaire visible.
+
+Intermédiaire :
+• Types built-in suivent les mêmes règles MRO.
+
+Expert :
+• Implémentation C sous le capot, mais MRO exposé cohérent.
+
+Concepts clés :
+• Vérification rapide isinstance/ sous-classe.
+
+Distinctions clés :
+• Pas (list, tuple, object).
+
+Fonctionnement :
+• list sous-classe directe de object en modèle utilisateur.
+
+Exécution étape par étape :
+• len 2.
+
+Ordre des opérations :
+• Import builtins implicite.
+
+Cas d'utilisation courants :
+• Sous-classer list (Q50).
+
+Cas limites :
+• Autres implémentations Python : même principe, détails internes.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• dict.__mro__ analogue.
+
+Remarques :
+• Réponse : (list, object) — 1re option.`,
+  2820: `bool.__mro__
+
+Débutant :
+• (bool, int, object) : bool est une sous-classe de int.
+
+Intermédiaire :
+• True/False sont des int en arithmétique (1/0) mais type distinct.
+
+Expert :
+• issubclass(bool, int) True ; piège pédagogique volontaire.
+
+Concepts clés :
+• Hiérarchie des types scalaires.
+
+Distinctions clés :
+• Pas (bool, object) seul.
+
+Fonctionnement :
+• int entre bool et object.
+
+Exécution étape par étape :
+• isinstance(True, int) True.
+
+Ordre des opérations :
+• Accès attribut sur bool.
+
+Cas d'utilisation courants :
+• Éviter bool dans annotations numériques sans cast.
+
+Cas limites :
+• Égalité 1 == True mais pas identité.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• True + True == 2.
+
+Remarques :
+• Réponse : (bool, int, object) — 1re option.`,
+  2821: `Que renvoie super() ?
+
+Débutant :
+• Un proxy qui délègue au prochain maillon du MRO.
+
+Intermédiaire :
+• Ni la classe parente ni une nouvelle instance.
+
+Expert :
+• super(type, obj) ou zéro-arg forme liée à frame méthode.
+
+Concepts clés :
+• Objet auxiliaire pour lookup coopératif.
+
+Distinctions clés :
+• Pas une copie de self.
+
+Fonctionnement :
+• __getattribute__ du proxy redirige.
+
+Exécution étape par étape :
+• super().m() résout m sur le suivant.
+
+Ordre des opérations :
+• Dans corps de méthode instance.
+
+Cas d'utilisation courants :
+• Extension de comportements parent.
+
+Cas limites :
+• Deux-arg forme pour sauter un niveau explicitement.
+
+Considérations de performance :
+• Très léger.
+
+Exemples :
+• repr(super()) dans méthode.
+
+Remarques :
+• Réponse : proxy vers la classe suivante dans le MRO — 1re option.`,
+  2822: `super(ClassName, self) vs super() en Python 3
+
+Débutant :
+• Même rôle : super() est le sucre pour la forme explicite avec la classe courante et self.
+
+Intermédiaire :
+• Le compilateur injecte __class__ et self pour le zéro-arg.
+
+Expert :
+• Forme explicite utile pour tests ou contournements rares.
+
+Concepts clés :
+• Équivalence sémantique standard.
+
+Distinctions clés :
+• Pas « appelle le grand-parent » par défaut.
+
+Fonctionnement :
+• Premier argument = point de départ après lequel chercher.
+
+Exécution étape par étape :
+• Même chaîne d'appels si paramètres cohérents.
+
+Ordre des opérations :
+• Appel méthode.
+
+Cas d'utilisation courants :
+• Migration Python 2 → 3.
+
+Cas limites :
+• Mauvais ClassName → saut incorrect dans MRO.
+
+Considérations de performance :
+• Identique.
+
+Exemples :
+• super(B, self).f() dans B.
+
+Remarques :
+• Réponse : équivalent / même chose — 1re option.`,
+  2823: `B().f() avec B.f return super().f()+1, A.f return 1
+
+Débutant :
+• 2 : super().f() vaut 1 puis +1.
+
+Intermédiaire :
+• Chaîne simple A → B sans multiple ici.
+
+Expert :
+• Base pour empiler plusieurs +1 (Q24).
+
+Concepts clés :
+• Délégation puis transformation.
+
+Distinctions clés :
+• Pas d'erreur si A définit bien f.
+
+Fonctionnement :
+• MRO (B,A,object).
+
+Exécution étape par étape :
+• A.f → 1 ; B.f → 2.
+
+Ordre des opérations :
+• B().
+
+Cas d'utilisation courants :
+• Compteurs, enveloppes.
+
+Cas limites :
+• Si A manque f : AttributeError sur super.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Généraliser à C (Q24).
+
+Remarques :
+• Réponse : 2 — 1re option.`,
+  2824: `C().f() avec chaîne C,B,A chacun +1 via super
+
+Débutant :
+• 3 : 1 +1 +1 le long de la chaîne.
+
+Intermédiaire :
+• C appelle B qui appelle A puis remonte en additionnant.
+
+Expert :
+• MRO linéaire (C,B,A,object).
+
+Concepts clés :
+• super empilé en profondeur.
+
+Distinctions clés :
+• Pas 2 si on oublie un niveau.
+
+Fonctionnement :
+• A retourne 1 ; B retourne 2 ; C retourne 3.
+
+Exécution étape par étape :
+• Récursion implicite via super.
+
+Ordre des opérations :
+• C().
+
+Cas d'utilisation courants :
+• Cumuls, validation en cascade.
+
+Cas limites :
+• break de chaîne si une classe ne super pas.
+
+Considérations de performance :
+• Profondeur = hauteur hiérarchie.
+
+Exemples :
+• Logger niveaux.
+
+Remarques :
+• Réponse : 3 — 1re option.`,
+  2825: `super() uniquement dans __init__ ?
+
+Débutant :
+• Non : toute méthode d'instance (ou classmethod) peut l'utiliser.
+
+Intermédiaire :
+• __init__ est l'exemple le plus cité, pas une restriction.
+
+Expert :
+• @staticmethod sans self/cls : super() zéro-arg ne convient pas.
+
+Concepts clés :
+• Besoin d'un contexte pour résoudre le MRO.
+
+Distinctions clés :
+• Pas réservé aux dunder spéciaux.
+
+Fonctionnement :
+• Compiler fournit cellule __class__ pour super() sans args.
+
+Exécution étape par étape :
+• greet, create, etc. peuvent super().
+
+Ordre des opérations :
+• Selon appel.
+
+Cas d'utilisation courants :
+• __repr__, hooks métier, classmethod alternate constructors.
+
+Cas limites :
+• Q31 staticmethod.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir Q26 classmethod.
+
+Remarques :
+• Réponse : Oui dans n'importe quelle méthode d'instance ou classmethod — 1re option.`,
+  2826: `print(B.f()) avec @classmethod et super().f()+"B"
+
+Débutant :
+• "AB" : A.f en classmethod renvoie "A", puis concat "B".
+
+Intermédiaire :
+• super() en classmethod utilise cls et __class__ correctement en Python 3.
+
+Expert :
+• MRO sur le type réel (B) pour résoudre le prochain classmethod.
+
+Concepts clés :
+• Héritage de méthodes de classe coopératif.
+
+Distinctions clés :
+• Pas le même binding que self sur instance.
+
+Fonctionnement :
+• B.f() → corps B → super → A.f(cls).
+
+Exécution étape par étape :
+• Chaîne courte A puis B.
+
+Ordre des opérations :
+• Appel B.f() sur la classe.
+
+Cas d'utilisation courants :
+• Fabriques named alternatives.
+
+Cas limites :
+• classmethod + super si mauvaise base explicite : bugs subtils.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• A.f() seul donne "A".
+
+Remarques :
+• Réponse : AB — 1re option.`,
+  2827: `super(A, A()) pointe vers quel type pour la suite du MRO ?
+
+Débutant :
+• object : après A il ne reste que object dans (A, object).
+
+Intermédiaire :
+• Forme deux arguments : commencer la recherche après A.
+
+Expert :
+• Utile pour appeler explicitement object.__init__ ou hooks rares.
+
+Concepts clés :
+• Découpage du MRO à un point donné.
+
+Distinctions clés :
+• Pas « A encore » ni type.
+
+Fonctionnement :
+• super(A, instance) fige la fenêtre MRO.
+
+Exécution étape par étape :
+• Proxy voit object comme prochain.
+
+Ordre des opérations :
+• Après création A().
+
+Cas d'utilisation courants :
+• Introspection pédagogique.
+
+Cas limites :
+• super(A, A()) sur hiérarchie plus profonde irait au suivant après A (pas toujours object).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Généraliser avec super(B, D()) en diamond.
+
+Remarques :
+• Réponse : object — 1re option (pour la classe A seule du snippet).`,
+  2828: `B(1,2) puis print((b.x, b.y)) avec super().__init__(x)
+
+Débutant :
+• (1, 2) : parent pose x, enfant pose y.
+
+Intermédiaire :
+• Passage d'arguments sélectifs au parent via super.
+
+Expert :
+• Pattern base pour kwargs coopératifs (Q33–34).
+
+Concepts clés :
+• Un seul self pour toute la chaîne.
+
+Distinctions clés :
+• Pas d'erreur de signature si ordre des params aligné.
+
+Fonctionnement :
+• B.__init__ appelle A.__init__(self, x).
+
+Exécution étape par étape :
+• x=1 puis y=2.
+
+Ordre des opérations :
+• Constructeur B.
+
+Cas d'utilisation courants :
+• Modèles avec champs parent + champs enfant.
+
+Cas limites :
+• Oublier super : x absent.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Étendre avec z=3.
+
+Remarques :
+• Réponse : (1, 2) — 1re option.`,
+  2829: `Ordre des prints dans B.__init__ : print B puis super
+
+Débutant :
+• B puis A : effet local avant délégation.
+
+Intermédiaire :
+• Si super était avant print, l'ordre s'inverserait.
+
+Expert :
+• En diamant, l'ordre global dépend aussi du MRO entre B et C.
+
+Concepts clés :
+• Contrôle fin du flux d'initialisation.
+
+Distinctions clés :
+• Pas « A puis B » ici.
+
+Fonctionnement :
+• Corps B s'exécute jusqu'au super.
+
+Exécution étape par étape :
+• print B ; entrée A.__init__ ; print A.
+
+Ordre des opérations :
+• B().
+
+Cas d'utilisation courants :
+• Log phase enfant avant parent.
+
+Cas limites :
+• super() en premier si parent doit valider avant log enfant.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Réécrire avec super en tête pour comparer.
+
+Remarques :
+• Réponse : B puis A — 1re option.`,
+  2830: `B().greet() avec super().greet() + " World"
+
+Débutant :
+• "Hello World" : A fournit "Hello".
+
+Intermédiaire :
+• Extension de méthode ordinaire hors __init__.
+
+Expert :
+• Même mécanisme super que pour les dunder.
+
+Concepts clés :
+• Réutilisation + suffixe.
+
+Distinctions clés :
+• Pas d'erreur si greet existe sur parent.
+
+Fonctionnement :
+• MRO (B,A,object).
+
+Exécution étape par étape :
+• super().greet → A.
+
+Ordre des opérations :
+• Appel sur instance.
+
+Cas d'utilisation courants :
+• API qui enrichit un template parent.
+
+Cas limites :
+• greet abstrait côté parent : autre pattern ABC.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Variante avec préfixe au lieu de suffixe.
+
+Remarques :
+• Réponse : Hello World — 1re option.`,
+  2831: `super() dans @staticmethod ?
+
+Débutant :
+• Non sans contexte : pas de self ni cls pour ancrer le MRO.
+
+Intermédiaire :
+• super() zéro-arg exige cellule __class__ + premier arg implicite — absent ici.
+
+Expert :
+• Contournement possible super(Classe, instance) hors staticmethod, ou passer en classmethod.
+
+Concepts clés :
+• super n'est pas magique sans binding.
+
+Distinctions clés :
+• Pas « oui normalement ».
+
+Fonctionnement :
+• staticmethod ne reçoit pas l'instance.
+
+Exécution étape par étape :
+• Erreur runtime si tentative naive.
+
+Ordre des opérations :
+• Définition peut parser, échoue à l'appel selon code.
+
+Cas d'utilisation courants :
+• Préférer @classmethod pour hooks de classe.
+
+Cas limites :
+• Python évolué : message d'erreur explicite super(): no arguments.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque exemple RuntimeError.
+
+Remarques :
+• Réponse : besoin instance ou contexte classe — 1re option.`,
+  2832: `Pourquoi préférer super().__init__() à Parent.__init__(self) ?
+
+Débutant :
+• super suit le MRO ; appeler Parent en dur casse la coopération et fige le parent.
+
+Intermédiaire :
+• En diamant, appels directs peuvent double-invocation de l'ancêtre commun.
+
+Expert :
+• Refactoring : ajout d'un mixin entre les deux sans réécrire tous les Parent.__init__.
+
+Concepts clés :
+• Ouvert à l'extension, fermé aux doublons accidentels.
+
+Distinctions clés :
+• Parent.__init__(self) « fonctionne » parfois mais est fragile.
+
+Fonctionnement :
+• super délègue au suivant calculé, pas au nom lexical.
+
+Exécution étape par étape :
+• Chaîne unique sur l'instance.
+
+Ordre des opérations :
+• Construction multi-niveaux.
+
+Cas d'utilisation courants :
+• Toute hiérarchie >2 avec MI possible.
+
+Cas limites :
+• Bibliothèques tierces non coopératives : adaptation manuelle.
+
+Considérations de performance :
+• Négligeable vs I/O.
+
+Exemples :
+• Comparer prints en diamant coopératif vs appels A.__init__ doublés.
+
+Remarques :
+• Réponse : super suit le MRO, pas de parent codé en dur — 1re option.`,
+  2833: `Pattern multi-init coopératif avec **kwargs
+
+Débutant :
+• Chaque couche pop ses clés et passe le reste à super().__init__(**kw).
+
+Intermédiaire :
+• object.__init__ reçoit souvent {} à la fin.
+
+Expert :
+• Évite signatures incompatibles en héritage multiple.
+
+Concepts clés :
+• File d'arguments résiduels.
+
+Distinctions clés :
+• Pas « tout appeler avec les mêmes kwargs bruts » sans pop.
+
+Fonctionnement :
+• kw diminue à chaque niveau.
+
+Exécution étape par étape :
+• C(a=1,b=2) remplit self.a et self.b via A puis B selon MRO.
+
+Ordre des opérations :
+• Selon MRO des __init__.
+
+Cas d'utilisation courants :
+• Django-like Model mixins, dataclass custom.
+
+Cas limites :
+• kwargs inconnu : décider raise vs **kwargs silencieux.
+
+Considérations de performance :
+• pop sur dict petit : OK.
+
+Exemples :
+• Voir code banque C(A,B).
+
+Remarques :
+• Réponse : pop propres args puis super(**kw) — 1re option.`,
+  2834: `Chaque __init__ coopératif doit
+
+Débutant :
+• Transmettre les **kwargs restants à super().__init__.
+
+Intermédiaire :
+• Sinon la chaîne s'arrête et des classes ne voient jamais leurs paramètres.
+
+Expert :
+• object.__init__ n'accepte pas de kwargs extra : ils doivent être consommés avant.
+
+Concepts clés :
+• Pass-the-baton.
+
+Distinctions clés :
+• Pas « tout arrêter après soi » ni appeler tous les parents à la main.
+
+Fonctionnement :
+• Collaboration ordonnée par MRO.
+
+Exécution étape par étape :
+• kw se vide progressivement.
+
+Ordre des opérations :
+• Construction.
+
+Cas d'utilisation courants :
+• Plugins multiples sur une même base.
+
+Cas limites :
+• kwargs orphelins : TypeError sur object si mal géré.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Ajouter print(kw) à chaque niveau en debug.
+
+Remarques :
+• Réponse : passer le reliquat **kwargs via super — 1re option.`,
+  2835: `print(D().f()) listes avec super diamond D(B,C), tous ajoutent par super
+
+Débutant :
+• ['C','B','D'] : remontée A=[] puis C, B, D ajoutent dans cet ordre de retour.
+
+Intermédiaire :
+• Même MRO que Q14 mais avec listes : empilement des concaténations.
+
+Expert :
+• Visualiser la pile d'appels : D→B→C→A puis remonte.
+
+Concepts clés :
+• Ordre des + reflète l'ordre de résolution super, pas l'ordre alphabétique des noms.
+
+Distinctions clés :
+• Pas ['B','C','D'].
+
+Fonctionnement :
+• A retourne [] ; C + ["C"] ; B + ["B"] ; D + ["D"].
+
+Exécution étape par étape :
+• Évaluation de fond en comble.
+
+Ordre des opérations :
+• D().f().
+
+Cas d'utilisation courants :
+• Agrégation de contributions (middlewares).
+
+Cas limites :
+• Mutation partagée si on modifiait une liste commune : ici listes neuves.
+
+Considérations de performance :
+• Concat répétée O(n²) sur grandes listes — pas le sujet du quiz.
+
+Exemples :
+• Remplacer + par append sur copie pour perf réelle.
+
+Remarques :
+• Réponse : ['C','B','D'] — 1re option.`,
+  2836: `Duck(Flyable, Swimmable) — print((d.fly(), d.swim()))
+
+Débutant :
+• ('flying', 'swimming') : deux capacités orthogonales sans conflit de noms.
+
+Intermédiaire :
+• MRO inclut les deux parents ; chaque méthode trouvée à sa place.
+
+Expert :
+• isinstance sur chaque ABC possible si typage nominal.
+
+Concepts clés :
+• Combinaison par héritage multiple simple.
+
+Distinctions clés :
+• Pas d'erreur ni inversion des chaînes ici.
+
+Fonctionnement :
+• d.fly résout dans Flyable ; d.swim dans Swimmable.
+
+Exécution étape par étape :
+• Tuple de deux appels.
+
+Ordre des opérations :
+• Instanciation puis print.
+
+Cas d'utilisation courants :
+• Traits / capacités séparées.
+
+Cas limites :
+• Si les deux parents définissent le même nom : MRO tranche.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Ajouter une troisième interface Quackable.
+
+Remarques :
+• Réponse : ('flying', 'swimming') — 1re option.`,
+  2837: `Qu'est-ce qu'un mixin ?
+
+Débutant :
+• Classe fournissant des méthodes réutilisables, rarement instanciée seule.
+
+Intermédiaire :
+• Composée dans une autre hiérarchie par héritage multiple.
+
+Expert :
+• Convention de nom *Mixin pour la lisibilité.
+
+Concepts clés :
+• Réutilisation horizontale.
+
+Distinctions clés :
+• Pas obligation ABC ni static-only.
+
+Fonctionnement :
+• Attributs hérités comme toute base.
+
+Exécution étape par étape :
+• self du mixin est l'instance du composé.
+
+Ordre des opérations :
+• class Enfant(Mixin, Base) typique.
+
+Cas d'utilisation courants :
+• Logging, sérialisation, validation.
+
+Cas limites :
+• MRO : ordre des mixins critique (Q40).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• LogMixin + SerializeMixin.
+
+Remarques :
+• Réponse : mixin = comportements à mixer, pas entité seule — 1re option.`,
+  2838: `App(LogMixin).log("hello")
+
+Débutant :
+• LOG: hello : méthode héritée du mixin.
+
+Intermédiaire :
+• f-string dans le mixin formate le message.
+
+Expert :
+• Pourrait être remplacé par logging module en prod.
+
+Concepts clés :
+• Héritage simple une base.
+
+Distinctions clés :
+• Pas erreur si App ne redéfinit pas log.
+
+Fonctionnement :
+• App.__mro__ inclut LogMixin.
+
+Exécution étape par étape :
+• bound method LogMixin.log(self, msg).
+
+Ordre des opérations :
+• Création App() puis appel.
+
+Cas d'utilisation courants :
+• Cross-cutting concerns.
+
+Cas limites :
+• Si App.log override sans super : mixin masqué.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Ajouter niveau DEBUG dans f-string.
+
+Remarques :
+• Réponse : LOG: hello — 1re option.`,
+  2839: `User("Alice").to_json() avec JSONMixin
+
+Débutant :
+• Chaîne JSON {"name": "Alice"} avec guillemets doubles.
+
+Intermédiaire :
+• json.dumps sur __dict__ ; diffère du repr Python simple quote.
+
+Expert :
+• Données non sérialisables (datetime) lèveraient TypeError — hors scope.
+
+Concepts clés :
+• Sérialisation standard JSON.
+
+Distinctions clés :
+• Pas la repr dict Python avec quotes simples.
+
+Fonctionnement :
+• dumps produit str JSON.
+
+Exécution étape par étape :
+• __dict__ puis dumps.
+
+Ordre des opérations :
+• Après __init__ User.
+
+Cas d'utilisation courants :
+• API REST, fichiers config.
+
+Cas limites :
+• __slots__ sans __dict__ : mixin à adapter.
+
+Considérations de performance :
+• dumps sur gros dict : coûteux.
+
+Exemples :
+• indent=2 pour lisibilité.
+
+Remarques :
+• Réponse : {"name": "Alice"} en texte JSON — 1re option.`,
+  2840: `Position des mixins dans la liste de bases
+
+Débutant :
+• À gauche (avant la classe parente « principale ») pour priorité MRO.
+
+Intermédiaire :
+• En cas de conflit de noms, le mixin à gauche l'emporte sur Base.
+
+Expert :
+• super() dans mixin peut alors appeler Base via chaîne coopérative.
+
+Concepts clés :
+• class Enfant(LogMixin, Model) idiomatique.
+
+Distinctions clés :
+• L'ordre n'est jamais « anodin » en MI.
+
+Fonctionnement :
+• MRO parcourt mixins avant Model si listés ainsi.
+
+Exécution étape par étape :
+• save() exemple banque : log puis DB via super.
+
+Ordre des opérations :
+• Définition de classe.
+
+Cas d'utilisation courants :
+• Django class Meta multiples patterns.
+
+Cas limites :
+• Trop de mixins : MRO difficile ; préférer composition parfois.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Inverser l'ordre et voir save() changer.
+
+Remarques :
+• Réponse : mixins à gauche — 1re option.`,
+  2841: `TimestampMixin.stamp — que ajoute-t-il ?
+
+Débutant :
+• Une méthode qui retourne datetime.now() à l'appel.
+
+Intermédiaire :
+• Pas d'attribut créé automatiquement à l'__init__ dans ce snippet.
+
+Expert :
+• Import local datetime à chaque appel — acceptable pour démo, pas optimal prod.
+
+Concepts clés :
+• Horodatage à la demande.
+
+Distinctions clés :
+• Pas __init__ qui enregistre created_at ici.
+
+Fonctionnement :
+• Méthode instance sur héritier.
+
+Exécution étape par étape :
+• Chaque stamp() potentiellement différent.
+
+Ordre des opérations :
+• Appel explicite stamp().
+
+Cas d'utilisation courants :
+• Events, audit trail léger.
+
+Cas limites :
+• Fuseaux horaires : datetime.now(timezone.utc).
+
+Considérations de performance :
+• import répété : micro-coût.
+
+Exemples :
+• Remplacer par time.time() pour perf brute.
+
+Remarques :
+• Réponse : méthode retournant date/heure courante — 1re option.`,
+  2842: `Même nom de méthode sur deux parents ?
+
+Débutant :
+• Oui : le MRO choisit la première définition rencontrée.
+
+Intermédiaire :
+• Pas d'erreur automatique de conflit comme certains langages.
+
+Expert :
+• Appel explicite AutreParent.meth(instance) pour version ombre.
+
+Concepts clés :
+• Résolution nominaliste par ordre.
+
+Distinctions clés :
+• Pas NameError ni TypeError par défaut.
+
+Fonctionnement :
+• Première classe dans MRO avec attribut callable.
+
+Exécution étape par étape :
+• Binding standard.
+
+Ordre des opérations :
+• C(A,B) avec greet sur A et B : A gagne.
+
+Cas d'utilisation courants :
+• Définir politique par ordre des bases.
+
+Cas limites :
+• Oublier une branche : bug silencieux.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque C(A,B) greet.
+
+Remarques :
+• Réponse : Oui, le MRO tranche — 1re option.`,
+  2843: `print(C.x) avec C(A,B), A.x=1, B.x=2
+
+Débutant :
+• 1 : A listé avant B dans C(A,B).
+
+Intermédiaire :
+• MRO (C,A,B,object) : premier x trouvé gagne.
+
+Expert :
+• Couplé à Q44 pour l'inversion B,A → 2.
+
+Concepts clés :
+• Attributs de classe homonymes.
+
+Distinctions clés :
+• Pas 2 ici.
+
+Fonctionnement :
+• C n'a pas x ; A a x.
+
+Exécution étape par étape :
+• Stop à A.
+
+Ordre des opérations :
+• Accès sur classe C.
+
+Cas d'utilisation courants :
+• Constantes de config sur branches parallèles.
+
+Cas limites :
+• Instance.x peut masquer.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Comparer C(B,A).
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  2844: `print(C.x) avec C(B,A)
+
+Débutant :
+• 2 : B avant A, donc B.x prioritaire.
+
+Intermédiaire :
+• Symétrique de 2843.
+
+Expert :
+• Démonstration que l'ordre des bases est un choix API.
+
+Concepts clés :
+• Même mécanisme, autres valeurs.
+
+Distinctions clés :
+• Pas 1.
+
+Fonctionnement :
+• MRO (C,B,A,object).
+
+Exécution étape par étape :
+• B.x trouvé.
+
+Ordre des opérations :
+• Définition C(B,A).
+
+Cas d'utilisation courants :
+• Override sélectif.
+
+Cas limites :
+• Diamond pourrait réordonner au-delà des deux feuilles.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Juxtaposer avec 2843.
+
+Remarques :
+• Réponse : 2 — 1re option.`,
+  2845: `Composition vs héritage (has-a / is-a)
+
+Débutant :
+• Composition = has-a ; héritage = is-a.
+
+Intermédiaire :
+• Voiture a un moteur vs Voiture est un Véhicule.
+
+Expert :
+• Loi de Demeter : composition réduit couplage structurel.
+
+Concepts clés :
+• Vocabulaire standard OOP.
+
+Distinctions clés :
+• Pas is-a / has-a inversé.
+
+Fonctionnement :
+• Deux axes de relation différents.
+
+Exécution étape par étape :
+• N/A code.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Modélisation domaine.
+
+Cas limites :
+• « is-a » abusif mène à hiérarchies profondes inutiles.
+
+Considérations de performance :
+• Délégation = un saut d'appel de plus.
+
+Exemples :
+• Engine dans Car vs Car(Vehicle).
+
+Remarques :
+• Réponse : has-a / is-a — 1re option.`,
+  2846: `Quand préférer la composition ?
+
+Débutant :
+• Quand on veut flexibilité et couplage lâche, échanger des implémentations.
+
+Intermédiaire :
+• Pas quand la relation est un vrai is-a polymorphique strict.
+
+Expert :
+• Testabilité : injection de mocks sur attributs.
+
+Concepts clés :
+• Favor object composition over class inheritance (GoF).
+
+Distinctions clés :
+• Pas « quand besoin polymorphisme nominal » seul.
+
+Fonctionnement :
+• Références runtime remplaçables.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Stratégies, loggers, stockage interchangeable.
+
+Cas limites :
+• Trop de délégation : façade nécessaire.
+
+Considérations de performance :
+• Indirection légère.
+
+Exemples :
+• App(logger=...) du banque.
+
+Remarques :
+• Réponse : flexibilité / faible couplage — 1re option.`,
+  2847: `Car avec self.engine = Engine() — quel pattern ?
+
+Débutant :
+• Composition : Car a un Engine, délègue start.
+
+Intermédiaire :
+• Pas d'héritage Car(Engine) absurde ici.
+
+Expert :
+• Permet moteur thermique/électrique injectable.
+
+Concepts clés :
+• Délégation explicite.
+
+Distinctions clés :
+• Pas Singleton ni Decorator dans l'énoncé.
+
+Fonctionnement :
+• car.start() → engine.start().
+
+Exécution étape par étape :
+• Deux objets dans le graphe.
+
+Ordre des opérations :
+• __init__ Car.
+
+Cas d'utilisation courants :
+• Injection de dépendances manuelle.
+
+Cas limites :
+• Cycle de vie engine : qui dispose ?
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Passer engine au constructeur.
+
+Remarques :
+• Réponse : Composition — 1re option.`,
+  2848: `Car(Vehicle): pass — quel pattern ?
+
+Débutant :
+• Héritage : Car est un Vehicle.
+
+Intermédiaire :
+• isinstance(car, Vehicle) True.
+
+Expert :
+• MRO (Car, Vehicle, object).
+
+Concepts clés :
+• Spécialisation vide = héritage pur.
+
+Distinctions clés :
+• Pas composition.
+
+Fonctionnement :
+• Délégation implicite via MRO.
+
+Exécution étape par étape :
+• start hérité.
+
+Ordre des opérations :
+• Instanciation Car.
+
+Cas d'utilisation courants :
+• Placeholder pour futures méthodes.
+
+Cas limites :
+• Classes vides multiples : préférer parfois Protocol.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Ajouter override start dans Car.
+
+Remarques :
+• Réponse : Héritage — 1re option.`,
+  2849: `len(D.__mro__) avec D(A,B,C) sans autres liens
+
+Débutant :
+• 5 : D, A, B, C, object.
+
+Intermédiaire :
+• Trois parents indépendants + tête + racine.
+
+Expert :
+• Diamond ajouterait fusion mais pas ici.
+
+Concepts clés :
+• Compter les entrées du tuple.
+
+Distinctions clés :
+• Pas 4 (oublier object) ni 6.
+
+Fonctionnement :
+• C3 linéaire simple.
+
+Exécution étape par étape :
+• print(len(...)) → 5.
+
+Ordre des opérations :
+• Après définition D.
+
+Cas d'utilisation courants :
+• Vérifier profondeur MRO avant MI complexe.
+
+Cas limites :
+• Si bases partagent sous-arbre, len peut baisser (un seul object).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Afficher D.__mro__ en entier.
+
+Remarques :
+• Réponse : 5 — 1re option.`,
+  2850: `class MyList(list) et isinstance(ml, list)
+
+Débutant :
+• True : sous-classe officielle du builtin list.
+
+Intermédiaire :
+• Hérite append, slicing, etc.
+
+Expert :
+• Attention à __init__ / __new__ si vous changez invariants.
+
+Concepts clés :
+• builtins sous-classables.
+
+Distinctions clés :
+• Pas False ni TypeError pour ce code.
+
+Fonctionnement :
+• MyList.__mro__ inclut list.
+
+Exécution étape par étape :
+• ml est instance de list pour isinstance.
+
+Ordre des opérations :
+• Après MyList([1,2,3]).
+
+Cas d'utilisation courants :
+• list avec méthodes métier (first, sum_safe).
+
+Cas limites :
+• Sous-classer dict avec clés spéciales : suivre doc.
+
+Considérations de performance :
+• Code C pour bulk ops reste sous-jacent.
+
+Exemples :
+• sorted(ml) fonctionne.
+
+Remarques :
+• Réponse : True — 1re option.`,
   2851: `Le .group(n) méthode renvoie the text matched by the nth capturing group. Group numbers start at 1. Group 0 is special and renvoie the entire match.
 
 Concepts clés :
