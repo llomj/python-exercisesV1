@@ -101012,3319 +101012,4011 @@ Exemples :
 
 Remarques :
 • Réponse : f = dec1(dec2(f)) (1re option).`,
-  2351: `Un descripteur est un attribut d'objet avec un comportement de liaison — dont l'accès aux attributs a été remplacé par des méthodes du protocole descripteur.
+  2351: `reduce(lambda a,b: a+b, [1,2,3,4])
+
+Débutant :
+• functools.reduce applique la fonction deux à deux de gauche à droite : ((1+2)+3)+4 = 10.
+
+Intermédiaire :
+• En Python 3, reduce vit dans functools, pas en built-in global.
+
+Expert :
+• Pour une simple somme, sum() est plus idiomatique.
 
 Concepts clés :
-• Un descripteur définit un ou plusieurs de : __get__, __set__, __delete__
-• Les descripteurs permettent à Python d'implémenter properties, méthodes, staticmethod, classmethod
-• Ils permettent de personnaliser l'accès aux attributs sur les classes
-• Les descripteurs doivent être définis comme attributs de classe, pas d'instance
+• Accumulateur, pliage (fold), itérable.
 
-Comment ça fonctionne :
-• Quand vous accédez à obj.attr, Python vérifie si l'attribut de classe est un descripteur
-• S'il a __get__, Python appelle descriptor.__get__(obj, type(obj))
-• Cela permet une logique personnalisée à chaque accès d'attribut
+Distinctions clés :
+• Pas le produit 24 ni la liste inchangée.
 
-Exemple :
-class Desc:
-    def __get__(self, obj, objtype=None):
-        return 42
+Fonctionnement :
+• Premier couple (1,2)→3, puis (3,3)→6, puis (6,4)→10.
 
-class C:
-    x = Desc()
+Exécution étape par étape :
+• Trois applications du lambda pour quatre éléments.
 
-C().x  # 42 — __get__ est appelé
+Ordre des opérations :
+• Ordre gauche-droite garanti.
 
-Usages courants :
-• @property est un descripteur de données
-• Les fonctions sont des descripteurs non-données (elles lient self via __get__)
-• Les ORM utilisent des descripteurs pour la validation des champs
-• Calcul paresseux d'attributs`,
-  2352: `Le protocole descripteur définit trois méthodes optionnelles qui contrôlent l'accès aux attributs.
+Cas d'utilisation courants :
+• Agrégations custom ; enseignement programmation fonctionnelle.
 
-Concepts clés :
-• __get__(self, obj, objtype=None) — appelé pour obtenir la valeur de l'attribut
-• __set__(self, obj, value) — appelé pour définir la valeur de l'attribut
-• __delete__(self, obj) — appelé pour supprimer l'attribut
-• Un descripteur doit définir au moins une de ces méthodes
+Cas limites :
+• Itérable vide sans initial : TypeError.
 
-Comment ça fonctionne :
-• obj est l'instance à travers laquelle le descripteur est accédé (ou None si accédé via la classe)
-• objtype est la classe qui possède le descripteur
-• self est l'instance du descripteur elle-même
+Considérations de performance :
+• O(n) ; reduce en pur Python peut être plus lent que sum C.
 
-Exemple :
-class Verbose:
-    def __get__(self, obj, objtype=None):
-        print("Getting")
-        return 42
-    def __set__(self, obj, value):
-        print(f"Setting to {value}")
-    def __delete__(self, obj):
-        print("Deleting")
+Exemples :
+• Voir produit avec * au Q suivant.
 
-Usages courants :
-• Validation des données à l'assignation
-• Attributs calculés à l'accès
-• Journalisation de l'accès aux attributs
-• Implémentation d'un comportement de type property`,
-  2353: `Les descripteurs de données définissent __set__ et/ou __delete__ en plus de __get__.
+Remarques :
+• Réponse : 10.`,
+  2352: `reduce(lambda a,b: a*b, [1,2,3,4])
+
+Débutant :
+• Produit cumulatif : ((1*2)*3)*4 = 24.
+
+Intermédiaire :
+• En 3.8+, math.prod fait pareil pour les nombres.
+
+Expert :
+• Même schéma que la somme mais avec l’opérateur multiplicatif.
 
 Concepts clés :
-• Un descripteur de données définit __set__ ou __delete__ (généralement avec __get__)
-• Les descripteurs de données ont la priorité sur l'instance __dict__
-• @property crée un descripteur de données (il définit __get__, __set__, __delete__)
-• La distinction clé est d'avoir __set__ ou __delete__
+• Identité multiplicative 1 si besoin d’initial (voir 2359).
 
-Comment ça fonctionne :
-• Quand Python cherche obj.attr, il vérifie d'abord les descripteurs de données de la classe
-• Si trouvé, le __get__ du descripteur est appelé, même si obj.__dict__ a 'attr'
-• Cela signifie que les descripteurs de données ne peuvent pas être surchargés par des attributs d'instance
+Distinctions clés :
+• Pas 10.
 
-Exemple :
-class DataDesc:
-    def __get__(self, obj, objtype=None):
-        return obj._val
-    def __set__(self, obj, value):
-        obj._val = value
+Fonctionnement :
+• 1*2=2, 2*3=6, 6*4=24.
 
-class C:
-    x = DataDesc()
+Exécution étape par étape :
+• Trois étapes pour quatre facteurs.
 
-c = C()
-c.x = 10      # calls DataDesc.__set__
-c.__dict__     # {'_val': 10} — x is not in instance dict
+Ordre des opérations :
+• Associativité de * sur les int : ordre stable.
 
-Usages courants :
-• Attributs validés
-• Champs vérifiés par type
-• Propriétés calculées avec setters`,
-  2354: `Les descripteurs non-données définissent uniquement __get__ — ils n'ont pas __set__ ou __delete__.
+Cas d'utilisation courants :
+• Factorielles via range.
 
-Concepts clés :
-• Non-data descriptors only implement __get__
-• L'instance __dict__ a la priorité sur les descripteurs non-données
-• Les fonctions sont des descripteurs non-données — elles implémentent __get__ pour devenir des méthodes liées
-• @staticmethod et @classmethod sont des descripteurs non-données
+Cas limites :
+• Overflow n’existe pas pour les int Python.
 
-Comment ça fonctionne :
-• Quand Python cherche obj.attr, il vérifie obj.__dict__ EN PREMIER
-• Seulement si attr n'est pas dans obj.__dict__ il passe au descripteur non-données
-• Cela signifie que vous pouvez masquer un descripteur non-données en définissant un attribut d'instance
+Considérations de performance :
+• math.prod souvent préférable.
 
-Exemple :
-class NonDataDesc:
-    def __get__(self, obj, objtype=None):
-        return "from descriptor"
+Exemples :
+• reduce(mul, ...) avec operator.mul.
 
-class C:
-    x = NonDataDesc()
+Remarques :
+• Réponse : 24.`,
+  2353: `reduce(..., [1,2,3,4], 10)
 
-c = C()
-c.x              # "from descriptor"
-c.__dict__['x'] = "from instance"
-c.x              # "from instance" — instance dict wins
+Débutant :
+• Le troisième argument est la valeur initiale : 10+1+2+3+4 = 20.
 
-Usages courants :
-• Fonctions (création de méthodes liées)
-• @staticmethod, @classmethod
-• Attributs mis en cache/paresseux`,
-  2355: `Les descripteurs de données ont la priorité sur l'instance __dict__ entries en Python's attribute lookup chain.
+Intermédiaire :
+• Avec initial, itérable vide → retour de l’initial sans appeler le lambda.
+
+Expert :
+• Utile pour typage ou neutre différent du premier élément.
 
 Concepts clés :
-• Ordre de recherche d'attributs de Python : descripteurs de données → instance __dict__ → descripteurs non-données → class __dict__
-• Les descripteurs de données (avec __set__ ou __delete__) sont vérifiés EN PREMIER
-• Même si obj.__dict__ contient la même clé, le descripteur de données gagne
-• C'est pourquoi @property peut intercepter l'accès aux attributs
+• Initializer / valeur de départ.
 
-Comment ça fonctionne :
-• obj.attr déclenche type.__getattribute__(obj, 'attr')
-• Étape 1 : Vérifier type(obj).__mro__ pour les descripteurs de données → si trouvé, appeler __get__
-• Étape 2 : Vérifier obj.__dict__ → si trouvé, retourner la valeur
-• Étape 3 : Vérifier type(obj).__mro__ pour les descripteurs non-données → si trouvé, appeler __get__
+Distinctions clés :
+• Pas 10 ni 14.
 
-Exemple :
-class Prop:
-    def __get__(self, obj, cls): return "descriptor"
-    def __set__(self, obj, val): pass  # makes it a data descriptor
+Fonctionnement :
+• a commence à 10 puis fusion avec chaque élément.
 
-class C:
-    x = Prop()
+Exécution étape par étape :
+• Quatre appels après l’init.
 
-c = C()
-c.__dict__['x'] = "instance"
-c.x  # "descriptor" — data descriptor wins over instance dict
+Ordre des opérations :
+• Init puis éléments dans l’ordre.
 
-Usages courants :
-• @property intercepte toujours l'accès
-• Application de la validation — ne peut pas être contourné en définissant un attribut d'instance`,
-  2356: `Les descripteurs non-données ne sont consultés que quand l'attribut n'est pas trouvé dans l'instance __dict__.
+Cas d'utilisation courants :
+• Somme avec offset, sécurité sur [].
 
-Concepts clés :
-• L'instance __dict__ est vérifiée AVANT les descripteurs non-données
-• Vous pouvez surcharger un descripteur non-données en ajoutant une entrée à instance __dict__
-• C'est pourquoi vous pouvez mettre en cache un résultat de méthode en assignant à self.method_name
-• Les fonctions (méthodes) sont des descripteurs non-données — vous pouvez les masquer par instance
+Cas limites :
+• Un seul élément : init op x.
 
-Comment ça fonctionne :
-• For obj.attr lookup:
-• Step 1: Check for data descriptors in class — not found
-• Step 2: Check obj.__dict__ — if found, return it (non-data descriptor skipped)
-• Step 3: Check for non-data descriptors in class — only reached if not in instance dict
+Considérations de performance :
+• N/A.
 
-Exemple :
-class NonData:
-    def __get__(self, obj, cls): return "descriptor"
+Exemples :
+• reduce sur [], 0 → 0.
 
-class C:
-    x = NonData()
+Remarques :
+• Réponse : 20.`,
+  2354: `reduce(lambda a,b: max(a,b), [3,1,4,1,5])
 
-c = C()
-c.x                          # "descriptor"
-c.__dict__['x'] = "cached"
-c.x                          # "cached" — instance dict wins
+Débutant :
+• À chaque pas on garde le plus grand ; le maximum global est 5.
 
-Usages courants :
-• Surcharges de méthodes par instance
-• Motif d'attribut mis en cache (évaluation paresseuse)
-• Masquage des valeurs par défaut au niveau de la classe`,
-  2357: `@property crée un descripteur de données avec les méthodes __get__, __set__ et __delete__.
+Intermédiaire :
+• Équivalent à max() sur cette liste.
+
+Expert :
+• Réduction générique pour toute opération binaire associative (max l’est sur totalement ordonné).
 
 Concepts clés :
-• Les objets property définissent les trois méthodes descripteur
-• Même sans setter, property définit __set__ (qui lève AttributeError)
-• Cela garantit que property intercepte toujours l'accès aux attributs — il ne peut pas être contourné
-• Comme c'est un descripteur de données, il a la priorité sur l'instance __dict__
+• Comparaisons successives.
 
-Comment ça fonctionne :
-• @property crée un property object with fget set to the decorated function
-• .setter adds fset, .deleter adds fdel
-• Even read-only properties define __set__ (raises AttributeError if called)
-• This data descriptor status prevents accidental instance dict shadowing
+Distinctions clés :
+• Pas 3 ni 1.
 
-Exemple :
-class C:
-    @property
-    def x(self):
-        return 42
+Fonctionnement :
+• Chaîne 3→4→4→5.
 
-c = C()
-c.x                    # 42 — calls __get__
-c.__dict__['x'] = 99
-c.x                    # 42 — data descriptor still wins!
+Exécution étape par étape :
+• Quatre étapes pour cinq nombres.
 
-Usages courants :
-• Computed attributes: @property def area(self): return self.w * self.h
-• Validation on set: @x.setter with type checking
-• Read-only attributes: property without setter`,
-  2358: `@staticmethod crée un descripteur non-données qui retourne la fonction originale inchangée.
+Ordre des opérations :
+• Paire initiale (3,1) puis résultat suivant.
 
-Concepts clés :
-• Les objets staticmethod n'implémentent que __get__
-• __get__ retourne la fonction encapsulée sans la lier à quoi que ce soit
-• Aucun paramètre self ou cls n'est passé automatiquement
-• Comme c'est non-données, il peut être masqué par des attributs d'instance
+Cas d'utilisation courants :
+• Pédagogie ; max natif en prod.
 
-Comment ça fonctionne :
-• @staticmethod wraps the function in a staticmethod descriptor
-• When accessed, __get__ returns la fonction originale as-is
-• No implicit first argument (self/cls) is prepended
-• La function behaves like a regular function that lives in the class namespace
+Cas limites :
+• Liste d’un élément : cet élément.
 
-Exemple :
-class Math:
-    @staticmethod
-    def add(a, b):
-        return a + b
+Considérations de performance :
+• max() built-in plus direct.
 
-Math.add(2, 3)     # 5
-Math().add(2, 3)   # 5 — same function, no self passed
+Exemples :
+• Variante min pour le minimum.
 
-Usages courants :
-• Fonctions utilitaires qui appartiennent logiquement à une classe
-• Fonctions qui n'ont pas besoin d'accéder à l'état d'instance ou de classe
-• Constructeurs alternatifs qui n'ont pas besoin de cls`,
-  2359: `@classmethod crée un descripteur non-données qui lie le premier argument à la classe.
+Remarques :
+• Réponse : 5.`,
+  2355: `reduce sur ["hello", " ", "world"]
+
+Débutant :
+• Concaténation : "hello" + " " + "world" → "hello world".
+
+Intermédiaire :
+• str.join est préférable pour de grandes listes (coût des copies intermédiaires).
+
+Expert :
+• reduce fonctionne sur tout type supportant l’opérateur binaire choisi.
 
 Concepts clés :
-• Les objets classmethod n'implémentent que __get__
-• __get__ crée une méthode liée où le premier argument est la classe (cls)
-• Fonctionne correctement avec l'héritage — cls est la classe réelle, pas nécessairement la classe définissante
-• Comme c'est non-données, il peut être masqué par des attributs d'instance
+• + sur str est concaténation.
 
-Comment ça fonctionne :
-• @classmethod wraps the function in a classmethod descriptor
-• When accessed via instance or class, __get__ binds cls to the owner class
-• cls reçoit le actual class (important for inheritance)
+Distinctions clés :
+• Pas "helloworld" sans espace (l’espace est un élément à part).
 
-Exemple :
-class Base:
-    @classmethod
-    def create(cls):
-        return cls()
+Fonctionnement :
+• Deux étapes de + pour trois chaînes.
 
-class Sub(Base):
-    pass
+Exécution étape par étape :
+• "hello"+" " puis +"world".
 
-Sub.create()   # crée un Sub instance (cls=Sub)
-Base.create()  # crée un Base instance (cls=Base)
+Ordre des opérations :
+• Ordre de la liste respecté.
 
-Usages courants :
-• Constructeurs alternatifs : Date.from_string("2024-01-01")
-• Méthodes factory qui respectent l'héritage
-• Accès aux données de classe sans coder en dur le nom de la classe`,
-  2360: `Quand vous access an attribute that is a descriptor, Python appelle the descriptor's __get__ method.
+Cas d'utilisation courants :
+• Démonstrations pédagogiques.
 
-Concepts clés :
-• Desc defines __get__, making it a descriptor
-• C.x = Desc() sets a descriptor as a class attribute
-• Accessing C().x triggers Desc.__get__(desc_instance, c_instance, C)
-• __get__ returns 42, so C().x evaluates to 42
+Cas limites :
+• Liste vide sans init : erreur.
 
-Comment ça fonctionne étape par étape :
-• C() creates an instance of C
-• Accessing .x on the instance triggers attribute lookup
-• Python finds x in C.__dict__ — it's a Desc instance
-• Desc has __get__, so Python appelle Desc.__get__(desc, c_instance, C)
-• __get__ returns 42
-• print outputs 42
+Considérations de performance :
+• O(n²) pire cas si chaînes longues concaténées naïvement.
 
-Exemple :
-class Desc:
-    def __get__(self, obj, cls):
-        return 42
+Exemples :
+• join(" ", ["hello","world"]).
 
-class C:
-    x = Desc()
+Remarques :
+• Réponse : "hello world" (1re option).`,
+  2356: `reduce lambda a,b: a if a > b else b sur [3,7,2,8,1]
 
-C().x    # 42
-C.x      # 42 (obj=None when accessed via class)
+Débutant :
+• Même effet que max : le plus grand est 8.
 
-Usages courants :
-• Attributs calculés qui retournent des valeurs dynamiques
-• Motifs de chargement paresseux
-• Proxying d'attributs`,
-  2361: `This demonstrates a data descriptor with both __get__ and __set__ methods.
+Intermédiaire :
+• Expression conditionnelle Python ternaire.
+
+Expert :
+• Montre qu’on peut coder max à la main dans reduce.
 
 Concepts clés :
-• __set__ est appelé when you assign c.x = 5
-• __set__ stocke le value in obj._x (a private attribute on the instance)
-• __get__ est appelé when you read c.x
-• __get__ returns obj._x * 2, which is 5 * 2 = 10
+• Réduction avec logique custom.
 
-Comment ça fonctionne étape par étape :
-• c = C() creates instance
-• c.x = 5 triggers Desc.__set__(desc, c, 5) → sets c._x = 5
-• c.x triggers Desc.__get__(desc, c, C) → returns c._x * 2 = 10
-• print outputs 10
+Distinctions clés :
+• Pas 7 seul.
 
-Exemple :
-class Desc:
-    def __get__(self, obj, cls):
-        return obj._x * 2
-    def __set__(self, obj, val):
-        obj._x = val
+Fonctionnement :
+• 3 vs 7→7, vs 2→7, vs 8→8, vs 1→8.
 
-class C:
-    x = Desc()
+Exécution étape par étape :
+• Quatre comparaisons.
 
-c = C()
-c.x = 5     # stores 5 in c._x
-c.x          # returns 10 (5 * 2)
-c.__dict__   # {'_x': 5}
+Ordre des opérations :
+• Évaluation paresseuse du ternaire par appel.
 
-Usages courants :
-• Propriétés calculées (transformation à l'accès)
-• Validation à l'assignation avec transformation à l'accès
-• Descripteurs de conversion d'unités`,
-  2362: `__set_name__ is a descriptor method that is automatically appelé quand the descriptor is assigned to a class attribute.
+Cas d'utilisation courants :
+• Critères non standards (avec tuple comparison).
 
-Concepts clés :
-• Added en Python 3.6
-• Signature: __set_name__(self, owner, name)
-• owner is the class that owns the descriptor
-• name is the attribute name the descriptor was assigned to
-• Called at class creation time, not at instance creation time
+Cas limites :
+• NaN brise la totalité d’ordre classique.
 
-Comment ça fonctionne :
-• When Python processes a class body, it checks each class attribute
-• If an attribute has __set_name__, Python appelle it with the class and attribute name
-• Cela permet the descriptor to know its own name without manual configuration
+Considérations de performance :
+• max() plus simple.
 
-Exemple :
-class Validator:
-    def __set_name__(self, owner, name):
-        self.name = name
-    def __set__(self, obj, value):
-        if not isinstance(value, int):
-            raise TypeError(f"{self.name} must be int")
-        obj.__dict__[self.name] = value
-    def __get__(self, obj, cls):
-        return obj.__dict__.get(self.name)
+Exemples :
+• Inverser pour le minimum.
 
-class Person:
-    age = Validator()   # __set_name__ called: name='age'
+Remarques :
+• Réponse : 8.`,
+  2357: `reduce lambda a,b: {**a,**b} sur trois dicts
 
-p = Person()
-p.age = 25   # works
-p.age = "x"  # TypeError: age must be int
+Débutant :
+• Fusion pairwise : d’abord a+b, puis fusion avec c → clés a,b,c avec valeurs 1,2,3.
 
-Usages courants :
-• Détection automatique du nom d'attribut pour le stockage
-• Définitions de champs ORM
-• Validation avec des messages d'erreur significatifs`,
-  2363: `This descriptor pattern enforces type checking when setting attribute values.
+Intermédiaire :
+• Clés dupliquées : la dernière fusion écrase (ex. deux fois "x").
+
+Expert :
+• En 3.9+, a|b|c peut remplacer pour deux dicts à la fois par étapes similaires.
 
 Concepts clés :
-• __init__ stocke le expected type
-• __set_name__ auto-captures the attribute name
-• __set__ validates the type before storing the value
-• The value is stored in obj.__dict__ to avoid infinite recursion
+• Unpacking de dictionnaires en littéral.
 
-Comment ça fonctionne :
-• TypedField("int") crée un descriptor expecting int values
-• __set_name__ records the attribute name
-• On assignment, __set__ checks isinstance(val, self.typ)
-• If type matches, stores in instance __dict__
-• If type doesn't match, raises TypeError
+Distinctions clés :
+• Pas seulement le dernier dict.
 
-Exemple :
-class TypedField:
-    def __init__(self, typ):
-        self.typ = typ
-    def __set_name__(self, owner, name):
-        self.name = name
-    def __set__(self, obj, val):
-        if not isinstance(val, self.typ):
-            raise TypeError
-        obj.__dict__[self.name] = val
+Fonctionnement :
+• {**a,**b} crée un nouveau dict à chaque étape.
 
-class Config:
-    port = TypedField(int)
-    host = TypedField(str)
+Exécution étape par étape :
+• Deux fusions pour trois dicts.
 
-c = Config()
-c.port = 8080      # OK
-c.host = "local"   # OK
-c.port = "abc"     # TypeError!
+Ordre des opérations :
+• Ordre de la liste détermine la priorité des clés en conflit.
 
-Usages courants :
-• Validation des données dans les ORM
-• Objets de configuration
-• Validation des entrées API`,
-  2364: `Regular Python functions are non-data descriptors — they implement __get__ to enable bound method creation.
+Cas d'utilisation courants :
+• Configs empilées.
 
-Concepts clés :
-• Every function object a un __get__ method
-• When a function is accessed as a class attribute via an instance, __get__ est appelé
-• __get__ retourne un bound method that automatically passe le instance comme premier argument (self)
-• C'est how Python's method binding mechanism works
+Cas limites :
+• Valeurs non hashables dans les clés : impossible en dict de toute façon.
 
-Comment ça fonctionne :
-• class C: def f(self): pass — f is a function stored in C.__dict__
-• c = C(); c.f — triggers function.__get__(f, c, C)
-• Cela retourne a bound method that wraps f with c pre-filled comme premier argument
-• Calling c.f() actually calls f(c) under the hood
+Considérations de performance :
+• Copies successives.
 
-Exemple :
-class C:
-    def greet(self):
-        return "hello"
+Exemples :
+• Voir banque x écrasé.
 
-c = C()
-C.__dict__['greet']       # <function C.greet>
-c.greet                   # <bound method C.greet of ...>
-c.greet()                 # "hello"
+Remarques :
+• Réponse : {"a":1,"b":2,"c":3} (formulation QCM).`,
+  2358: `reduce(lambda a,b: a+[b], [1,2,3], [])
 
-# Manual equivalent:
-C.__dict__['greet'].__get__(c, C)()  # "hello"
+Débutant :
+• Partir de [] puis ajouter chaque élément par concaténation → [1,2,3].
 
-Usages courants :
-• Liaison automatique de self pour les méthodes d'instance
-• C'est pourquoi les méthodes reçoivent self automatiquement
-• Comprendre cela explique la distinction méthode vs fonction`,
-  2365: `Methods stored in a class's __dict__ are plain function objects, not bound methods.
+Intermédiaire :
+• Peu idiomatique ; list(seq) ou compréhension suffisent.
+
+Expert :
+• coût quadratique si la liste grandit beaucoup (copies répétées).
 
 Concepts clés :
-• class C: def f(self): pass stores f as a function in C.__dict__
-• C.__dict__["f"] is a function object
-• Accessing via instance (c.f) déclenche le descriptor protocol → bound method
-• Accessing via class (C.f) retourne le function itself (en Python 3)
+• Initial [] comme accumulateur liste.
 
-Comment ça fonctionne :
-• Python stocke le function in the class namespace
-• C.__dict__["f"] bypasses the descriptor protocol — you get the raw function
-• C.f triggers __get__(None, C) — retourne le function (Python 3)
-• c.f triggers __get__(c, C) — retourne un bound method
+Distinctions clés :
+• Pas 6 ni liste de listes [[1],[2],[3]] ici.
 
-Exemple :
-class C:
-    def f(self):
-        pass
+Fonctionnement :
+• []+[1], puis [1]+[2], etc.
 
-type(C.__dict__["f"])    # <class 'function'>
-type(C.f)                # <class 'function'>
-type(C().f)              # <class 'method'> — bound method
+Exécution étape par étape :
+• Trois étapes.
 
-C.__dict__["f"] is C.f   # True (same object en Python 3)
+Ordre des opérations :
+• Immutabilité apparente : nouvelles listes à chaque +.
 
-Usages courants :
-• Comprendre la résolution de méthodes de Python
-• Débogage des problèmes de recherche d'attributs
-• Programmation par métaclasse et introspection`,
-  2366: `Les classes abstraites avec des méthodes abstraites non implémentées ne peuvent pas être instanciées.
+Cas d'utilisation courants :
+• Illustration de reduce.
 
-Concepts clés :
-• ABC est l'aide Classe de Base Abstraite du module abc
-• @abstractmethod marque une méthode qui DOIT être implémentée par les sous-classes
-• Tenter d'instancier une classe abstraite lève TypeError
-• Le message d'erreur indique quelles méthodes abstraites manquent
+Cas limites :
+• [] d’entrée avec init [] → [].
 
-Comment ça fonctionne :
-• class Shape(ABC) makes Shape an abstract base class
-• @abstractmethod def area marks area as abstract
-• Shape() tries to create an instance
-• Python checks for unimplemented abstract methods
-• Finds area is still abstract → raises TypeError
+Considérations de performance :
+• Préférer append dans une boucle ou list comp.
 
-Exemple :
-from abc import ABC, abstractmethod
+Exemples :
+• Variante b*2 sur éléments.
 
-class Shape(ABC):
-    @abstractmethod
-    def area(self):
-        pass
+Remarques :
+• Réponse : [1, 2, 3] (1re option).`,
+  2359: `reduce(lambda a,b: a*b, [2,3,4], 1)
 
-Shape()  # TypeError: Can't instantiate abstract class Shape
-         # with abstract method area
+Débutant :
+• 1 * 2 * 3 * 4 = 24 ; 1 est l’élément neutre de la multiplication.
 
-Usages courants :
-• Définition d'interfaces en Python
-• Application de l'implémentation de méthodes dans les sous-classes
-• Conception par contrat
-• Motif de méthode template`,
-  2367: `A concrete subclass that implements all abstract methods can be instantiated.
+Intermédiaire :
+• reduce sur [] avec init 1 retourne 1.
+
+Expert :
+• Parallèle avec init 0 pour +.
 
 Concepts clés :
-• Shape defines abstract method area
-• Circle inherits from Shape and implements area
-• Since all abstract methods are implemented, Circle is concrete
-• Circle() creates an instance successfully
+• Identité multiplicative.
 
-Comment ça fonctionne étape par étape :
-• class Circle(Shape) inherits from Shape
-• def area(self): return 3.14 provides the implementation
-• Python checks: are all abstract methods implemented? Yes.
-• Circle() creates an instance
-• .area() calls Circle's implementation → returns 3.14
+Distinctions clés :
+• Pas 10.
 
-Exemple :
-from abc import ABC, abstractmethod
+Fonctionnement :
+• Même produit que sans init si la liste non vide et premier élément multiplié après 1.
 
-class Shape(ABC):
-    @abstractmethod
-    def area(self):
-        pass
+Exécution étape par étape :
+• 1→2→6→24.
 
-class Circle(Shape):
-    def area(self):
-        return 3.14
+Ordre des opérations :
+• Init puis éléments.
 
-class Square(Shape):
-    def area(self):
-        return 100
+Cas d'utilisation courants :
+• Produit sûr avec liste potentiellement vide.
 
-Circle().area()   # 3.14
-Square().area()   # 100
+Cas limites :
+• Voir 2360 pour + et [].
 
-Usages courants :
-• Defining a common interface with guaranteed implementation
-• Plugin systems where all plugins must implement certain methods`,
-  2368: `@abstractmethod is a decorator that marks a method as abstract, requiring all concrete subclasses to provide an implementation.
+Considérations de performance :
+• N/A.
 
-Concepts clés :
-• Applied to methods in classes that inherit from ABC
-• Any subclass that n'implémente pas the abstract method remains abstract
-• Only concrete (fully-implemented) classes can be instantiated
-• The abstract method body can contain default code (accessible via super())
+Exemples :
+• factorial n via range.
 
-Comment ça fonctionne :
-• @abstractmethod sets the function's __isabstractmethod__ attribute to True
-• ABCMeta (the metaclass) tracks which methods are abstract
-• During instantiation, Python checks cls.__abstractmethods__
-• If any remain, TypeError is raised
+Remarques :
+• Réponse : 24.`,
+  2360: `reduce(lambda a,b: a+b, [], 0)
 
-Exemple :
-from abc import ABC, abstractmethod
+Débutant :
+• Itérable vide : reduce renvoie l’initial 0 sans invoquer le lambda.
 
-class Animal(ABC):
-    @abstractmethod
-    def speak(self):
-        pass
+Intermédiaire :
+• Sans initial sur [] : TypeError.
 
-class Dog(Animal):
-    def speak(self):
-        return "Woof"
-
-class Cat(Animal):
-    pass
-
-Dog().speak()  # "Woof" — implemented, works
-Cat()          # TypeError — speak not implemented
-
-Usages courants :
-• Application des contrats API
-• Motif de méthode template
-• Garantir l'exhaustivité des sous-classes`,
-  2369: `Abstract classes can contain a mix of abstract methods and concrete methods.
+Expert :
+• Pattern défensif pour agrégations.
 
 Concepts clés :
-• Abstract classes are not required to be fully abstract
-• Concrete methods provide shared default behavior
-• Subclasses inherit concrete methods without needing to override them
-• Only abstract methods must be implemented by subclasses
+• Short-circuit sur vide.
 
-Comment ça fonctionne :
-• Methods without @abstractmethod are concrete — they work as-is
-• Subclasses inherit concrete methods normally
-• Subclasses must only implement methods marked @abstractmethod
-• Cela permet partial implementation in the base class
+Distinctions clés :
+• Pas None ni erreur ici.
 
-Exemple :
-from abc import ABC, abstractmethod
+Fonctionnement :
+• Aucun appel à la fonction binaire.
 
-class Shape(ABC):
-    @abstractmethod
-    def area(self):
-        pass
+Exécution étape par étape :
+• Retour immédiat.
 
-    def describe(self):
-        return f"Area: {self.area()}"
+Ordre des opérations :
+• Vérification de longueur d’abord en interne.
 
-class Circle(Shape):
-    def area(self):
-        return 3.14
+Cas d'utilisation courants :
+• sum potentiellement vide.
 
-Circle().describe()  # "Area: 3.14" — inherits concrete method
+Cas limites :
+• Initial mal choisi pour l’opération (ex. * avec 0).
 
-Usages courants :
-• Motif de méthode template (concrete method calls abstract methods)
-• Shared utility methods in base classes
-• Default implementations that can be optionally overridden`,
-  2370: `An ABC subclass without abstract methods is concrete and can be instantiated normally.
+Considérations de performance :
+• O(1) sur vide.
 
-Concepts clés :
-• Shape inherits from ABC but n'a pas @abstractmethod decorators
-• describe() is a regular concrete method
-• Circle inherits from Shape with no abstract methods to implement
-• Circle can be instantiated and inherits describe()
+Exemples :
+• reduce sur [], "" pour str.
 
-Comment ça fonctionne étape par étape :
-• class Shape(ABC) — abstract base class, but no abstract methods
-• def describe(self) — concrete method, no @abstractmethod
-• class Circle(Shape): pass — inherits everything
-• Circle() — no abstract methods pending → instantiation succeeds
-• .describe() — inherited from Shape → returns "I'm a shape"
+Remarques :
+• Réponse : 0.`,
+  2361: `partial(add, 5) puis add5(3)
 
-Exemple :
-from abc import ABC
+Débutant :
+• partial fixe le premier argument : add(5,3) = 8.
 
-class Shape(ABC):
-    def describe(self):
-        return "I'm a shape"
+Intermédiaire :
+• Objet partial expose .func, .args, .keywords.
 
-class Circle(Shape):
-    pass
-
-Circle().describe()   # "I'm a shape"
-Shape()               # Also works! No abstract methods
-
-Usages courants :
-• Base classes that provide shared behavior
-• Marker classes for type checking
-• Gradual introduction of abstract methods`,
-  2371: `Python supports abstract properties by stacking @property and @abstractmethod decorators.
+Expert :
+• Ordre : args fixés d’abord, puis ceux du nouvel appel.
 
 Concepts clés :
-• Stack @property above @abstractmethod (or vice versa in older Python)
-• Subclasses must implement the property to be instantiable
-• Works for getters, setters, and deleters
-• Enforces that subclasses provide computed attributes
+• Application partielle (style FP).
 
-Comment ça fonctionne :
-• The @abstractmethod decorator must be the innermost decorator
-• @property wraps it as a property descriptor
-• The resulting property is marked as abstract
-• Subclasses must provide their own @property implementation
+Distinctions clés :
+• Pas 5 ni 3 seuls comme résultat.
 
-Exemple :
-from abc import ABC, abstractmethod
+Fonctionnement :
+• Concaténation des tuples d’arguments au call.
 
-class Shape(ABC):
-    @property
-    @abstractmethod
-    def area(self):
-        pass
+Exécution étape par étape :
+• Un seul appel effectif à add.
 
-class Circle(Shape):
-    def __init__(self, r):
-        self._r = r
+Ordre des opérations :
+• Évaluation de add5(3).
 
-    @property
-    def area(self):
-        return 3.14 * self._r ** 2
+Cas d'utilisation courants :
+• Callbacks, CLI, currying léger.
 
-Circle(5).area     # 78.5
-Shape()            # TypeError — abstract property
+Cas limites :
+• Trop d’arguments : TypeError selon signature.
 
-Usages courants :
-• Enforcing computed attributes in subclasses
-• Interface contracts for properties
-• Ensuring all shapes have area, perimeter, etc.`,
-  2372: `Si a subclass n'implémente pas all abstract méthodes, it remains abstract and cannot be instantiated.
+Considérations de performance :
+• Très léger.
 
-Concepts clés :
-• C defines abstract méthode f
-• D inherits from C but does not implement f
-• D is still considered abstract
-• Attempting D() raises TypeError
+Exemples :
+• partial(sorted, key=len).
 
-Comment ça fonctionne :
-• classe D(C): pass — D inherits f as an abstract méthode
-• D.__abstractmethods__ still contains 'f'
-• D() checks for abstract méthodes → finds f → raises TypeError
-• Error message: "Can't instantiate abstract classe D avec abstract méthode f"
+Remarques :
+• Réponse : 8.`,
+  2362: `partial(pow, 2) puis pow2(10)
 
-Exemple :
-from abc import ABC, abstractmethod
+Débutant :
+• pow(2, 10) = 2**10 = 1024.
 
-classe C(ABC):
-    @abstractmethod
-    def f(self):
-        pass
+Intermédiaire :
+• partial(pow, 2) fixe la base, l’exposant vient de l’appel.
 
-classe D(C):
-    pass
-
-classe E(C):
-    def f(self):
-        renvoyer "implemented"
-
-D()  # TypeError
-E()  # Works — f is implemented
-
-Usages courants :
-• Détecter les implémentations incomplètes tôt
-• Héritage multi-niveaux où les classes intermédiaires restent abstraites`,
-  2373: `Quand a subclass provides implementations for all abstract méthodes, it becomes concrete.
+Expert :
+• pow trois arguments (modulo) possible avec partial plus riche.
 
 Concepts clés :
-• C defines abstract méthode f
-• D inherits C and provides def f(self): renvoyer 1
-• All abstract méthodes are now implemented
-• D() succeeds and .f() retourne 1
+• Premier argument de pow figé.
 
-Comment ça fonctionne étape par étape :
-• classe D(C) inherits from abstract classe C
-• def f(self): renvoyer 1 provides the required implementation
-• D.__abstractmethods__ is empty → D is concrete
-• D() creates an instance
-• D().f() calls the implementation → retourne 1
+Distinctions clés :
+• Pas 20 ni 100.
 
-Exemple :
-from abc import ABC, abstractmethod
+Fonctionnement :
+• pow2(10) → pow(2, 10).
 
-classe C(ABC):
-    @abstractmethod
-    def f(self):
-        pass
+Exécution étape par étape :
+• Un appel built-in.
 
-classe D(C):
-    def f(self):
-        renvoyer 1
+Ordre des opérations :
+• Exposant entier : puissance exacte int.
 
-D().f()  # 1
+Cas d'utilisation courants :
+• Familles 2**n, 10**n.
 
-Usages courants :
-• Completing abstract interfaces
-• Providing specific behavior for abstract contracts`,
-  2374: `isinstance checks if an object is an instance of a class, issubclass checks class inheritance.
+Cas limites :
+• Grands exposants : big int.
 
-Concepts clés :
-• isinstance(obj, cls) checks if obj is an instance of cls (or a subclass of cls)
-• issubclass(cls, parent) checks if cls is a subclass of parent
-• All classes en Python inherit from object
-• Both return boolean values
+Considérations de performance :
+• pow optimisé.
 
-Comment ça fonctionne :
-• isinstance([], list) → [] is a list → True
-• issubclass(list, object) → list inherits from object → True
-• In Python, everything inherits from object (the base of all classes)
+Exemples :
+• pow2(8) → 256.
 
-Exemple :
-isinstance([], list)          # True
-isinstance([], object)        # True (list inherits from object)
-issubclass(list, object)      # True
-issubclass(bool, int)         # True (bool inherits from int)
-issubclass(int, str)          # False
+Remarques :
+• Réponse : 1024.`,
+  2363: `partial(int, base=2) sur "1010"
 
-Usages courants :
-• Vérification de type à l'exécution
-• Comportement polymorphe basé sur le type
-• Validation des arguments de fonction`,
-  2375: `ABC signifie Abstract Base Class (Classe de Base Abstraite) — a class that cannot be instantiated and serves as a blueprint for other classes.
+Débutant :
+• int("1010", 2) = 10 en décimal.
+
+Intermédiaire :
+• base est un mot-clé figé dans le partial.
+
+Expert :
+• Binaire valide : caractères 0-1 seulement.
 
 Concepts clés :
-• ABC is defined in the abc module
-• It provides the ABC helper class and @abstractmethod decorator
-• ABCs define interfaces that subclasses must implement
-• Python's standard library uses ABCs extensively in collections.abc
+• Conversion de base.
 
-Comment ça fonctionne :
-• from abc import ABC, abstractmethod
-• Inherit from ABC to create an abstract base class
-• Mark methods with @abstractmethod to require implementation
-• ABCMeta is the metaclass that powers this behavior
+Distinctions clés :
+• Pas la chaîne "1010" ni 2.
 
-Exemple :
-from abc import ABC, abstractmethod
+Fonctionnement :
+• Digits interprétés en place binaire.
 
-class Vehicle(ABC):
-    @abstractmethod
-    def start(self):
-        pass
+Exécution étape par étape :
+• 8+2 = 10.
 
-class Car(Vehicle):
-    def start(self):
-        return "Vroom!"
+Ordre des opérations :
+• str passée en premier argument positionnel à int.
 
-# Vehicle()  # TypeError
-Car().start()  # "Vroom!"
+Cas d'utilisation courants :
+• Parsing binaire, flags.
 
-Usages courants :
-• Defining contracts/interfaces
-• collections.abc: Iterable, Iterator, Mapping, Sequence
-• Framework plugin interfaces
-• Type checking with isinstance`,
-  2376: `collections.abc.Iterable est une classe de base abstraite pour les objets qui implémentent __iter__.
+Cas limites :
+• "102" en base 2 → ValueError.
 
-Concepts clés :
-• Iterable checks for the __iter__ method
-• Lists, tuples, dicts, sets, strings are all Iterable
-• isinstance with ABCs uses structural checking (duck typing)
-• An object is Iterable if it has __iter__ or is registered
+Considérations de performance :
+• N/A.
 
-Comment ça fonctionne :
-• from collections.abc import Iterable imports the ABC
-• isinstance([1,2,3], Iterable) checks if list has __iter__
-• list implements __iter__ → returns True
-• This works via __subclasshook__ which checks for __iter__
+Exemples :
+• "1111" → 15.
 
-Exemple :
-from collections.abc import Iterable
+Remarques :
+• Réponse : 10.`,
+  2364: `partial(print, "Hello") puis greet("World")
 
-isinstance([1, 2, 3], Iterable)   # True
-isinstance("hello", Iterable)     # True
-isinstance(42, Iterable)          # False
-isinstance({}, Iterable)          # True
-isinstance(range(5), Iterable)    # True
+Débutant :
+• print("Hello", "World") avec sep espace par défaut → affichage Hello World.
 
-Usages courants :
-• Vérifier si un objet peut être itéré
-• Indications de type : Iterable[int] pour tout itérable d'entiers
-• Programmation défensive avant les boucles for`,
-  2377: `collections.abc.Iterator is an ABC for objects that implement both __iter__ and __next__.
+Intermédiaire :
+• print renvoie None ; la question porte sur l’effet observable.
+
+Expert :
+• end et sep peuvent être partialement fixés aussi.
 
 Concepts clés :
-• Iterator extends Iterable — it requires both __iter__ and __next__
-• iter() on a list retourne un list_iterator, which is an Iterator
-• Iterators are stateful — they track position
-• All iterators are iterables, but not all iterables are iterators
+• Arguments positionnels concaténés à print.
 
-Comment ça fonctionne :
-• iter([1, 2, 3]) crée un list_iterator object
-• list_iterator has __iter__ (returns self) and __next__ (returns next element)
-• isinstance checks: does it have both __iter__ and __next__? Yes → True
+Distinctions clés :
+• Pas seulement World.
 
-Exemple :
-from collections.abc import Iterator, Iterable
+Fonctionnement :
+• "Hello" pré-rempli, "World" ajouté.
 
-it = iter([1, 2, 3])
-isinstance(it, Iterator)    # True
-isinstance(it, Iterable)    # True
-isinstance([1,2,3], Iterator)  # False — list n'a pas __next__
+Exécution étape par étape :
+• Un appel print.
 
-Usages courants :
-• Vérifier qu'un objet est un itérateur complet (pas juste iterable)
-• Classes d'itérateurs personnalisées
-• Les objets générateur sont des Iterators`,
-  2378: `collections.abc.Callable is an ABC for objects that peut être appelé like functions.
+Ordre des opérations :
+• Évaluation des args avant print.
 
-Concepts clés :
-• Callable checks for the __call__ method
-• Functions, methods, classes, and objects with __call__ are Callable
-• print is a built-in function — it's callable
-• Equivalent to using the callable() built-in function
+Cas d'utilisation courants :
+• Préfixe log.
 
-Comment ça fonctionne :
-• isinstance(print, Callable) checks if print has __call__
-• print is a built-in function with __call__ → True
-• callable(print) also returns True
+Cas limites :
+• Fichier=file en partial.
 
-Exemple :
-from collections.abc import Callable
+Considérations de performance :
+• I/O.
 
-isinstance(print, Callable)       # True
-isinstance(len, Callable)         # True
-isinstance(42, Callable)          # False
-isinstance(lambda x: x, Callable) # True
+Exemples :
+• Voir banque greet("Python").
 
-class Adder:
-    def __call__(self, x, y):
-        return x + y
+Remarques :
+• Réponse : imprime Hello World (1re option).`,
+  2365: `partial(sorted, key=len) sur ["hi","hello","hey"]
 
-isinstance(Adder(), Callable)     # True
+Débutant :
+• Longueurs 2, 5, 3 → ordre croissant par len : hi, hey, hello.
 
-Usages courants :
-• Indications de type : Callable[[int, int], str]
-• Vérifier si un argument est appelable avant de l'appeler
-• Validation des fonctions d'ordre supérieur`,
-  2379: `collections.abc.Mapping is an ABC for read-only mapping types like dict.
+Intermédiaire :
+• Tri stable : égalités de longueur conservent l’ordre relatif.
+
+Expert :
+• key=len évite lambda x: len(x) répété.
 
 Concepts clés :
-• Mapping requires __getitem__, __len__, __iter__, keys, items, values, get, __contains__, __eq__, __ne__
-• dict implements all Mapping methods
-• Mapping is read-only — MutableMapping adds __setitem__, __delitem__
-• OrderedDict, defaultdict, Counter are also Mappings
+• Fonction clé de tri.
 
-Comment ça fonctionne :
-• isinstance({}, Mapping) checks if dict satisfies the Mapping interface
-• dict is registered as a subclass of MutableMapping (which extends Mapping)
-• {} is a dict → it's an instance of Mapping → True
+Distinctions clés :
+• Pas ordre alphabétique brut.
 
-Exemple :
-from collections.abc import Mapping, MutableMapping
+Fonctionnement :
+• sorted appelé avec key fixé.
 
-isinstance({}, Mapping)            # True
-isinstance({}, MutableMapping)     # True
-isinstance("hello", Mapping)      # False
+Exécution étape par étape :
+• Comparaison par longueurs uniquement.
 
-from types import MappingProxyType
-proxy = MappingProxyType({"a": 1})
-isinstance(proxy, Mapping)         # True (read-only mapping)
+Ordre des opérations :
+• Nouvelle liste retournée.
 
-Usages courants :
-• Type hints: Mapping[str, int] for any mapping
-• Accepting dict-like objects without requiring dict specifically
-• Read-only interfaces using Mapping instead of MutableMapping`,
-  2380: `ABC.register() allows virtual subclassing — marking a class as a subclass without actual inheritance.
+Cas d'utilisation courants :
+• Tri de chaînes par longueur, données tabulaires.
 
-Concepts clés :
-• MyABC.register(SomeClass) makes isinstance(SomeClass(), MyABC) return True
-• SomeClass does NOT actually inherit from MyABC
-• No methods are inherited — it's purely for isinstance/issubclass checks
-• Used to retroactively declare that existing classes conform to an interface
+Cas limites :
+• None dans la liste : len échoue.
 
-Comment ça fonctionne :
-• register() adds the class to the ABC's registry
-• isinstance and issubclass then recognize the registered class
-• But the class gains no methods or behavior from the ABC
-• It's a declaration of compatibility, not inheritance
+Considérations de performance :
+• O(n log n).
 
-Exemple :
-from abc import ABC, abstractmethod
+Exemples :
+• Voir banque.
 
-class MyABC(ABC):
-    @abstractmethod
-    def process(self):
-        pass
+Remarques :
+• Réponse : ["hi", "hey", "hello"] (1re option).`,
+  2366: `partial(max, key=abs) sur (-10, 5, -3)
 
-class ThirdParty:
-    def process(self):
-        return "processed"
+Débutant :
+• Plus grande magnitude absolue : |-10|=10 ; max retourne l’élément d’origine -10.
 
-MyABC.register(ThirdParty)
+Intermédiaire :
+• Ce n’est pas 10 (valeur de la clé) mais la valeur réelle -10.
 
-isinstance(ThirdParty(), MyABC)   # True
-issubclass(ThirdParty, MyABC)     # True
-# But ThirdParty doesn't actually inherit from MyABC
-
-Usages courants :
-• Integrating third-party classes with your ABCs
-• Retroactive interface conformance
-• collections.abc uses this extensively (e.g., dict registered as MutableMapping)`,
-  2381: `A metaclass is a class that defines how other classes behave — it's the class of a class.
+Expert :
+• Égalité |5| et |-5| : le premier max gagnant dépend de l’ordre (stabilité interne).
 
 Concepts clés :
-• Just as an object is an instance of a class, a class is an instance of a metaclass
-• type is the default metaclass for all classes en Python
-• Metaclasses control class creation, modification, and behavior
-• They're rarely needed — most problems have simpler solutions
+• key compare, valeur retournée est l’objet initial.
 
-Comment ça fonctionne :
-• Quand vous write class Foo: pass, Python appelle type('Foo', (object,), {})
-• type is both a function and a metaclass
-• Custom metaclasses inherit from type
-• The metaclass's __new__ and __init__ are appelé quand the class est créé
+Distinctions clés :
+• Pas 5.
 
-Exemple :
-class Foo:
-    pass
+Fonctionnement :
+• max parcourt le tuple avec key=abs.
 
-type(Foo)      # <class 'type'> — Foo's metaclass is type
-type(type)     # <class 'type'> — type is its own metaclass
+Exécution étape par étape :
+• Comparaisons sur 10, 5, 3.
 
-# Foo is an instance of type
-isinstance(Foo, type)  # True
+Ordre des opérations :
+• Un seul appel.
 
-Usages courants :
-• ORMs (Django models, SQLAlchemy)
-• API frameworks
-• Singleton enforcement
-• Class registration/validation`,
-  2382: `type sert de métaclasse par défaut pour chaque classe en Python.
+Cas d'utilisation courants :
+• Signaux, vecteurs.
 
-Concepts clés :
-• Every class is an instance of type (unless a custom metaclass is specified)
-• type is both a callable (type(obj) retourne le type) and a metaclass
-• Built-in classes (int, str, list) and user-defined classes all use type
-• type itself is an instance of type (type(type) is type)
+Cas limites :
+• Liste vide : ValueError.
 
-Comment ça fonctionne :
-• class Foo: pass est équivalent à Foo = type('Foo', (object,), {})
-• type('name', bases, namespace) crée un new class
-• The resulting class object is an instance of type
+Considérations de performance :
+• N/A.
 
-Exemple :
-class Foo:
-    pass
+Exemples :
+• Voir banque f(1,-2,3)→3.
 
-type(Foo)       # <class 'type'>
-type(int)       # <class 'type'>
-type(str)       # <class 'type'>
-type(list)      # <class 'type'>
-type(object)    # <class 'type'>
-type(type)      # <class 'type'> — type is its own metaclass
+Remarques :
+• Réponse : -10 (1re option).`,
+  2367: `Que fait functools.partial ?
 
-Usages courants :
-• Understanding Python's object model
-• Dynamic class creation
-• Metaclass programming`,
-  2383: `type() avec trois arguments est la forme constructeur qui crée des classes dynamiquement.
+Débutant :
+• Crée un nouveau callable avec une partie des arguments déjà liés.
+
+Intermédiaire :
+• Ni « exécuter à moitié » au sens thread, ni découper le code source.
+
+Expert :
+• Implémenté comme type partial avec attributs introspectables.
 
 Concepts clés :
-• type(name, bases, dict) crée un new class
-• name: string — the class name
-• bases: tuple — parent classes
-• dict: dictionary — class namespace (methods and attributes)
-• C'est exactly what the class statement does internally
+• Application partielle, closure + stockage args/kw.
 
-Comment ça fonctionne :
-• type("MyClass", (object,), {}) crée un class named MyClass
-• It inherits from object (same as any class)
-• The empty dict {} means no methods or attributes
-• Retourne a class object, equivalent to class MyClass: pass
+Distinctions clés :
+• Pas split de fonction.
 
-Exemple :
-# These are equivalent:
-class MyClass:
-    pass
+Fonctionnement :
+• Au call, fusion des args figés et nouveaux.
 
-MyClass2 = type("MyClass2", (object,), {})
+Exécution étape par étape :
+• Construction de l’objet partial puis __call__.
 
-# With attributes and methods:
-MyClass3 = type("MyClass3", (object,), {
-    "x": 42,
-    "greet": lambda self: "hello"
-})
+Ordre des opérations :
+• kwargs du partial mélangés avec ceux du call.
 
-MyClass3().x       # 42
-MyClass3().greet()  # "hello"
+Cas d'utilisation courants :
+• Réduction de arity pour APIs.
 
-Usages courants :
-• Dynamic class creation at runtime
-• Metaprogramming
-• Code generation
-• Factory patterns`,
-  2384: `Quand a classe specifies a custom metaclass, that metaclass becomes its type.
+Cas limites :
+• Signatures vérifiées seulement à l’exécution.
 
-Concepts clés :
-• classe Meta(type): pass defines a custom metaclass
-• classe C(metaclass=Meta): pass uses Meta to create C
-• type(C) retourne Meta, not type
-• C is an instance of Meta
+Considérations de performance :
+• Léger overhead vs lambda fermée manuellement.
 
-Comment ça fonctionne :
-• Meta inherits from type — it IS a metaclass
-• metaclass=Meta tells Python to use Meta instead of type to create C
-• Python appelle Meta('C', (), {}) instead of type('C', (), {})
-• The resulting classe C is an instance of Meta
+Exemples :
+• power avec exp=2.
 
-Exemple :
-classe Meta(type):
-    pass
+Remarques :
+• Réponse : nouvelle fonction avec arguments pré-remplis (1re option).`,
+  2368: `partial(int, base=16) sur "ff"
 
-classe C(metaclass=Meta):
-    pass
+Débutant :
+• 15*16+15 = 255.
 
-type(C)               # <classe '__main__.Meta'>
-isinstance(C, Meta)   # True
-isinstance(C, type)   # True (Meta inherits from type)
+Intermédiaire :
+• Préfixe 0x non requis ici : int parse la str en hex.
 
-Usages courants :
-• Custom classe behavior
-• Automatic registration of subclasses
-• Validation of classe definitions
-• ORM model metaclasses`,
-  2385: `Le metaclass's __new__ méthode est appelé at classe definition time, not at instance creation time.
+Expert :
+• Lettres a-f insensibles à la casse.
 
 Concepts clés :
-• Meta.__new__ est appelé when the classe instruction is executed
-• This happens avant any instances of C are created
-• The print instruction runs as soon as Python processes classe C
-• The metaclass controls CLASS creation, not INSTANCE creation
+• Base 16.
 
-Comment ça fonctionne étape par étape :
-• Python encounters classe C(metaclass=Meta): pass
-• Python appelle Meta.__new__(Meta, 'C', (), namespace)
-• Inside __new__, print("Creating C") executes
-• super().__new__ (type.__new__) creates the actual classe objet
-• The classe C is now ready to use
+Distinctions clés :
+• Pas 16 ni "ff".
 
-Exemple :
-classe Meta(type):
-    def __new__(mcs, name, bases, ns):
-        print(f"Creating {name}")
-        renvoyer super().__new__(mcs, name, bases, ns)
+Fonctionnement :
+• int interprète chaque digit hex.
 
-classe C(metaclass=Meta):  # prints "Creating C" RIGHT HERE
-    pass
+Exécution étape par étape :
+• f=15.
 
-# "Creating C" was already printed above
-c = C()  # does NOT trigger Meta.__new__ again
+Ordre des opérations :
+• Validation des caractères.
 
-Usages courants :
-• Class registration at definition time
-• Validating classe structure avant it's usable
-• Modifying the classe namespace avant classe creation`,
-  2386: `__init_subclass__ (Python 3.6+) covers most metaclass use cases with much simpler code.
+Cas d'utilisation courants :
+• Couleurs, adresses.
 
-Concepts clés :
-• __init_subclass__ est appelé when a class is subclassed
-• It's a class method on the parent class
-• Much simpler than writing a full metaclass
-• Handles most registration, validation, and customization needs
+Cas limites :
+• "gg" invalide.
 
-Comment ça fonctionne :
-• Define __init_subclass__ in a base class
-• When any class inherits from that base, __init_subclass__ est appelé
-• Receives cls (the new subclass) and any keyword arguments from the class statement
+Considérations de performance :
+• N/A.
 
-Exemple :
-class Plugin:
-    registry = []
+Exemples :
+• "10" hex → 16.
 
-    def __init_subclass__(cls, **kwargs):
-        super().__init_subclass__(**kwargs)
-        Plugin.registry.append(cls)
+Remarques :
+• Réponse : 255.`,
+  2369: `partial(lambda a,b,c: a+b+c, 1, 2) puis f(3)
 
-class MyPlugin(Plugin):
-    pass
+Débutant :
+• 1+2+3 = 6.
 
-class AnotherPlugin(Plugin):
-    pass
+Intermédiaire :
+• Deux positions fixées, une libre.
 
-Plugin.registry  # [MyPlugin, AnotherPlugin]
-
-# Equivalent metaclass would be 15+ lines of code
-
-Usages courants :
-• Auto-registration of subclasses
-• Validation of subclass attributes
-• Setting default values for subclasses
-• Plugin systems`,
-  2387: `Function annotations sont stockés in the __annotations__ dictionary as actual type objects.
+Expert :
+• Mélange partial + lambda rare en prod mais valide.
 
 Concepts clés :
-• Type hints in function signatures sont stockés in __annotations__
-• Parameter types are keyed by parameter name
-• Return type is keyed by "return"
-• Values are the actual type objects (int, str), not strings
-• Annotations are metadata only — not enforced at runtime
+• Enchaînement des arguments positionnels.
 
-Comment ça fonctionne :
-• def f(x: int) -> str creates annotations
-• f.__annotations__ returns {"x": int, "return": str}
-• int and str are the actual built-in type objects
-• Python stores but does not use these annotations
+Distinctions clés :
+• Pas 3 seul.
 
-Exemple :
-def f(x: int) -> str:
-    return str(x)
+Fonctionnement :
+• Appel final (1,2,3).
 
-f.__annotations__
-# {'x': <class 'int'>, 'return': <class 'str'>}
+Exécution étape par étape :
+• Une somme.
 
-def g(name: str, age: int) -> bool:
-    return age > 0
+Ordre des opérations :
+• partial lie de gauche à droite.
 
-g.__annotations__
-# {'name': <class 'str'>, 'age': <class 'int'>, 'return': <class 'bool'>}
+Cas d'utilisation courants :
+• Templates numériques.
 
-Usages courants :
-• Documentation and IDE support
-• Type checkers (mypy, pyright)
-• Framework introspection (FastAPI, Pydantic)
-• Runtime validation libraries`,
-  2388: `Class-level type annotations sont stockés in the class's __annotations__ dictionary.
+Cas limites :
+• Oublier un argument restant → TypeError.
 
-Concepts clés :
-• x: int in a class body creates an annotation, NOT an attribute value
-• The annotation is stored in C.__annotations__
-• x: int alone does NOT create C.x — there's no value assigned
-• x: int = 5 would create both an annotation AND a class attribute
+Considérations de performance :
+• N/A.
 
-Comment ça fonctionne :
-• class C: x: int; y: str processes the annotations
-• Python stores them in C.__annotations__ = {"x": int, "y": str}
-• hasattr(C, 'x') is False — no value was assigned
-• C.__annotations__['x'] is int
+Exemples :
+• f(10)→13.
 
-Exemple :
-class C:
-    x: int
-    y: str
+Remarques :
+• Réponse : 6.`,
+  2370: `f.func pour partial(pow, 2)
 
-C.__annotations__   # {'x': <class 'int'>, 'y': <class 'str'>}
-hasattr(C, 'x')     # False — annotation only, no value
+Débutant :
+• L’attribut .func pointe vers la fonction d’origine, ici pow.
 
-class D:
-    x: int = 5
-    y: str = "hello"
+Intermédiaire :
+• .args vaut (2,) ici ; .keywords souvent {}.
 
-D.__annotations__   # {'x': <class 'int'>, 'y': <class 'str'>}
-D.x                 # 5 — has both annotation and value
-
-Usages courants :
-• dataclasses use annotations to define fields
-• Pydantic models
-• NamedTuple subclasses
-• Type checking and documentation`,
-  2389: `Les indications de type de Python sont purement informatives — l'interpréteur ne les vérifie ni ne les applique.
+Expert :
+• Utile pour tests et sérialisation partielle.
 
 Concepts clés :
-• Type hints sont stockés as annotations but never checked by Python itself
-• You can pass any type regardless of the hint: f(x: int) allows f("hello")
-• External tools like mypy, pyright, pytype perform static type checking
-• Some libraries (Pydantic, beartype) add runtime checking via decorators
+• Introspection du partial.
 
-Comment ça fonctionne :
-• def f(x: int) -> str stores hints in __annotations__
-• Calling f("not_an_int") works fine — no TypeError from Python
-• Only static type checkers flag mismatches
-• C'est by design — gradual typing philosophy
+Distinctions clés :
+• Pas le partial lui-même ni None.
 
-Exemple :
-def add(x: int, y: int) -> int:
-    return x + y
+Fonctionnement :
+• Référence directe au built-in pow.
 
-add(1, 2)           # 3 — correct types
-add("a", "b")       # "ab" — wrong types, but Python doesn't care!
-add([1], [2])       # [1, 2] — still works
+Exécution étape par étape :
+• Accès attribut sans appel.
 
-x: int = "hello"    # No error at runtime!
-print(x)            # "hello"
+Ordre des opérations :
+• N/A.
 
-Usages courants :
-• IDE autocompletion and error detection
-• mypy/pyright static analysis
-• Documentation
-• Runtime validation via third-party libraries (Pydantic, beartype)`,
-  2390: `Optional[X] est un raccourci pour Union[X, None], signifiant que la valeur peut être X ou None.
+Cas d'utilisation courants :
+• Wrappers, debug.
 
-Concepts clés :
-• from typing import Optional
-• Optional[int] means the value is either int or None
-• Equivalent to Union[int, None]
-• Since Python 3.10, you can write int | None directly
-• Common for function parameters with default None
+Cas limites :
+• partial imbriqués : .func chaîne.
 
-Comment ça fonctionne :
-• Optional[int] creates Union[int, None]
-• Used in function signatures where a parameter might be None
-• Type checkers understand this means: check for None before using as int
+Considérations de performance :
+• N/A.
 
-Exemple :
-from typing import Optional
+Exemples :
+• int avec base=16 → .keywords.
 
-def find_user(user_id: int) -> Optional[str]:
-    if user_id == 1:
-        return "Alice"
-    return None
+Remarques :
+• Réponse : la fonction d’origine pow (1re option).`,
+  2371: `@lru_cache fib(10)
 
-# Equivalent en Python 3.10+:
-def find_user(user_id: int) -> str | None:
-    ...
+Débutant :
+• Suite de Fibonacci : F(10)=55 avec F(0)=0,F(1)=1 selon la définition du snippet.
 
-# Common pattern:
-def greet(name: Optional[str] = None) -> str:
-    if name is None:
-        return "Hello!"
-    return f"Hello, {name}!"
+Intermédiaire :
+• lru_cache évite la re-explosion exponentielle des appels.
 
-Usages courants :
-• Return types that might be None (lookup failures)
-• Optional parameters with None defaults
-• Database fields that can be NULL`,
-  2391: `List[int] du module typing représente une liste dont les éléments sont des entiers.
+Expert :
+• maxsize par défaut 128 sur @lru_cache sans parenthèses.
 
 Concepts clés :
-• from typing import List (Python 3.5+)
-• List[int] means "a list where all elements are int"
-• Since Python 3.9, you can use the built-in list[int] instead
-• Type checkers verify elements match the specified type
+• Mémoïsisation, sous-problèmes partagés.
 
-Comment ça fonctionne :
-• List[int] crée un generic alias
-• Type checkers use it to verify list element types
-• At runtime, List[int] is just list — no enforcement
+Distinctions clés :
+• Pas 89 (décalage de définition possible si F(1)=1,F(2)=1 mais ici base du code).
 
-Exemple :
-from typing import List
+Fonctionnement :
+• n<2 retourne n sinon somme deux appels.
 
-def sum_all(numbers: List[int]) -> int:
-    return sum(numbers)
+Exécution étape par étape :
+• Table remplie jusqu’à 10.
 
-sum_all([1, 2, 3])        # 6 — correct
-sum_all(["a", "b"])       # type checker warns, but runs
+Ordre des opérations :
+• Cohérent avec banque anglaise.
 
-# Python 3.9+ — no import needed:
-def sum_all(numbers: list[int]) -> int:
-    return sum(numbers)
+Cas d'utilisation courants :
+• DP top-down.
 
-Usages courants :
-• Function parameters expecting lists of specific types
-• Return types for list-producing functions
-• Class attributes that hold lists`,
-  2392: `Python 3.9 introduced built-in generic types, removing the need to import from typing for common types.
+Cas limites :
+• Récursion profonde sans sys.setrecursionlimit.
 
-Concepts clés :
-• list[int] replaces typing.List[int]
-• dict[str, int] replaces typing.Dict[str, int]
-• tuple[int, str] replaces typing.Tuple[int, str]
-• set[str] replaces typing.Set[str]
-• No import needed — use the built-in types directly
+Considérations de performance :
+• Avec cache : linéaire en n.
 
-Comment ça fonctionne :
-• Python 3.9 added __class_getitem__ to built-in types
-• list[int] crée un GenericAlias at runtime
-• Type checkers treat it le même que List[int]
-• The typing versions still work but are considered legacy
+Exemples :
+• fib(20) 6765.
 
-Exemple :
-# Python 3.9+ — preferred:
-def process(items: list[int]) -> dict[str, int]:
-    return {str(i): i for i in items}
+Remarques :
+• Réponse : 55.`,
+  2372: `Pourquoi lru_cache accélère Fibonacci récursif ?
 
-# Before Python 3.9:
-from typing import List, Dict
-def process(items: List[int]) -> Dict[str, int]:
-    return {str(i): i for i in items}
+Débutant :
+• Les résultats fib(k) déjà calculés sont réutilisés au lieu d’être recalculés en arborescence.
 
-# Other built-in generics:
-x: tuple[int, str] = (1, "hello")
-y: set[float] = {1.0, 2.0}
-z: frozenset[int] = frozenset({1, 2})
+Intermédiaire :
+• Complexité passe d’exponentielle à linéaire en n (temps et espace de cache).
 
-Usages courants :
-• Modern Python type annotations
-• Cleaner code without typing imports
-• PEP 585 standard`,
-  2393: `Dict[str, int] is a generic type hint for dictionaries with specific key and value types.
+Expert :
+• Ce n’est pas du parallélisme ni une transformation itérative automatique.
 
 Concepts clés :
-• from typing import Dict (or dict[str, int] en Python 3.9+)
-• First parameter is the key type, second is the value type
-• Dict[str, int] → keys are strings, values are integers
-• Type checkers verify both key and value types
+• Sous-problèmes qui se chevauchent.
 
-Comment ça fonctionne :
-• Dict[str, int] crée un generic alias
-• Type checkers use it to verify dict operations
-• d["name"] = 42 is valid; d[42] = "name" would be flagged
+Distinctions clés :
+• Pas « réduit la pile » comme réponse principale.
 
-Exemple :
-from typing import Dict
+Fonctionnement :
+• Dict clé = arguments, valeur = résultat.
 
-def word_count(text: str) -> Dict[str, int]:
-    counts: Dict[str, int] = {}
-    for word in text.split():
-        counts[word] = counts.get(word, 0) + 1
-    return counts
+Exécution étape par étape :
+• Premier appel fib(k) calcule ; suivants hit cache.
 
-# Python 3.9+:
-def word_count(text: str) -> dict[str, int]:
-    ...
+Ordre des opérations :
+• LRU évince si maxsize fini.
 
-# Nested:
-config: Dict[str, Dict[str, int]] = {
-    "server": {"port": 8080, "timeout": 30}
-}
+Cas d'utilisation courants :
+• Toute fonction pure avec répétition d’args.
 
-Usages courants :
-• Configuration dictionaries
-• Lookup tables
-• JSON-like data structures`,
-  2394: `Tuple[int, str] specifies a fixed-length tuple with specific element types at each position.
+Cas limites :
+• Args non hashables interdits.
 
-Concepts clés :
-• Tuple[int, str] means exactly 2 elements: first is int, second is str
-• Tuple[int, ...] means variable-length tuple of ints (ellipsis for homogeneous)
-• Tuple[()] means an empty tuple
-• Each position has its own type — this is different from lists
+Considérations de performance :
+• Hits massifs sur fib.
 
-Comment ça fonctionne :
-• Tuple[int, str] crée un generic alias
-• Type checkers verify the tuple length and element types
-• (1, "hello") matches Tuple[int, str]
-• (1, 2) does NOT match (second element should be str)
+Exemples :
+• Voir comparaison avec / sans cache.
 
-Exemple :
-from typing import Tuple
+Remarques :
+• Réponse : met en cache les résultats déjà calculés (1re option).`,
+  2373: `@lru_cache(maxsize=32) — rôle de maxsize
 
-def get_name_age() -> Tuple[str, int]:
-    return ("Alice", 30)
+Débutant :
+• Nombre maximal d’entrées distinctes conservées avant éviction LRU.
 
-name, age = get_name_age()  # name: str, age: int
+Intermédiaire :
+• Pas la profondeur de récursion ni la taille des arguments.
 
-# Variable-length tuple:
-def get_scores() -> Tuple[int, ...]:
-    return (95, 87, 92)
-
-# Python 3.9+:
-def get_name_age() -> tuple[str, int]:
-    return ("Alice", 30)
-
-Usages courants :
-• Returning multiple values with different types
-• Database rows
-• Coordinate pairs: Tuple[float, float]`,
-  2395: `Union[X, Y] means the value can be any one of the specified types.
+Expert :
+• None = illimité (comme functools.cache).
 
 Concepts clés :
-• from typing import Union
-• Union[int, str] means the value is either int or str
-• Since Python 3.10, you can write int | str instead
-• Union can take any number of types: Union[int, str, float]
-• Union[X, None] is le même que Optional[X]
+• Politique LRU.
 
-Comment ça fonctionne :
-• Union[int, str] crée un special type
-• Type checkers require you to handle all possible types
-• Typically requires isinstance checks or pattern matching
+Distinctions clés :
+• Pas temps d’exécution max.
 
-Exemple :
-from typing import Union
+Fonctionnement :
+• Quand plein, la moins récemment utilisée est retirée.
 
-def process(value: Union[int, str]) -> str:
-    if isinstance(value, int):
-        return f"Number: {value}"
-    return f"Text: {value}"
+Exécution étape par étape :
+• Miss ajoute ; hit rafraîchit l’ordre.
 
-process(42)       # "Number: 42"
-process("hello")  # "Text: hello"
+Ordre des opérations :
+• Statistiques via cache_info().
 
-# Python 3.10+:
-def process(value: int | str) -> str:
-    ...
+Cas d'utilisation courants :
+• Borner la mémoire.
 
-# Multiple types:
-JsonValue = Union[str, int, float, bool, None, list, dict]
+Cas limites :
+• maxsize=0 : cache désactivé (comportement documenté).
 
-Usages courants :
-• Functions accepting multiple input types
-• JSON values
-• API parameters with flexible types`,
-  2396: `PEP 604 introduced the | operator for union types en Python 3.10.
+Considérations de performance :
+• Tuning hit/miss.
 
-Concepts clés :
-• int | str replaces Union[int, str]
-• int | None replaces Optional[int]
-• Works in function annotations, variable annotations, and isinstance/issubclass
-• Cleaner, more readable syntax
+Exemples :
+• Voir 2374.
 
-Comment ça fonctionne :
-• The | operator on types crée un union type
-• int | str is evaluated at runtime as types.UnionType
-• Type checkers treat it identically to Union[int, str]
-• Also fonctionne avec isinstance: isinstance(x, int | str)
+Remarques :
+• Réponse : nombre max de résultats en cache (1re option).`,
+  2374: `f(3) deux fois puis cache_info()
 
-Exemple :
-# Python 3.10+:
-def parse(value: int | str) -> str:
-    return str(value)
+Débutant :
+• Premier appel miss, second hit → hits=1, misses=1, currsize=1, maxsize=128 par défaut.
 
-def find(key: str) -> int | None:
-    ...
+Intermédiaire :
+• currsize compte les clés distinctes, pas le nombre d’appels.
 
-# isinstance with union (Python 3.10+):
-isinstance(42, int | str)    # True
-isinstance("hi", int | str)  # True
-isinstance([], int | str)    # False
-
-# Before Python 3.10:
-from typing import Union, Optional
-def parse(value: Union[int, str]) -> str: ...
-def find(key: str) -> Optional[int]: ...
-
-Usages courants :
-• Modern type annotations
-• Cleaner Optional syntax: X | None
-• isinstance with multiple types`,
-  2397: `Any is a special type that is compatible with every other type — it opts out of type checking.
+Expert :
+• Tuple nommé CacheInfo.
 
 Concepts clés :
-• from typing import Any
-• Any is both a subtype and supertype of every type
-• Variables typed as Any skip all type checking
-• Using Any is an escape hatch — prefer specific types when possible
+• Statistiques du décorateur.
 
-Comment ça fonctionne :
-• x: Any = 42 — valid
-• x: Any = "hello" — valid
-• x: Any = [1, 2, 3] — valid
-• Type checkers won't warn about any operations on Any values
-• Any propagates: if x is Any, x.anything is also Any
+Distinctions clés :
+• Pas hits=2 misses=0 (deuxième était hit mais premier était miss).
 
-Exemple :
-from typing import Any
+Fonctionnement :
+• Compteurs mis à jour à chaque appel.
 
-def process(data: Any) -> Any:
-    return data  # no type checking
+Exécution étape par étape :
+• Deux traversées de la logique de cache.
 
-x: Any = 42
-x.whatever()    # type checker won't complain (but will fail at runtime!)
+Ordre des opérations :
+• Évaluation de f.cache_info() en fin de chaîne.
 
-# Contrast with object:
-y: object = 42
-y.whatever()    # type checker WILL flag this
+Cas d'utilisation courants :
+• Observabilité.
 
-Usages courants :
-• Gradual typing — when migrating untyped code
-• Dynamic data from JSON, databases, external APIs
-• When the actual type is too complex to express
-• Escape hatch for type checker limitations`,
-  2398: `Protocol (PEP 544) permet le sous-typage structurel — checking that objects have the required methods/attributes without requiring inheritance.
+Cas limites :
+• cache_clear remet à zéro.
 
-Concepts clés :
-• from typing import Protocol
-• Define a Protocol with required methods/attributes
-• Any class that has those methods matches, no inheritance needed
-• C'est "static duck typing" — checked by type checkers
-• Unlike ABCs, no register() or inheritance is required
+Considérations de performance :
+• Lecture O(1).
 
-Comment ça fonctionne :
-• Define a Protocol class with method signatures
-• Type checkers verify that passed objects have matching methods
-• No runtime check by default (use @runtime_checkable for isinstance)
-• Classes n'a pas besoin to know about the Protocol to satisfy it
+Exemples :
+• Voir banque avec f(4).
 
-Exemple :
-from typing import Protocol
+Remarques :
+• Réponse : hits=1, misses=1, maxsize=128, currsize=1 (1re option).`,
+  2375: `cache_clear() sur fonction lru_cache
 
-class Drawable(Protocol):
-    def draw(self) -> str: ...
+Débutant :
+• Vide le cache et remet les compteurs (currsize à 0, hits/misses à 0 selon impl CPython documentée).
 
-class Circle:
-    def draw(self) -> str:
-        return "O"
+Intermédiaire :
+• Ne supprime pas le décorateur ni ne redéfinit la fonction Python.
 
-class Square:
-    def draw(self) -> str:
-        return "[]"
-
-def render(shape: Drawable) -> str:
-    return shape.draw()
-
-render(Circle())   # "O" — Circle satisfies Drawable
-render(Square())   # "[]" — Square satisfies Drawable
-# Neither inherits from Drawable!
-
-Usages courants :
-• Duck typing with static type safety
-• Callback protocols
-• Plugin interfaces without forcing inheritance
-• Interoperability between libraries`,
-  2399: `__class_getitem__ est appelé when a class is subscripted with square brackets.
+Expert :
+• Utile quand les données externes rendent le cache obsolète.
 
 Concepts clés :
-• __class_getitem__(cls, item) is a class method called for Class[item] syntax
-• It enables the generic subscript notation like list[int]
-• item receives whatever est passé in the brackets
-• Retourne whatever the class wants — typically a generic alias
+• Invalidation manuelle.
 
-Comment ça fonctionne :
-• C[int] calls C.__class_getitem__(int)
-• item is the int class object (not the string "int")
-• f"C[{int}]" formats to "C[<class 'int'>]" because str(int) is "<class 'int'>"
-• The result is printed
+Distinctions clés :
+• Pas erreur par défaut.
 
-Exemple :
-class C:
-    def __class_getitem__(cls, item):
-        return f"C[{item}]"
+Fonctionnement :
+• Structure interne du wrapper vidée.
 
-C[int]      # "C[<class 'int'>]"
-C[str]      # "C[<class 'str'>]"
-C["hello"]  # "C[hello]"
+Exécution étape par étape :
+• Prochains appels sont des misses.
 
-# Built-in usage:
-list[int]   # list.__class_getitem__(int) → list[int] generic alias
+Ordre des opérations :
+• Appel explicite.
 
-Usages courants :
-• Implementing generic classes
-• Custom type hint syntax
-• Parameterized class behavior`,
-  2400: `__class_getitem__ is the mechanism that allows classes to be parameterized with square bracket syntax.
+Cas d'utilisation courants :
+• Reload config, tests.
+
+Cas limites :
+• Concurrence : besoin de discipline thread-safe au-delà du simple clear.
+
+Considérations de performance :
+• Libère la mémoire des entrées.
+
+Exemples :
+• Voir banque après plusieurs valeurs.
+
+Remarques :
+• Réponse : efface tous les résultats mis en cache (1re option).`,
+  2376: `lru_cache — arguments non hashables
+
+Débutant :
+• Les clés du cache sont dérivées des arguments ; ils doivent être hashables (immuables typiques).
+
+Intermédiaire :
+• list, dict, set ne peuvent pas servir de clé ; tuple ou immuables OK.
+
+Expert :
+• Exception TypeError: unhashable type si violation.
 
 Concepts clés :
-• Added en Python 3.7 (PEP 560)
-• Enables Class[params] syntax without a metaclass
-• Used by built-in types (list, dict, tuple, set) for generic type hints
-• Replaces the need for typing.List, typing.Dict etc. (Python 3.9+)
-
-Comment ça fonctionne :
-• When Python sees MyClass[X], it looks for __class_getitem__ on MyClass
-• If found, it calls MyClass.__class_getitem__(X)
-• The return value is typically a GenericAlias object
-• Built-in types return types.GenericAlias instances
-
-Exemple :
-# Custom generic class:
-class MyList:
-    def __class_getitem__(cls, item):
-        return f"{cls.__name__}[{item.__name__}]"
-
-MyList[int]    # "MyList[int]"
-MyList[str]    # "MyList[str]"
-
-# Built-in generics (Python 3.9+):
-list[int]           # list.__class_getitem__(int)
-dict[str, int]      # dict.__class_getitem__((str, int))
-tuple[int, ...]     # tuple.__class_getitem__((int, Ellipsis))
-
-Usages courants :
-• Generic type hints on user-defined classes
-• Built-in type subscripting (list[int], dict[str, int])
-• Custom parameterized types
-• Type alias definitions`,
-  2401: `L'héritage est un mécanisme qui permet à une classe enfant (sous-classe) d'hériter des fonctionnalités d'une classe parente (superclasse). Quand vous define class Child(Parent), the child class automatically gets access to the parent class's attributes and methods. Cela permet code reuse and creates an "is-a" relationship - a Child is a type of Parent. The child can use parent features as-is, or override them to provide different behavior. Inheritance is one of the core principles of object-oriented programming.
-
-Inheritance concept:
-• Child class gets parent features
-• class Child(Parent): inherits from Parent
-• Child can access parent attributes and methods
-• Child can override parent methods
-• Enables code reuse and "is-a" relationships
-
-Comment ça fonctionne :
-• class Parent: defines parent class
-• class Child(Parent): defines child class inheriting from Parent
-• Child automatically gets Parent's attributes and methods
-• Child can use parent features directly
-• Child can override parent methods if needed
-
-Exemple :
-class Parent:
-    x = 1
-    def method(self):
-        return 1
-class Child(Parent):  # Inherits from Parent
-    pass
-Child.x                # 1 (inherits parent attribute)
-Child().method()       # 1 (inherits parent method)
-
-Usages courants :
-• Code reuse: class Child(Parent): (inherits parent features)
-• "Is-a" relationships: class Dog(Animal): (Dog is an Animal)
-• Inheritance hierarchy
-• Object-oriented programming
-
-Exemple : Inheritance is a mechanism that allows a child class to inherit features from a parent class, enabling the child to use parent attributes and methods while also allowing overrides for different behavior.
-`,
-  2402: `A child class inherits parent class attributes. If class Parent: x = 1; class Child(Parent): pass; Child.x, then Child.x returns 1 because inheritance allows the child class to access the parent class's attributes. Quand vous define class Child(Parent), Child automatically gets access to Parent's class attributes, including x = 1. Vous pouvez accéder parent class attributes through the child class directly.
-
-Child inherits parent attributes:
-• Child.x returns 1
-• class Child(Parent): inherits from Parent
-• Parent has class attribute x = 1
-• Child inherits this attribute
-• Retourne : 1
-
-Comment ça fonctionne :
-• class Parent: x = 1 creates class with class attribute
-• class Child(Parent): pass creates child inheriting from Parent
-• Child inherits Parent's class attributes
-• Child.x accesses inherited attribute
-• Retourne : 1
-
-Exemple :
-class Parent: x = 1
-class Child(Parent): pass
-Child.x                        # 1 (inherits parent class attribute)
-Parent.x                       # 1 (parent still has it)
-
-Usages courants :
-• Inheriting attributes: class Child(Parent): (inherits parent attributes)
-• Class attributes: child can access parent class attributes
-• Inheritance
-• Code reuse
-
-Exemple : If class Parent: x = 1; class Child(Parent): pass; Child.x, then Child.x returns 1 because the child class inherits parent class attributes, so it can access Parent's class attribute x = 1.
-`,
-  2403: `A child class inherits parent methods. If class Parent: def method(self): return 1; class Child(Parent): pass; Child().method(), then Child().method() returns 1 because inheritance allows the child class to use the parent class's methods. Quand vous create an instance of Child and call method(), Python looks for method in Child, doesn't find it, then looks in Parent and finds it. C'est how method resolution works in inheritance.
-
-Child inherits parent methods:
-• Child().method() returns 1
-• class Child(Parent): inherits from Parent
-• Parent has method()
-• Child inherits this method
-• Retourne : 1
-
-Comment ça fonctionne :
-• Child().method() calls method on Child instance
-• Python searches for method in Child (not found)
-• Python searches for method in Parent (found)
-• Calls Parent.method() with Child instance as self
-• Retourne : 1
-
-Exemple :
-class Parent:
-    def method(self):
-        return 1
-class Child(Parent): pass
-Child().method()              # 1 (inherits parent method)
-
-Usages courants :
-• Inheriting methods: class Child(Parent): (inherits parent methods)
-• Method reuse: child can use parent methods directly
-• Inheritance
-• Code reuse
-
-Exemple : If class Parent: def method(self): return 1; class Child(Parent): pass; Child().method(), then Child().method() returns 1 because the child class inherits parent methods, so instances of Child can call Parent's methods.
-`,
-  2404: `Le issubclass() fonction checks if a classe is a subclass of another classe. If classe Parent: pass; classe Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) retourne True car Child inherits from Parent, making Child a subclass of Parent. issubclass() checks the inheritance relationship entre classes, returning True if the first classe inherits from (or is le même que) the second classe.
-
-issubclass() fonction:
-• issubclass(Child, Parent) retourne True
-• issubclass() checks if Child is subclass of Parent
-• Child inherits from Parent
-• Child is subclass of Parent
-• Retourne : True
-
-Comment ça fonctionne :
-• classe Child(Parent): creates child inheriting from Parent
-• issubclass(Child, Parent) checks inheritance
-• Child is indeed a subclass of Parent
-• Retourne : True
-
-Exemple :
-classe Parent: pass
-classe Child(Parent): pass
-issubclass(Child, Parent)     # True (Child is subclass of Parent)
-
-Usages courants :
-• Inheritance check: issubclass(Child, Parent) (check if subclass)
-• Type checking: if issubclass(cls, Parent): ...
-• Inheritance
-• Type system
-
-Exemple : If classe Parent: pass; classe Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) retourne True car issubclass() checks if a classe is a subclass of another classe, and Child inherits from Parent.
-`,
-  2405: `Le isinstance() fonction checks if an instance is of a classe (including parent classes). If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) retourne True car isinstance() checks the entire inheritance chain. Since Child inherits from Parent, an instance of Child is also considered an instance of Parent. isinstance() is more flexible than type() == car il retourne True for parent classes too.
-
-isinstance() avec inheritance:
-• isinstance(Child(), Parent) retourne True
-• isinstance() checks inheritance chain
-• Child() is instance of Child
-• Child inherits from Parent
-• Child() is also instance of Parent
-• Retourne : True
-
-Comment ça fonctionne :
-• Child() creates instance of Child
-• isinstance(instance, Parent) checks if instance is of Parent
-• Child inherits from Parent
-• Instance of Child is also instance of Parent
-• Retourne : True
-
-Exemple :
-classe Parent: pass
-classe Child(Parent): pass
-isinstance(Child(), Parent)   # True (Child inherits from Parent)
-isinstance(Child(), Child)    # True (Child() is instance of Child)
-
-Usages courants :
-• Type checking: if isinstance(obj, Parent): ... (fonctionne avec inheritance)
-• Polymorphism: isinstance(obj, BaseClass) (checks base classes)
-• Inheritance
-• Type system
-
-Exemple : If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) retourne True car isinstance() checks if an instance is of a classe (including parent classes), and since Child inherits from Parent, an instance of Child is also an instance of Parent.
-`,
-  2406: `Le __bases__ attribute contains a tuple of parent classes. If classe Parent: pass; classe Child(Parent): pass; Child.__bases__, then Child.__bases__ retourne (<classe '__main__.Parent'>,) car __bases__ stocke le parent classes that a classe inherits from. For a classe avec a single parent, il retourne a tuple avec one element. For multiple inheritance, it contains all parent classes. C'est useful for introspection to see what classes a classe inherits from.
-
-__bases__ attribute:
-• Child.__bases__ retourne (<classe '__main__.Parent'>,)
-• __bases__ contains tuple of parent classes
-• Child inherits from Parent
-• Retourne tuple avec Parent
-• Retourne : (<classe '__main__.Parent'>,)
-
-Comment ça fonctionne :
-• classe Child(Parent): creates child inheriting from Parent
-• Python stores parent classes in Child.__bases__
-• __bases__ is tuple of parent classes
-• Contains: (Parent,)
-• Retourne : (<classe '__main__.Parent'>,)
-
-Exemple :
-classe Parent: pass
-classe Child(Parent): pass
-Child.__bases__               # (<classe '__main__.Parent'>,) (parent classes)
-
-Usages courants :
-• Inheritance inspection: Child.__bases__ (see parent classes)
-• Introspection: check what a classe inherits from
-• Inheritance
-• Type system
-
-Exemple : If classe Parent: pass; classe Child(Parent): pass; Child.__bases__, then Child.__bases__ retourne (<classe '__main__.Parent'>,) car __bases__ contains a tuple of parent classes, and Child inherits from Parent.
-`,
-  2407: `An instance of a child class can access parent class attributes. If class Parent: x = 1; class Child(Parent): pass; obj = Child(); obj.x, then obj.x returns 1 because when you access an attribute on an instance, Python searches the inheritance chain. Since obj is an instance of Child and Child inherits from Parent, Python can access Parent's class attribute x = 1 through the child instance.
-
-Instance accesses parent attribute:
-• obj.x returns 1
-• obj is instance of Child
-• Child inherits from Parent
-• Parent has class attribute x = 1
-• obj.x accesses inherited attribute
-• Retourne : 1
-
-Comment ça fonctionne :
-• obj = Child() creates instance of Child
-• obj.x looks for attribute x
-• Python searches: obj.__dict__ (not found) → Child.__dict__ (not found) → Parent.__dict__ (finds x = 1)
-• Retourne : 1
-
-Exemple :
-class Parent: x = 1
-class Child(Parent): pass
-obj = Child()
-obj.x                        # 1 (accesses parent class attribute)
-
-Usages courants :
-• Inherited attributes: obj.attr (accesses parent class attribute)
-• Instance access: instances can access parent class attributes
-• Inheritance
-• Attribute access
-
-Exemple : If class Parent: x = 1; class Child(Parent): pass; obj = Child(); obj.x, then obj.x returns 1 because an instance of a child class can access parent class attributes through the inheritance chain.
-`,
-  2408: `A child class inherits the parent's __init__ method if it doesn't override it. If class Parent: def __init__(self): self.x = 1; class Child(Parent): pass; Child().x, then Child().x returns 1 because quand vous créez an instance of Child, Python looks for __init__ in Child (doesn't find it), then looks in Parent and finds it. Parent.__init__ est appelé, setting self.x = 1 on the Child instance. Cela permet the child to use the parent's initialization logic.
-
-Child inherits parent __init__:
-• Child().x returns 1
-• Child doesn't define __init__
-• Python uses Parent.__init__
-• Parent.__init__ sets self.x = 1
-• Retourne : 1
-
-Comment ça fonctionne :
-• Child() creates instance and looks for __init__
-• Child doesn't have __init__
-• Python searches Parent, finds __init__
-• Calls Parent.__init__(self) with Child instance
-• Sets self.x = 1 on Child instance
-• Retourne : 1
-
-Exemple :
-class Parent:
-    def __init__(self):
-        self.x = 1
-class Child(Parent): pass  # No __init__ defined
-Child().x                  # 1 (inherits parent __init__)
-
-Usages courants :
-• Inherited initialization: class Child(Parent): pass (uses parent __init__)
-• Constructor inheritance: child can use parent __init__
-• Inheritance
-• Object initialization
-
-Exemple : If class Parent: def __init__(self): self.x = 1; class Child(Parent): pass; Child().x, then Child().x returns 1 because the child inherits the parent's __init__ if not overridden, so Parent.__init__ est appelé when creating a Child instance.
-`,
-  2409: `Le __subclasses__() méthode retourne un liste of direct subclasses of a classe. If classe Parent: pass; classe Child(Parent): pass; Parent.__subclasses__(), then Parent.__subclasses__() retourne [<classe '__main__.Child'>] car __subclasses__() listes all classes that directly inherit from Parent. It only shows direct children, not grandchildren or deeper descendants. C'est useful for introspection to see what classes inherit from a given classe.
-
-__subclasses__() méthode:
-• Parent.__subclasses__() retourne [<classe '__main__.Child'>]
-• __subclasses__() retourne liste of direct subclasses
-• Child directly inherits from Parent
-• Retourne liste avec Child
-• Retourne : [<classe '__main__.Child'>]
-
-Comment ça fonctionne :
-• classe Child(Parent): creates child inheriting from Parent
-• Python tracks subclasses in Parent.__subclasses__
-• __subclasses__() retourne liste of direct children
-• Contains: [Child]
-• Retourne : [<classe '__main__.Child'>]
-
-Exemple :
-classe Parent: pass
-classe Child(Parent): pass
-Parent.__subclasses__()      # [<classe '__main__.Child'>] (direct subclasses)
-
-Usages courants :
-• Subclass inspection: Parent.__subclasses__() (see direct children)
-• Introspection: check what classes inherit from a classe
-• Inheritance
-• Type system
-
-Exemple : If classe Parent: pass; classe Child(Parent): pass; Parent.__subclasses__(), then Parent.__subclasses__() retourne [<classe '__main__.Child'>] car __subclasses__() retourne un liste of direct subclasses, and Child directly inherits from Parent.
-`,
-  2410: `A child class attribute overrides (hides) the parent class attribute. If class Parent: x = 1; class Child(Parent): x = 2; Child.x, then Child.x returns 2 because when a child class defines an attribute with le même name as a parent attribute, the child's attribute takes precedence. The child attribute shadows the parent attribute, so accessing Child.x retourne le child's value (2), not the parent's value (1).
-
-Child overrides parent attribute:
-• Child.x returns 2
-• Child defines class attribute x = 2
-• Parent has class attribute x = 1
-• Child's attribute shadows parent's
-• Retourne : 2
-
-Comment ça fonctionne :
-• class Child(Parent): x = 2 defines child attribute
-• Child has its own class attribute x = 2
-• Child.x looks for attribute x
-• Python finds x in Child.__dict__ first
-• Retourne : 2 (child's attribute, not parent's)
-
-Exemple :
-class Parent: x = 1
-class Child(Parent): x = 2  # Overrides parent attribute
-Child.x                     # 2 (child's attribute, not parent's)
-Parent.x                    # 1 (parent's attribute inchangés)
-
-Usages courants :
-• Attribute override: class Child(Parent): attr = value (overrides parent)
-• Customization: child can override parent attributes
-• Inheritance
-• Attribute shadowing
-
-Exemple : If class Parent: x = 1; class Child(Parent): x = 2; Child.x, then Child.x returns 2 because the child class attribute overrides the parent attribute, so the child's value (2) takes precedence over the parent's value (1).
-`,
-  2411: `La surcharge de méthode est quand une classe enfant redéfinit une méthode qui existe déjà dans la classe parente. When a child class defines a method with le même name as a parent method, the child's method overrides (replaces) the parent's method. Cela permet the child to provide different behavior while keeping le même method name. Quand vous call the method on a child instance, Python uses the child's version, not the parent's. C'est a key feature of polymorphism - le même method name can have different implementations in different classes.
-
-Method overriding:
-• Child redefines parent method
-• Same method name in parent and child
-• Child's method takes precedence
-• Provides different behavior
-• Key feature of polymorphism
-
-Comment ça fonctionne :
-• Parent defines method()
-• Child defines method() with same name
-• Child's method overrides parent's method
-• Calling method() on Child instance uses Child's version
-• Parent's method is hidden (but can be accessed via super())
-
-Exemple :
-class Parent:
-    def method(self):
-        return 1
-class Child(Parent):
-    def method(self):
-        return 2  # Overrides parent method
-Child().method()  # 2 (uses child's version, not parent's)
-
-Usages courants :
-• Customization: class Child(Parent): def method(self): return custom_behavior
-• Polymorphism: same method name, different implementations
-• Method overriding
-• Object-oriented programming
-
-Exemple : Method overriding is when a child class redefines a method that already exists in the parent class, allowing the child to provide different behavior while keeping le même method name.
-`,
-  2412: `A child method overrides the parent method when it has le même name. If class Parent: def method(self): return 1; class Child(Parent): def method(self): return 2; Child().method(), then Child().method() returns 2 because the child's method overrides the parent's method. When Python looks for method() on a Child instance, il trouve method() in Child first and uses that, never reaching the parent's method. The child's version takes precedence.
-
-Child overrides parent method:
-• Child().method() returns 2
-• Child defines method() with same name
-• Child's method overrides parent's method
-• Child's version takes precedence
-• Retourne : 2
-
-Comment ça fonctionne :
-• Child().method() calls method on Child instance
-• Python searches for method in Child (found)
-• Uses Child.method() (doesn't check Parent)
-• Method executes: return 2
-• Retourne : 2
-
-Exemple :
-class Parent:
-    def method(self):
-        return 1
-class Child(Parent):
-    def method(self):
-        return 2  # Overrides parent
-Child().method()              # 2 (uses child's method)
-Parent().method()             # 1 (uses parent's method)
-
-Usages courants :
-• Method override: class Child(Parent): def method(self): return new_value
-• Customization: child provides different behavior
-• Method overriding
-• Polymorphism
-
-Exemple : If class Parent: def method(self): return 1; class Child(Parent): def method(self): return 2; Child().method(), then Child().method() returns 2 because the child method overrides the parent method, so the child's version takes precedence.
-`,
-  2413: `La fonction super() permet à une méthode enfant d'appeler la méthode parent. If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method(); Child().method(), then Child().method() returns 1 because super().method() calls the parent's method() even though the child has overridden it. super() fournit un way to access parent class methods and attributes from within an overridden child method, allowing you to extend parent behavior rather than completely replace it.
-
-super() calls parent method:
-• Child().method() returns 1
-• Child's method calls super().method()
-• super() accesses parent class
-• Calls Parent.method() from within child
-• Retourne : 1
-
-Comment ça fonctionne :
-• Child().method() calls method on Child instance
-• Child.method() executes: return super().method()
-• super() gets parent class (Parent)
-• Calls Parent.method() with Child instance as self
-• Parent.method() returns 1
-• Retourne : 1
-
-Exemple :
-class Parent:
-    def method(self):
-        return 1
-class Child(Parent):
-    def method(self):
-        return super().method()  # Calls parent method
-Child().method()              # 1 (calls parent via super())
-
-Usages courants :
-• Extending methods: def method(self): result = super().method(); return modified(result)
-• Parent access: super().method() (call parent from child)
-• Method overriding
-• Inheritance
-
-Exemple : If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method(); Child().method(), then Child().method() returns 1 because super() calls the parent method from the child, allowing access to the parent's implementation.
-`,
-  2414: `A child method can call the parent method and modify its result. If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method() + 1; Child().method(), then Child().method() returns 2 because super().method() calls the parent method (returns 1), and then the child adds 1 to it (1 + 1 = 2). Cela permet the child to extend or modify the parent's behavior rather than completely replace it - a common pattern for extending functionality.
-
-Child modifies parent result:
-• Child().method() returns 2
-• Child's method calls super().method()
-• Parent method returns 1
-• Child adds 1: 1 + 1 = 2
-• Retourne : 2
-
-Comment ça fonctionne :
-• Child().method() calls method on Child instance
-• Child.method() executes: return super().method() + 1
-• super().method() calls Parent.method(), returns 1
-• Child adds 1: 1 + 1 = 2
-• Retourne : 2
-
-Exemple :
-class Parent:
-    def method(self):
-        return 1
-class Child(Parent):
-    def method(self):
-        return super().method() + 1  # Extends parent
-Child().method()              # 2 (parent's 1 + 1)
-
-Usages courants :
-• Extending methods: def method(self): return super().method() + modification
-• Behavior extension: child extends parent behavior
-• Method overriding
-• Inheritance
-
-Exemple : If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method() + 1; Child().method(), then Child().method() returns 2 because the child can call the parent method and modify le résultat (1 + 1 = 2).
-`,
-  2415: `Overriding __init__ doesn't automatically call the parent __init__. If class Parent: def __init__(self): self.x = 1; class Child(Parent): def __init__(self): self.y = 2; Child().x, then Child().x raises an AttributeError because when Child defines its own __init__, it completely replaces the parent's __init__ - the parent's __init__ is not called automatically. Only the child's __init__ runs, qui définit self.y = 2 but doesn't set self.x = 1. To call the parent's __init__, you must explicitly call super().__init__().
-
-Overriding __init__ doesn't auto-call parent:
-• Child().x raises AttributeError
-• Child's __init__ overrides parent's __init__
-• Parent's __init__ not called automatically
-• Only Child.__init__ runs (sets self.y = 2)
-• self.x is not set
-• Raises AttributeError
-
-Comment ça fonctionne :
-• Child() creates instance and calls __init__
-• Child has its own __init__ (overrides parent)
-• Python appelle Child.__init__ (only)
-• Child.__init__ sets self.y = 2 (doesn't set self.x)
-• Parent.__init__ is not called
-• Child().x raises AttributeError
-
-Exemple :
-class Parent:
-    def __init__(self):
-        self.x = 1
-class Child(Parent):
-    def __init__(self):
-        self.y = 2  # Overrides, doesn't call parent
-Child().x                    # AttributeError (parent __init__ not called)
-
-Usages courants :
-• Understanding initialization: overriding __init__ doesn't auto-call parent
-• Explicit parent call: super().__init__() (must call manually)
-• Method overriding
-• Object initialization
-
-Exemple : If class Parent: def __init__(self): self.x = 1; class Child(Parent): def __init__(self): self.y = 2; Child().x, then Child().x raises an AttributeError because overriding __init__ doesn't call the parent __init__ automatically - you must call super().__init__() explicitly.
-`,
-  2416: `super().__init__() explicitly appelle le __init__ du parent method. If class Parent: def __init__(self): self.x = 1; class Child(Parent): def __init__(self): super().__init__(); self.y = 2; obj = Child(); obj.x, then obj.x returns 1 because super().__init__() appelle le __init__ du parent, qui définit self.x = 1. C'est the correct way to ensure parent initialization happens when you override __init__ in a child class. The child can then set its own attributes after calling the parent's initialization.
-
-super().__init__() calls parent:
-• obj.x returns 1
-• Child.__init__ calls super().__init__()
-• Parent.__init__ sets self.x = 1
-• Child.__init__ sets self.y = 2
-• Retourne : 1
-
-Comment ça fonctionne :
-• Child() creates instance and calls __init__
-• Child.__init__ executes: super().__init__()
-• super().__init__() calls Parent.__init__()
-• Parent.__init__ sets self.x = 1
-• Child.__init__ sets self.y = 2
-• obj.x returns 1
-
-Exemple :
-class Parent:
-    def __init__(self):
-        self.x = 1
-class Child(Parent):
-    def __init__(self):
-        super().__init__()  # Calls parent __init__
-        self.y = 2
-obj = Child()
-obj.x                        # 1 (parent __init__ called)
-obj.y                        # 2 (child __init__ sets)
-
-Usages courants :
-• Parent initialization: def __init__(self): super().__init__(); self.child_attr = value
-• Constructor chaining: ensure parent initialization happens
-• Method overriding
-• Object initialization
-
-Exemple : If class Parent: def __init__(self): self.x = 1; class Child(Parent): def __init__(self): super().__init__(); self.y = 2; obj = Child(); obj.x, then obj.x returns 1 because super().__init__() appelle le __init__ du parent, ensuring parent initialization happens.
-`,
-  2417: `A child class without its own method uses the parent's method. If class Parent: def method(self): return 'parent'; class Child(Parent): pass; Child().method(), then Child().method() returns 'parent' because Child doesn't define its own method(), so when you call method() on a Child instance, Python searches for method in Child (not found), then searches in Parent (found), and uses Parent.method(). Inheritance allows the child to use parent methods when they're not overridden.
-
-Child uses parent method:
-• Child().method() returns 'parent'
-• Child doesn't define method()
-• Python searches inheritance chain
-• Finds method() in Parent
-• Uses Parent.method()
-• Retourne : 'parent'
-
-Comment ça fonctionne :
-• Child().method() calls method on Child instance
-• Python searches for method in Child (not found)
-• Python searches for method in Parent (found)
-• Calls Parent.method() with Child instance as self
-• Method executes: return 'parent'
-• Retourne : 'parent'
-
-Exemple :
-class Parent:
-    def method(self):
-        return 'parent'
-class Child(Parent): pass  # No method defined
-Child().method()           # 'parent' (uses parent method)
-
-Usages courants :
-• Inherited methods: class Child(Parent): pass (uses parent methods)
-• Method reuse: child can use parent methods without defining them
-• Inheritance
-• Code reuse
-
-Exemple : If class Parent: def method(self): return 'parent'; class Child(Parent): pass; Child().method(), then Child().method() returns 'parent' because the child without a method uses the parent method through inheritance.
-`,
-  2418: `A parent instance uses the parent's method, not the child's override. If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method(); Parent().method(), then Parent().method() returns 1 because Parent().method() calls method on a Parent instance, which uses Parent.method() directly. The child's override n'affecte pas parent instances - method overriding only affects instances of the child class. Each class has its own method implementation.
-
-Parent uses parent method:
-• Parent().method() returns 1
-• Parent instance uses Parent.method()
-• Child's override n'affecte pas parent instances
-• Parent.method() returns 1
-• Retourne : 1
-
-Comment ça fonctionne :
-• Parent().method() calls method on Parent instance
-• Python searches for method in Parent (found)
-• Uses Parent.method() (doesn't check Child)
-• Method executes: return 1
-• Retourne : 1
-
-Exemple :
-class Parent:
-    def method(self):
-        return 1
-class Child(Parent):
-    def method(self):
-        return super().method()  # Overrides parent
-Parent().method()              # 1 (uses parent method, not child's)
-Child().method()               # 1 (uses child method, calls parent)
-
-Usages courants :
-• Independent methods: parent and child have separate method implementations
-• Method overriding: affects child instances only
-• Inheritance
-• Method resolution
-
-Exemple : If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method(); Parent().method(), then Parent().method() returns 1 because a parent instance uses the parent method - the child's override n'affecte pas parent instances.
-`,
-  2419: `Class methods can be overridden in child classes, just like instance methods. If class Parent: @classmethod; def method(cls): return 1; class Child(Parent): @classmethod; def method(cls): return 2; Child.method(), then Child.method() returns 2 because the child class defines its own class method with le même name, which overrides the parent's class method. Quand vous call Child.method(), Python uses the child's version, not the parent's. Class methods follow le même overriding rules as instance methods.
-
-Class methods can be overridden:
-• Child.method() returns 2
-• Child defines @classmethod method()
-• Child's class method overrides parent's
-• Child's version takes precedence
-• Retourne : 2
-
-Comment ça fonctionne :
-• Child.method() calls class method on Child class
-• Python finds method in Child (found)
-• Uses Child.method() (doesn't check Parent)
-• Method executes: return 2
-• Retourne : 2
-
-Exemple :
-class Parent:
-    @classmethod
-    def method(cls):
-        return 1
-class Child(Parent):
-    @classmethod
-    def method(cls):
-        return 2  # Overrides parent class method
-Child.method()              # 2 (uses child's class method)
-Parent.method()             # 1 (uses parent's class method)
-
-Usages courants :
-• Class method override: @classmethod def method(cls): return value (overrides parent)
-• Customization: child provides different class method behavior
-• Method overriding
-• Class methods
-
-Exemple : If class Parent: @classmethod; def method(cls): return 1; class Child(Parent): @classmethod; def method(cls): return 2; Child.method(), then Child.method() returns 2 because class methods can be overridden, and the child's class method takes precedence.
-`,
-  2420: `Static methods can be overridden in child classes, just like instance methods and class methods. If class Parent: @staticmethod; def method(): return 1; class Child(Parent): @staticmethod; def method(): return 2; Child.method(), then Child.method() returns 2 because the child class defines its own static method with le même name, which overrides the parent's static method. Quand vous call Child.method(), Python uses the child's version. Static methods follow le même overriding rules as other methods - they can be overridden in child classes.
-
-Static methods can be overridden:
-• Child.method() returns 2
-• Child defines @staticmethod method()
-• Child's static method overrides parent's
-• Child's version takes precedence
-• Retourne : 2
-
-Comment ça fonctionne :
-• Child.method() calls static method on Child class
-• Python finds method in Child (found)
-• Uses Child.method() (doesn't check Parent)
-• Method executes: return 2
-• Retourne : 2
-
-Exemple :
-class Parent:
-    @staticmethod
-    def method():
-        return 1
-class Child(Parent):
-    @staticmethod
-    def method():
-        return 2  # Overrides parent static method
-Child.method()              # 2 (uses child's static method)
-Parent.method()             # 1 (uses parent's static method)
-
-Usages courants :
-• Static method override: @staticmethod def method(): return value (overrides parent)
-• Customization: child provides different static method behavior
-• Method overriding
-• Static methods
-
-Exemple : If class Parent: @staticmethod; def method(): return 1; class Child(Parent): @staticmethod; def method(): return 2; Child.method(), then Child.method() returns 2 because static methods can be overridden, and the child's static method takes precedence.
-`,
-  2421: `Le super() fonction sans arguments automatically gets the parent classe quand appelé from within a méthode. If classe Parent: def méthode(self): renvoyer 1; classe Child(Parent): def méthode(self): renvoyer super().méthode(); Child().méthode(), then Child().méthode() retourne 1 car super() sans arguments in a méthode automatically determines the parent classe from the current classe and instance. When appelé from Child.méthode(), super() automatically refers to Parent, so super().méthode() calls Parent.méthode().
-
-super() sans arguments:
-• Child().méthode() retourne 1
-• super() in méthode automatically gets parent
-• super() refers to Parent (from Child)
-• super().méthode() calls Parent.méthode()
-• Retourne : 1
-
-Comment ça fonctionne :
-• Child().méthode() calls méthode on Child instance
-• Child.méthode() executes: renvoyer super().méthode()
-• super() automatically gets Parent (from Child)
-• super().méthode() calls Parent.méthode()
-• Parent.méthode() retourne 1
-• Retourne : 1
-
-Exemple :
-classe Parent:
-    def méthode(self):
-        renvoyer 1
-classe Child(Parent):
-    def méthode(self):
-        renvoyer super().méthode()  # super() gets Parent automatically
-Child().méthode()              # 1 (calls Parent.méthode())
-
-Usages courants :
-• Parent access: super().méthode() (automatically gets parent)
-• Method extension: def méthode(self): renvoyer super().méthode() + extension
-• super() fonction
-• Inheritance
-
-Exemple : If classe Parent: def méthode(self): renvoyer 1; classe Child(Parent): def méthode(self): renvoyer super().méthode(); Child().méthode(), then Child().méthode() retourne 1 car super() sans arguments in a méthode automatically gets the parent classe.
-`,
-  2422: `Le super() fonction peut être appelé avec explicit arguments: super(Child, self) spécifie le classe (Child) and instance (self) explicitly. If classe Parent: def méthode(self): renvoyer 1; classe Child(Parent): def méthode(self): renvoyer super(Child, self).méthode(); Child().méthode(), then Child().méthode() retourne 1 car super(Child, self) explicitly tells Python to look for the parent of Child (which is Parent) and use self as the instance. C'est the explicit form of super(), equivalent to super() sans arguments en Python 3, but more explicit about which classe to look for the parent of.
-
-super() avec explicit arguments:
-• Child().méthode() retourne 1
-• super(Child, self) explicitly specifies classe and instance
-• Child is the classe, self is the instance
-• super() looks for parent of Child (Parent)
-• super().méthode() calls Parent.méthode()
-• Retourne : 1
-
-Comment ça fonctionne :
-• Child().méthode() calls méthode on Child instance
-• Child.méthode() executes: renvoyer super(Child, self).méthode()
-• super(Child, self) gets parent of Child (Parent), uses self as instance
-• super().méthode() calls Parent.méthode() avec self as instance
-• Parent.méthode() retourne 1
-• Retourne : 1
-
-Exemple :
-classe Parent:
-    def méthode(self):
-        renvoyer 1
-classe Child(Parent):
-    def méthode(self):
-        renvoyer super(Child, self).méthode()  # Explicit super()
-Child().méthode()              # 1 (calls Parent.méthode())
-
-Usages courants :
-• Explicit super: super(Class, self).méthode() (Python 2 style, works en Python 3)
-• Clarity: explicitly specify classe and instance
-• super() fonction
-• Inheritance
-
-Exemple : If classe Parent: def méthode(self): renvoyer 1; classe Child(Parent): def méthode(self): renvoyer super(Child, self).méthode(); Child().méthode(), then Child().méthode() retourne 1 car super(Child, self) explicitly spécifie le classe and instance, telling Python to look for the parent of Child and use self as the instance.
-`,
-  2423: `Le super() fonction can access parent classe attributes. If classe Parent: x = 1; classe Child(Parent): def méthode(self): renvoyer super().x; Child().méthode(), then Child().méthode() retourne 1 car super() retourne un proxy objet that gives access to the parent classe, and super().x accesses the parent's classe attribute x = 1. Cela permet you to access parent classe attributes even if the child has overridden them avec its own attribute.
-
-super() accesses parent attributes:
-• Child().méthode() retourne 1
-• super() retourne parent proxy
-• super().x accesses parent classe attribute
-• Parent has x = 1
-• Retourne : 1
-
-Comment ça fonctionne :
-• Child().méthode() calls méthode on Child instance
-• Child.méthode() executes: renvoyer super().x
-• super() gets parent classe (Parent)
-• super().x accesses Parent.x
-• Parent.x = 1
-• Retourne : 1
-
-Exemple :
-classe Parent: x = 1
-classe Child(Parent):
-    def méthode(self):
-        renvoyer super().x  # Accesses parent classe attribute
-Child().méthode()          # 1 (accesses Parent.x)
-
-Usages courants :
-• Parent attribute access: super().attr (accesses parent classe attribute)
-• Override bypass: super().x (accesses parent even if child overrides)
-• super() fonction
-• Inheritance
-
-Exemple : If classe Parent: x = 1; classe Child(Parent): def méthode(self): renvoyer super().x; Child().méthode(), then Child().méthode() retourne 1 car super() can access parent classe attributes, and super().x accesses Parent.x = 1.
-`,
-  2424: `super().__init__() can pass arguments to the parent's __init__ method. If class Parent: def __init__(self, x): self.x = x; class Child(Parent): def __init__(self, x, y): super().__init__(x); self.y = y; obj = Child(1, 2); obj.x, then obj.x returns 1 because Child.__init__ receives arguments (1, 2), calls super().__init__(x) qui passe x = 1 to Parent.__init__, setting self.x = 1. Then Child.__init__ sets self.y = 2. Cela permet the child to initialize parent attributes with specific values.
-
-super().__init__() with arguments:
-• obj.x returns 1
-• Child(1, 2) calls Child.__init__(1, 2)
-• Child.__init__ calls super().__init__(1) (passes x)
-• Parent.__init__ sets self.x = 1
-• Child.__init__ sets self.y = 2
-• Retourne : 1
-
-Comment ça fonctionne :
-• Child(1, 2) calls Child.__init__(1, 2)
-• Child.__init__ executes: super().__init__(1)
-• super().__init__(1) calls Parent.__init__(1)
-• Parent.__init__ sets self.x = 1
-• Child.__init__ sets self.y = 2
-• obj.x returns 1
-
-Exemple :
-class Parent:
-    def __init__(self, x):
-        self.x = x
-class Child(Parent):
-    def __init__(self, x, y):
-        super().__init__(x)  # Passes x to parent
-        self.y = y
-obj = Child(1, 2)
-obj.x                        # 1 (parent __init__ sets with x=1)
-obj.y                        # 2 (child __init__ sets)
-
-Usages courants :
-• Parent initialization: def __init__(self, x, y): super().__init__(x); self.y = y
-• Constructor chaining: pass arguments to parent __init__
-• Method overriding
-• Object initialization
-
-Exemple : If class Parent: def __init__(self, x): self.x = x; class Child(Parent): def __init__(self, x, y): super().__init__(x); self.y = y; obj = Child(1, 2); obj.x, then obj.x returns 1 because super().__init__() passes arguments to the parent, so x = 1 est passé to Parent.__init__, setting obj.x = 1.
-`,
-  2425: `Le super() fonction works in classe méthodes. If classe Parent: @classmethod; def méthode(cls): renvoyer 1; classe Child(Parent): @classmethod; def méthode(cls): renvoyer super().méthode(); Child.méthode(), then Child.méthode() retourne 1 car super() peut être utilisé in classe méthodes to access the parent's classe méthode. When appelé from within a classe méthode, super() automatically gets the parent classe, and super().méthode() calls the parent's classe méthode. The cls parameter is automatically handled by super() in classe méthodes.
-
-super() in classe méthodes:
-• Child.méthode() retourne 1
-• super() works in classe méthodes
-• super() automatically gets parent classe
-• super().méthode() calls Parent.méthode()
-• Retourne : 1
-
-Comment ça fonctionne :
-• Child.méthode() calls classe méthode on Child classe
-• Child.méthode() executes: renvoyer super().méthode()
-• super() automatically gets Parent (from Child)
-• super().méthode() calls Parent.méthode()
-• Parent.méthode() retourne 1
-• Retourne : 1
-
-Exemple :
-classe Parent:
-    @classmethod
-    def méthode(cls):
-        renvoyer 1
-classe Child(Parent):
-    @classmethod
-    def méthode(cls):
-        renvoyer super().méthode()  # Works in classe méthode
-Child.méthode()              # 1 (calls Parent.méthode())
-
-Usages courants :
-• Class méthode inheritance: @classmethod def méthode(cls): renvoyer super().méthode()
-• Parent classe méthodes: super() works in classe méthodes
-• super() fonction
-• Class méthodes
-
-Exemple : If classe Parent: @classmethod; def méthode(cls): renvoyer 1; classe Child(Parent): @classmethod; def méthode(cls): renvoyer super().méthode(); Child.méthode(), then Child.méthode() retourne 1 car super() works in classe méthodes, automatically getting the parent classe and calling the parent's classe méthode.
-`,
-  2426: `Le super() fonction ne fonctionne pas in static méthodes car static méthodes n'a pas self or cls parameters. If classe Parent: @staticmethod; def méthode(): renvoyer 1; classe Child(Parent): @staticmethod; def méthode(): renvoyer super().méthode(); Child.méthode(), then Child.méthode() raises an AttributeError car super() requires either self (for instance méthodes) or cls (for classe méthodes) to determine the classe context, but static méthodes have neither. Without self or cls, super() cannot determine which classe to look for the parent of.
-
-super() in static méthodes:
-• Child.méthode() raises AttributeError
-• super() ne fonctionne pas in static méthodes
-• Static méthodes have no self or cls
-• super() needs self/cls to determine context
-• Raises AttributeError
-
-Comment ça fonctionne :
-• Child.méthode() calls static méthode on Child classe
-• Child.méthode() executes: renvoyer super().méthode()
-• super() needs self or cls to determine classe context
-• Static méthode n'a pas self or cls
-• super() cannot determine which classe (no context)
-• Raises AttributeError
-
-Exemple :
-classe Parent:
-    @staticmethod
-    def méthode():
-        renvoyer 1
-classe Child(Parent):
-    @staticmethod
-    def méthode():
-        renvoyer super().méthode()  # AttributeError (no self/cls)
-Child.méthode()              # AttributeError (super() ne fonctionne pas)
-
-Usages courants :
-• Understanding limitations: super() ne fonctionne pas in static méthodes
-• Static méthodes: no self/cls, so no super()
-• super() fonction
-• Static méthodes
-
-Exemple : If classe Parent: @staticmethod; def méthode(): renvoyer 1; classe Child(Parent): @staticmethod; def méthode(): renvoyer super().méthode(); Child.méthode(), then Child.méthode() raises an AttributeError car super() ne fonctionne pas in static méthodes - static méthodes have no self or cls, so super() cannot determine the classe context.
-`,
-  2427: `Le super() fonction peut être utilisé to extend parent méthode behavior rather than completely replace it. If classe Parent: def méthode(self): renvoyer 'parent'; classe Child(Parent): def méthode(self): renvoyer super().méthode() + ' child'; Child().méthode(), then Child().méthode() retourne 'parent child' car the child calls the parent's méthode via super().méthode() (qui retourne 'parent'), then extends it by concatenating ' child'. Ce pattern allows the child to enhance the parent's behavior while preserving it, creating behavior extension rather than replacement.
-
-super() extends parent behavior:
-• Child().méthode() retourne 'parent child'
-• Child calls super().méthode() (retourne 'parent')
-• Child extends result: 'parent' + ' child'
-• Retourne extended behavior
-• Retourne : 'parent child'
-
-Comment ça fonctionne :
-• Child().méthode() calls méthode on Child instance
-• Child.méthode() executes: renvoyer super().méthode() + ' child'
-• super().méthode() calls Parent.méthode(), retourne 'parent'
-• Child concatenates: 'parent' + ' child'
-• Retourne : 'parent child'
-
-Exemple :
-classe Parent:
-    def méthode(self):
-        renvoyer 'parent'
-classe Child(Parent):
-    def méthode(self):
-        renvoyer super().méthode() + ' child'  # Extends parent
-Child().méthode()              # 'parent child' (extends parent behavior)
-
-Usages courants :
-• Behavior extension: def méthode(self): renvoyer super().méthode() + extension
-• Preserving parent: call parent, then add child behavior
-• super() fonction
-• Method overriding
-
-Exemple : If classe Parent: def méthode(self): renvoyer 'parent'; classe Child(Parent): def méthode(self): renvoyer super().méthode() + ' child'; Child().méthode(), then Child().méthode() retourne 'parent child' car super() peut être utilisé to extend parent méthode behavior, calling the parent and then adding child-specific behavior.
-`,
-  2428: `Le super() fonction peut être appelé à l’extérieur de of a méthode by explicitly providing the classe and instance arguments. If classe Parent: def méthode(self): renvoyer 1; classe Child(Parent): pass; super(Child, Child()).méthode(), then super(Child, Child()).méthode() retourne 1 car super(Child, Child()) explicitly specifies Child as the classe and Child() as the instance, allowing you to call super() from à l’extérieur de the classe. Cela permet you to access parent méthodes even when not dans a méthode definition, useful for testing or advanced use cases.
-
-super() à l’extérieur de méthode:
-• super(Child, Child()).méthode() retourne 1
-• super(Child, Child()) explicitly specifies classe and instance
-• Child is the classe, Child() is the instance
-• super() gets parent of Child (Parent)
-• super().méthode() calls Parent.méthode()
-• Retourne : 1
-
-Comment ça fonctionne :
-• super(Child, Child()) creates super proxy
-• Child is the classe (to find parent of)
-• Child() is the instance (to pass as self)
-• super() gets parent of Child (Parent)
-• super().méthode() calls Parent.méthode() avec Child() instance
-• Parent.méthode() retourne 1
-• Retourne : 1
-
-Exemple :
-classe Parent:
-    def méthode(self):
-        renvoyer 1
-classe Child(Parent): pass
-super(Child, Child()).méthode()  # 1 (explicit super() à l’extérieur de méthode)
-
-Usages courants :
-• External super: super(Class, instance).méthode() (à l’extérieur de méthode)
-• Testing: call parent méthodes from à l’extérieur de classe
-• super() fonction
-• Advanced usage
-
-Exemple : If classe Parent: def méthode(self): renvoyer 1; classe Child(Parent): pass; super(Child, Child()).méthode(), then super(Child, Child()).méthode() retourne 1 car super() peut être appelé à l’extérieur de a méthode avec explicit arguments, specifying the classe and instance.
-`,
-  2429: `Le super() fonction accesses parent attributes even if the child has overridden them. If classe Parent: x = 1; classe Child(Parent): x = 2; def méthode(self): renvoyer super().x; Child().méthode(), then Child().méthode() retourne 1 car super() bypasses the child's override and accesses the parent's classe attribute. Quand vous use super().x, Python looks in the parent classe (Parent) for x, finding Parent.x = 1, not Child.x = 2. Cela permet you to access parent attributes that have been shadowed by child attributes.
-
-super() bypasses child override:
-• Child().méthode() retourne 1
-• Child has x = 2 (overrides parent)
-• super().x accesses parent attribute
-• super() bypasses child's x = 2
-• Accesses Parent.x = 1
-• Retourne : 1
-
-Comment ça fonctionne :
-• Child().méthode() calls méthode on Child instance
-• Child.méthode() executes: renvoyer super().x
-• super() gets parent classe (Parent)
-• super().x accesses Parent.x (not Child.x)
-• Parent.x = 1
-• Retourne : 1 (parent's valeur, not child's)
-
-Exemple :
-classe Parent: x = 1
-classe Child(Parent):
-    x = 2  # Overrides parent
-    def méthode(self):
-        renvoyer super().x  # Accesses parent, not child
-Child().méthode()          # 1 (parent's x, not child's x = 2)
-
-Usages courants :
-• Parent access: super().attr (accesses parent even if child overrides)
-• Override bypass: super() accesses parent attributes
-• super() fonction
-• Inheritance
-
-Exemple : If classe Parent: x = 1; classe Child(Parent): x = 2; def méthode(self): renvoyer super().x; Child().méthode(), then Child().méthode() retourne 1 car super() accesses the parent attribute even if the child overrides it, bypassing the child's x = 2 and accessing Parent.x = 1.
-`,
-  2430: `Le super() fonction follows the Method Resolution Order (MRO) and calls the immediate parent in the inheritance chain, not the ultimate ancestor. If classe Parent: def méthode(self): renvoyer 1; classe Middle(Parent): def méthode(self): renvoyer 2; classe Child(Middle): def méthode(self): renvoyer super().méthode(); Child().méthode(), then Child().méthode() retourne 2 car super() in Child follows the MRO (Method Resolution Order), which is [Child, Middle, Parent, objet]. super() in Child calls the next classe in the MRO, which is Middle, not Parent. So super().méthode() calls Middle.méthode(), qui retourne 2.
-
-super() follows MRO:
-• Child().méthode() retourne 2
-• super() follows Method Resolution Order
-• MRO: Child -> Middle -> Parent
-• super() in Child calls next in MRO: Middle
-• Middle.méthode() retourne 2
-• Retourne : 2
-
-Comment ça fonctionne :
-• Child().méthode() calls méthode on Child instance
-• Child.méthode() executes: renvoyer super().méthode()
-• super() follows MRO: [Child, Middle, Parent, objet]
-• super() in Child calls next in MRO: Middle.méthode()
-• Middle.méthode() retourne 2
-• Retourne : 2 (Middle's méthode, not Parent's)
-
-Exemple :
-classe Parent:
-    def méthode(self):
-        renvoyer 1
-classe Middle(Parent):
-    def méthode(self):
-        renvoyer 2
-classe Child(Middle):
-    def méthode(self):
-        renvoyer super().méthode()  # Calls Middle, not Parent
-Child().méthode()              # 2 (calls Middle.méthode(), not Parent.méthode())
-
-Usages courants :
-• MRO understanding: super() follows Method Resolution Order
-• Immediate parent: super() calls next in MRO, not ultimate ancestor
-• super() fonction
-• Method Resolution Order
-
-Exemple : If classe Parent: def méthode(self): renvoyer 1; classe Middle(Parent): def méthode(self): renvoyer 2; classe Child(Middle): def méthode(self): renvoyer super().méthode(); Child().méthode(), then Child().méthode() retourne 2 car super() follows the MRO and calls the immediate parent (Middle), not the ultimate ancestor (Parent).
-`,
-  2431: `Dans multiple inheritance, the first parent in the inheritance tuple takes precedence. If classe A: x = 1; classe B: x = 2; classe C(A, B): pass; C.x, then C.x retourne 1 car when a classe inherits from multiple parents, Python follows the Method Resolution Order (MRO), which prioritizes the leftmost parent. Since A comes avant B in classe C(A, B), A's attribute x = 1 is found first and used.
-
-Multiple inheritance order:
-• C.x retourne 1
-• classe C(A, B): inherits from A and B
-• A is first parent, B is second parent
-• First parent (A) takes precedence
-• A.x = 1 is found first
-• Retourne : 1
-
-Comment ça fonctionne :
-• classe C(A, B): creates child avec multiple parents
-• Python follows MRO: [C, A, B, objet]
-• C.x looks for attribute x
-• Python searches: C.__dict__ (not found) → A.__dict__ (finds x = 1)
-• Retourne : 1 (A's attribute, not B's)
-
-Exemple :
-classe A: x = 1
-classe B: x = 2
-classe C(A, B): pass
-C.x                        # 1 (first parent A takes precedence)
-
-Usages courants :
-• Multiple inheritance: classe C(A, B): (inherits from multiple parents)
-• Order matters: first parent in tuple takes precedence
-• Multiple inheritance
-• Method Resolution Order
-
-Exemple : If classe A: x = 1; classe B: x = 2; classe C(A, B): pass; C.x, then C.x retourne 1 car in multiple inheritance, the first parent in the tuple takes precedence, so A's x = 1 is found first.
-`,
-  2432: `Le order of parents in multiple inheritance matters - the first parent in the tuple takes precedence. If classe A: x = 1; classe B: x = 2; classe C(B, A): pass; C.x, then C.x retourne 2 car when you change the order to classe C(B, A), B comes avant A, so B's attribute x = 2 is found first and used. The leftmost parent in the inheritance tuple always takes precedence over the rightmost parent.
-
-Order matters in multiple inheritance:
-• C.x retourne 2
-• classe C(B, A): inherits from B and A
-• B is first parent, A is second parent
-• First parent (B) takes precedence
-• B.x = 2 is found first
-• Retourne : 2
-
-Comment ça fonctionne :
-• classe C(B, A): creates child avec B first, A second
-• Python follows MRO: [C, B, A, objet]
-• C.x looks for attribute x
-• Python searches: C.__dict__ (not found) → B.__dict__ (finds x = 2)
-• Retourne : 2 (B's attribute, not A's)
-
-Exemple :
-classe A: x = 1
-classe B: x = 2
-classe C(B, A): pass  # B first
-C.x                        # 2 (first parent B takes precedence)
-
-Usages courants :
-• Multiple inheritance order: classe C(Parent1, Parent2): (order matters)
-• Precedence: first parent in tuple takes precedence
-• Multiple inheritance
-• Method Resolution Order
-
-Exemple : If classe A: x = 1; classe B: x = 2; classe C(B, A): pass; C.x, then C.x retourne 2 car the order matters in multiple inheritance - the first parent in the tuple (B) takes precedence, so B.x = 2 is found first.
-`,
-  2433: `Method resolution in multiple inheritance follows the inheritance order (MRO). If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): pass; C().method(), then C().method() returns 'A' because when Python searches for method(), it follows the Method Resolution Order (MRO), which is [C, A, B, object]. It searches in order: C (not found) → A (found, returns 'A'). The first parent (A) in the inheritance tuple is searched first.
-
-Method resolution follows order:
-• C().method() returns 'A'
-• Python follows MRO: [C, A, B, object]
-• Searches for method() in order
-• Finds method() in A first
-• Uses A.method() qui returns 'A'
-• Retourne : 'A'
-
-Comment ça fonctionne :
-• C().method() calls method on C instance
-• Python follows MRO: [C, A, B, object]
-• Searches for method: C (not found) → A (found)
-• Uses A.method() with C instance as self
-• Method executes: return 'A'
-• Retourne : 'A'
-
-Exemple :
-class A:
-    def method(self):
-        return 'A'
-class B:
-    def method(self):
-        return 'B'
-class C(A, B): pass  # A first
-C().method()              # 'A' (MRO finds A.method() first)
-
-Usages courants :
-• Method resolution: MRO determines which parent's method est utilisé
-• Multiple inheritance: order determines method resolution
-• Method Resolution Order
-• Multiple inheritance
-
-Exemple : If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): pass; C().method(), then C().method() returns 'A' because method resolution follows the inheritance order (MRO), and A comes before B, so A.method() is found first.
-`,
-  2434: `Le super() fonction in multiple inheritance follows the Method Resolution Order (MRO). If classe A: def méthode(self): renvoyer 'A'; classe B: def méthode(self): renvoyer 'B'; classe C(A, B): def méthode(self): renvoyer super().méthode(); C().méthode(), then C().méthode() retourne 'A' car super() follows the MRO ([C, A, B, objet]). When super() est appelé in C.méthode(), it calls the next classe in the MRO après C, which is A. So super().méthode() calls A.méthode(), qui retourne 'A'.
-
-super() follows MRO in multiple inheritance:
-• C().méthode() retourne 'A'
-• super() follows MRO: [C, A, B, objet]
-• super() in C calls next in MRO: A
-• super().méthode() calls A.méthode()
-• A.méthode() retourne 'A'
-• Retourne : 'A'
-
-Comment ça fonctionne :
-• C().méthode() calls méthode on C instance
-• C.méthode() executes: renvoyer super().méthode()
-• super() follows MRO: [C, A, B, objet]
-• super() in C calls next in MRO: A.méthode()
-• A.méthode() retourne 'A'
-• Retourne : 'A'
-
-Exemple :
-classe A:
-    def méthode(self):
-        renvoyer 'A'
-classe B:
-    def méthode(self):
-        renvoyer 'B'
-classe C(A, B):
-    def méthode(self):
-        renvoyer super().méthode()  # Follows MRO: calls A.méthode()
-C().méthode()              # 'A' (super() calls next in MRO: A)
-
-Usages courants :
-• MRO understanding: super() follows Method Resolution Order
-• Multiple inheritance: super() calls next in MRO
-• super() fonction
-• Method Resolution Order
-
-Exemple : If classe A: def méthode(self): renvoyer 'A'; classe B: def méthode(self): renvoyer 'B'; classe C(A, B): def méthode(self): renvoyer super().méthode(); C().méthode(), then C().méthode() retourne 'A' car super() in multiple inheritance follows the MRO, and the next classe après C is A.
-`,
-  2435: `Le __bases__ attribute contains all parent classes in multiple inheritance. Si classe A: pass; classe B: pass; classe C(A, B): pass; C.__bases__, then C.__bases__ retourne (<classe '__main__.A'>, <classe '__main__.B'>) car __bases__ stores a tuple of all parent classes that a classe inherits from. For multiple inheritance, it contains all parents in the order they appear in the inheritance tuple.
-
-__bases__ avec multiple parents:
-• C.__bases__ retourne (<classe '__main__.A'>, <classe '__main__.B'>)
-• __bases__ contains tuple of all parent classes
-• C inherits from A and B
-• Retourne tuple avec both parents
-• Retourne : (<classe '__main__.A'>, <classe '__main__.B'>)
-
-Comment ça fonctionne :
-• classe C(A, B): creates child avec multiple parents
-• Python stores all parent classes in C.__bases__
-• __bases__ is tuple of parent classes
-• Contains: (A, B) in order
-• Retourne : (<classe '__main__.A'>, <classe '__main__.B'>)
-
-Exemple :
-classe A: pass
-classe B: pass
-classe C(A, B): pass
-C.__bases__               # (<classe '__main__.A'>, <classe '__main__.B'>) (all parents)
-
-Usages courants :
-• Inheritance inspection: C.__bases__ (see all parent classes)
-• Introspection: check what classes a classe inherits from
-• Multiple inheritance
-• Type system
-
-Exemple : Si classe A: pass; classe B: pass; classe C(A, B): pass; C.__bases__, then C.__bases__ retourne (<classe '__main__.A'>, <classe '__main__.B'>) car __bases__ contains all parent classes in multiple inheritance.
-`,
-  2436: `Le Method Resolution Order (MRO) follows C3 linearization, which uses depth-first, left-to-right traversal. Si classe A: pass; classe B(A): pass; classe C(A): pass; classe D(B, C): pass; D.mro(), then D.mro() retourne [D, B, C, A, objet] car C3 linearization processes the inheritance hierarchy: first D (the classe itself), then B (leftmost parent), then C (rightmost parent), then A (common ancestor of B and C), then objet (base of all classes). Cela assure a consistent, predictable order.
-
-C3 linearization MRO:
-• D.mro() retourne [D, B, C, A, objet]
-• MRO follows C3 linearization algorithm
-• Depth-first, left-to-right traversal
-• D -> B -> C -> A -> objet
-• Retourne : [D, B, C, A, objet]
-
-Comment ça fonctionne :
-• C3 linearization computes MRO
-• D inherits from B and C (left-to-right: B first, C second)
-• B and C both inherit from A (common ancestor)
-• MRO: D -> B -> C -> A -> objet
-• Ensures consistent, predictable order
-• Retourne : [D, B, C, A, objet]
-
-Exemple :
-classe A: pass
-classe B(A): pass
-classe C(A): pass
-classe D(B, C): pass
-D.mro()                     # [<classe '__main__.D'>, <classe '__main__.B'>, <classe '__main__.C'>, <classe '__main__.A'>, <classe 'objet'>]
-
-Usages courants :
-• MRO inspection: Class.mro() (see méthode resolution order)
-• Understanding inheritance: how Python searches for méthodes
-• Method Resolution Order
-• C3 linearization
-
-Exemple : Si classe A: pass; classe B(A): pass; classe C(A): pass; classe D(B, C): pass; D.mro(), then D.mro() retourne [D, B, C, A, objet] car MRO follows C3 linearization, which uses depth-first, left-to-right traversal to create a consistent order.
-`,
-  2437: `Le Method Resolution Order determines which méthode est appelé. If classe A: def méthode(self): renvoyer 'A'; classe B(A): def méthode(self): renvoyer 'B'; classe C(A): def méthode(self): renvoyer 'C'; classe D(B, C): pass; D().méthode(), then D().méthode() retourne 'B' car the MRO is [D, B, C, A, objet]. Python searches for méthode() in order: D (not found) → B (found, retourne 'B'). Since B comes avant C in the MRO, B.méthode() is found first and used, even though C also has méthode().
-
-MRO determines méthode:
-• D().méthode() retourne 'B'
-• MRO: [D, B, C, A, objet]
-• Searches for méthode() in order
-• Finds méthode() in B first
-• Uses B.méthode() qui retourne 'B'
-• Retourne : 'B'
-
-Comment ça fonctionne :
-• D().méthode() calls méthode on D instance
-• Python follows MRO: [D, B, C, A, objet]
-• Searches for méthode: D (not found) → B (found)
-• Uses B.méthode() avec D instance as self
-• Method executes: renvoyer 'B'
-• Retourne : 'B'
-
-Exemple :
-classe A:
-    def méthode(self):
-        renvoyer 'A'
-classe B(A):
-    def méthode(self):
-        renvoyer 'B'
-classe C(A):
-    def méthode(self):
-        renvoyer 'C'
-classe D(B, C): pass  # B first in MRO
-D().méthode()              # 'B' (MRO finds B.méthode() first)
-
-Usages courants :
-• Method resolution: MRO determines which parent's méthode est utilisé
-• Multiple inheritance: order determines méthode resolution
-• Method Resolution Order
-• Multiple inheritance
-
-Exemple : If classe A: def méthode(self): renvoyer 'A'; classe B(A): def méthode(self): renvoyer 'B'; classe C(A): def méthode(self): renvoyer 'C'; classe D(B, C): pass; D().méthode(), then D().méthode() retourne 'B' car the MRO is [D, B, C, A, objet], and B.méthode() is found first.
-`,
-  2438: `Le Method Resolution Order searches through all parents until il trouve a méthode. If classe A: def méthode(self): renvoyer 'A'; classe B(A): pass; classe C(A): def méthode(self): renvoyer 'C'; classe D(B, C): pass; D().méthode(), then D().méthode() retourne 'C' car the MRO is [D, B, C, A, objet]. Python searches for méthode() in order: D (not found) → B (not found, B doesn't define méthode) → C (found, retourne 'C'). Since B doesn't have méthode(), Python continues searching and finds it in C.
-
-MRO continues searching:
-• D().méthode() retourne 'C'
-• MRO: [D, B, C, A, objet]
-• Searches for méthode() in order
-• D (not found) → B (not found) → C (found)
-• Uses C.méthode() qui retourne 'C'
-• Retourne : 'C'
-
-Comment ça fonctionne :
-• D().méthode() calls méthode on D instance
-• Python follows MRO: [D, B, C, A, objet]
-• Searches for méthode: D (not found) → B (not found, no méthode) → C (found)
-• Uses C.méthode() avec D instance as self
-• Method executes: renvoyer 'C'
-• Retourne : 'C'
-
-Exemple :
-classe A:
-    def méthode(self):
-        renvoyer 'A'
-classe B(A): pass  # No méthode defined
-classe C(A):
-    def méthode(self):
-        renvoyer 'C'
-classe D(B, C): pass
-D().méthode()              # 'C' (MRO finds C.méthode() après B doesn't have it)
-
-Usages courants :
-• Method resolution: MRO searches all parents until méthode found
-• Multiple inheritance: méthode resolution continues through all parents
-• Method Resolution Order
-• Multiple inheritance
-
-Exemple : If classe A: def méthode(self): renvoyer 'A'; classe B(A): pass; classe C(A): def méthode(self): renvoyer 'C'; classe D(B, C): pass; D().méthode(), then D().méthode() retourne 'C' car the MRO continues searching through all parents, and C.méthode() is found après B doesn't have it.
-`,
-  2439: `A child class attribute overrides all parent attributes in multiple inheritance. If class A: x = 1; class B: x = 2; class C(A, B): x = 3; C.x, then C.x returns 3 because when a child class defines an attribute with le même name as parent attributes, the child's attribute takes precedence over all parent attributes. The child attribute is in C.__dict__, so it's found first when searching C.x, before checking any parents.
-
-Child overrides all parents:
-• C.x returns 3
-• C defines class attribute x = 3
-• A has x = 1, B has x = 2
-• Child's attribute shadows all parent attributes
-• Retourne : 3
-
-Comment ça fonctionne :
-• class C(A, B): x = 3 defines child attribute
-• C has its own class attribute x = 3
-• C.x looks for attribute x
-• Python finds x in C.__dict__ first
-• Retourne : 3 (child's attribute, not parents')
-
-Exemple :
-class A: x = 1
-class B: x = 2
-class C(A, B):
-    x = 3  # Overrides all parent attributes
-C.x                     # 3 (child's attribute, not A.x=1 or B.x=2)
-
-Usages courants :
-• Attribute override: class Child(Parent1, Parent2): attr = value (overrides all parents)
-• Customization: child can override parent attributes
-• Multiple inheritance
-• Attribute shadowing
-
-Exemple : If class A: x = 1; class B: x = 2; class C(A, B): x = 3; C.x, then C.x returns 3 because the child class attribute overrides all parent attributes, so the child's value (3) takes precedence over all parents' values.
-`,
-  2440: `Le super() fonction in multiple inheritance calls the next classe in the Method Resolution Order (MRO). If classe A: def méthode(self): renvoyer 'A'; classe B: def méthode(self): renvoyer 'B'; classe C(A, B): def méthode(self): renvoyer super().méthode(); C().méthode(), then C().méthode() retourne 'A' car super() follows the MRO ([C, A, B, objet]). When super() est appelé in C.méthode(), it calls the next classe in the MRO après C, which is A. So super().méthode() calls A.méthode(), qui retourne 'A', not B.méthode().
-
-super() calls next in MRO:
-• C().méthode() retourne 'A'
-• super() follows MRO: [C, A, B, objet]
-• super() in C calls next in MRO: A
-• super().méthode() calls A.méthode()
-• A.méthode() retourne 'A'
-• Retourne : 'A'
-
-Comment ça fonctionne :
-• C().méthode() calls méthode on C instance
-• C.méthode() executes: renvoyer super().méthode()
-• super() follows MRO: [C, A, B, objet]
-• super() in C calls next in MRO: A.méthode()
-• A.méthode() retourne 'A'
-• Retourne : 'A'
-
-Exemple :
-classe A:
-    def méthode(self):
-        renvoyer 'A'
-classe B:
-    def méthode(self):
-        renvoyer 'B'
-classe C(A, B):
-    def méthode(self):
-        renvoyer super().méthode()  # Calls next in MRO: A
-C().méthode()              # 'A' (super() calls A, not B)
-
-Usages courants :
-• MRO understanding: super() calls next in Method Resolution Order
-• Multiple inheritance: super() follows MRO, not just first parent
-• super() fonction
-• Method Resolution Order
-
-Exemple : If classe A: def méthode(self): renvoyer 'A'; classe B: def méthode(self): renvoyer 'B'; classe C(A, B): def méthode(self): renvoyer super().méthode(); C().méthode(), then C().méthode() retourne 'A' car super() in multiple inheritance calls the next classe in the MRO après C, which is A.
-`,
-  2441: `Polymorphism is a principle where different types peut être utilisé through le même interface, but each type provides its own implementation. The same method name peut être appelé on different objects, and each object responds appropriately based on its type. Cela permet code to fonctionner avec multiple types without knowing the specific type - "same interface, different behavior." In Python, polymorphism is achieved through method overriding (different classes define le même method with different implementations) and duck typing (if it quacks like a duck, treat it like a duck).
-
-Polymorphism concept:
-• Same interface, different behavior
-• Same method name, different implementations
-• Different types respond appropriately
-• Code fonctionne avec multiple types
-• "If it walks like a duck and quacks like a duck, it's a duck"
-
-Comment ça fonctionne :
-• Different classes define same method name
-• Each class provides its own implementation
-• Same method call works on different types
-• Each type responds with its own behavior
-• Enables code reuse and flexibility
-
-Exemple :
-class Animal:
-    def speak(self):
-        return 'sound'
-class Dog(Animal):
-    def speak(self):
-        return 'bark'  # Different implementation
-class Cat(Animal):
-    def speak(self):
-        return 'meow'  # Different implementation
-# Same interface (speak()), different behavior (bark, meow)
-
-Usages courants :
-• Polymorphism: same interface, different behavior
-• Code reuse: function fonctionne avec multiple types
-• Method overriding: different classes, same method name
-• Object-oriented programming
-
-Exemple : Polymorphism is a principle where different types peut être utilisé through le même interface, but each type provides its own implementation - "same interface, different behavior."
-`,
-  2442: `Different classes can implement le même method with different behavior, demonstrating polymorphism. If class Animal: def speak(self): return 'sound'; class Dog(Animal): def speak(self): return 'bark'; class Cat(Animal): def speak(self): return 'meow'; [Dog().speak(), Cat().speak()], then [Dog().speak(), Cat().speak()] returns ['bark', 'meow'] because Dog and Cat both define speak() with different implementations. Each class provides its own behavior for le même method name - Dog.speak() returns 'bark', Cat.speak() returns 'meow'. C'est polymorphism in action: same interface (speak()), different behavior (bark vs meow).
-
-Different implementations, same interface:
-• [Dog().speak(), Cat().speak()] returns ['bark', 'meow']
-• Both classes have speak() method
-• Dog.speak() returns 'bark'
-• Cat.speak() returns 'meow'
-• Same interface, different behavior
-• Retourne : ['bark', 'meow']
-
-Comment ça fonctionne :
-• Dog().speak() calls speak() on Dog instance
-• Python uses Dog.speak() (returns 'bark')
-• Cat().speak() calls speak() on Cat instance
-• Python uses Cat.speak() (returns 'meow')
-• Both use same method name, different implementations
-• Retourne : ['bark', 'meow']
-
-Exemple :
-class Animal:
-    def speak(self):
-        return 'sound'
-class Dog(Animal):
-    def speak(self):
-        return 'bark'  # Overrides parent
-class Cat(Animal):
-    def speak(self):
-        return 'meow'  # Overrides parent
-[Dog().speak(), Cat().speak()]  # ['bark', 'meow'] (polymorphism)
-
-Usages courants :
-• Polymorphism: different classes, same method, different behavior
-• Method overriding: each class provides its own implementation
-• Code flexibility: same interface fonctionne avec multiple types
-• Object-oriented programming
-
-Exemple : If class Animal: def speak(self): return 'sound'; class Dog(Animal): def speak(self): return 'bark'; class Cat(Animal): def speak(self): return 'meow'; [Dog().speak(), Cat().speak()], then [Dog().speak(), Cat().speak()] returns ['bark', 'meow'] because different classes implement le même method differently, demonstrating polymorphism.
-`,
-  2443: `Polymorphism allows le même method name with different implementations in different classes. If class Shape: def area(self): return 0; class Circle(Shape): def area(self): return 3.14; class Square(Shape): def area(self): return 1; [Circle().area(), Square().area()], then [Circle().area(), Square().area()] returns [3.14, 1] because Circle and Square both define area() with their own implementations - Circle.area() returns 3.14, Square.area() returns 1. Each class provides its own behavior for calculating area, but they all use le même method name (area()). C'est polymorphism: same interface (area()), different behavior (3.14 vs 1).
-
-Same method name, different implementations:
-• [Circle().area(), Square().area()] returns [3.14, 1]
-• Both classes have area() method
-• Circle.area() returns 3.14
-• Square.area() returns 1
-• Same method name, different implementations
-• Retourne : [3.14, 1]
-
-Comment ça fonctionne :
-• Circle().area() calls area() on Circle instance
-• Python uses Circle.area() (returns 3.14)
-• Square().area() calls area() on Square instance
-• Python uses Square.area() (returns 1)
-• Both use same method name, different implementations
-• Retourne : [3.14, 1]
-
-Exemple :
-class Shape:
-    def area(self):
-        return 0  # Default
-class Circle(Shape):
-    def area(self):
-        return 3.14  # Circle-specific
-class Square(Shape):
-    def area(self):
-        return 1  # Square-specific
-[Circle().area(), Square().area()]  # [3.14, 1] (polymorphism)
-
-Usages courants :
-• Polymorphism: same method name, different implementations
-• Method overriding: each class provides its own behavior
-• Code flexibility: same interface, different behavior
-• Object-oriented programming
-
-Exemple : If class Shape: def area(self): return 0; class Circle(Shape): def area(self): return 3.14; class Square(Shape): def area(self): return 1; [Circle().area(), Square().area()], then [Circle().area(), Square().area()] returns [3.14, 1] because polymorphism allows le même method name with different implementations - Circle.area() returns 3.14, Square.area() returns 1.
-`,
-  2444: `Functions can fonctionner avec different types through duck typing polymorphism. If def process(obj): return obj.method(); class A: def method(self): return 1; class B: def method(self): return 2; [process(A()), process(B())], then [process(A()), process(B())] returns [1, 2] because the process() function doesn't care about the specific type - it only cares that the object a un method() method. C'est duck typing: "if it walks like a duck and quacks like a duck, it's a duck." As long as both A and B have method(), process() can fonctionner avec both, and each responds with its own implementation (A returns 1, B returns 2).
-
-Duck typing polymorphism:
-• [process(A()), process(B())] returns [1, 2]
-• process() doesn't care about specific type
-• Only cares that object has method()
-• A.method() returns 1
-• B.method() returns 2
-• Same interface, different behavior
-• Retourne : [1, 2]
-
-Comment ça fonctionne :
-• process(A()) calls process() with A instance
-• process() executes: return obj.method()
-• A.method() returns 1
-• process(B()) calls process() with B instance
-• process() executes: return obj.method()
-• B.method() returns 2
-• Retourne : [1, 2]
-
-Exemple :
-def process(obj):
-    return obj.method()  # Duck typing: just needs method()
-class A:
-    def method(self):
-        return 1
-class B:
-    def method(self):
-        return 2
-[process(A()), process(B())]  # [1, 2] (fonctionne avec different types)
-
-Usages courants :
-• Duck typing: function fonctionne avec any type that has required method
-• Polymorphism: same interface, different types
-• Code flexibility: function fonctionne avec multiple types
-• Object-oriented programming
-
-Exemple : If def process(obj): return obj.method(); class A: def method(self): return 1; class B: def method(self): return 2; [process(A()), process(B())], then [process(A()), process(B())] returns [1, 2] because functions can fonctionner avec different types through duck typing polymorphism - the function only cares that objects have the required method, not their specific type.
-`,
-  2445: `A variable can hold different types, and method calls use the actual type of the object. If class Parent: def method(self): return 'parent'; class Child(Parent): def method(self): return 'child'; obj = Parent(); obj = Child(); obj.method(), then obj.method() returns 'child' because when you reassign obj = Child(), the variable obj now points to a Child instance. Quand vous call obj.method(), Python uses the actual type of the object (Child), not the variable's original type (Parent). So Child.method() est appelé, qui returns 'child'. This demonstrates polymorphism - le même variable can hold different types, and method calls are resolved based on the actual object type.
-
-Variable holds different types:
-• obj.method() returns 'child'
-• obj is reassigned to Child instance
-• obj.method() uses actual type: Child
-• Child.method() returns 'child'
-• Retourne : 'child'
-
-Comment ça fonctionne :
-• obj = Parent() creates Parent instance
-• obj = Child() reassigns obj to Child instance
-• obj.method() calls method on current object
-• Current object is Child instance
-• Python uses Child.method() (returns 'child')
-• Retourne : 'child'
-
-Exemple :
-class Parent:
-    def method(self):
-        return 'parent'
-class Child(Parent):
-    def method(self):
-        return 'child'
-obj = Parent()              # obj points to Parent
-obj = Child()               # obj now points to Child
-obj.method()                # 'child' (uses actual type: Child)
-
-Usages courants :
-• Polymorphism: variable can hold different types
-• Dynamic typing: method call uses actual object type
-• Runtime behavior: method resolution at runtime
-• Object-oriented programming
-
-Exemple : If class Parent: def method(self): return 'parent'; class Child(Parent): def method(self): return 'child'; obj = Parent(); obj = Child(); obj.method(), then obj.method() returns 'child' because a variable can hold different types, and method calls use the actual type of the object (Child), not the variable's original assignment.
-`,
-  2446: `Operator overloading enables polymorphic operations - le même operator can behave differently for different types. If class A: def __add__(self, other): return 'A'; class B: def __add__(self, other): return 'B'; A() + B(), then A() + B() returns 'A' because when you use the + operator, Python appelle A().__add__(B()). Since A defines __add__ to return 'A', il retourne 'A'. The + operator behaves differently for A and B (A returns 'A', B would return 'B'), demonstrating polymorphism - le même operator interface, but different behavior based on the left operand's type.
-
-Operator overloading polymorphism:
-• A() + B() returns 'A'
-• + operator calls A().__add__(B())
-• A.__add__() returns 'A'
-• Operator behavior depends on left operand
-• Same operator, different behavior
-• Retourne : 'A'
-
-Comment ça fonctionne :
-• A() + B() uses + operator
-• Python appelle A().__add__(B())
-• A.__add__() executes: return 'A'
-• Retourne : 'A'
-
-Exemple :
-class A:
-    def __add__(self, other):
-        return 'A'  # A's behavior
-class B:
-    def __add__(self, other):
-        return 'B'  # B's behavior
-A() + B()                # 'A' (calls A.__add__)
-B() + A()                # 'B' (calls B.__add__)
-
-Usages courants :
-• Operator overloading: __add__, __sub__, etc. (polymorphic operators)
-• Custom operators: define how operators work for your types
-• Polymorphism
-• Special methods
-
-Exemple : If class A: def __add__(self, other): return 'A'; class B: def __add__(self, other): return 'B'; A() + B(), then A() + B() returns 'A' because operator overloading enables polymorphic operations - le même operator behaves differently for different types, and A.__add__() est appelé.
-`,
-  2447: `Polymorphism allows a function to accept any object of a base type and call the appropriate method implementation. If class Animal: def speak(self): pass; class Dog(Animal): def speak(self): return 'bark'; def make_sound(animal): return animal.speak(); make_sound(Dog()), then make_sound(Dog()) returns 'bark' because make_sound() accepts any Animal (or subclass), and when you pass a Dog instance, it calls Dog.speak(), qui returns 'bark'. La function doesn't need to know the specific type - it just calls speak(), and Python uses the actual type's implementation (Dog.speak(), not Animal.speak()). C'est polymorphism in action.
-
-Polymorphic function:
-• make_sound(Dog()) returns 'bark'
-• make_sound() accepts any Animal
-• Calls animal.speak()
-• Actual type is Dog
-• Python uses Dog.speak() (returns 'bark')
-• Retourne : 'bark'
-
-Comment ça fonctionne :
-• make_sound(Dog()) calls function with Dog instance
-• make_sound() executes: return animal.speak()
-• animal is Dog instance
-• Python appelle Dog.speak() (not Animal.speak())
-• Dog.speak() returns 'bark'
-• Retourne : 'bark'
-
-Exemple :
-class Animal:
-    def speak(self):
-        pass
-class Dog(Animal):
-    def speak(self):
-        return 'bark'  # Override
-def make_sound(animal):
-    return animal.speak()  # Works with any Animal
-make_sound(Dog())          # 'bark' (calls Dog.speak())
-
-Usages courants :
-• Polymorphic functions: function fonctionne avec base type, calls actual type's method
-• Method overriding: different subclasses, same method name
-• Code flexibility: function fonctionne avec multiple types
-• Object-oriented programming
-
-Exemple : If class Animal: def speak(self): pass; class Dog(Animal): def speak(self): return 'bark'; def make_sound(animal): return animal.speak(); make_sound(Dog()), then make_sound(Dog()) returns 'bark' because polymorphism allows a function to accept any Animal and call the appropriate speak() implementation - in this case, Dog.speak().
-`,
-  2448: `Each class in an inheritance hierarchy can override a method, providing its own implementation. If class A: def method(self): return 1; class B(A): def method(self): return 2; class C(B): def method(self): return 3; [A().method(), B().method(), C().method()], then [A().method(), B().method(), C().method()] returns [1, 2, 3] because each class defines its own method() with its own implementation - A.method() returns 1, B.method() returns 2, C.method() returns 3. C'est polymorphism: same method name (method()), but each class in the hierarchy provides its own behavior. Quand vous call method() on an instance, Python uses that instance's class's implementation.
-
-Each class overrides method:
-• [A().method(), B().method(), C().method()] returns [1, 2, 3]
-• A.method() returns 1
-• B.method() returns 2
-• C.method() returns 3
-• Each class provides its own implementation
-• Retourne : [1, 2, 3]
-
-Comment ça fonctionne :
-• A().method() calls method on A instance
-• Python uses A.method() (returns 1)
-• B().method() calls method on B instance
-• Python uses B.method() (returns 2)
-• C().method() calls method on C instance
-• Python uses C.method() (returns 3)
-• Retourne : [1, 2, 3]
-
-Exemple :
-class A:
-    def method(self):
-        return 1
-class B(A):
-    def method(self):
-        return 2  # Overrides A
-class C(B):
-    def method(self):
-        return 3  # Overrides B
-[A().method(), B().method(), C().method()]  # [1, 2, 3] (polymorphism)
-
-Usages courants :
-• Method overriding: each class in hierarchy can override method
-• Polymorphism: same method name, different implementations
-• Inheritance hierarchy
-• Object-oriented programming
-
-Exemple : If class A: def method(self): return 1; class B(A): def method(self): return 2; class C(B): def method(self): return 3; [A().method(), B().method(), C().method()], then [A().method(), B().method(), C().method()] returns [1, 2, 3] because each class in the hierarchy can override the method, providing its own implementation.
-`,
-  2449: `A child class without its own method override uses the parent's method, but this is still polymorphic behavior. If class Parent: def method(self): return 'parent'; class Child(Parent): pass; [Parent().method(), Child().method()], then [Parent().method(), Child().method()] returns ['parent', 'parent'] because Child doesn't define its own method(), so when you call Child().method(), Python searches for method() in Child (not found), then finds it in Parent and uses Parent.method(). Both Parent and Child use le même method implementation, demonstrating polymorphism - le même method call works on both types, even though Child doesn't override it. The behavior is le même, but the mechanism is polymorphic.
-
-Child uses parent method:
-• [Parent().method(), Child().method()] returns ['parent', 'parent']
-• Parent.method() returns 'parent'
-• Child doesn't define method()
-• Child uses Parent.method() (returns 'parent')
-• Still polymorphic: same method call works on both
-• Retourne : ['parent', 'parent']
-
-Comment ça fonctionne :
-• Parent().method() calls method on Parent instance
-• Python uses Parent.method() (returns 'parent')
-• Child().method() calls method on Child instance
-• Python searches: Child (not found) → Parent (found)
-• Uses Parent.method() (returns 'parent')
-• Retourne : ['parent', 'parent']
-
-Exemple :
-class Parent:
-    def method(self):
-        return 'parent'
-class Child(Parent): pass  # No override
-[Parent().method(), Child().method()]  # ['parent', 'parent'] (still polymorphic)
-
-Usages courants :
-• Inherited methods: child uses parent method if not overridden
-• Polymorphism: same method call works on multiple types
-• Method reuse: child inherits parent behavior
-• Object-oriented programming
-
-Exemple : If class Parent: def method(self): return 'parent'; class Child(Parent): pass; [Parent().method(), Child().method()], then [Parent().method(), Child().method()] returns ['parent', 'parent'] because a child without an override uses the parent method, but this is still polymorphic - le même method call works on both types.
-`,
-  2450: `Special methods (magic methods) enable polymorphic behavior with built-in functions. If class A: def __str__(self): return 'A'; class B: def __str__(self): return 'B'; [str(A()), str(B())], then [str(A()), str(B())] returns ['A', 'B'] because str() calls the __str__() method, and each class defines its own __str__() with its own implementation - A.__str__() returns 'A', B.__str__() returns 'B'. This demonstrates polymorphism with built-in functions - le même built-in function (str()) fonctionne avec different types, and each type responds with its own implementation through its special method. Special methods like __str__, __len__, __add__, etc. enable polymorphic behavior with Python's built-in functions and operators.
-
-Special methods enable polymorphism:
-• [str(A()), str(B())] returns ['A', 'B']
-• str() calls __str__() method
-• A.__str__() returns 'A'
-• B.__str__() returns 'B'
-• Same built-in function, different behavior
-• Retourne : ['A', 'B']
-
-Comment ça fonctionne :
-• str(A()) calls str() on A instance
-• str() calls A.__str__() (returns 'A')
-• str(B()) calls str() on B instance
-• str() calls B.__str__() (returns 'B')
-• Both use same built-in function, different implementations
-• Retourne : ['A', 'B']
-
-Exemple :
-class A:
-    def __str__(self):
-        return 'A'
-class B:
-    def __str__(self):
-        return 'B'
-[str(A()), str(B())]  # ['A', 'B'] (polymorphism with built-ins)
-
-Usages courants :
-• Special methods: __str__, __len__, __add__, etc. (polymorphic with built-ins)
-• Operator overloading: define how operators work for your types
-• Polymorphism
-• Built-in functions
-
-Exemple : If class A: def __str__(self): return 'A'; class B: def __str__(self): return 'B'; [str(A()), str(B())], then [str(A()), str(B())] returns ['A', 'B'] because special methods enable polymorphic behavior with built-in functions - each class defines its own __str__(), so str() calls the appropriate implementation.
-`,
+• Hashabilité = __hash__ défini et stable avec __eq__.
+
+Distinctions clés :
+• Pas « doivent être des entiers ».
+
+Fonctionnement :
+• Construction d’une clé composite hashable.
+
+Exécution étape par étape :
+• Tentative de hachage avant stockage.
+
+Ordre des opérations :
+• Vérification à chaque appel.
+
+Cas d'utilisation courants :
+• Passer tuple au lieu de list pour données composites.
+
+Cas limites :
+• Objets mutables avec hash custom dangereux.
+
+Considérations de performance :
+• Hash rapide sur types built-in.
+
+Exemples :
+• f([1]) échoue ; f((1,)) OK.
+
+Remarques :
+• Réponse : arguments doivent être hashables (1re option).`,
+  2377: `@lru_cache(maxsize=None)
+
+Débutant :
+• None signifie cache sans limite de taille (tant que la mémoire tient).
+
+Intermédiaire :
+• Diffère de maxsize=128 par défaut du décorateur sans argument.
+
+Expert :
+• Risque fuite mémoire si l’espace des clés est infini.
+
+Concepts clés :
+• LRU dégénère en cache complet.
+
+Distinctions clés :
+• Pas « désactive le cache ».
+
+Fonctionnement :
+• Aucune éviction LRU.
+
+Exécution étape par étape :
+• Chaque nouvelle clé reste.
+
+Ordre des opérations :
+• Toujours croissant currsize jusqu’à saturation mémoire.
+
+Cas d'utilisation courants :
+• Fonctions à domaine fini connu.
+
+Cas limites :
+• Domaine infini : explosion.
+
+Considérations de performance :
+• Mémoire vs hits.
+
+Exemples :
+• Voir banque fib(20) avec None.
+
+Remarques :
+• Réponse : cache illimité (1re option).`,
+  2378: `functools.cache vs lru_cache(maxsize=None)
+
+Débutant :
+• cache est l’équivalent pratique de lru_cache sans limite, API plus courte.
+
+Intermédiaire :
+• Introduit en 3.9 ; avant, lru_cache(None).
+
+Expert :
+• Même famille d’implémentation côté CPython.
+
+Concepts clés :
+• Syntactic sugar.
+
+Distinctions clés :
+• Pas « cache est plus rapide algorithmiquement » comme différence majeure.
+
+Fonctionnement :
+• Décorateur simple sans paramètre maxsize.
+
+Exécution étape par étape :
+• Identique à lru_cache(None) pour usage courant.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Petites fonctions pures.
+
+Cas limites :
+• Même exigence hashable.
+
+Considérations de performance :
+• Pareil asymptotiquement.
+
+Exemples :
+• Voir banque question comparative.
+
+Remarques :
+• Réponse : équivalent à lru_cache(maxsize=None) (1re option).`,
+  2379: `f(1,2) puis f(2,1) avec lru_cache
+
+Débutant :
+• Deux tuples d’arguments différents → deux entrées de cache distinctes.
+
+Intermédiaire :
+• L’ordre des args fait partie de la clé.
+
+Expert :
+• Même valeurs dans kwargs différents ordres peuvent différer si mélange *.
+
+Concepts clés :
+• Clé = empreinte complète des arguments.
+
+Distinctions clés :
+• Pas « même entrée ».
+
+Fonctionnement :
+• Deux misses si première fois chacun.
+
+Exécution étape par étape :
+• Deux stockages.
+
+Ordre des opérations :
+• Égalité structurelle des args.
+
+Cas d'utilisation courants :
+• Fonctions non commutatives.
+
+Cas limites :
+• Objets égaux mais pas identiques : __eq__ peut surprendre si hash incohérent.
+
+Considérations de performance :
+• Deux slots.
+
+Exemples :
+• add commutatif mais clés distinctes quand positions changent.
+
+Remarques :
+• Réponse : entrées séparées (1re option).`,
+  2380: `lru_cache sur méthode d’instance
+
+Débutant :
+• Oui techniquement, mais self entre dans la clé : une entrée par instance.
+
+Intermédiaire :
+• Risque de retenir self via le cache et prolonger la vie de l’objet (fuite apparente).
+
+Expert :
+• Préférer cache sur fonction statique ou weakref selon besoin.
+
+Concepts clés :
+• Cache au niveau de la fonction, arguments incluent self.
+
+Distinctions clés :
+• Pas « interdit ».
+
+Fonctionnement :
+• Hash de self (par défaut id-based).
+
+Exécution étape par étape :
+• Instances différentes → caches logiquement séparés.
+
+Ordre des opérations :
+• GC peut être retardé.
+
+Cas d'utilisation courants :
+• Méthodes lourdes sur petit nombre d’instances longues vies.
+
+Cas limites :
+• Nombreuses instances courtes : cache inutilement gros.
+
+Considérations de performance :
+• Mémoire.
+
+Exemples :
+• Voir banque QCM.
+
+Remarques :
+• Réponse : oui mais self dans la clé + effet GC (1re option).`,
+  2381: `@singledispatch sur g
+
+Débutant :
+• Dispatch générique sur le type du premier argument positionnel.
+
+Intermédiaire :
+• Les suivants ne participent pas au choix de variante par défaut.
+
+Expert :
+• Extensible via register sur types ou annotations.
+
+Concepts clés :
+• Polymorphisme ad hoc.
+
+Distinctions clés :
+• Pas « tous les args » ni « valeur de retour ».
+
+Fonctionnement :
+• Table de types → fonctions enregistrées.
+
+Exécution étape par étape :
+• Résolution MRO pour classes.
+
+Ordre des opérations :
+• Fallback vers impl de base.
+
+Cas d'utilisation courants :
+• Sérialisation, pretty-print.
+
+Cas limites :
+• Premier arg non typé comme prévu.
+
+Considérations de performance :
+• Lookup O(1) typique.
+
+Exemples :
+• Voir g(42) vs g("hello").
+
+Remarques :
+• Réponse : dispatch sur type du premier argument (1re option).`,
+  2382: `g(42) avec singledispatch — seul int enregistré
+
+Débutant :
+• 42 est un int → l’implémentation enregistrée avec @f.register(int) retourne "int".
+
+Intermédiaire :
+• isinstance(42, int) est vrai ; la fonction de base marquée @singledispatch sert de repli pour les types non enregistrés.
+
+Expert :
+• bool est une sous-classe de int : sans branche bool dédiée, True/False suivent souvent la branche int.
+
+Concepts clés :
+• Routage par type au moment de l’appel.
+
+Distinctions clés :
+• Pas le repli "other" ici, car int est bien enregistré.
+
+Fonctionnement :
+• singledispatch résout le type du premier argument positionnel.
+
+Exécution étape par étape :
+• type(42) est int → dispatch vers la fonction enregistrée pour int.
+
+Ordre des opérations :
+• Les implémentations enregistrées sont consultées avant la fonction par défaut.
+
+Cas d'utilisation courants :
+• Surcharge ad hoc par type (sérialisation, rendu).
+
+Cas limites :
+• Premier argument seul pilote le choix ; les autres ne participent pas au dispatch par défaut.
+
+Considérations de performance :
+• Résolution typiquement en temps constant.
+
+Exemples :
+• Avec seulement int enregistré, une str utilisera la base → "other" (voir question suivante).
+
+Remarques :
+• Réponse : "int" (1re option).`,
+  2383: `g("hello") — même décorateur, int enregistré, str non enregistré
+
+Débutant :
+• type("hello") est str ; aucune implémentation enregistrée pour str → Python utilise la fonction par défaut décorée par @singledispatch, qui retourne "other".
+
+Intermédiaire :
+• Seul @f.register(int) a été ajouté ; la base f(x): return "other" reste le repli.
+
+Expert :
+• Pour gérer str, il faudrait @f.register(str) ou une autre stratégie (singledispatchmethod sur les méthodes, etc.).
+
+Concepts clés :
+• Repli (fallback) vers l’implémentation de base.
+
+Distinctions clés :
+• Ce n’est pas "int" ; ce n’est pas une erreur tant que la base gère le cas.
+
+Fonctionnement :
+• Recherche d’un enregistrement pour str → échec → appel de la fonction d’origine.
+
+Exécution étape par étape :
+• Dispatch échoue pour str → exécution du corps return "other".
+
+Ordre des opérations :
+• Enregistrements spécifiques d’abord, puis défaut.
+
+Cas d'utilisation courants :
+• Commencer par un cas générique puis enregistrer des types au fil du temps.
+
+Cas limites :
+• Sous-types : la résolution utilise l’MRO des classes pour le dispatch orienté objet.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Ajouter @f.register(str) ferait retourner une chaîne dédiée pour "hello".
+
+Remarques :
+• Réponse : "other" (1re option).`,
+  2384: `@total_ordering — minimum requis
+
+Débutant :
+• Il faut __eq__ et au moins une des comparaisons riches (__lt__, __le__, __gt__, __ge__).
+
+Intermédiaire :
+• Le décorateur synthétise les autres méthodes manquantes.
+
+Expert :
+• Cohérence logique à la charge du développeur (éviter contradictions).
+
+Concepts clés :
+• Réduction de boilerplate.
+
+Distinctions clés :
+• Pas seulement __lt__ sans __eq__.
+
+Fonctionnement :
+• Génération de méthodes dérivées.
+
+Exécution étape par étape :
+• Appels croisés entre opérateurs.
+
+Ordre des opérations :
+• Égalité testée via __eq__.
+
+Cas d'utilisation courants :
+• Classes ordonnables simples.
+
+Cas limites :
+• NaN-like patterns.
+
+Considérations de performance :
+• Chaînage peut multiplier les appels.
+
+Exemples :
+• Voir banque QCM.
+
+Remarques :
+• Réponse : __eq__ et une comparaison riche (1re option).`,
+  2385: `operator.add(3, 4)
+
+Débutant :
+• Fonction équivalente à 3+4 = 7.
+
+Intermédiaire :
+• Utile avec reduce, map, higher-order.
+
+Expert :
+• add sur types custom si __add__ défini.
+
+Concepts clés :
+• Opérateur comme callable.
+
+Distinctions clés :
+• Pas mul.
+
+Fonctionnement :
+• Dispatch vers __add__.
+
+Exécution étape par étape :
+• Un appel.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• reduce(operator.add, ...).
+
+Cas limites :
+• Types incompatibles TypeError.
+
+Considérations de performance :
+• Niveau C pour int.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 7.`,
+  2386: `operator.mul(3, 4)
+
+Débutant :
+• 3*4 = 12.
+
+Intermédiaire :
+• Symétrique à add pour reduce produit.
+
+Expert :
+• Peut surcharger sur numpy scalaires via __array_ufunc__ indirect.
+
+Concepts clés :
+• Multiplication binaire.
+
+Distinctions clés :
+• Pas 7.
+
+Fonctionnement :
+• __mul__.
+
+Exécution étape par étape :
+• Un appel.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Voir 2352.
+
+Cas limites :
+• str * int dupliqué (autre sens).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• mul(2,5)=10.
+
+Remarques :
+• Réponse : 12.`,
+  2387: `itemgetter(1)([10, 20, 30])
+
+Débutant :
+• Index 1 → 20.
+
+Intermédiaire :
+• itemgetter retourne une fonction callable réutilisable.
+
+Expert :
+• Plus rapide que lambda x: x[1] dans certains micro-benchmarks.
+
+Concepts clés :
+• Extraction par index.
+
+Distinctions clés :
+• Pas 10 ni 30.
+
+Fonctionnement :
+• __getitem__ sous-jacent.
+
+Exécution étape par étape :
+• Un lookup.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• key=itemgetter(1) dans sorted.
+
+Cas limites :
+• Index hors bornes IndexError.
+
+Considérations de performance :
+• Optimisé.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 20.`,
+  2388: `itemgetter(0, 2)([10, 20, 30])
+
+Débutant :
+• Plusieurs indices → tuple (10, 30).
+
+Intermédiaire :
+• Ordre des indices conservé dans le tuple résultat.
+
+Expert :
+• Combine avec map pour découper colonnes.
+
+Concepts clés :
+• Projection multi-colonnes.
+
+Distinctions clés :
+• Pas liste [10,30] comme type de retour (tuple).
+
+Fonctionnement :
+• Boucle interne sur indices.
+
+Exécution étape par étape :
+• Deux accès.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• CSV tuples.
+
+Cas limites :
+• Index dupliqués autorisés : (10,10) si (0,0).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : (10, 30) (1re option).`,
+  2389: `attrgetter("x", "y")(obj)
+
+Débutant :
+• Construit une fonction qui lit obj.x et obj.y et renvoie un tuple des valeurs.
+
+Intermédiaire :
+• Support chemins "a.b" pour attributs imbriqués.
+
+Expert :
+• getattr en chaîne optimisé.
+
+Concepts clés :
+• Accès attribut par nom.
+
+Distinctions clés :
+• Pas appel de méthode seul.
+
+Fonctionnement :
+• getattr successifs.
+
+Exécution étape par étape :
+• Un tuple à la fin.
+
+Ordre des opérations :
+• Évaluation paresseuse au call, pas à la création.
+
+Cas d'utilisation courants :
+• sorted(..., key=attrgetter("name")).
+
+Cas limites :
+• Attribut manquant AttributeError au call.
+
+Considérations de performance :
+• Souvent plus rapide que lambda.
+
+Exemples :
+• Voir banque QCM.
+
+Remarques :
+• Réponse : récupère les attributs nommés (1re option).`,
+  2390: `methodcaller("upper")("hello")
+
+Débutant :
+• Équivaut à "hello".upper() → "HELLO".
+
+Intermédiaire :
+• Peut inclure args supplémentaires pour des méthodes avec paramètres.
+
+Expert :
+• Utile avec map sur collections de str.
+
+Concepts clés :
+• Méthode comme callable différé.
+
+Distinctions clés :
+• Pas la liste de caractères.
+
+Fonctionnement :
+• getattr(obj, "upper")().
+
+Exécution étape par étape :
+• Lookup puis call.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• map(methodcaller("strip"), lines).
+
+Cas limites :
+• Méthode absente → erreur au call.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : "HELLO" (1re option).`,
+  2391: `list(map(pow, [2,3,4], [3,2,1]))
+
+Débutant :
+• pow(2,3)=8, pow(3,2)=9, pow(4,1)=4 → [8,9,4].
+
+Intermédiaire :
+• map s’arrête au plus court itérable (zip strict implicite).
+
+Expert :
+• En 3.10+, zip(strict=True) séparé ; map reste non-strict.
+
+Concepts clés :
+• Itération parallèle.
+
+Distinctions clés :
+• Pas [9,8,4] ordre inversé.
+
+Fonctionnement :
+• Un pow par triple.
+
+Exécution étape par étape :
+• Trois itérations.
+
+Ordre des opérations :
+• Évaluation lazy jusqu’à list().
+
+Cas d'utilisation courants :
+• Vectorisation légère.
+
+Cas limites :
+• Longueurs différentes tronquent.
+
+Considérations de performance :
+• Lazy sauf list().
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : [8, 9, 4] (1re option).`,
+  2392: `m = map(pow, [1,2], [3,4]) — type de m
+
+Débutant :
+• map retourne un itérateur map en Python 3, pas une liste.
+
+Intermédiaire :
+• Consommation unique sans copie intermédiaire.
+
+Expert :
+• __repr__ affiche map object.
+
+Concepts clés :
+• Lazy evaluation.
+
+Distinctions clés :
+• Pas list ni tuple.
+
+Fonctionnement :
+• Objet map.
+
+Exécution étape par étape :
+• Aucun pow tant que non itéré.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Pipelines mémoire bornée.
+
+Cas limites :
+• Itérateur épuisé.
+
+Considérations de performance :
+• O(1) création.
+
+Exemples :
+• list(m) matérialise.
+
+Remarques :
+• Réponse : objet map / itérateur (1re option).`,
+  2393: `list(itertools.starmap(pow, [(2,3),(3,2),(4,1)]))
+
+Débutant :
+• Dépaquette chaque tuple en arguments de pow → mêmes résultats [8,9,4].
+
+Intermédiaire :
+• Diffère de map(pow, ...) quand les paires sont déjà groupées.
+
+Expert :
+• starmap est lazy aussi jusqu’à list().
+
+Concepts clés :
+• Étoile implicite.
+
+Distinctions clés :
+• Pas [6,6,4] erreur fréquente.
+
+Fonctionnement :
+• pow(*pair) pour chaque pair.
+
+Exécution étape par étape :
+• Trois appels.
+
+Ordre des opérations :
+• Ordre de la liste d’entrées.
+
+Cas d'utilisation courants :
+• Données row-oriented.
+
+Cas limites :
+• Tuple trop long → TypeError.
+
+Considérations de performance :
+• Comparable à map zip.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : [8, 9, 4] (1re option).`,
+  2394: `def f(): return 1
+g = f; f = None; type(g)
+
+Débutant :
+• g référence encore la fonction ; f=None ne change pas le type de g → function.
+
+Intermédiaire :
+• La cellule f est réassignée, pas l’objet fonction sous-jacent.
+
+Expert :
+• GC peut collecter la fonction si plus aucune référence — ici g la garde.
+
+Concepts clés :
+• Objets de première classe.
+
+Distinctions clés :
+• Pas NoneType pour g.
+
+Fonctionnement :
+• g pointe vers le même code object.
+
+Exécution étape par étape :
+• type() introspection.
+
+Ordre des opérations :
+• Assignations séquentielles.
+
+Cas d'utilisation courants :
+• Alias, callbacks.
+
+Cas limites :
+• locals() vs globals() selon portée.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : function (1re option).`,
+  2395: `def f(x): return x*2
+g = f; del f; g(5)
+
+Débutant :
+• g toujours valide → 5*2 = 10.
+
+Intermédiaire :
+• del f supprime le nom du scope courant, pas la fonction si référencée ailleurs.
+
+Expert :
+• En interactif, nuances de __main__.
+
+Concepts clés :
+• Durée de vie par références.
+
+Distinctions clés :
+• Pas NameError pour g(5).
+
+Fonctionnement :
+• Namespace mapping.
+
+Exécution étape par étape :
+• Lookup g réussi.
+
+Ordre des opérations :
+• del avant appel.
+
+Cas d'utilisation courants :
+• Plugins reload.
+
+Cas limites :
+• del g ensuite → erreur.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 10.`,
+  2396: `locals() dans une fonction
+
+Débutant :
+• Dictionnaire des variables locales du frame courant (vue souvent couplée à l’impl).
+
+Intermédiaire :
+• En fonction, modifications du dict peuvent ne pas affecter les noms locaux réels selon contexte (optimisations).
+
+Expert :
+• Pour lecture/debug principalement.
+
+Concepts clés :
+• Frame, namespace.
+
+Distinctions clés :
+• Pas globals() du module entier.
+
+Fonctionnement :
+• CPython construit un mapping.
+
+Exécution étape par étape :
+• Snapshot logique.
+
+Ordre des opérations :
+• Appel au point d’exécution.
+
+Cas d'utilisation courants :
+• Debug, format **locals().
+
+Cas limites :
+• Class body vs function body diffèrent.
+
+Considérations de performance :
+• Coût non nul.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : dictionnaire des variables locales (1re option).`,
+  2397: `globals() au niveau module
+
+Débutant :
+• Dict du module courant : noms globaux définis.
+
+Intermédiaire :
+• Même objet retourné tant qu’on est dans ce module.
+
+Expert :
+• Écriture dedans crée vraies globales dynamiques (à manier avec prudence).
+
+Concepts clés :
+• Table de symboles module.
+
+Distinctions clés :
+• Pas locals() de fonction interne par défaut.
+
+Fonctionnement :
+• Référence au dict __dict__ du module.
+
+Exécution étape par étape :
+• Lecture/écriture possible.
+
+Ordre des opérations :
+• Nom lookup global.
+
+Cas d'utilisation courants :
+• Registres dynamiques, tests.
+
+Cas limites :
+• Shadowing import.
+
+Considérations de performance :
+• Dict lookup.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : dictionnaire des variables globales du module (1re option).`,
+  2398: `def f(x): return x
+f.__code__.co_varnames
+
+Débutant :
+• Tuple des noms locaux : au minimum ("x",) pour ce corps simple.
+
+Intermédiaire :
+• Peut inclure d’autres noms si internes (boucles, except).
+
+Expert :
+• Ordre peut inclure args puis locals.
+
+Concepts clés :
+• Code object introspection.
+
+Distinctions clés :
+• Pas ("return",).
+
+Fonctionnement :
+• Champ C du code object.
+
+Exécution étape par étape :
+• Lecture attribut.
+
+Ordre des opérations :
+• Immuable tuple.
+
+Cas d'utilisation courants :
+• Frameworks, debuggers.
+
+Cas limites :
+• Fonctions avec *args voir 2400.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : ("x",) (1re option).`,
+  2399: `def f(x, y, z=3): return x+y+z
+f.__code__.co_argcount
+
+Débutant :
+• Nombre de paramètres positionnels (sans *var ni kw-only après *) : ici x,y,z tous positionnels ou par défaut → 3.
+
+Intermédiaire :
+• co_kwonlyargcount sépare les args keyword-only en 3.x.
+
+Expert :
+• positional-or-keyword comptés jusqu’au premier *.
+
+Concepts clés :
+• Signature bytecode.
+
+Distinctions clés :
+• Pas 2.
+
+Fonctionnement :
+• Comptage dans le code object.
+
+Exécution étape par étape :
+• Inspect attribut.
+
+Ordre des opérations :
+• Compile time figé.
+
+Cas d'utilisation courants :
+• Libs d’inspection.
+
+Cas limites :
+• Voir *args change varnames pas argcount pareil.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 3.`,
+  2400: `def f(*args): return len(args)
+f.__code__.co_varnames
+
+Débutant :
+• Le nom du tuple variadique apparaît : ("args",) typiquement.
+
+Intermédiaire :
+• co_argcount peut être 0 pour *args seul.
+
+Expert :
+• Ordre : args formels puis locals.
+
+Concepts clés :
+• Empaquetage des positionnels restants.
+
+Distinctions clés :
+• Pas ("*args",) littéral avec astérisque dans le tuple.
+
+Fonctionnement :
+• Symbole interne args.
+
+Exécution étape par étape :
+• Tuple lié à args.
+
+Ordre des opérations :
+• Premier paramètre est le tuple.
+
+Cas d'utilisation courants :
+• Wrappers génériques.
+
+Cas limites :
+• **kwargs ajoute un nom supplémentaire.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : ("args",) (1re option).`,
+  2401: `class MyClass: pass — signification
+
+Débutant :
+• Le mot-clé class définit un type (une classe) nommé MyClass ; pass remplit le corps vide.
+
+Intermédiaire :
+• L’exécution crée un objet classe dans l’espace de noms courant, pas une instance.
+
+Expert :
+• La métaclasse par défaut est type ; la classe hérite implicitement de object.
+
+Concepts clés :
+• Classe comme fabrique d’instances ; instruction composée avec bloc indenté.
+
+Distinctions clés :
+• Ce n’est ni un appel qui crée un objet instance, ni une définition def.
+
+Fonctionnement :
+• Python compile puis exécute le corps de classe pour remplir le dictionnaire de la classe.
+
+Exécution étape par étape :
+• Lier le nom MyClass à l’objet classe ; aucune instance n’est créée tant qu’on n’appelle pas MyClass().
+
+Ordre des opérations :
+• Le nom de classe est lié une fois le bloc entièrement exécuté.
+
+Cas d'utilisation courants :
+• Modèles de données, regroupement de méthodes, POO.
+
+Cas limites :
+• Corps vide sans pass (avant 3.x on pouvait utiliser un docstring).
+
+Considérations de performance :
+• Coût négligeable à la définition.
+
+Exemples :
+• class Vide: pass puis instanciation plus tard.
+
+Remarques :
+• Réponse : définit une classe (1re option).`,
+  2402: `class MyClass: x = 1
+
+Débutant :
+• x est défini dans le corps de classe : c’est un attribut de classe, partagé par toutes les instances.
+
+Intermédiaire :
+• Stocké dans le dictionnaire de la classe ; lisible via MyClass.x ou instance si non masqué.
+
+Expert :
+• Distinct d’une variable locale de fonction ; distinct de self.x sans assignation préalable.
+
+Concepts clés :
+• Attribut de classe vs attribut d’instance.
+
+Distinctions clés :
+• Pas « crée un objet » seul, ni une fonction.
+
+Fonctionnement :
+• L’affectation dans le corps de classe lie x au mapping de la classe.
+
+Exécution étape par étape :
+• Évaluation de 1 au moment de la définition de classe.
+
+Ordre des opérations :
+• Ordre séquentiel du corps de classe.
+
+Cas d'utilisation courants :
+• Constantes partagées, compteur de classe (à manier avec prudence si mutable).
+
+Cas limites :
+• Mutables en attribut de classe : piège de partage (voir questions plus loin).
+
+Considérations de performance :
+• Un seul slot en mémoire pour la valeur partagée immuable.
+
+Exemples :
+• MyClass.x après plusieurs instances.
+
+Remarques :
+• Réponse : classe avec attribut de classe (1re option).`,
+  2403: `MyClass = class MyClass: pass
+
+Débutant :
+• Syntaxe invalide : on n’écrit pas class avec un signe = comme pour une affectation ordinaire.
+
+Intermédiaire :
+• Le parseur attend class Nom: corps ; le = provoque une erreur de syntaxe.
+
+Expert :
+• Le nom de classe est déjà la cible de l’instruction class.
+
+Concepts clés :
+• Grammaire Python des instructions composées.
+
+Distinctions clés :
+• Pas une NameError à l’exécution : échec au parsing.
+
+Fonctionnement :
+• Token class ne peut pas suivre = dans ce motif.
+
+Exécution étape par étape :
+• Aucun bytecode produit.
+
+Ordre des opérations :
+• Analyse syntaxique avant exécution.
+
+Cas d'utilisation courants :
+• Piège pédagogique ; rappel de la forme correcte class C: …
+
+Cas limites :
+• Alias possible après coup : C = MyClass une fois la classe définie.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• class MyClass: pass puis T = MyClass.
+
+Remarques :
+• Réponse : SyntaxError (1re option).`,
+  2404: `obj = MyClass() avec class MyClass: pass
+
+Débutant :
+• Les parenthèses appellent la classe : construction d’une nouvelle instance.
+
+Intermédiaire :
+• __new__ puis __init__ si défini ; ici __init__ par défaut de object.
+
+Expert :
+• Chaque appel renvoie un nouvel objet distinct en mémoire.
+
+Concepts clés :
+• Callable classe, instanciation.
+
+Distinctions clés :
+• Pas « appeler » au sens téléphoner : appel d’objet classe.
+
+Fonctionnement :
+• Mécanisme type.__call__ → __new__ → __init__.
+
+Exécution étape par étape :
+• Allouer instance, initialiser, retourner l’objet lié à obj.
+
+Ordre des opérations :
+• Évaluation de MyClass puis appel.
+
+Cas d'utilisation courants :
+• Pattern objet partout en Python.
+
+Cas limites :
+• Échec si __init__ exige des arguments non fournis.
+
+Considérations de performance :
+• Allocation rapide pour types simples.
+
+Exemples :
+• Deux appels → deux id différents.
+
+Remarques :
+• Réponse : crée une instance de MyClass (1re option).`,
+  2405: `type(MyClass()) avec class MyClass: pass
+
+Débutant :
+• type renvoie la classe de l’objet : ici MyClass (affichée avec le module, souvent __main__).
+
+Intermédiaire :
+• Ce n’est pas la méta-classe type de la classe elle-même, mais l’objet classe MyClass.
+
+Expert :
+• isinstance(obj, MyClass) cohérent avec ce résultat.
+
+Concepts clés :
+• introspection type().
+
+Distinctions clés :
+• Pas l’affichage littéral de la chaîne "MyClass" seule.
+
+Fonctionnement :
+• Objet instance → pointeur vers sa classe.
+
+Exécution étape par étape :
+• Création de l’instance puis appel type.
+
+Ordre des opérations :
+• MyClass() d’abord.
+
+Cas d'utilisation courants :
+• Tests de type, debug.
+
+Cas limites :
+• Sous-classes : type direct vs isinstance avec base.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• type(42) est int.
+
+Remarques :
+• Réponse : forme class __main__.MyClass (1re option du QCM).`,
+  2406: `isinstance(MyClass(), MyClass)
+
+Débutant :
+• Oui : l’objet créé est une instance de cette classe.
+
+Intermédiaire :
+• isinstance gère aussi les sous-classes ; ici cas exact.
+
+Expert :
+• Préféré à comparaison brute type(x) is MyClass pour l’héritage.
+
+Concepts clés :
+• Relation instance–classe.
+
+Distinctions clés :
+• Pas False sauf si mauvaise classe passée en 2e argument.
+
+Fonctionnement :
+• Vérification dans la chaîne de classes de x.
+
+Exécution étape par étape :
+• Construction puis test.
+
+Ordre des opérations :
+• Appel MyClass() puis isinstance.
+
+Cas d'utilisation courants :
+• Validation d’API, dispatch.
+
+Cas limites :
+• ABC et virtual subclassing.
+
+Considérations de performance :
+• Rapide en CPython.
+
+Exemples :
+• isinstance(True, int) True en Python.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2407: `MyClass.__name__
+
+Débutant :
+• Attribut spécial contenant le nom de la classe sous forme de chaîne.
+
+Intermédiaire :
+• Différent de __qualname__ pour classes imbriquées.
+
+Expert :
+• Utile pour logging, sérialisation, introspection.
+
+Concepts clés :
+• Métadonnées sur l’objet classe.
+
+Distinctions clés :
+• Pas None ni chaîne vide par défaut.
+
+Fonctionnement :
+• Renseigné à la création de la classe.
+
+Exécution étape par étape :
+• Accès attribut sans instancier.
+
+Ordre des opérations :
+• Lecture simple.
+
+Cas d'utilisation courants :
+• Fabriques, messages d’erreur.
+
+Cas limites :
+• Renommage dynamique rare.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• MyClass.__name__ == "MyClass".
+
+Remarques :
+• Réponse : 'MyClass' (1re option).`,
+  2408: `MyClass.__bases__
+
+Débutant :
+• Tuple des classes parentes directes ; sans héritage explicite, seul object.
+
+Intermédiaire :
+• Toujours un tuple, même une seule base.
+
+Expert :
+• Pour héritage multiple, plusieurs entrées dans l’ordre du listing.
+
+Concepts clés :
+• MRO commence par les bases.
+
+Distinctions clés :
+• Pas tuple vide dans le cas new-style class standard.
+
+Fonctionnement :
+• Fixé lors de la construction de la classe.
+
+Exécution étape par étape :
+• Lecture __bases__ sur l’objet type.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Frameworks, vérification d’héritage.
+
+Cas limites :
+• Classes C sans bases visibles : rare côté pur Python.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• class C(A,B): pass → __bases__ (A, B).
+
+Remarques :
+• Réponse : (object,) sous forme QCM (1re option).`,
+  2409: `MyClass.__module__
+
+Débutant :
+• Nom du module où la classe a été définie ; script principal souvent __main__.
+
+Intermédiaire :
+• Dans un fichier importé, ce serait le nom du module pointé.
+
+Expert :
+• Utilisé par pickle et outils d’introspection.
+
+Concepts clés :
+• Provenance de la définition.
+
+Distinctions clés :
+• Pas None pour une classe normalement chargée.
+
+Fonctionnement :
+• Assigné lors de class body execution.
+
+Exécution étape par étape :
+• Lecture attribut.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Debug, plugins.
+
+Cas limites :
+• exec dynamique peut surprendre.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• import mymod ; mymod.C.__module__ == 'mymod'.
+
+Remarques :
+• Réponse : '__main__' ou nom de module (1re option).`,
+  2410: `callable(MyClass)
+
+Débutant :
+• Une classe est un callable : on peut la invoquer pour fabriquer des instances.
+
+Intermédiaire :
+• callable vérifie __call__ sur le type de l’objet (ici la métaclasse).
+
+Expert :
+• Après instanciation, l’instance n’est callable que si __call__ est défini.
+
+Concepts clés :
+• Protocole call sur les classes.
+
+Distinctions clés :
+• Pas False pour une classe standard.
+
+Fonctionnement :
+• type.__call__ rend la classe callable.
+
+Exécution étape par étape :
+• Test booléen sans créer d’instance.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Factories génériques, injection.
+
+Cas limites :
+• Classes avec métaclasse qui bloque __call__ : cas avancé.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• callable(len) True, callable(3) False.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2411: `def __init__(self, x): self.x = x — nature
+
+Débutant :
+• Méthode d’initialisation appelée automatiquement après création de l’instance.
+
+Intermédiaire :
+• Souvent appelée « constructeur » en langage courant ; techniquement __new__ alloue.
+
+Expert :
+• Doit retourner None implicitement ; pas de valeur renvoyée utile.
+
+Concepts clés :
+• self lie l’instance ; paramètres utilisateurs après self.
+
+Distinctions clés :
+• Pas un destructeur (voir __del__ ailleurs).
+
+Fonctionnement :
+• type.__call__ invoque __init__ si présent sur la classe.
+
+Exécution étape par étape :
+• self.x = x crée attribut d’instance.
+
+Ordre des opérations :
+• __new__ puis __init__.
+
+Cas d'utilisation courants :
+• Invariant d’objet, champs requis.
+
+Cas limites :
+• Oubli de self → TypeError au call.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Classe Point avec x,y.
+
+Remarques :
+• Réponse : méthode constructeur / initialiseur (1re option).`,
+  2412: `MyClass(5) puis obj.x avec __init__(self,x): self.x = x
+
+Débutant :
+• __init__ a exécuté self.x = 5 ; lecture obj.x donne 5.
+
+Intermédiaire :
+• L’attribut vit sur l’instance (souvent __dict__ par défaut).
+
+Expert :
+• __slots__ changerait le stockage mais pas ici.
+
+Concepts clés :
+• Liaison nom d’attribut sur instance.
+
+Distinctions clés :
+• Pas None ni 0.
+
+Fonctionnement :
+• Passage de 5 comme argument positionnel après self.
+
+Exécution étape par étape :
+• Appel __init__ avec self frais et x=5.
+
+Ordre des opérations :
+• Construction complète avant lecture.
+
+Cas d'utilisation courants :
+• Modèle domaine.
+
+Cas limites :
+• Propriétés avec setter peuvent intercepter.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 5 (1re option).`,
+  2413: `__init__(self): pass seul ; MyClass()
+
+Débutant :
+• Toujours valide : aucun argument utilisateur requis ; une instance est créée.
+
+Intermédiaire :
+• __init__ sans paramètres autres que self : appel MyClass() sans args.
+
+Expert :
+• hérite toujours le comportement object.__init__ minimal.
+
+Concepts clés :
+• Signature de constructeur vide.
+
+Distinctions clés :
+• Pas d’erreur ni retour None de l’expression d’appel (l’assignation reçoit l’instance).
+
+Fonctionnement :
+• __init__ exécuté avec seulement self.
+
+Exécution étape par étape :
+• Allocation puis pass dans __init__.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Objet marqueur, configuration différée.
+
+Cas limites :
+• Si sous-classe impose des args : cas différent.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Petite classe A avec __init__(self): pass puis A() valide.
+
+Remarques :
+• Réponse : crée une instance (1re option).`,
+  2414: `__init__(self, x, y) puis MyClass(1, 2)
+
+Débutant :
+• Les deux arguments sont passés à __init__ ; self.x et self.y sont fixés.
+
+Intermédiaire :
+• Ordre positionnel : 1 puis 2.
+
+Expert :
+• On peut ajouter valeurs par défaut ou *args dans d’autres variantes.
+
+Concepts clés :
+• Paramètres multiples du constructeur.
+
+Distinctions clés :
+• Pas d’erreur ici.
+
+Fonctionnement :
+• Binding des arguments comme une fonction normale.
+
+Exécution étape par étape :
+• self.x=1, self.y=2.
+
+Ordre des opérations :
+• Gauche à droite pour les args.
+
+Cas d'utilisation courants :
+• Points 2D, paires clé-valeur initiales.
+
+Cas limites :
+• Trop peu ou trop d’arguments → TypeError.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : instance avec x=1 et y=2 (1re option).`,
+  2415: `__init__(self, x=1): self.x = x puis MyClass()
+
+Débutant :
+• Sans argument, x prend la valeur par défaut 1.
+
+Intermédiaire :
+• Règles des défauts Python identiques aux fonctions.
+
+Expert :
+• None comme défaut pour collections : antipattern classique à éviter ailleurs.
+
+Concepts clés :
+• Paramètres par défaut dans __init__.
+
+Distinctions clés :
+• Pas x=0.
+
+Fonctionnement :
+• Appel équivalent à __init__(self, 1).
+
+Exécution étape par étape :
+• self.x = 1.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Valeurs initiales optionnelles.
+
+Cas limites :
+• Mutables en défaut : piège (hors sujet strict ici).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• MyClass(9) écraserait le défaut.
+
+Remarques :
+• Réponse : instance avec x=1 (1re option).`,
+  2416: `Même __init__ avec défaut x=1 mais MyClass(5)
+
+Débutant :
+• L’argument explicite 5 remplace le défaut.
+
+Intermédiaire :
+• Ordre : valeurs passées lient avant application des défauts.
+
+Expert :
+• Keyword-only avec * possible dans d’autres signatures.
+
+Concepts clés :
+• Surcharge du défaut.
+
+Distinctions clés :
+• Pas 1.
+
+Fonctionnement :
+• x lié à 5 dans l’appel.
+
+Exécution étape par étape :
+• self.x = 5.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• API souples.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : instance avec x=5 (1re option).`,
+  2417: `class vide puis obj.x = 5 ; obj.x
+
+Débutant :
+• Python permet d’ajouter des attributs d’instance dynamiquement.
+
+Intermédiaire :
+• Pas besoin de déclarer les champs à l’avance (sauf __slots__).
+
+Expert :
+• __dict__ de l’instance reçoit la clé 'x'.
+
+Concepts clés :
+• Objet extensible.
+
+Distinctions clés :
+• Pas d’erreur ; pas 0 par défaut.
+
+Fonctionnement :
+• Affectation crée l’attribut sur l’objet.
+
+Exécution étape par étape :
+• Création instance puis setattr implicite.
+
+Ordre des opérations :
+• Lecture après écriture.
+
+Cas d'utilisation courants :
+• Prototypes rapides ; parfois déconseillé en prod stricte.
+
+Cas limites :
+• __slots__ interdirait si activé.
+
+Considérations de performance :
+• Coût dictionnaire par attribut.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 5 (1re option).`,
+  2418: `obj1 et obj2 deux MyClass() ; obj1 is obj2
+
+Débutant :
+• Deux appels → deux objets ; is compare l’identité : False.
+
+Intermédiaire :
+• == pourrait être True si __eq__ personnalisé, mais is reste False ici.
+
+Expert :
+• Petit entiers cachent : pas le cas pour instances custom.
+
+Concepts clés :
+• Identité vs égalité.
+
+Distinctions clés :
+• Pas True.
+
+Fonctionnement :
+• id différents.
+
+Exécution étape par étape :
+• Deux allocations.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Singletons : autre pattern (ex. override __new__).
+
+Cas limites :
+• None is None True.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2419: `hasattr(obj, 'x') sur instance vide
+
+Débutant :
+• Pas d’attribut x : hasattr renvoie False sans lever d’erreur.
+
+Intermédiaire :
+• hasattr attrape AttributeError éventuel de __getattr__.
+
+Expert :
+• Pour propriétés coûteuses, hasattr peut quand même déclencher du code selon descripteur.
+
+Concepts clés :
+• Test d’existence d’attribut.
+
+Distinctions clés :
+• Pas True.
+
+Fonctionnement :
+• getattr(obj,'x') interne avec gestion d’erreur.
+
+Exécution étape par étape :
+• Recherche échoue sur instance et classe pour x.
+
+Ordre des opérations :
+• MRO de l’attribut.
+
+Cas d'utilisation courants :
+• Code défensif.
+
+Cas limites :
+• Attributs calculés : attention aux effets de bord.
+
+Considérations de performance :
+• Léger.
+
+Exemples :
+• Après obj.x=5, hasattr devient True.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2420: `hasattr après __init__ qui définit self.x
+
+Débutant :
+• x existe sur l’instance : True.
+
+Intermédiaire :
+• Peu importe que x vienne d’__init__ ou d’affectation externe.
+
+Expert :
+• Peut être True même si la valeur est None.
+
+Concepts clés :
+• Présence vs valeur truthy.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Trouve x dans __dict__ ou descripteur data.
+
+Exécution étape par étape :
+• __init__ puis hasattr.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Vérifier API minimale d’un objet.
+
+Cas limites :
+• Voir descripteurs non-data.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2421: `self dans une méthode d’instance
+
+Débutant :
+• Convention : premier paramètre qui référence l’instance sur laquelle on appelle la méthode.
+
+Intermédiaire :
+• Python passe automatiquement l’instance ; le nom self n’est pas réservé mais standard.
+
+Expert :
+• Méthodes via descriptor : liaison au call.
+
+Concepts clés :
+• Bound method.
+
+Distinctions clés :
+• Pas la classe elle-même (ce serait cls).
+
+Fonctionnement :
+• Function.__get__ produit une méthode liée.
+
+Exécution étape par étape :
+• obj.m() → m(obj, …).
+
+Ordre des opérations :
+• Instance évaluée avant la méthode.
+
+Cas d'utilisation courants :
+• Toute méthode d’objet.
+
+Cas limites :
+• @staticmethod supprime self implicite.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : référence à l’instance (1re option).`,
+  2422: `obj.method() avec return 1
+
+Débutant :
+• Appel de méthode : exécute le corps et renvoie 1.
+
+Intermédiaire :
+• self est lié à obj automatiquement.
+
+Expert :
+• Types.FunctionType vs method selon accès.
+
+Concepts clés :
+• Appel de méthode d’instance.
+
+Distinctions clés :
+• Pas None.
+
+Fonctionnement :
+• pile d’appels Python standard.
+
+Exécution étape par étape :
+• Entrée méthode, return 1.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Comportements encapsulés.
+
+Cas limites :
+• Méthode abstraite non implémentée : erreur ailleurs.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2423: `MyClass.method(MyClass()) — même return 1
+
+Débutant :
+• Appeler la fonction sous-jacente en passant l’instance explicitement comme premier argument.
+
+Intermédiaire :
+• Équivalent à obj.method() si obj est cette instance.
+
+Expert :
+• Utile pour callbacks, tests, éviter liaison.
+
+Concepts clés :
+• Unbound vs bound (en pratique fonction + passage self).
+
+Distinctions clés :
+• Pas d’erreur ici.
+
+Fonctionnement :
+• MyClass() créé puis passé.
+
+Exécution étape par étape :
+• method(instance) avec self=instance.
+
+Ordre des opérations :
+• Évaluation intérieure MyClass() d’abord.
+
+Cas d'utilisation courants :
+• Passer une méthode comme fonction simple.
+
+Cas limites :
+• Oublier self → TypeError.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2424: `method(self, x): return x * 2 ; obj.method(5)
+
+Débutant :
+• 5 est lié à x après self ; retour 10.
+
+Intermédiaire :
+• self occupe le premier slot ; les args utilisateur suivent.
+
+Expert :
+• *args / **kwargs possibles dans d’autres signatures.
+
+Concepts clés :
+• Méthode avec paramètres.
+
+Distinctions clés :
+• Pas 5 ni erreur.
+
+Fonctionnement :
+• Multiplication entière.
+
+Exécution étape par étape :
+• Appel avec self=obj, x=5.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Services, transformations.
+
+Cas limites :
+• surcharge opérateur non impliquée ici.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 10 (1re option).`,
+  2425: `get_x(self): return self.x après __init__(5)
+
+Débutant :
+• get_x lit l’attribut fixé par __init__ : 5.
+
+Intermédiaire :
+• Deux méthodes partagent le même self via la même instance.
+
+Expert :
+• Pourrait être remplacé par property dans du code idiomatique.
+
+Concepts clés :
+• Lecture d’état interne.
+
+Distinctions clés :
+• Pas 0 ni erreur.
+
+Fonctionnement :
+• Résolution d’attribut sur instance.
+
+Exécution étape par étape :
+• __init__ puis get_x.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Getters explicites dans API Java-like ; property en Python moderne.
+
+Cas limites :
+• Attribut supprimé entre temps.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 5 (1re option).`,
+  2426: `method(self): return self puis obj.method() is obj
+
+Débutant :
+• self est l’instance ; la méthode la renvoie ; is vérifie identité : True.
+
+Intermédiaire :
+• Chaînage style fluent possible en retournant self.
+
+Expert :
+• Pas de copie : même pointeur mémoire.
+
+Concepts clés :
+• Identité d’objet.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Return self sans transformation.
+
+Exécution étape par étape :
+• Appel lie self à obj, return obj.
+
+Ordre des opérations :
+• is compare ids.
+
+Cas d'utilisation courants :
+• API fluide, builder.
+
+Cas limites :
+• sous-classe retournant mauvais type si mal conçu.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2427: `method(self, other): return self.x + other.x
+
+Débutant :
+• self pointe obj1 (x=1), other reçoit obj2 (x=2) : somme 3.
+
+Intermédiaire :
+• Pattern binaire explicite au lieu d’opérateur + surchargé.
+
+Expert :
+• Peut généraliser à tout attribut nommé partagé.
+
+Concepts clés :
+• Deux instances en interaction.
+
+Distinctions clés :
+• Pas 1 ni 2 seuls comme résultat final.
+
+Fonctionnement :
+• Passage positionnel obj2 en second paramètre utilisateur.
+
+Exécution étape par étape :
+• Lecture self.x et other.x puis addition.
+
+Ordre des opérations :
+• Préparation obj1, obj2 avant l’appel.
+
+Cas d'utilisation courants :
+• Vecteurs, agrégation entre objets.
+
+Cas limites :
+• AttributeError si x manque sur une instance.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 3 (1re option).`,
+  2428: `MyClass.method sans parenthèses finales sur la méthode
+
+Débutant :
+• Accès via la classe : on obtient la fonction sous-jacente (repr fonction).
+
+Intermédiaire :
+• Pas encore d’argument self injecté : ce n’est pas une bound method.
+
+Expert :
+• En Python 3, méthode = fonction descripteur ; vue classe = function.
+
+Concepts clés :
+• Descripteur de fonction.
+
+Distinctions clés :
+• Pas la chaîne 'instance' ni None.
+
+Fonctionnement :
+• __get__(None, cls) renvoie fonction nue.
+
+Exécution étape par étape :
+• Pas d’appel, seulement lookup.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Introspection, tests unitaires.
+
+Cas limites :
+• property se comporte différemment.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : objet fonction MyClass.method (1re option).`,
+  2429: `obj.method sans appeler — valeur
+
+Débutant :
+• Via l’instance : méthode liée (bound) montrant la classe et la fonction.
+
+Intermédiaire :
+• Appeler () déclenche l’exécution ; sans () c’est l’objet méthode.
+
+Expert :
+• __self__ et __func__ accessibles en interne.
+
+Concepts clés :
+• Bound method.
+
+Distinctions clés :
+• Pas la même chose que MyClass.method nu.
+
+Fonctionnement :
+• Descriptor lie self.
+
+Exécution étape par étape :
+• Création lazy de la bound method à la lecture.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Callbacks : passer obj.m sans parenthèses.
+
+Cas limites :
+• weakref.proxy subtilités.
+
+Considérations de performance :
+• Léger objet intermédiaire.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : bound method (1re option).`,
+  2430: `method(self, x=1): return x ; obj.method()
+
+Débutant :
+• Sans argument après self, x prend 1.
+
+Intermédiaire :
+• Même règle que pour les fonctions libres.
+
+Expert :
+• Keyword obj.method(x=7) possible.
+
+Concepts clés :
+• Défauts sur méthodes.
+
+Distinctions clés :
+• Pas 0 ni erreur.
+
+Fonctionnement :
+• Binding des défauts après self.
+
+Exécution étape par étape :
+• return 1.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Paramètres optionnels de commande.
+
+Cas limites :
+• Piège mutable défaut hors sujet.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2431: `class MyClass: x = 1 puis MyClass.x
+
+Débutant :
+• Lecture directe de l’attribut de classe : 1.
+
+Intermédiaire :
+• Pas besoin d’instance.
+
+Expert :
+• Peut servir de constante logique de classe.
+
+Concepts clés :
+• Namespace de classe.
+
+Distinctions clés :
+• Pas d’erreur.
+
+Fonctionnement :
+• Lookup dans __dict__ de la classe.
+
+Exécution étape par étape :
+• Accès attribut.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Configuration partagée.
+
+Cas limites :
+• Réassignation MyClass.x change pour tous non masqués.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2432: `x=1 classe ; obj = MyClass() ; obj.x
+
+Débutant :
+• Pas d’attribut d’instance : la résolution remonte à la classe → 1.
+
+Intermédiaire :
+• Ordre : instance puis classe le long du MRO.
+
+Expert :
+• data descriptors sur classe passent avant __dict__ instance (hors cas ici).
+
+Concepts clés :
+• Héritage d’attribut de classe par l’instance.
+
+Distinctions clés :
+• Pas None.
+
+Fonctionnement :
+• getattr hiérarchique.
+
+Exécution étape par étape :
+• Cherche dans obj.__dict__ vide → trouve sur classe.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Valeurs par défaut communes.
+
+Cas limites :
+• Masquage ultérieur par assignation instance.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2433: `obj.x = 2 puis MyClass.x
+
+Débutant :
+• L’affectation sur l’instance ne modifie pas l’attribut de classe : MyClass.x reste 1.
+
+Intermédiaire :
+• Création d’une entrée dans __dict__ de l’instance pour x.
+
+Expert :
+• Deux emplacements distincts : classe vs instance.
+
+Concepts clés :
+• Indépendance classe/instance pour l’affectation.
+
+Distinctions clés :
+• Pas 2 pour MyClass.x.
+
+Fonctionnement :
+• setattr sur instance n’écrit pas la classe.
+
+Exécution étape par étape :
+• obj.x shadow ; lecture classe inchangée.
+
+Ordre des opérations :
+• Séquence : création obj, assignation instance, lecture classe.
+
+Cas d'utilisation courants :
+• Surcharge par instance.
+
+Cas limites :
+• del obj.x révèle de nouveau la classe (question voisine).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2434: `obj.x = 2 puis lecture obj.x
+
+Débutant :
+• L’attribut d’instance masque la classe : on lit 2.
+
+Intermédiaire :
+• Précédence de __dict__ instance avant classe pour ce nom.
+
+Expert :
+• Même si la classe change plus tard, tant que shadow existe, instance gagne.
+
+Concepts clés :
+• Shadowing.
+
+Distinctions clés :
+• Pas 1 sur obj.x.
+
+Fonctionnement :
+• Trouve x dans instance d’abord.
+
+Exécution étape par étape :
+• getattr court-circuite sur instance.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Personnalisation par objet.
+
+Cas limites :
+• slots : pas de __dict__ classique.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2435: `obj1.x = 2 ; obj2.x sans attribut propre
+
+Débutant :
+• obj2 n’a pas d’instance x : il voit toujours l’attribut de classe 1.
+
+Intermédiaire :
+• obj1 est isolé avec son propre x=2.
+
+Expert :
+• Piège différent des listes partagées (question suivante).
+
+Concepts clés :
+• Attributs d’instance indépendants.
+
+Distinctions clés :
+• Pas 2 pour obj2.x.
+
+Fonctionnement :
+• getattr sur obj2 tombe sur classe.
+
+Exécution étape par étape :
+• Vérifier __dict__ de obj2 vide pour x.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Objets avec état divergent.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2436: `x = [] attribut de classe ; append sur obj1
+
+Débutant :
+• Une seule liste partagée : obj2 voit [1].
+
+Intermédiaire :
+• obj1.x et obj2.x pointent vers le même objet liste.
+
+Expert :
+• Bonne pratique : initialiser les mutables dans __init__.
+
+Concepts clés :
+• Mutabilité + partage.
+
+Distinctions clés :
+• Pas liste vide sur obj2.
+
+Fonctionnement :
+• append mute l’objet liste commun.
+
+Exécution étape par étape :
+• getattr renvoie la même référence.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Piège classique en exercice.
+
+Cas limites :
+• Si instance rebondit x vers nouvelle liste : cas différent.
+
+Considérations de performance :
+• Un seul objet liste.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : [1] (1re option).`,
+  2437: `MyClass.x = 2 puis obj = MyClass() ; obj.x
+
+Débutant :
+• Pas d’ombre sur l’instance : lecture de l’attribut de classe mis à 2.
+
+Intermédiaire :
+• Ordre du code : changement de classe avant création de obj.
+
+Expert :
+• Instances existantes verraient aussi 2 tant qu’elles ne masquent pas.
+
+Concepts clés :
+• Mutation d’attribut de classe.
+
+Distinctions clés :
+• Pas 1.
+
+Fonctionnement :
+• getattr trouve x=2 sur la classe.
+
+Exécution étape par étape :
+• Assignation classe puis instanciation puis lecture.
+
+Ordre des opérations :
+• Séquentiel comme écrit.
+
+Cas d'utilisation courants :
+• Compteurs globaux à la classe, feature flags.
+
+Cas limites :
+• Concurrence : besoin de synchronisation hors GIL si multi-thread réel.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2438: `obj.x = 2 puis del obj.x puis obj.x
+
+Débutant :
+• del supprime l’attribut d’instance ; la valeur de classe 1 réapparaît.
+
+Intermédiaire :
+• Équivalent à lever l’ombre.
+
+Expert :
+• delattr sur propriété data peut être interdit.
+
+Concepts clés :
+• Délégation au niveau classe après suppression locale.
+
+Distinctions clés :
+• Pas 2 ni erreur ici.
+
+Fonctionnement :
+• Retrait clé du __dict__ instance.
+
+Exécution étape par étape :
+• setattr shadow, del, getattr remonte.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Revenir au défaut de classe.
+
+Cas limites :
+• Si pas d’attribut classe x : AttributeError après del.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2439: `obj créé puis MyClass.x = 2 ; obj.x
+
+Débutant :
+• Instance sans x propre : voit la mise à jour de l’attribut de classe → 2.
+
+Intermédiaire :
+• Pas de copie par valeur au moment de __init__ pour x ici.
+
+Expert :
+• Si l’instance avait shadow 1, il faudrait del pour revoir la classe.
+
+Concepts clés :
+• Vue dynamique sur attribut de classe.
+
+Distinctions clés :
+• Pas 1.
+
+Fonctionnement :
+• Lecture résolue au moment de l’accès.
+
+Exécution étape par étape :
+• setattr classe puis getattr instance.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Paramètres globaux à toutes les instances non masquées.
+
+Cas limites :
+• Race threads.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2440: `obj.x = 2 puis MyClass.x = 3 ; obj.x
+
+Débutant :
+• L’instance garde son propre x=2 ; le changement de classe ne remplace pas l’attribut d’instance.
+
+Intermédiaire :
+• MyClass.x vaut 3 mais obj.x reste 2.
+
+Expert :
+• Illustration nette de l’indépendance après shadowing.
+
+Concepts clés :
+• Préséance instance une fois créée.
+
+Distinctions clés :
+• Pas 3 sur obj.x.
+
+Fonctionnement :
+• getattr s’arrête sur __dict__ instance.
+
+Exécution étape par étape :
+• Ordre : shadow, mutation classe, lecture instance.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Overrides locaux.
+
+Cas limites :
+• del pour réaligner.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2441: `@classmethod ; method(cls): return cls ; MyClass.method()
+
+Débutant :
+• cls reçoit la classe ; return cls donne l’objet classe MyClass.
+
+Intermédiaire :
+• Premier argument injecté est la classe, pas une instance.
+
+Expert :
+• Sous-classe : cls devient la sous-classe réelle (bon pour fabriques).
+
+Concepts clés :
+• Méthode de classe.
+
+Distinctions clés :
+• Pas la chaîne "MyClass" seule ni None.
+
+Fonctionnement :
+• Descriptor classmethod.
+
+Exécution étape par étape :
+• type.__get__ injecte MyClass.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• constructeurs alternatifs.
+
+Cas limites :
+• Oublier @classmethod → TypeError sur cls.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : objet classe __main__.MyClass (1re option).`,
+  2442: `classmethod appelée via obj.method()
+
+Débutant :
+• Même résultat : Python passe toujours la classe en premier, pas l’instance.
+
+Intermédiaire :
+• L’instance sert juste de point d’accès ; cls reste MyClass.
+
+Expert :
+• Diffère fondamentalement de def m(self).
+
+Concepts clés :
+• Appel depuis instance d’une classmethod.
+
+Distinctions clés :
+• Pas l’instance obj comme valeur de retour.
+
+Fonctionnement :
+• Même chemin que MyClass.method().
+
+Exécution étape par étape :
+• Résolution type(obj) pour cls.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• API symétrique classe/instance.
+
+Cas limites :
+• Héritage : cls est le type réel de obj.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : objet classe (1re option).`,
+  2443: `@staticmethod def method(): return 1
+
+Débutant :
+• Pas de self ni cls ; appel comme fonction ordinaire sur le namespace classe.
+
+Intermédiaire :
+• Le décorateur enlève l’injection automatique.
+
+Expert :
+• Utile pour regrouper utilitaires liés logiquement à la classe.
+
+Concepts clés :
+• Méthode statique.
+
+Distinctions clés :
+• Pas d’erreur faute de self.
+
+Fonctionnement :
+• staticmethod descriptor.
+
+Exécution étape par étape :
+• Appel direct return 1.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Helpers sans état.
+
+Cas limites :
+• Ne peut pas accéder à self sans le passer explicitement.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2444: `staticmethod appelée via obj.method()
+
+Débutant :
+• Identique à MyClass.method() : 1.
+
+Intermédiaire :
+• L’instance n’est pas passée au corps.
+
+Expert :
+• CPython ignore self pour staticmethod même si vous l’ajoutez par erreur dans la signature sans décorateur.
+
+Concepts clés :
+• Double syntaxe d’appel.
+
+Distinctions clés :
+• Pas None.
+
+Fonctionnement :
+• Pas de binding.
+
+Exécution étape par étape :
+• Lookup puis call simple.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• ergonomie d’API.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2445: `Différence classmethod vs staticmethod
+
+Débutant :
+• classmethod reçoit automatiquement la classe (cls) ; staticmethod ne reçoit rien d’automatique.
+
+Intermédiaire :
+• Choix : besoin du type pour fabriquer ou lire des attributs de classe vs utilitaire pur.
+
+Expert :
+• Héritage : cls dynamique vs références statiques au nom de classe.
+
+Concepts clés :
+• Injection du premier argument.
+
+Distinctions clés :
+• Pas « pas de différence » ni dépréciation.
+
+Fonctionnement :
+• Descripteurs distincts.
+
+Exécution étape par étape :
+• Préparer cls ou non avant le corps utilisateur.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• from_config(cls) vs add(a,b).
+
+Cas limites :
+• staticmethod + sous-classe : pas d’accès implicite.
+
+Considérations de performance :
+• Différence négligeable.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : classmethod reçoit cls, staticmethod rien (1re option).`,
+  2446: `@classmethod get_x(cls): return cls.x avec x=1 classe
+
+Débutant :
+• cls.x lit l’attribut de classe : 1.
+
+Intermédiaire :
+• Pattern idiomatique pour toucher l’état partagé.
+
+Expert :
+• Évite de coder en dur MyClass.x dans la méthode.
+
+Concepts clés :
+• Accès attribut de classe via cls.
+
+Distinctions clés :
+• Pas 0.
+
+Fonctionnement :
+• cls lié à MyClass à l’appel.
+
+Exécution étape par étape :
+• MyClass.get_x() → cls=MyClass.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Métadonnées, registres.
+
+Cas limites :
+• Si sous-classe redéfinit x.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2447: `@classmethod create(cls): return cls()
+
+Débutant :
+• Usine : cls() construit une nouvelle instance de la classe courante.
+
+Intermédiaire :
+• Équivalent conceptuel à MyClass() mais polymorphe en héritage.
+
+Expert :
+• Peut encapsuler validation avant __init__.
+
+Concepts clés :
+• Factory method.
+
+Distinctions clés :
+• Pas erreur ; pas renvoyer la classe seule sans appel.
+
+Fonctionnement :
+• cls est callable.
+
+Exécution étape par étape :
+• Appel de classe interne.
+
+Ordre des opérations :
+• create avant usage de obj.
+
+Cas d'utilisation courants :
+• from_dict, parseurs.
+
+Cas limites :
+• __init__ privé forcé : patterns avancés.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : crée une instance (1re option).`,
+  2448: `@staticmethod add(x,y) puis MyClass.add(1,2)
+
+Débutant :
+• Addition simple : 3.
+
+Intermédiaire :
+• Paramètres libres comme une fonction.
+
+Expert :
+• Pourrait être une fonction module ; staticmethod groupe par cohésion.
+
+Concepts clés :
+• Pas d’état implicite.
+
+Distinctions clés :
+• Pas Error.
+
+Fonctionnement :
+• x=1 y=2.
+
+Exécution étape par étape :
+• return 1+2.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Maths utilitaires dans la classe.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 3 (1re option).`,
+  2449: `Méthode instance return 1 et class_method return 2
+
+Débutant :
+• L’appel explicite est MyClass.class_method() → 2.
+
+Intermédiaire :
+• Les deux types coexistent dans une même classe.
+
+Expert :
+• Pas de conflit de noms ici car noms différents.
+
+Concepts clés :
+• Coexistence des types de méthodes.
+
+Distinctions clés :
+• Pas 1 pour cet appel précis.
+
+Fonctionnement :
+• Résolution du nom class_method sur la classe.
+
+Exécution étape par étape :
+• classmethod path.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• API mixte utilitaire/instance.
+
+Cas limites :
+• Shadowing de noms : erreurs humaines.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2450: `staticmethod return 'static' appelée via instance
+
+Débutant :
+• Pas d’usage de self : retourne 'static'.
+
+Intermédiaire :
+• Identique à l’appel sur la classe.
+
+Expert :
+• Si une méthode instance du même nom existait, la résolution sur l’instance prendrait l’instance method — ici un seul method défini.
+
+Concepts clés :
+• Indépendance à l’objet appelant.
+
+Distinctions clés :
+• Pas 'instance'.
+
+Fonctionnement :
+• staticmethod.__get__ renvoie fonction nue.
+
+Exécution étape par étape :
+• Call direct.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Helpers affichés côté OO.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 'static' (1re option).`,
   2451: `Double underscore prefix (__) triggers name mangling, making attributes "private" by changing their name. If class MyClass: def __init__(self): self.__x = 1; obj = MyClass(); obj.__x, then obj.__x lève an AttributeError car Python automatically renomme __x en _MyClass__x (en ajoutant le préfixe du nom de classe). C'est name mangling - Python changes the attribute name to include the class name, making it plus difficile d'accès from outside the class. The attribute still exists, but with a different name (_MyClass__x), so accès direct via __x échoue.
 
 Concepts clés (name mangling) :
