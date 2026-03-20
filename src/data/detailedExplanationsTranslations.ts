@@ -111018,1096 +111018,1997 @@ Exemples :
 
 Remarques :
 • Réponse : "hi" (1re option).`,
-  2601: `Abstract classes that contain @abstractmethod methods cannot be instantiated directly. Attempting to do so raises TypeError because the abstract method area() has not been implemented in a concrete subclass.
+  2601: `Point(1,2) et print(p.x) avec @dataclass
+
+Débutant :
+• @dataclass génère un __init__ à partir des annotations ; p.x vaut 1.
+
+Intermédiaire :
+• Les champs x et y deviennent attributs d’instance comme dans une classe classique.
+
+Expert :
+• field(), init=False ou slots=True modifient ce que le décorateur produit.
 
 Concepts clés :
-• ABC marks a class as abstract
-• @abstractmethod marks methods that MUST be overridden
-• Instantiating a class with unimplemented abstract methods raises TypeError
-• You must create a subclass that implements all abstract methods
+• @dataclass réduit le code répétitif pour des « sacs de données » typés.
 
-Comment ça fonctionne :
-• Shape inherits from ABC and declares area() as abstract
-• Shape() tries to create an instance
-• Python checks __abstractmethods__ and finds area() is not implemented
-• Raises TypeError: "Can't instantiate abstract class Shape with abstract method area"
+Distinctions clés :
+• Ce n’est pas un tuple nommé immuable par défaut.
 
-Exemple :
->>> from abc import ABC, abstractmethod
->>> class Shape(ABC):
-...     @abstractmethod
-...     def area(self): pass
->>> Shape()
-TypeError: Can't instantiate abstract class Shape with abstract method area`,
-  2602: `Quand a subclass implements all abstract méthodes de sa ABC parent, it becomes a concrete classe that can be instantiated normally.
+Fonctionnement :
+• Le décorateur inspecte le corps de classe et injecte __init__/__repr__/__eq__ (par défaut).
 
-Concepts clés :
-• Circle inherits from Shape (which is abstract)
-• Circle fournit un concrete implementation of area()
-• Since all abstract méthodes are implemented, Circle can be instantiated
-• Calling area() retourne 3.14
+Exécution étape par étape :
+• Point(1,2) ; assignation des champs ; lecture de p.x → 1.
 
-Comment ça fonctionne :
-• Shape declares area() as @abstractmethod
-• Circle overrides area() avec a concrete implementation returning 3.14
-• Circle() succeeds car no abstract méthodes remain unimplemented
-• Circle().area() calls the concrete implementation, returning 3.14
+Ordre des opérations :
+• Construction complète avant accès à l’attribut.
 
-Exemple :
->>> Circle().area()
-3.14`,
-  2603: `Abstract classes can absolutely contain concrete (non-abstract) methods alongside abstract ones. C'est one of the key design benefits of ABCs — they can provide shared implementations that subclasses inherit.
+Cas d'utilisation courants :
+• DTO, messages d’API, petits modèles internes.
 
-Concepts clés :
-• ABCs can have both abstract and concrete methods
-• Concrete methods in ABCs work just like regular methods
-• Subclasses inherit concrete methods without needing to override them
-• Only abstract methods must be overridden before instantiation
+Cas limites :
+• Ordre des champs avec défauts doit respecter les règles des paramètres Python.
 
-Comment ça fonctionne :
-• You mark seulement le methods that MUST be overridden with @abstractmethod
-• Other methods are regular concrete methods
-• Subclasses get the concrete methods for free via inheritance
-• Ce pattern est appelé the Template Method design pattern
+Considérations de performance :
+• Légère surcharge vs tuple pur ; souvent négligeable.
 
-Exemple :
->>> class Shape(ABC):
-...     @abstractmethod
-...     def area(self): pass
-...     def describe(self):
-...         return "I am a shape"
->>> class Circle(Shape):
-...     def area(self): return 3.14
->>> Circle().describe()
-'I am a shape'`,
-  2604: `Le concrete méthode describe() is defined in the abstract classe Shape. Since Circle implements the required abstract méthode area(), it can be instantiated, and it inherits describe() from Shape.
+Exemples :
+• p.y → 2 dans le même snippet.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2602: `Méthodes générées par @dataclass par défaut
+
+Débutant :
+• __init__, __repr__ et __eq__ sont générés par défaut.
+
+Intermédiaire :
+• __hash__ n’est pas activé par défaut si __eq__ existe (instance non hashable).
+
+Expert :
+• __str__ n’est pas généré : str() retombe sur __repr__ en général.
 
 Concepts clés :
-• Shape has one abstract méthode (area) and one concrete méthode (describe)
-• Circle implements area(), satisfying the ABC contract
-• Circle inherits describe() sans overriding it
-• Calling Circle().describe() invokes Shape's describe()
+• Trois méthodes couvrent construction, affichage debug et égalité structurelle.
 
-Comment ça fonctionne :
-• Circle() creates an instance (all abstract méthodes implemented)
-• Circle().describe() looks for describe in Circle — not found
-• Python follows MRO to Shape, finds describe() there
-• Retourne "I am a shape"
+Distinctions clés :
+• Pas __hash__ ni __str__ auto dans l’offre par défaut.
 
-Exemple :
->>> Circle().describe()
-'I am a shape'`,
-  2605: `Abstract classes can define __init__ just like any other class. Subclasses can (and should) call the parent's __init__ via super().__init__() to ensure proper initialization.
+Fonctionnement :
+• dataclasses.compare / flags init/repr/eq contrôlent la génération.
 
-Concepts clés :
-• ABCs can have __init__ with initialization logic
-• Subclasses call super().__init__() to run the parent init
-• __init__ is NOT automatically abstract — it's a regular method
-• The ABC still can't be instantiated directly if it has abstract methods
+Exécution étape par étape :
+• Définition de classe → transformation par le décorateur.
 
-Comment ça fonctionne :
-• Define __init__ in the ABC like any normal class
-• In the subclass __init__, call super().__init__()
-• The parent __init__ runs, setting up shared attributes
-• The subclass can then add its own initialization
+Ordre des opérations :
+• À l’import / exécution du bloc class.
 
-Exemple :
->>> class Animal(ABC):
-...     def __init__(self, name):
-...         self.name = name
-...     @abstractmethod
-...     def speak(self): pass
->>> class Dog(Animal):
-...     def __init__(self, name, breed):
-...         super().__init__(name)
-...         self.breed = breed
-...     def speak(self): return "Woof"
->>> d = Dog("Rex", "Lab")
->>> d.name
-'Rex'`,
-  2606: `Si an ABC defines multiple abstract méthodes, a subclass must implement ALL of them to be concrete. Missing even one abstract méthode means the subclass is still abstract.
+Cas d'utilisation courants :
+• Éviter le collage manuel de __init__/__repr__/__eq__.
+
+Cas limites :
+• Définir manuellement une méthode empêche sa régénération (selon cas).
+
+Considérations de performance :
+• __eq__ compare les champs : coût O(nombre de champs).
+
+Exemples :
+• frozen=True ajoute hash et immutabilité.
+
+Remarques :
+• Réponse : __init__, __repr__, __eq__ (1re option).`,
+  2603: `repr(P(1,2)) pour @dataclass
+
+Débutant :
+• __repr__ auto affiche P(x=1, y=2).
+
+Intermédiaire :
+• Format stable et lisible pour logs.
+
+Expert :
+• repr=False ou __repr__ custom remplace ce comportement.
 
 Concepts clés :
-• A defines two abstract méthodes: f() and g()
-• B only implements f(), leaving g() unimplemented
-• B is still abstract car g() remains unimplemented
-• B() raises TypeError
+• Repr orientée reconstruction / inspection.
 
-Comment ça fonctionne :
-• A.__abstractmethods__ = frozenset({'f', 'g'})
-• B implements f(), so B.__abstractmethods__ = frozenset({'g'})
-• Since B still has abstract méthodes, B() raises TypeError
-• Error: "Can't instantiate abstract classe B avec abstract méthode g"
+Distinctions clés :
+• Pas la forme <P object at 0x…> par défaut ici.
 
-Exemple :
->>> B()
-TypeError: Can't instantiate abstract classe B avec abstract méthode g`,
-  2607: `Quand all abstract méthodes are implemented, the subclass becomes concrete and can be instantiated normally.
+Fonctionnement :
+• Concaténation des noms de champs et valeurs.
 
-Concepts clés :
-• A defines two abstract méthodes: f() and g()
-• B implements both f() and g()
-• B n'a pas remaining abstract méthodes, so it's concrete
-• B() succeeds and B().f() retourne 1
+Exécution étape par étape :
+• P(1,2) ; appel repr ; chaîne structurée.
 
-Comment ça fonctionne :
-• B overrides f() to renvoyer 1 and g() to renvoyer 2
-• B.__abstractmethods__ = frozenset() (empty — all implemented)
-• B() creates an instance successfully
-• B().f() calls B's f(), qui retourne 1
+Ordre des opérations :
+• Ordre des champs = ordre de déclaration.
 
-Exemple :
->>> B().f()
-1
->>> B().g()
-2`,
-  2608: `An @abstractmethod can ont un body — it's not just a placeholder. Subclasses must still override the method, but they can call the parent's implementation via super().
+Cas d'utilisation courants :
+• Debug, collections qui affichent leurs éléments.
 
-Concepts clés :
-• @abstractmethod can contain actual implementation code
-• Subclasses MUST still override the method (it's still abstract)
-• Subclasses can call l'implémentation du parent via super().method()
-• This fournit un default or partial implementation pattern
+Cas limites :
+• Champs non repr avec repr=False au niveau field.
 
-Comment ça fonctionne :
-• Define the abstract method with a body (not just pass)
-• Subclass overrides the method (required)
-• Subclass can optionally call super().method() to run the parent body
-• Useful for providing base behavior that subclasses extend
+Considérations de performance :
+• N/A.
 
-Exemple :
->>> class A(ABC):
-...     @abstractmethod
-...     def f(self):
-...         return "base"
->>> class B(A):
-...     def f(self):
-...         return super().f() + " extended"
->>> B().f()
-'base extended'`,
-  2609: `Le abstract méthode f() in A a un body qui retourne "base". B overrides f() and calls super().f() to access the parent's implementation, then appends " extended".
+Exemples :
+• print([P(1,2)]) utilise les repr des éléments.
+
+Remarques :
+• Réponse : P(x=1, y=2) (1re option).`,
+  2604: `Égalité P(1,2) == P(1,2)
+
+Débutant :
+• __eq__ auto compare les champs ; tuple (1,2) égal → True.
+
+Intermédiaire :
+• Sans dataclass, == serait souvent identité seule → False entre deux objets.
+
+Expert :
+• eq=False désactive la génération d’__eq__.
 
 Concepts clés :
-• A.f() is abstract but a un body returning "base"
-• B.f() overrides A.f() (required since it's abstract)
-• B.f() calls super().f() to get "base" from the parent
-• Concatenation produces "base extended"
+• Égalité par valeur sur tous les champs pris en compte.
 
-Comment ça fonctionne :
-• B() creates instance (f is implemented)
-• B().f() calls B's f()
-• super().f() invokes A.f() qui retourne "base"
-• "base" + " extended" = "base extended"
+Distinctions clés :
+• Ce n’est pas is.
 
-Exemple :
->>> B().f()
-'base extended'`,
-  2610: `You can combine @property with @abstractmethod to create an abstract property. The class cannot be instantiated until a subclass fournit un concrete implementation of the property.
+Fonctionnement :
+• Comparaison champ à champ dans l’ordre.
 
-Concepts clés :
-• @property and @abstractmethod can be stacked
-• @property must come BEFORE @abstractmethod (outermost decorator)
-• The class with an abstract property cannot be instantiated
-• Subclasses must implement the property with @property
+Exécution étape par étape :
+• Deux instances distinctes mais équivalentes.
 
-Comment ça fonctionne :
-• A defines x as an abstract property
-• A.__abstractmethods__ includes 'x'
-• A() raises TypeError because x is not implemented
-• A subclass must define x as a @property to be concrete
+Ordre des opérations :
+• == déclenche P.__eq__.
 
-Exemple :
->>> class B(A):
-...     @property
-...     def x(self):
-...         return 42
->>> B().x
-42`,
-  2611: `To create an abstract class method, stack @classmethod on top of @abstractmethod. The outermost decorator should be @classmethod.
+Cas d'utilisation courants :
+• Tests unitaires, déduplication logique.
 
-Concepts clés :
-• @classmethod must be the outermost (top) decorator
-• @abstractmethod must be the innermost (bottom) decorator
-• This forces subclasses to implement a classmethod
-• The subclass implementation should also use @classmethod
+Cas limites :
+• Champs mutables partagés : égalité de référence sur ces objets.
 
-Comment ça fonctionne :
-• @classmethod wraps @abstractmethod
-• La method is both abstract (must be overridden) and a classmethod (receives cls)
-• Subclasses must override with their own @classmethod
-• Instantiation fails until the abstract classmethod is implemented
+Considérations de performance :
+• Comparable à comparer plusieurs attributs.
 
-Exemple :
->>> class A(ABC):
-...     @classmethod
-...     @abstractmethod
-...     def create(cls): pass
->>> class B(A):
-...     @classmethod
-...     def create(cls):
-...         return cls()
->>> B.create()
-<B object>`,
-  2612: `To create an abstract static method, stack @staticmethod on top of @abstractmethod. The outermost decorator should be @staticmethod.
+Exemples :
+• P(1,2)==P(1,3) → False.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2605: `P(1,2) == P(1,3)
+
+Débutant :
+• y diffère ; __eq__ retourne False.
+
+Intermédiaire :
+• Tous les champs doivent coïncider.
+
+Expert :
+• Avec order=True, on trie/compare autrement mais == reste basé sur les champs.
 
 Concepts clés :
-• @staticmethod must be the outermost (top) decorator
-• @abstractmethod must be the innermost (bottom) decorator
-• This forces subclasses to implement a staticmethod
-• The subclass implementation should also use @staticmethod
+• Une seule différence suffit à False.
 
-Comment ça fonctionne :
-• @staticmethod wraps @abstractmethod
-• La method is both abstract and static (no self or cls)
-• Subclasses must override with their own @staticmethod
-• Instantiation fails until the abstract staticmethod is implemented
+Distinctions clés :
+• x égal ne suffit pas si y diffère.
 
-Exemple :
->>> class A(ABC):
-...     @staticmethod
-...     @abstractmethod
-...     def validate(data): pass
->>> class B(A):
-...     @staticmethod
-...     def validate(data):
-...         return len(data) > 0
->>> B.validate([1, 2])
-True`,
-  2613: `Abstract classes can inherit from other abstract classes, creating a chain of abstraction. Each level can add new abstract methods, and seulement le final concrete class must implement all of them.
+Fonctionnement :
+• Comparaison de tuples de champs.
 
-Concepts clés :
-• ABC can inherit from another ABC
-• Abstract methods accumulate through the chain
-• The child ABC can add its own abstract methods
-• Only the final concrete subclass must implement ALL abstract methods
+Exécution étape par étape :
+• (1,2) vs (1,3).
 
-Comment ça fonctionne :
-• class A(ABC): @abstractmethod def f(): ...
-• class B(A): @abstractmethod def g(): ... — B is also abstract
-• B inherits f() from A and adds g()
-• class C(B): must implement both f() and g()
+Ordre des opérations :
+• Évaluation des deux instances puis ==.
 
-Exemple :
->>> class A(ABC):
-...     @abstractmethod
-...     def f(self): pass
->>> class B(A):
-...     @abstractmethod
-...     def g(self): pass
->>> class C(B):
-...     def f(self): return 1
-...     def g(self): return 2
->>> C().f()
-1`,
-  2614: `Dans a chain of abstract classes, the final concrete classe must implement all accumulated abstract méthodes from the entire hierarchy.
+Cas d'utilisation courants :
+• Détecter changements de configuration.
+
+Cas limites :
+• NaN dans un champ casse l’intuition d’égalité.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Inégalité stricte malgré même x.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2606: `P() avec x: int = 0 et y: int = 0
+
+Débutant :
+• Tous les arguments ont des défauts ; P() utilise 0 et 0.
+
+Intermédiaire :
+• Équivalent à P(x=0, y=0).
+
+Expert :
+• P(5) positionnel lie x en premier si signature positionnelle standard.
 
 Concepts clés :
-• A defines abstract méthode f()
-• B inherits from A and adds abstract méthode g()
-• C must implement both f() and g() to be concrete
-• C implements both, so it can be instantiated
+• Défauts de champs = paramètres optionnels du __init__ généré.
 
-Comment ça fonctionne :
-• C.__abstractmethods__ would be frozenset() (all implemented)
-• C() creates an instance successfully
-• C().f() calls C's implementation of f(), returning 1
+Distinctions clés :
+• Pas erreur ici.
 
-Exemple :
->>> C().f()
-1
->>> C().g()
-2`,
-  2615: `ABC is a helper class that uses ABCMeta as its metaclass. Writing class Shape(ABC) and class Shape(metaclass=ABCMeta) are functionally equivalent.
+Fonctionnement :
+• __init__(self, x=0, y=0) généré.
 
-Concepts clés :
-• ABC is defined as: class ABC(metaclass=ABCMeta)
-• Using metaclass=ABCMeta is the older, more explicit way
-• Inheriting from ABC is the modern, recommended approach
-• Both produce le même result: a class that supports @abstractmethod
+Exécution étape par étape :
+• Instanciation sans args ; repr montre les zéros.
 
-Comment ça fonctionne :
-• ABCMeta is the metaclass that enables abstract method checking
-• ABC is a convenience class with ABCMeta already set
-• class Shape(ABC) is shorthand for class Shape(metaclass=ABCMeta)
-• Both allow @abstractmethod declarations and prevent instantiation of incomplete subclasses
+Ordre des opérations :
+• Appel constructeur puis repr implicite si print de l’objet.
 
-Exemple :
->>> from abc import ABC, ABCMeta
->>> class A(ABC): pass
->>> class B(metaclass=ABCMeta): pass
->>> type(A)
-<class 'abc.ABCMeta'>
->>> type(B)
-<class 'abc.ABCMeta'>`,
-  2616: `Le ABC classe is defined avec ABCMeta as its metaclass. C'est what gives ABC (and its subclasses) the ability to track and enforce abstract méthodes.
+Cas d'utilisation courants :
+• Valeurs « zéro » ou sentinelles par défaut.
 
-Concepts clés :
-• ABC is a classe avec metaclass=ABCMeta
-• ABCMeta is the actual metaclass that does the heavy lifting
-• ABCMeta tracks __abstractmethods__ on each classe
-• ABCMeta prevents instantiation when abstract méthodes exist
+Cas limites :
+• Mélange champ avec/sans défaut : ordre obligatoire.
 
-Comment ça fonctionne :
-• ABCMeta.__new__ checks for @abstractmethod decorators
-• It collects them into __abstractmethods__ (a frozenset)
-• On instantiation, ABCMeta.__call__ checks if __abstractmethods__ is non-empty
-• If non-empty, raises TypeError
+Considérations de performance :
+• N/A.
 
-Exemple :
->>> from abc import ABC, ABCMeta
->>> type(ABC)
-<classe 'abc.ABCMeta'>
->>> ABC.__class__
-<classe 'abc.ABCMeta'>`,
-  2617: `A class that inherits from ABC but defines no @abstractmethod methods is technically concrete and can be instantiated. The ABC base class alone doesn't prevent instantiation — only unimplemented abstract methods do.
+Exemples :
+• P(5) → P(x=5,y=0).
+
+Remarques :
+• Réponse : P(x=0, y=0) (1re option).`,
+  2607: `P(1) avec y: int = 0
+
+Débutant :
+• x requis, y par défaut → P(x=1, y=0).
+
+Intermédiaire :
+• y doit suivre x dans la liste des champs si x sans défaut.
+
+Expert :
+• kwargs P(y=1, x=2) possible si signature le permet.
 
 Concepts clés :
-• Inheriting from ABC doesn't automatically make a class abstract
-• Only @abstractmethod methods prevent instantiation
-• A class with ABC but no abstract methods is concrete
-• A.__abstractmethods__ is frozenset() (empty)
+• Même règle que les défauts de fonctions Python.
 
-Comment ça fonctionne :
-• class A(ABC): pass — no abstract methods declared
-• A.__abstractmethods__ is empty
-• A() succeeds because there are no unimplemented abstract methods
-• The instance is a regular object of type A
+Distinctions clés :
+• Pas P(x=1) seul dans les options correctes de l’énoncé.
 
-Exemple :
->>> from abc import ABC
->>> class A(ABC): pass
->>> a = A()
->>> isinstance(a, A)
-True`,
-  2618: `Le __abstractmethods__ attribute is a frozenset contenant les names of all abstract méthodes that haven't been implemented. Python uses this to decide whether a classe can be instantiated.
+Fonctionnement :
+• Génération de signature cohérente.
 
-Concepts clés :
-• __abstractmethods__ is automatically maintained by ABCMeta
-• It's a frozenset (immutable set) of méthode name strings
-• If non-empty, the classe cannot be instantiated
-• When a subclass implements a méthode, it's removed from the set
+Exécution étape par étape :
+• Un argument positionnel pour x.
 
-Comment ça fonctionne :
-• ABCMeta scans for @abstractmethod-decorated méthodes
-• Collects their names into __abstractmethods__
-• A has f() as abstract, so A.__abstractmethods__ = frozenset({'f'})
-• A concrete subclass implementing f() would have frozenset() (empty)
+Ordre des opérations :
+• P(1) évalué d’abord.
 
-Exemple :
->>> A.__abstractmethods__
-frozenset({'f'})
->>> classe B(A):
-...     def f(self): renvoyer 1
->>> B.__abstractmethods__
-frozenset()`,
-  2619: `Le register() méthode makes a classe a "virtual subclass" of the ABC. This means isinstance() and issubclass() will renvoyer True, but no actual inheritance of méthodes or attributes occurs.
+Cas d'utilisation courants :
+• Paramètres obligatoires + options.
 
-Concepts clés :
-• register() crée un virtual subclass relationship
-• No actual méthode inheritance happens
-• isinstance() and issubclass() checks pass
-• The registered classe doesn't need to implement abstract méthodes
+Cas limites :
+• Oublier un champ requis → TypeError.
 
-Comment ça fonctionne :
-• MyABC.register(liste) tells Python that liste is a virtual subclass of MyABC
-• isinstance([], MyABC) retourne True
-• issubclass(liste, MyABC) retourne True
-• But liste doesn't actually get any MyABC méthodes
+Considérations de performance :
+• N/A.
 
-Exemple :
->>> MyABC.register(liste)
->>> isinstance([], MyABC)
-True
->>> issubclass(liste, MyABC)
-True`,
-  2620: `After calling MyABC.register(int), the int type becomes a virtual subclass of MyABC. This makes isinstance(42, MyABC) return True even though int doesn't actually inherit from MyABC.
+Exemples :
+• P(1,5) remplace le défaut de y.
+
+Remarques :
+• Réponse : P(x=1, y=0) (1re option).`,
+  2608: `Champ sans défaut après champ avec défaut
+
+Débutant :
+• TypeError à la définition de la classe : même règle que def f(a=0, b).
+
+Intermédiaire :
+• Le __init__ généré serait invalide.
+
+Expert :
+• Réordonner les champs ou utiliser dataclasses.KW_ONLY (versions récentes) pour cas avancés.
 
 Concepts clés :
-• register() crée un virtual subclass relationship
-• isinstance() checks include virtual subclasses
-• 42 is an int, and int is a virtual subclass of MyABC
-• So isinstance(42, MyABC) returns True
+• Cohérence avec la grammaire des paramètres Python.
 
-Comment ça fonctionne :
-• MyABC.register(int) registers int as virtual subclass
-• isinstance(42, MyABC) checks: is 42 an instance of MyABC?
-• Python checks actual inheritance — no
-• Python checks virtual subclass registry — yes (int is registered)
-• Retourne True
+Distinctions clés :
+• Pas SyntaxError ici : souvent TypeError au décorateur.
 
-Exemple :
->>> MyABC.register(int)
->>> isinstance(42, MyABC)
-True
->>> issubclass(int, MyABC)
-True`,
-  2621: `Virtual subclasses (created via register()) only affect isinstance() and issubclass() checks. They do NOT create actual inheritance — no methods or attributes are inherited.
+Fonctionnement :
+• @dataclass valide la liste des Field.
 
-Concepts clés :
-• Virtual subclasses pass isinstance() checks — True
-• Virtual subclasses pass issubclass() checks — True
-• Virtual subclasses do NOT inherit any methods
-• Virtual subclasses do NOT inherit any attributes
-• There is no actual MRO (method resolution order) connection
+Exécution étape par étape :
+• Échec avant toute instanciation.
 
-Comment ça fonctionne :
-• register() adds the class to the ABC's virtual subclass registry
-• isinstance/issubclass use __subclasshook__ or the registry to check
-• But Python's method resolution (MRO) is inchangés
-• The virtual subclass cannot call methods from the ABC
+Ordre des opérations :
+• Corps de classe exécuté ; dataclass transforme.
 
-Exemple :
->>> class MyABC(ABC):
-...     def greet(self): return "hello"
->>> MyABC.register(int)
->>> isinstance(42, MyABC)
-True
->>> (42).greet()
-AttributeError: 'int' object n'a pas attribute 'greet'`,
-  2622: `Le Sized ABC from collections.abc requiert un __len__ méthode. Since liste implements __len__, isinstance([], Sized) retourne True.
+Cas d'utilisation courants :
+• Éviter ambiguïté sur arguments positionnels.
+
+Cas limites :
+• Héritage multi-niveaux : règles cumulées sur tous les champs.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Mettre y avant x=0.
+
+Remarques :
+• Réponse : TypeError — champ sans défaut après défaut (1re option).`,
+  2609: `field(default_factory=list) et C().items
+
+Débutant :
+• Chaque instance reçoit une nouvelle liste vide ; print montre [].
+
+Intermédiaire :
+• list sans parenthèses est la fabrique appelée à chaque __init__.
+
+Expert :
+• lambda ou dict/set factory pour défauts mutables personnalisés.
 
 Concepts clés :
-• Sized is an ABC that requires __len__
-• liste has __len__ (len([]) works)
-• isinstance checks if the objet's classe implements the required méthodes
-• Uses __subclasshook__ for structural checking
+• Évite le piège de la liste partagée.
 
-Comment ça fonctionne :
-• Sized defines __subclasshook__ that checks for __len__
-• liste has __len__, so the check passes
-• isinstance([], Sized) retourne True
-• C'est an example of structural checking built into ABCs
+Distinctions clés :
+• Pas None ni type list brut comme valeur affichée.
 
-Exemple :
->>> from collections.abc import Sized
->>> isinstance([], Sized)
-True
->>> isinstance("hello", Sized)
-True
->>> isinstance(42, Sized)
-False`,
-  2623: `Le Iterable ABC from collections.abc requires an __iter__ méthode. Since str implements __iter__, isinstance("hello", Iterable) retourne True.
+Fonctionnement :
+• default_factory invoquée pendant l’initialisation.
 
-Concepts clés :
-• Iterable is an ABC that requires __iter__
-• str has __iter__ (you can iterate over characters)
-• isinstance checks if the objet's classe has __iter__
-• Uses __subclasshook__ for structural checking
+Exécution étape par étape :
+• C() ; factory → [] ; attribut items.
 
-Comment ça fonctionne :
-• Iterable defines __subclasshook__ that checks for __iter__
-• str has __iter__, so the check passes
-• isinstance("hello", Iterable) retourne True
-• Any objet avec __iter__ is considered Iterable
+Ordre des opérations :
+• __init__ généré appelle la factory au bon moment.
 
-Exemple :
->>> from collections.abc import Iterable
->>> isinstance("hello", Iterable)
-True
->>> isinstance([1, 2], Iterable)
-True
->>> isinstance(42, Iterable)
-False`,
-  2624: `Le Hashable ABC requiert un __hash__ méthode. Lists explicitly set __hash__ = None (car they are mutable), so isinstance([], Hashable) retourne False.
+Cas d'utilisation courants :
+• Agrégation par instance, buffers, enfants.
+
+Cas limites :
+• Factory qui modifie état global → effets de bord.
+
+Considérations de performance :
+• Coût d’allocation par instance.
+
+Exemples :
+• Deux C() ont des listes différentes.
+
+Remarques :
+• Réponse : [] (1re option).`,
+  2610: `Pourquoi interdire items: list = [] ?
+
+Débutant :
+• Une même liste serait partagée par toutes les instances.
+
+Intermédiaire :
+• Même problème que def f(x=[]):.
+
+Expert :
+• @dataclass lève ValueError si défaut mutable direct.
 
 Concepts clés :
-• Hashable requires __hash__ to be implemented (and not None)
-• Mutable types like liste set __hash__ = None
-• Cela empêche them from being used as dictionnaire keys or set elements
-• isinstance checks both the presence AND non-None-ness of __hash__
+• Séparation des états mutables par objet.
 
-Comment ça fonctionne :
-• Hashable.__subclasshook__ checks if __hash__ is not None
-• liste.__hash__ is None (explicitly disabled)
-• isinstance([], Hashable) retourne False
-• Immutable types like tuple, str, int are Hashable
+Distinctions clés :
+• Ce n’est pas une interdiction d’annoter list.
 
-Exemple :
->>> from collections.abc import Hashable
->>> isinstance([], Hashable)
-False
->>> isinstance({}, Hashable)
-False
->>> isinstance((), Hashable)
-True`,
-  2625: `Le Hashable ABC requiert un __hash__ méthode. Tuples are immutable and have __hash__ implemented, so isinstance((1, 2), Hashable) retourne True.
+Fonctionnement :
+• Détection des mutables dans les défauts.
 
-Concepts clés :
-• Tuples are immutable, so they can be hashed
-• tuple.__hash__ is implemented (not None)
-• isinstance((1, 2), Hashable) retourne True
-• C'est pourquoi tuples can be dictionnaire keys but listes cannot
+Exécution étape par étape :
+• Classe refusée ou erreur à la définition selon version / cas.
 
-Comment ça fonctionne :
-• Hashable.__subclasshook__ checks for __hash__
-• tuple.__hash__ exists and is not None
-• isinstance((1, 2), Hashable) retourne True
-• Note : a tuple containing unhashable items (like listes) will raise TypeError at hash time, but the isinstance check still passes
+Cas d'utilisation courants :
+• list, dict, set comme état par instance.
 
-Exemple :
->>> from collections.abc import Hashable
->>> isinstance((1, 2), Hashable)
-True
->>> isinstance("hello", Hashable)
-True
->>> hash((1, 2))
--3550055125485641917`,
-  2626: `typing.Protocol defines structural interfaces for Python's type system. A class satisfies a Protocol if it has the required methods/attributes, regardless of whether it explicitly inherits from the Protocol.
+Cas limites :
+• Tuple immuable comme défaut est OK.
+
+Considérations de performance :
+• Factory légère préférable à copies profondes inutiles.
+
+Exemples :
+• field(default_factory=dict).
+
+Remarques :
+• Réponse : défaut mutable partagé (1re option).`,
+  2611: `frozen=True et p.x = 3
+
+Débutant :
+• Affectation après construction → FrozenInstanceError (sous-classe d’AttributeError).
+
+Intermédiaire :
+• __init__ utilise object.__setattr__ pour la phase initiale.
+
+Expert :
+• frozen permet aussi __hash__ cohérent avec immutabilité.
 
 Concepts clés :
-• Protocol enables structural subtyping (duck typing for type checkers)
-• No explicit inheritance needed — just matching method signatures
-• Introduced en Python 3.8 (PEP 544)
-• Used primarily for static type checking with mypy, pyright, etc.
+• Objet valeur figé après création.
 
-Comment ça fonctionne :
-• Define a Protocol class with required method signatures
-• Any class with matching methods is considered a subtype
-• Type checkers verify structural conformance
-• No runtime inheritance relationship required
+Distinctions clés :
+• Pas TypeError standard pour cette affectation simple.
 
-Exemple :
->>> from typing import Protocol
->>> class Drawable(Protocol):
-...     def draw(self) -> str: ...
->>> class Circle:
-...     def draw(self) -> str:
-...         return "circle"
->>> def render(shape: Drawable):
-...     return shape.draw()
->>> render(Circle())
-'circle'`,
-  2627: `Protocol uses structural subtyping, which means compatibility is determined by the structure of a class (its methods and attributes) rather than its inheritance hierarchy.
+Fonctionnement :
+• __setattr__ surchargé pour bloquer.
 
-Concepts clés :
-• Structural subtyping: "if it has the right methods, it matches"
-• Based on duck typing philosophy
-• No inheritance required
-• Checked by static type checkers (mypy, pyright)
+Exécution étape par étape :
+• P(1,2) OK ; assignation x refuse.
 
-Comment ça fonctionne :
-• A Protocol defines required methods/attributes
-• Any class with those methods/attributes is structurally compatible
-• The type checker verifies the match without requiring inheritance
-• C'est the opposite of nominal subtyping (used by ABC)
+Ordre des opérations :
+• Mutation tentée après init complète.
 
-Exemple :
-• Protocol Drawable requires draw() -> str
-• class Sprite has draw() -> str
-• Sprite is structurally compatible with Drawable
-• No need for class Sprite(Drawable)`,
-  2628: `ABC uses nominal subtyping, which means compatibility is determined by the explicit inheritance hierarchy, not by the methods a class happens to have.
+Cas d'utilisation courants :
+• Clés de dict, configs immuables.
+
+Cas limites :
+• Objets mutables dans un champ frozen : contenu encore mutable.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• delattr aussi bloqué.
+
+Remarques :
+• Réponse : FrozenInstanceError (1re option).`,
+  2612: `Rôle de frozen=True
+
+Débutant :
+• Rend l’instance immuable après __init__.
+
+Intermédiaire :
+• Active la génération de __hash__ (souvent) pour hashabilité.
+
+Expert :
+• Pas « geler la classe » ni empêcher l’import.
 
 Concepts clés :
-• Nominal subtyping: "you must explicitly inherit to be a subtype"
-• Based on class declarations, not structure
-• class Child(Parent) explicitly declares the relationship
-• Used by ABC (Abstract Base Class)
+• Pattern valeur / record immuable.
 
-Comment ça fonctionne :
-• ABC defines abstract methods that must be overridden
-• A class must explicitly inherit from the ABC to be considered a subtype
-• Even if a class has all the right methods, it's not a subtype without inheriting
-• isinstance/issubclass checks require actual or registered inheritance
+Distinctions clés :
+• Ce ne sont pas des champs privés automatiques.
 
-Comparaison :
-• ABC (nominal): class Circle(Shape) required
-• Protocol (structural): just having the right methods is enough
-• ABC enforces "is-a" relationships explicitly
-• Protocol checks "has-a" structure implicitly`,
-  2629: `Sprite is considered a Drawable by static type checkers because it a un draw() method with a matching signature. C'est structural subtyping — no inheritance required.
+Fonctionnement :
+• Hooks setattr/delattr + hash.
 
-Concepts clés :
-• Drawable Protocol requiert un draw() -> str method
-• Sprite has draw() -> str (matches the signature)
-• Type checkers see Sprite as compatible with Drawable
-• No explicit inheritance (class Sprite(Drawable)) needed
+Exécution étape par étape :
+• Construction puis blocage mutations.
 
-Comment ça fonctionne :
-• Static type checker compares Sprite's methods to Drawable's requirements
-• Sprite has draw(self) -> str, matching Drawable's requirement
-• Type checker accepts Sprite wherever Drawable is expected
-• C'est the essence of structural subtyping
+Ordre des opérations :
+• N/A.
 
-Exemple :
->>> def render(shape: Drawable) -> str:
-...     return shape.draw()
->>> render(Sprite())  # Type checker accepts this
-'sprite'`,
-  2630: `This demonstrates that Sprite works on its own with its draw() method. When combined with a Protocol, any function expecting a Drawable can accept Sprite without inheritance.
+Cas d'utilisation courants :
+• Sets, dict keys, thread-safety basique.
 
-Concepts clés :
-• Sprite a un draw() method qui retourne "sprite"
-• No ABC or Protocol inheritance needed for the method to work
-• C'est standard Python duck typing
-• Protocol formalizes this for static type checkers
+Cas limites :
+• copy.replace (3.10+) pour « mutation » fonctionnelle.
 
-Comment ça fonctionne :
-• Sprite() creates an instance
-• .draw() calls the draw method
-• Retourne "sprite"
-• If a Protocol Drawable exists with draw(), Sprite matches it structurally
+Considérations de performance :
+• N/A.
 
-Exemple :
->>> Sprite().draw()
-'sprite'`,
-  2631: `Protocol does NOT require a class to explicitly inherit from it. Unlike ABC where you write class Child(MyABC), with Protocol a class just needs to have the right methods and attributes.
+Exemples :
+• frozen dataclass en clé de cache.
+
+Remarques :
+• Réponse : immutabilité des instances (1re option).`,
+  2613: `Frozen dataclass comme clé de dict
+
+Débutant :
+• Oui : __hash__ généré + immutabilité → clé valide.
+
+Intermédiaire :
+• Sans frozen, __hash__ souvent None si __eq__ généré.
+
+Expert :
+• Égalité et hash doivent rester cohérents (pas de champs mutables hashés naïvement).
 
 Concepts clés :
-• No need for class MyClass(MyProtocol)
-• Just having matching methods is sufficient
-• C'est what makes it "structural" subtyping
-• Contrasts with ABC's "nominal" subtyping
+• Hash stable si l’objet ne change pas.
 
-Comment ça fonctionne :
-• Protocol defines required interface (methods/attributes)
-• Any class with matching methods is compatible
-• No inheritance declaration needed
-• Type checker verifies the match purely by structure
+Distinctions clés :
+• Pas « jamais hashable » pour tout dataclass.
 
-Exemple :
-• Protocol requires draw() -> str
-• class Sprite: def draw(self) -> str: ... — compatible!
-• class Sprite(Drawable): — NOT required
-• Both approaches make Sprite usable where Drawable is expected`,
-  2632: `Le @runtime_checkable decorator allows Protocol classes to be used avec isinstance() at runtime. Since liste has __len__, isinstance([1, 2], HasLen) retourne True.
+Fonctionnement :
+• hash((champs...)) typique.
 
-Concepts clés :
-• @runtime_checkable enables isinstance() checks avec Protocol
-• Without it, isinstance() avec Protocol raises TypeError
-• The check verifies méthode existence (not signatures)
-• [1, 2] is a liste, and liste has __len__
+Exécution étape par étape :
+• Création P(1,2) ; utilisation comme clé.
 
-Comment ça fonctionne :
-• @runtime_checkable adds __instancecheck__ to HasLen
-• isinstance([1, 2], HasLen) checks if liste has __len__
-• liste.__len__ exists, so the check passes
-• Retourne True
+Ordre des opérations :
+• N/A.
 
-Exemple :
->>> isinstance([1, 2], HasLen)
-True
->>> isinstance("hello", HasLen)
-True
->>> isinstance(42, HasLen)
-False`,
-  2633: `By default, Protocol classes cannot be used with isinstance() at runtime. Adding @runtime_checkable enables this capability.
+Cas d'utilisation courants :
+• Maps par coordonnées, index fonctionnels.
 
-Concepts clés :
-• Default Protocol: only for static type checking (mypy, pyright)
-• @runtime_checkable: enables isinstance() at runtime
-• isinstance() checks only method/attribute existence, not signatures
-• Useful for runtime duck-type checking
+Cas limites :
+• Champ non hashable dans frozen → problème à la construction du hash.
 
-Comment ça fonctionne :
-• @runtime_checkable modifies the Protocol's metaclass behavior
-• Adds __instancecheck__ that checks for required attributes
-• isinstance(obj, MyProtocol) now works at runtime
-• Only checks if methods exist, not their exact signatures
+Considérations de performance :
+• Lookup dict O(1) amorti.
 
-Exemple :
->>> @runtime_checkable
-... class Sizeable(Protocol):
-...     def __len__(self) -> int: ...
->>> isinstance([], Sizeable)
-True
->>> isinstance(42, Sizeable)
-False`,
-  2634: `Protocol classes without @runtime_checkable cannot be used with isinstance() at runtime. Attempting to do so raises TypeError.
+Exemples :
+• d[P(1,2)] lecture.
+
+Remarques :
+• Réponse : oui, hashable (1re option).`,
+  2614: `P(1) < P(2) avec order=True
+
+Débutant :
+• Comparaison lexicographique des tuples de champs ; (1,) < (2,) → True.
+
+Intermédiaire :
+• Nécessite eq=True (défaut) avec order.
+
+Expert :
+• functools.total_ordering non requis ici : les quatre rich compares sont ajoutées.
 
 Concepts clés :
-• Protocol without @runtime_checkable is for static type checking only
-• isinstance() is a runtime check, which Protocol doesn't support by default
-• @runtime_checkable must be explicitly added to enable isinstance()
-• C'est a deliberate design choice to separate static and runtime checking
+• order=True ajoute < <= > >=.
 
-Comment ça fonctionne :
-• MyProto is a Protocol without @runtime_checkable
-• isinstance("hello", MyProto) tries a runtime check
-• Protocol's __instancecheck__ raises TypeError
-• Error: "Protocols with non-method members ne supporte pas issubclass()"
+Distinctions clés :
+• Pas TypeError si types cohérents.
 
-Exemple :
->>> isinstance("hello", MyProto)
-TypeError: Protocols with non-method members ne supporte pas issubclass()`,
-  2635: `This Protocol defines a Comparable interface: any class that a un __lt__ method (less-than comparison) is structurally compatible with Comparable.
+Fonctionnement :
+• Tuple de champs comparé comme en tri Python.
 
-Concepts clés :
-• Protocol defines structural requirements
-• Comparable requires __lt__(self, other) -> bool
-• int, float, str all have __lt__ — they're all Comparable
-• Custom classes with __lt__ are also Comparable
+Exécution étape par étape :
+• Deux instances ; __lt__.
 
-Comment ça fonctionne :
-• Type checker looks for __lt__ method on a class
-• If present with compatible signature, the class matches Comparable
-• No inheritance from Comparable needed
-• Works with built-in types and custom classes alike
+Ordre des opérations :
+• Champs dans l’ordre de définition.
 
-Exemple :
->>> class Temperature:
-...     def __init__(self, value):
-...         self.value = value
-...     def __lt__(self, other):
-...         return self.value < other.value
->>> def minimum(a: Comparable, b: Comparable):
-...     return a if a < b else b
->>> minimum(Temperature(20), Temperature(30)).value
-20`,
-  2636: `Duck typing is a programming concept where an object's suitability is determined by the presence of certain methods and properties, rather than the object's actual type or inheritance.
+Cas d'utilisation courants :
+• Tri de listes de records, files de priorité simples.
 
-Concepts clés :
-• "If it walks like a duck and quacks like a duck, it's a duck"
-• Focus on behavior (methods), not identity (class hierarchy)
-• Core philosophy of Python's dynamic type system
-• Protocol formalizes duck typing for static type checkers
+Cas limites :
+• Types non comparables entre eux → TypeError.
 
-Comment ça fonctionne :
-• Python doesn't check an object's type before calling methods
-• If the method exists, it works; if not, you get AttributeError
-• Cela permet different types to be used interchangeably
-• As long as they have the right methods, they "quack like a duck"
+Considérations de performance :
+• Comparaison O(champs).
 
-Exemple :
->>> class Duck:
-...     def quack(self): return "Quack!"
->>> class Person:
-...     def quack(self): return "I'm quacking!"
->>> def make_quack(thing):
-...     return thing.quack()
->>> make_quack(Duck())
-'Quack!'
->>> make_quack(Person())
-"I'm quacking!"`,
-  2637: `Protocol is Python's way of formalizing duck typing for static type checkers. It bridges the gap between Python's dynamic duck typing and static type analysis.
+Exemples :
+• P(2) < P(1) False.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2615: `order=True : quelles méthodes ?
+
+Débutant :
+• __lt__, __le__, __gt__, __ge__.
+
+Intermédiaire :
+• Pas __cmp__ (Python 3 n’utilise pas ça).
+
+Expert :
+• Conflit si vous définissez vous-même une de ces méthodes sans désactiver order.
 
 Concepts clés :
-• Duck typing: behavior-based, no type declarations needed
-• Protocol: declares expected behavior for type checkers
-• Brings duck typing benefits to static analysis
-• Introduced in PEP 544 (Python 3.8)
+• Rich comparison protocol.
 
-Comment ça fonctionne :
-• Without Protocol: duck typing works at runtime but type checkers can't verify it
-• With Protocol: you declare the expected interface
-• Type checkers verify that passed objects match the Protocol
-• Runtime behavior is inchangés — still duck typing
+Distinctions clés :
+• __eq__ déjà présent par défaut séparément.
 
-Exemple :
-• Before Protocol: def process(obj): obj.run() — type checker can't verify
-• With Protocol:
->>> class Runnable(Protocol):
-...     def run(self) -> None: ...
->>> def process(obj: Runnable) -> None:
-...     obj.run()
-• Now type checkers verify that arguments to process() have run()`,
-  2638: `Le Closable Protocol matches any objet that a un close() méthode avec a compatible signature. This includes files, database connections, network sockets, and any custom classe avec close().
+Fonctionnement :
+• Génération symétrique des quatre.
 
-Concepts clés :
-• Closable requires close(self) -> None
-• Files have close() — they match
-• Database connections have close() — they match
-• Network sockets have close() — they match
-• Any custom classe avec close() also matches
+Exécution étape par étape :
+• Utilisation par sorted, bisect, comparaisons infix.
 
-Comment ça fonctionne :
-• Protocol defines the structural interface
-• Type checker matches any classe avec close() -> None
-• No inheritance from Closable needed
-• Very useful for resource management patterns
+Cas d'utilisation courants :
+• Classement, bornes.
 
-Exemple :
->>> classe MyResource:
-...     def close(self) -> None:
-...         print("Closed!")
->>> def cleanup(resource: Closable) -> None:
-...     resource.close()
->>> cleanup(MyResource())
-Closed!
->>> cleanup(open("test.txt"))  # Also works — files have close()`,
-  2639: `Protocol can have default implementations in its methods, but only classes that explicitly inherit from the Protocol will receive those defaults. Structurally matched classes won't get them.
+Cas limites :
+• Champs optionnels None : comparaison peut échouer selon types.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• min(liste_de_P).
+
+Remarques :
+• Réponse : les quatre comparaisons ordinales (1re option).`,
+  2616: `asdict(P(1,2))
+
+Débutant :
+• Dict nom → valeur : {'x': 1, 'y': 2}.
+
+Intermédiaire :
+• Récursif sur dataclasses imbriquées.
+
+Expert :
+• Copies profondes configurables via dict_factory.
 
 Concepts clés :
-• Protocol methods can have bodies (default implementations)
-• Only classes that explicitly inherit get the defaults
-• Structurally matched classes (no inheritance) don't get defaults
-• C'est a key difference from ABC default methods
+• Pont vers JSON, CSV, kwargs.
 
-Comment ça fonctionne :
-• class MyProto(Protocol): def f(self): return "default"
-• class A(MyProto): pass — inherits, gets default f()
-• class B: def f(self): return "custom" — structural match, own implementation
-• class C: pass — no f(), doesn't match Protocol at all
+Distinctions clés :
+• Pas un tuple ni la repr string.
 
-Exemple :
->>> class Greetable(Protocol):
-...     def greet(self) -> str:
-...         return "Hello!"
->>> class Polite(Greetable):
-...     pass
->>> Polite().greet()
-'Hello!'`,
-  2640: `C'est the fundamental difference between Protocol and ABC:
-• Protocol: structural subtyping — "does it have the right methods?"
-• ABC: nominal subtyping — "does it inherit from the right class?"
+Fonctionnement :
+• Introspection des Field.
 
-Concepts clés :
-• Protocol = structural checks (duck typing formalized)
-• ABC = nominal checks (inheritance-based)
-• Protocol: no inheritance needed, just matching methods
-• ABC: explicit inheritance required (class Child(MyABC))
+Exécution étape par étape :
+• Lecture des attributs exposés.
 
-Comment ça fonctionne :
-• Protocol: type checker scans class for required methods/attributes
-• ABC: Python checks MRO (method resolution order) for parent class
-• Protocol: a class with matching methods IS a subtype
-• ABC: a class MUST inherit to be a subtype (or use register())
+Ordre des opérations :
+• P(1,2) construit puis asdict.
 
-Tableau comparatif :
-• Protocol — based on structure — no inheritance needed — duck typing
-• ABC — based on inheritance — explicit subclass needed — nominal typing
-• Protocol — Python 3.8+ — typing module
-• ABC — Python 2.6+ — abc module`,
-  2641: `Le Iterator ABC from collections.abc requires two méthodes: __iter__ and __next__. Together, they define the iterator protocol.
+Cas d'utilisation courants :
+• Sérialisation, logging structuré.
+
+Cas limites :
+• Objets non sérialisables restent tels quels.
+
+Considérations de performance :
+• Copie récursive peut coûter cher.
+
+Exemples :
+• json.dumps(asdict(p)) avec types compatibles.
+
+Remarques :
+• Réponse : {'x': 1, 'y': 2} (1re option).`,
+  2617: `astuple(P(1,2))
+
+Débutant :
+• Tuple des valeurs dans l’ordre des champs : (1, 2).
+
+Intermédiaire :
+• Pas les noms de champs dans le tuple.
+
+Expert :
+• Déballage x, y = astuple(p).
 
 Concepts clés :
-• __iter__: retourne le iterator itself (usually renvoyer self)
-• __next__: retourne le next valeur or raises StopIteration
-• Every Iterator is also an Iterable (has __iter__)
-• Iterable only needs __iter__; Iterator needs both
+• Vue « séquence » du record.
 
-Comment ça fonctionne :
-• __iter__ est appelé when you use for...in or iter()
-• For iterators, __iter__ typically retourne self
-• __next__ est appelé chaque itération to get the next valeur
-• When exhausted, __next__ raises StopIteration
+Distinctions clés :
+• Diffère d’asdict.
 
-Exemple :
->>> classe Counter:
-...     def __init__(self, n):
-...         self.n = n
-...         self.i = 0
-...     def __iter__(self):
-...         renvoyer self
-...     def __next__(self):
-...         if self.i >= self.n:
-...             raise StopIteration
-...         self.i += 1
-...         renvoyer self.i
->>> liste(Counter(3))
-[1, 2, 3]`,
-  2642: `Le Sequence ABC requires you to implement __getitem__ and __len__, and in renvoyer provides several mixin méthodes for free.
+Fonctionnement :
+• Valeurs extraites comme pour un tuple logique.
 
-Concepts clés :
-• Required: __getitem__(self, index) and __len__(self)
-• Free mixins: __contains__, __iter__, __reversed__, index, count
-• These mixins are implemented using __getitem__ and __len__
-• Saves you from implementing common sequence operations
+Exécution étape par étape :
+• P(1,2) ; astuple.
 
-Comment ça fonctionne :
-• You implement __getitem__ and __len__ in your subclass
-• Sequence uses these to provide __contains__ (in operator)
-• __iter__ iterates using __getitem__ avec indices 0, 1, 2, ...
-• __reversed__ iterates in reverse using __getitem__
-• index() finds first occurrence, count() counts occurrences
+Ordre des opérations :
+• Ordre = définition des champs.
 
-Exemple :
->>> from collections.abc import Sequence
->>> classe MySeq(Sequence):
-...     def __init__(self, data):
-...         self._data = liste(data)
-...     def __getitem__(self, idx):
-...         renvoyer self._data[idx]
-...     def __len__(self):
-...         renvoyer len(self._data)
->>> s = MySeq([1, 2, 3, 2])
->>> 2 in s
-True
->>> s.count(2)
-2`,
-  2643: `MutableSequence extends Sequence by requiring three additional methods and providing several mixin methods for mutation operations.
+Cas d'utilisation courants :
+• Passage à des APIs tuple, SQL placeholders.
+
+Cas limites :
+• Champs réordonnés en sous-classe : suivre MRO des champs.
+
+Considérations de performance :
+• Souvent un peu plus léger que dict.
+
+Exemples :
+• astuple pour zip.
+
+Remarques :
+• Réponse : (1, 2) (1re option).`,
+  2618: `len(fields(P)) pour deux champs
+
+Débutant :
+• fields(P) retourne un tuple de Field ; len vaut 2.
+
+Intermédiaire :
+• Utile pour introspection (nom, type, défauts).
+
+Expert :
+• fields(instance) aussi accepté.
 
 Concepts clés :
-• Inherits from Sequence (needs __getitem__, __len__)
-• Additional required: __setitem__, __delitem__, insert
-• Free mixins: append, clear, reverse, extend, pop, __iadd__, remove
-• These mixins use the required methods to implement common mutations
+• Métadonnées de dataclass.
 
-Comment ça fonctionne :
-• __setitem__: enables s[i] = value
-• __delitem__: enables del s[i]
-• insert: enables s.insert(i, value)
-• append is implemented using insert(len(self), value)
-• extend uses append repeatedly
-• pop uses __getitem__ + __delitem__
-• reverse uses __getitem__ + __setitem__
+Distinctions clés :
+• Pas le nombre de méthodes.
 
-Exemple :
->>> from collections.abc import MutableSequence
->>> class MyList(MutableSequence):
-...     def __init__(self): self._data = []
-...     def __getitem__(self, i): return self._data[i]
-...     def __setitem__(self, i, v): self._data[i] = v
-...     def __delitem__(self, i): del self._data[i]
-...     def __len__(self): return len(self._data)
-...     def insert(self, i, v): self._data.insert(i, v)
->>> m = MyList()
->>> m.append(1)  # Free mixin!
->>> m.extend([2, 3])  # Free mixin!`,
-  2644: `Le Mapping ABC represents read-only dictionnaire-like objets. dict implements all required méthodes, so isinstance({"a": 1}, Mapping) retourne True.
+Fonctionnement :
+• Liste compilée par le décorateur.
 
-Concepts clés :
-• Mapping requires __getitem__, __len__, __iter__
-• dict has all three méthodes
-• Mapping also provides mixins: __contains__, keys, items, valeurs, get, __eq__, __ne__
-• dict is registered as a virtual subclass of Mapping
+Exécution étape par étape :
+• fields(P) puis len.
 
-Comment ça fonctionne :
-• isinstance checks if dict satisfies the Mapping interface
-• dict has __getitem__ (d[key]), __len__ (len(d)), __iter__ (iterate keys)
-• The check passes, returning True
-• All standard dict operations conform to the Mapping ABC
+Ordre des opérations :
+• P est la classe typée dataclass.
 
-Exemple :
->>> from collections.abc import Mapping
->>> isinstance({"a": 1}, Mapping)
-True
->>> isinstance([], Mapping)
-False`,
-  2645: `MutableMapping extends Mapping by requiring __setitem__ and __delitem__. dict implements these, so isinstance({"a": 1}, MutableMapping) returns True.
+Cas d'utilisation courants :
+• Génération de formulaires, validation générique.
+
+Cas limites :
+• Champs ClassVar exclus du mécanisme field instance.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• boucle for f in fields(P).
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2619: `Rect(3,4).area()
+
+Débutant :
+• Méthode normale sur dataclass ; 3*4 = 12.
+
+Intermédiaire :
+• self.w et self.h viennent du __init__ généré.
+
+Expert :
+• @classmethod / @staticmethod aussi autorisés.
 
 Concepts clés :
-• MutableMapping inherits from Mapping
-• Additional required: __setitem__ and __delitem__
-• dict supports d[key] = value and del d[key]
-• MutableMapping also provides mixins: pop, popitem, clear, update, setdefault
+• Dataclass ≠ interdiction de comportement.
 
-Comment ça fonctionne :
-• isinstance checks if dict satisfies MutableMapping
-• dict has __getitem__, __len__, __iter__ (from Mapping)
-• dict also has __setitem__ and __delitem__ (for mutation)
-• The check passes, returning True
+Distinctions clés :
+• Pas erreur ni tuple affiché.
 
-Exemple :
->>> from collections.abc import MutableMapping
->>> isinstance({"a": 1}, MutableMapping)
-True
->>> isinstance(type("", (), {"__getitem__": None})(), MutableMapping)
-False`,
-  2646: `Le Set ABC represents immutable set-like objets. frozenset implements all required méthodes (__contains__, __iter__, __len__), so isinstance(frozenset(), Set) retourne True.
+Fonctionnement :
+• Descripteur de fonction sur la classe.
 
-Concepts clés :
-• Set requires __contains__, __iter__, __len__
-• frozenset has all three méthodes
-• Set is the immutable set ABC (read-only operations)
-• Both set and frozenset satisfy Set
+Exécution étape par étape :
+• Instanciation ; appel area.
 
-Comment ça fonctionne :
-• isinstance checks if frozenset satisfies Set
-• frozenset has __contains__ (in operator), __iter__ (iteration), __len__ (length)
-• The check passes, returning True
-• Set also provides mixins: __le__, __lt__, __eq__, __ne__, __gt__, __ge__, __and__, __or__, __xor__, __sub__, isdisjoint
+Ordre des opérations :
+• Accès attribut puis ().
 
-Exemple :
->>> from collections.abc import Set
->>> isinstance(frozenset(), Set)
-True
->>> isinstance(set(), Set)
-True`,
-  2647: `MutableSet extends Set by requiring add() and discard() methods. frozenset is immutable and doesn't have these methods, so isinstance(frozenset(), MutableSet) returns False.
+Cas d'utilisation courants :
+• Modèles avec petites opérations métier.
 
-Concepts clés :
-• MutableSet inherits from Set
-• Additional required: add() and discard()
-• frozenset is immutable — no add() or discard()
-• Regular set IS a MutableSet (it has add and discard)
+Cas limites :
+• Méthode qui mute un frozen → FrozenInstanceError.
 
-Comment ça fonctionne :
-• isinstance checks if frozenset satisfies MutableSet
-• frozenset has __contains__, __iter__, __len__ (from Set)
-• But frozenset does NOT have add() or discard()
-• The check fails, returning False
+Considérations de performance :
+• N/A.
 
-Exemple :
->>> from collections.abc import MutableSet
->>> isinstance(frozenset(), MutableSet)
-False
->>> isinstance(set(), MutableSet)
-True`,
-  2648: `Le Callable ABC matches any objet that peut être appelé (has __call__). Lambda fonctions are callable, so isinstance(lambda: None, Callable) retourne True.
+Exemples :
+• perimeter() maison.
+
+Remarques :
+• Réponse : 12 (1re option).`,
+  2620: `Méthodes custom sur dataclass ?
+
+Débutant :
+• Oui : classe Python normale + génération de boilerplate.
+
+Intermédiaire :
+• property, classmethod, staticmethod supportés.
+
+Expert :
+• On peut surcharger __repr__ généré en définissant la sienne (avec repr=False si besoin).
 
 Concepts clés :
-• Callable checks for __call__ méthode
-• Lambda fonctions have __call__
-• Regular fonctions have __call__
-• Classes avec __call__ are also Callable
+• @dataclass n’enlève pas la flexibilité POO.
 
-Comment ça fonctionne :
-• isinstance checks if the lambda has __call__
-• All fonctions (including lambdas) have __call__
-• The check passes, returning True
-• Callable matches fonctions, méthodes, classes, and objets avec __call__
+Distinctions clés :
+• Pas « données seules » obligatoire.
 
-Exemple :
->>> from collections.abc import Callable
->>> isinstance(lambda: None, Callable)
-True
->>> isinstance(print, Callable)
-True
->>> isinstance(42, Callable)
-False
->>> classe Adder:
-...     def __call__(self, x): renvoyer x + 1
->>> isinstance(Adder(), Callable)
-True`,
-  2649: `A class can satisfy multiple Protocols simultaneously — it just needs to implement all the methods required by each Protocol. No special syntax or inheritance needed.
+Fonctionnement :
+• Même modèle d’attributs que classes classiques.
 
-Concepts clés :
-• Each Protocol defines its own set of required methods
-• A class that has ALL methods from multiple Protocols satisfies all of them
-• No need to inherit from any Protocol
-• C'est the power of structural subtyping
+Exécution étape par étape :
+• Définition au corps de classe.
 
-Comment ça fonctionne :
-• Protocol A requires method f()
-• Protocol B requires method g()
-• A class with both f() and g() satisfies both A and B
-• Type checker accepts the class wherever A or B is expected
+Ordre des opérations :
+• N/A.
 
-Exemple :
->>> class Drawable(Protocol):
-...     def draw(self) -> str: ...
->>> class Resizable(Protocol):
-...     def resize(self, factor: float) -> None: ...
->>> class Widget:
-...     def draw(self) -> str: return "widget"
-...     def resize(self, factor: float) -> None: pass
->>> # Widget satisfies BOTH Drawable and Resizable!`,
-  2650: `Tout objet Python satisfait le Protocol Printable car tous les objets héritent de __str__ depuis la classe de base object. Cela signifie que tout objet en Python peut être converti en chaîne.
+Cas d'utilisation courants :
+• from_config(), validate(), conversions.
+
+Cas limites :
+• Ordre entre méthodes générées et héritage : attention MRO.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir Rect.area de la banque.
+
+Remarques :
+• Réponse : oui, comme classes normales (1re option).`,
+  2621: `__post_init__ et total = x+y
+
+Débutant :
+• Après __init__ auto, __post_init__ calcule total ; 3+4 = 7.
+
+Intermédiaire :
+• total n’est pas un field déclaré : pas dans __eq__ par défaut.
+
+Expert :
+• field(init=False) pour champs dérivés inclus dans dataclass complète.
 
 Concepts clés :
-• object (the base class of all classes) defines __str__
-• Every class en Python inherits from object
-• Therefore every object has __str__
-• The Printable Protocol is universally satisfied
+• Hook post-traitement / validation.
 
-Comment ça fonctionne :
-• Printable requires __str__(self) -> str
-• object.__str__ exists and retourne un string representation
-• Every class inherits __str__ from object (unless overridden)
-• So every instance of every class matches the Printable Protocol
+Distinctions clés :
+• Pas exécuté avant les assignations de champs.
 
-Exemple :
->>> str(42)
-'42'
->>> str([1, 2, 3])
-'[1, 2, 3]'
->>> str(None)
-'None'
->>> class Empty: pass
->>> str(Empty())
-'<__main__.Empty object at 0x...>'`,
+Fonctionnement :
+• __init__ généré appelle __post_init__ si présent.
 
+Exécution étape par étape :
+• Champs posés ; puis total.
+
+Ordre des opérations :
+• P(3,4) complet puis lecture .total.
+
+Cas d'utilisation courants :
+• Invariants, normalisation, caches dérivés.
+
+Cas limites :
+• Lever dans __post_init__ : construction échoue.
+
+Considérations de performance :
+• Un hook de plus par instance.
+
+Exemples :
+• validation température.
+
+Remarques :
+• Réponse : 7 (1re option).`,
+  2622: `But de __post_init__
+
+Débutant :
+• Logique après le __init__ généré, champs déjà prêts.
+
+Intermédiaire :
+• Ne remplace pas __init__ généré.
+
+Expert :
+• super() avec héritage : chaîner __post_init__ parent.
+
+Concepts clés :
+• Point d’extension sans écrire __init__ à la main.
+
+Distinctions clés :
+• Pas réservé au typage statique seul.
+
+Fonctionnement :
+• Dernière étape du constructeur synthétique.
+
+Exécution étape par étape :
+• Assign fields ; post_init().
+
+Ordre des opérations :
+• Toujours après init fields.
+
+Cas d'utilisation courants :
+• Champs calculés, checks.
+
+Cas limites :
+• Oubli d’appeler super().__post_init__ en hiérarchie.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• coercition de types.
+
+Remarques :
+• Réponse : après __init__ pour logique perso (1re option).`,
+  2623: `isinstance(P(1,2), P)
+
+Débutant :
+• Instance normale de la classe P → True.
+
+Intermédiaire :
+• @dataclass ne change pas la relation de sous-typage par rapport à object.
+
+Expert :
+• Protocols / ABCs restent utilisables.
+
+Concepts clés :
+• isinstance teste le type réel.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Même mécanisme que classes sans décorateur.
+
+Exécution étape par étape :
+• Création puis test.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Dispatch polymorphique.
+
+Cas limites :
+• Sous-classes : isinstance enfant vers parent True.
+
+Considérations de performance :
+• Rapide.
+
+Exemples :
+• type(p) is P souvent vrai pour instance directe.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2624: `@dataclass(repr=False)
+
+Débutant :
+• Pas de __repr__ généré ; repli sur object.__repr__ par défaut si non défini.
+
+Intermédiaire :
+• __init__ et __eq__ inchangés par ce flag seul.
+
+Expert :
+• Permet de fournir __repr__ manuel sans conflit.
+
+Concepts clés :
+• Désactive une des trois bêtes à cornes.
+
+Distinctions clés :
+• N’empêche ni print sur d’autres bases ni la création.
+
+Fonctionnement :
+• Paramètre du décorateur.
+
+Exécution étape par étape :
+• Classe transformée sans __repr__ auto.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Repr volumineuse ou secrets à masquer.
+
+Cas limites :
+• print utilise str qui peut encore montrer peu d’infos.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• repr personnalisé court.
+
+Remarques :
+• Réponse : désactive __repr__ auto (1re option).`,
+  2625: `Héritage dataclass Child(Base) avec y
+
+Débutant :
+• Champs fusionnés : x puis y ; Child(1,2) → repr Child(x=1, y=2).
+
+Intermédiaire :
+• Ordre des paramètres : base puis sous-classe.
+
+Expert :
+• Règles de défauts combinées : piège si parent a défauts et enfant ajoute sans défaut.
+
+Concepts clés :
+• Composition linéaire des fields.
+
+Distinctions clés :
+• Pas seulement Base(x=1).
+
+Fonctionnement :
+• Traitement récursif des bases dataclass.
+
+Exécution étape par étape :
+• Child(1,2) ; init unifié.
+
+Ordre des opérations :
+• Arguments positionnels suivent l’ordre des champs fusionnés.
+
+Cas d'utilisation courants :
+• Étendre un record de base.
+
+Cas limites :
+• Plusieurs héritages : ordre MRO des champs.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• voir docs dataclass inheritance.
+
+Remarques :
+• Réponse : Child(x=1, y=2) (1re option).`,
+  2626: `print(Color.RED)
+
+Débutant :
+• __str__ du membre affiche NomClasse.NomMembre, pas l’entier brut.
+
+Intermédiaire :
+• .value donne 1 ; repr montre souvent <Color.RED: 1>.
+
+Expert :
+• EnumMeta garantit singleton par membre.
+
+Concepts clés :
+• Constantes nommées fortes.
+
+Distinctions clés :
+• Pas l’entier 1 seul via print direct du membre.
+
+Fonctionnement :
+• Classe Enum spéciale avec métaclasse.
+
+Exécution étape par étape :
+• Résolution Color.RED ; conversion str pour print.
+
+Ordre des opérations :
+• print prend la str du membre.
+
+Cas d'utilisation courants :
+• États, codes, options UI.
+
+Cas limites :
+• Aliases partagent la même valeur mais affichage peut surprendre.
+
+Considérations de performance :
+• Comparaison d’identité rapide entre membres.
+
+Exemples :
+• repr(Color.RED) pour debug.
+
+Remarques :
+• Réponse : Color.RED (1re option).`,
+  2627: `Color.RED.value
+
+Débutant :
+• Accès à la charge utile : 1.
+
+Intermédiaire :
+• Le membre n’est pas un int Enum classique.
+
+Expert :
+• Avec mixins (IntEnum), comparaisons avec int changent.
+
+Concepts clés :
+• Séparation nom / valeur.
+
+Distinctions clés :
+• Pas Color.RED en chaîne ni 'RED' ici.
+
+Fonctionnement :
+• Attribut value stocké sur le membre.
+
+Exécution étape par étape :
+• Color.RED puis .value.
+
+Ordre des opérations :
+• Accès attribut après résolution membre.
+
+Cas d'utilisation courants :
+• Persistance numérique, APIs.
+
+Cas limites :
+• Valeurs dupliquées → alias.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• int brut pour calculs.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2628: `Color.RED.name
+
+Débutant :
+• Chaîne du nom du membre : 'RED'.
+
+Intermédiaire :
+• Diffère de .value (1).
+
+Expert :
+• Utile pour logs, sérialisation « sémantique ».
+
+Concepts clés :
+• Identifiant stable côté code.
+
+Distinctions clés :
+• Pas 'Color.RED' ni 1.
+
+Fonctionnement :
+• Propriété name sur Enum.
+
+Exécution étape par étape :
+• Résolution membre ; lecture name.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• JSON avec noms, switches.
+
+Cas limites :
+• Renommer membre casse données persistées.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• f'{Color.RED.name}'.
+
+Remarques :
+• Réponse : RED / "RED" (1re option).`,
+  2629: `Color(1) lookup par valeur
+
+Débutant :
+• Appeler la classe avec la valeur renvoie le membre RED existant.
+
+Intermédiaire :
+• ValueError si aucun membre ne porte cette valeur.
+
+Expert :
+• Alias : plusieurs noms une valeur → membre canonique selon règles Enum.
+
+Concepts clés :
+• Fabrique de recherche inverse.
+
+Distinctions clés :
+• Pas l’entier seul ni la chaîne 'RED'.
+
+Fonctionnement :
+• Scan des membres ou table interne.
+
+Exécution étape par étape :
+• Color(1) → Color.RED.
+
+Ordre des opérations :
+• Construction logique sans nouveau membre.
+
+Cas d'utilisation courants :
+• Désérialisation depuis DB.
+
+Cas limites :
+• Valeurs non uniques : comportement alias.
+
+Considérations de performance :
+• Lookup O(n) pire cas simple Enum.
+
+Exemples :
+• Color(5) erreur.
+
+Remarques :
+• Réponse : Color.RED (1re option).`,
+  2630: `Color["RED"]
+
+Débutant :
+• Accès par nom comme clé → membre RED.
+
+Intermédiaire :
+• Équivalent à getattr(Color, 'RED').
+
+Expert :
+• KeyError si casse ou nom invalide.
+
+Concepts clés :
+• Deux API : valeur vs nom.
+
+Distinctions clés :
+• Diffère de Color(1).
+
+Fonctionnement :
+• __getitem__ sur la classe Enum.
+
+Exécution étape par étape :
+• Chaîne 'RED' ; retour singleton.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Lecture depuis fichier config texte.
+
+Cas limites :
+• noms réservés _ etc.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Color['GREEN'].
+
+Remarques :
+• Réponse : Color.RED (1re option).`,
+  2631: `list(Color)
+
+Débutant :
+• Itération donne les membres dans l’ordre de définition.
+
+Intermédiaire :
+• Ce ne sont pas les valeurs brutes ni seulement les noms.
+
+Expert :
+• _order_ ou mixins peuvent influencer cas avancés.
+
+Concepts clés :
+• Enum itérable.
+
+Distinctions clés :
+• Liste de membres, pas [1,2,3] ici.
+
+Fonctionnement :
+• __iter__ sur le type Enum.
+
+Exécution étape par étape :
+• Collecte RED, GREEN, BLUE.
+
+Ordre des opérations :
+• Ordre déclaratif.
+
+Cas d'utilisation courants :
+• Menus déroulants, validation exhaustive.
+
+Cas limites :
+• Membres privés _ignore_ selon flags.
+
+Considérations de performance :
+• Petit n en pratique.
+
+Exemples :
+• [m.value for m in Color].
+
+Remarques :
+• Réponse : liste des membres Color.RED, … (1re option).`,
+  2632: `len(Color)
+
+Débutant :
+• Nombre de membres non alias : 3 ici.
+
+Intermédiaire :
+• Alias ne compte pas comme membre distinct pour len.
+
+Expert :
+• Enum unique avec contraintes spéciales peut varier.
+
+Concepts clés :
+• Cardinal de l’ensemble des constantes.
+
+Distinctions clés :
+• Pas erreur.
+
+Fonctionnement :
+• Implémentation __len__ sur EnumType.
+
+Exécution étape par étape :
+• Trois noms distincts.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Tests, boucles bornées.
+
+Cas limites :
+• _ignore_.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Enum avec ENABLED alias de ACTIVE → len réduit.
+
+Remarques :
+• Réponse : 3 (1re option).`,
+  2633: `Color.RED == Color.RED
+
+Débutant :
+• Même membre → True.
+
+Intermédiaire :
+• Enum.__eq__ compare identité / type membre.
+
+Expert :
+• Deux enums différents même valeur → False en général.
+
+Concepts clés :
+• Constantes fortes typées.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Singleton par membre.
+
+Exécution étape par étape :
+• Références au même objet.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• if state == State.DONE.
+
+Cas limites :
+• Comparaison cross-enum.
+
+Considérations de performance :
+• Rapide.
+
+Exemples :
+• RED == GREEN False.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2634: `Color.RED is Color.RED
+
+Débutant :
+• Singleton garanti → True.
+
+Intermédiaire :
+• Color(1) is Color.RED aussi True.
+
+Expert :
+• Metaclass crée une fois chaque membre.
+
+Concepts clés :
+• Identité stable.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Registre interne des membres.
+
+Exécution étape par étape :
+• Même id.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• if x is Status.OK (style identité).
+
+Cas limites :
+• Pickle / dynamic enum edge cases rares.
+
+Considérations de performance :
+• is plus léger que ==.
+
+Exemples :
+• id fixes entre imports même module.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2635: `Color.RED == 1 avec Enum normal
+
+Débutant :
+• False : membre n’est pas égal à l’int brut.
+
+Intermédiaire :
+• .value == 1 serait True.
+
+Expert :
+• Évite collisions accidentelles avec entiers magiques.
+
+Concepts clés :
+• Type sémantique distinct.
+
+Distinctions clés :
+• Pas True.
+
+Fonctionnement :
+• __eq__ refuse comparaison utile avec int.
+
+Exécution étape par étape :
+• Comparaison membre vs 1.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• APIs strictes.
+
+Cas limites :
+• IntEnum change la donne.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• if color == 1: souvent erreur de design.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2636: `IntEnum Color.RED == 1
+
+Débutant :
+• IntEnum hérite de int ; comparaison avec 1 → True.
+
+Intermédiaire :
+• Arithmétique mixte possible (attention aux effets).
+
+Expert :
+• Perte de « sécurité de type » par rapport à Enum pur.
+
+Concepts clés :
+• Compatibilité avec legacy int.
+
+Distinctions clés :
+• Diffère de Enum simple.
+
+Fonctionnement :
+• MRO inclut int.
+
+Exécution étape par étape :
+• Sous-classe int.__eq__ joue.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Codes C, protobuf, vieux modules.
+
+Cas limites :
+• accepted où int attendu peut masquer bugs.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Color.RED + 1.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2637: `Color.RED.value = 2
+
+Débutant :
+• Immuabilité des membres → AttributeError (assignation interdite).
+
+Intermédiaire :
+• Pas de mutation post-création des attributs fondamentaux.
+
+Expert :
+• Nouveau membre dynamique aussi restreint.
+
+Concepts clés :
+• Ensemble figé à la définition.
+
+Distinctions clés :
+• Pas silencieux ni nouvelle instance auto.
+
+Fonctionnement :
+• __setattr__ bloque sur Enum.
+
+Exécution étape par étape :
+• Tentative d’écriture sur .value.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Garantir invariants protocolaires.
+
+Cas limites :
+• aenum tiers pour cas dynamiques.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• créer nouvelle classe Enum si besoin d’étendre.
+
+Remarques :
+• Réponse : AttributeError (1re option).`,
+  2638: `auto() RED puis GREEN — value de GREEN
+
+Débutant :
+• auto() numérote par défaut à partir de 1 ; deuxième → 2.
+
+Intermédiaire :
+• _generate_next_value_ personnalisable.
+
+Expert :
+• Mélange auto et valeurs explicites ajuste la suite.
+
+Concepts clés :
+• Évite compter manuellement.
+
+Distinctions clés :
+• Pas 1 pour GREEN ici.
+
+Fonctionnement :
+• Compteur interne par enum.
+
+Exécution étape par étape :
+• RED=1 ; GREEN=2.
+
+Ordre des opérations :
+• Ordre des lignes de classe.
+
+Cas d'utilisation courants :
+• Enums où seule l’unicité compte.
+
+Cas limites :
+• Dépendre des entiers auto en API persistante : fragile.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• troisième auto → 3.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2639: `Dir.N.value avec chaîne "north"
+
+Débutant :
+• La valeur peut être str ; .value → 'north'.
+
+Intermédiaire :
+• Dir('north') retrouve le membre.
+
+Expert :
+• Enum fonctionnel avec types hétérogènes possibles.
+
+Concepts clés :
+• Pas limité aux int.
+
+Distinctions clés :
+• Pas le nom 'N' ni erreur.
+
+Fonctionnement :
+• Stockage de la chaîne comme valeur.
+
+Exécution étape par étape :
+• Accès .value.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Sérialisation lisible.
+
+Cas limites :
+• Hash de membre si valeur non hashable rare.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• JSON direct.
+
+Remarques :
+• Réponse : north (1re option).`,
+  2640: `Méthodes sur Enum ?
+
+Débutant :
+• Oui : la classe Enum reste une classe Python.
+
+Intermédiaire :
+• Méthodes d’instance reçoivent self = membre.
+
+Expert :
+• @unique, @property, mixins possibles.
+
+Concepts clés :
+• Comportement + constantes.
+
+Distinctions clés :
+• Pas réservé à static seul ni à IntEnum.
+
+Fonctionnement :
+• Même mécanisme que méthodes de classe usuelles.
+
+Exécution étape par étape :
+• Définition au corps ; dispatch sur membre.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• describe(), next_state(), parsing.
+
+Cas limites :
+• Ne pas masquer les noms réservés Enum.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• méthode qui utilise self.value.
+
+Remarques :
+• Réponse : Oui (1re option).`,
+  2641: `namedtuple Point et p.x
+
+Débutant :
+• Sous-classe de tuple avec accès attribut ; p.x → 1.
+
+Intermédiaire :
+• Équivalent p[0].
+
+Expert :
+• Renommer _fields / rename=False options récentes.
+
+Concepts clés :
+• Légèreté + lisibilité.
+
+Distinctions clés :
+• Pas erreur ni chaîne 'x'.
+
+Fonctionnement :
+• Descripteurs générés par namedtuple().
+
+Exécution étape par étape :
+• Point(1,2) ; lecture x.
+
+Ordre des opérations :
+• Construction puis accès.
+
+Cas d'utilisation courants :
+• Retours multiples nommés.
+
+Cas limites :
+• Noms invalides ou mots clés interdits.
+
+Considérations de performance :
+• Très compact vs dict.
+
+Exemples :
+• unpacking x,y = p.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2642: `p[0] sur namedtuple
+
+Débutant :
+• Toujours un tuple ; index 0 → 1.
+
+Intermédiaire :
+• Cohérence avec APIs tuple-only.
+
+Expert :
+• _asdict pas impliqué.
+
+Concepts clés :
+• Double accès nom / index.
+
+Distinctions clés :
+• Pas le nom 'x'.
+
+Fonctionnement :
+• héritage tuple.__getitem__.
+
+Exécution étape par étape :
+• Point(1,2) ; [0].
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Interop avec code legacy indices.
+
+Cas limites :
+• Index hors bornes IndexError.
+
+Considérations de performance :
+• Index souvent très rapide.
+
+Exemples :
+• p[-1] pour dernier champ.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2643: `p._replace(x=10)
+
+Débutant :
+• Nouveau Point(x=10, y=2) ; immuable donc copie.
+
+Intermédiaire :
+• p inchangé.
+
+Expert :
+• Remplace plusieurs champs en un appel.
+
+Concepts clés :
+• Mise à jour fonctionnelle.
+
+Distinctions clés :
+• Pas Point(x=1,y=2) affiché pour le résultat de _replace ici.
+
+Fonctionnement :
+• Construction d’une nouvelle instance tuple.
+
+Exécution étape par étape :
+• Copie y depuis p ; x écrasé.
+
+Ordre des opérations :
+• Appel méthode sur instance.
+
+Cas d'utilisation courants :
+• État immutable pipelines.
+
+Cas limites :
+• Nom de champ incorrect → TypeError.
+
+Considérations de performance :
+• Copie O(n champs).
+
+Exemples :
+• q = p._replace(x=10).
+
+Remarques :
+• Réponse : Point(x=10, y=2) (1re option).`,
+  2644: `Que retourne _replace ?
+
+Débutant :
+• Nouvelle namedtuple ; l’originale intacte.
+
+Intermédiaire :
+• Pas None ; pas mutation in-place.
+
+Expert :
+• Pattern « update » par réaffectation de variable.
+
+Concepts clés :
+• Immuabilité du tuple.
+
+Distinctions clés :
+• Pas dict des changements.
+
+Fonctionnement :
+• clone sélectif.
+
+Exécution étape par étape :
+• Création nouvelle avec kwargs.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Simulation de setters.
+
+Cas limites :
+• Oublier de réassigner la variable.
+
+Considérations de performance :
+• Moins cher que deepcopy complète.
+
+Exemples :
+• p = p._replace(...).
+
+Remarques :
+• Réponse : nouvelle instance (1re option).`,
+  2645: `dict(p._asdict())
+
+Débutant :
+• _asdict mappe noms→valeurs ; dict() normalise ; {'x':1,'y':2}.
+
+Intermédiaire :
+• Python 3.7+ dict insertion ordonnée.
+
+Expert :
+• _asdict copie shallow des valeurs.
+
+Concepts clés :
+• Passage vers monde mapping.
+
+Distinctions clés :
+• Pas le tuple seul.
+
+Fonctionnement :
+• Méthode générée sur la classe namedtuple.
+
+Exécution étape par étape :
+• p puis _asdict puis dict().
+
+Ordre des opérations :
+• Appels imbriqués de gauche à droite.
+
+Cas d'utilisation courants :
+• JSON, **kwargs.
+
+Cas limites :
+• Valeurs non JSON-serializable.
+
+Considérations de performance :
+• Allocation dict.
+
+Exemples :
+• json.dumps.
+
+Remarques :
+• Réponse : {'x': 1, 'y': 2} (1re option).`,
+  2646: `Point._fields
+
+Débutant :
+• Tuple des noms ('x', 'y').
+
+Intermédiaire :
+• Attribut de classe.
+
+Expert :
+• Pas les types (typing.NamedTuple les ajoute autrement).
+
+Concepts clés :
+• Introspection légère.
+
+Distinctions clés :
+• Pas liste ni set affiché ici.
+
+Fonctionnement :
+• Stocké à la création de la factory.
+
+Exécution étape par étape :
+• Accès classe.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Génération CSV headers.
+
+Cas limites :
+• Renommage field avec rename=True produit _0 etc.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• zip(Point._fields, p).
+
+Remarques :
+• Réponse : ('x', 'y') (1re option).`,
+  2647: `namedtuple defaults=[0] sur y
+
+Débutant :
+• Le défaut s’applique au champ le plus à droite : y=0 ; Point(1) → (1,0).
+
+Intermédiaire :
+• Point() manque x → TypeError.
+
+Expert :
+• defaults=(a,b) pour plusieurs champs de droite.
+
+Concepts clés :
+• Analogie paramètres fonction.
+
+Distinctions clés :
+• Pas inversion x/y défaut.
+
+Fonctionnement :
+• Signature __new__ ajustée.
+
+Exécution étape par étape :
+• Un argument pour x.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Origine y=0 fréquente.
+
+Cas limites :
+• Trop de defaults vs champs.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Point(1,2) override.
+
+Remarques :
+• Réponse : Point(x=1, y=0) (1re option).`,
+  2648: `typing.NamedTuple class Point
+
+Débutant :
+• Même accès p.x ; valeur 1.
+
+Intermédiaire :
+• Syntaxe moderne avec annotations.
+
+Expert :
+• Méthodes et defaults possibles dans la définition de classe.
+
+Concepts clés :
+• namedtuple déclaratif.
+
+Distinctions clés :
+• Pas erreur.
+
+Fonctionnement :
+• Construction via méta typing.NamedTuple.
+
+Exécution étape par étape :
+• Point(1,2).x.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Code typé propre.
+
+Cas limites :
+• Annotations non forcées à l’exécution.
+
+Considérations de performance :
+• Proche de collections.namedtuple.
+
+Exemples :
+• hériter pour ajouter méthodes.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2649: `Différence clé namedtuple vs dataclass
+
+Débutant :
+• namedtuple est immuable et sous-classe de tuple.
+
+Intermédiaire :
+• dataclass mutable par défaut ; pas d’indexation p[0] native sauf si tuple autre.
+
+Expert :
+• frozen dataclass rapproche mais reste pas tuple.
+
+Concepts clés :
+• Choix immutabilité / tuple API.
+
+Distinctions clés :
+• Les propositions « dataclass immuable par défaut » ou « namedtuple sans méthodes » sont fausses.
+
+Fonctionnement :
+• Deux outils complémentaires.
+
+Exécution étape par étape :
+• N/A.
+
+Cas d'utilisation courants :
+• petit record immuable → namedtuple ; objet riche mutable → dataclass.
+
+Cas limites :
+• defaults mutables : dataclass gère mieux avec default_factory.
+
+Considérations de performance :
+• namedtuple souvent plus compact.
+
+Exemples :
+• isinstance(nt, tuple) True.
+
+Remarques :
+• Réponse : namedtuple immuable et sous-type tuple (1re option).`,
+  2650: `isinstance(Point(1,2), tuple)
+
+Débutant :
+• namedtuple hérite de tuple → True.
+
+Intermédiaire :
+• isinstance(p, Point) aussi True.
+
+Expert :
+• MRO : Point, tuple, object.
+
+Concepts clés :
+• Identité structurelle tuple + noms.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Vérification isinstance sur la chaîne de bases.
+
+Exécution étape par étape :
+• Création puis test tuple.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Fonctions génériques sur séquences.
+
+Cas limites :
+• dataclass n’est pas tuple : False pour elle.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• len(p), p+p concat interdit field mismatch? actually tuple concat works if same type? Namedtuple + namedtuple same class works.
+
+Remarques :
+• Réponse : True (1re option).`,
   2651: `Lorsqu'une classe hérite d'un attribut, elle peut y accéder via le MRO, mais il n'apparaît pas dans le __dict__ propre de la sous-classe.
 
 Concepts clés :
