@@ -25,6 +25,41 @@ function getBaseNoSlash() {
   return base.endsWith('/') ? base.slice(0, -1) : base;
 }
 
+/** Match precached HTML for any navigation URL (query strings, trailing slash, iOS PWA). */
+const CACHE_MATCH_OPTS = { ignoreSearch: true };
+
+async function cachesMatchSafe(request) {
+  try {
+    return await caches.match(request, CACHE_MATCH_OPTS);
+  } catch (_) {
+    return await caches.match(request);
+  }
+}
+
+async function matchCachedNavigation(request, base, baseNoSlash) {
+  const origin = self.location.origin;
+  const candidates = [
+    request,
+    base + 'index.html',
+    origin + base + 'index.html',
+    base,
+    baseNoSlash,
+    origin + base,
+    origin + baseNoSlash
+  ];
+  for (const key of candidates) {
+    const req = typeof key === 'string' ? new Request(key, { method: 'GET' }) : key;
+    const hit = await cachesMatchSafe(req);
+    if (hit) return hit;
+  }
+  return null;
+}
+
+/** Prefer fresh HTML when online; fall back if cache option is unsupported. */
+function fetchNavigationHtml(request) {
+  return fetch(request, { cache: 'no-store' }).catch(() => fetch(request));
+}
+
 self.addEventListener('install', (event) => {
   event.waitUntil(
     (async () => {
@@ -73,34 +108,47 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
-  const requestUrl = new URL(event.request.url);
-  const isNavigation = event.request.mode === 'navigate' || event.request.destination === 'document' || event.request.url.includes('index.html');
-  const isLocal = requestUrl.origin === location.origin;
   const base = getBasePath();
   const baseNoSlash = getBaseNoSlash();
+  const requestUrl = new URL(event.request.url);
+  const isLocal = requestUrl.origin === location.origin;
+  const path = requestUrl.pathname;
+  // Safari / iOS PWA sometimes omits mode=navigate; still treat app shell HTML as navigation
+  const isAppShellDocument =
+    isLocal &&
+    event.request.method === 'GET' &&
+    (event.request.headers.get('accept') || '').includes('text/html') &&
+    (path === baseNoSlash ||
+      path + '/' === base ||
+      path === base ||
+      path.endsWith('/index.html'));
+  const isNavigation =
+    event.request.mode === 'navigate' ||
+    event.request.destination === 'document' ||
+    event.request.url.includes('index.html') ||
+    isAppShellDocument;
 
   // Navigation: network first with no HTTP cache (so phone PWA gets fresh HTML and shows new build id), then cache for offline
   if (isNavigation) {
     event.respondWith(
-      fetch(event.request, { cache: 'no-store' })
-        .then((response) => {
+      (async () => {
+        try {
+          const response = await fetchNavigationHtml(event.request);
           if (response && response.status === 200) {
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, response.clone());
-              cache.put(base + 'index.html', response.clone());
-              cache.put(base, response.clone());
-              cache.put(baseNoSlash, response.clone());
-            });
+            const cache = await caches.open(CACHE_NAME);
+            const clone = response.clone();
+            await cache.put(event.request, clone);
+            await cache.put(base + 'index.html', response.clone());
+            await cache.put(base, response.clone());
+            await cache.put(baseNoSlash, response.clone());
           }
           return response;
-        })
-        .catch(() => {
-          return caches.match(event.request)
-            .then((cached) => cached || caches.match(base + 'index.html'))
-            .then((cached) => cached || caches.match(base))
-            .then((cached) => cached || caches.match(baseNoSlash))
-            .then((cached) => cached || new Response('Offline', { status: 503, statusText: 'Offline' }));
-        })
+        } catch (_) {
+          const cached = await matchCachedNavigation(event.request, base, baseNoSlash);
+          if (cached) return cached;
+          return new Response('Offline', { status: 503, statusText: 'Offline' });
+        }
+      })()
     );
     return;
   }
@@ -108,7 +156,7 @@ self.addEventListener('fetch', (event) => {
   // Local JS/CSS: cache first, then network (offline = serve from cache)
   if (isLocal) {
     event.respondWith(
-      caches.match(event.request).then((cached) => {
+      cachesMatchSafe(event.request).then((cached) => {
         if (cached) return cached;
         return fetch(event.request)
           .then((response) => {
@@ -126,7 +174,7 @@ self.addEventListener('fetch', (event) => {
 
   // CDN: cache first, then network
   event.respondWith(
-    caches.match(event.request).then((cached) => {
+    cachesMatchSafe(event.request).then((cached) => {
       if (cached) return cached;
       return fetch(event.request)
         .then((response) => {
