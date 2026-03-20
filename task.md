@@ -309,7 +309,7 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
 - **Done:** **Level 8 FR 2601–2650** — `level8_expert_a.ts` Q1–50 (`@dataclass`, `field`, `__post_init__`, `frozen`/`slots`, ordre des défauts, `__repr__`/`__eq__`, `asdict`/`astuple`, héritage dataclass, `InitVar`, comparaison `order=True`, `__hash__`, `replace`, `ABC`/`@abstractmethod`, `register`, `Enum`/`IntEnum`/`auto`, `namedtuple`/`NamedTuple`). Fragments: `scripts/fr-l8-frags/fr-l8-2601-2625.mjs`, `fr-l8-2626-2650.mjs`. Patch: `scripts/patch-fr-l8-2601-2650.mjs` (START ancien ABC anglais erroné `` 2601: `Abstract classes that contain @abstractmethod`` → END `` 2651: `Lorsqu'une classe hérite``). Build OK (`vite build` + `inject-precache.js`).
 
 ### Immediate next batches
-1. **Level 8 FR 2651–2700** — vérifier **2651:** (MRO / `__dict__` hérité) et **2701:** (`try/except`…) pour START/END du patch ; banque = suite `level8_expert_a.ts` ou fichier suivant selon `questionsBank.ts`.
+1. **Level 8 FR 2651–2700** — `level8_expert_b.ts` Q1–50 (descripteurs, ABC, métaclasses, type hints…). Vérifier **2651:** vs banque (le texte FR actuel parle du MRO/`__dict__` : peut être un ancien décalage à remplacer) et **2701:** (`try/except`…) pour START/END du patch.
 2. Optional: audit `301-600` for any regression or glossary drift.
 
 ### Remaining range
