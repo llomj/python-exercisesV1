@@ -1,0 +1,45 @@
+/**
+ * Splices French detailed explanations for Level 8 IDs 2551–2600 (level8_intermediate_b.ts Q1–50).
+ */
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import fr2551_2575 from "./fr-l8-frags/fr-l8-2551-2575.mjs";
+import fr2576_2600 from "./fr-l8-frags/fr-l8-2576-2600.mjs";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const target = path.join(__dirname, "../src/data/detailedExplanationsTranslations.ts");
+
+const START =
+  "  2551: `You can subclass built-in types like list, dict, str, int, and set to add custom behavior while retaining all original functionality.";
+const END =
+  "  2601: `Abstract classes that contain @abstractmethod methods cannot be instantiated directly. Attempting to do so raises TypeError because the abstract method area() has not been implemented in a concrete subclass.";
+
+const blocks = { ...fr2551_2575, ...fr2576_2600 };
+
+function ent(id, body) {
+  return `  ${id}: \`${String(body).trim()}\`,\n`;
+}
+
+let replacement = "";
+for (let id = 2551; id <= 2600; id++) {
+  if (blocks[id] === undefined) {
+    console.error("Missing FR block for id", id);
+    process.exit(1);
+  }
+  replacement += ent(id, blocks[id]);
+}
+
+let s = fs.readFileSync(target, "utf8");
+const i = s.indexOf(START);
+const j = s.indexOf(END);
+if (i === -1 || j === -1) {
+  console.error("Markers not found", { i, j });
+  process.exit(1);
+}
+if (j <= i) {
+  console.error("Bad marker order");
+  process.exit(1);
+}
+fs.writeFileSync(target, s.slice(0, i) + replacement + s.slice(j));
+console.log("Patched Level 8 FR 2551–2600, chars", replacement.length);
