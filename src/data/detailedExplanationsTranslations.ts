@@ -121000,1282 +121000,2006 @@ Exemples :
 
 Remarques :
 • Réponse : True — 1re option.`,
-  2851: `Le .group(n) méthode renvoie the text matched by the nth capturing group. Group numbers start at 1. Group 0 is special and renvoie the entire match.
+  2851: `MyList(list) avec first() — ml.first()
+
+Débutant :
+• 1 : self est la liste ; self[0] lit le premier élément.
+
+Intermédiaire :
+• Toutes les méthodes list (append, len, slicing) restent disponibles.
+
+Expert :
+• Pour que MyList + [...] reste MyList, surcharger __add__ etc.
 
 Concepts clés :
-• .group(0) = entire match
-• .group(1) = first parenthesized group
-• .group(2) = second parenthesized group
-• Lève IndexError if group number n'existe pas
+• Extension de types built-in sans les réimplémenter.
 
-Comment ça fonctionne :
-• Pattern: (\\\\w+)@(\\\\w+) matches "user@host"
-• Group 1: (\\\\w+) avant @ captures "user"
-• Group 2: (\\\\w+) après @ captures "host"
-• .group(1) renvoie "user"
+Distinctions clés :
+• Pas une liste enveloppée dans un attribut séparé.
 
-Exemple :
-import re
-m = re.match(r"(\\\\w+)@(\\\\w+)", "user@host")
-print(m.group(0))  # "user@host"
-print(m.group(1))  # "user"
-print(m.group(2))  # "host"`,
-  2852: `Quand re.sub() receives a fonction (or lambda) as the replacement argument, it calls that fonction for each match, passing the Match objet. La fonction's renvoyer valeur est utilisé as the replacement string.
+Fonctionnement :
+• MyList([1,2,3]) construit comme list puis ajoute la méthode.
 
-Concepts clés :
-• re.sub(pattern, fonction, string) calls fonction for each match
-• La fonction receives a Match objet as argument
-• La fonction's renvoyer valeur replaces the match
-• m.group() renvoie the matched text
-• .upper() converts a string to uppercase
+Exécution étape par étape :
+• Appel first() → retour index 0.
 
-Comment ça fonctionne :
-• r"(\\\\w+)" matches each word: "hello", then "world"
-• For "hello": lambda receives match, m.group() = "hello", .upper() = "HELLO"
-• For "world": lambda receives match, m.group() = "world", .upper() = "WORLD"
-• Space entre words is not matched, so it's preserved
-• Résultat : "HELLO WORLD"
+Ordre des opérations :
+• Création puis first().
 
-Exemple :
-import re
-result = re.sub(r"(\\\\w+)", lambda m: m.group().upper(), "hello world")
-print(result)  # "HELLO WORLD"
+Cas d'utilisation courants :
+• Collections métier (Queue, Stack) typées.
 
-# Another example: capitalize first letter
-result = re.sub(r"\\\\b\\\\w", lambda m: m.group().upper(), "hello world")
-print(result)  # "Hello World"`,
-  2853: `Le préfixe r crée un littéral de chaîne brute où les backslashes sont traités comme caractères backslash littéraux, not as escape sequences. C'est essential for regex because regex patterns use backslashes extensively (\\d, \\w, \\s, etc.), and without r, Python would try to interpret them first.
+Cas limites :
+• Liste vide : IndexError sur first() naïf.
+
+Considérations de performance :
+• Opérations C sous-jacentes inchangées.
+
+Exemples :
+• ml.append(4) fonctionne toujours.
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  2852: `MyList(list): pass puis append et len
+
+Débutant :
+• 4 : append hérité allonge la sous-classe comme une list.
+
+Intermédiaire :
+• pass ne retire aucun comportement du parent.
+
+Expert :
+• type(ml) reste MyList ; type(ml+[4]) serait list (autre question).
 
 Concepts clés :
-• r"\\d" is the raw string containing two characters: \\ and d
-• "\\d" without r would be interpreted by Python first
-• Raw strings prevent double-escaping issues
-• Without r, you'd need "\\\\d" to get the regex \\d
+• Sous-classe vide = alias enrichi du parent.
 
-Comment ça fonctionne :
-• r"\\n" is literally backslash + n (regex newline pattern)
-• "\\n" is a single newline character (Python escape)
-• r"\\d+" is backslash + d + plus (regex digit pattern)
-• "\\d+" might work by accident but is not reliable
+Distinctions clés :
+• Diffère d'une liste stockée dans un attribut.
 
-Exemple :
-import re
-# These are equivalent:
-re.search(r"\\d+", "abc123")  # Raw string (preferred)
-re.search("\\\\d+", "abc123")  # Regular string (needs double escape)
+Fonctionnement :
+• Même structure mémoire qu'une list CPython.
 
-# Difference matters with \\n:
-re.search(r"\\n", text)   # Matches literal newline in text
-re.search("\\n", text)    # Also matches newline (by coincidence)
-re.search(r"\\\\n", text)  # Matches literal backslash + n
+Exécution étape par étape :
+• [1,2,3] puis append(4).
 
-Usages courants :
-• Always use raw strings for regex patterns
-• Avoids confusion between Python escapes and regex escapes
-• Makes patterns more readable`,
-  2854: `itertools.chain takes multiple iterables and yields elements from each one in order, as if they were a single iterable. It does not create nested structures — it flattens one level of nesting.
+Ordre des opérations :
+• append avant len.
 
-Concepts clés :
-• chain(iter1, iter2, ...) yields elements from iter1, then iter2, etc.
-• Each argument must be an iterable
-• Elements are yielded lazily (one at a time)
-• Only flattens one level — nested lists inside remain nested
+Cas d'utilisation courants :
+• Tag de type isinstance(x, MyList).
 
-Comment ça fonctionne :
-1. chain([1,2], [3,4], [5]) takes three lists
-2. Yields 1, 2 from first list
-3. Then 3, 4 from second list
-4. Then 5 from third list
-5. Résultat : [1, 2, 3, 4, 5]
+Cas limites :
+• Pickle / copy : comportement standard sous-classe.
 
-Exemple :
-from itertools import chain
-list(chain("AB", "CD"))       # ['A', 'B', 'C', 'D']
-list(chain([1], [2], [3,4]))  # [1, 2, 3, 4]
-list(chain(range(3), range(3,6)))  # [0, 1, 2, 3, 4, 5]
+Considérations de performance :
+• N/A.
 
-Usages courants :
-• Combining multiple sequences without copying
-• Flattening a known number of iterables
-• Processing items from multiple sources as one stream`,
-  2855: `chain.from_iterable is an alternate constructor that accepts a single iterable whose elements are themselves iterables. C'est useful when you ont un list of lists (or any nested iterable) and want to flatten it one level.
+Exemples :
+• len(MyList()) puis extends.
+
+Remarques :
+• Réponse : 4 — 1re option.`,
+  2853: `MyDict(dict) keys_sorted() sur b=2,a=1
+
+Débutant :
+• ['a','b'] : sorted sur les clés du dict.
+
+Intermédiaire :
+• self.keys() comme sur tout dict ; ordre d'insertion n'empêche pas le tri alphabétique ici.
+
+Expert :
+• Pour ordre d'insertion brut : list(self.keys()) sans sorted.
 
 Concepts clés :
-• chain.from_iterable(iterable_of_iterables) — takes ONE argument
-• Unlike chain(*args) which takes multiple arguments
-• Useful when the number of sub-iterables is unknown or dynamic
-• Still only flattens one level
+• self est le mapping.
 
-Comment ça fonctionne :
-1. chain.from_iterable([[1,2],[3,4]]) receives one list containing two sublists
-2. Yields 1, 2 from [1,2]
-3. Then yields 3, 4 from [3,4]
-4. Résultat : [1, 2, 3, 4]
+Distinctions clés :
+• Retour liste, pas set.
 
-Exemple :
-from itertools import chain
-nested = [[1, 2], [3, 4], [5]]
-list(chain.from_iterable(nested))  # [1, 2, 3, 4, 5]
+Fonctionnement :
+• sorted itère sur les clés et renvoie liste triée.
 
-# Equivalent to:
-list(chain(*nested))  # same result but requires unpacking
+Exécution étape par étape :
+• Clés b,a → tri → a,b.
 
-Usages courants :
-• Flattening a list of lists
-• Processing dynamically generated groups of items
-• More memory-efficient than chain(*big_list) for large inputs`,
-  2856: `itertools.product computes the Cartesian product of input iterables, which is all possible ordered pairs (or tuples) combining one element from each input.
+Ordre des opérations :
+• Construction MyDict(b=2,a=1) puis appel.
 
-Concepts clés :
-• product(A, B) yields all (a, b) where a ∈ A and b ∈ B
-• Equivalent to nested for-loops
-• Résultat length = len(A) × len(B)
-• Can take more than 2 iterables: product(A, B, C) yields 3-tuples
+Cas d'utilisation courants :
+• Affichage stable de paramètres.
 
-Comment ça fonctionne :
-1. product("AB", "12") pairs each character from "AB" with each from "12"
-2. A with 1 → ("A","1")
-3. A with 2 → ("A","2")
-4. B with 1 → ("B","1")
-5. B with 2 → ("B","2")
-6. Résultat : [("A","1"), ("A","2"), ("B","1"), ("B","2")]
+Cas limites :
+• Locales / clés non comparables : TypeError possible.
 
-Exemple :
-from itertools import product
-list(product([0,1], repeat=2))
-# [(0,0), (0,1), (1,0), (1,1)]
+Considérations de performance :
+• O(n log n) pour le tri.
 
-list(product("AB", "CD", "EF"))
-# 8 tuples: ("A","C","E"), ("A","C","F"), ...
+Exemples :
+• Variante values_sorted dérivée.
 
-Usages courants :
-• Generating all combinations of parameters
-• Replacing nested loops
-• Testing all input combinations`,
-  2857: `itertools.permutations renvoie all possible orderings (arrangements) of the input elements. For n distinct elements, there are n! (n factorial) permutations.
+Remarques :
+• Réponse : ['a','b'] — 1re option.`,
+  2854: `MyStr(str) shout() — upper + !
+
+Débutant :
+• "HELLO!" : str immuable ; upper() crée une nouvelle chaîne.
+
+Intermédiaire :
+• self est la valeur str ; méthodes str disponibles.
+
+Expert :
+• Pas de mutation in-place sur str.
 
 Concepts clés :
-• permutations(iterable) generates all orderings of all elements
-• permutations(iterable, r) generates r-length orderings
-• For "ABC" with 3 characters: 3! = 3 × 2 × 1 = 6 permutations
-• Each permutation is a tuple
+• Sous-classe str pour API domaine.
 
-Comment ça fonctionne :
-1. permutations("ABC") generates all orderings of A, B, C
-2. ('A','B','C'), ('A','C','B'), ('B','A','C'), ('B','C','A'), ('C','A','B'), ('C','B','A')
-3. That's 6 tuples total
-4. len(...) renvoie 6
+Distinctions clés :
+• Pas "hello!" ni "HELLO" seul.
 
-Exemple :
-from itertools import permutations
-list(permutations("AB"))
-# [('A','B'), ('B','A')] — 2! = 2
+Fonctionnement :
+• Concaténation de str après upper.
 
-list(permutations("ABC", 2))
-# [('A','B'), ('A','C'), ('B','A'), ('B','C'), ('C','A'), ('C','B')] — 6
+Exécution étape par étape :
+• hello → HELLO → HELLO!.
 
-Usages courants :
-• Generating all possible orderings
-• Solving combinatorial problems
-• Brute-force search over arrangements`,
-  2858: `itertools.combinations renvoie r-length subsequences of elements from the input iterable, in sorted order and without repeated elements. Unlike permutations, l'ordre n'a pas d'importance: (A,B) is included but (B,A) is not.
+Ordre des opérations :
+• Appel shout sur instance.
 
-Concepts clés :
-• combinations(iterable, r) — choose r elements from the iterable
-• Order doesn't matter: (A,B) and (B,A) are le même combination
-• Number of combinations: C(n, r) = n! / (r! × (n-r)!)
-• C(3, 2) = 3! / (2! × 1!) = 3
+Cas d'utilisation courants :
+• Normalisation affichage.
 
-Comment ça fonctionne :
-1. combinations("ABC", 2) picks all 2-element subsets
-2. ("A","B"), ("A","C"), ("B","C")
-3. Note: ("B","A") is NOT included (already covered by ("A","B"))
-4. Elements maintain their original order from the input
+Cas limites :
+• Chaîne vide : "!" seulement.
 
-Exemple :
-from itertools import combinations
-list(combinations(range(4), 2))
-# [(0,1), (0,2), (0,3), (1,2), (1,3), (2,3)]
+Considérations de performance :
+• N/A.
 
-list(combinations("ABCD", 3))
-# [('A','B','C'), ('A','B','D'), ('A','C','D'), ('B','C','D')]
+Exemples :
+• whisper avec lower.
 
-Usages courants :
-• Choosing subsets from a collection
-• Lottery number combinations
-• Testing pairs of items`,
-  2859: `combinations_with_replacement renvoie r-length subsequences where individual elements may repeat. Unlike regular combinations, le même element can appear multiple times in a single combination.
+Remarques :
+• Réponse : "HELLO!" — 1re option.`,
+  2855: `MyInt(int) is_even() sur 4
+
+Débutant :
+• True : 4 % 2 == 0.
+
+Intermédiaire :
+• self se comporte comme un int dans les opérateurs.
+
+Expert :
+• bool est sous-classe de int ; ici le résultat est bool attendu.
 
 Concepts clés :
-• combinations_with_replacement(iterable, r) — choose r elements, repeats allowed
-• Still maintains sorted order (no (B,A) if (A,B) exists)
-• More results than regular combinations
-• For n elements choosing r: C(n+r-1, r)
+• Extension numérique légère.
 
-Comment ça fonctionne :
-1. combinations_with_replacement("AB", 2) picks 2 elements, allowing repeats
-2. ("A","A") — A chosen twice
-3. ("A","B") — one of each
-4. ("B","B") — B chosen twice
-5. Résultat : [("A","A"), ("A","B"), ("B","B")]
+Distinctions clés :
+• Pas 0 ni Error.
 
-Exemple :
-from itertools import combinations_with_replacement
-list(combinations_with_replacement("ABC", 2))
-# [('A','A'), ('A','B'), ('A','C'), ('B','B'), ('B','C'), ('C','C')]
+Fonctionnement :
+• Modulo puis comparaison à 0.
 
-Usages courants :
-• Multisets and bags
-• Dice rolls (where l'ordre n'a pas d'importance)
-• Sampling with replacement`,
-  2860: `itertools.repeat renvoie an iterator qui produit le même object over and over. When a count is specified, it yields exactly that many times. Without a count, it repeats infinitely.
+Exécution étape par étape :
+• MyInt(4) puis is_even.
 
-Concepts clés :
-• repeat(object, times) — yields object exactly 'times' times
-• repeat(object) without times — repeats infinitely (use with islice or zip)
-• Useful as a constant argument in map() or zip()
-• Résultat : an iterator, not a list
+Ordre des opérations :
+• Création puis appel.
 
-Comment ça fonctionne :
-1. repeat("x", 3) creates an iterator
-2. First next() call yields "x"
-3. Second next() call yields "x"
-4. Third next() call yields "x"
-5. StopIteration after 3 yields
-6. list(...) collects: ["x", "x", "x"]
+Cas d'utilisation courants :
+• Wrappers avec invariants.
 
-Exemple :
-from itertools import repeat
-list(repeat(0, 5))      # [0, 0, 0, 0, 0]
-list(repeat([1,2], 2))  # [[1,2], [1,2]] — same object repeated
+Cas limites :
+• Très grands int : modulo reste défini.
 
-Usages courants :
-• Providing constant values to map/zip
-• Creating fixed-length sequences of le même value
-• Default fill values in algorithms`,
-  2861: `itertools.count creates an infinite counter that starts at a given value and increments by a step. Since it's infinite, you must use it with something that limits consumption (like islice, zip, or a manual break).
+Considérations de performance :
+• N/A.
+
+Exemples :
+• MyInt(3) False.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2856: `MyInt(3).is_even()
+
+Débutant :
+• False : reste 1 après % 2.
+
+Intermédiaire :
+• Même méthode is_even() que pour MyInt(4) (ID 2855), ici valeur impaire.
+
+Expert :
+• Les négatifs : -3 % 2 en Python vaut 1 → impair.
 
 Concepts clés :
-• count(start=0, step=1) — default start is 0, default step is 1
-• Produces an infinite sequence: start, start+step, start+2*step, ...
-• Must be limited externally (islice, zip, list comprehension with range, etc.)
-• Works with floats too: count(0.5, 0.1)
+• Parité via modulo.
 
-Comment ça fonctionne :
-1. count(10, 2) crée un counter starting at 10, step 2
-2. First next(c) → 10
-3. Second next(c) → 12
-4. Third next(c) → 14
-5. Fourth next(c) → 16
-6. Résultat : [10, 12, 14, 16]
+Distinctions clés :
+• Pas True.
 
-Exemple :
-from itertools import count, islice
-list(islice(count(1, 3), 5))  # [1, 4, 7, 10, 13]
-list(islice(count(0, -1), 4)) # [0, -1, -2, -3]
+Fonctionnement :
+• 3 % 2 → 1 ; 1 == 0 faux.
 
-Usages courants :
-• Generating sequential IDs
-• Creating arithmetic progressions
-• Pairing with zip for enumeration alternatives`,
-  2862: `itertools.cycle takes an iterable and renvoie an infinite iterator that repeats the elements of the iterable endlessly. It first consumes the entire iterable (saving a copy), then yields elements from the saved copy in a loop.
+Exécution étape par étape :
+• Évaluation booléenne.
 
-Concepts clés :
-• cycle(iterable) — repeats the iterable's elements forever
-• Saves a copy of the iterable internally
-• Must be limited externally to avoid infinite loops
-• Useful for round-robin scheduling
+Ordre des opérations :
+• Appel méthode.
 
-Comment ça fonctionne :
-1. cycle("AB") saves ['A', 'B'] internally
-2. Yields: A, B, A, B, A, B, A, B, ... (forever)
-3. [next(c) for _ in range(5)] takes exactly 5 elements
-4. Résultat : ["A", "B", "A", "B", "A"]
+Cas d'utilisation courants :
+• Validation schémas.
 
-Exemple :
-from itertools import cycle, islice
-colors = cycle(["red", "green", "blue"])
-list(islice(colors, 7))
-# ['red', 'green', 'blue', 'red', 'green', 'blue', 'red']
+Cas limites :
+• booléens True/False sont des int 1/0 en arithmétique.
 
-Usages courants :
-• Round-robin scheduling
-• Alternating between states
-• Repeating patterns in data processing`,
-  2863: `itertools.islice works like regular slicing but on any iterator, including infinite ones. It takes start, stop, and step arguments similar to slice notation.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Tester 0 (pair).
+
+Remarques :
+• Réponse : False — 1re option.`,
+  2857: `DefaultDict __missing__ puis d['x'] += 1
+
+Débutant :
+• 1 : __missing__ pose 0 puis += ajoute 1.
+
+Intermédiaire :
+• += lit puis écrit ; première lecture déclenche __missing__.
+
+Expert :
+• Proche de collections.defaultdict(int) en idée.
 
 Concepts clés :
-• islice(iterable, stop) — take first 'stop' elements
-• islice(iterable, start, stop) — skip 'start', take until 'stop'
-• islice(iterable, start, stop, step) — with step like [start:stop:step]
-• Works on any iterator, not just sequences
-• Consumes elements from the underlying iterator
+• Hook __getitem__ / __missing__ pour clés absentes.
 
-Comment ça fonctionne :
-1. islice(range(100), 0, 10, 3) slices range(100)
-2. Start at index 0, stop before 10, step of 3
-3. Indices selected: 0, 3, 6, 9
-4. Values at those indices: 0, 3, 6, 9
-5. Résultat : [0, 3, 6, 9]
+Distinctions clés :
+• Pas 0 final ni erreur sur cette séquence.
 
-Exemple :
-from itertools import islice, count
-list(islice(count(), 5))           # [0, 1, 2, 3, 4]
-list(islice("ABCDEFG", 2, 5))     # ['C', 'D', 'E']
-list(islice(range(20), 0, 20, 4)) # [0, 4, 8, 12, 16]
+Fonctionnement :
+• __missing__ insère clé et retourne défaut.
 
-Usages courants :
-• Taking first N items from an infinite iterator
-• Skipping items at the start
-• Sampling every Nth item from a stream`,
-  2864: `itertools.accumulate renvoie running accumulated results. By default it sums, but you can pass a custom binary function. Here, the lambda multiplies, producing a running product.
+Exécution étape par étape :
+• get 0 ; add 1 ; stocke 1.
 
-Concepts clés :
-• accumulate(iterable) — running sum by default
-• accumulate(iterable, func) — apply func to accumulate values
-• First element is always yielded as-is
-• Each subsequent element is func(accumulated, next_element)
+Ordre des opérations :
+• Un seul += sur clé nouvelle.
 
-Comment ça fonctionne :
-1. Start with first element: 1
-2. func(1, 2) = 1 * 2 = 2
-3. func(2, 3) = 2 * 3 = 6
-4. func(6, 4) = 6 * 4 = 24
-5. Résultat : [1, 2, 6, 24]
+Cas d'utilisation courants :
+• Compteurs, graphes adjacence.
 
-Exemple :
-from itertools import accumulate
-import operator
-list(accumulate([1,2,3,4]))               # [1, 3, 6, 10] — running sum
-list(accumulate([1,2,3,4], operator.mul))  # [1, 2, 6, 24] — running product
-list(accumulate([3,1,4,1,5], max))         # [3, 3, 4, 4, 5] — running max
+Cas limites :
+• __missing__ qui ne stocke pas la clé : boucle ou KeyError selon cas.
 
-Usages courants :
-• Running totals and cumulative sums
-• Running products
-• Running max/min values`,
-  2865: `itertools.takewhile yields elements from an iterable as long as the predicate function renvoie True. It stops immediately when the predicate renvoie False for the first time — even if later elements would satisfy the predicate.
+Considérations de performance :
+• Coût dict normal.
+
+Exemples :
+• d['a'] seul retourne 0.
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  2858: `UpperStr(str) __new__ avec s.upper()
+
+Débutant :
+• "HELLO" : la valeur est normalisée à la création.
+
+Intermédiaire :
+• __new__ de str reçoit la chaîne finale ; __init__ str est no-op.
+
+Expert :
+• Pattern standard pour int/str/tuple/frozenset.
 
 Concepts clés :
-• takewhile(predicate, iterable) — yields while predicate is True
-• Stops at the FIRST False — does NOT resume
-• Elements après le first False are never seen
-• Similar to a "break" condition in a loop
+• Immuabilité : mutation impossible après __new__.
 
-Comment ça fonctionne :
-1. Check 1: 1 < 5 → True → yield 1
-2. Check 3: 3 < 5 → True → yield 3
-3. Check 5: 5 < 5 → False → STOP immediately
-4. 2 and 4 are never checked even though they're < 5
-5. Résultat : [1, 3]
+Distinctions clés :
+• Pas "hello" ni erreur.
 
-Exemple :
-from itertools import takewhile
-list(takewhile(str.islower, "abcDef"))  # ['a', 'b', 'c']
-list(takewhile(lambda x: x > 0, [3, 2, 1, 0, -1, 5]))  # [3, 2, 1]
+Fonctionnement :
+• super().__new__(cls, texte_upper).
 
-Usages courants :
-• Reading data until a sentinel value
-• Processing sorted data up to a threshold
-• Taking a prefix that satisfies a condition`,
-  2866: `itertools.dropwhile is the complement of takewhile. It drops elements from the iterable as long as the predicate is True, then yields ALL remaining elements regardless of whether they satisfy the predicate.
+Exécution étape par étape :
+• hello → HELLO avant retour instance.
 
-Concepts clés :
-• dropwhile(predicate, iterable) — drops while predicate is True
-• Once predicate renvoie False, yields EVERYTHING remaining
-• Does NOT filter — just skips a prefix
-• Later elements are yielded even if they would satisfy the predicate
+Ordre des opérations :
+• Appel constructeur UpperStr.
 
-Comment ça fonctionne :
-1. Check 1: 1 < 5 → True → drop
-2. Check 3: 3 < 5 → True → drop
-3. Check 5: 5 < 5 → False → yield 5 and everything after
-4. Yields: 5, 2, 4 (2 and 4 are yielded even though they're < 5)
-5. Résultat : [5, 2, 4]
+Cas d'utilisation courants :
+• Identifiants canoniques (email upper).
 
-Exemple :
-from itertools import dropwhile
-list(dropwhile(str.islower, "abcDef"))  # ['D', 'e', 'f']
-list(dropwhile(lambda x: x > 0, [3, 2, 0, -1, 5]))  # [0, -1, 5]
+Cas limites :
+• Sous-classes multiples : bien passer cls.
 
-Usages courants :
-• Skipping headers in data files
-• Ignoring leading whitespace or noise
-• Finding the first element that doesn't match a condition`,
-  2867: `itertools.compress filters elements from a data iterable using a corresponding selector iterable. An element is included uniquement si its corresponding selector value is truthy.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance(UpperStr('a'), str) True.
+
+Remarques :
+• Réponse : "HELLO" — 1re option.`,
+  2859: `Pourquoi __new__ pour str/int immuables ?
+
+Débutant :
+• La valeur est figée dans __new__ ; __init__ arrive trop tard.
+
+Intermédiaire :
+• __init__ sur str ne change pas la séquence de caractères stockée.
+
+Expert :
+• list/dict : contenu mutable donc __init__ suffit souvent.
 
 Concepts clés :
-• compress(data, selectors) — pairs data with selectors
-• Element is yielded if its selector is truthy (1, True, non-zero, etc.)
-• Element is skipped if its selector is falsy (0, False, None, etc.)
-• Stops when either data or selectors is exhausted
+• Protocole création en deux phases.
 
-Comment ça fonctionne :
-1. Pair: A→1, B→0, C→1, D→0, E→1
-2. A: selector 1 (truthy) → yield "A"
-3. B: selector 0 (falsy) → skip
-4. C: selector 1 (truthy) → yield "C"
-5. D: selector 0 (falsy) → skip
-6. E: selector 1 (truthy) → yield "E"
-7. Résultat : ["A", "C", "E"]
+Distinctions clés :
+• Pas « __init__ n'existe pas » ni vitesse comme raison principale.
 
-Exemple :
-from itertools import compress
-data = range(10)
-selectors = [1,0,0,1,0,1,0,0,1,0]
-list(compress(data, selectors))  # [0, 3, 5, 8]
+Fonctionnement :
+• allocate + initialiser valeur pour immuable.
 
-Usages courants :
-• Applying a boolean mask to data
-• Selecting elements based on external criteria
-• Filtering with precomputed conditions`,
-  2868: `itertools.zip_longest works like zip but continues until the LONGEST iterable is exhausted, filling missing values with a specified fillvalue (default None).
+Exécution étape par étape :
+• __new__ retourne instance complète.
 
-Concepts clés :
-• zip_longest(*iterables, fillvalue=None) — zip to longest
-• Regular zip stops at shortest iterable
-• zip_longest fills missing values with fillvalue
-• Default fillvalue is None
+Ordre des opérations :
+• __new__ puis __init__ (no-op str).
 
-Comment ça fonctionne :
-1. [1,2] has 2 elements, [3,4,5] has 3 elements
-2. Pair 1: (1, 3)
-3. Pair 2: (2, 4)
-4. [1,2] is exhausted, but [3,4,5] has one more element
-5. Pair 3: (0, 5) — 0 is the fillvalue replacing the missing element
-6. Résultat : [(1,3), (2,4), (0,5)]
+Cas d'utilisation courants :
+• Sous-types validés (PositiveInt).
 
-Exemple :
-from itertools import zip_longest
-list(zip_longest("AB", "XYZ", fillvalue="-"))
-# [('A','X'), ('B','Y'), ('-','Z')]
+Cas limites :
+• Méta-classes : autre couche.
 
-list(zip_longest([1], [2,3], [4,5,6]))
-# [(1,2,4), (None,3,5), (None,None,6)]
+Considérations de performance :
+• N/A.
 
-Usages courants :
-• Aligning data of different lengths
-• Parallel iteration where all elements matter
-• Matrix operations with uneven rows`,
-  2869: `itertools.starmap is like map, but instead of passing chaque élément as a single argument, it unpacks chaque élément (which must be an iterable) as multiple arguments to the function.
+Exemples :
+• UpperStr vs mauvais __init__ inutile.
+
+Remarques :
+• Réponse : valeur fixée dans __new__ — 1re option.`,
+  2860: `MySet(set) __contains__ délègue — 1 in MySet({1,2,3})
+
+Débutant :
+• True : super().__contains__ fait le test d'appartenance normal.
+
+Intermédiaire :
+• Point d'accroche pour journaliser ou normaliser (ex. casefold).
+
+Expert :
+• in déclenche __contains__ sur le type.
 
 Concepts clés :
-• starmap(function, iterable_of_iterables)
-• Each element of the iterable is unpacked with * into the function
-• Equivalent to: (func(*args) for args in iterable)
-• Name comes from the * (star) utilisé dans unpacking
+• Surcharge contrôlée avec délégation.
 
-Comment ça fonctionne :
-1. starmap(pow, [(2,3), (3,2)])
-2. First tuple (2,3) → pow(2, 3) = 2³ = 8
-3. Second tuple (3,2) → pow(3, 2) = 3² = 9
-4. Résultat : [8, 9]
+Distinctions clés :
+• Pas False ni Error.
 
-Exemple :
-from itertools import starmap
-list(starmap(max, [(1,5,3), (2,8,4)]))  # [5, 8]
-list(starmap(str.replace, [("hello", "l", "L"), ("world", "o", "0")]))
-# ["heLLo", "w0rld"]
+Fonctionnement :
+• Lookup méthode sur MySet puis super.
 
-Usages courants :
-• Applying functions with multiple arguments to data
-• Processing rows of a table/matrix
-• Replacing loops that unpack tuples`,
-  2870: `json.dumps converts a Python object to a JSON-formatted string. The indent parameter controls pretty-printing: when set, it adds newlines and indentation to make the output human-readable.
+Exécution étape par étape :
+• 1 présent dans le set.
 
-Concepts clés :
-• json.dumps(obj) — compact single-line output by default
-• json.dumps(obj, indent=n) — pretty-printed with n spaces per level
-• indent=None (default) — no pretty-printing
-• indent=0 — newlines but no indentation
+Ordre des opérations :
+• Création set puis in.
 
-Comment ça fonctionne :
-1. json.dumps({"a": 1}, indent=2) produces:
-{
-  "a": 1
-}
-2. Each nesting level is indented by 2 additional spaces
-3. Keys and values are on separate lines for readability
+Cas d'utilisation courants :
+• Sets insensibles à la casse custom.
 
-Exemple :
-import json
-data = {"name": "Alice", "scores": [90, 85]}
-print(json.dumps(data, indent=4))
-# {
-#     "name": "Alice",
-#     "scores": [
-#         90,
-#         85
-#     ]
-# }
+Cas limites :
+• __contains__ incohérent avec __iter__ : bugs logiques.
 
-Usages courants :
-• Writing human-readable JSON config files
-• Debugging JSON data
-• Logging structured data`,
-  2871: `Le sort_keys parameter in json.dumps sorts the dictionnaire keys alphabetically in the output. C'est useful for producing deterministic, reproducible JSON output regardless of insertion order.
+Considérations de performance :
+• Hachage O(1) amorti.
+
+Exemples :
+• LoggedSet du cours.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2861: `isinstance(MyList([]), list)
+
+Débutant :
+• True : sous-classe ≡ relation est-un pour isinstance.
+
+Intermédiaire :
+• Parcourt MRO du type de l'objet.
+
+Expert :
+• type(x) is list serait False pour MyList.
 
 Concepts clés :
-• sort_keys=True — keys appear in alphabetical order
-• sort_keys=False (default) — keys appear in insertion order
-• Only affects dictionnaire key ordering, not liste element ordering
-• Useful for comparing JSON outputs or version control
+• Polymorphisme nominal.
 
-Comment ça fonctionne :
-1. Input dict: {"b": 2, "a": 1} (insertion order: b first)
-2. sort_keys=True sorts keys: "a" avant "b"
-3. Output: '{"a": 1, "b": 2}'
+Distinctions clés :
+• Pas False.
 
-Exemple :
-import json
-data = {"z": 1, "m": 2, "a": 3}
-json.dumps(data, sort_keys=True)   # '{"a": 3, "m": 2, "z": 1}'
-json.dumps(data, sort_keys=False)  # '{"z": 1, "m": 2, "a": 3}'
+Fonctionnement :
+• list apparaît dans le MRO de MyList.
 
-Usages courants :
-• Deterministic serialization for hashing or comparison
-• Clean diffs in version control
-• Canonical JSON representation`,
-  2872: `json.dumps converts any JSON-serializable Python object to a JSON string. Lists become JSON arrays. The default separator includes a space after commas and after colons.
+Exécution étape par étape :
+• Vérification positive.
 
-Concepts clés :
-• json.dumps renvoie a STRING, not a list
-• Python lists become JSON arrays
-• Default separators: ", " (comma-space) and ": " (colon-space)
-• The result is a string representation of the JSON array
+Ordre des opérations :
+• Après définition classes.
 
-Comment ça fonctionne :
-1. json.dumps([1, 2, 3]) converts the list to a JSON string
-2. Default separator after comma includes a space
-3. Résultat : '[1, 2, 3]' (a string, not a list)
+Cas d'utilisation courants :
+• APIs acceptant list ou sous-types.
 
-Exemple :
-import json
-json.dumps([1, 2, 3])        # '[1, 2, 3]'
-json.dumps(["a", "b"])       # '["a", "b"]'
-type(json.dumps([1, 2, 3]))  # <class 'str'>
+Cas limites :
+• ABC.register peut élargir hors sous-classe syntaxique.
 
-Usages courants :
-• Serializing data for APIs
-• Storing structured data as strings
-• Sending data over network protocols`,
-  2873: `JSON has its own set of data types that differ from Python's. json.dumps handles the mapping between Python and JSON types automatically.
+Considérations de performance :
+• isinstance optimisé types built-in.
+
+Exemples :
+• isinstance(True, int) True.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2862: `isinstance([], MyList)
+
+Débutant :
+• False : [] est list pure, pas instance de MyList.
+
+Intermédiaire :
+• isinstance ne descend pas vers les enfants depuis le parent.
+
+Expert :
+• Animal vs Chien analogie.
 
 Concepts clés :
-• Python None → JSON null
-• Python True → JSON true
-• Python False → JSON false
-• Python dict → JSON object
-• Python list → JSON array
-• Python str → JSON string
-• Python int/float → JSON number
+• Direction hiérarchique.
 
-Comment ça fonctionne :
-1. json.dumps(None) converts Python's None to JSON
-2. JSON's equivalent of None is null (lowercase)
-3. Résultat : 'null' (a string contenant les word null)
+Distinctions clés :
+• Inverse de 2861.
 
-Exemple :
-import json
-json.dumps(None)    # 'null'
-json.dumps(True)    # 'true'
-json.dumps(False)   # 'false'
-json.loads('null')  # None (reverse mapping)
+Fonctionnement :
+• type([]) is list, pas sous-classe de MyList.
 
-Usages courants :
-• Representing absent values in JSON APIs
-• Serializing optional fields
-• Interoperability between Python and JSON`,
-  2874: `JSON booleans are lowercase (true/false), unlike Python's capitalized booleans (True/False). json.dumps handles this conversion automatically.
+Exécution étape par étape :
+• Rejet.
 
-Concepts clés :
-• Python True → JSON true (lowercase)
-• Python False → JSON false (lowercase)
-• C'est a common source of confusion between Python and JSON
-• json.loads('true') converts back to Python True
+Ordre des opérations :
+• Literal [] puis test.
 
-Comment ça fonctionne :
-1. json.dumps(True) converts Python's True to JSON format
-2. JSON requires lowercase: true, not True
-3. Résultat : 'true'
+Cas d'utilisation courants :
+• Valider liste concrète typée.
 
-Exemple :
-import json
-json.dumps(True)           # 'true'
-json.dumps(False)          # 'false'
-json.dumps({"flag": True}) # '{"flag": true}'
-json.loads('true')         # True
-json.loads('false')        # False
+Cas limites :
+• None : isinstance(None, MyList) False.
 
-Usages courants :
-• Boolean fields in API responses
-• Configuration files
-• Feature flags in JSON`,
-  2875: `json.loads parses a JSON string and renvoie the corresponding Python object. JSON null is converted to Python's None.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance(MyList(), MyList) True.
+
+Remarques :
+• Réponse : False — 1re option.`,
+  2863: `AutoList append sans doublon — deux append(1)
+
+Débutant :
+• 1 : second append ignoré si déjà présent.
+
+Intermédiaire :
+• not in utilise __contains__ de list O(n).
+
+Expert :
+• Pour perf : set auxiliaire ou OrderedDict selon besoin.
 
 Concepts clés :
-• json.loads(string) — parse JSON string to Python object
-• JSON null → Python None
-• JSON true → Python True
-• JSON false → Python False
-• Reverse of json.dumps
+• Override append avec garde.
 
-Comment ça fonctionne :
-1. json.loads("null") parses the JSON string "null"
-2. JSON null maps to Python None
-3. Résultat : None
+Distinctions clés :
+• Pas 2.
 
-Exemple :
-import json
-json.loads("null")           # None
-json.loads("true")           # True
-json.loads("42")             # 42
-json.loads('"hello"')        # 'hello'
-json.loads('[1, 2, 3]')      # [1, 2, 3]
-json.loads('{"a": 1}')       # {'a': 1}
+Fonctionnement :
+• if item not in self puis super().append.
 
-Usages courants :
-• Parsing API responses
-• Reading JSON configuration files
-• Deserializing stored data`,
-  2876: `json.loads converts JSON primitives to their Python equivalents. JSON's lowercase true becomes Python's capitalized True.
+Exécution étape par étape :
+• Premier 1 ajouté ; second skip.
 
-Concepts clés :
-• json.loads("true") → True (Python bool)
-• json.loads("false") → False (Python bool)
-• The input must be valid JSON — "True" (capitalized) would cause an error
-• json.loads is strict about JSON syntax
+Ordre des opérations :
+• Séquence append.
 
-Comment ça fonctionne :
-1. json.loads("true") parses the JSON value true
-2. JSON true → Python True
-3. Résultat : True (the Python boolean)
+Cas d'utilisation courants :
+• Historique ordonné sans répétition.
 
-Exemple :
-import json
-json.loads("true")   # True
-json.loads("false")  # False
-# json.loads("True")  # JSONDecodeError — not valid JSON!
+Cas limites :
+• Égalité vs identité : dépend __eq__ éléments.
 
-Usages courants :
-• Parsing boolean values from JSON APIs
-• Processing feature flags
-• Handling boolean configuration values`,
-  2877: `json.loads parses a JSON-formatted string and renvoie the corresponding Python data structure. JSON arrays become Python lists, and JSON numbers become Python ints or floats.
+Considérations de performance :
+• Coût linéaire par append naïf.
+
+Exemples :
+• append("a") deux fois.
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  2864: `type(MyList()).__name__
+
+Débutant :
+• "MyList" : type retourne la classe exacte.
+
+Intermédiaire :
+• Diffère de isinstance(..., list).
+
+Expert :
+• __class__.__name__ cohérent ici.
 
 Concepts clés :
-• JSON arrays → Python lists
-• JSON numbers (no decimal) → Python int
-• JSON numbers (with decimal) → Python float
-• The string must contain valid JSON
+• Identité de classe runtime.
 
-Comment ça fonctionne :
-1. json.loads("[1, 2, 3]") parses the JSON array
-2. JSON array [1, 2, 3] becomes Python list [1, 2, 3]
-3. Each number is converted to a Python int
-4. Résultat : [1, 2, 3] (a Python list, not a string)
+Distinctions clés :
+• Pas "list".
 
-Exemple :
-import json
-json.loads("[1, 2, 3]")           # [1, 2, 3]
-json.loads('["a", "b", "c"]')     # ['a', 'b', 'c']
-json.loads('[1, 2.5, "three"]')   # [1, 2.5, 'three']
-type(json.loads("[1, 2, 3]"))     # <class 'list'>
+Fonctionnement :
+• Objet créé par MyList().
 
-Usages courants :
-• Parsing list data from JSON APIs
-• Processing array-format configuration
-• Converting stored JSON arrays back to Python lists`,
-  2878: `JSON only supports a limited set of data types: objects, arrays, strings, numbers, booleans, and null. Python sets have no JSON equivalent, so json.dumps lève a TypeError.
+Exécution étape par étape :
+• Attribut __name__ sur le type.
 
-Concepts clés :
-• JSON-serializable types: dict, list, str, int, float, bool, None
-• NOT serializable: set, tuple (but tuple is converted to array), bytes, custom objects
-• Actually, tuples ARE serialized as JSON arrays — but sets are NOT
-• To serialize a set, convert it to a list first: json.dumps(list(my_set))
+Ordre des opérations :
+• MyList() puis type.
 
-Comment ça fonctionne :
-1. json.dumps({1, 2, 3}) tries to serialize a Python set
-2. Sets have no JSON equivalent
-3. Lève TypeError: Object of type set is not JSON serializable
+Cas d'utilisation courants :
+• Dispatch sur nom court.
 
-Exemple :
-import json
-# json.dumps({1, 2, 3})     # TypeError!
-json.dumps(list({1, 2, 3})) # '[1, 2, 3]' — convert to list first
-json.dumps((1, 2, 3))       # '[1, 2, 3]' — tuples work (become arrays)
+Cas limites :
+• Proxy ou instances dynamiques : noms exotiques.
 
-Contournement — encodeur personnalisé :
-class SetEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, set):
-            return list(obj)
-        return super().default(obj)
+Considérations de performance :
+• N/A.
 
-json.dumps({1, 2, 3}, cls=SetEncoder)  # '[1, 2, 3]'
+Exemples :
+• type([]).__name__ list.
 
-Usages courants :
-• Understanding JSON type limitations
-• Building custom JSON encoders for non-standard types
-• Converting data before serialization`,
-  2879: `Le separators parameter in json.dumps controls the characters used entre items and entre keys and valeurs. The default is (", ", ": ") which includes spaces. Using (",", ":") removes spaces for compact output.
+Remarques :
+• Réponse : "MyList" — 1re option.`,
+  2865: `type(MyList([1]) + [2]).__name__
+
+Débutant :
+• "list" : __add__ de list renvoie une list neuve, pas MyList.
+
+Intermédiaire :
+• Piège classique sous-classe builtins.
+
+Expert :
+• Surcharger __add__ pour retourner cls(...) si besoin.
 
 Concepts clés :
-• separators=(item_separator, key_separator)
-• Default: (", ", ": ") — spaces après commas and colons
-• Compact: (",", ":") — no spaces
-• Useful for minimizing JSON size in network transmission
+• Opérateurs hérités typent le résultat comme base C.
 
-Comment ça fonctionne :
-1. json.dumps({"a": 1}, separators=(",", ":"))
-2. Item separator "," — no space après comma entre key-valeur pairs
-3. Key separator ":" — no space après colon entre key and valeur
-4. Résultat : '{"a":1}' (compact, no extra whitespace)
+Distinctions clés :
+• Pas "MyList".
 
-Exemple :
-import json
-data = {"a": 1, "b": [2, 3]}
-json.dumps(data)                          # '{"a": 1, "b": [2, 3]}'
-json.dumps(data, separators=(",", ":"))   # '{"a":1,"b":[2,3]}'
+Fonctionnement :
+• list.__add__ produit list.
 
-Usages courants :
-• Minimizing JSON payload size for APIs
-• Reducing bandwidth in network communication
-• Compact storage format`,
-  2880: `pathlib.Path.name is a property that renvoie the final component of the path as a string. It's the filename (or last directory name) without any parent directories.
+Exécution étape par étape :
+• Concat puis type du résultat.
 
-Concepts clés :
-• Path.name — the last component of the path
-• For files: renvoie the filename with extension
-• For directories: renvoie the directory name
-• Résultat : a string, not a Path object
+Ordre des opérations :
+• + puis type.
 
-Comment ça fonctionne :
-1. Path("a/b/c") crée un path object
-2. .name renvoie the last component: "c"
-3. It strips all parent directories
+Cas d'utilisation courants :
+• numpy-like wrapping : réimplémenter ops.
 
-Exemple :
-from pathlib import Path
-Path("a/b/c").name          # 'c'
-Path("/home/user/file.txt").name  # 'file.txt'
-Path("file.py").name        # 'file.py'
-Path("/").name              # ''
+Cas limites :
+• * et slice idem.
 
-Usages courants :
-• Extracting filename from a full path
-• Getting the last directory in a path
-• File management and processing`,
-  2881: `pathlib.Path.suffix renvoie the file extension of the final component, including the leading dot. If there is no extension, it renvoie an empty string.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• type(ml*2) list.
+
+Remarques :
+• Réponse : "list" — 1re option.`,
+  2866: `C.__bases__[0].__name__ avec C(B), B(A)
+
+Débutant :
+• "B" : __bases__ liste seulement parents directs.
+
+Intermédiaire :
+• MRO complet dans __mro__, pas dans __bases__.
+
+Expert :
+• MI : plusieurs entrées dans __bases__.
 
 Concepts clés :
-• Path.suffix — extension with the dot
-• Résultat : "" if no extension
-• Only renvoie the LAST extension (for .tar.gz, renvoie .gz)
-• Use .suffixes for all extensions
+• Parenthé direct vs ancêtres.
 
-Comment ça fonctionne :
-1. Path("a/b/c.txt") crée un path
-2. .suffix renvoie ".txt" (with the dot)
-3. Not "txt" — the dot is included
+Distinctions clés :
+• Pas "A".
 
-Exemple :
-from pathlib import Path
-Path("file.txt").suffix        # '.txt'
-Path("file.tar.gz").suffix     # '.gz' (last only)
-Path("file").suffix            # '' (no extension)
-Path(".hidden").suffix         # '' (dotfile, not extension)
+Fonctionnement :
+• C.__bases__ == (B,).
 
-Usages courants :
-• Checking file types by extension
-• Filtering files by type
-• Conditional processing based on file format`,
-  2882: `pathlib.Path.stem renvoie the final path component without its extension. It's equivalent to Path.name minus Path.suffix.
+Exécution étape par étape :
+• Index 0 → B.
 
-Concepts clés :
-• Path.stem — name without extension
-• Path.name = Path.stem + Path.suffix
-• For multiple extensions (.tar.gz), stem is "file.tar"
-• Résultat : a string
+Ordre des opérations :
+• Après définition hiérarchie.
 
-Comment ça fonctionne :
-1. Path("a/b/c.txt") crée un path
-2. .name is "c.txt"
-3. .suffix is ".txt"
-4. .stem is "c" (name minus suffix)
+Cas d'utilisation courants :
+• Introspection frameworks.
 
-Exemple :
-from pathlib import Path
-Path("report.pdf").stem         # 'report'
-Path("archive.tar.gz").stem     # 'archive.tar' (removes only last suffix)
-Path("noext").stem              # 'noext'
-Path("/home/user/file.py").stem # 'file'
+Cas limites :
+• Pas de bases : rare pour user class.
 
-Usages courants :
-• Getting base filename for renaming
-• Creating output filenames with different extensions
-• Processing files without caring about their type`,
-  2883: `pathlib.Path overloads the / (division) operator to join path segments. This fournit un clean, readable syntax for building paths.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Comparer C.__mro__[2] pour A.
+
+Remarques :
+• Réponse : "B" — 1re option.`,
+  2867: `issubclass(C, A) chaîne C(B), B(A)
+
+Débutant :
+• True : transitivité des sous-classes.
+
+Intermédiaire :
+• A dans MRO de C.
+
+Expert :
+• issubclass(C,C) True aussi.
 
 Concepts clés :
-• Path / string — joins path with string segment
-• Path / Path — joins two Path objects
-• Equivalent to Path.joinpath()
-• Résultat : a new Path object (paths are immutable)
+• Graphe d'héritage linéaire ici.
 
-Comment ça fonctionne :
-1. Path("a/b") crée un path
-2. / "c.txt" joins "c.txt" as a child
-3. Résultat : Path("a/b/c.txt")
+Distinctions clés :
+• Pas False.
 
-Exemple :
-from pathlib import Path
-base = Path("/home/user")
-base / "docs" / "file.txt"     # Path('/home/user/docs/file.txt')
-Path("src") / Path("main.py")  # Path('src/main.py')
+Fonctionnement :
+• Vérification sur MRO ou équivalent interne.
 
-# If right side is absolute, it replaces the left:
-Path("a/b") / "/c"             # Path('/c')
+Exécution étape par étape :
+• Succès.
 
-Usages courants :
-• Building file paths dynamically
-• Constructing paths in a readable way
-• Cross-platform path construction`,
-  2884: `pathlib.Path.parent renvoie a new Path representing the parent directory. It strips the last component of the path.
+Ordre des opérations :
+• Trois classes définies.
 
-Concepts clés :
-• Path.parent — immediate parent directory
-• Path.parents — sequence of all ancestor directories
-• Résultat : a Path object, not a string
-• Does not check if the path actually exists
+Cas d'utilisation courants :
+• Plugins dérivés d'une base.
 
-Comment ça fonctionne :
-1. Path("a/b/c") represents path a/b/c
-2. .parent removes the last component ("c")
-3. Résultat : Path("a/b")
+Cas limites :
+• Tuple de bases dans issubclass : 2e arg tuple.
 
-Exemple :
-from pathlib import Path
-Path("/home/user/file.txt").parent    # Path('/home/user')
-Path("/home/user/file.txt").parent.parent  # Path('/home')
-Path("a").parent                      # Path('.')
+Considérations de performance :
+• N/A.
 
-# .parents gives all ancestors:
-p = Path("/a/b/c/d")
-list(p.parents)  # [Path('/a/b/c'), Path('/a/b'), Path('/a'), Path('/')]
+Exemples :
+• issubclass(C,B) True.
 
-Usages courants :
-• Navigating directory hierarchies
-• Creating sibling files
-• Finding project root directories`,
-  2885: `pathlib.Path.parts renvoie a tuple containing all the individual components of the path. For absolute paths, the root (/ or drive letter) is included as the first element.
+Remarques :
+• Réponse : True — 1re option.`,
+  2868: `Que renvoie A.__subclasses__() ?
+
+Débutant :
+• Liste des classes qui héritent directement de A (pas instances).
+
+Intermédiaire :
+• Pas ancêtres, pas MRO, pas tous descendants profonds.
+
+Expert :
+• Faibles refs : classes supprimées disparaissent de la liste.
 
 Concepts clés :
-• Path.parts — tuple of path components
-• Relative paths: just the directories and filename
-• Absolute paths: root is included as first element
-• Résultat : a tuple, not a list
+• Registre runtime des enfants directs.
 
-Comment ça fonctionne :
-1. Path("a/b/c") is a relative path with 3 components
-2. .parts splits into individual components
-3. Résultat : ("a", "b", "c")
+Distinctions clés :
+• Première option du Q.
 
-Exemple :
-from pathlib import Path
-Path("a/b/c").parts            # ('a', 'b', 'c')
-Path("/usr/local/bin").parts   # ('/', 'usr', 'local', 'bin')
-Path("file.txt").parts         # ('file.txt',)
+Fonctionnement :
+• Rempli à la définition des sous-classes.
 
-Usages courants :
-• Inspecting individual path components
-• Checking if a specific directory is in the path
-• Reconstructing paths from parts`,
-  2886: `pathlib.Path.suffixes renvoie a list of all the file extensions in the path's final component. Unlike .suffix which only renvoie the last extension, .suffixes captures all of them.
+Exécution étape par étape :
+• Appel renvoie liste courante.
 
-Concepts clés :
-• Path.suffixes — list of all extensions
-• Path.suffix — seulement le last extension
-• Each extension includes its leading dot
-• Résultat : a list of strings
+Ordre des opérations :
+• Après class body enfants.
 
-Comment ça fonctionne :
-1. Path("file.tar.gz") has two extensions
-2. .suffixes renvoie [".tar", ".gz"]
-3. Compare: .suffix renvoie just ".gz"
+Cas d'utilisation courants :
+• Découverte plugins.
 
-Exemple :
-from pathlib import Path
-Path("file.tar.gz").suffixes     # ['.tar', '.gz']
-Path("file.txt").suffixes        # ['.txt']
-Path("file").suffixes            # []
-Path("my.backup.2024.zip").suffixes  # ['.backup', '.2024', '.zip']
+Cas limites :
+• Import ordre : sous-classe pas encore définie → absente.
 
-Usages courants :
-• Detecting compound extensions like .tar.gz
-• Processing files with multiple extensions
-• Stripping all extensions from a filename`,
-  2887: `os.path.join intelligently joins path components using the correct separator for the current operating system. On Unix/macOS it uses /, on Windows it uses \\.
+Considérations de performance :
+• Scan rare ; coût modéré.
+
+Exemples :
+• Voir banque B,C puis A.__subclasses__.
+
+Remarques :
+• Réponse : liste des sous-classes directes — 1re option.`,
+  2869: `set des __name__ des sous-classes directes de A — B et C
+
+Débutant :
+• {B,C} en noms : {"B","C"}.
+
+Intermédiaire :
+• A exclu ; petits-enfants exclus.
+
+Expert :
+• Utile pour registre par nom.
 
 Concepts clés :
-• os.path.join(path1, path2, ...) — joins with OS separator
-• Handles trailing/leading separators correctly
-• If a component is absolute, previous components are discarded
-• Résultat : a string (not a Path object)
+• Compréhension + __subclasses__.
 
-Comment ça fonctionne :
-1. os.path.join("a", "b", "c") joins three components
-2. On Unix: uses / as separator
-3. Résultat : "a/b/c"
+Distinctions clés :
+• Pas ensemble avec A.
 
-Exemple :
-import os.path
-os.path.join("home", "user", "file.txt")  # 'home/user/file.txt'
-os.path.join("/home", "user")             # '/home/user'
-os.path.join("a", "/b", "c")             # '/b/c' (absolute resets)
+Fonctionnement :
+• Itération sur classes objets.
 
-Usages courants :
-• Building file paths in a cross-platform way
-• Older alternative to pathlib.Path / operator
-• Working with os module functions that expect string paths`,
-  2888: `os.path.splitext splits a path into a (root, extension) tuple. The extension includes the dot. If there's no extension, the second element is an empty string.
+Exécution étape par étape :
+• Deux noms collectés.
 
-Concepts clés :
-• Résultat : a tuple: (root, ext)
-• Extension includes the dot
-• Only splits the LAST dot: "file.tar.gz" → ("file.tar", ".gz")
-• No extension: ("file", "")
+Ordre des opérations :
+• Définition B,C puis expression.
 
-Comment ça fonctionne :
-1. os.path.splitext("file.txt") splits at the last dot
-2. Root: "file"
-3. Extension: ".txt" (with dot)
-4. Résultat : ("file", ".txt")
+Cas d'utilisation courants :
+• Menu drivers.
 
-Exemple :
-import os.path
-os.path.splitext("file.txt")         # ('file', '.txt')
-os.path.splitext("archive.tar.gz")   # ('archive.tar', '.gz')
-os.path.splitext("noext")            # ('noext', '')
-os.path.splitext("/path/to/file.py") # ('/path/to/file', '.py')
+Cas limites :
+• Renommage dynamique rare.
 
-Usages courants :
-• Extracting file extensions
-• Changing file extensions
-• Checking file types`,
-  2889: `os.path.basename renvoie the last component of a path — the filename or last directory name. It's equivalent to Path.name in pathlib.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• dict comprehension registry.
+
+Remarques :
+• Réponse : {"B","C"} — 1re option.`,
+  2870: `__init_subclass__ append cls.__name__ — Base.registry
+
+Débutant :
+• ["A","B"] : chaque sous-classe définie déclenche le hook.
+
+Intermédiaire :
+• Base lui-même ne passe pas par __init_subclass__ pour se créer.
+
+Expert :
+• super().__init_subclass__(**kwargs) pour chaîne métaclasses.
 
 Concepts clés :
-• os.path.basename(path) — renvoie last path component
-• Equivalent to the part après le last separator
-• Résultat : empty string for paths ending in separator
-• Résultat : a string
+• Hook définition de classe enfant.
 
-Comment ça fonctionne :
-1. os.path.basename("/a/b/c.txt")
-2. Splits at last separator /
-3. Résultat : everything after: "c.txt"
+Distinctions clés :
+• Pas ["Base",...].
 
-Exemple :
-import os.path
-os.path.basename("/a/b/c.txt")   # 'c.txt'
-os.path.basename("/a/b/c/")      # '' (trailing separator)
-os.path.basename("file.py")      # 'file.py'
+Fonctionnement :
+• Au moment de class A(Base): exécuté.
 
-Usages courants :
-• Extracting filenames from full paths
-• Logging just the filename
-• File processing pipelines`,
-  2890: `os.path.dirname renvoie everything avant le last path separator — the directory contenant les file. It's equivalent to Path.parent in pathlib (but renvoie a string).
+Exécution étape par étape :
+• A puis B ajoutés en ordre de définition.
 
-Concepts clés :
-• os.path.dirname(path) — directory portion
-• os.path.basename(path) — filename portion
-• Together: dirname + basename = full path
-• Résultat : a string
+Ordre des opérations :
+• Déclarations successives.
 
-Comment ça fonctionne :
-1. os.path.dirname("/a/b/c.txt")
-2. Splits at last separator /
-3. Résultat : everything before: "/a/b"
+Cas d'utilisation courants :
+• Registres automatiques.
 
-Exemple :
-import os.path
-os.path.dirname("/a/b/c.txt")    # '/a/b'
-os.path.dirname("/a/b/")         # '/a/b'
-os.path.dirname("file.txt")      # '' (no directory)
+Cas limites :
+• kwargs classe mal passés : TypeError.
 
-# dirname + basename = full path
-path = "/a/b/c.txt"
-os.path.dirname(path) + "/" + os.path.basename(path)
-# '/a/b/c.txt'
+Considérations de performance :
+• N/A.
 
-Usages courants :
-• Extracting the directory of a file
-• Navigating to parent directories
-• Constructing sibling file paths`,
-  2891: `os.sep is a string constant contenant les character used by the operating system to separate path components. On Unix-based systems (Linux, macOS) it's /, on Windows it's \\.
+Exemples :
+• Plugin.plugins dict.
+
+Remarques :
+• Réponse : ["A","B"] — 1re option.`,
+  2871: `Quand __init_subclass__ est-il appelé ?
+
+Débutant :
+• À la définition d'une sous-classe (exécution du class statement).
+
+Intermédiaire :
+• Pas à l'instanciation ; pas au GC.
+
+Expert :
+• Ordre avant fin du corps de la classe enfant.
 
 Concepts clés :
-• os.sep — path separator: "/" on Unix, "\\" on Windows
-• os.altsep — alternative separator (None on Unix, "/" on Windows)
-• os.pathsep — PATH variable separator: ":" on Unix, ";" on Windows
-• Use os.path.join or pathlib instead of manual string concatenation
+• Méta-niveau vs __init__ instance.
 
-Comment ça fonctionne :
-1. On Unix/macOS, paths use / as separator
-2. os.sep renvoie "/"
-3. On Windows, os.sep renvoie "\\\\"
+Distinctions clés :
+• Pas création instance.
 
-Exemple :
-import os
-print(os.sep)      # '/' on Unix, '\\' on Windows
-print(os.pathsep)  # ':' on Unix, ';' on Windows
+Fonctionnement :
+• Interpréteur appelle parent.__init_subclass__(cls=enfant).
 
-# Avoid this:
-path = "a" + os.sep + "b"  # 'a/b'
-# Prefer this:
-path = os.path.join("a", "b")  # 'a/b' (more portable)
+Exécution étape par étape :
+• print possible dès import module.
 
-Usages courants :
-• Understanding OS-specific path behavior
-• Splitting paths manually (prefer os.path.split instead)
-• Cross-platform path utilities`,
-  2892: `pathlib.Path.with_suffix renvoie a new Path with the suffix (extension) changed. If l'originale path n'a pas suffix, the new suffix is appended.
+Ordre des opérations :
+• Parser puis builder classe.
 
-Concepts clés :
-• with_suffix(new_suffix) — replaces the extension
-• The new suffix must include the dot: ".md" not "md"
-• with_suffix("") removes the extension entirely
-• Résultat : a new Path (paths are immutable)
+Cas d'utilisation courants :
+• Remplacer métaclasse légère.
 
-Comment ça fonctionne :
-1. Path("a.txt") has suffix ".txt"
-2. .with_suffix(".md") replaces ".txt" with ".md"
-3. Résultat : Path("a.md")
+Cas limites :
+• Plusieurs héritages : chaque parent peut avoir hook.
 
-Exemple :
-from pathlib import Path
-Path("report.txt").with_suffix(".pdf")   # Path('report.pdf')
-Path("archive.tar.gz").with_suffix(".bz2")  # Path('archive.tar.bz2')
-Path("file.txt").with_suffix("")         # Path('file') — removes extension
-Path("noext").with_suffix(".py")         # Path('noext.py') — adds extension
+Considérations de performance :
+• Une fois par classe.
 
-Usages courants :
-• Converting file formats (change extension before saving)
-• Creating output files with different extensions
-• Generating companion files (.py → .pyc)`,
-  2893: `Le string module provides several useful string constants. ascii_lowercase contains all 26 lowercase English letters from 'a' to 'z'.
+Exemples :
+• Voir timeline banque.
+
+Remarques :
+• Réponse : lors de la définition de sous-classe — 1re option.`,
+  2872: `Base.method return type(self).__name__ — Child().method()
+
+Débutant :
+• "Child" : self est l'instance enfant à l'exécution.
+
+Intermédiaire :
+• Pas besoin de redéfinir method dans Child.
+
+Expert :
+• Évite chaînes codées en dur dans __repr__.
 
 Concepts clés :
-• string.ascii_lowercase — "abcdefghijklmnopqrstuvwxyz"
-• It's a constant string, not a fonction
-• Contains exactly 26 characters
-• Only ASCII letters — no accented characters
+• Polymorphisme via type dynamique.
 
-Comment ça fonctionne :
-1. import string loads the string module
-2. string.ascii_lowercase is a pre-defined constant
-3. Value: "abcdefghijklmnopqrstuvwxyz"
+Distinctions clés :
+• Pas "Base".
 
-Exemple :
-import string
-string.ascii_lowercase  # 'abcdefghijklmnopqrstuvwxyz'
-len(string.ascii_lowercase)  # 26
-'a' in string.ascii_lowercase  # True
-'A' in string.ascii_lowercase  # False
+Fonctionnement :
+• type(self) résolu à l'appel.
 
-Usages courants :
-• Validating that a string contains only lowercase letters
-• Generating random strings
-• Character rotation ciphers (Caesar cipher, ROT13)`,
-  2894: `string.ascii_uppercase contains all 26 uppercase English letters from 'A' to 'Z'. It's the uppercase counterpart of string.ascii_lowercase.
+Exécution étape par étape :
+• Liaison sur self réel.
 
-Concepts clés :
-• string.ascii_uppercase — "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-• Exactly 26 characters
-• Only ASCII uppercase letters
-• Counterpart: string.ascii_lowercase
+Ordre des opérations :
+• Child() puis method().
 
-Comment ça fonctionne :
-1. string.ascii_uppercase is a pre-defined constant
-2. Value: "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+Cas d'utilisation courants :
+• __repr__ générique.
 
-Exemple :
-import string
-string.ascii_uppercase  # 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-len(string.ascii_uppercase)  # 26
-'Z' in string.ascii_uppercase  # True
-'z' in string.ascii_uppercase  # False
+Cas limites :
+• super() dans __init__ multiple : self correct quand même.
 
-Usages courants :
-• Validating uppercase input
-• Password strength checking
-• Encoding/decoding algorithms`,
-  2895: `string.digits contains all 10 decimal digit characters from '0' to '9'. It's useful for validating numeric input or generating random numeric strings.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• A().method → "A".
+
+Remarques :
+• Réponse : "Child" — 1re option.`,
+  2873: `self.__class__.__name__ sur Child — même résultat
+
+Débutant :
+• "Child" : équivalent type(self) pour classes normales Py3.
+
+Intermédiaire :
+• Style légèrement plus ancien mais idiomatique encore.
+
+Expert :
+• Cas edge métaclasse rares : suivre doc.
 
 Concepts clés :
-• string.digits — "0123456789"
-• Starts with '0', not '1'
-• Contains 10 characters
-• Only ASCII digits — no unicode numerals
+• Double accès à la classe runtime.
 
-Comment ça fonctionne :
-1. string.digits is a pre-defined constant
-2. Value: "0123456789"
+Distinctions clés :
+• Même réponse que 2872.
 
-Exemple :
-import string
-string.digits            # '0123456789'
-len(string.digits)       # 10
-'5' in string.digits     # True
-'a' in string.digits     # False
+Fonctionnement :
+• __class__ sur instance pointe vers type concret.
 
-# Check if string is all digits:
-all(c in string.digits for c in "12345")  # True
-all(c in string.digits for c in "123a5")  # False
+Exécution étape par étape :
+• Résolution Child.
 
-Usages courants :
-• Validating numeric strings
-• Generating random PINs or codes
-• Stripping non-digit characters`,
-  2896: `string.punctuation contains all ASCII characters that are considered punctuation — characters that are printable but are neither letters nor digits.
+Ordre des opérations :
+• Même idée que l'ID 2872, variante d'écriture.
 
-Concepts clés :
-• string.punctuation — all ASCII punctuation
-• Contains: !"#$%&'()*+,-./:;<=>?@[\\]^_\`{|}~
-• 32 characters total
-• Does not include space (space is in string.whitespace)
+Cas d'utilisation courants :
+• Logs incluant nom classe.
 
-Comment ça fonctionne :
-1. string.punctuation is a pre-defined constant
-2. Contains every printable ASCII character that is not a letter, digit, or whitespace
-3. Both '!' and '@' are included
+Cas limites :
+• Proxy __class__ override : avancé.
 
-Exemple :
-import string
-string.punctuation  # '!"#$%&\\'()*+,-./:;<=>?@[\\\\]^_\`{|}~'
-len(string.punctuation)  # 32
-'!' in string.punctuation   # True
-'@' in string.punctuation   # True
-' ' in string.punctuation   # False (space is whitespace)
+Considérations de performance :
+• N/A.
 
-Usages courants :
-• Stripping punctuation from text
-• Password validation (checking for special characters)
-• Text preprocessing for NLP`,
-  2897: `string.ascii_letters is the concatenation of string.ascii_lowercase and string.ascii_uppercase, containing all 52 ASCII letters.
+Exemples :
+• Comparer avec type(self) is self.__class__.
+
+Remarques :
+• Réponse : "Child" — 1re option.`,
+  2874: `B.x = 2 après A.x = 1 — valeur A.x
+
+Débutant :
+• 1 : assignation sur B crée attribut propre sur B, pas mutation de A.
+
+Intermédiaire :
+• Lecture B.x masque A.x mais A.x inchangé.
+
+Expert :
+• Si B avait seulement hérité sans assigner, B.x lirait 1 depuis A.
 
 Concepts clés :
-• string.ascii_letters = string.ascii_lowercase + string.ascii_uppercase
-• "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-• Total: 26 + 26 = 52 characters
-• Does not include digits, punctuation, or whitespace
+• Espaces de noms de classe séparés.
 
-Comment ça fonctionne :
-1. string.ascii_letters contains all 52 ASCII letters
-2. len(string.ascii_letters) renvoie 52
-3. 26 lowercase + 26 uppercase = 52
+Distinctions clés :
+• Pas 2 sur A.
 
-Exemple :
-import string
-string.ascii_letters  # 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-len(string.ascii_letters)  # 52
-'a' in string.ascii_letters  # True
-'Z' in string.ascii_letters  # True
-'5' in string.ascii_letters  # False
+Fonctionnement :
+• B.__dict__ reçoit clé x.
 
-Usages courants :
-• Validating alphabetic input
-• Generating random alphanumeric strings (with string.digits)
-• Character classification`,
-  2898: `string.hexdigits contains all characters that are valid in hexadecimal representation: the 10 decimal digits (0-9) plus lowercase (a-f) and uppercase (A-F) hex letters.
+Exécution étape par étape :
+• A.__dict__['x'] reste 1.
 
-Concepts clés :
-• string.hexdigits — "0123456789abcdefABCDEF"
-• Contains 22 characters total
-• Includes both lowercase and uppercase hex letters
-• Hexadecimal uses base 16: 0-9 and A-F
+Ordre des opérations :
+• Définitions puis B.x=2.
 
-Comment ça fonctionne :
-1. string.hexdigits is a pre-defined constant
-2. Value: "0123456789abcdefABCDEF"
-3. Contains digits 0-9, then a-f, then A-F
+Cas d'utilisation courants :
+• Defaults par sous-classe.
 
-Exemple :
-import string
-string.hexdigits  # '0123456789abcdefABCDEF'
-len(string.hexdigits)  # 22
-'f' in string.hexdigits  # True
-'F' in string.hexdigits  # True
-'g' in string.hexdigits  # False
+Cas limites :
+• Descripteur data sur classe : autre histoire.
 
-# Validate hex string:
-all(c in string.hexdigits for c in "1a2B3c")  # True
-all(c in string.hexdigits for c in "1g2h")    # False
+Considérations de performance :
+• N/A.
 
-Usages courants :
-• Validating hexadecimal strings
-• Parsing color codes (#FF0000)
-• Working with hex-encoded data`,
-  2899: `string.whitespace contains all ASCII characters considered whitespace. These are characters that create blank space in text output.
+Exemples :
+• "x" in B.__dict__ True après assign.
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  2875: `A.lst = [] partagé — B.lst.append(1) puis A.lst
+
+Débutant :
+• [1] : B.lst résout vers la même liste que A.lst sans redéfinition.
+
+Intermédiaire :
+• Mutation in-place partagée ; pas copie.
+
+Expert :
+• B.lst = [] casserait le partage (question suivante).
 
 Concepts clés :
-• string.whitespace — contains 6 whitespace characters
-• Space ' ', Tab '\\t', Newline '\\n'
-• Carriage Return '\\r', Form Feed '\\x0c', Vertical Tab '\\x0b'
-• These are le même characters that str.split() splits on by default
+• Piège mutable en attribut de classe.
 
-Comment ça fonctionne :
-1. string.whitespace is a pre-defined constant
-2. Contains: ' \\t\\n\\r\\x0b\\x0c'
-3. These characters all produce "blank" space in output
+Distinctions clés :
+• Pas [] sur A après append via B.
 
-Exemple :
-import string
-string.whitespace     # ' \\t\\n\\r\\x0b\\x0c'
-len(string.whitespace)  # 6
-' ' in string.whitespace   # True
-'\\t' in string.whitespace  # True
-'\\n' in string.whitespace  # True
+Fonctionnement :
+• id(A.lst) == id(B.lst).
 
-# Check if character is whitespace:
-all(c in string.whitespace for c in " \\t\\n")  # True
+Exécution étape par étape :
+• append mute l'objet liste unique.
 
-Usages courants :
-• Custom whitespace stripping
-• Tokenization and parsing
-• Detecting whitespace-only strings`,
-  2900: `textwrap.wrap breaks a long string into a list of lines, where each line is at most 'width' characters long. It breaks at word boundaries (spaces) to avoid splitting words.
+Ordre des opérations :
+• append puis lecture A.lst.
+
+Cas d'utilisation courants :
+• Préférer default_factory style defaultdict ou __init__ instance.
+
+Cas limites :
+• Threads : mutations concurrentes liste.
+
+Considérations de performance :
+• Référence unique.
+
+Exemples :
+• Corriger avec lst = [] dans B.
+
+Remarques :
+• Réponse : [1] — 1re option.`,
+  2876: `B.lst = [] casse le partage — A.lst = [] puis append sur B
+
+Débutant :
+• [] : B possède sa propre liste ; append sur B ne touche pas A.lst.
+
+Intermédiaire :
+• id(A.lst) != id(B.lst) après assignation sur B.
+
+Expert :
+• Sans B.lst = [], B hérite de la référence A (voir ID 2875).
 
 Concepts clés :
-• textwrap.wrap(text, width=70) — renvoie a list of strings
-• Default width is 70 characters
-• Breaks at word boundaries (whitespace)
-• Résultat : a list of lines without trailing newlines
+• Réassignation d'attribut sur la sous-classe.
 
-Comment ça fonctionne :
-1. textwrap.wrap("hello world foo bar", width=10)
-2. Breaks text so no line exceeds 10 characters
-3. Breaks at spaces: ["hello", "world foo", "bar"] or similar
-4. Résultat : a list of wrapped lines
+Distinctions clés :
+• Opposé au piège liste partagée en classe parent.
 
-Exemple :
-import textwrap
-textwrap.wrap("hello world foo bar", width=10)
-# ['hello', 'world foo', 'bar']
+Fonctionnement :
+• B.__dict__['lst'] pointe vers une nouvelle liste vide.
 
-textwrap.wrap("The quick brown fox jumps over the lazy dog", width=15)
-# ['The quick brown', 'fox jumps over', 'the lazy dog']
+Exécution étape par étape :
+• append mute la liste de B ; A.lst inchangé.
 
-# textwrap.fill is similar but joins with newlines:
-textwrap.fill("hello world foo bar", width=10)
-# 'hello\\nworld foo\\nbar'
+Ordre des opérations :
+• Définitions puis B.lst=[] puis append(1).
 
-Usages courants :
-• Formatting text for terminal output
-• Creating fixed-width text displays
-• Email formatting`,
+Cas d'utilisation courants :
+• Données par défaut isolées par sous-classe.
+
+Cas limites :
+• Oublier d'assigner : retour au partage.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Vérifier len(A.lst)==0.
+
+Remarques :
+• Réponse : [] — 1re option.`,
+  2877: `Animal.speak lève NotImplementedError — Dog parle Woof
+
+Débutant :
+• "Woof" : la méthode résolue est celle de Dog.
+
+Intermédiaire :
+• Animal()().speak lèverait ; Dog() est valide.
+
+Expert :
+• Avec ABC, Animal() serait interdit à la création.
+
+Concepts clés :
+• Méthode « à implémenter » documentée par exception.
+
+Distinctions clés :
+• Pas d'erreur sur Dog().speak().
+
+Fonctionnement :
+• MRO Dog → speak défini.
+
+Exécution étape par étape :
+• Appel sur instance concrète.
+
+Ordre des opérations :
+• Dog() puis speak().
+
+Cas d'utilisation courants :
+• Template method avec défaut explicite.
+
+Cas limites :
+• Oublier override : crash à l'usage.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Chat avec Meow.
+
+Remarques :
+• Réponse : "Woof" — 1re option.`,
+  2878: `Animal().speak() sans sous-classe
+
+Débutant :
+• NotImplementedError : comportement par défaut de la base.
+
+Intermédiaire :
+• Instanciation réussit ; l'échec est à l'appel speak.
+
+Expert :
+• ABC + abstractmethod change la règle (instanciation bloquée).
+
+Concepts clés :
+• Erreur volontaire vs oubli silencieux.
+
+Distinctions clés :
+• Pas chaîne "default".
+
+Fonctionnement :
+• raise dans le corps de speak.
+
+Exécution étape par étape :
+• Animal() puis speak() propage.
+
+Ordre des opérations :
+• __init__ vide puis appel méthode.
+
+Cas d'utilisation courants :
+• Forcer les sous-classes à définir le comportement.
+
+Cas limites :
+• Si speak absent : AttributeError différent.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir module abc.
+
+Remarques :
+• Réponse : NotImplementedError — 1re option.`,
+  2879: `ABC @abstractmethod vs NotImplementedError seul
+
+Débutant :
+• ABC empêche d'instancier la classe abstraite ; NIE n'empêche pas Animal().
+
+Intermédiaire :
+• NIE frappe à l'appel de la méthode manquante.
+
+Expert :
+• register() des ABC pour types structurels.
+
+Concepts clés :
+• Garantie plus tôt dans le cycle de vie.
+
+Distinctions clés :
+• Pas « NIE plus rapide » comme idée centrale.
+
+Fonctionnement :
+• Méta-infrastructure ABC marque méthodes abstraites.
+
+Exécution étape par étape :
+• Tentative Animal() avec méthode abstraite → TypeError.
+
+Ordre des opérations :
+• Définition classe puis instanciation.
+
+Cas d'utilisation courants :
+• Plugins avec contrat obligatoire.
+
+Cas limites :
+• property abstraite : décorateurs combinés.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• class C(ABC): @abstractmethod def m: ...
+
+Remarques :
+• Réponse : ABC bloque l'instanciation — 1re option.`,
+  2880: `User.serialize — str du __dict__
+
+Débutant :
+• Représentation str du dictionnaire d'attributs (style Python).
+
+Intermédiaire :
+• Pas du JSON sans json.dumps.
+
+Expert :
+• __slots__ sans __dict__ : adapter serialize.
+
+Concepts clés :
+• Introspection instance simple.
+
+Distinctions clés :
+• Pas liste d'attributs seule ni erreur ici.
+
+Fonctionnement :
+• vars(self) équivalent à self.__dict__.
+
+Exécution étape par étape :
+• str() sur le mapping.
+
+Ordre des opérations :
+• Construction User puis serialize.
+
+Cas d'utilisation courants :
+• Debug rapide, logs.
+
+Cas limites :
+• Attributs non sérialisables dans __dict__ : échec str rare.
+
+Considérations de performance :
+• Copie en chaîne.
+
+Exemples :
+• json.dumps(vars(u)) pour API.
+
+Remarques :
+• Réponse : str du __dict__ — 1re option.`,
+  2881: `B hérite A — f retourne lambda: "A"
+
+Débutant :
+• "A" : la lambda ferme sur le nom global A (la classe) au moment de la définition de f.
+
+Intermédiaire :
+• Pas de liaison tardive sur self ou B ici.
+
+Expert :
+• Corriger avec lambda: type(self).__name__ ou default arg.
+
+Concepts clés :
+• Closure sur nom LEGB, pas sur classe dynamique implicite.
+
+Distinctions clés :
+• Pas "B".
+
+Fonctionnement :
+• Corps de f exécuté à la définition de la classe B ; global A résolu.
+
+Exécution étape par étape :
+• B().f() appelle la lambda sans argument.
+
+Ordre des opérations :
+• Définition classes puis appel.
+
+Cas d'utilisation courants :
+• Piège boucles qui créent lambdas.
+
+Cas limites :
+• Réassignation de A avant appel : visible.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• f = lambda: "A" identique en esprit.
+
+Remarques :
+• Réponse : "A" — 1re option.`,
+  2882: `D(B) et A séparé — f dans B, lambda "B"
+
+Débutant :
+• "B" : f défini dans B ; la lambda capture le global B.
+
+Intermédiaire :
+• D hérite f sans le redéfinir ; même fonction que sur B.
+
+Expert :
+• Le MRO ne change pas la closure déjà formée.
+
+Concepts clés :
+• Héritage de méthode = même objet fonction.
+
+Distinctions clés :
+• Ni "D" ni "A".
+
+Fonctionnement :
+• D().f est la fonction définie dans le corps de B.
+
+Exécution étape par étape :
+• Appel f() → lambda lit B.
+
+Ordre des opérations :
+• Hiérarchie D(B), A indépendant puis D().f().
+
+Cas d'utilisation courants :
+• Comprendre binding des noms en classes imbriquées.
+
+Cas limites :
+• Redéfinir f dans D pour changer le message.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• B().f() même résultat.
+
+Remarques :
+• Réponse : "B" — 1re option.`,
+  2883: `@classmethod who — B.who()
+
+Débutant :
+• "B" : cls injecté vaut B pour l'appel sur la classe B.
+
+Intermédiaire :
+• Pas besoin d'instance.
+
+Expert :
+• super() dans classmethod suit MRO des classes.
+
+Concepts clés :
+• Premier paramètre implicite = classe réceptrice.
+
+Distinctions clés :
+• Pas "A".
+
+Fonctionnement :
+• Binding classmethod passe cls=B.
+
+Exécution étape par étape :
+• return cls.__name__.
+
+Ordre des opérations :
+• Appel B.who().
+
+Cas d'utilisation courants :
+• Constructeurs alternatifs.
+
+Cas limites :
+• who() sur instance : cls = type réel de l'instance.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• datetime.fromtimestamp.
+
+Remarques :
+• Réponse : "B" — 1re option.`,
+  2884: `classmethod create — type(B.create()).__name__
+
+Débutant :
+• "B" : create retourne cls() donc une instance de B.
+
+Intermédiaire :
+• Si C(B) sans override, C.create() instancie C.
+
+Expert :
+• Pattern factory lié à la hiérarchie.
+
+Concepts clés :
+• cls() dispatch vers le constructeur concret.
+
+Distinctions clés :
+• Pas "object".
+
+Fonctionnement :
+• B.create → __new__/__init__ de B.
+
+Exécution étape par étape :
+• Objet créé puis type(...).__name__.
+
+Ordre des opérations :
+• Appel de classe puis introspection.
+
+Cas d'utilisation courants :
+• Parsing vers instance typée.
+
+Cas limites :
+• __init__ privé : idiomes _ ouclassmethod interne.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• NamedTuple._make style.
+
+Remarques :
+• Réponse : "B" — 1re option.`,
+  2885: `isinstance(B.create(), B)
+
+Débutant :
+• True : cohérent avec la fabrique classmethod.
+
+Intermédiaire :
+• isinstance plus large que type(x) is B si sous-classes.
+
+Expert :
+• unittest.mock peut altérer isinstance (rare).
+
+Concepts clés :
+• Vérification après factory.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Objet issu de cls().
+
+Exécution étape par étape :
+• Test positif.
+
+Ordre des opérations :
+• create puis isinstance.
+
+Cas d'utilisation courants :
+• Tests unitaires.
+
+Cas limites :
+• Metaclass instances : cas avancés.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance(3, int) True.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2886: `B(A) sans super dans __init__ — hasattr(b,"x")
+
+Débutant :
+• False : A.__init__ n'a pas été invoqué ; x jamais posé pour le flux B.
+
+Intermédiaire :
+• Pas d'appel implicite automatique du parent.
+
+Expert :
+• super().__init__(1) rétablit x.
+
+Concepts clés :
+• Chaîne __init__ explicite en Python.
+
+Distinctions clés :
+• Pas True.
+
+Fonctionnement :
+• b.__dict__ sans x ; classe B sans x propre.
+
+Exécution étape par étape :
+• B() court ; hasattr faux.
+
+Ordre des opérations :
+• Instanciation puis hasattr.
+
+Cas d'utilisation courants :
+• Héritage multiple coopératif.
+
+Cas limites :
+• __slots__ parent : autres erreurs si non initialisé.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Toujours super() dans __init__ multi-bases.
+
+Remarques :
+• Réponse : False — 1re option.`,
+  2887: `B avec super().__init__(1,2) — (b.x, b.y)
+
+Débutant :
+• (1, 2) : A.__init__ reçoit via super et pose les attributs.
+
+Intermédiaire :
+• MRO B, A, object.
+
+Expert :
+• En diamant, super seul chemin correct.
+
+Concepts clés :
+• Initialisation coopérative.
+
+Distinctions clés :
+• Pas d'erreur.
+
+Fonctionnement :
+• B.__init__ appelle A.__init__ avec arguments.
+
+Exécution étape par étape :
+• self.x et self.y assignés dans A.
+
+Ordre des opérations :
+• B(1,2) construction complète.
+
+Cas d'utilisation courants :
+• Widgets empilés, modèles ORM.
+
+Cas limites :
+• Oublier **kwargs : casse les extensions.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir super() cookbook.
+
+Remarques :
+• Réponse : (1, 2) — 1re option.`,
+  2888: `A.__repr__ return "A()" — repr(B())
+
+Débutant :
+• "A()" : chaîne codée en dur dans la méthode héritée.
+
+Intermédiaire :
+• Pas de polymorphisme sur le nom réel de la classe.
+
+Expert :
+• Anti-pattern pour hiérarchies profondes.
+
+Concepts clés :
+• repr statique vs dynamique.
+
+Distinctions clés :
+• Pas "B()".
+
+Fonctionnement :
+• MRO trouve A.__repr__ inchangée.
+
+Exécution étape par étape :
+• Retour littéral fixe.
+
+Ordre des opérations :
+• B() puis repr.
+
+Cas d'utilisation courants :
+• Leçon de débogage.
+
+Cas limites :
+• Si __repr__ non héritée : autre comportement.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• f"{type(self).__name__}()" correct.
+
+Remarques :
+• Réponse : "A()" — 1re option.`,
+  2889: `__repr__ avec type(self).__name__ — repr(B())
+
+Débutant :
+• "B()" : nom dynamique de l'instance réelle.
+
+Intermédiaire :
+• Pattern idiomatique recommandé.
+
+Expert :
+• Inclure champs clés dans un repr riche.
+
+Concepts clés :
+• Polymorphisme sur self.
+
+Distinctions clés :
+• Pas "A()".
+
+Fonctionnement :
+• self est une B ; type(self).__name__ vaut B.
+
+Exécution étape par étape :
+• f-string ou format équivalent.
+
+Ordre des opérations :
+• Héritage depuis A.__repr__ utilisé par instance B.
+
+Cas d'utilisation courants :
+• Collections, logs.
+
+Cas limites :
+• Proxy modifiant __class__ : attention.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• dataclasses génèrent repr.
+
+Remarques :
+• Réponse : "B()" — 1re option.`,
+  2890: `A.__eq__ isinstance(other, A) — A() == B()
+
+Débutant :
+• True : B est sous-classe de A ; isinstance(B(), A) vrai.
+
+Intermédiaire :
+• Égalité basée famille, pas contenu.
+
+Expert :
+• Symétrie avec B()==A() si B n'override pas (voir 2891).
+
+Concepts clés :
+• isinstance accepte les sous-types.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• self A, other B instance ; test de type large.
+
+Exécution étape par étape :
+• __eq__ retourne True.
+
+Ordre des opérations :
+• Création puis ==.
+
+Cas d'utilisation courants :
+• Égalité naïve (souvent à affiner).
+
+Cas limites :
+• Si B redéfinit __eq__ : ordre peut changer sensibilité.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Préférer comparaison de champs métier.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2891: `Même A.__eq__ — B() == A()
+
+Débutant :
+• True : Python appelle B.__eq__ héritée de A avec self=B(), other=A().
+
+Intermédiaire :
+• isinstance(A(), A) vrai pour other.
+
+Expert :
+• Réflexion __eq__ si NotImplemented : ici pas besoin.
+
+Concepts clés :
+• Héritage de __eq__ et sens des arguments.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• type(B()).__eq__ est A.__eq__.
+
+Exécution étape par étape :
+• isinstance(other, A) sur A instance → True.
+
+Ordre des opérations :
+• B() == A() évalue via méthode de B.
+
+Cas d'utilisation courants :
+• Vérifier symétrie des définitions __eq__.
+
+Cas limites :
+• Sous-types avec __eq__ différent : casser symétrie.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Toujours inclure isinstance(type(self), type(other)) si besoin strict.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2892: `__init_subclass__ greeting — B(A, greeting="hi")
+
+Débutant :
+• "hi" : mot-clé classe transmis au hook parent.
+
+Intermédiaire :
+• Défaut "hello" si omis.
+
+Expert :
+• super().__init_subclass__(**kwargs) pour chaîner.
+
+Concepts clés :
+• Paramètres sur la ligne class enfant.
+
+Distinctions clés :
+• Pas "hello" pour B.
+
+Fonctionnement :
+• A.__init_subclass__(cls=B, greeting="hi").
+
+Exécution étape par étape :
+• cls.greeting = "hi".
+
+Ordre des opérations :
+• Définition B puis lecture B.greeting.
+
+Cas d'utilisation courants :
+• Registres configurables.
+
+Cas limites :
+• kwargs invalides : TypeError.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Plugin avec prefix=.
+
+Remarques :
+• Réponse : "hi" — 1re option.`,
+  2893: `Monkey-patch A.method après a = A()
+
+Débutant :
+• 2 : résolution à l'appel via la classe ; toutes instances voient le nouveau.
+
+Intermédiaire :
+• a.method() cherche sur A au moment de l'appel.
+
+Expert :
+• bound method recréée à chaque accès.
+
+Concepts clés :
+• Monkey-patching dynamique.
+
+Distinctions clés :
+• Pas 1.
+
+Fonctionnement :
+• Remplacement de l'attribut de classe method.
+
+Exécution étape par étape :
+• Patch puis appel voit lambda.
+
+Ordre des opérations :
+• Création instance puis assignation A.method.
+
+Cas d'utilisation courants :
+• Tests, hotfix (avec prudence).
+
+Cas limites :
+• Instance shadow (voir 2894) change la règle.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• mock.patch sur classe.
+
+Remarques :
+• Réponse : 2 — 1re option.`,
+  2894: `a.method = lambda: 2 — ombre sur l'instance
+
+Débutant :
+• 2 : l'attribut d'instance masque la méthode de classe.
+
+Intermédiaire :
+• lambda sans self : fonction simple, pas bound method.
+
+Expert :
+• Autres instances non affectées.
+
+Concepts clés :
+• Ordre de recherche instance avant classe.
+
+Distinctions clés :
+• Pas 1.
+
+Fonctionnement :
+• a.__dict__['method'] prioritaire.
+
+Exécution étape par étape :
+• Appel direct de la lambda.
+
+Ordre des opérations :
+• A() puis assignation a.method.
+
+Cas d'utilisation courants :
+• Remplacer comportement ponctuel (rare en prod).
+
+Cas limites :
+• Oublier self : différence avec méthode normale.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• b.method() encore 1.
+
+Remarques :
+• Réponse : 2 — 1re option.`,
+  2895: `a.__class__.x = 2 — valeur A.x
+
+Débutant :
+• 2 : a.__class__ est A ; modifier x modifie l'attribut de classe.
+
+Intermédiaire :
+• Équivalent à A.x = 2.
+
+Expert :
+• Toutes instances sans x propre voient 2.
+
+Concepts clés :
+• Alias vers l'objet classe.
+
+Distinctions clés :
+• Pas 1 sur A après assign.
+
+Fonctionnement :
+• Même objet classe via __class__.
+
+Exécution étape par étape :
+• A.x mis à jour globalement pour la classe.
+
+Ordre des opérations :
+• A.x=1 puis instance puis patch via __class__.
+
+Cas d'utilisation courants :
+• Métadonnée de classe runtime.
+
+Cas limites :
+• a.x = 2 créerait attribut d'instance distinct.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Vérifier b.x pour autre instance.
+
+Remarques :
+• Réponse : 2 — 1re option.`,
+  2896: `A in B.__mro__ avec B(A)
+
+Débutant :
+• True : le MRO liste B, A, object.
+
+Intermédiaire :
+• in teste appartenance au tuple.
+
+Expert :
+• Lié à issubclass(B, A).
+
+Concepts clés :
+• Chaîne de résolution complète.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• B.__mro__ contient A.
+
+Exécution étape par étape :
+• Membership positive.
+
+Ordre des opérations :
+• Définition classes puis test.
+
+Cas d'utilisation courants :
+• Introspection frameworks.
+
+Cas limites :
+• Classes dynamiques : MRO recalculé.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• B in B.__mro__ True.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2897: `object in B.__mro__
+
+Débutant :
+• True : toute classe nouvelle hérite implicitement d'object en fin de MRO.
+
+Intermédiaire :
+• object fournit défauts __repr__, __eq__, etc.
+
+Expert :
+• Built-ins aussi terminent par object.
+
+Concepts clés :
+• Racine unique du modèle objet.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Dernière entrée du tuple MRO.
+
+Exécution étape par étape :
+• Test in sur tuple.
+
+Ordre des opérations :
+• Après définition B(A).
+
+Cas d'utilisation courants :
+• Pédagogie modèle objet Python.
+
+Cas limites :
+• Pas d'héritage explicite requis en Python 3.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• int.__mro__ se termine par object.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2898: `Printable.__str__ appelle to_string — str(Report())
+
+Débutant :
+• "Report" : self est Report ; MRO trouve Report.to_string.
+
+Intermédiaire :
+• Pattern Template Method.
+
+Expert :
+• __str__ hérité, to_string spécialisé.
+
+Concepts clés :
+• Squelette parent, étapes enfant.
+
+Distinctions clés :
+• Pas "Printable".
+
+Fonctionnement :
+• Appel dynamique sur self.
+
+Exécution étape par étape :
+• str → __str__ → to_string → chaîne.
+
+Ordre des opérations :
+• Report() puis str().
+
+Cas d'utilisation courants :
+• Rendus polymorphes.
+
+Cas limites :
+• Oublier to_string dans sous-classe : AttributeError.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Invoice variant.
+
+Remarques :
+• Réponse : "Report" — 1re option.`,
+  2899: `class C(A,B) — len(C.__bases__)
+
+Débutant :
+• 2 : un tuple de deux parents directs.
+
+Intermédiaire :
+• Ordre A,B reflété dans __bases__.
+
+Expert :
+• MRO C3 linéarise A,B pour la résolution.
+
+Concepts clés :
+• Héritage multiple explicite.
+
+Distinctions clés :
+• Pas 1 ni 3 ici.
+
+Fonctionnement :
+• __bases__ == (A, B).
+
+Exécution étape par étape :
+• len compte deux entrées.
+
+Ordre des opérations :
+• Définition C puis len.
+
+Cas d'utilisation courants :
+• Mixins multiples.
+
+Cas limites :
+• MRO impossible : TypeError à la définition.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Comparer len(D.__bases__) pour D(A).
+
+Remarques :
+• Réponse : 2 — 1re option.`,
+  2900: `len(type.__mro__)
+
+Débutant :
+• 2 : (type, object).
+
+Intermédiaire :
+• type est instance de type ; hérite d'object.
+
+Expert :
+• Boucle bootstrappée type/object fondamentale.
+
+Concepts clés :
+• Métaclasse et racine objet.
+
+Distinctions clés :
+• Pas 1 ni 3.
+
+Fonctionnement :
+• type.__mro__ longueur 2.
+
+Exécution étape par étape :
+• len sur tuple.
+
+Ordre des opérations :
+• Accès attribut built-in type.
+
+Cas d'utilisation courants :
+• Cours sur le cœur du langage.
+
+Cas limites :
+• Implémentations doivent garder cette structure.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• type.__bases__ == (object,).
+
+Remarques :
+• Réponse : 2 — 1re option.`,
   2901: `textwrap.dedent removes any common leading whitespace from all lines in the text. It inspects all non-empty lines, trouve le longest common whitespace prefix, and removes it.
 
 Concepts clés :
