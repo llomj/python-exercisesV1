@@ -14317,2638 +14317,1573 @@ Exemples :
 
 Remarques :
 • La pratique robuste pour détecter l’absence est x is None / x is not None.`,
-  301: `10 > 1 vaut True.
-
-Débutant : 10 > 1 vérifie si 10 est supérieur à 1. Comme c'est vrai, le résultat est True.
-Intermédiaire : 10 > 1 applique une comparaison stricte : 10 est strictement supérieur à 1, donc l'expression renvoie True.
-Expert : l'opérateur > compare les deux valeurs et exige une inégalité stricte. Ici, 10 > 1, donc True.
-
-Concepts clés :
-• L'opérateur > compare deux valeurs et renvoie un booléen (True ou False).
-• “Strictement supérieur” signifie que l'égalité ne suffit pas : 5 > 5 est False.
-• Le but est de produire une condition directement utilisable dans une instruction if.
-
-Distinctions clés :
-• 10 > 1 est True, tandis que 10 >= 1 accepte aussi l'égalité.
-• 10 > 10 est False, mais 10 >= 10 est True.
-• Par ailleurs, > ne teste pas l'identité d'objet ; il teste l'ordre (comparaison de valeurs).
-
-Fonctionnement :
-• Python évalue d'abord le côté gauche et le côté droit de la comparaison.
-• Ensuite, il applique la règle de comparaison > pour le type des valeurs (numérique ici).
-• Enfin, il convertit la relation “gauche > droite” en True/False.
-
-Exécution étape par étape :
-1. Évaluer 10 (valeur entière).
-2. Évaluer 1 (valeur entière).
-3. Comparer 10 à 1 avec une inégalité stricte.
-4. Conclure que 10 est strictement supérieur à 1.
-5. Renvoyer True.
-
-Ordre des opérations :
-• Les deux expressions (gauche et droite) sont évaluées avant d'appliquer >.
-• Dans une expression plus grande, le résultat de > (True/False) devient une valeur booléenne exploitable.
-
-Cas d'utilisation courants :
-• Seuils stricts : si score > 90: ...
-• “Au-dessus de” : vérifier qu'une mesure dépasse une limite.
-• Construire des logiques de tri/filtrage fondées sur l'ordre des valeurs.
-
-Cas limites :
-• Types incompatibles : comparer un int et une liste peut lever TypeError.
-• Cas particulier float('nan') : les comparaisons avec NaN donnent souvent False, y compris nan > 1.
-• Pour des chaînes, > suit l'ordre lexicographique (caractère par caractère), pas l'ordre “alphabétique” dans le sens humain.
-
-Considérations de performance :
-• Pour les nombres, la comparaison est généralement O(1) : elle ne parcourt pas une structure.
-• Pour de très grands entiers, le coût peut dépendre de la taille des valeurs, mais reste direct.
-
-Exemples :
-• 10 > 1   # True
-• 1 > 10   # False
-• 5 > 5    # False
-• 'b' > 'a'  # True (lexicographique)
-
-Remarques :
-• Si vous voulez inclure l'égalité, préférez >= plutôt que >.`,
-  302: `5 <= 5 vaut True.
-
-Débutant : 5 <= 5 demande si 5 est inférieur ou égal à 5. Comme 5 égale 5, le résultat est True.
-Intermédiaire : <= est une comparaison inclusive : l'égalité fait passer la condition. Donc 5 <= 5 renvoie True.
-Expert : l'opérateur <= teste l'ordre avec égalité autorisée. Ici, 5 est égal à 5, donc True.
-
-Concepts clés :
-• L'opérateur <= compare deux valeurs et renvoie True/False.
-• Il inclut l'égalité : “inférieur OU égal”.
-• Il produit une condition booléenne à utiliser dans des if/while.
-
-Distinctions clés :
-• 5 <= 5 est True, tandis que 5 < 5 est False.
-• 5 <= 4 est False, alors que 4 <= 5 est True.
-• Comme pour >, <= compare des valeurs selon un ordre, pas l'identité d'objet.
-
-Fonctionnement :
-• Python évalue d'abord les deux opérandes de la comparaison.
-• Ensuite, il applique la règle “gauche <= droite” : soit gauche < droite, soit gauche == droite.
-• Le résultat final est converti en booléen (True ou False).
-
-Exécution étape par étape :
-1. Évaluer 5 à gauche (entier).
-2. Évaluer 5 à droite (entier).
-3. Vérifier la condition “5 est inférieur ou égal à 5”.
-4. Constater qu'elles sont égales (donc la condition est satisfaite).
-5. Renvoyer True.
-
-Ordre des opérations :
-• Les deux côtés sont évalués avant l'application de <=.
-• Le résultat de la comparaison devient une valeur booléenne exploitable immédiatement.
-
-Cas d'utilisation courants :
-• Seuils inclusifs : if age <= 18: ...
-• Vérifier qu'une valeur reste “dans la limite”.
-• Définir des bornes inférieures/maximums acceptant aussi la borne.
-
-Cas limites :
-• Avec des flottants, de petites erreurs d'arrondi peuvent rendre une valeur “presque égale” mais pas strictement égale.
-• float('nan') : les comparaisons avec NaN échouent généralement (nan <= 1 donne False).
-• Types incompatibles : int vs dictionnaire/list peuvent déclencher TypeError en Python 3.
-
-Considérations de performance :
-• Pour les nombres, la comparaison <= est généralement O(1).
-• Le coût réel dépend du type (et de la taille des entiers), mais il n'y a pas d'itération explicite.
-
-Exemples :
-• 5 <= 5   # True
-• 4 <= 5   # True
-• 6 <= 5   # False
-• 'a' <= 'b'  # True (lexicographique)
-
-Remarques :
-• Pour exclure l'égalité, utilisez < plutôt que <=.`,
-  303: `3 >= 4 vaut False.
-
-Débutant : 3 >= 4 demande si 3 est supérieur ou égal à 4. Comme ce n'est pas le cas, le résultat est False.
-Intermédiaire : >= inclut l'égalité. Ici, 3 est strictement plus petit que 4, donc la condition échoue et on obtient False.
-Expert : l'opérateur >= compare deux valeurs selon un ordre. Pour que l'expression soit vraie, la gauche doit être au moins aussi grande que la droite. Or 3 < 4, donc False.
-
-Concepts clés :
-• >= compare deux valeurs et renvoie un booléen (True ou False).
-• “Supérieur ou égal” signifie que l'égalité suffit aussi : 4 >= 4 est True.
-• On utilise >= pour construire des tests de seuil directement dans des conditions.
-
-Distinctions clés :
-• 3 >= 4 est False, alors que 4 >= 4 est True.
-• > est strict : 4 > 4 est False, mais 4 >= 4 est True.
-• Pour les chaînes, >= utilise l'ordre lexicographique (caractère par caractère), pas la taille “numérique”.
-
-Fonctionnement :
-• Python évalue d'abord l'opérande de gauche (3) et celle de droite (4).
-• Ensuite, il applique la règle d'ordre adaptée aux types (ici des nombres).
-• Le résultat de la comparaison est converti en True/False.
-
-Exécution étape par étape :
-1. Évaluer 3 (valeur entière).
-2. Évaluer 4 (valeur entière).
-3. Tester “3 >= 4”.
-4. Constater que 3 n'atteint pas 4.
-5. Renvoyer False.
-
-Ordre des opérations :
-• Les deux côtés sont calculés avant d'appliquer >=.
-• Le booléen final peut ensuite être utilisé dans une instruction if.
-
-Cas d'utilisation courants :
-• Seuils inclusifs : si x >= min_value: ...
-• Vérifier qu'une valeur est “au moins” une limite.
-• Exprimer des contraintes où la borne est acceptée.
-
-Cas limites :
-• Comparer des types incompatibles en Python 3 peut déclencher une TypeError.
-• Les flottants peuvent surprendre à cause des arrondis.
-• Avec float('nan'), les comparaisons donnent souvent False : nan >= 1 est typiquement False.
-
-Considérations de performance :
-• Pour des nombres, la comparaison est généralement O(1).
-
-Exemples :
-• 3 >= 4   # False
-• 4 >= 4   # True
-• 5 >= 4   # True
-• 'b' >= 'a'  # True (lexicographique)
-
-Remarques :
-• Si vous voulez exclure l'égalité au niveau de la borne, utilisez > plutôt que >=.`,
-  304: `(1, 2) + (3,) vaut (1, 2, 3).
-
-Débutant : le + entre deux tuples les concatène. Ici, on colle (3,) après (1, 2), ce qui donne (1, 2, 3).
-Intermédiaire : (3,) est un tuple à un seul élément grâce à la virgule finale. L'opérateur + renvoie un nouveau tuple sans modifier les originaux.
-Expert : Python alloue un nouveau tuple avec une taille égale à len(gauche) + len(droite), puis remplit le résultat avec les éléments gauche puis droite (par références d'objets).
-
-Concepts clés :
-• Les tuples sont des séquences ordonnées.
-• L'opérateur + concatène des tuples et produit un nouveau tuple.
-• La virgule est essentielle pour créer un tuple à un élément.
-
-Distinctions clés :
-• (3,) est un tuple d'une longueur 1, tandis que (3) n'est qu'un parenthésage de l'entier 3.
-• Un + de tuples crée un nouveau contenant : les tuples sont immuables, donc rien n'est “modifié en place”.
-• Les listes et tuples ont des règles de concaténation différentes (mais dans les deux cas, la concaténation renvoie une nouvelle structure).
-
-Fonctionnement :
-• Python évalue d'abord les deux expressions de tuples.
-• Ensuite, il calcule la longueur du nouveau tuple.
-• Puis il copie les éléments (en conservant les références) dans l'ordre gauche puis droite.
-
-Exécution étape par étape :
-1. Évaluer le tuple de gauche : (1, 2).
-2. Évaluer le tuple de droite : (3,), en notant la virgule.
-3. Concaténer gauche suivi de droite.
-4. Construire le résultat : (1, 2, 3).
-5. Renvoyer le tuple.
-
-Ordre des opérations :
-• Les opérandes sont évalués avant l'application de +.
-
-Cas d'utilisation courants :
-• Construire progressivement une “fiche” de valeurs fixes via des tuples.
-• Packaging de résultats multi-valeurs.
-• Créer des structures immuables (souvent pour des clés ou données de configuration).
-
-Cas limites :
-• Concaténer un tuple avec une autre structure (par ex. une liste) peut lever une TypeError.
-• Ajouter un tuple vide : (1, 2) + () = (1, 2).
-• Attention à la syntaxe du tuple à un élément : sans virgule, ce n'est pas un tuple.
-
-Considérations de performance :
-• La concaténation est O(n) car le nouveau tuple doit être alloué et rempli.
-
-Exemples :
-• (1, 2) + (3,)   # (1, 2, 3)
-• () + (1,)        # (1,)
-• (1,) + (2, 3)    # (1, 2, 3)
-
-Remarques :
-• Pour construire un gros tuple de façon répétée, préférez construire une liste puis convertir en tuple à la fin.`,
-  305: `'pie'[1:3] vaut 'ie'.
-
-Débutant : dans une tranche [1:3], le début 1 est inclus et la fin 3 est exclue. Donc on prend les caractères d'index 1 et 2 : 'i' et 'e'.
-Intermédiaire : 'pie' a les index 0='p', 1='i', 2='e'. Comme on s'arrête avant 3, on obtient 'ie'.
-Expert : le slicing respecte toujours la convention “fin exclusive”, donc l'index de fin n'est pas inclus dans le résultat.
-
-Concepts clés :
-• Le slicing [start:end] extrait une sous-chaîne (ou sous-séquence).
-• start est inclus, end est exclu.
-• On obtient une nouvelle chaîne (ici 'ie').
-
-Distinctions clés :
-• 'pie'[1:3] = 'ie', mais 'pie'[1:2] = 'i' car 2 est exclu.
-• L'indexation simple retourne un seul caractère, le slicing retourne une portion.
-• end exclu rend les tranches plus “mathématiques” et cohérentes.
-
-Fonctionnement :
-• Python interprète start et end (ici 1 et 3).
-• Il extrait tout ce qui se trouve à partir de start jusqu'à end-1.
-• Le résultat est une nouvelle chaîne.
-
-Exécution étape par étape :
-1. Évaluer la chaîne 'pie' : indices 0='p', 1='i', 2='e'.
-2. Prendre start=1 (inclus) et end=3 (exclus).
-3. Inclure l'élément à l'index 1 : 'i'.
-4. Inclure l'élément à l'index 2 : 'e'.
-5. S'arrêter avant l'index 3.
-6. Renvoyer 'ie'.
-
-Ordre des opérations :
-• La chaîne est évaluée d'abord.
-• Ensuite, on applique les règles de slicing.
-
-Cas d'utilisation courants :
-• Extraire la partie “au milieu” d'un mot.
-• Construire des chaînes à partir de segments connus.
-• Parsing quand les positions sont fixes.
-
-Cas limites :
-• Si end dépasse la longueur, Python “clamp” (limite) la valeur à len(s).
-• Si start >= end, le résultat est '' (chaîne vide).
-• Les index négatifs sont possibles et comptent depuis la fin.
-
-Considérations de performance :
-• Le slicing coûte O(k) où k est le nombre de caractères retournés.
-
-Exemples :
-• 'pie'[1:3]  # 'ie'
-• 'pie'[1:2]  # 'i'
-• 'pie'[2:3]  # 'e'
-• 'pie'[0:2]  # 'pi'
-
-Remarques :
-• Utilisez le slicing pour extraire une portion, et l'indexation pour un seul caractère.`,
-  306: `'pie'[:2] vaut 'pi' : la tranche [:2] prend les deux premiers caractères de la chaîne.
+  301: `type(42) renvoie la classe des entiers : l'affichage habituel est <class 'int'>.
 
 Débutant :
-• 'pie'[:2] renvoie 'pi'.
-• On part du début (index 0) et on s’arrête avant l’index 2.
+• 42 est un littéral entier ; Python le range dans le type int.
 
 Intermédiaire :
-• Dans [:2], start est omis donc start = 0.
-• end = 2 est exclusif : on garde les index 0 et 1 (p et i), pas 2 (e).
+• type() renvoie l'objet classe lui-même, pas une chaîne utilitaire séparée.
 
 Expert :
-• C’est un “préfixe” obtenu par slicing, cohérent avec la règle fin-exclue de Python.
+• bool est une sous-classe de int ; type(True) reste bool, pas int.
 
 Concepts clés :
-• Slicing de type préfixe [:end].
-• start par défaut à 0 quand il est omis.
-• Borne de fin end toujours exclue.
+• Chaque valeur possède une classe ; les entiers utilisent int.
 
 Distinctions clés :
-• 'pie'[:2] = 'pi' alors que 'pie'[:1] = 'p'.
-• 'pie'[:2] n’inclut pas 'e' (index 2).
-• Différence entre slicing (sous-chaîne) et indexation (un seul caractère).
+• 42 est int ; 42.0 est float ; '42' est str.
 
 Fonctionnement :
-• Python lit start et end dans la notation [start:end].
-• start manquant => 0 ; end=2.
-• La tranche renvoie les caractères de 0 jusqu’à 2 exclu.
+• Le littéral est évalué, puis type() lit __class__ de l'instance.
 
 Exécution étape par étape :
-1. Considérer 'pie' avec 0='p', 1='i', 2='e'.
-2. Interpréter [:2] comme start=0, end=2.
-3. Prendre les caractères aux index 0 et 1.
-4. S’arrêter avant 2.
-5. Obtenir 'pi'.
+1. Créer l'entier 42.
+2. Passer cette valeur à type().
+3. Retourner la classe int.
 
 Ordre des opérations :
-• Évaluer la chaîne.
-• Remplir les valeurs implicites du slicing (start=0).
-• Appliquer l’extraction avec fin-exclue.
+• L'argument est entièrement évalué avant l'appel.
 
 Cas d'utilisation courants :
-• Récupérer un préfixe fixe (par exemple les deux premières lettres d’un code).
-• Tronquer un texte après un certain nombre de caractères.
+• REPL, cours débutants, vérifications rapides avant calculs.
 
 Cas limites :
-• 'pie'[:0] renvoie '' (préfixe vide).
-• Si end dépasse la longueur, la tranche est automatiquement limitée à len(s).
+• Très grands entiers restent int ; pas de débordement style C.
 
 Considérations de performance :
-• Coût en O(k), k étant le nombre de caractères renvoyés.
+• Coût négligeable ; souvent réutilisation de petits int mis en cache.
 
 Exemples :
-• 'pie'[:2]   # 'pi'
-• 'pie'[:1]   # 'p'
-• 'pie'[:10]  # 'pie'
+• type(42)    # <class 'int'>
+• type(-3)    # <class 'int'>
+• type(10**9) # <class 'int'>
 
 Remarques :
-• L’idiome s[:n] est très courant pour prendre les n premiers caractères.`,
-  307: `'pie'[2:] vaut 'e'.
+• Pour accepter les sous-classes, préférez isinstance(x, int).`,
+  302: `type(3.14) pointe vers float : les nombres avec point décimal sont des flottants binaires IEEE 754.
 
 Débutant :
-• Dans [2:], on commence à l’index 2 et on va jusqu’à la fin.
-• Dans 'pie', l’index 2 correspond à 'e'.
+• 3.14 n'est pas un int ; c'est un float.
 
 Intermédiaire :
-• Le début (start) est inclus.
-• La fin est omise, donc Python prend len('pie') automatiquement.
+• Même 2.0 est float alors qu'il est mathématiquement entier.
 
 Expert :
-• C’est un slicing de suffixe.
-• La règle fin-exclusive reste vraie, mais ici la fin est implicite.
+• Les arrondis binaires font que 0.1 + 0.2 n'affiche pas exactement 0.3.
 
 Concepts clés :
-• Tranche [start:].
-• Start inclus.
-• Fin implicite = longueur de la chaîne.
+• float modélise les réels en machine avec précision finie.
 
 Distinctions clés :
-• 'pie'[2:] = 'e' tandis que 'pie'[:2] = 'pi'.
-• Slicing renvoie une sous-chaîne, pas un caractère isolé “nu”.
+• float vs int : présence d'un point ou notation scientifique.
 
 Fonctionnement :
-• Python lit start=2 et end absent.
-• Il fixe end à la longueur de la chaîne.
-• Il extrait de 2 jusqu’à la fin.
+• Le littéral est parsé en objet float puis interrogé par type().
 
 Exécution étape par étape :
-1. Index de 'pie' : 0='p', 1='i', 2='e'.
-2. Interpréter [2:] comme start=2.
-3. Déduire end=3.
-4. Extraire l’index 2 uniquement.
-5. Retourner 'e'.
+1. Construire 3.14 en float.
+2. Appeler type() sur cet objet.
+3. Retourner la classe float.
 
 Ordre des opérations :
-• Évaluer la chaîne.
-• Résoudre les bornes implicites.
-• Appliquer la tranche.
+• Pas d'implicite int ici : le point force float.
 
 Cas d'utilisation courants :
-• Récupérer le suffixe d’une chaîne.
-• Retirer un préfixe connu.
+• Mesures, probabilités, division réelle (10 / 4 -> 2.5).
 
 Cas limites :
-• start=len(s) renvoie ''.
-• start > len(s) renvoie '' aussi.
+• float('nan') et float('inf') ont des règles de comparaison spéciales.
 
 Considérations de performance :
-• Coût O(k), k nombre de caractères copiés.
+• Opérations float coûtent plus que des int petits mais restent O(1).
 
 Exemples :
-• 'pie'[2:]   # 'e'
-• 'pie'[1:]   # 'ie'
-• 'pie'[3:]   # ''
+• type(3.14)  # <class 'float'>
+• type(2.0)   # <class 'float'>
+• type(1e3)   # <class 'float'>
 
 Remarques :
-• L’idiome s[n:] est très utile pour “le reste de la chaîne”.`,
-  308: `Diviser par zéro en Python lève une exception ZeroDivisionError. C'est mathématiquement indéfini et Python empêche cette opération en levant une erreur. Vous ne pouvez diviser aucun nombre par zéro — ce n'est pas valide mathématiquement ni en Python.
-
-Division par zéro :
-• 10 / 0 lève ZeroDivisionError
-• 10 // 0 lève ZeroDivisionError
-• 10 % 0 lève ZeroDivisionError
-• Toute division par zéro provoque une erreur
-
-Pourquoi cela arrive :
-• Mathématiquement indéfini (on ne peut diviser par zéro)
-• Python empêche les opérations invalides
-• Lève une exception pour signaler l'erreur
-• Doit être géré sinon le programme plante
-
-L'erreur :
-• Type d'exception : ZeroDivisionError
-• Message : "division by zero"
-• Arrête l'exécution du programme sauf si capturée
-• Erreur fréquente dans les calculs
-
-Gestion de l'erreur :
-• Utiliser try-except pour la capturer
-• Vérifier avant de diviser : if diviseur != 0:
-• Fournir des valeurs par défaut pour les cas limites
-• Valider les entrées pour éviter la division par zéro
-
-Exemple de gestion :
-try:
-    result = 10 / 0
-except ZeroDivisionError:
-    result = None  # Gérer l'erreur
-
-Prévention :
-• Vérifier avant de diviser : if y != 0: x / y
-• Valider les entrées : assert diviseur != 0
-• Utiliser des valeurs par défaut : x / y if y != 0 else 0
-
-Exemple : 10 / 0 lève ZeroDivisionError car la division par zéro est mathématiquement indéfinie. Il faut la capturer avec try-except ou l'éviter en vérifiant que le diviseur n'est pas zéro avant de diviser.
-
-Concepts clés :
-• La fonction list() construit une nouvelle liste à partir d'un itérable.
-• Si l'entrée est déjà une liste, list() fabrique une copie superficielle (nouveau conteneur, mais mêmes objets internes).
-• L'ordre des éléments est conservé car list() parcourt l'itérable dans le bon sens.
-
-Distinctions clés :
-• Affectation vs copie : a = b ne copie pas le conteneur, alors que list(b) renvoie un nouveau conteneur.
-• Copie superficielle : les sous-listes (ou objets) restent partagées entre l'ancien et le nouveau.
-• list() exige un itérable : si ce n'est pas itérable, Python lève une TypeError.
-
-Fonctionnement :
-• Python évalue l'argument (ici une liste).
-• Il crée une liste vide.
-• Il parcourt chaque élément puis l'ajoute à la liste résultat.
-• La liste finale est renvoyée.
-
-Exécution étape par étape :
-1. Évaluer l'argument : [1, 2].
-2. Appeler list() avec cet itérable.
-3. Parcourir les éléments dans l'ordre : d'abord 1, puis 2.
-4. Ajouter 1 dans la liste résultat.
-5. Ajouter 2 dans la liste résultat.
-6. Renvoyer [1, 2].
-
-Ordre des opérations :
-• D'abord, l'expression dans list(...) est évaluée.
-• Ensuite seulement, list() matérialise l'itérable en créant une nouvelle liste.
-
-Cas d'utilisation courants :
-• Faire une copie avant de modifier une liste (éviter les effets de bord).
-• Convertir des itérables (tuple, range, dictionnaire, générateur) en liste modifiable.
-• Rendre une opération de liste plus évidente en “matérialisant” des valeurs.
-
-Cas limites :
-• list('ab') renvoie ['a', 'b'] car une chaîne est un itérable de caractères.
-• list({'x': 1}) renvoie ['x'] : un dict itère par clés.
-• list(generator) consomme le générateur : il ne pourra pas être réutilisé ensuite.
-• list(123) lève une TypeError : un int n'est pas un itérable.
-
-Considérations de performance :
-• Temps O(n) et mémoire O(n) car tous les éléments sont copiés dans un nouveau conteneur.
-• Sur de gros itérables, la conversion peut être coûteuse.
-
-Exemples :
-• list([1, 2])          # [1, 2]
-• list((1, 2))          # [1, 2]
-• list(range(3))        # [0, 1, 2]
-• list('ab')            # ['a', 'b']
-• list({'x': 1})       # ['x']
-
-Remarques :
-• Si vous devez copier profondément des structures imbriquées, utilisez copy.deepcopy au lieu de list().
-`,
-  309: `tuple((1,)) vaut (1,) : convertir un tuple en tuple garde les mêmes valeurs.
+• Pour décimaux exacts (finance), envisagez decimal.Decimal.`,
+  303: `type("hello") est str : guillemets ou apostrophes délimitent du texte Unicode.
 
 Débutant :
-• (1,) est déjà un tuple d’un élément.
-• tuple((1,)) redonne (1,).
+• "hello" est une chaîne de caractères, pas un nombre.
 
 Intermédiaire :
-• tuple(itérable) construit un tuple à partir des éléments.
-• Si l’entrée est déjà tuple, le résultat a le même contenu.
+• Les str sont immuables : les méthodes renvoient souvent de nouvelles str.
 
 Expert :
-• C’est une conversion/copie superficielle de conteneur.
-• Les objets internes éventuels restent les mêmes références.
+• Depuis Python 3, str est une séquence Unicode (pas des octets bruts).
 
 Concepts clés :
-• Fonction tuple().
-• Immutabilité du tuple.
-• Tuple à un élément (virgule obligatoire).
+• Texte utilisateur, identifiants affichables, parsing.
 
 Distinctions clés :
-• (1) est un int, (1,) est un tuple.
-• tuple((1,)) conserve la structure tuple.
+• str vs bytes : b'x' est binaire, "x" est texte.
 
 Fonctionnement :
-• Python itère sur l’entrée (1,).
-• Il collecte ses éléments et fabrique un tuple résultat.
+• Création d'un objet str puis introspection via type().
 
 Exécution étape par étape :
-1. Évaluer l’entrée (1,).
-2. Lire l’unique élément 1.
-3. Construire un tuple contenant 1.
-4. Retourner (1,).
+1. Évaluer le littéral "hello".
+2. Appeler type() dessus.
+3. Retourner la classe str.
 
 Ordre des opérations :
-• L’argument est évalué avant l’appel à tuple().
-• Ensuite l’itération de conversion est effectuée.
+• Évaluation du littéral puis appel.
 
 Cas d'utilisation courants :
-• Normaliser un type en tuple.
-• Geler des données pour les rendre immuables.
+• E/S console, fichiers texte, JSON textuel.
 
 Cas limites :
-• tuple(123) lève TypeError (int non itérable).
-• tuple('ab') donne ('a', 'b').
+• str vide '' a quand même le type str.
 
 Considérations de performance :
-• O(n) sur la taille de l’itérable.
+• Concaténations répétées : préférez join ou f-strings.
 
 Exemples :
-• tuple((1,))      # (1,)
-• tuple([1, 2])    # (1, 2)
-• tuple('ab')      # ('a', 'b')
+• type("hello")  # <class 'str'>
+• type('')       # <class 'str'>
 
 Remarques :
-• Pour un tuple unitaire littéral, n’oubliez pas la virgule : (x,).`,
+• len("hello") compte les caractères Unicode, pas toujours les octets UTF-8.`,
+  304: `type(True) renvoie bool, le type des valeurs de vérité True et False.
 
-// (Ancien bloc explicatif tuple déplacé / neutralisé pour éviter une syntaxe invalide hors littéral.)
-// Concepts clés (tuple) :
-// • La fonction tuple() construit une séquence immuable à partir d'un itérable.
-// • Si l'entrée est un tuple, tuple() renvoie une copie superficielle.
-// • La taille et l'ordre des éléments sont conservés dans le tuple résultat.
-//
-// Distinctions clés (tuple) :
-// • tuple est immuable : on ne peut pas remplacer un élément après coup.
-// • (1) n'est pas un tuple à un élément, (1,) oui.
-// • tuple() ne fait pas une copie profonde.
-//
-// Fonctionnement (tuple) :
-// • Python évalue l'argument itérable, parcourt les éléments et les empaquette dans un tuple.
-//
-// Exécution étape par étape (tuple) :
-// 1. Évaluer l'entrée, 2. Itérer dessus, 3. Construire un nouveau tuple, 4. Le renvoyer.
-//
-// Cas d'utilisation courants (tuple) :
-// • Rendre une collection hashable, “geler” une structure, convertir des itérables.
-//
-// Cas limites (tuple) :
-// • tuple(123) lève TypeError, tuple('ab') donne ('a','b'), tuple({'x':1}) donne ('x',), tuple(generator) consomme le générateur.
+Débutant :
+• True et False sont des mots-clés booléens.
 
-// (suite du bloc tuple neutralisee)
-  310: `Les objets range supportent l'indexation négative, permettant d'accéder aux éléments depuis la fin. range(5)[-1] retourne 4 car range(5) génère [0, 1, 2, 3, 4] et l'index -1 est le dernier élément (4). L'indexation négative compte à rebours depuis la fin.
+Intermédiaire :
+• bool hérite de int pour l'arithmétique : True + 1 vaut 2, mais le type reste bool pour True.
 
-Indexation négative des range :
-• range(5)[-1] = 4 (dernier élément)
-• range(5) génère : 0, 1, 2, 3, 4
-• Index -1 = dernier élément = 4
-• L'indexation négative fonctionne avec les range
-
-Comment ça fonctionne :
-• range(5) crée la séquence : 0, 1, 2, 3, 4
-• L'index -1 accède au dernier élément
-• Retourne 4
-• Fonctionne comme l'indexation négative de liste
-
-Exemples :
-• range(5)[-1] = 4 (dernier)
-• range(5)[-2] = 3 (avant-dernier)
-• range(5)[-5] = 0 (premier)
-• range(5)[-6] = IndexError (hors limites)
-
-Usages courants :
-• Accéder au dernier élément : range(n)[-1]
-• Accès inversé
-• Opérations depuis la fin
-• Comportement séquentiel
-
-Exemple : range(5)[-1] retourne 4 car range(5) génère la séquence [0, 1, 2, 3, 4] et l'index -1 est le dernier élément (4).
+Expert :
+• Les opérateurs logiques renvoient parfois des opérandes non booléennes (court-circuit).
 
 Concepts clés :
-• set() crée un ensemble à partir d'un itérable.
-• Un ensemble supprime automatiquement les doublons : chaque valeur unique apparaît une seule fois.
-• Les éléments d'un set doivent être hashables.
+• Logique conditionnelle, tests, prédicats.
 
 Distinctions clés :
-• Contrairement à list(), un set ne conserve pas les doublons.
-• L'affichage d'un set est non ordonné : il ne faut pas s'y fier pour une séquence stable.
-• Les tuples peuvent avoir des doublons; un set, non.
+• type(True) est bool ; type(1) est int malgré des égalités partielles.
 
 Fonctionnement :
-• Python évalue l'itérable d'entrée.
-• Il initialise un ensemble vide.
-• Pour chaque élément, Python tente de l'ajouter : s'il est déjà présent, il est ignoré.
+• Singletons booléens connus du runtime.
 
 Exécution étape par étape :
-1. Évaluer l'entrée : [2, 2, 3].
-2. Créer un set vide : set().
-3. Ajouter 2 (le set devient {2}).
-4. Re-voir 2 : déjà présent, on n'ajoute rien.
-5. Ajouter 3 (le set devient {2, 3}).
-6. Renvoyer {2, 3}.
+1. Évaluer True.
+2. type() retourne la classe bool.
 
 Ordre des opérations :
-• L'itérable est évalué avant tout.
-• Puis les insertions dans le set se font élément par élément.
+• Identique aux autres littéraux.
 
 Cas d'utilisation courants :
-• Déduplication de données (transformer une liste “sale” en valeurs uniques).
-• Tests d'appartenance rapides (x in mon_set).
-• Préparer des opérations ensemblistes (intersection, union, différence).
+• if / while, flags, validations.
 
 Cas limites :
-• set([[1], [1]]) échoue car une liste n'est pas hashable (TypeError).
-• L'ordre d'affichage peut changer : ne pas comparer des strings imprimées pour tester.
-• Avec NaN, le “caractère unique” peut être surprenant selon les règles Python.
+• if x: utilise la vérité (truthiness), pas forcément type bool.
 
 Considérations de performance :
-• Insertion moyenne O(1) par élément : construire un set de n éléments coûte typiquement O(n).
+• Comparaisons booléennes quasi gratuites.
 
 Exemples :
-• set([2, 2, 3])     # {2, 3}
-• set((1, 2, 1))     # {1, 2}
-• set('banana')       # {'a', 'b', 'n'}
-• set([])             # set()
-
-Remarques :
-• Si vous voulez un ordre déterministe, utilisez sorted(mon_set) puis convertissez en liste.
-`,
-  311: `La fonction len() fonctionne avec les objets range et retourne le nombre d'éléments du range. len(range(5)) retourne 5 car range(5) génère 5 valeurs (0, 1, 2, 3, 4). Les objets range supportent len() comme les listes et autres séquences.
-
-len() avec range :
-• len(range(5)) = 5
-• range(5) génère : 0, 1, 2, 3, 4
-• Total des éléments : 5
-• len() retourne le nombre d'éléments
-
-Comment ça fonctionne :
-• range(5) crée une séquence de 5 éléments
-• len() compte les éléments
-• Retourne 5
-• Fonctionne avec tout range
-
-Exemples :
-• len(range(5)) = 5
-• len(range(1, 5)) = 4
-• len(range(0)) = 0 (vide)
-
-Usages courants :
-• Obtenir la longueur du range : n = len(range(5))
-• Compter les itérations
-• Longueur de séquence
-• Planification de boucles
-
-Exemple : len(range(5)) retourne 5 car range(5) génère 5 valeurs (0, 1, 2, 3, 4), donc len() retourne 5.
-
-Concepts clés :
-• L'opérateur // calcule une division entière (quotient arrondi au plancher).
-• Avec des entiers, le résultat est un entier Python.
-• 11 // 2 vaut 5 car 11/2 = 5,5 et on “baisse” à 5.
-
-Distinctions clés :
-• // diffère de / : / renvoie un float, alors que // renvoie un quotient entier.
-• Pour les négatifs, // arrondit vers moins l'infini (pas vers zéro).
-• // est lié à % : quotient et reste se complètent.
-
-Fonctionnement :
-• Python calcule le quotient puis l'arrondit vers le plancher.
-• Le quotient plancher est renvoyé.
-
-Exécution étape par étape :
-1. Évaluer 11 (dividende).
-2. Évaluer 2 (diviseur).
-3. Calculer le quotient réel : 11/2 = 5,5.
-4. Appliquer le plancher : floor(5,5) = 5.
-5. Renvoyer 5.
-
-Ordre des opérations :
-• Les deux opérandes sont évalués avant d'exécuter //.
-• Ensuite, l'arrondi au plancher produit le résultat.
-
-Cas d'utilisation courants :
-• Découper un travail en blocs entiers.
-• Calculer des indices “de capacité” à partir de longueurs.
-• Utiliser l'arithmétique modulaire (quotient pour reconstruire la relation avec le reste).
-
-Cas limites :
-• b = 0 lève ZeroDivisionError.
-• Avec des nombres négatifs : -3 // 2 = -2.
-• Pour des floats, // “plancherise” aussi, mais la représentation peut être flottante.
-
-Considérations de performance :
-• O(1) pour les types numériques intégrés.
-
-Exemples :
-• 11 // 2   # 5
-• 12 // 2   # 6
-• 3 // 2    # 1
-• -3 // 2   # -2
-
-Remarques :
-• Pour obtenir le reste en même temps, utilisez la paire // et %.
-`,
-  312: `La fonction sum() fonctionne avec les objets range et additionne tous les éléments. sum(range(5)) retourne 10 car range(5) génère [0, 1, 2, 3, 4] et 0 + 1 + 2 + 3 + 4 = 10. Les objets range sont des itérables, donc sum() peut itérer dessus.
-
-sum() avec range :
-• sum(range(5)) = 10
-• range(5) génère : 0, 1, 2, 3, 4
-• Somme : 0 + 1 + 2 + 3 + 4 = 10
-• sum() additionne tous les éléments
-
-Comment ça fonctionne :
-• range(5) crée l'itérable : 0, 1, 2, 3, 4
-• sum() itère et additionne toutes les valeurs
-• 0 + 1 + 2 + 3 + 4 = 10
-• Retourne la somme totale
-
-Exemples :
-• sum(range(5)) = 10 (0+1+2+3+4)
-• sum(range(1, 5)) = 10 (1+2+3+4)
-• sum(range(0)) = 0 (range vide)
-
-Usages courants :
-• Sommer des séquences : total = sum(range(n))
-• Calculer des totaux
-• Progressions arithmétiques
-• Séries de nombres
-
-Exemple : sum(range(5)) retourne 10 car range(5) génère [0, 1, 2, 3, 4] et sum() les additionne : 0 + 1 + 2 + 3 + 4 = 10.
-
-Concepts clés :
-• L'opérateur % calcule le reste (modulo) d'une division.
-• Pour des entiers b != 0 : a = (a // b) * b + (a % b).
-• Donc 11 % 2 vaut 1.
-
-Distinctions clés :
-• % renvoie le reste, pas le quotient (le quotient est //).
-• En Python, le signe du reste suit les règles du langage et dépend du diviseur.
-• % est le “complément” de // : ensemble, ils décrivent toute la division euclidienne.
-
-Fonctionnement :
-• Python utilise le quotient au plancher a // b.
-• Puis il calcule le reste comme r = a - q * b.
-• Le reste r est renvoyé.
-
-Exécution étape par étape :
-1. Évaluer a = 11.
-2. Évaluer b = 2.
-3. Calculer q = 11 // 2 = 5.
-4. Calculer r = 11 - 5 * 2.
-5. Trouver r = 1.
-6. Renvoyer 1.
-
-Ordre des opérations :
-• Les deux opérandes sont évaluées d'abord.
-• Puis le reste est dérivé à partir du quotient au plancher.
-
-Cas d'utilisation courants :
-• Test de divisibilité : a % b == 0.
-• Parité : n % 2 (0 = pair, 1 = impair pour des entiers positifs).
-• Index cycliques (wrap-around) sur des structures.
-
-Cas limites :
-• Diviser par 0 lève ZeroDivisionError.
-• Les valeurs négatives peuvent surprendre : -11 % 2 vaut 1 en Python.
-• Pour des floats, le modulo peut être affecté par les imprécisions flottantes.
-
-Considérations de performance :
-• O(1) pour les entiers et types numériques intégrés.
-
-Exemples :
-• 11 % 2   # 1
-• 10 % 3   # 1
-• 9 % 3    # 0
-• -11 % 2  # 1
-
-Remarques :
-• Si vous avez besoin du quotient et du reste, privilégiez // et % ensemble plutôt que de recalculer via /.
-`,
-  313: `La fonction min() fonctionne avec les objets range et retourne la plus petite valeur. min(range(5)) retourne 0 car range(5) génère [0, 1, 2, 3, 4] et 0 est la valeur minimum. Les objets range sont des itérables, donc min() peut trouver le minimum.
-
-min() avec range :
-• min(range(5)) = 0
-• range(5) génère : 0, 1, 2, 3, 4
-• Valeur minimum : 0
-• min() trouve le plus petit élément
-
-Comment ça fonctionne :
-• range(5) crée l'itérable : 0, 1, 2, 3, 4
-• min() itère et trouve le minimum
-• 0 est la plus petite valeur
-• Retourne 0
-
-Exemples :
-• min(range(5)) = 0 (minimum)
-• min(range(1, 5)) = 1 (minimum)
-• min(range(5, 0, -1)) = 1 (minimum du range inverse)
-
-Usages courants :
-• Trouver le minimum : smallest = min(range(n))
-• Analyse des range
-• Opérations sur séquences
-• Recherche de valeurs
-
-Exemple : min(range(5)) retourne 0 car range(5) génère [0, 1, 2, 3, 4] et 0 est la plus petite valeur de cette séquence.
-
-Concepts clés :
-• L'addition avec des floats utilise la représentation flottante.
-• Ici, 1.5 + 1.5 produit un float affiché en 3.0.
-• Le signe des opérandes et la règle IEEE 754 déterminent le résultat flottant.
-
-Distinctions clés :
-• 1.5 + 1.5 (floats) n'a pas le même type qu'un calcul fait uniquement avec des int.
-• Les décimaux peuvent être approximés en interne, même si l'affichage donne “3.0”.
-• Pour des nombres, + signifie addition (pas concaténation).
-
-Fonctionnement :
-• Python évalue chaque littéral 1.5 en valeur float.
-• Il applique ensuite l'addition flottante.
-• Le résultat est renvoyé comme float (ici 3.0).
-
-Exécution étape par étape :
-1. Évaluer le premier 1.5 (float).
-2. Évaluer le second 1.5 (float).
-3. Additionner les deux floats.
-4. Obtenir 3.0.
-5. Renvoyer 3.0.
-
-Ordre des opérations :
-• Les deux opérandes sont évaluées d'abord.
-• Ensuite seulement, l'opérateur + calcule la somme.
-
-Cas d'utilisation courants :
-• Calculer des totaux à base de valeurs décimales.
-• Produire des résultats float pour des fonctions qui attendent une précision décimale.
-
-Cas limites :
-• Arrondi : certaines sommes décimales ne sont pas représentées exactement en binaire.
-• Comparer des floats avec == peut être trompeur à cause d'écarts minimes.
-• Très grands floats : risques de dépassement vers inf.
-
-Considérations de performance :
-• Addition de floats sur types intégrés : coût constant O(1).
-
-Exemples :
-• 1.5 + 1.5  # 3.0
-• 2.5 + 0.5  # 3.0
-• 1.0 + 2.0  # 3.0
-• 0.1 + 0.2  # souvent pas exactement 0.3
-
-Remarques :
-• Si vous avez besoin d'une précision décimale exacte (ex. monnaie), utilisez decimal plutôt que des floats.
-`,
-  314: `La fonction max() fonctionne avec les objets range et retourne la plus grande valeur. max(range(5)) retourne 4 car range(5) génère [0, 1, 2, 3, 4] et 4 est la valeur maximum. Les objets range sont des itérables, donc max() peut trouver le maximum.
-
-max() avec range :
-• max(range(5)) = 4
-• range(5) génère : 0, 1, 2, 3, 4
-• Valeur maximum : 4
-• max() trouve le plus grand élément
-
-Comment ça fonctionne :
-• range(5) crée l'itérable : 0, 1, 2, 3, 4
-• max() itère et trouve le maximum
-• 4 est la plus grande valeur
-• Retourne 4
-
-Exemples :
-• max(range(5)) = 4 (maximum)
-• max(range(1, 5)) = 4 (maximum)
-• max(range(5, 0, -1)) = 5 (maximum du range inverse)
-
-Usages courants :
-• Trouver le maximum : largest = max(range(n))
-• Analyse des range
-• Opérations sur séquences
-• Recherche de valeurs
-
-Exemple : max(range(5)) retourne 4 car range(5) génère [0, 1, 2, 3, 4] et 4 est la plus grande valeur de cette séquence.
-
-Concepts clés :
-• type(valeur) retourne la classe (le type) de la valeur.
-• 1.0 est un littéral float, donc type(1.0) renvoie float.
-• L'affichage attendu est <class 'float'>.
-
-Distinctions clés :
-• 1 est un int, tandis que 1.0 est un float : type(1) diffère de type(1.0).
-• True/False sont de type bool, même si bool se comporte comme 0/1 en calcul.
-• type() donne le type “Python”, pas la “catégorie mathématique” que vous imaginez.
-
-Fonctionnement :
-• Python construit d'abord l'objet float 1.0.
-• type() inspecte ensuite l'objet reçu et renvoie l'objet classe float.
-
-Exécution étape par étape :
-1. Évaluer 1.0 en objet float.
-2. Appeler type(1.0).
-3. Identifier la classe : float.
-4. Renvoyer la classe float.
-5. Afficher <class 'float'>.
-
-Ordre des opérations :
-• 1.0 est évalué avant l'appel à type().
-
-Cas d'utilisation courants :
-• Vérifier qu'une expression produit bien un float.
-• Debug : distinguer int vs float pour des formattages ou calculs.
-
-Cas limites :
-• float('nan') reste un float : type(float('nan')) est float.
-• Pour les sous-classes, type(x) renverra la classe précise (pas forcément “float”).
-
-Considérations de performance :
-• type() est O(1) : il inspecte la classe de l'objet.
-
-Exemples :
-• type(1.0)    # <class 'float'>
-• type(0.0)    # <class 'float'>
-• type(-3.25)  # <class 'float'>
-• type(1)       # <class 'int'>
-
-Remarques :
-• Pour accepter des sous-classes, utilisez isinstance(x, float) plutôt que type(x) == float.
-`,
-  315: `La fonction round() utilise l'« arrondi banquier » (arrondi demi vers le pair) lorsque la partie décimale est exactement .5. round(3.5) arrondit à 4 car 4 est le nombre pair le plus proche. Cette méthode d'arrondi évite le biais statistique en arrondissant .5 vers le nombre pair le plus proche.
-
-Arrondi banquier :
-• round(3.5) = 4 (arrondit vers le pair : 4)
-• round(2.5) = 2 (arrondit vers le pair : 2)
-• round(4.5) = 4 (arrondit vers le pair : 4)
-• round(5.5) = 6 (arrondit vers le pair : 6)
-
-Comment ça fonctionne :
-• Si partie décimale < .5, arrondit vers le bas
-• Si partie décimale > .5, arrondit vers le haut
-• Si partie décimale = .5, arrondit vers le nombre pair le plus proche
-• C'est « round half to even » ou l'arrondi IEEE 754
-
-Pourquoi l'arrondi banquier :
-• Évite le biais systématique d'arrondi
-• Plus précis en statistiques
-• Standard dans les calculs financiers
-• Norme IEEE 754
-
-Exemples :
-• round(3.5) = 4 (nombre pair)
-• round(2.5) = 2 (nombre pair)
-• round(4.5) = 4 (nombre pair)
-• round(5.5) = 6 (nombre pair)
-
-Note importante :
-• Différent de l'arrondi traditionnel
-• Traditionnel : toujours arrondir .5 vers le haut
-• Banquier : arrondir .5 vers le pair le plus proche
-• Python utilise l'arrondi banquier
-
-Exemple : round(3.5) retourne 4 car lors de l'arrondi de 0.5, Python arrondit vers le nombre pair le plus proche. Comme 3.5 est à égale distance de 3 et 4, il choisit 4 (le nombre pair).
-
-Concepts clés :
-• '' est une chaîne vide : elle fait partie du type str.
-• Le “vide” signifie longueur 0, pas “pas de type”.
-• type('') renvoie donc <class 'str'>.
-
-Distinctions clés :
-• '' n'est pas None. None a un type différent (NoneType).
-• En contexte booléen, '' est falsy, mais type('') reste str.
-• ' ' (un espace) n'est pas vide : c'est une chaîne str non vide.
-
-Fonctionnement :
-• Python interprète le littéral '' comme un objet chaîne de longueur 0.
-• type() inspecte ensuite cet objet et retourne sa classe.
-
-Exécution étape par étape :
-1. Évaluer le littéral '' (objet str de longueur 0).
-2. Appeler type('').
-3. Déterminer la classe : str.
-4. Renvoyer la classe.
-5. Afficher <class 'str'>.
-
-Ordre des opérations :
-• La valeur '' est évaluée avant que type() soit appliqué.
-
-Cas d'utilisation courants :
-• Valider des entrées : une chaîne vide indique “aucun texte saisi”.
-• S'assurer qu'une variable est bien une chaîne avant de faire des opérations string.
-
-Cas limites :
-• '' == 0 est False, même si bool('') vaut False.
-• type(None) n'est pas str.
-• Attention à la différence entre absence (None) et “texte vide” ('').
-
-Considérations de performance :
-• type() est O(1) : inspection directe de la classe.
-
-Exemples :
-• type('')    # <class 'str'>
-• type('abc') # <class 'str'>
-• type('0')   # <class 'str'>
-• type(0)      # <class 'int'>
-
-Remarques :
-• Pour traiter “vide”, testez la valeur (len(s) == 0) plutôt que de vous fier au type.
-`,
-  316: `L'opérateur in vérifie si une valeur est dans un range. 10 in range(5) retourne False car range(5) génère [0, 1, 2, 3, 4] et 10 n'est pas présent dans cette séquence. La valeur 10 est en dehors du range, donc le test d'appartenance retourne False.
-
-Vérification d'appartenance :
-• 10 in range(5) = False
-• range(5) génère : 0, 1, 2, 3, 4
-• 10 n'est pas dans la séquence
-• L'opérateur in retourne False
-
-Comment ça fonctionne :
-• range(5) crée la séquence : 0, 1, 2, 3, 4
-• L'opérateur in vérifie si 10 est dans la séquence
-• 10 n'est pas trouvé, retourne False
-• La valeur est en dehors du range
-
-Exemples :
-• 10 in range(5) = False (non trouvé)
-• 5 in range(5) = False (exclusif, non inclus)
-• 0 in range(5) = True (trouvé)
-
-Usages courants :
-• Vérification d'appartenance négative : if value not in range(n):
-• Validation
-• Test de range
-• Logique conditionnelle
-
-Exemple : 10 in range(5) retourne False car range(5) génère [0, 1, 2, 3, 4] et 10 n'est pas présent dans cette séquence (il est en dehors du range).
-
-Concepts clés :
-• [[]] est une liste imbriquée : la liste extérieure contient une liste intérieure vide.
-• Le type externe de [[]] est list.
-• Donc type([[]]) renvoie <class 'list'>.
-
-Distinctions clés :
-• [] et [[]] partagent le même type externe (list), mais leur contenu diffère.
-• [[]][0] donne la liste intérieure (ici []), qui a aussi pour type list.
-• La “profondeur” du nesting ne se déduit pas uniquement de type([[]]) : elle se voit en inspectant les éléments.
-
-Fonctionnement :
-• Python construit d'abord la liste intérieure [].
-• Puis il construit la liste extérieure [ ... ] contenant cet objet intérieur.
-• type() inspecte enfin l'objet extérieur construit.
-
-Exécution étape par étape :
-1. Construire l'intérieur : [] (liste vide).
-2. Construire l'extérieur : ajouter cet objet comme seul élément de la liste extérieure.
-3. Obtenir la valeur finale [[]].
-4. Appeler type([[]]) sur la liste extérieure.
-5. Renvoyer la classe list.
-
-Ordre des opérations :
-• On construit toute la structure imbriquée avant d'appeler type().
-
-Cas d'utilisation courants :
-• Initialiser des “matrices” (liste de lignes).
-• Créer des emplacements vides pour remplir plus tard des données de niveau supérieur.
-
-Cas limites :
-• Mutations : modifier la liste intérieure modifie le contenu visible depuis l'extérieur (mêmes objets partagés).
-• type([[]]) n'expose pas le type des éléments : il faut regarder type(x[0]).
-
-Considérations de performance :
-• Construire une petite littérale est peu coûteux, et type() reste O(1).
-
-Exemples :
-• type([[]])  # <class 'list'>
-• type([])     # <class 'list'>
-• type([[1]])  # <class 'list'>
-• type(())     # <class 'tuple'>
-
-Remarques :
-• Pour vérifier le nesting, inspectez les éléments (par ex. type(x[0])) plutôt que seulement le conteneur.
-`,
-  317: `L'opérateur not in est l'inverse de in : il retourne True si la valeur N'est PAS dans le range. 3 not in range(5) retourne False car range(5) génère [0, 1, 2, 3, 4] et 3 EST présent, donc not in retourne False. L'opérateur not in inverse le test d'appartenance.
-
-not in avec range :
-• 3 not in range(5) = False
-• range(5) génère : 0, 1, 2, 3, 4
-• 3 est dans la séquence
-• not in retourne False (la valeur est présente)
-
-Comment ça fonctionne :
-• range(5) crée la séquence : 0, 1, 2, 3, 4
-• not in vérifie si 3 n'est PAS dans la séquence
-• 3 est trouvé, donc not in retourne False
-• Inverse le test d'appartenance
-
-Exemples :
-• 3 not in range(5) = False (3 est dans le range)
-• 10 not in range(5) = True (10 n'est pas dans le range)
-• 0 not in range(5) = False (0 est dans le range)
-
-Usages courants :
-• Vérification d'appartenance négative : if value not in range(n):
-• Validation
-• Test de range
-• Logique conditionnelle
-
-Exemple : 3 not in range(5) retourne False car 3 est présent dans range(5) (qui génère [0, 1, 2, 3, 4]), donc not in retourne False.
-
-Concepts clés :
-• L'opérateur == compare l'égalité des valeurs.
-• bool est une sous-classe de int : False se comporte comme 0 pour les comparaisons en valeur.
-• Donc 0 == False évalue à True.
-
-Distinctions clés :
-• 0 == False est True, mais 0 is False est False (identity différente).
-• True == 1 est aussi True pour la même raison.
-• != suit la même logique de comparaison de valeurs.
-
-Fonctionnement :
-• Python évalue 0 (int) et False (bool).
-• Lors de ==, il compare selon les règles d'égalité : False correspond à 0.
-• Le résultat booléen est alors True.
-
-Exécution étape par étape :
-1. Évaluer le côté gauche : 0 (int).
-2. Évaluer le côté droit : False (bool).
-3. Appliquer == pour tester l'égalité.
-4. Reconnaître que False correspond à 0.
-5. Renvoyer True.
-
-Ordre des opérations :
-• Les deux opérandes sont évaluées avant d'appliquer ==.
-
-Cas d'utilisation courants :
-• Comprendre des “flags” numériques 0/1 qui apparaissent parfois comme False/True.
-• Expliquer pourquoi certains tests d'égalité déconcertent les débutants.
-
-Cas limites :
-• Identity : 0 is False est différent de 0 == False.
-• Avec None : 0 == None est False.
-• Pour les floats NaN : nan == nan est False (autre cas spécial à retenir).
-
-Considérations de performance :
-• Comparer int et bool avec == est O(1).
-
-Exemples :
-• 0 == False   # True
-• 1 == True    # True
-• 2 == True    # False
-• 0 is False   # False
-
-Remarques :
-• Pour une logique strictement booléenne, privilégiez is True / is False ou convertissez explicitement avec bool(x).
-`,
-  318: `L'opérateur not in retourne True si la valeur N'est PAS dans le range. 10 not in range(5) retourne True car range(5) génère [0, 1, 2, 3, 4] et 10 N'est PAS présent, donc not in retourne True. L'opérateur not in est utile pour les vérifications d'appartenance négatives.
-
-not in avec range :
-• 10 not in range(5) = True
-• range(5) génère : 0, 1, 2, 3, 4
-• 10 n'est pas dans la séquence
-• not in retourne True (la valeur est absente)
-
-Comment ça fonctionne :
-• range(5) crée la séquence : 0, 1, 2, 3, 4
-• not in vérifie si 10 n'est PAS dans la séquence
-• 10 n'est pas trouvé, donc not in retourne True
-• Inverse le test d'appartenance
-
-Exemples :
-• 10 not in range(5) = True (10 n'est pas dans le range)
-• 3 not in range(5) = False (3 est dans le range)
-• 5 not in range(5) = True (5 est exclusif, non inclus)
-
-Usages courants :
-• Vérification d'appartenance négative : if value not in range(n):
-• Validation
-• Test de range
-• Logique conditionnelle
-
-Exemple : 10 not in range(5) retourne True car 10 n'est pas présent dans range(5) (qui génère [0, 1, 2, 3, 4]), donc not in retourne True.
-
-Concepts clés :
-• L'opérateur in teste l'appartenance : “cette valeur est-elle présente dans la collection ?”.
-• Avec un tuple, la vérification compare la valeur à chacun des éléments.
-• Donc 1 in (1, 2) vaut True : 1 est bien un élément du tuple.
-
-Distinctions clés :
-• in teste les valeurs, pas les positions (indices).
-• not in est l'inverse logique de in.
-• Pour les chaînes, le sens peut être “sous-chaîne”, alors que pour les tuples c'est “élément égal”.
-
-Fonctionnement :
-• Python évalue la valeur à gauche.
-• Python évalue ensuite la collection à droite.
-• Il parcourt les éléments et applique l'égalité pour chercher une correspondance.
-• Dès qu'un élément correspond, le résultat est True.
-
-Exécution étape par étape :
-1. Évaluer la valeur : 1.
-2. Évaluer la collection : (1, 2).
-3. Comparer 1 à l'élément 1 : 1 == 1, donc correspondance.
-4. Renvoyer True (on s'arrête dès le premier match).
-
-Ordre des opérations :
-• Les deux côtés (valeur puis collection) sont évalués avant le test d'appartenance.
-
-Cas d'utilisation courants :
-• Filtrer des valeurs : if x in allowed: ...
-• Tests de garde (guard clauses) dans des conditions.
-• Comprendre les tuples comme des conteneurs de valeurs.
-
-Cas limites :
-• Dans un tuple vide : x in () est toujours False.
-• Avec des objets personnalisés : le comportement dépend de __eq__.
-• Attention aux chaînes : 'a' in ('a','b') fonctionne comme “élément”, mais 'ab' in 'cab' teste “sous-chaîne”.
-
-Considérations de performance :
-• Dans le pire des cas, l'in sur un tuple coûte O(n) car il peut comparer tous les éléments.
-
-Exemples :
-• 1 in (1, 2)   # True
-• 2 in (1, 2)   # True
-• 3 in (1, 2)   # False
-• 0 in ()        # False
-
-Remarques :
-• Pour beaucoup de tests d'appartenance, une set peut être plus rapide (même concept, recherche plus efficace).
-`,
-  319: `La fonction pow() peut prendre un troisième argument pour l'exponentiation modulaire. pow(2, 3, 5) calcule (2 ** 3) % 5, ce qui égale 8 % 5 = 3. C'est plus efficace que de calculer 2 ** 3 d'abord, puis de prendre le modulo.
-
-Exponentiation modulaire :
-• pow(2, 3, 5) = (2 ** 3) % 5 = 8 % 5 = 3
-• Le troisième argument est le modulus
-• Plus efficace pour les grands nombres
-• Calcule (base ** exposant) % modulus directement
-
-Comment ça fonctionne :
-• Calcule base ** exposant
-• Prend le résultat modulo modulus
-• Plus efficace que les opérations séparées
-• Utile pour la cryptographie et les grands nombres
-
-Étape par étape :
-• pow(2, 3, 5)
-• D'abord : 2 ** 3 = 8
-• Puis : 8 % 5 = 3
-• Résultat : 3
-
-Pourquoi utiliser le troisième argument :
-• Plus efficace pour les grands exposants
-• Évite les grands nombres intermédiaires
-• Important pour la cryptographie
-• Prévient les problèmes de dépassement
-
-Exemples :
-• pow(2, 3, 5) = 3
-• pow(3, 4, 7) = (3 ** 4) % 7 = 81 % 7 = 4
-• pow(5, 2, 10) = (5 ** 2) % 10 = 25 % 10 = 5
-
-Usages courants :
-• Cryptographie (RSA, etc.)
-• Calculs sur grands nombres
-• Arithmétique modulo efficace
-• Prévention des dépassements
-
-Exemple : pow(2, 3, 5) retourne 3 car il calcule (2 ** 3) % 5 = 8 % 5 = 3. C'est plus efficace que de calculer 2 ** 3 séparément, surtout pour les grands exposants.
-
-Concepts clés :
-• not in est l'inverse logique de in.
-• Donc 10 not in (1, 2) vaut True parce que 10 ne correspond à aucun des éléments du tuple.
-
-Distinctions clés :
-• x not in container équivaut à not (x in container).
-• Le test utilise les mêmes règles d'égalité que in.
-• not in renvoie toujours un booléen, pas un élément.
-
-Fonctionnement :
-• Python cherche une correspondance comme pour in.
-• Si aucune égalité n'est vraie pour aucun élément, in serait False.
-• not in renvoie alors True.
-
-Exécution étape par étape :
-1. Évaluer la valeur : 10.
-2. Évaluer le tuple : (1, 2).
-3. Comparer 10 à 1 : ce n'est pas égal.
-4. Comparer 10 à 2 : ce n'est pas égal.
-5. Aucune correspondance : renvoyer True pour not in.
-
-Ordre des opérations :
-• Valeur et collection sont évaluées d'abord.
-• Puis l'inversion logique est appliquée au résultat de l'appartenance.
-
-Cas d'utilisation courants :
-• Exclure des valeurs : if x not in blocked: ...
-• Décrire clairement les “valeurs autorisées” vs “valeurs refusées”.
-
-Cas limites :
-• Dans un tuple vide : x not in () vaut toujours True.
-• Si les éléments sont des objets, la comparaison dépend de __eq__.
-
-Considérations de performance :
-• Sur tuples, not in est O(n) dans le pire cas (scan jusqu'à la fin).
-
-Exemples :
-• 10 not in (1, 2)  # True
-• 1 not in (1, 2)   # False
-• 2 not in (1, 2)   # False
-
-Remarques :
-• Pour des collections volumineuses et des tests répétés, utilisez une set pour accélérer l'appartenance.
-`,
-  320: `La fonction sorted() fonctionne avec les objets range et retourne une liste triée. sorted(range(5, 0, -1)) crée [1, 2, 3, 4, 5] car range(5, 0, -1) génère [5, 4, 3, 2, 1] (inverse) et sorted() le trie en ordre croissant. Utile pour trier tout itérable, y compris les range.
-
-sorted() avec range :
-• sorted(range(5, 0, -1)) = [1, 2, 3, 4, 5]
-• range(5, 0, -1) génère : 5, 4, 3, 2, 1
-• sorted() trie en ordre croissant
-• Résultat : [1, 2, 3, 4, 5]
-
-Comment ça fonctionne :
-• range(5, 0, -1) crée la séquence : 5, 4, 3, 2, 1
-• sorted() trie la séquence
-• Ordre croissant : 1, 2, 3, 4, 5
-• Retourne une liste triée
-
-Exemples :
-• sorted(range(5, 0, -1)) = [1, 2, 3, 4, 5]
-• sorted(range(5)) = [0, 1, 2, 3, 4] (déjà trié)
-• sorted(range(1, 6, 2)) = [1, 3, 5] (déjà trié)
-
-Usages courants :
-• Trier des range : numbers = sorted(range(5, 0, -1))
-• Créer des séquences triées
-• Ordonner des valeurs
-• Manipulation de séquences
-
-Exemple : sorted(range(5, 0, -1)) retourne [1, 2, 3, 4, 5] car range(5, 0, -1) génère [5, 4, 3, 2, 1] et sorted() le trie en ordre croissant en [1, 2, 3, 4, 5].
-
-Concepts clés :
-• abs(x) renvoie la valeur absolue (la “magnitude”) de x.
-• Pour les nombres réels, la valeur absolue est toujours non négative.
-• Donc abs(0) vaut 0.
-
-Distinctions clés :
-• abs(-5) vaut 5 : abs supprime le signe.
-• abs ne change pas la “valeur” que mathématiquement, il ne fait que prendre la distance à zéro.
-• Pour les nombres complexes, abs retourne la norme (magnitude), pas la partie réelle.
-
-Fonctionnement :
-• Python regarde si x est déjà non négatif.
-• Si x est négatif, il renvoie l’opposé (-x).
-• Sinon il renvoie x tel quel.
-
-Exécution étape par étape :
-1. Évaluer x = 0.
-2. Vérifier que 0 n’est pas négatif.
-3. Renvoyer 0.
-
-Ordre des opérations :
-• On évalue l’argument avant d’appeler abs().
-
-Cas d'utilisation courants :
-• Calculer une distance (écart) sans se préoccuper du sens.
-• Normaliser des erreurs : “l’erreur en grandeur”.
-
-Cas limites :
-• abs sur un type non supporté lève TypeError (sauf si l’objet fournit __abs__).
-• abs(-0.0) peut s’afficher comme 0.0, mais la valeur est bien nulle.
-• Pour complex, abs(a+bj) donne une norme positive.
-
-Considérations de performance :
-• abs est O(1) : c’est un calcul direct.
-
-Exemples :
-• abs(0)    # 0
-• abs(-5)   # 5
-• abs(3.2)  # 3.2
-• abs(3+4j) # 5.0
-
-Remarques :
-• abs(x) n’est pas bool(x) : abs calcule une grandeur, bool(x) calcule la “vérité” (truthiness).
-`,
-  321: `Le mot-clé continue saute le reste de l'itération actuelle de la boucle et passe à la suivante. Quand continue est rencontré, le code restant dans le corps de la boucle est ignoré et la boucle continue avec l'itération suivante. Utile pour sauter certaines itérations selon des conditions.
-
-Mot-clé continue :
-• Saute le reste de l'itération actuelle
-• Passe à l'itération suivante
-• La boucle continue normalement
-• Utile pour un saut conditionnel
-
-Comment ça fonctionne :
-• Quand continue est exécuté, le code restant est ignoré
-• La boucle passe à l'itération suivante
-• La boucle ne se termine pas (contrairement à break)
-• Utile dans des blocs conditionnels
-
-Exemple :
-for i in range(5):
-    if i == 2:
-        continue  # Sauter le reste, passer au suivant
-    print(i)  # Affiche 0, 1, 3, 4 (saute 2)
-
-Usages courants :
-• Sauter des valeurs invalides : if not valid: continue
-• Filtrer les itérations
-• Traitement conditionnel
-• Gestion d'erreurs dans les boucles
-
-Exemple : Le mot-clé continue saute le reste du cycle actuel de la boucle et passe à l'itération suivante. Il permet de sauter certaines itérations tout en gardant la boucle active.
-
-Concepts clés :
-• round(x) arrondit un nombre à l’entier le plus proche (ou à un nombre de décimales).
-• Python utilise l’arrondi “banquier” : en cas d’égalité pile à .5, on choisit le voisin pair.
-• Donc round(5.5) vaut 6 car 6 est pair.
-
-Distinctions clés :
-• Ce comportement diffère de “toujours arrondir demi vers le haut”.
-• round(6.5) n’est pas 7 : c’est 6 car 6 est pair.
-• Sur les floats, la notion de “exactement .5” dépend parfois de la représentation binaire, mais ici 5.5 est un cas de tie clair.
-
-Fonctionnement :
-• Python examine la partie décimale.
-• Si c’est inférieur à .5, il arrondit vers le bas.
-• Si c’est supérieur à .5, il arrondit vers le haut.
-• Si c’est exactement .5, il choisit le nombre pair le plus proche.
-
-Exécution étape par étape :
-1. Évaluer x = 5.5.
-2. Constater que 5.5 est exactement à mi-chemin entre 5 et 6.
-3. Comparer les deux candidats : 5 (impair) et 6 (pair).
-4. Choisir 6 (pair).
-5. Renvoyer 6.
-
-Ordre des opérations :
-• L’argument x est évalué puis round(x) est appliqué.
-
-Cas d'utilisation courants :
-• Rendre des valeurs pour l’affichage sans biais systématique sur des séries de données.
-• Convertir en entiers en gardant une règle de tie symétrique.
-
-Cas limites :
-• Tie négatif : round(-5.5) choisit l’entier pair voisin (souvent -6).
-• Représentation des floats : certains “.5” peuvent ne pas être exacts.
-
-Considérations de performance :
-• round est O(1) pour les types numériques intégrés.
-
-Exemples :
-• round(5.5)  # 6
-• round(6.5)  # 6
-• round(4.5)  # 4
-• round(7.5)  # 8
-
-Remarques :
-• Pour un arrondi “half up” strict, utilisez decimal avec une stratégie explicite.
-`,
-  322: `Le mot-clé break termine une boucle immédiatement, en sortant entièrement de la boucle. Quand break est rencontré, la boucle s'arrête d'exécuter et le contrôle passe à l'instruction après la boucle. Utile pour sortir prématurément d'une boucle lorsqu'une condition est remplie.
-
-Mot-clé break :
-• Termine la boucle immédiatement
-• Sort entièrement de la boucle
-• Le contrôle passe après la boucle
-• Utile pour une sortie prématurée
-
-Comment ça fonctionne :
-• Quand break est exécuté, la boucle se termine
-• Les itérations restantes sont ignorées
-• Le contrôle passe au code après la boucle
-• La boucle ne continue pas
-
-Exemple :
-for i in range(5):
-    if i == 3:
-        break  # Sortir de la boucle
-    print(i)  # Affiche 0, 1, 2 (s'arrête à 3)
-
-Usages courants :
-• Sortie prématurée : if found: break
-• Terminaison conditionnelle
-• Opérations de recherche
-• Gestion d'erreurs
-
-Exemple : Le mot-clé break termine une boucle entièrement, en sortant immédiatement lorsqu'il est rencontré. Il permet de sortir prématurément d'une boucle lorsqu'une condition est remplie.
-
-Concepts clés :
-• min(a, b) renvoie la plus petite des valeurs fournies.
-• Pour des nombres, la comparaison se fait avec l’ordre naturel (<).
-• Donc min(0, 1) vaut 0.
-
-Distinctions clés :
-• min avec deux arguments compare exactement ces deux valeurs.
-• min peut aussi recevoir un itérable (par exemple min([3, 1, 2])).
-• Si vous comparez des types incompatibles (int vs str), Python peut lever TypeError.
-
-Fonctionnement :
-• Python évalue les arguments.
-• Il compare les valeurs et garde celle qui est la plus petite.
-
-Exécution étape par étape :
-1. Évaluer 0.
-2. Évaluer 1.
-3. Comparer 0 et 1.
-4. Identifier que 0 est plus petit.
-5. Renvoyer 0.
-
-Ordre des opérations :
-• Les arguments sont évalués avant d’effectuer la comparaison.
-
-Cas d'utilisation courants :
-• Choisir un minimum entre deux candidats.
-• “Clamp” : min(x, limite) pour ne pas dépasser un seuil.
-• Garder un “meilleur résultat” dans une boucle (best-so-far).
-
-Cas limites :
-• min() sur un itérable vide lève ValueError.
-• Avec NaN, les comparaisons peuvent donner des résultats contre-intuitifs.
-
-Considérations de performance :
-• Pour deux arguments, c’est O(1).
-
-Exemples :
-• min(0, 1)   # 0
-• min(5, -2)  # -2
-• min(1, 1)   # 1
-• min([3, 1, 2]) # 1
-
-Remarques :
-• Si vous avez besoin d’une règle personnalisée, utilisez l’option key (min(values, key=...)).
-`,
-  323: `La fonction sorted() accepte un paramètre reverse. Lorsque reverse=True, elle trie l'itérable en ordre décroissant (du plus grand au plus petit). sorted([3, 1, 2], reverse=True) retourne [3, 2, 1], trié du plus grand au plus petit.
-
-sorted() avec reverse :
-• sorted([3, 1, 2], reverse=True) = [3, 2, 1] (décroissant)
-• reverse=True trie du plus grand au plus petit
-• Retourne une nouvelle liste triée
-• L'original reste inchangé
-
-Comment ça fonctionne :
-• Crée une nouvelle liste à partir de l'itérable
-• Trie en ordre décroissant (reverse=True)
-• Retourne la liste triée (du plus grand au plus petit)
-• L'original reste inchangé
-
-Exemples :
-• sorted([3, 1, 2], reverse=True) = [3, 2, 1]
-• sorted([5, 2, 8, 1], reverse=True) = [8, 5, 2, 1]
-• sorted("hello", reverse=True) = ['o', 'l', 'l', 'h', 'e']
-• sorted([3, 1, 2], reverse=False) = [1, 2, 3] (par défaut)
-
-Comportement par défaut :
-• reverse=False (par défaut) → ordre croissant
-• reverse=True → ordre décroissant
-• On peut aussi utiliser : sorted([3, 1, 2])[::-1] pour décroissant
-
-Usages courants :
-• Trier du plus grand au plus petit
-• Trouver les N premiers éléments
-• Ordre inversé
-• Tris décroissants
-
-Exemple : sorted([3, 1, 2], reverse=True) retourne [3, 2, 1] car elle trie la liste en ordre décroissant (du plus grand au plus petit) lorsque reverse=True est spécifié.
-
-Concepts clés :
-• max(a, b) renvoie la plus grande des valeurs fournies.
-• Pour des nombres, la comparaison suit l'ordre naturel : on choisit celui qui est “plus grand”.
-• Donc max(0, -1) vaut 0 car 0 est supérieur à -1.
-
-Distinctions clés :
-• max est le “symétrique” de min : min choisit le plus petit, max choisit le plus grand.
-• max peut prendre deux arguments ou un itérable (max([3, 1, 2])).
-• Avec des types incompatibles, Python peut lever une TypeError lors de la comparaison.
-
-Fonctionnement :
-• Python évalue d'abord les deux valeurs.
-• Il compare ensuite (équivalent à vérifier lequel est >).
-• Il renvoie la valeur la plus grande.
-
-Exécution étape par étape :
-1. Évaluer a = 0.
-2. Évaluer b = -1.
-3. Comparer 0 et -1.
-4. Constater que 0 est plus grand.
-5. Renvoyer 0.
-
-Ordre des opérations :
-• Les arguments sont évalués avant que max n'effectue la comparaison.
-
-Cas d'utilisation courants :
-• Choisir la meilleure valeur parmi deux candidates.
-• “Clamp” : imposer une borne supérieure via une logique avec max.
-• Suivre un maximum “best-so-far” dans une boucle.
-
-Cas limites :
-• max() sur un itérable vide lève ValueError.
-• Avec NaN, les comparaisons peuvent donner des résultats inattendus.
-
-Considérations de performance :
-• Pour deux arguments, max est O(1).
-
-Exemples :
-• max(0, -1)   # 0
-• max(5, 2)     # 5
-• max(1, 1)     # 1
-• max([3, 1, 2])  # 3
-
-Remarques :
-• Pour une règle personnalisée, utilisez key : max(values, key=...).
-`,
-  324: `Une boucle while True: est une boucle infinie car la condition est toujours True, donc la boucle ne s'arrête jamais d'elle-même. La boucle s'exécutera indéfiniment à moins qu'une instruction break soit utilisée pour en sortir. Ce motif est courant pour les boucles d'événements, la saisie utilisateur ou le traitement continu.
-
-Boucle while True :
-• Boucle infinie (condition toujours True)
-• Ne s'arrête jamais d'elle-même
-• Requiert break pour sortir
-• Motif courant pour le traitement continu
-
-Comment ça fonctionne :
-• La condition True est toujours True
-• Le corps de la boucle s'exécute en boucle
-• Continue indéfiniment sauf si break
-• Doit avoir une condition de sortie à l'intérieur
-
-Exemple :
-while True:
-    user_input = input("Entrez une commande : ")
-    if user_input == "quit":
-        break  # Sortir de la boucle
-    # Traiter l'entrée
-
-Usages courants :
-• Boucles d'événements : while True: process_events()
-• Saisie utilisateur : while True: get_input()
-• Traitement continu
-• Boucles de serveur
-
-Exemple : while True: est une boucle infinie car la condition est toujours True, donc elle ne s'arrête jamais d'elle-même. Elle requiert une instruction break pour en sortir.
-
-Concepts clés :
-• sum(iterable) additionne tous les éléments d'un itérable.
-• La valeur de départ (start) vaut 0 par défaut.
-• Donc sum([0, 1, 2]) = 0 + 1 + 2 = 3.
-
-Distinctions clés :
-• sum additionne des valeurs, tandis que len compte le nombre d'éléments.
-• start modifie le total initial : sum([1, 2], 10) commence à 10.
-• Avec des floats, l'accumulation peut introduire de petites erreurs d'arrondi.
-
-Fonctionnement :
-• Python évalue l'itérable.
-• Il initialise un total courant.
-• Il parcourt les éléments et ajoute chacun au total.
-• Il renvoie le total final.
-
-Exécution étape par étape :
-1. Évaluer [0, 1, 2].
-2. Mettre total = 0.
-3. Ajouter 0 : total reste 0.
-4. Ajouter 1 : total devient 1.
-5. Ajouter 2 : total devient 3.
-6. Renvoyer 3.
-
-Ordre des opérations :
-• L'itérable est évalué avant le début de l'accumulation.
-• L'addition suit ensuite l'ordre de parcours.
-
-Cas d'utilisation courants :
-• Calculer des totaux (scores, sommes de poids, quantités).
-• Réductions (reduction) en accumulant vers une valeur finale.
-
-Cas limites :
-• sum([]) renvoie 0 (car aucun élément n'est ajouté).
-• Sur des types incompatibles, une TypeError peut apparaître.
-• Avec beaucoup de floats, les erreurs d'arrondi peuvent s'additionner.
-
-Considérations de performance :
-• Temps O(n) et mémoire supplémentaire O(1) (seulement un total courant).
-
-Exemples :
-• sum([0, 1, 2])   # 3
-• sum([1, 2, 3])   # 6
-• sum([], 10)       # 10
-• sum(range(5))    # 10
-
-Remarques :
-• Pour améliorer la précision sur des floats, utilisez math.fsum.
-`,
-  325: `Une boucle for avec pass est une boucle qui ne fait rien : elle itère sur le range mais n'exécute aucune action. for i in range(5): pass bouclera 5 fois (i prend les valeurs 0, 1, 2, 3, 4), mais pass ne fait rien, donc aucun code ne s'exécute dans le corps de la boucle. Utile pour le code placeholder ou les boucles vides.
-
-Boucle for avec pass :
-• Boucle 5 fois (range(5))
-• pass ne fait rien
-• Aucune action exécutée
-• Syntaxe Python valide
-
-Comment ça fonctionne :
-• for i in range(5): itère 5 fois
-• i prend les valeurs : 0, 1, 2, 3, 4
-• pass s'exécute mais ne fait rien
-• La boucle se termine normalement
-
-Exemple :
-for i in range(5):
-    pass  # Boucle s'exécute 5 fois, ne fait rien
-# Boucle terminée, i = 4
-
-Usages courants :
-• Boucles placeholder
-• Corps de boucles vides
-• Code incomplet
-• Exigences syntaxiques
-
-Exemple : for i in range(5): pass est une boucle qui ne fait rien : elle itère 5 fois mais pass n'exécute aucune action. C'est une syntaxe Python valide utilisée pour du code placeholder.
-
-Concepts clés :
-• pow(a, b) calcule a puissance b (équivalent à a ** b).
-• Avec des entiers et un exposant non négatif, le résultat est un entier.
-• Donc pow(3, 2) = 3 ** 2 = 9.
-
-Distinctions clés :
-• pow(a, b) correspond à a ** b pour deux arguments.
-• pow(a, b, m) fait une exponentiation modulaire : utile pour économiser du calcul.
-• Un exposant négatif produit un résultat de type float (car division).
-
-Fonctionnement :
-• Python évalue la base et l'exposant.
-• Il applique ensuite les règles d'exponentiation.
-• Il renvoie la valeur calculée.
-
-Exécution étape par étape :
-1. Évaluer la base : 3.
-2. Évaluer l'exposant : 2.
-3. Calculer 3 ** 2.
-4. 3 ** 2 signifie 3 * 3 = 9.
-5. Renvoyer 9.
-
-Ordre des opérations :
-• Les deux arguments sont évalués avant l'exponentiation.
-
-Cas d'utilisation courants :
-• Calculer carrés et puissances.
-• En cryptographie et en arithmétique modulaire : pow avec un troisième argument.
-
-Cas limites :
-• pow(2, -1) donne 0.5 (float) car exponent négatif implique division.
-• Exposants très grands : création d'entiers très volumineux.
-
-Considérations de performance :
-• L'algorithme d'exponentiation est optimisé (typiquement environ O(log b) pour de grands exposants).
-
-Exemples :
-• pow(3, 2)  # 9
-• pow(2, 3)  # 8
-• pow(5, 0)  # 1
-• pow(2, 10, 1000) # exponentiation modulaire efficace
-
-Remarques :
-• En modulaire, pow(a, b, m) est plus efficace que (a ** b) % m.
-`,
-  326: `Le mot-clé break ne peut être utilisé qu'à l'intérieur de boucles (for ou while). Utiliser break en dehors d'une boucle provoque une SyntaxError car break est spécifiquement conçu pour sortir des boucles. Il ne peut pas être utilisé dans du code ordinaire, des fonctions ou des classes, sauf dans les corps de boucles.
-
-Utilisation de break :
-• Seulement à l'intérieur de boucles (for/while)
-• SyntaxError si utilisé en dehors
-• Ne peut pas être utilisé dans des fonctions (sauf dans une boucle)
-• Ne peut pas être utilisé dans des classes (sauf dans une boucle)
-
-Comment ça fonctionne :
-• break doit être dans le corps de la boucle
-• Python vérifie la syntaxe à l'analyse
-• SyntaxError levée si en dehors de la boucle
-• Doit être indenté dans la boucle
-
-Exemple :
-# Valide :
-for i in range(5):
-    if i == 3:
-        break  # OK, dans la boucle
-
-# Invalide :
-break  # SyntaxError: 'break' outside loop
-
-Usages courants :
-• Sortir prématurément des boucles
-• Terminaison conditionnelle
-• Opérations de recherche
-• Gestion d'erreurs dans les boucles
-
-Exemple : Non, vous ne pouvez pas utiliser break en dehors d'une boucle. Utiliser break en dehors d'une boucle provoque une SyntaxError car break ne peut être utilisé que dans des boucles for ou while.
-
-Concepts clés :
-• divmod(a, b) renvoie un couple (quotient, reste).
-• Le quotient suit la division entière : a // b (floor division).
-• Le reste correspond à : a % b.
-• Donc divmod(10, 3) renvoie (3, 1).
-
-Distinctions clés :
-• divmod renvoie un tuple de deux valeurs.
-• quotient et reste sont cohérents : a = (a // b) * b + (a % b).
-• divmod évite de calculer séparément // et % dans deux appels.
-
-Fonctionnement :
-• Python calcule d'abord q = a // b.
-• Il calcule ensuite r = a % b.
-• Il renvoie (q, r).
-
-Exécution étape par étape :
-1. Évaluer a = 10.
-2. Évaluer b = 3.
-3. Calculer q = 10 // 3 = 3.
-4. Calculer r = 10 % 3 = 1.
-5. Renvoyer (3, 1).
-
-Ordre des opérations :
-• On évalue d'abord les opérandes, puis on obtient quotient et reste ensemble.
-
-Cas d'utilisation courants :
-• Diviser en blocs entiers + reste.
-• Calculer des coordonnées (ligne/colonne) : quotient pour la ligne, reste pour la colonne.
-
-Cas limites :
-• b = 0 lève ZeroDivisionError.
-• Pour les nombres négatifs, les règles Python restent basées sur le floor.
-
-Considérations de performance :
-• Pour les types numériques intégrés : O(1).
-
-Exemples :
-• divmod(10, 3)  # (3, 1)
-• divmod(7, 3)   # (2, 1)
-• divmod(9, 3)   # (3, 0)
-
-Remarques :
-• divmod(a, b) est équivalent à (a // b, a % b), mais en un seul appel.
-`,
-  327: `Le mot-clé continue ne peut être utilisé qu'à l'intérieur de boucles (for ou while). Utiliser continue en dehors d'une boucle provoque une SyntaxError car continue est spécifiquement conçu pour sauter à l'itération suivante des boucles. Il ne peut pas être utilisé dans du code ordinaire, des fonctions ou des classes, sauf dans les corps de boucles.
-
-Utilisation de continue :
-• Seulement à l'intérieur de boucles (for/while)
-• SyntaxError si utilisé en dehors
-• Ne peut pas être utilisé dans des fonctions (sauf dans une boucle)
-• Ne peut pas être utilisé dans des classes (sauf dans une boucle)
-
-Comment ça fonctionne :
-• continue doit être dans le corps de la boucle
-• Python vérifie la syntaxe à l'analyse
-• SyntaxError levée si en dehors de la boucle
-• Doit être indenté dans la boucle
-
-Exemple :
-# Valide :
-for i in range(5):
-    if i == 2:
-        continue  # OK, dans la boucle
-
-# Invalide :
-continue  # SyntaxError: 'continue' outside loop
-
-Usages courants :
-• Sauter des itérations
-• Traitement conditionnel
-• Filtrage dans les boucles
-• Gestion d'erreurs dans les boucles
-
-Exemple : Non, vous ne pouvez pas utiliser continue en dehors d'une boucle. Utiliser continue en dehors d'une boucle provoque une SyntaxError car continue ne peut être utilisé que dans des boucles for ou while.
-
-Concepts clés :
-• L'opérateur or évalue la “vérité” (truthiness) de gauche à droite.
-• Il utilise le short-circuit : si la gauche est vraie, la droite n'est pas évaluée.
-• or renvoie le premier opérande “truthy” (sinon le dernier).
-• Donc True or True vaut True.
-
-Distinctions clés :
-• or peut renvoyer une valeur non booléenne (pas seulement True/False).
-• Dans ce cas précis, les deux valeurs sont booléennes, donc le résultat reste True.
-• not in n'est pas lié : or est un opérateur logique, différent de l'in/ not in.
-
-Fonctionnement :
-• Python évalue le côté gauche et teste sa vérité.
-• Si c'est truthy, Python renvoie immédiatement cet opérande.
-• Sinon, Python évalue le côté droit et renvoie le résultat.
-
-Exécution étape par étape :
-1. Évaluer la gauche : True.
-2. True est truthy.
-3. Renvoi immédiat : True.
-4. Le second True n'est pas évalué.
-
-Ordre des opérations :
-• Le côté gauche est évalué avant toute décision.
-• or décide ensuite s'il doit (ou non) évaluer la droite.
-
-Cas d'utilisation courants :
-• Valeur par défaut : x or valeur_defaut
-• Choisir “la première option disponible”.
-• Éviter des calculs coûteux grâce au short-circuit.
-
-Cas limites :
-• Valeurs falsy : 0 or 5 renvoie 5, '' or 'a' renvoie 'a'.
-• Effets de bord : une expression à droite peut être ignorée si la gauche est truthy.
-
-Considérations de performance :
-• or peut être plus rapide car il peut éviter d'évaluer l'opérande de droite.
-
-Exemples :
-• True or True    # True
-• False or "x"    # "x"
-• True or (1/0)   # True (droite non évaluée)
-
-Remarques :
-• Si vous voulez forcer un booléen strict, utilisez bool(x or y).
-`,
-  328: `Quand break est utilisé dans une boucle imbriquée, il ne sort que de la boucle la plus interne (celle qui contient l'instruction break). La boucle extérieure continue normalement. C'est important à comprendre lors de l'utilisation de boucles imbriquées : break ne sort pas de toutes les boucles, seulement de celle où il se trouve directement.
-
-break dans boucle imbriquée :
-• break ne sort que de la boucle la plus interne
-• La boucle extérieure continue
-• Ne sort pas de toutes les boucles
-• N'affecte que la boucle contenante
-
-Comment ça fonctionne :
-• break dans la boucle intérieure sort uniquement de la boucle intérieure
-• La boucle extérieure continue avec son itération suivante
-• Le contrôle revient à la boucle extérieure
-• La boucle extérieure ne se termine pas
-
-Exemple :
-for i in range(3):
-    for j in range(3):
-        if j == 1:
-            break  # Sort uniquement de la boucle intérieure
-    print(i)  # La boucle extérieure continue
-# Affiche 0, 1, 2 (la boucle extérieure continue)
-
-Usages courants :
-• Sortir des boucles intérieures
-• Contrôle de boucles imbriquées
-• Itération multi-niveaux
-• Structures de boucles complexes
-
-Exemple : Si break est dans une boucle imbriquée, il ne sort que de la boucle la plus interne. La boucle extérieure continue normalement avec son itération suivante.
-
-Concepts clés :
-• L'opérateur and évalue la “vérité” (truthiness) de son opérande gauche puis éventuellement droite.
-• Il renvoie le premier opérande qui est falsy (ou, si tout est truthy, le dernier opérande).
-• Donc False and True vaut False car False est falsy dès le départ.
-
-Distinctions clés :
-• and n'est pas juste “True/False” : il renvoie souvent un opérande, pas forcément un booléen.
-• Ici, les deux opérandes sont des booléens, donc le résultat est bien False.
-• short-circuit : si la gauche est falsy, la droite n'est pas évaluée.
-
-Fonctionnement :
-• Python évalue d'abord le côté gauche.
-• Si ce côté gauche est falsy, Python renvoie ce côté gauche immédiatement.
-• Sinon, Python évalue le côté droit et renvoie le résultat de cette évaluation.
-
-Exécution étape par étape :
-1. Évaluer la gauche : False.
-2. Vérifier la truthiness : False est falsy.
-3. Renvoyer False immédiatement.
-4. Le “True” à droite n'est pas évalué (il est ignoré).
-
-Ordre des opérations :
-• L'opérande gauche est évalué avant toute décision de and.
-
-Cas d'utilisation courants :
-• Gardes (guard clauses) : “si ce n'est pas valide, on stop”.
-• Conditions combinées où on veut éviter des calculs inutiles.
-
-Cas limites :
-• False and X vaut toujours False, même si X serait “problématique” à évaluer (car X peut être court-circuité).
-• Avec des valeurs non booléennes, le résultat retourné est un opérande, pas forcément True/False.
-
-Considérations de performance :
-• and peut être plus rapide car il peut éviter l'évaluation de l'opérande droite.
-
-Exemples :
-• False and True  # False
-• True and True   # True
-• True and 0      # 0
-• 0 and "abc"     # 0
-
-Remarques :
-• Si vous avez besoin d'un booléen strict, encapsulez le résultat avec bool(...).
-`,
-  329: `Quand continue est utilisé dans une boucle imbriquée, il n'affecte que la boucle la plus interne (celle qui contient l'instruction continue). Le continue saute à l'itération suivante de la boucle intérieure, mais la boucle extérieure continue normalement. C'est important pour le flux de contrôle des boucles imbriquées.
-
-continue dans boucle imbriquée :
-• continue n'affecte que la boucle la plus interne
-• Saute à l'itération suivante de la boucle intérieure
-• La boucle extérieure continue normalement
-• N'affecte que la boucle contenante
-
-Comment ça fonctionne :
-• continue dans la boucle intérieure saute l'itération intérieure
-• La boucle intérieure passe à l'itération suivante
-• La boucle extérieure continue normalement
-• La boucle extérieure ne saute pas
-
-Exemple :
-for i in range(3):
-    for j in range(3):
-        if j == 1:
-            continue  # Saute uniquement l'itération intérieure
-        print(j)  # Affiche 0, 2 pour chaque i
-    print(i)  # La boucle extérieure continue normalement
-
-Usages courants :
-• Sauter des itérations intérieures
-• Contrôle de boucles imbriquées
-• Filtrage multi-niveaux
-• Structures de boucles complexes
-
-Exemple : Si continue est dans une boucle imbriquée, il n'affecte que la boucle la plus interne (saute à l'itération suivante). La boucle extérieure continue normalement.
-
-Concepts clés :
-• En Python, les opérateurs ont une priorité (order of operations).
-• La multiplication (*) est prioritaire sur l'addition (+).
-• Ainsi, 2 * 3 + 4 s'évalue comme (2 * 3) + 4 et donne 10.
-
-Distinctions clés :
-• Sans parenthèses, 2 * 3 + 4 groupe naturellement (2 * 3) puis + 4.
-• Avec parenthèses, on peut changer l'intention : 2 * (3 + 4) vaut 14.
-• Ici, ce sont des entiers, donc le résultat reste un int.
-
-Fonctionnement :
-• Python applique d'abord l'opération de plus haute priorité.
-• Il calcule ensuite la seconde opération restante.
-
-Exécution étape par étape :
-1. Calculer 2 * 3 d'abord.
-2. Obtenir 6.
-3. Ajouter 4.
-4. Obtenir 10.
-5. Renvoyer 10.
-
-Ordre des opérations :
-• Priorité : multiplication avant addition, quand il n'y a pas de parenthèses.
-
-Cas d'utilisation courants :
-• Formules simples “mise à l'échelle puis décalage” (scale then offset).
-• Expressions arithmétiques combinant plusieurs opérateurs.
-
-Cas limites :
-• Les valeurs négatives suivent la même priorité, seules les valeurs changent.
-• Les très grands entiers restent corrects en Python (big integers), mais le coût peut augmenter selon la taille.
-
-Considérations de performance :
-• Un nombre fixe d'opérations ici : coût constant O(1).
-
-Exemples :
-• 2 * 3 + 4  # 10
-• 1 * 5 + 6  # 11
-• 3 * 0 + 7  # 7
-
-Remarques :
-• Utilisez des parenthèses si vous craignez une mauvaise interprétation de regroupement.
-`,
-  330: `Oui, les boucles for peuvent avoir des clauses else en Python. Le bloc else s'exécute lorsque la boucle for se termine normalement (sans être interrompue par break). Si la boucle est quittée avec break, le bloc else ne s'exécute pas. C'est une fonctionnalité unique de Python utile pour les opérations de recherche.
-
-Clause else des boucles for :
-• Les boucles for peuvent avoir des clauses else
-• else s'exécute si la boucle se termine normalement
-• else ne s'exécute PAS si break est utilisé
-• Utile pour les opérations de recherche
-
-Comment ça fonctionne :
-• La boucle for itère sur les éléments
-• Si la boucle se termine sans break, else s'exécute
-• Si break est utilisé, else est ignoré
-• else fait partie de la structure de la boucle
-
-Exemple :
-for i in range(5):
-    if i == 10:
-        break
-else:
-    print("Boucle terminée normalement")  # S'exécute
-
-for i in range(5):
-    if i == 3:
-        break
-else:
-    print("Ceci ne s'affichera pas")  # Ne s'exécute pas
-
-Usages courants :
-• Opérations de recherche : for item in items: if found: break; else: not_found()
-• Validation
-• Gestion de terminaison
-• Vérification du résultat de boucle
-
-Exemple : Oui, les boucles for peuvent avoir des clauses else. Le bloc else s'exécute lorsque la boucle se termine normalement (sans break), ce qui est utile pour les opérations de recherche.
-
-Concepts clés :
-• Les parenthèses forcent Python à évaluer d'abord l'expression à l'intérieur.
-• Donc dans 2 * (3 + 4), on calcule (3 + 4) avant la multiplication.
-• 3 + 4 = 7, puis 2 * 7 = 14.
-
-Distinctions clés :
-• 2 * (3 + 4) est différent de 2 * 3 + 4.
-• Les parenthèses transforment une partie de l'expression en “valeur intermédiaire”.
-
-Fonctionnement :
-• Python évalue l'expression interne.
-• Il utilise ensuite le résultat comme opérande gauche ou droite de l'opération externe.
-
-Exécution étape par étape :
-1. Évaluer l'expression entre parenthèses : 3 + 4.
-2. Obtenir 7.
-3. Calculer ensuite 2 * 7.
-4. Obtenir 14.
-5. Renvoyer 14.
-
-Ordre des opérations :
-• Parenthèses d'abord, puis application de la multiplication.
-
-Cas d'utilisation courants :
-• Corriger ou clarifier l'ordre de calcul dans les formules.
-• Réduire les erreurs de priorité lors de l'écriture du code.
-
-Cas limites :
-• Parenthèses imbriquées : on suit “du plus interne au plus externe”.
-• Le signe dépend des valeurs dans les parenthèses.
-
-Considérations de performance :
-• Pas de complexité spéciale : c'est juste quelques opérations arithmétiques.
-
-Exemples :
-• 2 * (3 + 4)  # 14
-• (10 + 5) * 2  # 30
-• (1 + 1) * (2 + 3)  # 10
-
-Remarques :
-• Les parenthèses sont la méthode la plus sûre pour garantir le regroupement.
-`,
-  331: `Oui, vous pouvez boucler sur une chaîne car les chaînes sont des itérables en Python. Lorsque vous itérez sur une chaîne, vous obtenez chaque caractère un par un. C'est utile pour traiter du texte caractère par caractère, vérifier des motifs ou transformer des chaînes.
-
-Itération sur chaîne :
-• Les chaînes sont des itérables
-• for char in "abc": itère sur les caractères
-• Chaque itération donne un caractère
-• Utile pour le traitement caractère par caractère
-
-Comment ça fonctionne :
-• La chaîne est une séquence itérable
-• La boucle for itère caractère par caractère
-• Chaque caractère est une chaîne de longueur 1
-• La variable de boucle reçoit chaque caractère
-
-Exemple :
-for char in "abc":
-    print(char)  # Affiche : a, b, c (un par ligne)
-
-Usages courants :
-• Traitement caractère par caractère : for char in text:
-• Correspondance de motifs
-• Transformation de chaînes
-• Analyse de caractères
-
-Exemple : Oui, vous pouvez boucler sur une chaîne. Les chaînes sont des itérables, donc for char in "abc": itère sur les caractères 'a', 'b', 'c'.
-
-Concepts clés :
-• Sur les chaînes, in teste la présence d'une sous-chaîne.
-• not in renvoie l'opposé logique du résultat de in.
-• Donc 'a' not in 'bc' vaut True : 'a' n'apparaît pas dans 'bc'.
-
-Distinctions clés :
-• 'a' in 'bc' signifie “la sous-chaîne 'a' est-elle présente dans 'bc' ?”.
-• Pour les tuples/lists, la notion est différente : c'est la présence d'un élément.
-• not in inverse le booléen issu de in.
-
-Fonctionnement :
-• Python cherche la sous-chaîne 'a' dans 'bc'.
-• Si elle est trouvée, in est True.
-• Sinon, in est False et donc not in est True.
-
-Exécution étape par étape :
-1. Évaluer le motif : 'a'.
-2. Évaluer la chaîne hôte : 'bc'.
-3. Rechercher 'a' dans 'bc'.
-4. Aucun match n'est trouvé.
-5. Le test in serait False, donc not in renvoie True.
-
-Ordre des opérations :
-• Les deux chaînes sont évaluées avant de calculer l'appartenance.
-
-Cas d'utilisation courants :
-• Vérifier des caractères ou fragments dans un texte.
-• Filtrer ou déclencher des conditions selon un contenu.
-
-Cas limites :
-• Sensibilité à la casse : 'A' in 'abc' est False.
-• '' in 'abc' est toujours True (la chaîne vide est “contenue” partout).
-
-Considérations de performance :
-• La recherche de sous-chaîne peut être coûteuse sur grandes chaînes (typiquement plus cher qu'une simple recherche en table).
-
-Exemples :
-• 'a' not in 'bc'   # True
-• 'b' in 'bc'       # True
-• 'd' in 'bc'       # False
-
-Remarques :
-• Pour des tests répétitifs et des règles complexes, prétraitez ou utilisez des outils spécialisés (regex).
-`,
-  332: `Lorsque vous bouclez sur une chaîne avec for char in "abc":, cela itère sur chaque caractère individuellement : 'a', 'b', 'c'. La variable de boucle char prend chaque caractère comme valeur, un à la fois. C'est ainsi que fonctionne l'itération sur chaîne en Python.
-
-Itération sur chaîne :
-• for char in "abc": itère sur 'a', 'b', 'c'
-• Chaque itération : char = 'a', puis 'b', puis 'c'
-• Les caractères sont des chaînes de longueur 1
-• La boucle s'exécute 3 fois
-
-Comment ça fonctionne :
-• La chaîne "abc" a 3 caractères
-• La boucle itère 3 fois
-• char prend les valeurs : 'a', 'b', 'c'
-• Chaque caractère est une chaîne
-
-Exemple :
-for char in "abc":
-    print(char)  # Affiche a, b, c
-
-Usages courants :
-• Traitement caractère par caractère
-• Analyse de chaînes
-• Correspondance de motifs
-• Transformation de caractères
-
-Exemple : for char in "abc": itère sur les caractères 'a', 'b', 'c' (un caractère par itération).
-
-Concepts clés :
-• Le slicing [start:end] sur une liste renvoie une nouvelle liste.
-• La borne end est exclusive.
-• [:0] signifie : “de l'indice 0 inclus jusqu'à l'indice 0 exclu” => liste vide.
-
-Distinctions clés :
-• [][0] serait un accès indexé et déclencherait IndexError.
-• [][:0] est un slicing : il ne déclenche pas d'erreur, il renvoie juste [].
-• [:0] est équivalent à “préfixe vide”.
-
-Fonctionnement :
-• Python calcule les bornes du slicing.
-• Il extrait les éléments de start jusqu'à end-1.
-• Il construit une nouvelle liste.
-
-Exécution étape par étape :
-1. Évaluer la liste : [].
-2. Interpréter le slicing [:0] : start par défaut = 0, end = 0.
-3. Aucun élément n'est à inclure.
-4. Construire une liste résultat vide.
-5. Renvoyer [].
-
-Ordre des opérations :
-• Évaluer la liste avant d'appliquer les règles de slicing.
-
-Cas d'utilisation courants :
-• Obtenir un préfixe potentiellement vide sans risque d'IndexError.
-• Préparer des structures ou segments “vides” pour compléter plus tard.
-
-Cas limites :
-• Si start >= end, le slicing renvoie [].
-• Pour des indices négatifs, l'exclusion/inclusion dépend des bornes calculées.
-
-Considérations de performance :
-• Sur une liste vide, c'est essentiellement immédiat.
-• De manière générale, le coût dépend du nombre de caractères/éléments retournés (O(k)).
-
-Exemples :
-• [][:0]      # []
-• [1, 2][:0] # []
-• [1, 2][:1] # [1]
-• [1, 2][:2] # [1, 2]
-
-Remarques :
-• Préférez le slicing quand les indices peuvent être “hors plage”, car slicing est sûr.
-`,
-  333: `Oui, vous pouvez boucler sur une liste car les listes sont des itérables en Python. Lorsque vous itérez sur une liste, vous obtenez chaque élément un par un. C'est l'usage le plus courant des boucles for : itérer à travers des collections pour traiter chaque élément.
-
-Itération sur liste :
-• Les listes sont des itérables
-• for item in [1, 2, 3]: itère sur les éléments
-• Chaque itération donne un élément
-• Utile pour traiter les collections
-
-Comment ça fonctionne :
-• La liste est une séquence itérable
-• La boucle for itère élément par élément
-• Chaque élément peut être de tout type
-• La variable de boucle reçoit chaque élément
-
-Exemple :
-for item in [1, 2, 3]:
-    print(item)  # Affiche : 1, 2, 3 (un par ligne)
-
-Usages courants :
-• Traiter des collections : for item in items:
-• Transformation d'éléments
-• Filtrage
-• Agrégation
-
-Exemple : Oui, vous pouvez boucler sur une liste. Les listes sont des itérables, donc for item in [1, 2, 3]: itère sur les éléments 1, 2, 3.
-
-Concepts clés :
-• L'indexation d'un tuple avec [indice] renvoie la valeur stockée à cette position.
-• En Python, les indices commencent à 0 : l'indice 0 est le premier élément.
-• Donc (1, 2)[0] renvoie 1.
-
-Distinctions clés :
-• L'indexation renvoie un seul élément, tandis que le slicing renvoie une sous-séquence.
-• Les indices négatifs comptent depuis la fin : (1, 2)[-1] renvoie 2.
-• L'accès ne modifie pas le tuple : les tuples sont immuables.
-
-Fonctionnement :
-• Python évalue d'abord l'expression du tuple.
-• Puis il calcule l'indice demandé et récupère l'élément correspondant.
-
-Exécution étape par étape :
-1. Évaluer le tuple (1, 2).
-2. Lire l'indice 0.
-3. Sélectionner le premier élément.
-4. Renvoyer 1.
-
-Ordre des opérations :
-• Le tuple est évalué avant l'application de l'opérateur d'indexation.
-
-Cas d'utilisation courants :
-• Accéder à des valeurs de position fixe dans un résultat renvoyé (par exemple, un tuple).
-• Récupérer le premier ou le dernier élément rapidement.
-
-Cas limites :
-• Indice hors limites : un IndexError est levé si l'indice ne correspond pas à une position existante.
-• Tuple vide : ()[0] lève IndexError.
-
-Considérations de performance :
-• L'accès par index dans un tuple est O(1) : Python calcule directement l'offset.
-
-Exemples :
-• (1, 2)[0]   # 1
-• (1, 2)[1]   # 2
-• (1, 2)[-1]  # 2
-• (1, 2)[-2]  # 1
-
-Remarques :
-• Pour récupérer plusieurs éléments, préférez le slicing plutôt que des index répétés.
-`,
-  334: `Lorsque vous bouclez sur une liste avec for item in [1, 2, 3]:, cela itère sur chaque élément individuellement : 1, 2, 3. La variable de boucle item prend chaque élément comme valeur, un à la fois. C'est ainsi que fonctionne l'itération sur liste en Python.
-
-Itération sur liste :
-• for item in [1, 2, 3]: itère sur 1, 2, 3
-• Chaque itération : item = 1, puis 2, puis 3
-• Les éléments sont accédés un par un
-• La boucle s'exécute 3 fois
-
-Comment ça fonctionne :
-• La liste [1, 2, 3] a 3 éléments
-• La boucle itère 3 fois
-• item prend les valeurs : 1, 2, 3
-• Chaque élément peut être de tout type
-
-Exemple :
-for item in [1, 2, 3]:
-    print(item)  # Affiche 1, 2, 3
-
-Usages courants :
-• Traiter des éléments
-• Transformation d'éléments
-• Filtrage
-• Agrégation
-
-Exemple : for item in [1, 2, 3]: itère sur les éléments 1, 2, 3 (un élément par itération).
-
-Concepts clés :
-• type(valeur) renvoie la classe de la valeur.
-• False est une valeur booléenne : sa classe est bool.
-• Donc type(False) renvoie <class 'bool'>.
-
-Distinctions clés :
-• bool est une sous-classe de int : False se comporte comme 0 pour les comparaisons de valeurs.
-• Malgré cela, type(False) reste bool et non int.
-• type(0) renvoie int, donc type(0) et type(False) diffèrent.
-
-Fonctionnement :
-• Python construit la valeur False comme objet bool.
-• type() inspecte l'objet et renvoie sa classe : bool.
-
-Exécution étape par étape :
-1. Évaluer False.
-2. Appeler type(False).
-3. Déterminer la classe : bool.
-4. Renvoyer la classe.
-5. L'afficher comme <class 'bool'>.
-
-Ordre des opérations :
-• False est évalué avant l'appel à type().
-
-Cas d'utilisation courants :
-• Vérifier que vous travaillez bien avec des drapeaux logiques (True/False).
-• Debugger des conditions où une valeur peut être confondue avec 0/1.
-
-Cas limites :
-• type(True) est aussi bool.
-• bool et int se ressemblent en comparaison, mais leur type Python reste distinct.
-
-Considérations de performance :
-• type() est O(1) : inspection de classe, pas d'itération.
-
-Exemples :
-• type(False)  # <class 'bool'>
 • type(True)   # <class 'bool'>
-• type(0)      # <class 'int'>
-• type(1)      # <class 'int'>
-
-Remarques :
-• Pour accepter des sous-types de bool, préférez isinstance(x, bool).
-`,
-  335: `Oui, vous pouvez boucler sur un dictionnaire car les dictionnaires sont des itérables en Python. Lorsque vous itérez directement sur un dictionnaire, vous itérez sur ses clés. Pour obtenir les valeurs ou les paires clé-valeur, utilisez les méthodes .values() ou .items().
-
-Itération sur dictionnaire :
-• Les dictionnaires sont des itérables
-• for key in dict: itère sur les clés
-• L'itération par défaut est sur les clés
-• Utilisez .items() pour les paires clé-valeur
-
-Comment ça fonctionne :
-• Le dictionnaire est itérable
-• L'itération par défaut donne les clés
-• for key in dict: obtient chaque clé
-• Utilisez dict[key] pour accéder aux valeurs
-
-Exemple :
-d = {"a": 1, "b": 2}
-for key in d:
-    print(key)  # Affiche : a, b (clés)
-
-Usages courants :
-• Itérer sur les clés : for key in dict:
-• Itérer sur les valeurs : for value in dict.values():
-• Itérer sur les paires : for key, value in dict.items():
-
-Exemple : Oui, vous pouvez boucler sur un dictionnaire. Par défaut, for key in dict: itère sur les clés du dictionnaire.
-
-Concepts clés :
-• None est la valeur spéciale utilisée pour représenter “pas de valeur”.
-• None a un type dédié : NoneType.
-• Donc type(None) renvoie <class 'NoneType'>.
-
-Distinctions clés :
-• None n'est pas False : le type NoneType est différent du type bool.
-• None n'est pas 0 : le type NoneType est différent du type int.
-• Pourtant, bool(None) vaut False en conditions, ce qui peut prêter à confusion.
-
-Fonctionnement :
-• Python évalue None comme un objet singleton particulier.
-• type() inspecte cet objet et renvoie l'objet classe NoneType.
-
-Exécution étape par étape :
-1. Évaluer None (objet singleton).
-2. Appeler type(None).
-3. Déterminer la classe : NoneType.
-4. Renvoyer la classe.
-5. L'afficher comme <class 'NoneType'>.
-
-Ordre des opérations :
-• None est évalué avant l'appel à type().
-
-Cas d'utilisation courants :
-• Marquer une absence de résultat ou une valeur “non fournie”.
-• Écrire des fonctions où un paramètre optionnel vaut None.
-
-Cas limites :
-• None est un singleton : None is None est True.
-• Pour tester une absence explicitement, préférez is None plutôt que ==.
-
-Considérations de performance :
-• type() est O(1) car il ne parcourt rien : il inspecte simplement la classe.
-
-Exemples :
-• type(None)   # <class 'NoneType'>
 • type(False)  # <class 'bool'>
-• type(0)       # <class 'int'>
 
 Remarques :
-• En Python, testez None avec is None pour une lecture claire et sans ambiguïté.
-`,
-  336: `Lorsque vous bouclez sur un dictionnaire avec for key in {"a": 1, "b": 2}:, cela itère sur les clés : 'a', 'b'. La variable de boucle key prend chaque clé comme valeur. L'itération sur dictionnaire se fait par défaut sur les clés, pas les valeurs ni les paires.
+• Pour tester True exactement : is True si singleton requis.`,
+  305: `type(None) est NoneType : le singleton qui signale l'absence de valeur utile.
 
-Itération sur les clés :
-• for key in {"a": 1, "b": 2}: itère sur 'a', 'b'
-• Chaque itération : key = 'a', puis 'b'
-• Les clés sont accédées, pas les valeurs
-• La boucle s'exécute 2 fois (une par clé)
+Débutant :
+• None est un mot-clé ; il n'y a qu'une seule instance None.
 
-Comment ça fonctionne :
-• Le dictionnaire {"a": 1, "b": 2} a 2 clés
-• La boucle itère 2 fois
-• key prend les valeurs : 'a', 'b'
-• L'itération par défaut est sur les clés
+Intermédiaire :
+• Les fonctions sans return explicite renvoient None.
 
-Exemple :
-for key in {"a": 1, "b": 2}:
-    print(key)  # Affiche a, b
-
-Pour obtenir les valeurs :
-for key in {"a": 1, "b": 2}:
-    print({"a": 1, "b": 2}[key])  # Affiche 1, 2
-
-Usages courants :
-• Itérer sur les clés : for key in dict:
-• Traitement basé sur les clés
-• Parcours de dictionnaire
-• Opérations sur les clés
-
-Exemple : for key in {"a": 1, "b": 2}: itère sur les clés 'a', 'b' (une clé par itération).
+Expert :
+• Tester None avec is None, pas == (surtout avec surcharges d'égalité).
 
 Concepts clés :
-• [] est une littérale de liste : elle crée une liste vide.
-• Les listes sont des séquences mutables en Python.
-• Donc type([]) renvoie <class 'list'>.
+• Sentinelle standard pour « pas de résultat ».
 
 Distinctions clés :
-• Une liste vide reste une liste : elle n'est pas “sans type”.
-• [] diffère de () (tuple vide) : type(()) est tuple.
-• {} crée un dictionnaire vide : ce n'est pas une liste.
+• None n'est ni 0 ni False, même s'il est falsey.
 
 Fonctionnement :
-• Python lit la littérale [] et construit un conteneur liste vide.
-• Ensuite type() inspecte ce conteneur et renvoie la classe list.
+• type() renvoie la classe NoneType.
 
 Exécution étape par étape :
-1. Interpréter [] comme une liste vide.
-2. Créer l'objet liste.
-3. Appeler type([]).
-4. Déterminer la classe : list.
-5. Renvoyer <class 'list'>.
+1. Évaluer None.
+2. type(None) -> NoneType.
 
 Ordre des opérations :
-• La liste est construite avant l'appel à type().
+• Comme tout littéral.
 
 Cas d'utilisation courants :
-• Initialiser un accumulateur avant de remplir la liste.
-• Préparer une structure destinée à recevoir des éléments plus tard.
+• Valeur par défaut, initialisation, absence optionnelle.
 
 Cas limites :
-• Une liste vide est falsy : bool([]) est False.
-• Modifier la liste plus tard ne change pas son type.
+• None dans une liste reste un objet valide à l'index.
 
 Considérations de performance :
-• Créer [] est O(1) et type() est O(1).
+• Singleton : comparaison d'identité rapide.
 
 Exemples :
-• type([])       # <class 'list'>
-• type([1, 2])  # <class 'list'>
+• type(None)  # <class 'NoneType'>
+
+Remarques :
+• Évitez d'utiliser None comme valeur magique si un enum ou dataclass clarifie le domaine.`,
+  306: `type([]) est list : tableau dynamique ordonné et mutable.
+
+Débutant :
+• Les crochets vides construisent une liste vide.
+
+Intermédiaire :
+• list supporte append, pop, slice, etc.
+
+Expert :
+• Les listes stockent des références : partage d'objets mutables possible.
+
+Concepts clés :
+• Séquence modifiable pour collections homogènes ou hétérogènes.
+
+Distinctions clés :
+• list vs tuple : [] mutable, () immuable.
+
+Fonctionnement :
+• Littéral [] crée une instance list puis type() lit sa classe.
+
+Exécution étape par étape :
+1. Construire [].
+2. type([]) -> list.
+
+Ordre des opérations :
+• Direct.
+
+Cas d'utilisation courants :
+• Accumulateurs, files simples, buffers.
+
+Cas limites :
+• [[]]*3 piège de références partagées.
+
+Considérations de performance :
+• append amorti O(1) ; insert(0) coûteux.
+
+Exemples :
+• type([])        # <class 'list'>
+• type([1, 2])    # <class 'list'>
+
+Remarques :
+• Pour séquences immuables figées, tuple ou frozenset selon besoin.`,
+  307: `type(()) est tuple : séquence ordonnée immuable souvent utilisée pour paires fixes.
+
+Débutant :
+• La virgule crée le tuple : (1,) est un tuple d'un élément, pas (1) qui reste int.
+
+Intermédiaire :
+• Les tuples peuvent servir de clés de dict si tous les éléments sont hashables.
+
+Expert :
+• tuple est plus léger que list pour petites collections figées.
+
+Concepts clés :
+• Immutabilité garantit hashabilité si contenu compatible.
+
+Distinctions clés :
+• tuple vs list : pas d'append in-place.
+
+Fonctionnement :
+• () crée le tuple vide, type() renvoie tuple.
+
+Exécution étape par étape :
+1. Évaluer ().
+2. type(()) -> tuple.
+
+Ordre des opérations :
+• Standard.
+
+Cas d'utilisation courants :
+• Retours multiples, clés composites, records légers.
+
+Cas limites :
+• tuple contenant une liste : non hashable.
+
+Considérations de performance :
+• Itération et indexation O(1).
+
+Exemples :
 • type(())       # <class 'tuple'>
+• type((1, 2))   # <class 'tuple'>
 
 Remarques :
-• Si vous avez besoin d'immuabilité, préférez un tuple plutôt qu'une liste.
-`,
-  337: `Les boucles for sont meilleures pour itérer sur des collections fixes (listes, chaînes, tuples, dictionnaires, etc.) car elles sont conçues spécifiquement pour l'itération. Les boucles for gèrent automatiquement l'itération, ne nécessitent pas de gestion manuelle d'index et sont plus pythoniques et lisibles pour l'itération sur collections.
+• namedtuple ou dataclass pour des champs nommés lisibles.`,
+  308: `type({}) est dict : table de correspondance clé -> valeur, clés hashables.
 
-Avantages des boucles for :
-• Conçues pour l'itération
-• Gestion automatique de l'itération
-• Pas de gestion manuelle d'index
-• Plus lisibles et pythoniques
+Débutant :
+• {} est un dictionnaire vide, pas un set.
 
-Comment ça fonctionne :
-• for item in collection: itère automatiquement
-• Gère l'itération en interne
-• Code plus propre et simple
-• Moins d'erreurs
+Intermédiaire :
+• set vide s'écrit set(), pas {}.
 
-Exemple :
-# Boucle for (meilleure) :
-for item in [1, 2, 3]:
-    print(item)
-
-# Boucle while (plus complexe) :
-i = 0
-items = [1, 2, 3]
-while i < len(items):
-    print(items[i])
-    i += 1
-
-Usages courants :
-• Itérer sur des collections : for item in collection:
-• Traiter des séquences
-• Transformer des éléments
-• Opérations sur collections
-
-Exemple : Les boucles for sont meilleures pour les collections fixes car elles sont conçues pour l'itération, gèrent automatiquement le processus d'itération et sont plus lisibles et pythoniques.
+Expert :
+• dict préserve l'ordre d'insertion depuis Python 3.7 (langage 3.9+).
 
 Concepts clés :
-• {} crée un dictionnaire vide en Python : un mapping.
-• Un dict stocke des paires clé-valeur.
-• Donc type({}) renvoie <class 'dict'>.
+• Recherche amortie O(1) par clé en moyenne.
 
 Distinctions clés :
-• {} est un dict, pas un set.
-• Pour un set vide, utilisez set().
-• Un dict vide est falsy : bool({}) vaut False.
+• dict vs set : paires vs éléments uniques sans valeur associée.
 
 Fonctionnement :
-• Python interprète {} comme un conteneur dict vide.
-• type() inspecte ce conteneur et renvoie dict.
+• Littéral {} -> dict vide ; type() confirme.
 
 Exécution étape par étape :
-1. Interpréter {} comme dictionnaire vide.
-2. Créer l'objet dict.
-3. Appeler type({}).
-4. Déterminer la classe : dict.
-5. Renvoyer <class 'dict'>.
+1. Créer {}.
+2. type({}) -> dict.
 
 Ordre des opérations :
-• La construction du dict se fait avant l'appel à type().
+• Immédiat.
 
 Cas d'utilisation courants :
-• Stocker des données sous forme “clé -> valeur”.
-• Accès rapide par clé.
-• Construire des tables de configuration ou de correspondance.
+• Index par identifiant, caches, JSON Python.
 
 Cas limites :
-• Les clés doivent être hashables, sinon TypeError.
-• Une clé dupliquée dans un littéral est remplacée : la dernière gagne.
+• Clé non hashable -> TypeError à l'insertion.
 
 Considérations de performance :
-• Créer {} et appeler type() sont O(1).
+• Rehashing occasionnel quand la table grandit.
 
 Exemples :
-• type({})        # <class 'dict'>
-• type({'a': 1}) # <class 'dict'>
-• type({1, 2})    # <class 'set'>
+• type({})           # <class 'dict'>
+• type({'a': 1})     # <class 'dict'>
 
 Remarques :
-• Utilisez set() (ou un littéral {1, 2}) pour créer un set, pas {}.
-`,
+• defaultdict et Counter étendent les usages fréquentiels.`,
+  309: `type({1, 2, 3}) est set : collection non ordonnée d'éléments uniques hashables.
+
+Débutant :
+• Les accolades avec éléments délimités par virgules (sans :) forment un set.
+
+Intermédiaire :
+• set vide s'écrit set() car {} serait un dict.
+
+Expert :
+• Les sets supportent unions, intersections, différences en temps quasi linéaire.
+
+Concepts clés :
+• Unicité et test d'appartenance rapide.
+
+Distinctions clés :
+• set vs dict : pas de valeurs associées ici.
+
+Fonctionnement :
+• Construire le set puis type().
+
+Exécution étape par étape :
+1. Évaluer {1, 2, 3}.
+2. type(...) -> set.
+
+Ordre des opérations :
+• Éléments évalués puis insertion avec déduplication.
+
+Cas d'utilisation courants :
+• Déduplication, membres uniques, algos graphes.
+
+Cas limites :
+• Éléments non hashables (list) interdits.
+
+Considérations de performance :
+• Membership O(1) amorti.
+
+Exemples :
+• type({1})       # <class 'set'>
+• type(set())     # <class 'set'>
+
+Remarques :
+• frozenset pour ensembles immuables hashables.`,
+  310: `type(b'hello') est bytes : séquence immuable d'octets 0-255.
+
+Débutant :
+• Le préfixe b devant les guillemets indique des octets, pas du texte Unicode.
+
+Intermédiaire :
+• Encoder du str -> bytes via .encode() ; décoder l'inverse.
+
+Expert :
+• Les fichiers binaires et sockets manipulent des bytes, pas des str.
+
+Concepts clés :
+• Distinction texte (str) vs données brutes (bytes).
+
+Distinctions clés :
+• b'a' est int 97 en élément, pas la str 'a'.
+
+Fonctionnement :
+• Littéral bytes construit la séquence ; type() renvoie bytes.
+
+Exécution étape par étape :
+1. Parser b'hello'.
+2. type(...) -> bytes.
+
+Ordre des opérations :
+• Standard.
+
+Cas d'utilisation courants :
+• I/O binaire, crypto, réseau bas niveau.
+
+Cas limites :
+• Toute valeur d'octet hors 0-255 est invalide dans un littéral bytes simple.
+
+Considérations de performance :
+• bytearray si mutation fréquente nécessaire.
+
+Exemples :
+• type(b'hello')  # <class 'bytes'>
+• type(b'')       # <class 'bytes'>
+
+Remarques :
+• Toujours préciser l'encodage (utf-8) lors des conversions str <-> bytes.`,
+  311: `'my_variable' est un identifiant valide : lettre ou underscore au début, puis lettres, chiffres ou underscores.
+
+Débutant :
+• Les noms de variables ne peuvent pas commencer par un chiffre.
+
+Intermédiaire :
+• Python distingue la casse : ma et Ma sont différents.
+
+Expert :
+• Les mots réservés (class, def, ...) ne peuvent pas servir de noms même s'ils suivent la syntaxe lexicale.
+
+Concepts clés :
+• Règles lexicales des identifiants en Python.
+
+Distinctions clés :
+• Validité lexicale vs bonnes pratiques (PEP 8 snake_case).
+
+Fonctionnement :
+• Le tokenizer accepte [a-zA-Z_] suivis de [a-zA-Z0-9_]*.
+
+Exécution étape par étape :
+1. Premier caractère 'm' autorisé.
+2. Suite alphanumérique + underscore permise.
+3. Nom accepté.
+
+Ordre des opérations :
+• Analyse statique à la compilation du fichier.
+
+Cas d'utilisation courants :
+• Nommer variables, fonctions, modules importés.
+
+Cas limites :
+• Caractères accentués sont permis mais peuvent nuire à l'interop.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• my_variable = 1  # ok
+
+Remarques :
+• Utilisez str.isidentifier() pour tester une chaîne candidate.`,
+  312: `'2variable' est invalide : un identifiant ne peut pas commencer par un chiffre.
+
+Débutant :
+• Le premier symbole doit être lettre ou underscore.
+
+Intermédiaire :
+• Même si le reste respecte les règles, le 2 initial suffit à invalider.
+
+Expert :
+• Les analyseurs lèvent SyntaxError lors de l'assignation si le token n'est pas un identifiant.
+
+Concepts clés :
+• Préfixe numérique réservé aux littéraux numériques.
+
+Distinctions clés :
+• variable2 est permis ; 2variable ne l'est pas.
+
+Fonctionnement :
+• Le lexer tente de classer le token ; 2variable est ambigu avec un nombre.
+
+Exécution étape par étape :
+1. Lecture du '2'.
+2. Impossible de poursuivre comme identifiant légal au début.
+3. Erreur de syntaxe si utilisé comme nom cible.
+
+Ordre des opérations :
+• Détection très tôt (parse).
+
+Cas d'utilisation courants :
+• Éviter les noms issus de données commençant par chiffres : préfixer (ex. v_2x).
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• var2 = 1   # ok
+• 2var = 1   # SyntaxError
+
+Remarques :
+• Préfixe underscore pour champs internes, pas pour contourner cette règle.`,
+  313: `'my-variable' est invalide : le tiret '-' n'est pas autorisé dans un identifiant Python (c'est l'opérateur soustraction).
+
+Débutant :
+• Seuls lettres, chiffres (pas en tête) et underscore sont permis.
+
+Intermédiaire :
+• my_variable oumyvariable remplacent le tiret interdit.
+
+Expert :
+• Les noms avec tirets existent en JSON/HTML mais doivent être mappés en Python.
+
+Concepts clés :
+• Jeu de caractères identifiants strict.
+
+Distinctions clés :
+• - binaire vs _ dans les noms.
+
+Fonctionnement :
+• Le lexer voit my - variable comme soustraction, pas un seul nom.
+
+Exécution étape par étape :
+1. Tokenisation coupe au '-'.
+2. Pas d'identifiant unique 'my-variable'.
+
+Ordre des opérations :
+• Parse time.
+
+Cas d'utilisation courants :
+• Convertir clés API kebab-case en snake_case.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• a-b interprété comme soustraction.
+
+Remarques :
+• Utilisez pydantic/dataclasses field(alias=...) pour exposer des noms externes différents.`,
+  314: `'class' est invalide comme nom de variable : c'est un mot réservé (keyword) du langage.
+
+Débutant :
+• Les mots réservés structurent la syntaxe (class, def, return, ...).
+
+Intermédiaire :
+• Même si class ressemblerait à un identifiant lexical, le parser le rejette.
+
+Expert :
+• keyword.iskeyword('class') est True ; isidentifier peut être True mais assignation interdite.
+
+Concepts clés :
+• Mots-clés fixes, non recyclables comme noms liés.
+
+Distinctions clés :
+• Mot réservé vs builtins (list est réassignable mais déconseillé).
+
+Fonctionnement :
+• Grammar interdit NAME '=' ... quand NAME est keyword.
+
+Exécution étape par étape :
+1. Tentative d'assignation à class.
+2. SyntaxError.
+
+Ordre des opérations :
+• Compile time.
+
+Cas d'utilisation courants :
+• Renommer en klass, cls_, entity_class, etc.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• class_ = 1  # ok avec suffixe underscore
+
+Remarques :
+• Évitez d'écraser les builtins (list, dict) même si autorisé.`,
+  315: `'def' est un mot réservé : il introduit les définitions de fonction et ne peut pas être un nom de variable.
+
+Débutant :
+• Comme class, def fait partie du socle syntaxique.
+
+Intermédiaire :
+• def_ ou define_data sont des alternatives sûres.
+
+Expert :
+• Soft keywords (match/case 3.10+) ont des règles plus subtiles mais def reste strict.
+
+Concepts clés :
+• Mots réservés pour déclarations.
+
+Distinctions clés :
+• def vs lambda : lambda n'est pas un nom assignable non plus.
+
+Fonctionnement :
+• Parser attend une signature après def, pas une affectation inverse.
+
+Exécution étape par étape :
+1. Lecture de def comme mot-clé.
+2. Assignation illégale si utilisé comme cible.
+
+Ordre des opérations :
+• Analyse syntaxique.
+
+Cas d'utilisation courants :
+• Choisir des noms métier éloignés des mots-clés.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• definition = 1  # ok
+
+Remarques :
+• IDE/syntax highlighters signalent les conflits tôt.`,
+  316: `'if' est mot réservé pour les conditionnelles ; impossible de l'utiliser comme nom simple de variable.
+
+Débutant :
+• if commence un bloc conditionnel, pas une étiquette libre.
+
+Intermédiaire :
+• if_ ou predicate conviennent pour stocker un booléen.
+
+Expert :
+• Les parseurs PEG de CPython distinguent clairement soft/hard keywords ; if reste dur.
+
+Concepts clés :
+• Structure de contrôle vs espace de noms utilisateur.
+
+Distinctions clés :
+• if expression (ternaire) utilise if au milieu d'une expression, toujours mot-clé.
+
+Fonctionnement :
+• Rejet à la compilation si assignation à if.
+
+Exécution étape par étape :
+1. Token if reconnu.
+2. Pas de binding utilisateur sous ce nom.
+
+Ordre des opérations :
+• Parse.
+
+Cas d'utilisation courants :
+• Variables booléennes should_run, ok, flag.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• if_condition = True  # ok
+
+Remarques :
+• Les gabarits de code doivent échapper les mots-clés générés.`,
+  317: `'MyVariable' est valide : la casse mélangée est permise, même si PEP 8 recommande snake_case pour les variables.
+
+Débutant :
+• Majuscules et minuscules sont autorisées après la première lettre.
+
+Intermédiaire :
+• Les noms CapWords servent souvent aux classes, mais restent lexicalement valides partout.
+
+Expert :
+• Les conventions aident la lisibilité, pas la grammaire.
+
+Concepts clés :
+• Identifiants case-sensitive.
+
+Distinctions clés :
+• myvariable != MyVariable.
+
+Fonctionnement :
+• Token NAME accepté.
+
+Exécution étape par étape :
+1. M majuscule permise en tête.
+2. Suite alphanumérique ok.
+
+Ordre des opérations :
+• Lexing.
+
+Cas d'utilisation courants :
+• Classes, constantes nommées, code auto-généré.
+
+Cas limites :
+• Noms illisibles possibles mais valides.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• MyVariable = 1  # ok
+
+Remarques :
+• Préférez my_variable pour cohérence d'équipe.`,
+  318: `'_private' est valide : l'underscore initial est autorisé et signale souvent « usage interne » par convention.
+
+Débutant :
+• Un nom peut commencer par _ ; ce n'est pas une erreur.
+
+Intermédiaire :
+• from module import * n'importe pas les noms commençant par _ (convention).
+
+Expert :
+• __double_underscore__ déclenche du name mangling seulement à l'intérieur des classes.
+
+Concepts clés :
+• Underscore comme caractère premier classique.
+
+Distinctions clés :
+• Convention vs enforcement : Python ne bloque pas l'accès « privé ».
+
+Fonctionnement :
+• Lexer accepte _ en tête.
+
+Exécution étape par étape :
+1. '_' puis suite autorisée.
+2. Nom valide.
+
+Ordre des opérations :
+• Lexical.
+
+Cas d'utilisation courants :
+• Méthodes internes, caches, données protégées documentées.
+
+Cas limites :
+• __main__ est un nom magique de module, pas spécial pour les variables locales simples.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• _tmp = 0  # ok
+
+Remarques :
+• Respectez les conventions pour faciliter la relecture.`,
+  319: `'__special__' est valide : doubles underscores autorisés ; certains noms déclenchent des protocoles (hooks) s'ils sont dans des classes.
+
+Débutant :
+• Ce n'est pas un mot réservé par la grammaire de base.
+
+Intermédiaire :
+• Hors classe, __name__ reste un identifiant normal (peu utilisé ainsi).
+
+Expert :
+• Dans une classe, __dict__ et méthodes __dunder__ suivent des règles de résolution spéciales.
+
+Concepts clés :
+• Dunders comme signal conventionnel pour l'écosystème Python.
+
+Distinctions clés :
+• data.__len__ vs len(data) : le second appelle le premier.
+
+Fonctionnement :
+• Token valide ; comportement sémantique dépend du contexte de classe.
+
+Exécution étape par étape :
+1. Nom accepté lexicalement.
+2. Attachement selon espace de noms.
+
+Ordre des opérations :
+• Parse puis binding.
+
+Cas d'utilisation courants :
+• Implémenter __str__, __repr__, __eq__ dans vos classes.
+
+Cas limites :
+• Éviter d'inventer des dunders sans suivre la doc data model.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• __all__ = []  # convention module
+
+Remarques :
+• Lisez la data model avant de surcharger __*__.`,
+  320: `'variable name' (avec espace) est invalide : un identifiant doit être un token continu sans blancs.
+
+Débutant :
+• Les espaces séparent les tokens ; ce n'est pas un seul nom.
+
+Intermédiaire :
+• Utilisez variable_name ou camelCase sans espaces.
+
+Expert :
+• Les chaînes peuvent contenir des espaces, mais ne servent pas d'identifiants directs.
+
+Concepts clés :
+• Blanks interdits au milieu d'un NAME.
+
+Distinctions clés :
+• dict['cle avec espace'] possible en données, pas comme nom de variable Python.
+
+Fonctionnement :
+• Le lexer voit deux noms séparés par espace -> SyntaxError en assignation simple.
+
+Exécution étape par étape :
+1. Lecture de 'variable'.
+2. Espace -> fin du token courant.
+3. Impossible d'assigner à deux tokens ainsi.
+
+Ordre des opérations :
+• Parse.
+
+Cas d'utilisation courants :
+• Colonnes CSV avec espaces : normaliser en snake_case.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• variable_name = 1  # ok
+
+Remarques :
+• Pour attributs dynamiques, setattr(obj, 'texte avec espace', val) reste rare.`,
+  321: `len("hello") compte le nombre de caractères Unicode de la chaîne : ici 5 (h, e, l, l, o).
+
+Débutant :
+• len est une fonction intégrée qui mesure la longueur d'une séquence ou d'une collection.
+• Pour une chaîne, chaque caractère compte pour 1 dans la plupart des cas usuels.
+
+Intermédiaire :
+• len ne compte pas les octets bruts : pour les str, c'est le nombre de points de code (souvent = caractères visibles pour du texte simple).
+• Les chaînes vides : len("") vaut 0.
+
+Expert :
+• Pour connaître la taille encodée (UTF-8), utilisez len(s.encode('utf-8')).
+
+Concepts clés :
+• Fonction len, itérable de type str, longueur logique.
+
+Distinctions clés :
+• len(str) vs len(bytes) : sémantique différente (caractères vs octets).
+
+Fonctionnement :
+• Python parcourt la représentation interne de la chaîne et renvoie sa longueur.
+
+Exécution étape par étape :
+1. Évaluer le littéral "hello".
+2. Appeler len sur cet objet str.
+3. Compter les éléments (5).
+4. Renvoyer l'entier 5.
+
+Ordre des opérations :
+• L'argument est entièrement évalué avant l'appel à len.
+
+Cas d'utilisation courants :
+• Valider une saisie (longueur min/max), boucler avec range(len(s)) si besoin d'index.
+
+Cas limites :
+• Caractères composés (émojis avec modificateurs) peuvent surprendre : un glyphe peut correspondre à plusieurs points de code.
+
+Considérations de performance :
+• len sur str est en temps constant en CPython (longueur stockée).
+
+Exemples :
+• len("hello")  # 5
+• len("é")      # souvent 1 en Python 3
+
+Remarques :
+• Préférez itérer directement sur la chaîne plutôt que range(len(s)) quand l'index n'est pas nécessaire`,
+  322: `"Hello" + "World" en Python concatène deux chaînes : le résultat est "HelloWorld" (sans espace automatique).
+
+Débutant :
+• L'opérateur + entre deux str assemble le texte bout à bout.
+
+Intermédiaire :
+• + n'est pas commutatif pour des types mélangés : "a" + 1 lève TypeError ; il faut str(1).
+
+Expert :
+• La concaténation crée une nouvelle chaîne (les str sont immuables).
+
+Concepts clés :
+• Surcharge de + pour str, immuabilité, allocation d'un nouvel objet.
+
+Distinctions clés :
+• Concaténation vs interpolation f"{a}{b}" ou "".join(...).
+
+Fonctionnement :
+• Python construit une nouvelle séquence de caractères contenant la première puis la seconde partie.
+
+Exécution étape par étape :
+1. Évaluer "Hello".
+2. Évaluer "World".
+3. Appliquer + : produire "HelloWorld".
+
+Ordre des opérations :
+• Les opérandes sont évalués de gauche à droite.
+
+Cas d'utilisation courants :
+• Construire un message, un chemin simple (attention aux séparateurs), un identifiant textuel.
+
+Cas limites :
+• Beaucoup de + dans une boucle peut être coûteux ; join sur une liste de morceaux est souvent préférable.
+
+Considérations de performance :
+• Coût proportionnel à la taille totale des chaînes impliquées pour une seule opération.
+
+Exemples :
+• "Hello" + "World"
+• "Hi" + " " + "there"
+
+Remarques :
+• Ajoutez explicitement " " si vous voulez un espace entre deux mots`,
+  323: `"Hi" * 3 répète la chaîne trois fois : "HiHiHi".
+
+Débutant :
+• * entre une str et un int duplique le motif autant de fois.
+
+Intermédiaire :
+• L'ordre importe peu : 3 * "Hi" donne le même résultat.
+
+Expert :
+• n doit être un entier ; n négatif donne '' ; * avec float lève TypeError.
+
+Concepts clés :
+• Répétition de séquence, opérateur * sur str.
+
+Distinctions clés :
+• Répéter une liste [0]*3 vs str : même idée de répétition, types différents.
+
+Fonctionnement :
+• Python alloue une nouvelle chaîne dont la longueur est len(s) * n.
+
+Exécution étape par étape :
+1. Évaluer "Hi".
+2. Évaluer 3.
+3. Construire la chaîne répétée.
+
+Ordre des opérations :
+• Les deux opérandes sont évalués avant la répétition.
+
+Cas d'utilisation courants :
+• Bordures textuelles, remplissage, prototypes rapides ("-" * 20).
+
+Cas limites :
+• Répétition énorme peut saturer la mémoire.
+
+Considérations de performance :
+• Peut pré-allouer la taille finale ; reste O(longueur résultat).
+
+Exemples :
+• "Hi" * 3
+• "ab" * 0  # ''
+
+Remarques :
+• Pour des motifs complexes, join + générateur peut être plus clair`,
+  324: `"Python"[0] est l'indexation : le premier caractère est 'P' (indices à partir de 0).
+
+Débutant :
+• Les crochets [] accèdent à une position dans la chaîne.
+
+Intermédiaire :
+• Index positif : 0 = premier, 1 = deuxième, etc.
+
+Expert :
+• En dessous de -len(s) ou au-dessus de len(s)-1 : IndexError.
+
+Concepts clés :
+• Séquence indexable, base zéro, immuabilité (lecture seule).
+
+Distinctions clés :
+• s[0] premier caractère vs s[1] second.
+
+Fonctionnement :
+• Python calcule l'offset et renvoie le caractère sous forme de str d'une lettre.
+
+Exécution étape par étape :
+1. Évaluer "Python".
+2. Évaluer l'index 0.
+3. Renvoyer 'P'.
+
+Ordre des opérations :
+• La chaîne est évaluée avant l'index.
+
+Cas d'utilisation courants :
+• Inspecter premier caractère, tests de préfixe, parsing rudimentaire.
+
+Cas limites :
+• Chaîne vide : [0] est invalide.
+
+Considérations de performance :
+• Accès O(1) en CPython pour les str.
+
+Exemples :
+• "Python"[0]
+• "Python"[3]  # 'h'
+
+Remarques :
+• Pour le dernier caractère, s[-1] est idiomatique`,
+  325: `"Python"[-1] utilise un index négatif : le dernier caractère, ici 'n'.
+
+Débutant :
+• -1 signifie « en partant de la fin ».
+
+Intermédiaire :
+• -2 = avant-dernier, etc.
+
+Expert :
+• -len(s) pointe vers le premier caractère ; -len(s)-1 est hors plage.
+
+Concepts clés :
+• Indexation négative, convention -1 = fin.
+
+Distinctions clés :
+• s[len(s)-1] équivalent à s[-1] si s non vide.
+
+Fonctionnement :
+• Python convertit l'index négatif en position positive len(s)+k.
+
+Exécution étape par étape :
+1. len("Python") vaut 6.
+2. Index -1 → position 5.
+3. Renvoyer 'n'.
+
+Ordre des opérations :
+• Calcul de longueur implicite pour la normalisation d'index.
+
+Cas d'utilisation courants :
+• Dernier caractère d'un mot, extension de fichier simple, vérifier suffixe.
+
+Cas limites :
+• Chaîne vide : [-1] lève IndexError.
+
+Considérations de performance :
+• O(1) pour l'accès.
+
+Exemples :
+• "Python"[-1]
+• "hi"[-2]  # 'h'
+
+Remarques :
+• Combiner avec découpage [:-1] pour « tout sauf le dernier »`,
+  326: `"Python"[1:4] est une tranche (slice) : caractères aux index 1, 2, 3 → "yth".
+
+Débutant :
+• slice start:stop exclut la position stop.
+
+Intermédiaire :
+• Indices peuvent être omis ou négatifs ; pas d'IndexError sur bornes hors limites (souvent tronqué).
+
+Expert :
+• Troisième paramètre pas : s[i:j:k] ; ici pas utilisé.
+
+Concepts clés :
+• Slicing demi-ouvert [start, stop), copie superficielle de sous-chaîne.
+
+Distinctions clés :
+• s[1:4] quatre caractères max mais stop exclus donc 3 caractères.
+
+Fonctionnement :
+• Python construit une nouvelle str copiant la plage demandée.
+
+Exécution étape par étape :
+1. start=1 → 'y'
+2. index 2 → 't'
+3. index 3 → 'h'
+4. stop=4 exclus → "yth"
+
+Ordre des opérations :
+• bornes normalisées puis copie.
+
+Cas d'utilisation courants :
+• Sous-chaînes, parsing fixe, tests sur morceaux.
+
+Cas limites :
+• start >= stop renvoie ''.
+
+Considérations de performance :
+• Proportionnel à la taille de la tranche.
+
+Exemples :
+• "Python"[1:4]
+• "Python"[0:2]  # 'Py'
+
+Remarques :
+• Pour copier toute la chaîne : s[:] ou s[::1]`,
+  327: `"Python"[:3] omet le début : équivalent à [0:3], donc "Pyt".
+
+Débutant :
+• Laisser vide avant : signifie « depuis le début ».
+
+Intermédiaire :
+• De même s[3:] va jusqu'à la fin.
+
+Expert :
+• [:] shallow copy de la chaîne entière.
+
+Concepts clés :
+• Slice implicite start=0, slicing idiomatique.
+
+Distinctions clés :
+• [:3] vs [0:3] : identique pour les str.
+
+Fonctionnement :
+• Normalisation : start devient 0, stop devient 3.
+
+Exécution étape par étape :
+1. Prendre indices 0,1,2.
+2. Former "Pyt".
+
+Ordre des opérations :
+• Évaluation de la chaîne puis application du slice.
+
+Cas d'utilisation courants :
+• Préfixes, en-têtes CSV, comparer début de mot.
+
+Cas limites :
+• Si la chaîne est plus courte que stop, la tranche s'arrête proprement.
+
+Considérations de performance :
+• O(longueur de la tranche).
+
+Exemples :
+• "Python"[:3]
+• "Hi"[:10]  # 'Hi'
+
+Remarques :
+• Combiner [:n] et [n:] pour partitionner une chaîne en deux morceaux`,
+  328: `"Python"[3:] omet la fin : de l'index 3 jusqu'au bout → "hon".
+
+Débutant :
+• Le premier indice est inclus ; la fin manquante signifie len(s).
+
+Intermédiaire :
+• Utile pour enlever un préfixe fixe quand on connaît la longueur du préfixe.
+
+Expert :
+• Avec index négatif : s[-2:] derniers deux caractères.
+
+Concepts clés :
+• Slice avec stop implicite = fin de séquence.
+
+Distinctions clés :
+• s[3:] suffixe après le 4e caractère (index 3).
+
+Fonctionnement :
+• start=3, stop=len(s).
+
+Exécution étape par étape :
+1. Indices 3,4,5 sur "Python" (longueur 6).
+2. "hon".
+
+Ordre des opérations :
+• Calcul de la longueur pour borner stop.
+
+Cas d'utilisation courants :
+• Suffixes, retirer préfixe, queue de fichier.
+
+Cas limites :
+• start au-delà de la longueur : ''.
+
+Considérations de performance :
+• O(taille du suffixe).
+
+Exemples :
+• "Python"[3:]
+• "abc"[2:]  # 'c'
+
+Remarques :
+• Pour retirer une extension connue, vérifiez d'abord endswith`,
+  329: `"Python"[::2] utilise un pas de 2 : un caractère sur deux → "Pto".
+
+Débutant :
+• Le troisième nombre dans [début:fin:pas] indique le saut.
+
+Intermédiaire :
+• Par défaut le pas est 1 ; 2 prend indices 0,2,4,...
+
+Expert :
+• Pas négatif parcourt en sens inverse (voir [::-1]).
+
+Concepts clés :
+• Slice à trois composantes, stride, échantillonnage.
+
+Distinctions clés :
+• [::2] garde positions paires en partant de 0 pour cette chaîne.
+
+Fonctionnement :
+• Itération sur indices i = start, start+step, ... tant que dans les bornes.
+
+Exécution étape par étape :
+1. Indices 0 'P', 2 't', 4 'o' sur "Python".
+2. Résultat "Pto".
+
+Ordre des opérations :
+• Normalisation des bornes puis application du pas.
+
+Cas d'utilisation courants :
+• Sous-échantillonner, motifs alternés, jeux et puzzles.
+
+Cas limites :
+• Pas 0 lève ValueError.
+
+Considérations de performance :
+• O(n) sur la longueur avec facteur lié au pas.
+
+Exemples :
+• "Python"[::2]
+• "abcdef"[1::2]  # 'bdf'
+
+Remarques :
+• Pour des analyses binaires, bytes et pas sont aussi utiles`,
+  330: `"Python"[::-1] inverse la chaîne : "nohtyP".
+
+Débutant :
+• Pas -1 parcourt de la fin vers le début.
+
+Intermédiaire :
+• start et stop omis avec pas négatif parcourent toute la chaîne inversée.
+
+Expert :
+• Idiomatique et lisible pour petites chaînes ; pour très gros textes, considérez bytearray ou buffers si besoin.
+
+Concepts clés :
+• Slice avec step négatif, renversement.
+
+Distinctions clés :
+• reversed(iterable) donne un itérateur ; [::-1] donne une nouvelle str immédiate.
+
+Fonctionnement :
+• Python parcourt les index de len(s)-1 à 0.
+
+Exécution étape par étape :
+1. Chaîne source "Python".
+2. Parcours inverse car pas -1.
+3. Construction de "nohtyP".
+
+Ordre des opérations :
+• Évaluation de s puis création de la copie inversée.
+
+Cas d'utilisation courants :
+• Palindromes, transformations ludiques, certains algorithmes naïfs.
+
+Cas limites :
+• Mémoire double de la taille de la chaîne pour le résultat.
+
+Considérations de performance :
+• O(n) temps et O(n) espace.
+
+Exemples :
+• "Python"[::-1]
+• "aba"[::-1] == "aba"
+
+Remarques :
+• Pour tester palindrome : s == s[::-1] (naïf mais clair)`,
+  331: `Le symbole # commence un commentaire sur une ligne : tout ce qui suit sur cette ligne est ignoré par l'exécuteur Python.
+
+Débutant :
+• # ne produit aucune valeur ; c'est une annotation pour les humains.
+
+Intermédiaire :
+• Un commentaire ne peut pas « continuer » sur la ligne suivante sans un nouveau #.
+
+Expert :
+• # à l'intérieur d'une chaîne littérale fait partie des données, pas un commentaire.
+
+Concepts clés :
+• Commentaire fin de ligne, lexing, tokenization.
+
+Distinctions clés :
+• # réel commentaire vs caractère # dans une str.
+
+Fonctionnement :
+• Après # hors chaîne, le reste de la ligne est jeté par le parseur.
+
+Exécution étape par étape :
+1. Lecture de code: x = 1  # note
+2. Seule x = 1 est exécutée.
+
+Ordre des opérations :
+• Le commentaire est retiré avant l'arbre syntaxique exécutable.
+
+Cas d'utilisation courants :
+• Expliquer le pourquoi, désactiver temporairement une partie (préférer le contrôle de version pour du gros bloc).
+
+Cas limites :
+• Pas de commentaire multi-ligne avec # seul ; utiliser plusieurs lignes # ou une chaîne non assignée (discutable).
+
+Considérations de performance :
+• Aucun coût runtime.
+
+Exemples :
+• # ceci est ignoré
+• print("# visible")  # affiche # visible
+
+Remarques :
+• Les docstrings """...""" ne sont pas des commentaires : elles créent des objets str`,
+  332: `Pour une chaîne multi-lignes, la forme correcte et idiomatique est d'utiliser des triples quotes '''...''' ou """...""" qui peuvent s'étendre sur plusieurs lignes physiques.
+
+Débutant :
+• Trois quotes ouvrantes et trois quotes fermantes encadrent tout le bloc de texte.
+
+Intermédiaire :
+• On peut aussi concaténer des chaînes entre parenthèses avec des retours ligne implicites.
+
+Expert :
+• Une docstring de module/fonction est une chaîne triple-quoted en tête de bloc ; ce n'est pas un « commentaire » au sens lexer.
+
+Concepts clés :
+• Littéraux multi-lignes, newlines préservés dans la str.
+
+Distinctions clés :
+• Triple quotes vs \\n explicites dans une chaîne courte.
+
+Fonctionnement :
+• Le parseur absorbe les retours ligne jusqu'au terminateur triple égal.
+
+Exécution étape par étape :
+1. Ouvrir """.
+2. Lire lignes suivantes.
+3. Fermer avec """ → une seule valeur str.
+
+Ordre des opérations :
+• Construction du littéral lors de l'évaluation de l'expression.
+
+Cas d'utilisation courants :
+• Gabarits ASCII, JSON embarqué, texte d'aide, mails.
+
+Cas limites :
+• Si le texte contient le même triple quote, alterner ' et " ou échapper.
+
+Considérations de performance :
+• Identique à toute construction de str de même taille.
+
+Exemples :
+• s = """ligne1
+ligne2"""
+
+Remarques :
+• textwrap.dedent nettoie souvent l'indentation des blocs multi-lignes`,
+  333: `Les commentaires servent à documenter l'intention humaine : ils rendent le code plus lisible et facilite la maintenance sans changer le comportement du programme.
+
+Débutant :
+• Ils expliquent « pourquoi » plus que « quoi » quand le code est déjà clair.
+
+Intermédiaire :
+• Ils ne sont pas exécutés : aucun effet sur les variables.
+
+Expert :
+• Outils comme doctest peuvent extraire des exemples de docstrings ; les # simples restent purement ignorés.
+
+Concepts clés :
+• Documentation inline, clarté, collaboration.
+
+Distinctions clés :
+• Commentaire vs docstring vs type hints (qui influencent outils).
+
+Fonctionnement :
+• Phase d'analyse : texte après # supprimé ; docstrings stockées sur __doc__.
+
+Exécution étape par étape :
+1. Développeur écrit # raison du choix.
+2. Interpréteur ignore.
+3. Lecture future par humains.
+
+Ordre des opérations :
+• Aucune interaction avec l'ordre d'évaluation des expressions voisines.
+
+Cas d'utilisation courants :
+• TODO contrôlés, avertissements métier, références tickets.
+
+Cas limites :
+• Commentaires obsolètes mentent : maintenez-les comme le code.
+
+Considérations de performance :
+• Fichiers sources plus gros ; zéro impact une fois chargé.
+
+Exemples :
+• # FIXME: gérer None
+• x = a + b  # invariant du domaine
+
+Remarques :
+• Préférez des noms explicites aux longs commentaires redondants`,
+  334: `Oui : on peut placer un commentaire après du code sur la même ligne grâce à # ; seul le code avant # est exécuté.
+
+Débutant :
+• x = 1  # commentaire est valide.
+
+Intermédiaire :
+• Tout ce qui suit # sur cette ligne est du commentaire, pas une deuxième instruction.
+
+Expert :
+• Impossible de « couper » une expression au milieu puis commenter la fin sans terminer l'expression correctement avant #.
+
+Concepts clés :
+• Fin de ligne, séparation code / annotation.
+
+Distinctions clés :
+• Deux instructions sur une ligne séparées par ; sont rares ; # termine toujours la partie exécutable de la ligne.
+
+Fonctionnement :
+• Lexer lit l'expression, puis rencontre # et ignore la fin.
+
+Exécution étape par étape :
+1. Évaluer l'instruction complète avant #.
+2. Ignorer le texte explicatif.
+
+Ordre des opérations :
+• L'expression avant # suit les règles normales (+, appels, etc.).
+
+Cas d'utilisation courants :
+• Annoter une constante magique, expliquer un seuil.
+
+Cas limites :
+• Les parenthèses non fermées avant # provoquent SyntaxError.
+
+Considérations de performance :
+• Nulle.
+
+Exemples :
+• rate = 0.05  # TVA réduite
+• return x  # early exit
+
+Remarques :
+• Les linters peuvent limiter la longueur de ligne incluant commentaires`,
+  335: `'''triple quotes''' (ou """...""") créent une chaîne de caractères str, souvent utilisée pour du texte sur plusieurs lignes ou des docstrings.
+
+Débutant :
+• Le résultat est un objet str comme avec '...'.
+
+Intermédiaire :
+• Les retours ligne dans le littéral font partie de la chaîne.
+
+Expert :
+• Si placée en tête de module/classe/fonction immédiatement après la définition, c'est une docstring assignée à __doc__.
+
+Concepts clés :
+• Littéral str, triple quoting, multi-ligne.
+
+Distinctions clés :
+• Chaîne non assignée en script peut être évaluée puis jetée (effet de bord rare) ; docstring a une place sémantique.
+
+Fonctionnement :
+• Parseur agrège le contenu entre les délimiteurs triples.
+
+Exécution étape par étape :
+1. Rencontrer '''.
+2. Capturer le texte jusqu'au ''' fermant.
+3. Produire l'objet str.
+
+Ordre des opérations :
+• Comme tout littéral, évaluation à l'exécution de la portée.
+
+Cas d'utilisation courants :
+• SQL multiligne, JSON/XML embarqué, documentation.
+
+Cas limites :
+• Échapper ou alterner quotes si le texte contient '''.
+
+Considérations de performance :
+• Identique à toute str de même taille.
+
+Exemples :
+• s = '''a
+b'''
+
+Remarques :
+• Utilisez textwrap.dedent pour retirer indentation commune`,
+  336: `# est avant tout un marqueur de commentaire lorsqu'il apparaît dans le code hors chaîne ; ce n'est pas un délimiteur de chaîne comme ' ou ".
+
+Débutant :
+• Dans du code normal, # commence un commentaire.
+
+Intermédiaire :
+• Dans "a#b", le # est un caractère ordinaire du texte.
+
+Expert :
+• En f-strings, certaines parties sont des expressions ; # reste commentaire seulement dans la partie « code » hors littéraux internes.
+
+Concepts clés :
+• Contexte lexical, délimiteurs de str, rôle dual du caractère #.
+
+Distinctions clés :
+• Token COMMENT vs caractère U+0023 dans une str.
+
+Fonctionnement :
+• Le lexer distingue mode code et mode chaîne.
+
+Exécution étape par étape :
+1. Hors chaîne : # → fin du code utile sur la ligne.
+2. Dans chaîne : # copié dans la valeur.
+
+Ordre des opérations :
+• Analyse ligne par ligne / littéral par littéral.
+
+Cas d'utilisation courants :
+• Afficher des hashtags, chemins, couleurs #RRGGBB dans des chaînes.
+
+Cas limites :
+• Chaînes brutes r"..." : # reste dans la chaîne.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• "#tag"   # une chaîne
+• x = 1  # commentaire
+
+Remarques :
+• colorier syntaxiquement aide à voir quand # est littéral`,
+  337: `Les triples quotes peuvent servir de « commentaire de bloc » informel en plaçant une chaîne multi-lignes sans l'assigner à une variable, mais ce n'est pas un vrai commentaire : Python crée quand même un objet str temporaire (souvent immédiatement jeté).
+
+Débutant :
+• Mieux vaut # sur plusieurs lignes pour du vrai commentaire.
+
+Intermédiaire :
+• En début de fonction, une str seule est une docstring, pas un simple commentaire ignoré.
+
+Expert :
+• Les outils d'analyse statique et la REPL affichent parfois ces chaînes ; préférez # ou docstrings intentionnelles.
+
+Concepts clés :
+• Chaîne non utilisée vs commentaire lexer, docstring implicite.
+
+Distinctions clés :
+• Commentaire # supprimé tôt vs littéral str évalué.
+
+Fonctionnement :
+• Une expression str seule dans un bloc devient docstring si première instruction ; sinon peut être une valeur abandonnée.
+
+Exécution étape par étape :
+1. Si première ligne d'une fonction : docstring stockée.
+2. Sinon : str créée puis écartée par GC.
+
+Ordre des opérations :
+• Suit les règles de bloc pour docstrings.
+
+Cas d'utilisation courants :
+• Vraie docstring avec """Explication.""" en tête de def.
+
+Cas limites :
+• Ne pas utiliser des chaînes orphelines pour masquer du code mort : confus.
+
+Considérations de performance :
+• Légère allocation si chaîne orpheline ; négligeable sauf boucle chaude.
+
+Exemples :
+• def f():
+    """Renvoie zéro."""
+    return 0
+
+Remarques :
+• Pour désactiver du code, utilisez # ou if False: avec avertissement linter`,
   338: `Tout ce qui suit le symbole # sur une ligne est ignoré par Python : c’est un commentaire, donc ce texte ne s’exécute pas.
 
 Débutant :
@@ -20217,8726 +19152,11612 @@ Exemples :
 
 Remarques :
 • C’est une étape de nettoyage très fréquente avant validation/parsing.`,
-  402: `"  hello  ".lstrip() renvoie "hello  " : lstrip supprime les blancs à gauche uniquement.
-
+  422: `Après s = "hello", l'instruction s[0] = "H" lève TypeError : les str sont immuables ; on ne peut pas modifier un caractère en place.
 Débutant :
-• Les espaces du début sont retirés.
-• Les espaces de fin restent.
+• On lit s[0], mais on ne l'écrit pas.
+• Il faut fabriquer une nouvelle chaîne (slicing + concaténation).
 
 Intermédiaire :
-• lstrip agit uniquement sur le bord gauche.
+• Message typique : "str object does not support item assignment".
+• list et bytearray acceptent l'affectation par indice ; str non.
 
 Expert :
-• lstrip(chars) peut retirer des caractères spécifiques.
+• L'immuabilité permet hachage stable et clés de dict sûres pour les chaînes.
 
 Concepts clés :
-• Nettoyage côté gauche.
+• Immuabilité, indexation lecture seule, TypeError.
 
 Distinctions clés :
-• lstrip gauche, rstrip droite, strip deux côtés.
+• s = "H" + s[1:] crée un nouvel objet ; s[0] = "H" est interdit.
 
 Fonctionnement :
-• Python enlève les caractères de blanc en tête jusqu’au premier non-blanc.
+• Tentative d'appeler __setitem__ sur str → échec.
 
 Exécution étape par étape :
-1. Lire "  hello  ".
-2. Supprimer espaces initiaux.
-3. Conserver espaces finaux.
-4. Retourner "hello  ".
+1. s pointe vers "hello".
+2. Évaluation de la cible s[0] pour affectation.
+3. TypeError ; s inchangé.
 
 Ordre des opérations :
-• Évaluer la chaîne puis appeler lstrip().
+• L'affectation échoue avant toute mutation.
 
 Cas d'utilisation courants :
-• Nettoyage d’entrées avec indentation parasite.
+• Corriger une lettre, normaliser une saisie, reconstruire un identifiant.
 
 Cas limites :
-• Chaîne tout-blanc -> "".
+• bytearray(b"ab")[0] = 97 est légal ; str ne le sera jamais.
 
 Considérations de performance :
-• O(n) au pire.
+• Reconstruction O(n) ; reste l'idiome standard.
 
 Exemples :
-• "  hi".lstrip()  # "hi"
+• "H" + "ello"
+• s = "hello"; s[:1] + "i" + s[2:]  # "hillo"
 
 Remarques :
-• Idéal quand on veut préserver l’alignement de fin.`,
-  403: `"  hello  ".rstrip() renvoie "  hello" : rstrip supprime les blancs à droite uniquement.
-
+• Pour édition fréquente, accumulez dans une liste puis join.`,
+  423: `str([1, 2]) donne la chaîne "[1, 2]" : conversion lisible d'une liste via __str__.
 Débutant :
-• Les espaces de fin disparaissent.
-• Les espaces du début restent.
+• Ce texte ressemble à la notation Python, mais c'est du simple str.
+• Utile pour afficher vite le contenu.
 
 Intermédiaire :
-• rstrip agit sur la queue de la chaîne.
+• Ce n'est pas du JSON standard (espaces, types).
+• Chaque élément est lui-même converti en texte.
 
 Expert :
-• rstrip(chars) permet de retirer un ensemble de caractères ciblés.
+• Pour échanger des données, préférez json, csv, protobuf, etc.
 
 Concepts clés :
-• Nettoyage côté droit.
+• str() sur conteneur, représentation "informative".
 
 Distinctions clés :
-• rstrip droite, lstrip gauche, strip des deux côtés.
+• str(liste) vs repr(liste) : souvent identiques pour listes simples, pas garanti pour tous les types.
 
 Fonctionnement :
-• Python retire les blancs finaux jusqu’au premier non-blanc.
+• Construction récursive de la représentation de la liste.
 
 Exécution étape par étape :
-1. Lire "  hello  ".
-2. Retirer les deux espaces finaux.
-3. Garder les espaces initiaux.
-4. Retourner "  hello".
+1. Créer [1, 2].
+2. Appeler str sur l'objet liste.
+3. Obtenir "[1, 2]".
 
 Ordre des opérations :
-• Évaluer puis rstrip().
+• La liste existe avant la conversion.
 
 Cas d'utilisation courants :
-• Nettoyer des fins de ligne/valeurs importées.
+• print de debug, messages utilisateur simples.
 
 Cas limites :
-• Chaîne vide reste vide.
+• Objets sans __str__ cohérent ; références circulaires → erreur.
 
 Considérations de performance :
-• O(n) au pire.
+• Linéaire dans la taille du texte produit.
 
 Exemples :
-• "hi  ".rstrip()  # "hi"
+• str([1, 2])
+• str([])  # "[]"
 
 Remarques :
-• Utile pour conserver l’indentation gauche tout en nettoyant la fin.`,
-  404: `"xxhelloxx".strip("x") renvoie "hello" : strip("x") enlève les x aux deux extrémités.
-
+• Ne "parsez" pas str(liste) pour reconstruire des données.`,
+  424: `repr("hello") vaut souvent "'hello'" (guillemets inclus) : une représentation qui vise à être réévaluable ; str("hello") vaut "hello" sans quotes externes.
 Débutant :
-• Les x du début et de la fin sont retirés.
-• Le cœur "hello" reste.
+• str : texte pour humain ; repr : texte pour déboguer ou recréer la valeur.
+• En console interactive, repr est souvent utilisé pour les résultats non évidents.
 
 Intermédiaire :
-• strip("x") n’enlève pas les x au milieu.
+• __str__ vs __repr__ sur types personnalisés : deux hooks distincts.
+• repr cherche l'information "exacte" ou la forme officielle.
 
 Expert :
-• strip(chars) traite chars comme ensemble de caractères, pas comme sous-chaîne.
+• eval(repr(x)) parfois possible pour types built-in simples ; jamais une garantie générale.
 
 Concepts clés :
-• strip avec argument.
-• Retrait aux bords seulement.
+• str() vs repr(), objectifs d'affichage différents.
 
 Distinctions clés :
-• strip("x") agit sur extrémités, pas remplacement global.
+• print(str(x)) doux ; print(repr(x)) explicite (quote visible pour chaîne).
 
 Fonctionnement :
-• Python enlève les caractères de l’ensemble {"x"} depuis gauche puis droite.
+• repr appelle PyObject_Repr ; str appelle PyObject_Str.
 
 Exécution étape par étape :
-1. Lire "xxhelloxx".
-2. Retirer x à gauche jusqu’à "h".
-3. Retirer x à droite jusqu’à "o".
-4. Retourner "hello".
+1. Évaluer "hello".
+2. repr → "'hello'" (CPython typique).
+3. str → "hello".
 
 Ordre des opérations :
-• Évaluer chaîne et argument chars puis strip.
+• Chaque appel est indépendant.
 
 Cas d'utilisation courants :
-• Nettoyage de délimiteurs parasites.
+• Logs techniques, assert messages, REPL.
 
 Cas limites :
-• "xhellox".strip("xy") retire x/y aux bords uniquement.
+• Caractères non ASCII : repr peut utiliser échappements Unicode (séquence \\uXXXX).
+
+Considérations de performance :
+• Coût similaire à une petite construction de chaîne.
+
+Exemples :
+• repr("hello")
+• str("hello")
+
+Remarques :
+• En f-string, !r force repr.`,
+  425: `"  Hello  ".strip().lower() vaut "hello" : strip enlève espaces début/fin, lower met en minuscules.
+Débutant :
+• strip retire les blancs (par défaut) aux extrémités.
+• lower transforme toutes les lettres en minuscules (Unicode).
+
+Intermédiaire :
+• Chaînage gauche-droite : d'abord strip sur la str d'origine, puis lower sur le résultat.
+• strip ne touche pas aux espaces internes.
+
+Expert :
+• strip accepte un argument chars pour autres caractères à retirer.
+
+Concepts clés :
+• Méthodes str, immuabilité (nouvelles str à chaque étape).
+
+Distinctions clés :
+• lower vs casefold pour comparaisons insensibles à la casse agressives.
+
+Fonctionnement :
+• strip crée une nouvelle str tronquée ; lower crée une nouvelle str normalisée.
+
+Exécution étape par étape :
+1. "  Hello  ".strip() → "Hello".
+2. .lower() → "hello".
+
+Ordre des opérations :
+• Appels de méthodes de gauche à droite.
+
+Cas d'utilisation courants :
+• Normaliser saisie utilisateur, comparaisons insensibles aux espaces/casse.
+
+Cas limites :
+• Caractères Unicode spéciaux : lower suit les règles Unicode.
+
+Considérations de performance :
+• Deux parcours de chaîne ; négligeable pour textes courts.
+
+Exemples :
+• "  Hi  ".strip().lower()
+• "  ".strip()  # ""
+
+Remarques :
+• combinez avec replace ou translate pour nettoyage plus fort.`,
+  426: `f"{2 + 3}" vaut "5" : les accolades d'une f-string évaluent l'expression Python puis convertissent en texte.
+Débutant :
+• Le préfixe f active l'interpolation.
+• 2 + 3 est calculé avant insertion.
+
+Intermédiaire :
+• Les f-strings sont analysées à la compilation (PEP 498).
+• Les expressions peuvent appeler des fonctions (avec prudence).
+
+Expert :
+• Portée lexicale : accès aux variables de la fonction/module englobant.
+
+Concepts clés :
+• f-string, évaluation d'expression, formatage dynamique.
+
+Distinctions clés :
+• f"{x}" vs str(x) externe : f-string intègre le formatage.
+
+Fonctionnement :
+• Le moteur évalue 2+3 → 5 puis __format__ avec défaut.
+
+Exécution étape par étape :
+1. Préfixe f détecté.
+2. Calcul de 2 + 3.
+3. Assemblage de "5".
+
+Ordre des opérations :
+• Expressions internes avant concaténation finale.
+
+Cas d'utilisation courants :
+• Messages, logs, templates simples.
+
+Cas limites :
+• Accolades littérales : doubler {{ }}.
+
+Considérations de performance :
+• Très efficace en CPython 3.11+.
+
+Exemples :
+• f"{2 + 3}"
+• f"{10 // 3}"
+
+Remarques :
+• Évitez effets de bord lourds dans les { }.`,
+  427: `f"{'hello'.upper()}" vaut "HELLO" : l'expression entre accolades peut invoquer des méthodes.
+Débutant :
+• upper() renvoie une nouvelle chaîne en majuscules.
+• Le résultat est injecté dans la f-string.
+
+Intermédiaire :
+• Les quotes autour de 'hello' sont dans l'expression, pas le texte fixe.
+• Chaînes imbriquées : attention aux délimiteurs cohérents.
+
+Expert :
+• lower/upper suivent Unicode ; certaines lettres n'ont pas de casse.
+
+Concepts clés :
+• Appel de méthode dans expression f-string.
+
+Distinctions clés :
+• f"{'hello'.upper()}" vs "hello".upper() seul : la première est déjà dans un gabarit.
+
+Fonctionnement :
+• Évaluation de 'hello'.upper() puis format.
+
+Exécution étape par étape :
+1. Créer "hello".
+2. upper() → "HELLO".
+3. f-string → "HELLO".
+
+Ordre des opérations :
+• Expression complète avant assemblage.
+
+Cas d'utilisation courants :
+• Titres, codes, comparaisons normalisées affichées.
+
+Cas limites :
+• upper() ne modifie pas la str d'origine.
+
+Considérations de performance :
+• Coût d'une copie de chaîne supplémentaire.
+
+Exemples :
+• f"{'hello'.upper()}"
+
+Remarques :
+• Gardez les expressions courtes pour la lisibilité.`,
+  428: `f"{'even' if 4 % 2 == 0 else 'odd'}" vaut "even" : une expression conditionnelle peut vivre dans les accolades.
+Débutant :
+• if/else inline renvoie une des deux chaînes.
+• 4 % 2 == 0 est True, donc branche 'even'.
+
+Intermédiaire :
+• Priorité : l'expression ternaire est une seule expression.
+• Peut être imbriquée mais vite illisible.
+
+Expert :
+• Même mécanisme que hors f-string ; pas de sous-langage magique.
+
+Concepts clés :
+• Expression conditionnelle, f-string, booléens.
+
+Distinctions clés :
+• if inline vs if statement : seulement pour expressions.
+
+Fonctionnement :
+• Évaluation du test puis branche choisie.
+
+Exécution étape par étape :
+1. Calculer 4 % 2 == 0 → True.
+2. Choisir 'even'.
+3. Injecter dans la f-string.
+
+Ordre des opérations :
+• Test avant parties vrai/faux.
+
+Cas d'utilisation courants :
+• Libellés dynamiques, statuts, bandeaux.
+
+Cas limites :
+• Ne remplace pas des if multi-lignes complexes.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• f"{'yes' if True else 'no'}"
+
+Remarques :
+• Extrayez la logique dans une variable si elle grossit.`,
+  429: `f"{3.14159:.2f}" arrondit l'affichage à deux décimales : "3.14" (arrondi, pas troncature brutale).
+Débutant :
+• Après le deux-points, .2f impose deux chiffres après la virgule.
+• Le résultat est une chaîne, pas un float.
+
+Intermédiaire :
+• Suit mini-langage de format (comme format()).
+• Peut afficher séparateur, signe, padding.
+
+Expert :
+• Arrondi binaire des floats : parfois 2.675 → "2.67" selon représentation.
+
+Concepts clés :
+• Spécificateur de format, précision, type f.
+
+Distinctions clés :
+• Affichage vs valeur mathématique exacte.
+
+Fonctionnement :
+• __format__ sur float avec pattern .2f.
+
+Exécution étape par étape :
+1. Évaluer 3.14159.
+2. Appliquer formatage .2f.
+3. Produit "3.14".
+
+Ordre des opérations :
+• Expression puis spécificateur.
+
+Cas d'utilisation courants :
+• Devises, mesures, tableaux lisibles.
+
+Cas limites :
+• Besoin d'exact décimal : module decimal.
+
+Considérations de performance :
+• Conversion format coûte peu plus qu'un print float.
+
+Exemples :
+• f"{3.14159:.2f}"
+• f"{1:.4f}"
+
+Remarques :
+• Combinez avec alignement (> < ^) si besoin.`,
+  430: `f"{42:05d}" affiche l'entier sur 5 positions avec zéros à gauche : "00042".
+Débutant :
+• 0 indique le remplissage par zéro ; 5 la largeur minimale ; d entier décimal.
+• Si le nombre est plus long que la largeur, la largeur est dépassée.
+
+Intermédiaire :
+• Différent de zfill sur str : ici on formate un int.
+• Signes négatifs consomment une place.
+
+Expert :
+• Pour bases autres : b, x, o avec mêmes règles de largeur.
+
+Concepts clés :
+• Format d'entier, padding, largeur.
+
+Distinctions clés :
+• 05d vs >5d (espaces) : choix visuel.
+
+Fonctionnement :
+• Conversion int → texte avec padding.
+
+Exécution étape par étape :
+1. Valeur 42.
+2. Largeur 5, pad 0 → "00042".
+
+Ordre des opérations :
+• Évaluation de 42 puis format.
+
+Cas d'utilisation courants :
+• Identifiants numériques fixes, heures, codes.
+
+Cas limites :
+• Très grandes largeurs : chaîne longue mais valide.
+
+Considérations de performance :
+• O(1) pour petits entiers.
+
+Exemples :
+• f"{7:03d}"  # "007"
+
+Remarques :
+• Pour aligner du texte, utilisez formats sur str.`,
+  431: `len(f"{'hi':>10}") vaut 10 : la f-string produit une chaîne de largeur totale 10 (hi aligné à droite, espaces à gauche).
+Débutant :
+• >10 dans le champ de format impose une largeur minimale de 10 caractères.
+• len compte tous les caractères, espaces compris.
+
+Intermédiaire :
+• Le contenu 'hi' fait 2 caractères ; 8 espaces complètent si alignement à droite.
+• Si le texte dépasse 10, len peut être > 10.
+
+Expert :
+• Le remplissage par défaut est l'espace ; on peut choisir un autre caractère avec second =.
+
+Concepts clés :
+• Formatage avec largeur, mesure par len.
+
+Distinctions clés :
+• Largeur minimale vs longueur exacte du contenu.
+
+Fonctionnement :
+• Construction de la str formatée puis len.
+
+Exécution étape par étape :
+1. Formater 'hi' en largeur 10 alignée droite.
+2. Obtenir 10 caractères.
+3. len → 10.
+
+Ordre des opérations :
+• f-string d'abord, len ensuite.
+
+Cas d'utilisation courants :
+• Colonnes monospace, rapports texte.
+
+Cas limites :
+• Caractères Unicode largeur d'affichage ≠ 1 en terminal ; len reste en points de code.
+
+Considérations de performance :
+• Deux constructions de chaîne ; négligeable.
+
+Exemples :
+• len(f"{'abc':^6}")  # 6
+
+Remarques :
+• Pour colonnes UI riches, préférez bibliothèques d'affichage.`,
+  432: `x = f"{'hi':<10}" produit "hi" suivi de 8 espaces ; x.endswith("hi") vaut False car la chaîne se termine par des espaces, pas par la sous-chaîne "hi".
+Débutant :
+• :<10 aligne à gauche sur une largeur de 10 : padding à droite.
+• endswith regarde la fin exacte, caractère par caractère.
+
+Intermédiaire :
+• startswith("hi") serait True ici ; endswith diffère.
+• Pour tester le motif avant espaces : x.rstrip().endswith("hi").
+
+Expert :
+• Le remplissage par défaut est l'espace U+0020 ; pas de trim implicite.
+
+Concepts clés :
+• Spécificateur de largeur, alignement, méthodes str.
+
+Distinctions clés :
+• Suffixe logique vs suffixe brut de la représentation complète.
+
+Fonctionnement :
+• Construction de la f-string puis appel endswith sur le résultat.
+
+Exécution étape par étape :
+1. x reçoit "hi        ".
+2. endswith("hi") compare la fin : derniers caractères sont des espaces.
+3. Résultat booléen False.
+
+Ordre des opérations :
+• Évaluation de la f-string avant l'appel de méthode.
+
+Cas d'utilisation courants :
+• Vérifier extensions de fichiers, préfixes/suffixes après normalisation.
+
+Cas limites :
+• Chaînes vides : endswith("") est True (trivialement).
+
+Considérations de performance :
+• Linéaire dans la longueur du suffixe testé.
+
+Exemples :
+• "hi".endswith("hi")  # True
+• ("hi" + "   ").endswith("hi")  # False
+
+Remarques :
+• Toujours décider si les espaces font partie des données métier.`,
+  433: `x = f"{'hi':^10}" centre "hi" dans 10 caractères ; x.strip() supprime espaces début/fin et redonne "hi".
+Débutant :
+• ^ centre le texte ; strip enlève espaces aux deux bords.
+• Après strip, il ne reste que les lettres utiles.
+
+Intermédiaire :
+• strip sans argument retire espaces/blancs Unicode usuels en bord.
+• strip ne change pas l'intérieur (pas d'espace ici).
+
+Expert :
+• strip(chars) permet d'autres caractères à retirer.
+
+Concepts clés :
+• Formatage centré, normalisation de chaîne.
+
+Distinctions clés :
+• strip vs replace : strip cible les bords seulement.
+
+Fonctionnement :
+• f-string puis mutation logique via nouvelle str strip.
+
+Exécution étape par étape :
+1. x = "   hi    " (exemple typique 3+4 espaces pour largeur 10).
+2. strip → "hi".
+
+Ordre des opérations :
+• D'abord créer x, ensuite strip sur cette valeur.
+
+Cas d'utilisation courants :
+• Nettoyer champs utilisateur après padding d'affichage.
+
+Cas limites :
+• strip ne retire pas tous les espaces internes.
+
+Considérations de performance :
+• Deux parcours de chaîne ; négligeable.
+
+Exemples :
+• f"{'ab':^6}".strip()
+
+Remarques :
+• combinez lstrip/rstrip si un seul côté compte.`,
+  434: `f"{'hi':*^10}" remplit une largeur 10 avec des astérisques autour de "hi" : motif du type "***hi****" (répartition selon règles de centrage).
+Débutant :
+• Le caractère avant = est le remplissage choisi (* au lieu d'espace).
+• ^ centre la valeur dans le champ.
+
+Intermédiaire :
+• Avec largeur paire autour d'une longueur 2, padding équilibré des deux côtés.
+• Le résultat est toujours une str.
+
+Expert :
+• Un seul caractère de remplissage autorisé pour ce mini-langage.
+
+Concepts clés :
+• Remplissage personnalisé, alignement, f-string.
+
+Distinctions clés :
+• *^ vs > avec fill : même idée, position différente.
+
+Fonctionnement :
+• Moteur de format calcule colonnes de * et insère la valeur.
+
+Exécution étape par étape :
+1. Valeur "hi".
+2. Largeur 10, centre, fill *.
+3. Chaîne finale affichable.
+
+Ordre des opérations :
+• Évaluation de l'expression formatée puis assemblage.
+
+Cas d'utilisation courants :
+• Bannières ASCII, tests visuels, CLI ludiques.
+
+Cas limites :
+• Caractère de fill invalide ou trop long → erreur.
+
+Considérations de performance :
+• Identique à un formatage standard.
+
+Exemples :
+• f"{'x':-^5}"
+
+Remarques :
+• Pour tableaux sérieux, utilisez tabulate ou rich.`,
+  435: `f"{10:b}" affiche la représentation binaire de 10 sans préfixe 0b : "1010".
+Débutant :
+• b après deux-points demande base 2.
+• C'est du texte, pas un type int.
+
+Intermédiaire :
+• Diffère de bin(10) qui renvoie "0b1010".
+• On peut combiner avec # pour préfixe si souhaité (autre question).
+
+Expert :
+• Minimum de chiffres possible sans padding explicite.
+
+Concepts clés :
+• Format int, base 2, f-string.
+
+Distinctions clés :
+• f"{n:b}" vs format(n, "b").
+
+Fonctionnement :
+• Conversion exacte de l'entier en chiffres binaires.
+
+Exécution étape par étape :
+1. n = 10.
+2. Format binaire → "1010".
+
+Ordre des opérations :
+• Évaluation de l'expression int puis format.
+
+Cas d'utilisation courants :
+• Masques de bits, dumps pédagogiques.
+
+Cas limites :
+• Entiers négatifs : représentation signée avec moins en tête.
+
+Considérations de performance :
+• O(log n) chiffres.
+
+Exemples :
+• f"{0:b}"
+
+Remarques :
+• Pour largeur fixe : f"{n:08b}".`,
+  436: `f"{255:x}" produit "ff" : hexadécimal minuscule sans préfixe 0x par défaut.
+Débutant :
+• x choisit les chiffres 0-9a-f.
+• 255 est FF en hex, ici en minuscules.
+
+Intermédiaire :
+• X majuscule force A-F majuscules.
+• Diffère de hex(255) qui inclut 0x.
+
+Expert :
+• Pour préfixe automatique : f"{255:#x}" → "0xff".
+
+Concepts clés :
+• Format hexadécimal, f-string.
+
+Distinctions clés :
+• Valeur formatée vs littéral Python 0xff.
+
+Fonctionnement :
+• Division-successive ou algorithme interne → digits.
+
+Exécution étape par étape :
+1. Entier 255.
+2. Conversion base 16.
+3. Chaîne "ff".
+
+Ordre des opérations :
+• Comme pour b mais base 16.
+
+Cas d'utilisation courants :
+• Couleurs, adresses mémoire pédagogiques, dumps.
+
+Cas limites :
+• Très grands int supportés ; texte plus long.
+
+Considérations de performance :
+• Négligeable pour petits nombres.
+
+Exemples :
+• f"{15:x}"  # "f"
+
+Remarques :
+• Combinez padding pour octets fixes : f"{b:02x}".`,
+  437: `f"{8:o}" affiche la représentation octale de 8 : "10" (un zéro puis un en base 8).
+Débutant :
+• o signifie base 8.
+• 8 décimal vaut 10 en octal.
+
+Intermédiaire :
+• Sans préfixe 0o contrairement à oct() qui renvoie "0o10".
+• Utile pour permissions unix pédagogiques.
+
+Expert :
+• Avec # : f"{8:#o}" → "0o10".
+
+Concepts clés :
+• Conversion base 8, format mini-langage.
+
+Distinctions clés :
+• Octal affiché vs littéral Python 0o10.
+
+Fonctionnement :
+• Division par 8 itérative.
+
+Exécution étape par étape :
+1. Valeur 8.
+2. Chiffres octaux "10".
+
+Ordre des opérations :
+• Expression puis spécificateur.
+
+Cas d'utilisation courants :
+• Permissions chmod, vieux systèmes.
+
+Cas limites :
+• Entiers négatifs : forme signée avec -.
+
+Considérations de performance :
+• Très rapide.
+
+Exemples :
+• f"{7:o}"  # "7"
+
+Remarques :
+• Vérifiez toujours la base attendue par l'API consommatrice.`,
+  438: `f"{1234.5:e}" utilise la notation scientifique (exponentielle) : style "1.234500e+03" (détails d'arrondi selon défaut).
+Débutant :
+• e force mantisse × 10^exposant.
+• Le résultat est une chaîne.
+
+Intermédiaire :
+• E majuscule utilise E dans l'exposant.
+• Précision par défaut 6 chiffres significatifs après la virgule pour f? (format géné) — voir doc.
+
+Expert :
+• Floats binaires : valeur affichée peut être arrondie.
+
+Concepts clés :
+• Notation scientifique, format float.
+
+Distinctions clés :
+• e vs g (général) qui choisit compact.
+
+Fonctionnement :
+• Décomposition signe/mantisse/exposant.
+
+Exécution étape par étape :
+1. Float 1234.5.
+2. Format e appliqué.
+3. Chaîne avec e+.
+
+Ordre des opérations :
+• Comme autres formats f-string.
+
+Cas d'utilisation courants :
+• Physique, très grands/petits nombres.
+
+Cas limites :
+• inf/nan ont représentations spéciales.
+
+Considérations de performance :
+• Conversion modeste.
+
+Exemples :
+• f"{0.0001:e}"
+
+Remarques :
+• Contrôlez décimales avec .precision avant e.`,
+  439: `f"{1000000:,}" insère des séparateurs de milliers : "1,000,000" selon locale par défaut anglo.
+Débutant :
+• La virgule dans le format ajoute des groupes de trois chiffres.
+• Lisibilité des grands entiers.
+
+Intermédiaire :
+• Fonctionne aussi sur certains floats (partie entière groupée).
+• Pour séparateur espace fine insécable selon locale, voir locale module.
+
+Expert :
+• Underscore _ peut servir de séparateur alternatif en format 3.11+ / syntaxe séparée.
+
+Concepts clés :
+• Groupement de chiffres, internationalisation partielle.
+
+Distinctions clés :
+• Affichage vs valeur numérique sans séparateurs.
+
+Fonctionnement :
+• Insertion de virgules entre groupes depuis la droite.
+
+Exécution étape par étape :
+1. Entier 1_000_000.
+2. Format , appliqué.
+3. Texte avec virgules.
+
+Ordre des opérations :
+• Standard f-string.
+
+Cas d'utilisation courants :
+• Finances, stats, dashboards texte.
+
+Cas limites :
+• Conventions locales variables (FR utilise souvent espace ou point).
+
+Considérations de performance :
+• Linéaire en nombre de chiffres.
+
+Exemples :
+• f"{1234:,}"
+
+Remarques :
+• Pour vrai i18n, formattez avec locale ou babel.`,
+  440: `f"{0.75:.0%}" affiche un pourcentage avec 0 décimale : "75%" (multiplie par 100 et ajoute %).
+Débutant :
+• % dans le type de format = style pourcentage.
+• .0 arrondit à l'entier pourcent le plus proche.
+
+Intermédiaire :
+• .2% donnerait deux décimales.
+• Valeur 1.0 → "100%".
+
+Expert :
+• Arrondi binaire des floats peut surprendre sur 0.575 etc.
+
+Concepts clés :
+• Format pourcentage, arrondi d'affichage.
+
+Distinctions clés :
+• Valeur stockée 0.75 vs texte "75%".
+
+Fonctionnement :
+• Multiplication par 100, format, ajout symbole %.
+
+Exécution étape par étape :
+1. Float 0.75.
+2. ×100 → 75.
+3. Arrondi .0 → 75.
+4. Suffixe %.
+
+Ordre des opérations :
+• Comme format float spécialisé.
+
+Cas d'utilisation courants :
+• Progrès, taux de réussite, A/B tests.
+
+Cas limites :
+• Dépassement >100% possible si données brutes >1.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• f"{0.333:.1%}"
+
+Remarques :
+• Pour calculs financiers exacts : Decimal.`,
+  441: `d = {"a": 1} puis f"{d['a']}" insère la valeur associée à la clé "a" : "1".
+Débutant :
+• Les accolades externes sont f-string ; d['a'] est une expression Python.
+• Résultat textuel du nombre 1.
+
+Intermédiaire :
+• Guillemets simples/doubles imbriqués : attention à la cohérence.
+• Si la clé manque : KeyError comme ailleurs.
+
+Expert :
+• On peut utiliser d.get('a', 'défaut') dans l'expression.
+
+Concepts clés :
+• f-string + indexation dict.
+
+Distinctions clés :
+• f"{d}" affiche la repr du dict ; ici on cible une valeur précise.
+
+Fonctionnement :
+• Évaluation dict puis lookup puis format par défaut.
+
+Exécution étape par étape :
+1. Construire d.
+2. Lire d['a'] → 1.
+3. Convertir en "1" dans la chaîne.
+
+Ordre des opérations :
+• Expression complète avant assemblage.
+
+Cas d'utilisation courants :
+• Messages paramétrés depuis dict de configuration.
+
+Cas limites :
+• Clés non hashables impossibles.
+
+Considérations de performance :
+• Lookup O(1) amorti.
+
+Exemples :
+• f"{ {'x':2}['x'] }"
+
+Remarques :
+• Pour beaucoup de clés, préparez variables intermédiaires lisibles.`,
+  442: `lst = [10, 20, 30] ; f"{lst[1]}" vaut "20" : index 1 est le deuxième élément.
+Débutant :
+• Indices commencent à 0.
+• lst[1] sélectionne 20.
+
+Intermédiaire :
+• Les listes sont mutables mais ici on lit seulement.
+• Si index hors plage : IndexError.
+
+Expert :
+• Les expressions complexes dans f-string sont évaluées normalement.
+
+Concepts clés :
+• Indexation liste, interpolation.
+
+Distinctions clés :
+• lst[1] vs lst[1:2] (slice liste vs élément).
+
+Fonctionnement :
+• __getitem__ sur liste.
+
+Exécution étape par étape :
+1. lst construite.
+2. Accès index 1.
+3. Format str "20".
+
+Ordre des opérations :
+• lst existe avant accès.
+
+Cas d'utilisation courants :
+• Afficher un champ choisi dans une séquence.
+
+Cas limites :
+• Liste vide : impossible d'accéder [1].
+
+Considérations de performance :
+• O(1) accès.
+
+Exemples :
+• f"{[1][0]}"
+
+Remarques :
+• Préférez noms parlants : second = lst[1].`,
+  443: `f"{'hello'}" produit simplement "hello" : guillemets dans l'expression ne font pas partie du résultat.
+Débutant :
+• C'est une f-string minimale sans formatage avancé.
+• Équivalent presque à "hello" seul, mais montre le mécanisme {}.
+
+Intermédiaire :
+• f"hello" sans {} est valide mais inutile (préfixe f ignoré).
+• Ici {} force l'évaluation du littéral.
+
+Expert :
+• Peut servir de gabarit homogène quand d'autres parties deviennent dynamiques.
+
+Concepts clés :
+• f-string basique, littéral str.
+
+Distinctions clés :
+• Contenu expression vs texte fixe autour.
+
+Fonctionnement :
+• Évaluation de 'hello' puis insertion.
+
+Exécution étape par étape :
+1. Expression 'hello'.
+2. Chaîne finale hello.
+
+Ordre des opérations :
+• Trivial.
+
+Cas d'utilisation courants :
+• Ébauches de templates.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• Légère overhead du mécanisme f.
+
+Exemples :
+• f"{'a'+'b'}"  # "ab"
+
+Remarques :
+• Préférez chaîne simple si aucune partie dynamique.`,
+  444: `f"{len('abc')}" devient "3" : len compte les caractères puis l'entier est formaté en décimal par défaut.
+Débutant :
+• len('abc') vaut 3.
+• f-string convertit l'int en texte.
+
+Intermédiaire :
+• On peut ajouter formats : f"{len(s):02d}".
+• len est O(1) sur str en CPython.
+
+Expert :
+• len dans {} peut lire variables longues ; gardez lisibilité.
+
+Concepts clés :
+• Appels de fonction dans f-string.
+
+Distinctions clés :
+• len vs affichage : deux étapes.
+
+Fonctionnement :
+• Appel len puis conversion format default pour int.
+
+Exécution étape par étape :
+1. Évaluer 'abc'.
+2. len → 3.
+3. Insérer "3".
+
+Ordre des opérations :
+• Intérieur d'abord.
+
+Cas d'utilisation courants :
+• Afficher longueurs dans logs ou messages.
+
+Cas limites :
+• len sur générateur consomme tout : ici str fixe.
+
+Considérations de performance :
+• Très faible.
+
+Exemples :
+• f"{len('')}"
+
+Remarques :
+• Pour codepoints vs graphemes, len peut surprendre sur Unicode.`,
+  445: `Avec x = 42, f"{x=}" produit "x=42" : le débogage rapide affiche nom + signe égal + repr de la valeur.
+Débutant :
+• Le signe = dans le champ demande ce format auto-descriptif.
+• Utile en print provisoires.
+
+Intermédiaire :
+• On peut ajouter un format après = : f"{x=:.2f}".
+• Le nom affiché est la sous-chaîne source approximative.
+
+Expert :
+• Disponible depuis 3.8 ; remplace des f"x={x}" répétitifs.
+
+Concepts clés :
+• Debug specifier, f-string avancée.
+
+Distinctions clés :
+• x= utilise souvent repr pour la valeur.
+
+Fonctionnement :
+• Compileur capture texte de l'expression et la concatène.
+
+Exécution étape par étape :
+1. Lire x.
+2. Construire morceaux "x", "=", repr(x).
+
+Ordre des opérations :
+• Évaluation de x une fois.
+
+Cas d'utilisation courants :
+• REPL, traces rapides.
+
+Cas limites :
+• Expressions complexes peuvent être longues à afficher.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• f"{lst=}"
+
+Remarques :
+• Retirez ces f-strings avant prod si bruyantes.`,
+  446: `"{} {}".format("a", "b") renvoie "a b" : les champs {} sont remplis dans l'ordre des arguments positionnels.
+Débutant :
+• format est méthode de str sur le gabarit.
+• Deux placeholders, deux valeurs.
+
+Intermédiaire :
+• On peut numéroter {0} {1} explicitement.
+• Moins idiomatique que f-string moderne mais toujours valide.
+
+Expert :
+• Mécanisme interne via str.format_map possible avec Mapping.
+
+Concepts clés :
+• str.format, arguments positionnels.
+
+Distinctions clés :
+• format vs f-string : évaluation différée des expressions.
+
+Fonctionnement :
+• Parser du mini-langage {} puis injection.
+
+Exécution étape par étape :
+1. Gabarit "{} {}".
+2. Args "a", "b".
+3. "a b".
+
+Ordre des opérations :
+• Args évalués avant appel format.
+
+Cas d'utilisation courants :
+• Traductions avec catalogues, templates dynamiques.
+
+Cas limites :
+• KeyError si index manquant en mode nommé.
+
+Considérations de performance :
+• Légèrement plus lourd que f-string mais OK.
+
+Exemples :
+• "{:.2f}".format(3.1415)
+
+Remarques :
+• En nouveau code, f-string souvent plus claire.`,
+  447: `"{1} {0}".format("a", "b") vaut "b a" : les indices explicites réordonnent les arguments.
+Débutant :
+• {0} première valeur, {1} seconde.
+• Ici l'ordre d'affichage inverse l'ordre visuel.
+
+Intermédiaire :
+• Utile pour i18n où la grammaire change l'ordre des segments.
+• Les arguments restent positionnels.
+
+Expert :
+• On peut réutiliser un index plusieurs fois : "{0}{0}".format("x").
+
+Concepts clés :
+• Champs numérotés, permutation.
+
+Distinctions clés :
+• Indices vs champs auto incrémentés vides {}.
+
+Fonctionnement :
+• Lecture des positions dans la chaîne de format.
+
+Exécution étape par étape :
+1. Args "a" index0, "b" index1.
+2. Pattern {1} {0}.
+3. "b a".
+
+Ordre des opérations :
+• Évaluation args puis résolution des champs.
+
+Cas d'utilisation courants :
+• Messages localisés, templates réutilisables.
+
+Cas limites :
+• Index hors plage : IndexError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• "{1} {1}".format("only")  # erreur
+
+Remarques :
+• Documentez l'ordre attendu pour les traducteurs.`,
+  448: `"{name} is {age}".format(name="Alice", age=30) produit "Alice is 30" : arguments nommés lient les champs.
+Débutant :
+• name= dans format alimente {name}.
+• Mots-clés lisibles.
+
+Intermédiaire :
+• Mélange positionnel puis nommé autorisé selon règles Python.
+• Alternative : **dict dans format(**mapping).
+
+Expert :
+• format_map évite la double étoile si vous avez déjà un Mapping.
+
+Concepts clés :
+• Champs nommés, kwargs.
+
+Distinctions clés :
+• Clé manquante → KeyError.
+
+Fonctionnement :
+• Association nom de champ → valeur fournie.
+
+Exécution étape par étape :
+1. Champs name, age.
+2. Liaison Alice, 30.
+3. Assemblage phrase.
+
+Ordre des opérations :
+• Évaluation des kwargs avant substitution.
+
+Cas d'utilisation courants :
+• Templates lisibles, SQL paramétré (avec drivers sûrs).
+
+Cas limites :
+• Injection si on concatène mal : préférez paramètres bindés.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• "Hi {who}".format(who="you")
+
+Remarques :
+• f-string remplace souvent ce motif en interne.`,
+  449: `len("{:>10}".format("hi")) vaut 10 : le format force une chaîne de largeur 10 (espaces à gauche de "hi").
+Débutant :
+• >10 aligne à droite sur 10 caractères.
+• len compte la chaîne finale complète.
+
+Intermédiaire :
+• On peut imbriquer format dans len, str, etc.
+• Résultat toujours str avant len.
+
+Expert :
+• combinez avec f-string pour style homogène moderne.
+
+Concepts clés :
+• Composition de fonctions, format width.
+
+Distinctions clés :
+• len sur str intermédiaire vs len sur donnée brute.
+
+Fonctionnement :
+• format produit padding ; len mesure.
+
+Exécution étape par étape :
+1. format → chaîne longueur 10.
+2. len → 10.
+
+Ordre des opérations :
+• Intérieur puis extérieur.
+
+Cas d'utilisation courants :
+• Valider largeur colonne, tests unitaires sur gabarits.
+
+Cas limites :
+• Texte plus long que largeur : len > 10.
+
+Considérations de performance :
+• Deux allocations ; OK.
+
+Exemples :
+• len(f"{'no':>4}")
+
+Remarques :
+• Pour UI, mesurez aussi largeur d'affichage réelle.`,
+  450: `"%s is %d" % ("age", 25) utilise l'opérateur % de formatage style printf : produit "age is 25".
+Débutant :
+• %s string, %d entier.
+• Le tuple à droite fournit les valeurs dans l'ordre.
+
+Intermédiaire :
+• Un seul élément peut être passé sans tuple : "%d" % 5.
+• Moins souple que format/f-string pour types complexes.
+
+Expert :
+• Attention sécurité : si le gabarit est contrôlé utilisateur, risque ; préférez toujours données en paramètres, pas en gabarit dynamique.
+
+Concepts clés :
+• Ancien formatage, interpolation modulo.
+
+Distinctions clés :
+• % vs .format vs f-string : trois époques cohabitent.
+
+Fonctionnement :
+• CPython implémente via opération binaire sur str.
+
+Exécution étape par étape :
+1. Gabarit avec deux slots.
+2. Valeurs "age", 25.
+3. "age is 25".
+
+Ordre des opérations :
+• Tuple évalué puis substitution.
+
+Cas d'utilisation courants :
+• Code legacy, snippets courts.
+
+Cas limites :
+• Tuple unique : "%s" % (obj,) nécessite la virgule.
+
+Considérations de performance :
+• Comparable à format pour petits cas.
+
+Exemples :
+• "%.2f" % 3.1415
+
+Remarques :
+• Nouveau code : migrer vers f-string quand possible.`,
+  451: `Après s = "a" puis s += "b", s vaut "ab" : sur str, += concatène comme s = s + "b" et rebind le nom.
+
+Débutant :
+• += assemble le texte de deux chaînes.
+• Les str ne mutent pas : une nouvelle str est créée.
+
+Intermédiaire :
+• s += "b" équivaut à s = s + "b".
+• L'ancienne str "a" peut être récupérée par le GC si plus référencée.
+
+Expert :
+• En boucle, de nombreux += peuvent devenir quadratiques ; préférez list + join.
+
+Concepts clés :
+• Concaténation, immuabilité, rebinding.
+
+Distinctions clés :
+• += sur list mute en place ; += sur str alloue une nouvelle str.
+
+Fonctionnement :
+• Évaluation de s + "b" puis assignation du résultat à s.
+
+Exécution étape par étape :
+1. s référence "a".
+2. Calcul de "a" + "b" → "ab".
+3. s pointe vers "ab".
+
+Ordre des opérations :
+• Addition puis assignation.
+
+Cas d'utilisation courants :
+• Construire des URL, SQL (avec paramètres sûrs), logs.
+
+Cas limites :
+• "age: " + 25 lève TypeError (autre question).
+
+Considérations de performance :
+• Coût lié à la taille des chaînes répété ; join amortit.
+
+Exemples :
+• s = ""; s += "x"
+
+Remarques :
+• io.StringIO ou list de morceaux pour gros volumes.`,
+  452: `Après s = "ab" puis s *= 3, s vaut "ababab" : *= répète la chaîne comme s = s * 3.
+
+Débutant :
+• * entre str et int duplique le motif.
+• 3 copies de "ab" se suivent.
+
+Intermédiaire :
+• n négatif ou zéro donne souvent ''.
+• n doit être int.
+
+Expert :
+• Pour une str “plate”, pas de problème de références partagées comme avec des listes imbriquées.
+
+Concepts clés :
+• Répétition de séquence, opérateur *=.
+
+Distinctions clés :
+• s *= n vs s = s * n : effet de liaison identique pour str.
+
+Fonctionnement :
+• Création d'une str de longueur n * len(s) (sauf cas vides).
+
+Exécution étape par étape :
+1. s = "ab".
+2. s * 3 → "ababab".
+3. s lie le résultat.
+
+Ordre des opérations :
+• Évaluation de s puis de l'entier puis multiplication.
+
+Cas d'utilisation courants :
+• Motifs, séparateurs, bordures texte.
+
+Cas limites :
+• n très grand → mémoire.
+
+Considérations de performance :
+• O(taille du résultat).
+
+Exemples :
+• "a" * 0  # ''
+
+Remarques :
+• Pas de mutation in-place de la str d'origine.`,
+  453: `"hello".__contains__("ell") vaut True : c'est la méthode appelée derrière in pour tester une sous-chaîne.
+
+Débutant :
+• in vérifie si le motif apparaît tel quel, contigu.
+• "ell" est bien dans "hello".
+
+Intermédiaire :
+• Complexité typiquement linéaire en la longueur de la chaîne (recherche).
+• __contains__ est le hook du protocole conteneur.
+
+Expert :
+• Pour recherche avancée, regex ou algorithmes spécialisés.
+
+Concepts clés :
+• Opérateur in, sous-chaîne, méthode spéciale.
+
+Distinctions clés :
+• in vs str.find() >= 0 : style et retour différents.
+
+Fonctionnement :
+• Parcours ou algorithme interne pour détecter le motif.
+
+Exécution étape par étape :
+1. Chaîne "hello", motif "ell".
+2. Détection du segment.
+3. True.
+
+Ordre des opérations :
+• Évaluation des opérandes puis test.
+
+Cas d'utilisation courants :
+• Validation, parsing simple, filtres.
+
+Cas limites :
+• Motif vide : True en Python.
+
+Considérations de performance :
+• Peut devenir coûteux sur très longues chaînes répétées.
+
+Exemples :
+• "x" in "xyz"
+
+Remarques :
+• Normalisez casse/Unicode si besoin avant test.`,
+  454: `"hello" == "hello" vaut True : == compare le contenu (valeur) des deux str.
+
+Débutant :
+• Même séquence de caractères ⇒ égalité.
+• Casse et espaces doivent correspondre exactement.
+
+Intermédiaire :
+• == appelle str.__eq__.
+• is testerait l'identité d'objet, souvent distinct pour grandes chaînes.
+
+Expert :
+• Normalisation Unicode (NFC/NFD) peut être nécessaire pour texte international.
+
+Concepts clés :
+• Égalité de valeur pour str.
+
+Distinctions clés :
+• == vs is pour comparer du texte.
+
+Fonctionnement :
+• Comparaison caractère à caractère jusqu'à différence ou fin.
+
+Exécution étape par étape :
+1. Évaluer les deux opérandes.
+2. Comparer.
+3. True.
+
+Ordre des opérations :
+• Opérandes puis ==.
+
+Cas d'utilisation courants :
+• Comparer saisies, tokens, réponses.
+
+Cas limites :
+• Accents différents mais “même lettre” peuvent donner False.
+
+Considérations de performance :
+• O(L) jusqu'à première différence.
+
+Exemples :
+• "a" == "A"  # False
+
+Remarques :
+• Utilisez casefold() pour comparaisons insensibles à la casse robustes.`,
+  455: `Avec a = "hi" et b = "hi", a is b est souvent True en CPython (internage de petites str), mais seule == est la garantie sémantique pour le texte.
+
+Débutant :
+• is vérifie si deux noms pointent vers le même objet.
+• Pour le contenu textuel, préférez ==.
+
+Intermédiaire :
+• L'internage dépend de l'implémentation et du contexte de création.
+• Ne basez pas une règle métier sur is entre str arbitraires.
+
+Expert :
+• PyPy/Jython peuvent différer ; tests portables utilisent ==.
+
+Concepts clés :
+• Identité d'objet, internage CPython.
+
+Distinctions clés :
+• is vs == sur littéraux courts vs construits dynamiquement.
+
+Fonctionnement :
+• Comparaison des adresses id(a) et id(b).
+
+Exécution étape par étape :
+1. Créer a et b.
+2. Comparer identités.
+3. Résultat dépend de l'implémentation.
+
+Ordre des opérations :
+• Évaluation des noms puis is.
+
+Cas d'utilisation courants :
+• Singletons (None, petits int), micro-optimisations rares.
+
+Cas limites :
+• "a"*1000 construit deux fois : is souvent False.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• a = "hello"; b = "hello"; a is b  # souvent True en CPython
+
+Remarques :
+• En revue de code, signaler is entre str comme suspect.`,
+  456: `len("") vaut 0 : la chaîne vide n'a aucun caractère.
+
+Débutant :
+• len compte les éléments de la séquence str.
+• "" est le neutre pour la concaténation.
+
+Intermédiaire :
+• bool("") est False (falsy).
+• Utile pour tests "texte présent".
+
+Expert :
+• len en O(1) sur str en CPython.
+
+Concepts clés :
+• Longueur zéro, chaîne vide.
+
+Distinctions clés :
+• len("") vs espaces : "  " a len 2.
+
+Fonctionnement :
+• Lecture de la longueur stockée ou comptage selon implémentation.
+
+Exécution étape par étape :
+1. Objet str vide.
+2. len retourne 0.
+
+Ordre des opérations :
+• Appel direct.
+
+Cas d'utilisation courants :
+• Validation formulaire, garde-fous avant indexation.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1) CPython.
+
+Exemples :
+• len("abc")  # 3
+
+Remarques :
+• Distinguer vide et whitespace-only.`,
+  457: `len("  ") vaut 2 : chaque espace est un caractère compté.
+
+Débutant :
+• Les espaces visibles ou non sont des caractères comme les autres.
+• strip() les enlèverait aux bords.
+
+Intermédiaire :
+• \t, \n comptent aussi pour 1 chacun dans len.
+
+Expert :
+• Caractères Unicode “large” : len compte les points de code, pas la largeur d'affichage.
+
+Concepts clés :
+• Whitespace compte dans len.
+
+Distinctions clés :
+• Texte “vide visuellement” vs chaîne vide.
+
+Fonctionnement :
+• Comptage des codepoints de la str.
+
+Exécution étape par étape :
+1. Chaîne deux espaces.
+2. len → 2.
+
+Ordre des opérations :
+• Immédiat.
+
+Cas d'utilisation courants :
+• Détecter saisie uniquement espaces.
+
+Cas limites :
+• Caractères de largeur zéro (combining) comptent comme points de code.
+
+Considérations de performance :
+• O(1) CPython.
+
+Exemples :
+• len("\n\t")  # 2
+
+Remarques :
+• combinez strip() et len pour “champ vide”.`,
+  458: `"python"[-3:] vaut "hon" : slice sans fin avec index négatif prend les trois derniers caractères.
+
+Débutant :
+• -3 commence trois positions avant la fin.
+• : signifie jusqu'à la fin de la chaîne.
+
+Intermédiaire :
+• Équivalent à [len-3:len] pour cette chaîne de longueur 6.
+
+Expert :
+• Si la chaîne a moins de 3 caractères, le résultat est la chaîne entière (pas d'erreur).
+
+Concepts clés :
+• Slicing, index négatif, suffixe.
+
+Distinctions clés :
+• [-3:] vs [-3] (un caractère).
+
+Fonctionnement :
+• Normalisation des indices puis copie de la sous-chaîne.
+
+Exécution étape par étape :
+1. Indices -3 → position 3 pour "python".
+2. Copie jusqu'à la fin.
+3. "hon".
+
+Ordre des opérations :
+• Évaluation de la str puis du slice.
+
+Cas d'utilisation courants :
+• Extensions, suffixes, derniers tokens.
+
+Cas limites :
+• Chaîne vide : résultat vide.
+
+Considérations de performance :
+• O(k) k = taille du slice.
+
+Exemples :
+• "hi"[-5:]  # "hi"
+
+Remarques :
+• endswith est plus expressif pour suffixes littéraux.`,
+  459: `"abcde"[4:1:-1] vaut "edc" : slice avec pas -1 parcourt de l'indice 4 vers 2 (stop 1 exclus).
+
+Débutant :
+• start=4 ('e'), stop=1 exclu, pas -1 → e, d, c.
+• L'ordre est inversé sur cette plage.
+
+Intermédiaire :
+• stop est toujours exclus ; avec pas négatif, la direction change.
+
+Expert :
+• Si start/stop ne permettent aucun caractère, ''.
+
+Concepts clés :
+• Slice à trois composantes, pas négatif.
+
+Distinctions clés :
+• [4:1] vide vs [4:1:-1] non vide.
+
+Fonctionnement :
+• Génération d'indices décroissants.
+
+Exécution étape par étape :
+1. Indices valides 4,3,2.
+2. Caractères e,d,c.
+3. "edc".
+
+Ordre des opérations :
+• Normalisation puis itération.
+
+Cas d'utilisation courants :
+• Inverser un segment, palindromes partiels.
+
+Cas limites :
+• Pas 0 interdit.
+
+Considérations de performance :
+• O(longueur du segment).
+
+Exemples :
+• "abc"[::-1]
+
+Remarques :
+• Tracez sur papier pour éviter off-by-one.`,
+  460: `bool("") est False tandis que bool(" ") est True : toute chaîne non vide est "truthy", même si elle ne contient que des espaces.
+
+Débutant :
+• Seule la chaîne vide est falsy parmi les str.
+• Un espace est un caractère réel.
+
+Intermédiaire :
+• if s: dépend de cette règle.
+• Pour ignorer whitespace, testez not s.strip().
+
+Expert :
+• Autres types ont leurs propres règles de vérité.
+
+Concepts clés :
+• Vérité des str, chaîne vide vs whitespace.
+
+Distinctions clés :
+• bool("  ") vs bool("").
+
+Fonctionnement :
+• bool appelle __bool__ sur str : non vide → True.
+
+Exécution étape par étape :
+1. "" → False.
+2. " " → True.
+
+Ordre des opérations :
+• Conversion explicite ou contexte booléen.
+
+Cas d'utilisation courants :
+• Validation : refuser "" mais accepter " " si métier l'exige.
+
+Cas limites :
+• Caractères de contrôle invisibles comptent comme truthy.
+
+Considérations de performance :
+• O(1) pour str.
+
+Exemples :
+• if name: ...
+
+Remarques :
+• Documentez si les champs “vides” excluent les espaces.`,
+  461: `"age: " + str(25) vaut "age: 25" : str() convertit l'entier en texte avant concaténation.
+
+Débutant :
+• + entre str assemble les morceaux.
+• str(25) produit les caractères 2 et 5.
+
+Intermédiaire :
+• str est la conversion explicite ; format/f-string sont des alternatives.
+• L'ordre des morceaux suit l'expression.
+
+Expert :
+• __str__ sur int produit la représentation décimale standard.
+
+Concepts clés :
+• Concaténation str + str, conversion int → str.
+
+Distinctions clés :
+• "age: " + 25 lève TypeError sans conversion.
+
+Fonctionnement :
+• Évaluation de str(25) puis concaténation.
+
+Exécution étape par étape :
+1. str(25) → "25".
+2. "age: " + "25".
+3. "age: 25".
+
+Ordre des opérations :
+• Appel str puis +.
+
+Cas d'utilisation courants :
+• Messages utilisateur simples, logs.
+
+Cas limites :
+• Très grands int : chaîne longue mais valide.
+
+Considérations de performance :
+• Coût linéaire en taille du texte.
+
+Exemples :
+• "x=" + str([])
+
+Remarques :
+• Préférez f-strings pour lisibilité.`,
+  462: `"age: " + 25 lève TypeError : on ne concatène pas directement str et int.
+
+Débutant :
+• + exige deux opérandes compatibles.
+• Il faut convertir le nombre ou utiliser une f-string.
+
+Intermédiaire :
+• Message typique : can only concatenate str (not "int") to str.
+
+Expert :
+• f"age: {25}" ou format évite l'erreur.
+
+Concepts clés :
+• Typage fort implicite pour + sur str.
+
+Distinctions clés :
+• JavaScript ferait une coercition ; Python refuse.
+
+Fonctionnement :
+• str.__add__ rejette int.
+
+Exécution étape par étape :
+1. Évaluation des opérandes.
+2. Tentative d'addition str+int.
+3. TypeError.
+
+Ordre des opérations :
+• Pas de conversion automatique.
+
+Cas d'utilisation courants :
+• Piège débutant après saisie input non convertie.
+
+Cas limites :
+• None + str est aussi interdit sans str(None).
+
+Considérations de performance :
+• N/A (échec rapide).
+
+Exemples :
+• "v=" + str(1)
+
+Remarques :
+• Activez les linters/type checkers pour attraper tôt.`,
+  463: `"hi" * -1 vaut '' : répéter une chaîne un nombre de fois négatif donne la chaîne vide en Python 3.
+
+Débutant :
+• Pas de répétition “inverse”.
+• Résultat vide, pas d'erreur.
+
+Intermédiaire :
+• 0 donne aussi ''.
+• Positif duplique normalement.
+
+Expert :
+• Cohérent avec la sémantique de séquence * n.
+
+Concepts clés :
+• Répétition str, cas n ≤ 0.
+
+Distinctions clés :
+• Liste * -1 → [] également.
+
+Fonctionnement :
+• Algorithme de répétition renvoie vide si n <= 0.
+
+Exécution étape par étape :
+1. "hi" et -1.
+2. Produit ''.
+
+Ordre des opérations :
+• Évaluation des deux opérandes puis *.
+
+Cas d'utilisation courants :
+• Boucles où n peut être 0 ou négatif.
+
+Cas limites :
+• float comme multiplicateur → TypeError.
+
+Considérations de performance :
+• Instantané.
+
+Exemples :
+• "x" * 0
+
+Remarques :
+• Documentez pourquoi n peut être négatif dans votre code.`,
+  464: `len("a\nb") vaut 3 : la séquence contient 'a', un saut de ligne, puis 'b'.
+
+Débutant :
+• \n est un seul caractère (U+000A).
+• len compte les caractères, pas les “lignes visuelles”.
+
+Intermédiaire :
+• splitlines() interpréterait différemment les fins de ligne.
+
+Expert :
+• \r\n sous Windows peut compter comme deux caractères si présents bruts.
+
+Concepts clés :
+• Échappements, len sur str.
+
+Distinctions clés :
+• len vs nombre de lignes affichées.
+
+Fonctionnement :
+• Comptage des codepoints.
+
+Exécution étape par étape :
+1. Littéral trois caractères.
+2. len → 3.
+
+Ordre des opérations :
+• Création de la str puis len.
+
+Cas d'utilisation courants :
+• Limites de buffer, validation longueur fichier texte.
+
+Cas limites :
+• Normalisation Unicode des sauts de ligne.
+
+Considérations de performance :
+• O(1) len CPython.
+
+Exemples :
+• len("\\")  # 1 (backslash)
+
+Remarques :
+• repr() montre les échappements clairement.`,
+  465: `"a\tb".split("\t") vaut ['a', 'b'] : split coupe sur le séparateur tabulation.
+
+Débutant :
+• split sans argument coupe sur whitespace ; ici séparateur explicite.
+• Résultat : liste de str.
+
+Intermédiaire :
+• Séparateurs adjacents peuvent produire '' selon cas.
+
+Expert :
+• split et join sont inverses approximatifs.
+
+Concepts clés :
+• str.split, délimiteur, liste.
+
+Distinctions clés :
+• split("\t") vs split().
+
+Fonctionnement :
+• Parcours et découpe.
+
+Exécution étape par étape :
+1. Chaîne "a\tb".
+2. Coupe sur tab.
+3. ['a','b'].
+
+Ordre des opérations :
+• Évaluation de la str puis appel split.
+
+Cas d'utilisation courants :
+• TSV, exports tableurs.
+
+Cas limites :
+• Pas de tab : liste d'un seul élément.
+
+Considérations de performance :
+• O(n) sur longueur.
+
+Exemples :
+• "a,b".split(",")
+
+Remarques :
+• csv module pour CSV réels avec guillemets.`,
+  466: `chr(65) vaut 'A' : chr convertit un code point Unicode en caractère str d'un élément.
+
+Débutant :
+• 65 est le code ASCII/Unicode de A majuscule.
+• Résultat toujours str longueur 1 (pour valeur valide).
+
+Intermédiaire :
+• Hors plage valide pour l'implémentation : ValueError.
+
+Expert :
+• chr et ord sont inverses pour BMP usuel.
+
+Concepts clés :
+• Code point, caractère, chr.
+
+Distinctions clés :
+• chr vs bytes : chr travaille en str Unicode.
+
+Fonctionnement :
+• Construction du caractère depuis l'entier.
+
+Exécution étape par étape :
+1. Entier 65.
+2. chr → 'A'.
+
+Ordre des opérations :
+• Appel direct.
+
+Cas d'utilisation courants :
+• Manipuler ASCII, ROT13 pédagogique, puzzles.
+
+Cas limites :
+• Valeurs invalides selon version.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• chr(48)  # '0'
+
+Remarques :
+• Pour bytes, utilisez bytes([65]).`,
+  467: `chr(ord("a") + 1) vaut 'b' : ord donne le code de 'a', +1 décale, chr reconstruit la lettre suivante.
+
+Débutant :
+• ord("a") est 97 en ASCII/Unicode minuscule latine.
+• +1 donne 98 → 'b'.
+
+Intermédiaire :
+• Ne suppose pas que l'alphabet est continu pour toutes les langues.
+
+Expert :
+• Pour rotations sur AZ seulement, modulo et bornes.
+
+Concepts clés :
+• ord, chr, arithmétique sur code points.
+
+Distinctions clés :
+• Majuscules vs minuscules ont des codes différents.
+
+Fonctionnement :
+• ord puis addition puis chr.
+
+Exécution étape par étape :
+1. ord('a').
+2. +1.
+3. chr → 'b'.
+
+Ordre des opérations :
+• De l'intérieur vers l'extérieur.
+
+Cas d'utilisation courants :
+• César simple, génération de plages.
+
+Cas limites :
+• Dépassement hors 'z' : caractère imprévu ou erreur.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• chr(ord('A') + 32)  # 'a' en ASCII
+
+Remarques :
+• Préférez .lower() pour casse.`,
+  468: `min("hello") vaut 'e' : min sur str compare lexicographiquement les caractères (ord).
+
+Débutant :
+• Chaque caractère est comparé ; le plus “petit” gagne.
+• 'e' précède 'h','l','o' dans l'ordre Unicode/ASCII de cette chaîne.
+
+Intermédiaire :
+• min sur itérable vide lève ValueError ; str non vide OK.
+
+Expert :
+• Ordre dépend des points de code, pas de la locale humaine.
+
+Concepts clés :
+• min sur séquence de caractères.
+
+Distinctions clés :
+• min(str) vs min(liste de str).
+
+Fonctionnement :
+• Parcours linéaire avec meilleur courant.
+
+Exécution étape par étape :
+1. Itérer sur h,e,l,l,o.
+2. Retenir le minimum 'e'.
+
+Ordre des opérations :
+• Comparaisons successives.
+
+Cas d'utilisation courants :
+• Première lettre alphabétique, jeux.
+
+Cas limites :
+• Chaîne vide interdite pour min.
 
 Considérations de performance :
 • O(n).
 
 Exemples :
-• "xxabcxx".strip("x")  # "abc"
+• min("cba")
 
 Remarques :
-• Pour enlever un motif partout, utilisez replace, pas strip.`,
-  405: `type("abc".encode()).__name__ renvoie "bytes" : encode transforme str en bytes.
+• Pour tri humain, clé de collation locale.`,
+  469: `sorted("python") vaut ['h', 'n', 'o', 'p', 't', 'y'] : sorted renvoie une nouvelle liste triée des caractères.
 
 Débutant :
-• "abc".encode() produit des octets.
-• Le type s’appelle bytes.
+• Les caractères deviennent des éléments de liste str de longueur 1.
+• L'original "python" reste inchangé.
 
 Intermédiaire :
-• __name__ donne le nom de la classe sous forme de chaîne.
+• Ordre lexicographique sur code points.
+• sorted accepte key= et reverse=.
 
 Expert :
-• Encodage par défaut UTF-8 si non précisé.
+• TimSort sous-jacent ; stable.
 
 Concepts clés :
-• Conversion texte -> bytes.
-• Inspection de type.
+• sorted, itération sur str, liste.
 
 Distinctions clés :
-• str (texte) vs bytes (octets).
+• sorted vs .sort() (méthode list in-place).
 
 Fonctionnement :
-• Python encode chaque caractère selon UTF-8.
+• Matérialise une liste puis trie.
 
 Exécution étape par étape :
-1. Évaluer "abc".
-2. Appeler encode() -> b"abc".
-3. type(...) -> <class 'bytes'>.
-4. __name__ -> "bytes".
+1. Itérer la str.
+2. Trier.
+3. Nouvelle liste.
 
 Ordre des opérations :
-• encode puis type puis accès attribut __name__.
+• Évaluation str puis sorted.
 
 Cas d'utilisation courants :
-• Préparer des données pour fichiers/réseau.
+• Anagrammes, signatures triées.
 
 Cas limites :
-• Certains caractères donnent plusieurs octets.
+• Caractères égaux : ordre stable.
 
 Considérations de performance :
-• O(n) sur la longueur du texte.
+• O(n log n).
 
 Exemples :
-• "é".encode("utf-8")  # b'\\xc3\\xa9'
+• sorted("ba", reverse=True)
 
 Remarques :
-• encode est indispensable pour passer du texte au binaire.`,
-  406: `"123".isdigit() renvoie True : tous les caractères sont des chiffres.
+• join pour recoller en str.`,
+  470: `"".join(sorted("python")) vaut "hnopty" : on trie les caractères puis on les recolle sans séparateur.
 
 Débutant :
-• 1, 2, 3 sont des chiffres.
-• isdigit renvoie True.
+• sorted donne une liste ; join attend des str.
+• Le séparateur vide colle directement.
 
 Intermédiaire :
-• La chaîne doit contenir au moins un caractère, et tous doivent être digits.
+• Équivalent conceptuel au tri des lettres du mot.
 
 Expert :
-• isdigit couvre plus que 0-9 ASCII selon Unicode.
+• join sur str exige que l'itérable contienne des str.
 
 Concepts clés :
-• Validation numérique textuelle.
+• join, sorted, pipeline texte.
 
 Distinctions clés :
-• isdigit vs isnumeric vs isdecimal (différences Unicode).
+• join vs + répété (join plus efficace pour listes longues).
 
 Fonctionnement :
-• Python vérifie chaque caractère de la chaîne.
+• sorted crée liste ; join alloue résultat final.
 
 Exécution étape par étape :
-1. Lire "123".
-2. Vérifier '1','2','3'.
-3. Tous digits -> True.
+1. sorted("python") → liste.
+2. "".join(...) → str triée.
 
 Ordre des opérations :
-• Évaluer puis isdigit().
+• Intérieur sorted puis join.
 
 Cas d'utilisation courants :
-• Vérifier un champ numérique textuel.
+• Signature triée, détection d'anagramme.
 
 Cas limites :
-• Chaîne vide -> False.
+• join sur liste non-str → erreur.
+
+Considérations de performance :
+• Meilleur que + en boucle pour nombreux morceaux.
+
+Exemples :
+• "-".join(["a","b"])
+
+Remarques :
+• sorted renvoie liste : type différent de la str source.`,
+  471: `list("abc") vaut ['a', 'b', 'c'] : list() matérialise chaque caractère comme élément distinct.
+
+Débutant :
+• Une str est itérable caractère par caractère.
+• Le résultat est une liste de str de longueur 1.
+
+Intermédiaire :
+• list ne “divise” pas par mots : seulement par caractères Unicode.
+• str originale inchangée.
+
+Expert :
+• Pour tokenizer, utilisez split ou regex.
+
+Concepts clés :
+• Constructeur list depuis itérable str.
+
+Distinctions clés :
+• list(str) vs [str] (liste d'un seul élément).
+
+Fonctionnement :
+• Itération __iter__ sur str.
+
+Exécution étape par étape :
+1. Itérer "a","b","c".
+2. Construire liste.
+
+Ordre des opérations :
+• Évaluation de l'argument puis list().
+
+Cas d'utilisation courants :
+• Muter caractères via liste puis join.
+
+Cas limites :
+• str vide → [].
+
+Considérations de performance :
+• O(n) mémoire et temps.
+
+Exemples :
+• list("")
+
+Remarques :
+• bytearray pour octets mutables.`,
+  472: `"abc" * 2 + "d" vaut "abcabcd" : * avant + par précédence, donc d'abord duplication puis concaténation finale.
+
+Débutant :
+• "abc"*2 → "abcabc".
+• Puis +"d" → "abcabcd".
+
+Intermédiaire :
+• Parenthèses changeraient l'ordre si besoin.
+
+Expert :
+• Même niveau * et niveau suivant + : * lie plus fort.
+
+Concepts clés :
+• Précédence * sur +, concaténation.
+
+Distinctions clés :
+• "abc" + "abc" + "d" même résultat ici.
+
+Fonctionnement :
+• Évaluation * puis +.
+
+Exécution étape par étape :
+1. "abc"*2.
+2. Ajouter "d".
+
+Ordre des opérations :
+• * puis +.
+
+Cas d'utilisation courants :
+• Construire motifs répétés avec suffixe.
+
+Cas limites :
+• Mélange types sans conversion → erreur.
+
+Considérations de performance :
+• Proportionnel taille résultat.
+
+Exemples :
+• 2 * "x" + "y"
+
+Remarques :
+• Parenthèses explicites clarifient l'intention.`,
+  473: `"abc" < "abcd" vaut True : comparaison lexicographique : préfixe commun puis la chaîne plus courte est inférieure si l'autre continue.
+
+Débutant :
+• On compare caractère par caractère a==a, b==b, c==c.
+• "abc" s'arrête ; "abcd" a encore un caractère ⇒ la première est plus petite.
+
+Intermédiaire :
+• Même règle que pour list/tuple.
+
+Expert :
+• Ordre basé sur code points, pas collation humaine.
+
+Concepts clés :
+• Ordre lexicographique des str.
+
+Distinctions clés :
+• < vs == : ici strictement inférieur.
+
+Fonctionnement :
+• __lt__ sur str.
+
+Exécution étape par étape :
+1. Comparer position par position.
+2. Fin de la plus courte avec préfixe égal ⇒ plus petite.
+
+Ordre des opérations :
+• Évaluation des deux str puis comparaison.
+
+Cas d'utilisation courants :
+• Tri, bornes de chaînes, recherche binaire sur texte.
+
+Cas limites :
+• Chaînes vides : "" < "a".
+
+Considérations de performance :
+• O(L) jusqu'à différence.
+
+Exemples :
+• "apple" < "banana"
+
+Remarques :
+• Normalisez casse si besoin de comparaison insensible.`,
+  474: `"   ".strip() vaut '' : strip retire espaces (et whitespace par défaut) en début et fin ; ici tout est bord.
+
+Débutant :
+• Rien ne reste après retrait des trois espaces.
+• strip ne touche pas “au milieu” (il n'y en a pas).
+
+Intermédiaire :
+• strip() sans argument utilise une classe de caractères whitespace Unicode.
+
+Expert :
+• strip(chars) retire un ensemble custom.
+
+Concepts clés :
+• Nettoyage de bord, chaîne vide résultat.
+
+Distinctions clés :
+• strip vs replace(' ', '').
+
+Fonctionnement :
+• Balayage depuis gauche et droite.
+
+Exécution étape par étape :
+1. Chaîne trois espaces.
+2. Retrait → ''.
+
+Ordre des opérations :
+• Appel strip sur la littérale.
+
+Cas d'utilisation courants :
+• Inputs utilisateur “vides”.
+
+Cas limites :
+• Espaces internes préservés.
+
+Considérations de performance :
+• O(n) sur longueur.
+
+Exemples :
+• "\n  x  \n".strip()
+
+Remarques :
+• combinez lower() pour normalisation.`,
+  475: `"hello".translate(str.maketrans("", "", "aeiou")) vaut "hll" : maketrans avec troisième argument liste des caractères à supprimer ; translate applique la table.
+
+Débutant :
+• Toutes les voyelles a,e,i,o,u sont retirées.
+• Consonnes restent en place.
+
+Intermédiaire :
+• maketrans("", "", delchars) construit une table de suppression.
+
+Expert :
+• translate est rapide pour jeux de caractères.
+
+Concepts clés :
+• str.translate, maketrans, suppression.
+
+Distinctions clés :
+• translate vs replace enchaîné.
+
+Fonctionnement :
+• Table mappe chaque caractère ; None supprime.
+
+Exécution étape par étape :
+1. maketrans supprime voyelles.
+2. translate filtre "hello".
+
+Ordre des opérations :
+• maketrans puis translate.
+
+Cas d'utilisation courants :
+• Nettoyer ponctuation, normaliser identifiants.
+
+Cas limites :
+• Caractères non listés inchangés.
+
+Considérations de performance :
+• Efficace pour gros texte vs multiples replace.
+
+Exemples :
+• str.maketrans("a","A") pour remplacement simple
+
+Remarques :
+• regex pour motifs multi-caractères.`,
+  476: `int("0b1010", 2) vaut 10 : avec base 2, la chaîne peut inclure le préfixe 0b ; les chiffres valides sont interprétés en binaire.
+
+Débutant :
+• Deuxième argument = base.
+• "0b1010" en base 2 : positions puissances de 2.
+
+Intermédiaire :
+• Avec base 0, Python peut auto-détecter 0b/0x/0o dans la chaîne (autre usage que base fixe).
+
+Expert :
+• Caractères invalides → ValueError.
+
+Concepts clés :
+• int(str, base), binaire.
+
+Distinctions clés :
+• int("1010",2) vs int("0b1010",0).
+
+Fonctionnement :
+• Parsing positionnel.
+
+Exécution étape par étape :
+1. Lire chiffres 0/1.
+2. Accumuler valeur.
+3. 10.
+
+Ordre des opérations :
+• Appel int avec base.
+
+Cas d'utilisation courants :
+• Config bits, protocoles bas niveau.
+
+Cas limites :
+• Base hors 2-36 ou combinaison invalide.
+
+Considérations de performance :
+• O(longueur).
+
+Exemples :
+• int("ff",16)
+
+Remarques :
+• bin() pour l'inverse textuel avec préfixe.`,
+  477: `int("0xff", 16) vaut 255 : hexadécimal, préfixe 0x autorisé dans la chaîne avec base 16.
+
+Débutant :
+• ff en hex = 15*16+15 = 255.
+
+Intermédiaire :
+• Lettres a-f insensibles à la casse.
+
+Expert :
+• Underscores dans la chaîne peuvent séparer groupes (versions récentes).
+
+Concepts clés :
+• Parsing hexadécimal.
+
+Distinctions clés :
+• int(...,16) vs int("255") décimal.
+
+Fonctionnement :
+• Lecture chiffres hex.
+
+Exécution étape par étape :
+1. Chaîne "0xff".
+2. Conversion → 255.
+
+Ordre des opérations :
+• int avec base 16.
+
+Cas d'utilisation courants :
+• Couleurs, adresses.
+
+Cas limites :
+• Caractère hors 0-9a-f → erreur.
+
+Considérations de performance :
+• O(len).
+
+Exemples :
+• int("10",16)  # 16
+
+Remarques :
+• hex() pour revenir en str avec 0x.`,
+  478: `int("0o17", 8) vaut 15 : octal, 17 en base 8 = 1*8+7.
+
+Débutant :
+• Préfixe 0o marque l'octal dans la chaîne.
+• Valeur décimale 15.
+
+Intermédiaire :
+• Chiffres 0-7 seulement.
+
+Expert :
+• oct() produit la forme avec préfixe 0o.
+
+Concepts clés :
+• Base 8, conversion.
+
+Distinctions clés :
+• Confusion avec décimal 17.
+
+Fonctionnement :
+• Parse chiffres octaux.
+
+Exécution étape par étape :
+1. "0o17".
+2. → 15.
+
+Ordre des opérations :
+• int(...,8).
+
+Cas d'utilisation courants :
+• Permissions unix symboliques.
+
+Cas limites :
+• '8' ou '9' invalides en octal strict.
+
+Considérations de performance :
+• O(len).
+
+Exemples :
+• int("7",8)
+
+Remarques :
+• Préfixe 0 seul (vieux style) évité en Python 3.`,
+  479: `bin(10) vaut "0b1010" : représentation binaire avec préfixe 0b.
+
+Débutant :
+• Résultat est str.
+• Préfixe distingue du décimal.
+
+Intermédiaire :
+• Entiers négatifs : forme signée avec moins.
+
+Expert :
+• Pas de padding par défaut ; formatez vous-même si besoin.
+
+Concepts clés :
+• bin(), littéral binaire textuel.
+
+Distinctions clés :
+• bin vs format(n,'b') sans 0b.
+
+Fonctionnement :
+• Algorithme division / bits.
+
+Exécution étape par étape :
+1. Entier 10.
+2. Chaîne "0b1010".
+
+Ordre des opérations :
+• Appel bin.
+
+Cas d'utilisation courants :
+• Debug bits, enseignement.
+
+Cas limites :
+• Très grands int : chaîne longue.
+
+Considérations de performance :
+• O(log n) chiffres.
+
+Exemples :
+• bin(0)
+
+Remarques :
+• int(s,2) pour parser si sans 0b attention.`,
+  480: `hex(255) vaut "0xff" : hexadécimal minuscule avec préfixe 0x.
+
+Débutant :
+• str retournée.
+• ff = 255.
+
+Intermédiaire :
+• hex n'ajoute pas de padding fixe.
+
+Expert :
+• Pour majuscules, formatez ou traitez la str.
+
+Concepts clés :
+• hex(), préfixe 0x.
+
+Distinctions clés :
+• hex vs f"{n:x}" sans préfixe.
+
+Fonctionnement :
+• Conversion répétée mod 16.
+
+Exécution étape par étape :
+1. 255.
+2. "0xff".
+
+Ordre des opérations :
+• Appel hex.
+
+Cas d'utilisation courants :
+• Dump mémoire pédagogique, couleurs.
+
+Cas limites :
+• n négatif : forme avec signe.
+
+Considérations de performance :
+• Rapide.
+
+Exemples :
+• hex(16)
+
+Remarques :
+• int(s,16) parse souvent avec 0x.`,
+  481: `oct(15) vaut "0o17" : représentation octale avec préfixe 0o.
+
+Débutant :
+• 15 décimal = 17 en base 8 (1*8+7).
+
+Intermédiaire :
+• Toujours une str en retour.
+
+Expert :
+• Cohérent avec les littéraux Python 0o...
+
+Concepts clés :
+• oct(), base 8.
+
+Distinctions clés :
+• oct vs format(n,'o') sans préfixe.
+
+Fonctionnement :
+• Division par 8 itérative.
+
+Exécution étape par étape :
+1. n=15.
+2. "0o17".
+
+Ordre des opérations :
+• Appel oct.
+
+Cas d'utilisation courants :
+• Illustrer chmod.
+
+Cas limites :
+• n négatif : représentation signée.
+
+Considérations de performance :
+• O(log n).
+
+Exemples :
+• oct(8)
+
+Remarques :
+• int(s,8) pour inverse.`,
+  482: `format(42, "b") vaut "101010" : format binaire sans préfixe 0b.
+
+Débutant :
+• Deuxième argument = mini-langage de format.
+• Résultat str.
+
+Intermédiaire :
+• Diffère de bin(42) qui ajoute 0b.
+
+Expert :
+• Largeur et zéros possibles : format(42,"08b").
+
+Concepts clés :
+• format(), type b.
+
+Distinctions clés :
+• bin vs format(...,"b").
+
+Fonctionnement :
+• __format__ sur int.
+
+Exécution étape par étape :
+1. 42.
+2. "101010".
+
+Ordre des opérations :
+• Appel format.
+
+Cas d'utilisation courants :
+• Gabarits dynamiques non f-string.
+
+Cas limites :
+• Type incompatible → erreur.
+
+Considérations de performance :
+• Faible.
+
+Exemples :
+• format(255,"x")
+
+Remarques :
+• f"{42:b}" équivalent idiomatique.`,
+  483: `format(255, "x") vaut "ff" : hex minuscule sans 0x.
+
+Débutant :
+• Deux caractères hex pour 255.
+
+Intermédiaire :
+• "X" majuscule pour FF.
+
+Expert :
+• Préfixe via format spéc : "#x" en f-string.
+
+Concepts clés :
+• format hex.
+
+Distinctions clés :
+• format vs hex().
+
+Fonctionnement :
+• Conversion base 16.
+
+Exécution étape par étape :
+1. 255.
+2. "ff".
+
+Ordre des opérations :
+• format.
+
+Cas d'utilisation courants :
+• Logs compacts.
+
+Cas limites :
+• float avec "x" invalide.
+
+Considérations de performance :
+• Faible.
+
+Exemples :
+• format(10,"o")
+
+Remarques :
+• Combinez avec width fill.`,
+  484: `format(3.14, ".1f") vaut "3.1" : un chiffre après la virgule, arrondi.
+
+Débutant :
+• f pour float décimal.
+• .1 précision.
+
+Intermédiaire :
+• Arrondi binaire des floats peut surprendre.
+
+Expert :
+• Pour décimal exact : Decimal.
+
+Concepts clés :
+• format float, précision.
+
+Distinctions clés :
+• str(3.14) vs format arrondi.
+
+Fonctionnement :
+• __format__ float.
+
+Exécution étape par étape :
+1. Float 3.14.
+2. Arrondi affichage.
+3. "3.1".
+
+Ordre des opérations :
+• format.
+
+Cas d'utilisation courants :
+• Affichage utilisateur.
+
+Cas limites :
+• nan, inf formats spéciaux.
+
+Considérations de performance :
+• Faible.
+
+Exemples :
+• format(2.675,".2f")
+
+Remarques :
+• Voir documentation arrondi.`,
+  485: `f"{'abc':>5}" vaut "  abc" : largeur 5, alignement à droite, espaces à gauche.
+
+Débutant :
+• > pousse le texte à droite.
+• 'abc' fait 3 caractères → 2 espaces.
+
+Intermédiaire :
+• Le remplissage par défaut est espace.
+
+Expert :
+• Autre caractère de remplissage : f"{'abc':*>5}".
+
+Concepts clés :
+• Alignement, largeur minimale.
+
+Distinctions clés :
+• > vs < vs ^.
+
+Fonctionnement :
+• Moteur de format calcule padding.
+
+Exécution étape par étape :
+1. Texte 'abc'.
+2. Pad à gauche jusqu'à 5.
+
+Ordre des opérations :
+• f-string.
+
+Cas d'utilisation courants :
+• Colonnes monospace.
+
+Cas limites :
+• Texte plus long que largeur : pas de troncature.
+
+Considérations de performance :
+• Faible.
+
+Exemples :
+• f"{12:>4}"
+
+Remarques :
+• Combinez avec types numériques.`,
+  486: `f"{'abc':<5}" vaut "abc  " : aligné à gauche, espaces à droite.
+
+Débutant :
+• < remplit à droite.
+
+Intermédiaire :
+• Par défaut pour str.
+
+Expert :
+• = pour padding numérique centré sur signe (nums).
+
+Concepts clés :
+• Padding droit.
+
+Distinctions clés :
+• < vs >.
+
+Fonctionnement :
+• Insère espaces après le texte.
+
+Exécution étape par étape :
+1. 'abc' longueur 3.
+2. Ajoute 2 espaces finaux.
+
+Ordre des opérations :
+• f-string.
+
+Cas d'utilisation courants :
+• Tables texte.
+
+Cas limites :
+• idem largeur minimale.
+
+Considérations de performance :
+• Faible.
+
+Exemples :
+• f"{'x':<3}"
+
+Remarques :
+• endswith voit les espaces.`,
+  487: `f"{'abc':^7}" vaut "  abc  " : centré dans 7 caractères, espaces des deux côtés (2+3+2).
+
+Débutant :
+• ^ centre le contenu.
+• 7-3=4 espaces → 2 et 2 si pair.
+
+Intermédiaire :
+• Si déséquilibre d'un espace, convention Python fixe le côté favori.
+
+Expert :
+• Voir docs sur alignement impair.
+
+Concepts clés :
+• Centrage, largeur.
+
+Distinctions clés :
+• ^ vs strip.
+
+Fonctionnement :
+• Calcule pads gauche/droite.
+
+Exécution étape par étape :
+1. Largeur 7.
+2. Centre 'abc'.
+
+Ordre des opérations :
+• f-string.
+
+Cas d'utilisation courants :
+• Titres ASCII.
+
+Cas limites :
+• Largeur < len(texte) : pas de troncature.
+
+Considérations de performance :
+• Faible.
+
+Exemples :
+• f"{'hi':^4}"
+
+Remarques :
+• Vérifiez visuellement en monospace.`,
+  488: `f"{42:#x}" vaut "0x2a" : x hex avec préfixe grâce à #.
+
+Débutant :
+• # demande le préfixe 0x pour hex.
+
+Intermédiaire :
+• Même idée #b, #o.
+
+Expert :
+• Alignement avec 0x compte dans largeur totale si combiné.
+
+Concepts clés :
+• Préfixe alternate form.
+
+Distinctions clés :
+• avec/sans #.
+
+Fonctionnement :
+• Format int avec flag.
+
+Exécution étape par étape :
+1. 42.
+2. "0x2a".
+
+Ordre des opérations :
+• f-string.
+
+Cas d'utilisation courants :
+• Logs hex explicites.
+
+Cas limites :
+• Types non numériques invalides.
+
+Considérations de performance :
+• Faible.
+
+Exemples :
+• f"{255:#x}"
+
+Remarques :
+• Cohérent avec hex() visuellement.`,
+  489: `f"{42:#b}" vaut "0b101010" : binaire avec préfixe.
+
+Débutant :
+• # ajoute 0b.
+
+Intermédiaire :
+• Alignement utile en colonnes avec préfixe.
+
+Expert :
+• Tronquer préfixe manuellement si besoin spécifique.
+
+Concepts clés :
+• Format binaire préfixé.
+
+Distinctions clés :
+• f"{42:b}" sans 0b.
+
+Fonctionnement :
+• __format__ avec #.
+
+Exécution étape par étape :
+1. 42.
+2. "0b101010".
+
+Ordre des opérations :
+• f-string.
+
+Cas d'utilisation courants :
+• Debug bitmasks.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• Faible.
+
+Exemples :
+• f"{0:#b}"
+
+Remarques :
+• bin(42) identique ici.`,
+  490: `f"{42:#o}" vaut "0o52" : octal avec préfixe 0o.
+
+Débutant :
+• 42 en octal est 52.
+
+Intermédiaire :
+• # assure préfixe visible.
+
+Expert :
+• oct(42) similaire.
+
+Concepts clés :
+• Format octal préfixé.
+
+Distinctions clés :
+• o sans # sans préfixe.
+
+Fonctionnement :
+• Conversion + préfixe.
+
+Exécution étape par étape :
+1. 42.
+2. "0o52".
+
+Ordre des opérations :
+• f-string.
+
+Cas d'utilisation courants :
+• Pédagogie bases.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• Faible.
+
+Exemples :
+• f"{8:#o}"
+
+Remarques :
+• Lisible pour apprendre 0o syntax.`,
+  491: `f"{1234567:_}" vaut "1_234_567" : le underscore dans le format groupe les milliers pour la lisibilité.
+
+Débutant :
+• Le séparateur _ est inséré entre groupes de trois chiffres depuis la droite.
+
+Intermédiaire :
+• Disponible pour int (et certaines versions pour float).
+
+Expert :
+• Ne change pas la valeur, seulement l'affichage.
+
+Concepts clés :
+• Séparateurs de milliers en formatage.
+
+Distinctions clés :
+• Affichage vs littéral Python 1_234_567 en code source.
+
+Fonctionnement :
+• Moteur de format insère _.
+
+Exécution étape par étape :
+1. Entier 1234567.
+2. Insertion des _.
+
+Ordre des opérations :
+• f-string.
+
+Cas d'utilisation courants :
+• Logs de gros nombres.
+
+Cas limites :
+• Locales humaines différentes (virgule, espace).
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• f"{1000:_}"
+
+Remarques :
+• Pour vraie locale, module locale ou babel.`,
+  492: `f"{ {1: 2} }" vaut exactement la chaîne "{1: 2}" (7 caractères) : le dict est converti en texte comme dans un print du mapping.
+
+Débutant :
+• Les accolades externes délimitent l'expression f-string ; l'intérieur {1: 2} est un dict littéral.
+
+Intermédiaire :
+• Pour afficher des accolades littérales dans une f-string, doublez-les {{ }}.
+
+Expert :
+• !r sur l'expression changerait la représentation (souvent avec quotes).
+
+Concepts clés :
+• f-string avec expression dict, conversion str implicite.
+
+Distinctions clés :
+• Affichage dict vs repr complet avec quotes parfois différent.
+
+Fonctionnement :
+• Évalue {1:2} puis format.
+
+Exécution étape par étape :
+1. Dict singleton.
+2. str utilisée dans f-string.
+3. Chaîne visible "{1: 2}".
+
+Ordre des opérations :
+• Expression puis assemblage.
+
+Cas d'utilisation courants :
+• Debug rapide de petits mappings.
+
+Cas limites :
+• Dict non trié en affichage avant 3.7 historique ; aujourd'hui ordre insertion.
+
+Considérations de performance :
+• Faible.
+
+Exemples :
+• f"{ {'a':1} }"
+
+Remarques :
+• json.dumps pour JSON réel.`,
+  493: `"Name: %(name)s" % {"name": "Alice"} vaut "Name: Alice" : l'opérateur % avec dict nomme les placeholders %(name)s.
+
+Débutant :
+• %s attend une str ; Alice est injectée.
+
+Intermédiaire :
+• Un seul dict à droite ; clés doivent correspondre.
+
+Expert :
+• Moins souple que format ; attention sécurité si gabarit externe.
+
+Concepts clés :
+• Formatage % style printf, mapping.
+
+Distinctions clés :
+• % vs .format vs f-string.
+
+Fonctionnement :
+• Scan du gabarit et remplacement.
+
+Exécution étape par étape :
+1. Dict avec name.
+2. Substitution.
+3. Chaîne finale.
+
+Ordre des opérations :
+• Évaluation dict puis %.
+
+Cas d'utilisation courants :
+• Code legacy, SQL paramétré via drivers sûrs seulement.
+
+Cas limites :
+• Clé manquante → KeyError.
+
+Considérations de performance :
+• OK pour petits gabarits.
+
+Exemples :
+• "%(x)d" % {"x": 3}
+
+Remarques :
+• Évitez % pour concaténation utilisateur directe.`,
+  494: `"Hello, {name}!".format_map({"name": "Bob"}) vaut "Hello, Bob!" : format_map lit directement le mapping sans copie via kwargs.
+
+Débutant :
+• {name} est remplacé par la valeur du dict.
+
+Intermédiaire :
+• Utile avec UserDict ou mappings custom.
+
+Expert :
+• Diffère de **kwargs qui exige identifiants Python valides.
+
+Concepts clés :
+• format_map, SimpleNamespace patterns.
+
+Distinctions clés :
+• format_map vs format(**d).
+
+Fonctionnement :
+• __getitem__ sur le mapping.
+
+Exécution étape par étape :
+1. Mapping Bob.
+2. Substitution name.
+3. Chaîne salutation.
+
+Ordre des opérations :
+• Évaluation dict puis format_map.
+
+Cas d'utilisation courants :
+• i18n, templates data-driven.
+
+Cas limites :
+• Clé absente → KeyError.
+
+Considérations de performance :
+• Comparable à format.
+
+Exemples :
+• collections.ChainMap usages
+
+Remarques :
+• f-string souvent plus lisible en interne.`,
+  495: `ascii("café") utilise des échappements ASCII pour les non ASCII : chaîne comme 'caf\xe9' avec quotes (repr-like).
+
+Débutant :
+• é devient séquence \xe9 en hexadécimal du point de code.
+
+Intermédiaire :
+• Similaire à repr pour str non ASCII souvent.
+
+Expert :
+• Utile pour logs 7-bit sûrs.
+
+Concepts clés :
+• ascii(), échappement Unicode.
+
+Distinctions clés :
+• ascii vs str() naturel.
+
+Fonctionnement :
+• Remplace non ASCII par escapes.
+
+Exécution étape par étape :
+1. Texte café.
+2. Produire forme échappée.
+
+Ordre des opérations :
+• Appel ascii.
+
+Cas d'utilisation courants :
+• Protocoles ASCII, debugging.
+
+Cas limites :
+• Lisibilité humaine réduite.
 
 Considérations de performance :
 • O(n).
 
 Exemples :
-• "12a".isdigit()  # False
+• ascii("€")
 
 Remarques :
-• Pour convertir en int, il faut aussi gérer signes/espaces selon besoin.`,
-  407: `"hello3".isalpha() renvoie False : la présence de "3" casse la condition alphabetique pure.
+• encode('unicode_escape') lié mais différent.`,
+  496: `repr("hello") inclut souvent des quotes : "'hello'" ; str("hello") vaut "hello" : deux conversions affichage, objectifs différents.
 
 Débutant :
-• isalpha veut seulement des lettres.
-• "3" n’est pas une lettre.
+• str : lisible ; repr : souvent réévaluable ou explicite.
 
 Intermédiaire :
-• Au moins un caractère non lettre -> False.
+• En REPL, repr domine parfois pour ambiguïté.
 
 Expert :
-• Basé sur catégories Unicode de lettres.
+• __repr__ vs __str__ sur types custom.
 
 Concepts clés :
-• Test alphabétique.
+• str vs repr.
 
 Distinctions clés :
-• isalpha exclut chiffres/espaces/symboles.
+• f"{x!r}" force repr.
 
 Fonctionnement :
-• Python inspecte chaque caractère pour vérifier qu’il est lettre.
+• Appels PyObject_Str / Repr.
 
 Exécution étape par étape :
-1. Lire "hello3".
-2. h,e,l,l,o passent.
-3. "3" échoue.
-4. Retourner False.
+1. Même objet "hello".
+2. Deux représentations textuelles.
 
 Ordre des opérations :
-• Évaluer puis isalpha().
+• Indépendants.
 
 Cas d'utilisation courants :
-• Validation de noms strictement alphabétiques.
+• Logs techniques vs UI.
 
 Cas limites :
-• Chaîne vide -> False.
+• Caractères rares : longues séquences d'échappement.
 
 Considérations de performance :
-• O(n), arrêt dès un caractère invalide.
+• Faible.
 
 Exemples :
-• "hello".isalpha()  # True
+• repr("\n")
 
 Remarques :
-• Pour lettres + espaces, il faut une logique personnalisée.`,
-  408: `"hello3".isalnum() renvoie True : tous les caractères sont lettres ou chiffres.
+• Choisissez selon audience.`,
+  497: `isinstance("hello", str) vaut True : str est le type des chaînes Unicode.
 
 Débutant :
-• "hello" = lettres, "3" = chiffre.
-• Ensemble alphanumérique valide.
+• Vérifie le type (classe) de l'objet.
 
 Intermédiaire :
-• isalnum accepte lettres/chiffres, sans espaces ni symboles.
+• isinstance accepte tuple de types : isinstance(x,(str,bytes)).
 
 Expert :
-• Comportement Unicode (pas limité ASCII).
+• Préféré à type(x)==str pour héritage (sous-classes).
 
 Concepts clés :
-• Test alphanumérique.
+• isinstance, introspection.
 
 Distinctions clés :
-• isalnum plus permissif que isalpha.
+• isinstance vs type(x) is str (pas de sous-types).
 
 Fonctionnement :
-• Python vérifie que chaque caractère est lettre ou chiffre.
+• Parcourt la MRO.
 
 Exécution étape par étape :
-1. Lire "hello3".
-2. Vérifier chaque caractère.
-3. Tous valides alnum -> True.
+1. Objet str.
+2. Classe str.
+3. True.
 
 Ordre des opérations :
-• Évaluer puis isalnum().
+• Appel isinstance.
 
 Cas d'utilisation courants :
-• Validation d’identifiants simples.
+• Validation API, polymorphisme.
 
 Cas limites :
-• Chaîne vide -> False.
+• ABC register peut influencer.
+
+Considérations de performance :
+• O(1) typiquement.
+
+Exemples :
+• isinstance(1,int)
+
+Remarques :
+• Évitez isinstance abusif : duck typing souvent suffit.`,
+  498: `isinstance(42, str) vaut False : un int n'est pas une str.
+
+Débutant :
+• Types distincts.
+
+Intermédiaire :
+• Conversion str(42) pour obtenir une str.
+
+Expert :
+• numpy scalars etc. peuvent surprendre hors stdlib.
+
+Concepts clés :
+• Typage, isinstance négatif.
+
+Distinctions clés :
+• 42 vs "42".
+
+Fonctionnement :
+• MRO ne contient pas str.
+
+Exécution étape par étape :
+1. int 42.
+2. Test str.
+3. False.
+
+Ordre des opérations :
+• isinstance.
+
+Cas d'utilisation courants :
+• Branches selon type.
+
+Cas limites :
+• bool subclass de int (True isinstance int).
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• isinstance(True,int)  # True
+
+Remarques :
+• Attention piège bool/int.`,
+  499: `"2var".isidentifier() vaut False : un identifiant ne peut pas commencer par un chiffre.
+
+Débutant :
+• Règles lexicales Python pour noms.
+
+Intermédiaire :
+• isidentifier ne garantit pas que le nom n'est pas un mot-clé.
+
+Expert :
+• keyword.iskeyword séparement.
+
+Concepts clés :
+• isidentifier, lexique.
+
+Distinctions clés :
+• valide lexicalement vs mot réservé.
+
+Fonctionnement :
+• Vérifie pattern NAME.
+
+Exécution étape par étape :
+1. Chaîne "2var".
+2. Premier caractère chiffre.
+3. False.
+
+Ordre des opérations :
+• Appel méthode.
+
+Cas d'utilisation courants :
+• Valider noms de colonnes dynamiques.
+
+Cas limites :
+• Identifiants Unicode possibles selon règles.
+
+Considérations de performance :
+• O(len).
+
+Exemples :
+• "_ok".isidentifier()
+
+Remarques :
+• Normalisez avant test.`,
+  500: `type("hello") is str vaut True en CPython : la classe de l'objet str littéral est exactement str (pas une sous-classe).
+
+Débutant :
+• type(x) retourne la classe.
+• is compare identité de classe.
+
+Intermédiaire :
+• Pour instances utilisateur héritant de str, type peut différer.
+
+Expert :
+• isinstance plus souple pour sous-types.
+
+Concepts clés :
+• type(), is, classe built-in str.
+
+Distinctions clés :
+• type(x) is str vs isinstance(x,str).
+
+Fonctionnement :
+• Objet.__class__ comparé à str.
+
+Exécution étape par étape :
+1. "hello" instance de str.
+2. type → str.
+3. str is str → True.
+
+Ordre des opérations :
+• type puis is.
+
+Cas d'utilisation courants :
+• Tests stricts rares ; préférez isinstance.
+
+Cas limites :
+• Sous-classes : type n'est pas str.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• type([]) is list
+
+Remarques :
+• En général API publique : isinstance.`,
+  501: `type(b"hello") est la classe bytes : les littéraux b"..." produisent des séquences d'octets immuables.
+
+Débutant :
+• bytes représente des données binaires, pas du texte Unicode décodé.
+• Le préfixe b indique un littéral bytes.
+
+Intermédiaire :
+• Chaque élément est un int 0–255.
+• Diffère de str qui est texte Unicode.
+
+Expert :
+• bytes est immutable comme str ; bytearray est la variante mutable.
+
+Concepts clés :
+• type(), bytes, littéral b.
+
+Distinctions clés :
+• bytes vs str vs bytearray.
+
+Fonctionnement :
+• Construction d'un objet bytes depuis la notation littérale.
+
+Exécution étape par étape :
+1. Parser b"hello".
+2. Stocker octets ASCII.
+3. type → bytes.
+
+Ordre des opérations :
+• Littéral évalué à la demande.
+
+Cas d'utilisation courants :
+• Fichiers binaires, sockets, crypto.
+
+Cas limites :
+• Octet >255 impossible dans littéral simple.
+
+Considérations de performance :
+• Contigus en mémoire en CPython.
+
+Exemples :
+• type(b"")
+
+Remarques :
+• Décodez explicitement vers str pour affichage texte.`,
+  502: `type(bytearray(b"hello")) est bytearray : copie mutable d'une séquence d'octets.
+
+Débutant :
+• bytearray se comporte comme une liste d'octets.
+• On peut modifier des indices.
+
+Intermédiaire :
+• bytearray(b"...") copie souvent les données.
+
+Expert :
+• Méthodes similaires à bytes pour recherche, mais __setitem__ existe.
+
+Concepts clés :
+• bytearray, mutabilité.
+
+Distinctions clés :
+• bytes immutable ; bytearray mutable.
+
+Fonctionnement :
+• Alloue buffer modifiable.
+
+Exécution étape par étape :
+1. Partir de b"hello".
+2. Construire bytearray.
+3. type → bytearray.
+
+Ordre des opérations :
+• Appel constructeur.
+
+Cas d'utilisation courants :
+• Buffer I/O, construction incrémentale.
+
+Cas limites :
+• Valeur hors 0–255 → ValueError.
+
+Considérations de performance :
+• Réallocation possible comme list.
+
+Exemples :
+• bytearray(5)
+
+Remarques :
+• .decode() pour obtenir str.`,
+  503: `b"hello"[0] vaut 104 : l'indexation d'un bytes renvoie un int (code octet), pas un bytes d'un élément.
+
+Débutant :
+• 104 est le code ASCII de 'h'.
+• Même règle d'index négatif qu'une séquence.
+
+Intermédiaire :
+• Contrairement à str[0] qui est str une lettre, bytes[0] est int.
+
+Expert :
+• Pour obtenir un sous-bytes d'un octet : b"h"[0:1].
+
+Concepts clés :
+• Indexation bytes → int.
+
+Distinctions clés :
+• str[i] str vs bytes[i] int.
+
+Fonctionnement :
+• Accès direct au buffer.
+
+Exécution étape par étape :
+1. bytes b"hello".
+2. Index 0.
+3. 104.
+
+Ordre des opérations :
+• Évaluation bytes puis [].
+
+Cas d'utilisation courants :
+• Parser binaire octet par octet.
+
+Cas limites :
+• Index hors plage → IndexError.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• b"A"[0]  # 65
+
+Remarques :
+• chr(b[0]) si ASCII attendu.`,
+  504: `b"hello"[1] vaut 101 : deuxième octet, code ASCII de 'e'.
+
+Débutant :
+• Indices commencent à 0.
+
+Intermédiaire :
+• Cohérent pour toute la séquence bytes.
+
+Expert :
+• Données non texte : pas de “lettre”, juste octet.
+
+Concepts clés :
+• Octets individuels comme int.
+
+Distinctions clés :
+• Lecture seule sur bytes.
+
+Fonctionnement :
+• Même mécanisme que [0].
+
+Exécution étape par étape :
+1. b"hello".
+2. Index 1 → 101.
+
+Ordre des opérations :
+• [] sur bytes.
+
+Cas d'utilisation courants :
+• Inspection paquets réseau.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• b"\xff"[0]  # 255
+
+Remarques :
+• Toujours vérifier encodage avant interprétation texte.`,
+  505: `list(b"Hi") vaut [72, 105] : itération matérialise chaque octet comme entier.
+
+Débutant :
+• H → 72, i → 105 en ASCII.
+
+Intermédiaire :
+• list() consomme tout l'itérable bytes.
+
+Expert :
+• Pour grandes données, évitez list() si un itérateur suffit.
+
+Concepts clés :
+• bytes itérable d'int.
+
+Distinctions clés :
+• list(bytes) vs list(str) caractères.
+
+Fonctionnement :
+• __iter__ produit ints.
+
+Exécution étape par étape :
+1. Itérer b"Hi".
+2. Liste deux ints.
+
+Ordre des opérations :
+• list construit depuis itérable.
+
+Cas d'utilisation courants :
+• Édition ponctuelle avant reconstruction bytes.
+
+Cas limites :
+• Mémoire double pour gros buffers.
 
 Considérations de performance :
 • O(n).
 
 Exemples :
-• "abc_1".isalnum()  # False
+• list(b"")  # []
 
 Remarques :
-• Pour autoriser "_" utilisez un test personnalisé/regex.`,
-  409: `"   ".isspace() renvoie True : la chaîne contient uniquement des blancs.
+• bytes(liste) reconstruit si valeurs valides.`,
+  506: `len(b"abc") vaut 3 : nombre d'octets, pas de caractères Unicode.
 
 Débutant :
-• Trois espaces = caractères d’espacement.
-• isspace renvoie True.
+• Chaque lettre ASCII = 1 octet.
 
 Intermédiaire :
-• Il faut au moins un caractère et tous doivent être des blancs.
+• Texte UTF-8 multioctet : len(bytes) ≥ len(str).
 
 Expert :
-• Inclut espaces, tabulations, retours selon Unicode.
+• len O(1) sur bytes CPython.
 
 Concepts clés :
-• Test de whitespace.
+• Taille buffer octets.
 
 Distinctions clés :
-• isspace teste nature des caractères, pas simple vide/non-vide.
+• len(str) vs len(bytes) même texte encodé.
 
 Fonctionnement :
-• Python vérifie chaque caractère de la chaîne.
+• Compte octets contigus.
 
 Exécution étape par étape :
-1. Lire "   ".
-2. Vérifier chaque espace.
-3. Tous whitespace -> True.
+1. b"abc".
+2. len → 3.
 
 Ordre des opérations :
-• Évaluer puis isspace().
+• Direct.
 
 Cas d'utilisation courants :
-• Détecter lignes “vides visuellement”.
+• En-têtes taille fixe.
 
 Cas limites :
-• "".isspace() -> False.
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• len(b"\xff\x00")
+
+Remarques :
+• Ne confondez pas avec nombre de glyphes.`,
+  507: `b"hello" + b" world" concatène deux bytes immuables en un nouveau bytes.
+
+Débutant :
+• + exige deux bytes (ou compatible) ; pas bytes+str.
+
+Intermédiaire :
+• Nouvelle allocation ; opérandes inchangés.
+
+Expert :
+• b"".join(iterable) pour plusieurs morceaux efficacement.
+
+Concepts clés :
+• Concaténation bytes.
+
+Distinctions clés :
+• Pas de coercition str automatique.
+
+Fonctionnement :
+• Copie mémoire des deux parties.
+
+Exécution étape par étape :
+1. b"hello".
+2. b" world".
+3. b"hello world".
+
+Ordre des opérations :
+• Évaluation gauche/droite puis +.
+
+Cas d'utilisation courants :
+• Trames binaires, chunks.
+
+Cas limites :
+• Très grandes concaténations : join/bytearray.
+
+Considérations de performance :
+• O(n) résultat.
+
+Exemples :
+• b"a" + b"b"
+
+Remarques :
+• Vérifiez encodage homogène.`,
+  508: `b"ab" * 3 vaut b"ababab" : répétition identique aux str/list.
+
+Débutant :
+• Duplique la séquence d'octets.
+
+Intermédiaire :
+• n négatif ou zéro → b''.
+
+Expert :
+• Même sémantique que str * n.
+
+Concepts clés :
+• Répétition bytes.
+
+Distinctions clés :
+• bytes * n produit bytes.
+
+Fonctionnement :
+• Allocation taille n * len.
+
+Exécution étape par étape :
+1. b"ab".
+2. *3.
+3. b"ababab".
+
+Ordre des opérations :
+• * après évaluation opérandes.
+
+Cas d'utilisation courants :
+• Padding, motifs réseau.
+
+Cas limites :
+• Mémoire si n énorme.
+
+Considérations de performance :
+• O(taille résultat).
+
+Exemples :
+• b"x" * 0
+
+Remarques :
+• bytearray peut être préféré pour construction.`,
+  509: `b"hello"[1:3] vaut b"el" : slicing bytes renvoie bytes (copie vue).
+
+Débutant :
+• stop exclus comme str.
+• Indices en octets.
+
+Intermédiaire :
+• Pas de décodage implicite.
+
+Expert :
+• memoryview pour zéro-copy.
+
+Concepts clés :
+• Slice bytes.
+
+Distinctions clés :
+• slice vs index simple int.
+
+Fonctionnement :
+• Copie sous-plage.
+
+Exécution étape par étape :
+1. Indices 1,2.
+2. b"el".
+
+Ordre des opérations :
+• Évaluation base puis slice.
+
+Cas d'utilisation courants :
+• Découper payloads.
+
+Cas limites :
+• Bornes clampées sans erreur.
+
+Considérations de performance :
+• O(k) k longueur slice.
+
+Exemples :
+• b"abc"[:2]
+
+Remarques :
+• Alignement protocole souvent fixe.`,
+  510: `bytes([72, 101, 108, 108, 111]) vaut b"hello" : constructeur depuis itérable d'entiers 0–255.
+
+Débutant :
+• Chaque int devient un octet.
+
+Intermédiaire :
+• itérable vide → b''.
+
+Expert :
+• bytes.fromhex alternative pour hex strings.
+
+Concepts clés :
+• Construction bytes depuis ints.
+
+Distinctions clés :
+• liste d'int vs str "hello".
+
+Fonctionnement :
+• Vérifie bornes puis copie.
+
+Exécution étape par étape :
+1. Itérer codes.
+2. Valider 0–255.
+3. Produit b"hello".
+
+Ordre des opérations :
+• Appel bytes().
+
+Cas d'utilisation courants :
+• Reconstituer depuis tableau de codes.
+
+Cas limites :
+• int hors plage → ValueError.
 
 Considérations de performance :
 • O(n).
 
 Exemples :
-• "\\t\\n".isspace()  # True
+• bytes([255])
 
 Remarques :
-• Souvent combiné à strip pour nettoyer les entrées.`,
-  410: `"²".isnumeric() renvoie True : "²" est un caractère numérique en Unicode.
+• bytearray(liste) mutable équivalent.`,
+  511: `Après ba = bytearray(b"abc") puis ba[0] = 65, ba vaut bytearray(b"Abc") : mutation in-place du premier octet.
 
 Débutant :
-• "²" représente une valeur numérique.
-• isnumeric le reconnaît.
+• 65 est 'A' ASCII.
+• bytearray autorise l'affectation par indice.
 
 Intermédiaire :
-• isnumeric couvre une gamme large de caractères numériques Unicode.
+• bytes seul interdirait l'assignation.
 
 Expert :
-• Certains caractères sont numériques sans être décimaux.
+• Peut lever TypeError si slice assigné mal formé.
 
 Concepts clés :
-• Numérique Unicode.
+• Mutation bytearray, code ASCII.
 
 Distinctions clés :
-• isnumeric est plus large que isdecimal.
+• bytearray vs bytes immuable.
 
 Fonctionnement :
-• Python consulte la propriété Unicode du caractère.
+• __setitem__ modifie buffer.
 
 Exécution étape par étape :
-1. Lire "²".
-2. Vérifier la catégorie numérique.
-3. Retourner True.
+1. Copie mutable de b"abc".
+2. Remplace octet 0 par 65.
+3. Affiche bytearray(b"Abc").
 
 Ordre des opérations :
-• Évaluer puis isnumeric().
+• Création puis assignation index.
 
 Cas d'utilisation courants :
-• Validation de nombres dans contextes internationaux.
+• Parser éditant buffer.
 
 Cas limites :
-• Certains caractères numériques ne se convertissent pas directement via int().
+• Valeur >255 ou <0 interdite.
+
+Considérations de performance :
+• O(1) pour un octet.
+
+Exemples :
+• ba.append(10)
+
+Remarques :
+• Décoder après modifications si texte visé.`,
+  512: `b"hello".decode("utf-8") vaut "hello" : interprète les octets selon l'encodage pour produire str.
+
+Débutant :
+• decode est l'inverse logique d'encode pour texte.
+
+Intermédiaire :
+• utf-8 est l'encodage par défaut sur beaucoup de plateformes pour .decode() sans argument souvent utf-8 en 3.x (locale peut influencer défaut).
+
+Expert :
+• errors= pour remplacer/ignorer octets invalides.
+
+Concepts clés :
+• bytes → str, codec.
+
+Distinctions clés :
+• decode vs str(bytes) (repr binaire).
+
+Fonctionnement :
+• Codec UTF-8 interprète séquence.
+
+Exécution étape par étape :
+1. Octets ASCII compatibles UTF-8.
+2. Chaîne Unicode identique visuelle.
+
+Ordre des opérations :
+• Méthode sur bytes.
+
+Cas d'utilisation courants :
+• Lire fichier texte ouvert en binaire.
+
+Cas limites :
+• Octets invalides UTF-8 → UnicodeDecodeError.
 
 Considérations de performance :
 • O(n).
 
 Exemples :
-• "½".isnumeric()  # True
+• b"\xc3\xa9".decode()  # "é"
 
 Remarques :
-• isnumeric est utile pour détection, pas toujours suffisant pour parsing classique.`,
-  411: `"²".isdecimal() renvoie False : "²" n’est pas un chiffre décimal strict.
+• Spécifiez l'encodage explicitement en prod.`,
+  513: `"hello".encode("utf-8") vaut b"hello" : str → bytes en UTF-8 (ici ASCII pur).
 
 Débutant :
-• "²" est un exposant, pas un chiffre decimal 0-9 standard.
-• isdecimal renvoie False.
+• encode choisit comment sérialiser le texte.
 
 Intermédiaire :
-• isdecimal est la vérification la plus stricte des trois (decimal/digit/numeric).
+• UTF-8 variable : caractères non ASCII → plusieurs octets.
 
 Expert :
-• "²" peut être digit/numeric mais pas decimal.
+• normalize Unicode avant encodage sensible.
 
 Concepts clés :
-• Décimal Unicode strict.
+• str → bytes.
 
 Distinctions clés :
-• isdecimal ⊂ isdigit ⊂ isnumeric.
+• encode vs bytes(str) interdit.
 
 Fonctionnement :
-• Python vérifie si le caractère appartient à la catégorie décimale Unicode.
+• Codec transforme points de code.
 
 Exécution étape par étape :
-1. Lire "²".
-2. Tester propriété decimal.
-3. Échec -> False.
+1. str "hello".
+2. UTF-8 bytes identiques ASCII.
 
 Ordre des opérations :
-• Évaluer puis isdecimal().
+• Appel .encode.
 
 Cas d'utilisation courants :
-• Validation stricte de nombres décimaux textuels.
+• Écrire sockets, fichiers binaires.
 
 Cas limites :
-• "3".isdecimal() -> True ; "²".isdecimal() -> False.
+• Caractère non représentable dans codec → erreur.
 
 Considérations de performance :
 • O(n).
 
 Exemples :
-• "123".isdecimal()  # True
-• "²".isdecimal()    # False
+• "é".encode("utf-8")
 
 Remarques :
-• Pour tolérer davantage de symboles numériques, préférer isdigit/isnumeric selon le besoin.`,
-  412: `Quand l'index start est omis dans le slicing, il vaut 0 par défaut (le début). [1, 2, 3, 4][:2] retourne [1, 2] car [:2] signifie « du début jusqu'à (mais pas inclus) l'index 2 », ce qui donne les deux premiers éléments. Pattern courant pour obtenir les N premiers éléments.
-
-Slicing avec start omis :
-• [1, 2, 3, 4][:2] = [1, 2]
-• Start omis = 0 par défaut (début)
-• L'index stop 2 est exclusif
-• Retourne les éléments du début à l'index 1
-• Donne les 2 premiers éléments
-
-Comment ça fonctionne :
-• [:2] signifie commencer à 0 (défaut), s'arrêter avant 2
-• Inclut les indices 0 et 1 : [1, 2]
-• Exclut l'index 2 (stop exclusif)
-• Retourne une nouvelle liste : [1, 2]
-• Pattern courant pour « N premiers éléments »
-
-Exemple :
-[1, 2, 3, 4][:2]    # [1, 2] (2 premiers)
-[1, 2, 3, 4][:3]    # [1, 2, 3] (3 premiers)
-[1, 2, 3, 4][:1]    # [1] (1 premier)
-
-Usages courants :
-• N premiers éléments : first_two = items[:2]
-• Obtenir un préfixe : prefix = data[:n]
-• Éléments initiaux
-• Début de liste
-
-Exemple : [1, 2, 3, 4][:2] retourne [1, 2] car l'omission du start vaut 0 par défaut, donc on obtient les éléments du début jusqu'à (mais pas inclus) l'index 2, soit les deux premiers éléments.`,
-  413: `Quand l'index stop est omis dans le slicing, il vaut la fin de la liste par défaut. [1, 2, 3, 4][2:] retourne [3, 4] car [2:] signifie « depuis l'index 2 jusqu'à la fin », ce qui inclut tous les éléments à partir de l'index 2. Pattern courant pour obtenir les N derniers éléments ou tout ce qui suit un certain point.
-
-Slicing avec stop omis :
-• [1, 2, 3, 4][2:] = [3, 4]
-• L'index start 2 est inclusif
-• Stop omis = fin de la liste par défaut
-• Retourne les éléments de l'index 2 à la fin
-• Donne les éléments restants
-
-Comment ça fonctionne :
-• [2:] signifie commencer à l'index 2, aller jusqu'à la fin
-• Inclut les indices 2 et 3 : [3, 4]
-• Pas de stop = inclure tout jusqu'à la fin
-• Retourne une nouvelle liste : [3, 4]
-• Pattern courant pour « depuis l'index N à la fin »
-
-Exemple :
-[1, 2, 3, 4][2:]    # [3, 4] (depuis l'index 2)
-[1, 2, 3, 4][1:]    # [2, 3, 4] (depuis l'index 1)
-[1, 2, 3, 4][3:]    # [4] (depuis l'index 3)
-
-Usages courants :
-• Depuis un index jusqu'à la fin : rest = items[2:]
-• Obtenir un suffixe : suffix = data[n:]
-• Éléments restants
-• Fin de liste
-
-Exemple : [1, 2, 3, 4][2:] retourne [3, 4] car l'omission du stop vaut la fin de la liste par défaut, donc on obtient tous les éléments depuis l'index 2 (inclusif) jusqu'à la fin.`,
-  414: `Le slicing avec un step utilise la syntaxe [start:stop:step]. [1, 2, 3, 4][::2] retourne [1, 3] car [::2] signifie « du début à la fin, prendre un élément sur deux ». La valeur step contrôle l'intervalle entre les éléments sélectionnés. Quand start et stop sont omis, la liste entière est utilisée.
-
-Slicing avec step :
-• [1, 2, 3, 4][::2] = [1, 3]
-• [::2] signifie start=0, stop=fin, step=2
-• Prend un élément sur deux
-• Retourne les éléments aux indices 0, 2 : [1, 3]
-• Le step contrôle l'intervalle
-
-Comment ça fonctionne :
-• [::2] signifie : commencer à 0, aller à la fin, step 2
-• Prend les éléments aux indices 0, 2 : [1, 3]
-• Saute les indices 1, 3
-• Retourne une nouvelle liste : [1, 3]
-• Un step de 2 signifie prendre un élément sur deux
-
-Exemple :
-[1, 2, 3, 4][::2]   # [1, 3] (un sur deux)
-[1, 2, 3, 4][::1]   # [1, 2, 3, 4] (tous les éléments)
-[1, 2, 3, 4, 5][::2] # [1, 3, 5] (un sur deux)
-
-Usages courants :
-• Un élément sur N : evens = items[::2]
-• Sauter des éléments : sampled = data[::n]
-• Sélection par intervalle
-• Extraction de motif
-
-Exemple : [1, 2, 3, 4][::2] retourne [1, 3] car le step 2 signifie prendre un élément sur deux du début à la fin, sélectionnant les éléments aux indices 0 et 2.`,
-  415: `Un step négatif dans le slicing inverse l'ordre. [1, 2, 3, 4][::-1] retourne [4, 3, 2, 1] car [::-1] signifie « de la fin au début, step -1 », ce qui inverse la liste. Quand start et stop sont omis avec un step négatif, la liste entière est parcourue à l'envers.
-
-Inversion avec step négatif :
-• [1, 2, 3, 4][::-1] = [4, 3, 2, 1]
-• [::-1] signifie start=fin, stop=début, step=-1
-• Un step négatif inverse la direction
-• Retourne les éléments en ordre inverse
-• Façon courante d'inverser une liste
-
-Comment ça fonctionne :
-• [::-1] signifie : commencer à la fin, s'arrêter au début, step -1
-• Parcourt la liste à l'envers
-• Prend les éléments dans l'ordre inverse : 4, 3, 2, 1
-• Retourne une nouvelle liste inversée : [4, 3, 2, 1]
-• La liste d'origine est inchangée
-
-Exemple :
-[1, 2, 3, 4][::-1]   # [4, 3, 2, 1] (inversée)
-[1, 2, 3][::-1]     # [3, 2, 1] (inversée)
-['a', 'b'][::-1]    # ['b', 'a'] (inversée)
-
-Usages courants :
-• Inverser une liste : reversed_list = items[::-1]
-• Créer une copie inversée : rev = data[::-1]
-• Itération inverse
-• Séquence à l'envers
-
-Exemple : [1, 2, 3, 4][::-1] retourne [4, 3, 2, 1] car un step négatif de -1 inverse la direction, créant une nouvelle liste avec les éléments en ordre inverse.`,
-  416: `Le slicing avec indices négatifs combine un start positif et un stop négatif. [1, 2, 3, 4][1:-1] retourne [2, 3] car [1:-1] signifie « depuis l'index 1 jusqu'à l'avant-dernier élément (exclusif) ». Cela exclut à la fois le premier (index 0) et le dernier (index -1), donnant les éléments du milieu.
-
-Slicing avec stop négatif :
-• [1, 2, 3, 4][1:-1] = [2, 3]
-• L'index start 1 est inclusif
-• L'index stop -1 est exclusif (exclut le dernier)
-• Retourne les éléments aux indices 1 et 2
-• Exclut le premier (index 0) et le dernier (index -1)
-
-Comment ça fonctionne :
-• [1:-1] signifie : commencer à 1, s'arrêter avant -1
-• L'index -1 est le dernier élément (exclusif)
-• Inclut les indices 1 et 2 : [2, 3]
-• Exclut l'index 0 (premier) et l'index -1 (dernier)
-• Retourne les éléments du milieu : [2, 3]
-
-Exemple :
-[1, 2, 3, 4][1:-1]  # [2, 3] (exclut premier et dernier)
-[1, 2, 3, 4, 5][1:-1] # [2, 3, 4] (exclut premier et dernier)
-[1, 2][1:-1]        # [] (rien ne reste)
-
-Usages courants :
-• Exclure les extrémités : middle = items[1:-1]
-• Obtenir les éléments internes : inner = data[1:-1]
-• Supprimer premier et dernier
-• Partie centrale
-
-Exemple : [1, 2, 3, 4][1:-1] retourne [2, 3] car cela commence à l'index 1 (inclusif) et s'arrête avant l'index -1 (exclusif), excluant le premier et le dernier, laissant les éléments du milieu.`,
-  417: `Le slicing avec start et stop omis [:] crée une copie superficielle de toute la liste. [1, 2, 3][:] retourne [1, 2, 3] car [:] signifie « du début à la fin », incluant tous les éléments. Cela crée un nouvel objet liste avec les mêmes éléments, mais c'est une copie superficielle : les objets imbriqués restent partagés.
-
-Copie superficielle avec [:] :
-• [1, 2, 3][:] = [1, 2, 3] (nouvelle liste, mêmes éléments)
-• [:] signifie start=0, stop=fin (tous les éléments)
-• Crée un nouvel objet liste
-• Copie tous les éléments dans la nouvelle liste
-• Copie superficielle (objets imbriqués partagés)
-
-Comment ça fonctionne :
-• [:] signifie : commencer à 0, aller à la fin
-• Inclut tous les éléments : 1, 2, 3
-• Crée un nouvel objet liste
-• Copie les éléments dans la nouvelle liste : [1, 2, 3]
-• Nouvelle liste, mais copie superficielle
-
-Exemple :
-[1, 2, 3][:]        # [1, 2, 3] (copie superficielle)
-a = [1, 2, 3]
-b = a[:]            # b est une nouvelle liste, mais copie superficielle
-a is b              # False (objets différents)
-
-Usages courants :
-• Créer une copie : copy = items[:]
-• Copie superficielle : new_list = data[:]
-• Dupliquer une liste
-• Objet liste indépendant
-
-Exemple : [1, 2, 3][:] retourne [1, 2, 3] car [:] crée une copie superficielle de toute la liste, donnant un nouvel objet liste avec les mêmes éléments.`,
-  418: `Le slicing avec start, stop et step utilise [start:stop:step]. [1, 2, 3, 4, 5][1:4:2] retourne [2, 4] car cela commence à l'index 1, s'arrête avant l'index 4, et prend un élément sur deux. Combine une plage avec un intervalle de step pour sélectionner des éléments spécifiques.
-
-Slicing avec start, stop, step :
-• [1, 2, 3, 4, 5][1:4:2] = [2, 4]
-• L'index start 1 est inclusif
-• L'index stop 4 est exclusif
-• Step 2 signifie un élément sur deux
-• Retourne les éléments aux indices 1, 3 : [2, 4]
-
-Comment ça fonctionne :
-• [1:4:2] signifie : commencer à 1, s'arrêter avant 4, step 2
-• Indices dans la plage [1, 4) : 1, 2, 3
-• Step 2 : prend les indices 1, 3
-• Éléments aux indices 1, 3 : [2, 4]
-• Retourne une nouvelle liste : [2, 4]
-
-Exemple :
-[1, 2, 3, 4, 5][1:4:2]  # [2, 4] (indices 1, 3)
-[1, 2, 3, 4, 5][0:5:2]  # [1, 3, 5] (indices 0, 2, 4)
-[1, 2, 3, 4, 5][1:5:3]  # [2, 5] (indices 1, 4)
-
-Usages courants :
-• Plage avec step : selected = items[1:4:2]
-• Intervalle dans une plage : sampled = data[start:end:step]
-• Extraction de motif
-• Extraction sélective
-
-Exemple : [1, 2, 3, 4, 5][1:4:2] retourne [2, 4] car cela commence à l'index 1 (inclusif), s'arrête avant l'index 4 (exclusif), et prend un élément sur deux, sélectionnant les éléments aux indices 1 et 3.`,
-  419: `Quand les indices start et stop sont égaux dans le slicing, le résultat est une liste vide. [1, 2, 3][0:0] retourne [] car [0:0] signifie « de l'index 0 à l'index 0 (exclusif) », ce qui n'inclut aucun élément car le stop est exclusif. C'est vrai pour tout start égal à stop.
-
-Start et stop égaux :
-• [1, 2, 3][0:0] = [] (liste vide)
-• Index start 0, index stop 0 (exclusif)
-• Aucun élément dans la plage [0, 0)
-• Retourne une liste vide
-• Le stop est exclusif, donc rien n'est inclus
-
-Comment ça fonctionne :
-• [0:0] signifie : commencer à 0, s'arrêter avant 0
-• La plage [0, 0) n'inclut aucun index
-• Le stop est exclusif, donc l'index 0 n'est pas inclus
-• Aucun élément à inclure
-• Retourne une liste vide : []
-
-Exemple :
-[1, 2, 3][0:0]       # [] (aucun élément)
-[1, 2, 3][1:1]       # [] (aucun élément)
-[1, 2, 3][2:2]       # [] (aucun élément)
-[1, 2, 3][3:3]       # [] (aucun élément)
-
-Usages courants :
-• Slice vide : empty = items[i:i]
-• Point d'insertion : items[i:i] = [x] (insère à i)
-• Plage vide
-• Slice sans effet
-
-Exemple : [1, 2, 3][0:0] retourne [] car quand start et stop sont égaux, la plage est vide (stop exclusif), donc aucun élément n'est inclus dans le slice.`,
-  420: `Le slicing avec des indices au-delà des bornes de la liste retourne une liste vide plutôt qu'une erreur. [1, 2, 3][5:10] retourne [] car l'index start 5 dépasse la longueur de la liste (qui est 3), donc aucun élément n'est dans cette plage. Le slicing en Python est indulgent : pas d'erreur pour les indices hors limites, juste une liste vide.
-
-Slicing au-delà des bornes :
-• [1, 2, 3][5:10] = [] (liste vide)
-• La liste a les indices 0, 1, 2 (longueur 3)
-• L'index start 5 dépasse les bornes
-• Aucun élément dans la plage [5, 10)
-• Retourne une liste vide (pas d'erreur)
-
-Comment ça fonctionne :
-• La liste [1, 2, 3] a les indices 0, 1, 2
-• [5:10] signifie : commencer à 5, s'arrêter avant 10
-• L'index 5 n'existe pas (hors bornes)
-• La plage [5, 10) n'a aucun index valide
-• Retourne une liste vide : []
-
-Exemple :
-[1, 2, 3][5:10]     # [] (hors bornes)
-[1, 2, 3][10:20]    # [] (hors bornes)
-[1, 2, 3][3:5]      # [] (start à la fin, rien après)
-
-Usages courants :
-• Slicing sûr : result = items[start:end] (sûr même hors bornes)
-• Pas de gestion d'erreur nécessaire
-• Résultat vide gracieux
-• Pas besoin de vérifier les bornes
-
-Exemple : [1, 2, 3][5:10] retourne [] car l'index start 5 dépasse les bornes de la liste (indices 0-2), donc aucun élément n'est dans cette plage, et Python retourne une liste vide au lieu de lever une erreur.`,
-  421: `L'opérateur + concatène les listes, les combinant en une nouvelle liste. [1, 2] + [3, 4] retourne [1, 2, 3, 4] car + joint les éléments des deux listes dans l'ordre. Cela crée un nouvel objet liste : les listes d'origine ne sont pas modifiées. L'opérateur + pour les listes ne fonctionne qu'avec d'autres listes.
-
-Concaténation de listes avec + :
-• [1, 2] + [3, 4] = [1, 2, 3, 4]
-• + joint les éléments des deux listes
-• Crée un nouvel objet liste
-• Listes d'origine inchangées
-• Éléments dans l'ordre : première liste, puis deuxième
-
-Comment ça fonctionne :
-• [1, 2] est la première liste
-• + est l'opérateur de concaténation
-• [3, 4] est la deuxième liste
-• Combine : 1, 2, puis 3, 4
-• Retourne une nouvelle liste : [1, 2, 3, 4]
-
-Exemple :
-[1, 2] + [3, 4]     # [1, 2, 3, 4]
-['a'] + ['b', 'c']  # ['a', 'b', 'c']
-[] + [1, 2]         # [1, 2]
-
-Usages courants :
-• Combiner des listes : combined = list1 + list2
-• Joindre des séquences : result = items + more_items
-• Fusionner des listes
-• Créer une nouvelle liste combinée
-
-Exemple : [1, 2] + [3, 4] retourne [1, 2, 3, 4] car + concatène les deux listes, créant une nouvelle liste avec les éléments des deux listes dans l'ordre.`,
-  422: `L'opérateur * répète une liste un nombre de fois donné. [1, 2] * 3 vaut [1, 2, 1, 2, 1, 2].
+• errors= pour politiques souples.`,
+  514: `b"hello".upper() vaut b"HELLO" : méthodes de casse existent sur bytes (ASCII letters seulement).
 
 Débutant :
-• * entre une liste et un entier répète la liste : [1, 2] * 3 donne [1, 2, 1, 2, 1, 2].
-• On obtient une nouvelle liste ; la liste d'origine n'est pas modifiée.
+• Même idée que str.upper mais sur octets.
 
 Intermédiaire :
-• L'opérande droit doit être un entier (positif, nul ou négatif). [1, 2] * 0 donne [].
-• Le résultat est une nouvelle liste : les mêmes éléments répétés en séquence.
+• Non-ASCII bytes peuvent rester inchangés selon règles.
 
 Expert :
-• L'opération est équivalente à concaténer N copies de la liste. Les éléments sont des références partagées (copie superficielle).
+• lower, title, swapcase analogues.
 
 Concepts clés :
-• Répétition de séquence : liste * n crée une nouvelle liste en concaténant n copies de la liste.
-• Le multiplicateur doit être un int ; un float lève TypeError.
+• bytes.upper, ASCII case.
 
 Distinctions clés :
-• liste * n crée un nouvel objet ; list *= n modifie la liste en place (méthode __imul__).
-• * pour les listes n'est pas commutatif : [1, 2] * 3 est valide, 3 * [1, 2] l'est aussi en Python (int.__mul__ délègue à list.__rmul__).
+• Pas d'équivalent Unicode complet comme str casefold.
 
 Fonctionnement :
-• Python appelle list.__mul__(self, n) ou int.__rmul__(n, list). Le résultat est une nouvelle liste construite en répétant les références des éléments.
+• Parcours octets 0x61-0x7a etc.
 
 Exécution étape par étape :
-1. Évaluation de [1, 2] → une liste de deux éléments.
-2. Évaluation de 3 → l'entier 3.
-3. list.__mul__([1, 2], 3) construit une nouvelle liste en concaténant trois copies de [1, 2].
-4. Résultat : [1, 2, 1, 2, 1, 2].
+1. b"hello".
+2. Transforme h→H etc.
+3. b"HELLO".
 
 Ordre des opérations :
-• La liste et l'entier sont évalués, puis * (multiplication/répétition) est appliqué. Pas de priorité particulière avec d'autres opérateurs dans une expression plus grande.
+• Méthode bytes.
 
 Cas d'utilisation courants :
-• Initialiser une liste avec une valeur répétée : [0] * 10.
-• Répéter un motif : [1, 2] * 3 pour obtenir une séquence plus longue.
+• Protocoles ASCII case-insensitive.
 
 Cas limites :
-• [1, 2] * 0 donne []. Liste vide si n <= 0 (pour n négatif, le comportement historique peut varier ; en pratique, n négatif donne souvent []).
-• Si la liste contient des objets mutables, chaque « copie » est la même référence : [[1]] * 3 donne [[1], [1], [1]] mais les trois sous-listes sont le même objet.
+• Octets non lettres ASCII inchangés.
 
 Considérations de performance :
-• Création d'une liste de taille n * len(liste) : coût mémoire et temps O(n * L). Pour de très grands n, envisager une boucle ou un générateur si on n'a pas besoin de toute la liste en mémoire.
+• O(n).
 
 Exemples :
-• [1, 2] * 3          # [1, 2, 1, 2, 1, 2]
-• ['a'] * 4            # ['a', 'a', 'a', 'a']
-• [1, 2] * 0           # []
+• b"a1".upper()
 
 Remarques :
-• Ne pas confondre avec la multiplication numérique : ici * signifie « répéter la séquence ». Pour une copie profonde, utiliser copy.deepcopy ou une autre méthode.`,
-  423: `Multiplier une liste par 0 donne une liste vide. [1] * 0 vaut [].
+• Pour Unicode texte, decode puis str.upper.`,
+  515: `b"hello".split(b"l") vaut [b"he", b"", b"o"] : split sur bytes avec séparateur bytes, segments vides possibles.
 
 Débutant :
-• Liste * 0 donne toujours une liste vide : [1] * 0 = [], [1, 2] * 0 = [].
-• « Répéter zéro fois » signifie qu'on ne met aucun élément.
+• Deux 'l' consécutifs créent élément vide entre.
 
 Intermédiaire :
-• C'est cohérent avec la sémantique : répéter 0 fois une séquence ne produit aucun élément.
-• Le résultat est une nouvelle liste vide, pas None.
+• bytes.split() sans argument coupe sur whitespace ASCII, comme str.split().
 
 Expert :
-• list.__mul__(L, 0) ou équivalent produit une nouvelle liste vide []. Pas de réutilisation d'un objet liste vide singleton garanti ; en pratique c'est souvent une nouvelle liste.
+• Pour d'autres séparateurs, passez un motif bytes explicite.
 
 Concepts clés :
-• liste * 0 : répétition zéro fois → liste vide. Même idée que « 0 copie ».
-• Toute liste L : L * 0 == [].
+• split bytes.
 
 Distinctions clés :
-• [1] * 0 donne [] (liste vide), pas [1] ni None. Différent de « supprimer les éléments » sur une liste existante (qui modifie en place).
+• Séparateur doit être bytes.
 
 Fonctionnement :
-• L'opérateur * avec opérande droit 0 appelle la logique de répétition ; le résultat est une liste de longueur 0.
+• Recherche occurrences du motif.
 
 Exécution étape par étape :
-1. [1] est évalué → une liste d'un élément.
-2. 0 est évalué.
-3. list.__mul__([1], 0) construit une liste de 0 répétition → [].
-4. Résultat : [].
+1. Motif b"l".
+2. Découpe "he", "", "o".
 
 Ordre des opérations :
-• Évaluation de la liste et du 0, puis application de *. Pas d'effet de bord sur la liste d'origine.
+• Appel split.
 
 Cas d'utilisation courants :
-• Obtenir une liste vide de même « type » conceptuel : result = items * 0.
-• Cas limites dans des boucles ou conditions où n peut être 0.
+• Parser champs binaires simples.
 
 Cas limites :
-• [] * 0 donne aussi []. Pas d'erreur pour une liste déjà vide.
-• Pour n négatif, le comportement peut donner [] selon les versions (à éviter en code portable si non documenté).
+• maxsplit optionnel.
 
 Considérations de performance :
-• Très peu coûteux : création d'une liste vide. Aucune copie d'éléments.
+• O(n).
 
 Exemples :
-• [1] * 0             # []
-• [1, 2] * 0          # []
-• [] * 0              # []
+• b"a,b".split(b",")
 
 Remarques :
-• Utile pour initialiser à « rien » quand on part d'une liste existante sans la modifier.`,
-  424: `L'opérateur in teste l'appartenance : 2 in [1, 2, 3] vaut True.
+• re sur bytes pour motifs complexes.`,
+  516: `104 in b"hello" vaut True : l'opérateur in sur bytes teste la présence d'un octet (int 0–255).
 
 Débutant :
-• in indique si une valeur est un élément de la liste. 2 in [1, 2, 3] est True car 2 est dans la liste.
-• Si la valeur n'est pas dans la liste, le résultat est False.
+• 104 est 'h'.
 
 Intermédiaire :
-• La comparaison utilise l'égalité (==) entre la valeur cherchée et chaque élément. Pour des types mélangés, 2 in [1, 2, '2'] donne True (2 == 2).
-• Complexité linéaire O(n) : Python parcourt les éléments jusqu'à trouver une égalité ou la fin.
+• Avec un int, in teste un octet précis ; avec un objet bytes, in teste une sous-séquence contiguë (par ex. le motif de trois octets pour "ell" dans "hello").
 
 Expert :
-• list.__contains__(self, x) : parcourt les éléments, retourne True si un élément y vérifie x == y, sinon False. Pas de hachage pour les listes (contrairement aux ensembles).
+• Même opérateur, deux interprétations selon le type de l'opérande gauche du in.
 
 Concepts clés :
-• x in L teste l'appartenance : True si un élément de L est égal à x, False sinon.
-• Fonctionne sur toute séquence (listes, tuples, chaînes) et sur les dictionnaires (teste les clés).
+• appartenance octet.
 
 Distinctions clés :
-• in sur une liste : comparaison par égalité, parcours linéaire. in sur un set/dict : test par hachage, en général O(1) en moyenne.
-• « in » teste l'égalité de valeur, pas l'identité (is).
+• int in bytes vs bytes substring in bytes.
 
 Fonctionnement :
-• Python appelle __contains__ sur le conteneur. Pour une liste, boucle sur les indices et compare chaque élément avec la valeur cherchée.
+• Scan linéaire.
 
 Exécution étape par étape :
-1. Évaluation de 2 et de [1, 2, 3].
-2. list.__contains__([1, 2, 3], 2) : compare 2 avec 1 (False), puis avec 2 (True).
-3. Retourne True.
+1. Parcours octets.
+2. Trouve 104 au début.
+3. True.
 
 Ordre des opérations :
-• L'opérande gauche et la liste sont évalués, puis le test d'appartenance est effectué. Court-circuit dès qu'une égalité est trouvée.
+• in.
 
 Cas d'utilisation courants :
-• Vérifier la présence : if x in allowed_values.
-• Validation d'entrée, filtrage conceptuel.
+• Tester marqueur binaire.
 
 Cas limites :
-• [] in [[], 1] est True (la liste vide est un élément). 2 in [] est False.
-• Pour des flottants, les pièges d'égalité (0.1 + 0.2 != 0.3) s'appliquent.
+• int hors 0–255 TypeError.
 
 Considérations de performance :
-• Liste : O(n). Pour de nombreux tests d'appartenance sur la même liste, convertir en set une fois (O(n)) puis faire des tests O(1).
+• O(n).
 
 Exemples :
-• 2 in [1, 2, 3]      # True
-• 5 in [1, 2, 3]      # False
-• 'a' in ['a', 'b']   # True
+• 0 in b"\x00"
 
 Remarques :
-• not in est la négation logique de in. Pour savoir à quel index se trouve l'élément, utiliser .index() ou enumerate.`,
-  425: `Quand la valeur n'est pas dans la liste, in retourne False. 5 in [1, 2, 3] vaut False.
+• Clairifier int vs sous-bytes dans la doc interne.`,
+  517: `b"hello".hex() vaut "68656c6c6f" : chaîne hexadécimale deux caractères par octet, sans préfixe.
 
 Débutant :
-• 5 in [1, 2, 3] est False car 5 n'est pas un élément de la liste.
-• in donne False dès qu'aucun élément n'est égal à la valeur cherchée.
+• 68 est 'h', 65 'e', etc.
 
 Intermédiaire :
-• Python compare 5 à chaque élément (1, 2, 3) ; aucune égalité → False.
-• Même principe pour toute séquence : chaîne, tuple, etc.
+• hex inverse partiel via bytes.fromhex.
 
 Expert :
-• __contains__ parcourt toute la liste ; il n'y a pas de court-circuit « trouvé » ici, donc tous les éléments sont comparés jusqu'à la fin.
+• Séparateur optionnel en Python 3.8+ via bytes.hex(sep).
 
 Concepts clés :
-• x in L vaut False si pour tout élément e de L, x != e. Pas d'exception, pas de None : un booléen.
-• Test par égalité (==), pas par identité.
+• représentation hex dump.
 
 Distinctions clés :
-• False (non trouvé) vs KeyError pour dict[key] quand la clé manque. in sur une liste ne lève jamais d'exception pour « absent ».
-• 5 in [1, 2, 3] est False ; 5 not in [1, 2, 3] est True.
+• hex str vs binaire.
 
 Fonctionnement :
-• Parcours séquentiel ; comparaison avec chaque élément ; retour de False à la fin si aucune égalité.
+• Formatage chaque octet en deux nibbles.
 
 Exécution étape par étape :
-1. Évaluation de 5 et [1, 2, 3].
-2. Comparaison avec 1 → False, avec 2 → False, avec 3 → False.
-3. Fin de la liste → retour False.
+1. Cinq octets.
+2. Chaîne longueur 10 hex digits.
 
 Ordre des opérations :
-• Évaluation des opérandes puis test d'appartenance. Aucun court-circuit quand le résultat est False (tout est parcouru).
+• méthode hex.
 
 Cas d'utilisation courants :
-• Vérifier l'absence : if x not in forbidden.
-• Éviter les doublons conceptuels, validation de plages ou d'ensembles de valeurs.
+• Logs, comparaisons visuelles.
 
 Cas limites :
-• Liste vide : 5 in [] → False. Objets personnalisés : __eq__ détermine l'égalité.
-• Types différents : 5 in [5.0] peut être True (5 == 5.0 en Python).
+• bytes vide → "".
 
 Considérations de performance :
-• O(n) pour une liste. Si on fait souvent « x not in L », envisager un set pour des tests répétés.
+• O(n).
 
 Exemples :
-• 5 in [1, 2, 3]      # False
-• 10 in [1, 2, 3]     # False
-• 'z' in ['a', 'b']   # False
+• bytes.fromhex("68656c6c6f")
 
 Remarques :
-• Pour compter les occurrences, utiliser L.count(x). Pour l'index, L.index(x) (lève ValueError si absent).`,
-  426: `L'opérateur == compare le contenu de deux listes. [1, 2] == [1, 2] retourne True car les deux listes ont les mêmes éléments dans le même ordre. == vérifie l'égalité des valeurs - il compare élément par élément, et les deux listes doivent avoir la même longueur et les mêmes éléments aux mêmes positions pour être égales.
-
-Égalité de listes avec == :
-• [1, 2] == [1, 2] = True
-• == compare le contenu des listes (valeurs)
-• Vérifie si les éléments correspondent
-• Vérifie si l'ordre correspond
-• Les deux doivent être égaux pour True
-
-Comment ça fonctionne :
-• [1, 2] est la première liste
-• == est l'opérateur d'égalité
-• [1, 2] est la deuxième liste
-• Compare élément par élément : 1 == 1, 2 == 2
-• Mêmes éléments, même ordre, retourne True
-
-Exemple :
-[1, 2] == [1, 2]    # True (même contenu)
-[1, 2] == [2, 1]    # False (ordre différent)
-[1, 2] == [1, 2, 3] # False (longueur différente)
-
-Usages courants :
-• Comparer des listes : if list1 == list2:
-• Égalité de valeurs : if items == expected:
-• Comparaison de contenu
-• Vérification d'égalité
-
-Exemple : [1, 2] == [1, 2] retourne True car == compare le contenu des deux listes élément par élément, et elles ont les mêmes éléments dans le même ordre.`,
-  427: `L'opérateur == vérifie à la fois les éléments et leur ordre. [1, 2] == [2, 1] retourne False car même si les deux listes contiennent les mêmes éléments (1 et 2), ils sont dans un ordre différent. Les listes sont des séquences ordonnées, donc == exige non seulement les mêmes éléments mais aussi les mêmes positions pour que la comparaison retourne True.
-
-Égalité de listes - l'ordre compte :
-• [1, 2] == [2, 1] = False
-• == compare éléments et ordre
-• Mêmes éléments mais ordre différent
-• L'ordre doit correspondre pour l'égalité
-• Retourne False (ordre différent)
-
-Comment ça fonctionne :
-• [1, 2] est la première liste
-• == est l'opérateur d'égalité
-• [2, 1] est la deuxième liste
-• Compare élément par élément : 1 != 2, 2 != 1
-• Les éléments correspondent mais l'ordre diffère, retourne False
-
-Exemple :
-[1, 2] == [2, 1]    # False (ordre différent)
-[1, 2, 3] == [3, 2, 1] # False (ordre différent)
-['a', 'b'] == ['b', 'a'] # False (ordre différent)
-
-Usages courants :
-• Comparaison sensible à l'ordre : if list1 == list2:
-• Vérification d'égalité de séquence
-• Comparaison tenant compte des positions
-• Vérification de séquence ordonnée
-
-Exemple : [1, 2] == [2, 1] retourne False car == compare les listes élément par élément dans l'ordre, et bien que les deux listes contiennent 1 et 2, ils sont à des positions différentes, donc la comparaison retourne False.`,
-  428: `L'opérateur is vérifie l'identité des objets (si deux variables référencent le même objet en mémoire), pas l'égalité des valeurs. [1, 2] is [1, 2] retourne False car chaque littéral de liste crée un nouvel objet en mémoire. Même si elles ont le même contenu, ce sont des objets différents avec des adresses mémoire différentes.
-
-Identité d'objet avec is :
-• [1, 2] is [1, 2] = False
-• is vérifie l'identité d'objet (même objet)
-• Chaque littéral crée un nouvel objet
-• Objets différents en mémoire
-• Retourne False (objets différents)
-
-Comment ça fonctionne :
-• [1, 2] crée le premier objet liste
-• is est l'opérateur d'identité
-• [1, 2] crée le deuxième objet liste
-• Vérifie si c'est le même objet en mémoire
-• Objets différents, retourne False
-
-Exemple :
-[1, 2] is [1, 2]    # False (objets différents)
-a = [1, 2]
-b = [1, 2]
-a is b              # False (objets différents)
-a = [1, 2]
-b = a
-a is b              # True (même objet)
-
-Usages courants :
-• Vérifier l'identité : if obj1 is obj2:
-• Vérification de même référence
-• Comparaison d'objets
-• Vérification d'adresse mémoire
-
-Exemple : [1, 2] is [1, 2] retourne False car chaque littéral de liste crée un nouvel objet en mémoire, donc même s'ils ont le même contenu, ce sont des objets différents, et is vérifie l'identité d'objet, pas l'égalité des valeurs.`,
-  429: `Les listes sont comparées lexicographiquement (élément par élément, comme l'ordre du dictionnaire). [1, 2] < [1, 3] retourne True car Python compare les listes élément par élément : d'abord 1 == 1 (égal), puis 2 < 3 (inférieur), donc la première liste est inférieure à la seconde. C'est l'algorithme de comparaison standard pour les séquences.
-
-Comparaison lexicographique :
-• [1, 2] < [1, 3] = True
-• Compare élément par élément
-• 1 == 1 (égal, continuer)
-• 2 < 3 (inférieur, première liste < seconde)
-• Retourne True (première liste est inférieure)
-
-Comment ça fonctionne :
-• [1, 2] est la première liste
-• < est l'opérateur inférieur à
-• [1, 3] est la deuxième liste
-• Compare élément par élément :
-  - Index 0 : 1 == 1 (égal, continuer)
-  - Index 1 : 2 < 3 (inférieur, retourne True)
-• Retourne True
-
-Exemple :
-[1, 2] < [1, 3]     # True (2 < 3)
-[1, 2] < [2, 1]     # True (1 < 2)
-[1, 2] < [1, 2]     # False (égal)
-
-Usages courants :
-• Tri : sorted(lists)
-• Vérification d'ordre : if list1 < list2:
-• Ordre lexicographique
-• Comparaison de séquences
-
-Exemple : [1, 2] < [1, 3] retourne True car les listes sont comparées lexicographiquement - Python compare élément par élément, trouve 1 == 1 (égal), puis trouve 2 < 3 (inférieur), donc la première liste est inférieure à la seconde.`,
-  430: `Lors de la comparaison de listes de longueurs différentes, Python compare élément par élément jusqu'à trouver une différence. [1, 2] < [1, 2, 3] retourne True car la première liste est un préfixe de la seconde - tous les éléments de la première liste correspondent aux éléments correspondants de la seconde, et une liste plus courte est considérée comme inférieure à une liste plus longue lorsqu'elle en est un préfixe. C'est cohérent avec l'ordre lexicographique.
-
-Comparaison avec longueurs différentes :
-• [1, 2] < [1, 2, 3] = True
-• La liste plus courte est un préfixe de la plus longue
-• Tous les éléments correspondent : 1 == 1, 2 == 2
-• Liste plus courte < liste plus longue quand préfixe
-• Retourne True (le préfixe est inférieur)
-
-Comment ça fonctionne :
-• [1, 2] est la première liste (longueur 2)
-• < est l'opérateur inférieur à
-• [1, 2, 3] est la deuxième liste (longueur 3)
-• Compare élément par élément :
-  - Index 0 : 1 == 1 (égal, continuer)
-  - Index 1 : 2 == 2 (égal, continuer)
-  - La première liste s'arrête, la plus courte est inférieure
-• Retourne True
-
-Exemple :
-[1, 2] < [1, 2, 3]  # True (le préfixe est inférieur)
-[1, 2] < [1, 2]     # False (égal)
-[1, 2, 3] < [1, 2]  # False (la plus longue n'est pas inférieure)
-
-Usages courants :
-• Comparaison de préfixe : if prefix < full_list:
-• Ordonnancement avec longueurs différentes
-• Comparaison lexicographique
-• Ordonnancement de séquences
-
-Exemple : [1, 2] < [1, 2, 3] retourne True car la première liste est un préfixe de la seconde (tous ses éléments correspondent), et dans l'ordre lexicographique, une liste plus courte qui est un préfixe d'une liste plus longue est considérée comme inférieure à la liste plus longue.`,
-  431: `La méthode append() ajoute un seul élément à la fin d'une liste et retourne None. [1, 2].append(3) retourne None car append() modifie la liste sur place et ne retourne rien. Après avoir appelé append(3), la liste [1, 2] devient [1, 2, 3], mais la méthode elle-même retourne None. C'est une distinction importante - append() modifie la liste, elle ne crée pas une nouvelle liste.
-
-Méthode append() :
-• [1, 2].append(3) = None (retourne None)
-• append() ajoute un élément à la fin
-• Modifie la liste sur place
-• Retourne None (ne retourne pas une nouvelle liste)
-• Liste d'origine modifiée : [1, 2] → [1, 2, 3]
-
-Comment ça fonctionne :
-• append(3) appelé sur [1, 2]
-• Ajoute l'élément 3 à la fin de la liste
-• Modifie la liste d'origine : [1, 2, 3]
-• Retourne None (pas de valeur de retour)
-• La méthode modifie sur place
-
-Exemple :
-a = [1, 2]
-a.append(3)         # None (retourne None)
-a                   # [1, 2, 3] (liste modifiée)
-[1, 2].append(3)    # None (retourne None)
-
-Usages courants :
-• Ajouter des éléments : items.append(value)
-• Construire des listes : result.append(item)
-• Ajout en fin
-• Modification sur place
-
-Exemple : [1, 2].append(3) retourne None car append() modifie la liste sur place (transformant [1, 2] en [1, 2, 3]), et la méthode elle-même retourne None plutôt que de retourner la liste modifiée.`,
-  432: `La méthode extend() ajoute tous les éléments d'un itérable à la fin d'une liste et retourne None. [1, 2].extend([3, 4]) retourne None car extend() modifie la liste sur place. Après avoir appelé extend([3, 4]), la liste [1, 2] devient [1, 2, 3, 4], ajoutant chaque élément de l'itérable individuellement. extend() diffère de append() - il ajoute les éléments de l'itérable, pas l'itérable lui-même.
-
-Méthode extend() :
-• [1, 2].extend([3, 4]) = None (retourne None)
-• extend() ajoute les éléments de l'itérable
-• Modifie la liste sur place
-• Retourne None (ne retourne pas une nouvelle liste)
-• Liste d'origine modifiée : [1, 2] → [1, 2, 3, 4]
-
-Comment ça fonctionne :
-• extend([3, 4]) appelé sur [1, 2]
-• Parcourt [3, 4]
-• Ajoute chaque élément à la fin : 3, puis 4
-• Modifie la liste d'origine : [1, 2, 3, 4]
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-a = [1, 2]
-a.extend([3, 4])    # None (retourne None)
-a                   # [1, 2, 3, 4] (liste modifiée)
-[1, 2].extend([3, 4]) # None (retourne None)
-
-Usages courants :
-• Ajouter plusieurs éléments : items.extend(more_items)
-• Combiner des listes : list1.extend(list2)
-• Étendre des listes
-• Modification sur place
-
-Exemple : [1, 2].extend([3, 4]) retourne None car extend() modifie la liste sur place (transformant [1, 2] en [1, 2, 3, 4] en ajoutant chaque élément de [3, 4]), et la méthode elle-même retourne None.`,
-  433: `La méthode insert() insère un élément à un index spécifique et retourne None. [1, 2].insert(1, 5) retourne None car insert() modifie la liste sur place. Le premier argument est l'index où insérer, et le deuxième argument est l'élément à insérer. Après avoir appelé insert(1, 5), la liste [1, 2] devient [1, 5, 2] - l'élément à l'index 1 (qui était 2) est décalé vers l'index 2, et 5 est inséré à l'index 1.
-
-Méthode insert() :
-• [1, 2].insert(1, 5) = None (retourne None)
-• insert(index, element) insère à la position
-• Modifie la liste sur place
-• Retourne None (ne retourne pas une nouvelle liste)
-• Liste d'origine modifiée : [1, 2] → [1, 5, 2]
-
-Comment ça fonctionne :
-• insert(1, 5) appelé sur [1, 2]
-• Insère l'élément 5 à l'index 1
-• Les éléments à partir de l'index 1 sont décalés vers la droite
-• [1] reste à l'index 0, [5] inséré à l'index 1, [2] passe à l'index 2
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-a = [1, 2]
-a.insert(1, 5)      # None (retourne None)
-a                   # [1, 5, 2] (liste modifiée)
-[1, 2, 3].insert(0, 0) # [0, 1, 2, 3] (insérer au début)
-
-Usages courants :
-• Insérer des éléments : items.insert(index, value)
-• Ajout à une position spécifique
-• Insertion à un index
-• Modification sur place
-
-Exemple : [1, 2].insert(1, 5) retourne None car insert() modifie la liste sur place (transformant [1, 2] en [1, 5, 2] en insérant 5 à l'index 1 et en décalant les éléments vers la droite).`,
-  434: `La méthode insert() avec l'index 0 insère un élément au début de la liste. [1, 2].insert(0, 0) retourne None car insert() modifie la liste sur place. Après avoir appelé insert(0, 0), la liste [1, 2] devient [0, 1, 2] - l'élément 0 est inséré à l'index 0 (le début), et tous les éléments existants sont décalés vers la droite d'une position.
-
-insert(0, élément) :
-• [1, 2].insert(0, 0) = None (retourne None)
-• insert(0, x) insère au début
-• Modifie la liste sur place
-• Retourne None (ne retourne pas de nouvelle liste)
-• Liste originale modifiée : [1, 2] → [0, 1, 2]
-
-Comment ça fonctionne :
-• insert(0, 0) appelé sur [1, 2]
-• Insère l'élément 0 à l'index 0 (début)
-• Tous les éléments existants se décalent à droite
-• [0] inséré à l'index 0, [1] passe à l'index 1, [2] à l'index 2
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-a = [1, 2]
-a.insert(0, 0)      # None (retourne None)
-a                   # [0, 1, 2] (liste modifiée)
-[1, 2].insert(0, 0) # None (retourne None)
-
-Usages courants :
-• Ajouter au début : items.insert(0, value)
-• Préfixer des éléments : list.insert(0, item)
-• Insertion au début
-• Modification sur place
-
-Exemple : [1, 2].insert(0, 0) retourne None car insert() modifie la liste sur place, insérant 0 à l'index 0 (le début), transformant [1, 2] en [0, 1, 2], et la méthode elle-même retourne None.`,
-  435: `La méthode insert() avec un index hors bornes ne lève pas d'erreur - elle ajoute l'élément à la fin de la liste. [1, 2].insert(10, 5) retourne None car insert() modifie la liste sur place. Comme l'index 10 dépasse les bornes de la liste (les indices sont 0-1), insert() ajoute l'élément à la fin à la place. Après l'appel insert(10, 5), la liste [1, 2] devient [1, 2, 5].
-
-insert() avec index hors bornes :
-• [1, 2].insert(10, 5) = None (retourne None)
-• L'index 10 dépasse les bornes
-• insert() ajoute à la fin au lieu d'erreur
-• Modifie la liste sur place
-• Liste originale modifiée : [1, 2] → [1, 2, 5]
-
-Comment ça fonctionne :
-• insert(10, 5) appelé sur [1, 2]
-• L'index 10 dépasse les bornes (indices 0-1)
-• insert() ne lève pas d'erreur
-• Ajoute l'élément 5 à la fin à la place
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-a = [1, 2]
-a.insert(10, 5)     # None (retourne None)
-a                   # [1, 2, 5] (ajouté à la fin)
-[1, 2].insert(100, 5) # [1, 2, 5] (ajoute à la fin)
-
-Usages courants :
-• Insertion sûre : items.insert(index, value) (pas d'erreur)
-• Alternative à append : list.insert(len(list), item)
-• Gestion des indices hors bornes
-• Comportement gracieux
-
-Exemple : [1, 2].insert(10, 5) retourne None car insert() ne lève pas d'erreur pour les indices hors bornes - à la place, elle ajoute l'élément à la fin, transformant [1, 2] en [1, 2, 5], et la méthode elle-même retourne None.`,
-  436: `La différence clé entre append() et extend() est ce qu'ils ajoutent à la liste. append() ajoute un seul élément (l'objet entier), tandis que extend() ajoute tous les éléments d'un itérable (en dépliant l'itérable). Par exemple, [1, 2].append([3, 4]) donne [1, 2, [3, 4]] (la liste est ajoutée comme un seul élément), tandis que [1, 2].extend([3, 4]) donne [1, 2, 3, 4] (les éléments 3 et 4 sont ajoutés individuellement).
-
-append() vs extend() :
-• append(item) ajoute l'élément entier
-• extend(iterable) ajoute tous les éléments de l'itérable individuellement
-• append() crée une structure imbriquée si l'élément est une liste
-• extend() aplatit et ajoute les éléments
-• Les deux retournent None, modifient sur place
-
-Comment ça fonctionne :
-• append([3, 4]) : ajoute [3, 4] comme un seul élément → [1, 2, [3, 4]]
-• extend([3, 4]) : itère [3, 4], ajoute 3 puis 4 → [1, 2, 3, 4]
-• append() n'itère pas
-• extend() itère sur l'itérable
-• Les deux modifient la liste originale
-
-Exemple :
-a = [1, 2]
-a.append([3, 4])    # [1, 2, [3, 4]] (liste ajoutée)
-a = [1, 2]
-a.extend([3, 4])    # [1, 2, 3, 4] (éléments ajoutés)
-
-Usages courants :
-• append() : élément unique : items.append(item)
-• extend() : éléments multiples : items.extend(iterable)
-• Choisir selon ce qu'on veut ajouter
-• Distinction importante pour les listes
-
-Exemple : La différence est que append() ajoute l'objet entier comme un élément (donc [1, 2].append([3, 4]) crée [1, 2, [3, 4]]), tandis que extend() ajoute tous les éléments de l'itérable individuellement (donc [1, 2].extend([3, 4]) crée [1, 2, 3, 4]).`,
-  437: `L'opérateur + crée une nouvelle liste, tandis que extend() modifie la liste existante sur place. [1, 2] + [3] retourne une nouvelle liste [1, 2, 3] sans modifier les listes originales, tandis que [1, 2].extend([3]) modifie [1, 2] sur place pour devenir [1, 2, 3] et retourne None. C'est une différence cruciale - + crée un nouvel objet, extend() modifie l'objet existant.
-
-+ vs extend() :
-• [1, 2] + [3] crée une nouvelle liste [1, 2, 3]
-• [1, 2].extend([3]) modifie [1, 2] en [1, 2, 3]
-• + retourne un nouvel objet liste
-• extend() retourne None, modifie l'original
-• + ne modifie pas les listes originales
-
-Comment ça fonctionne :
-• [1, 2] + [3] : crée une nouvelle liste, retourne [1, 2, 3]
-• Original [1, 2] inchangé, [3] inchangé
-• a = [1, 2]; a.extend([3]) : modifie a en [1, 2, 3], retourne None
-• Original a modifié sur place
-• extend() modifie, + crée nouveau
-
-Exemple :
-a = [1, 2]
-b = a + [3]         # b = [1, 2, 3], a inchangé
-a = [1, 2]
-a.extend([3])      # a = [1, 2, 3], modifie a
-
-Usages courants :
-• + : créer une nouvelle liste : result = list1 + list2
-• extend() : modifier l'existant : list.extend(items)
-• Choisir selon le besoin de nouvel objet ou modification
-• Important pour le comportement des variables
-
-Exemple : [1, 2] + [3] crée une nouvelle liste [1, 2, 3] sans modifier les originaux, tandis que [1, 2].extend([3]) modifie [1, 2] sur place pour devenir [1, 2, 3] et retourne None.`,
-  438: `La méthode append() ajoute l'objet entier comme un seul élément, même s'il s'agit d'une liste. [1, 2].append([3]) retourne None car append() modifie la liste sur place. Après l'appel append([3]), la liste [1, 2] devient [1, 2, [3]] - la liste entière [3] est ajoutée comme un seul élément (créant une liste imbriquée), pas l'élément 3 individuellement. C'est différent de extend(), qui ajouterait les éléments de l'itérable.
-
-append() avec liste :
-• [1, 2].append([3]) = None (retourne None)
-• append() ajoute l'objet entier comme un élément
-• La liste [3] ajoutée comme élément unique
-• Crée une structure de liste imbriquée
-• Liste originale modifiée : [1, 2] → [1, 2, [3]]
-
-Comment ça fonctionne :
-• append([3]) appelé sur [1, 2]
-• Ajoute la liste entière [3] comme élément unique
-• N'itère ni ne déplie [3]
-• Crée une structure imbriquée : [1, 2, [3]]
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-a = [1, 2]
-a.append([3])       # None (retourne None)
-a                   # [1, 2, [3]] (liste imbriquée)
-[1, 2].append([3, 4]) # [1, 2, [3, 4]] (imbriquée)
-
-Usages courants :
-• Ajouter des listes comme éléments : items.append([x, y])
-• Créer des structures imbriquées : list.append([items])
-• Listes imbriquées
-• Modification sur place
-
-Exemple : [1, 2].append([3]) retourne None car append() ajoute la liste entière [3] comme un élément, créant une liste imbriquée [1, 2, [3]], et la méthode elle-même retourne None.`,
-  439: `La méthode extend() itère sur l'itérable et ajoute chaque élément individuellement. [1, 2].extend([3]) retourne None car extend() modifie la liste sur place. Après l'appel extend([3]), la liste [1, 2] devient [1, 2, 3] - elle itère sur [3] et ajoute l'élément 3 individuellement, pas la liste [3] elle-même. C'est différent de append(), qui ajouterait la liste entière comme un élément.
-
-extend() avec liste :
-• [1, 2].extend([3]) = None (retourne None)
-• extend() itère sur l'itérable
-• Ajoute chaque élément individuellement
-• Élément 3 ajouté, pas la liste [3]
-• Liste originale modifiée : [1, 2] → [1, 2, 3]
-
-Comment ça fonctionne :
-• extend([3]) appelé sur [1, 2]
-• Itère sur [3]
-• Ajoute chaque élément (seulement 3) individuellement
-• Crée une liste plate : [1, 2, 3]
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-a = [1, 2]
-a.extend([3])       # None (retourne None)
-a                   # [1, 2, 3] (élément 3 ajouté)
-[1, 2].extend([3, 4]) # [1, 2, 3, 4] (éléments ajoutés)
-
-Usages courants :
-• Ajouter plusieurs éléments : items.extend(more_items)
-• Combiner des listes : list1.extend(list2)
-• Extension de listes
-• Modification sur place
-
-Exemple : [1, 2].extend([3]) retourne None car extend() modifie la liste sur place (transformant [1, 2] en [1, 2, 3] en ajoutant chaque élément de [3]), et la méthode elle-même retourne None.`,
-  440: `La méthode extend() accepte tout itérable, y compris les chaînes. [1, 2].extend('ab') retourne None car extend() modifie la liste sur place. Elle itère sur la chaîne 'ab' caractère par caractère, ajoutant 'a' puis 'b' individuellement. Après l'appel, la liste [1, 2] devient [1, 2, 'a', 'b']. extend() traite les chaînes comme des itérables de caractères.
-
-extend() avec chaîne :
-• [1, 2].extend('ab') = None (retourne None)
-• extend() itère sur l'itérable
-• Chaîne 'ab' : itère 'a', puis 'b'
-• Ajoute chaque caractère individuellement
-• Liste originale modifiée : [1, 2] → [1, 2, 'a', 'b']
-
-Comment ça fonctionne :
-• extend('ab') appelé sur [1, 2]
-• Itère sur 'ab' (chaîne)
-• Pour une chaîne : itère caractère par caractère
-• Ajoute 'a' à l'index 3, 'b' à l'index 4
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-a = [1, 2]
-a.extend('ab')      # None (retourne None)
-a                   # [1, 2, 'a', 'b']
-[1, 2].extend('hi') # [1, 2, 'h', 'i']
-
-Usages courants :
-• Étendre avec caractères : list.extend('abc')
-• Construire des listes de caractères
-• Itérables variés
-• Comportement d'itération
-
-Exemple : [1, 2].extend('ab') retourne None car extend() itère sur la chaîne caractère par caractère, ajoutant 'a' puis 'b', transformant [1, 2] en [1, 2, 'a', 'b'].`,
-  441: `La méthode pop() supprime et retourne le dernier élément d'une liste lorsqu'elle est appelée sans argument. [1, 2, 3].pop() retourne 3 car pop() supprime le dernier élément (index -1) et le retourne. Après l'appel à pop(), la liste [1, 2, 3] devient [1, 2] - l'élément 3 est supprimé et retourné. Utile pour implémenter un comportement de pile (LIFO - Last In First Out).
-
-Méthode pop() :
-• [1, 2, 3].pop() = 3 (retourne le dernier élément)
-• pop() supprime et retourne le dernier élément
-• Modifie la liste sur place
-• Retourne l'élément supprimé
-• Liste modifiée : [1, 2, 3] → [1, 2]
-
-Comment ça fonctionne :
-• pop() appelé sur [1, 2, 3]
-• Supprime le dernier élément (index -1, qui est 3)
-• Retourne l'élément supprimé : 3
-• Modifie la liste d'origine : [1, 2]
-• Lève IndexError si la liste est vide
-
-Exemple :
-a = [1, 2, 3]
-a.pop()             # 3 (retourne le dernier)
-a                   # [1, 2] (liste modifiée)
-[1, 2, 3].pop()     # 3 (retourne le dernier)
-
-Usages courants :
-• Supprimer le dernier élément : last = items.pop()
-• Opérations de pile : top = stack.pop()
-• Obtenir et supprimer
-• Opérations LIFO
-
-Exemple : [1, 2, 3].pop() retourne 3 car pop() supprime le dernier élément (index -1, qui est 3) de la liste et le retourne, laissant la liste à [1, 2].`,
-  442: `La méthode pop() avec un argument d'index supprime et retourne l'élément à cet index. [1, 2, 3].pop(0) retourne 1 car pop(0) supprime l'élément à l'index 0 (le premier élément) et le retourne. Après l'appel à pop(0), la liste [1, 2, 3] devient [2, 3] - l'élément 1 est supprimé et retourné. Utile pour implémenter un comportement de file (FIFO - First In First Out).
-
-Méthode pop(index) :
-• [1, 2, 3].pop(0) = 1 (retourne l'élément à l'index 0)
-• pop(index) supprime et retourne l'élément à l'index
-• Modifie la liste sur place
-• Retourne l'élément supprimé
-• Liste modifiée : [1, 2, 3] → [2, 3]
-
-Comment ça fonctionne :
-• pop(0) appelé sur [1, 2, 3]
-• Supprime l'élément à l'index 0 (qui est 1)
-• Retourne l'élément supprimé : 1
-• Modifie la liste d'origine : [2, 3]
-• Lève IndexError si l'index est hors limites
-
-Exemple :
-a = [1, 2, 3]
-a.pop(0)            # 1 (retourne le premier)
-a                   # [2, 3] (liste modifiée)
-[1, 2, 3].pop(1)    # 2 (retourne l'élément à l'index 1)
-
-Usages courants :
-• Supprimer le premier élément : first = items.pop(0)
-• Opérations de file : front = queue.pop(0)
-• Suppression par index
-• Opérations FIFO
-
-Exemple : [1, 2, 3].pop(0) retourne 1 car pop(0) supprime l'élément à l'index 0 (le premier élément, qui est 1) de la liste et le retourne, laissant la liste à [2, 3].`,
-  443: `La méthode remove() supprime la première occurrence d'une valeur dans une liste et retourne None. [1, 2, 3].remove(2) retourne None car remove() modifie la liste sur place et ne retourne pas l'élément supprimé. Après l'appel à remove(2), la liste [1, 2, 3] devient [1, 3] - la première occurrence de la valeur 2 est supprimée. Contrairement à pop(), remove() prend une valeur, pas un index, et ne supprime que la première occurrence en cas de doublons.
-
-Méthode remove() :
-• [1, 2, 3].remove(2) = None (retourne None)
-• remove(value) supprime la première occurrence de value
-• Modifie la liste sur place
-• Retourne None (ne retourne pas l'élément supprimé)
-• Liste modifiée : [1, 2, 3] → [1, 3]
-
-Comment ça fonctionne :
-• remove(2) appelé sur [1, 2, 3]
-• Cherche la première occurrence de la valeur 2
-• Trouve 2 à l'index 1, le supprime
-• Modifie la liste d'origine : [1, 3]
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-a = [1, 2, 3]
-a.remove(2)         # None (retourne None)
-a                   # [1, 3] (liste modifiée)
-[1, 2, 2, 3].remove(2) # [1, 2, 3] (supprime le premier 2)
-
-Usages courants :
-• Supprimer par valeur : items.remove(value)
-• Supprimer la première occurrence : list.remove(item)
-• Suppression basée sur la valeur
-• Modification sur place
-
-Exemple : [1, 2, 3].remove(2) retourne None car remove() supprime la première occurrence de la valeur 2 de la liste (transformant [1, 2, 3] en [1, 3]), et la méthode elle-même retourne None plutôt que de retourner l'élément supprimé.`,
-  444: `La méthode remove() ne supprime que la première occurrence d'une valeur, pas toutes. [1, 2, 2, 3].remove(2) retourne None car remove() modifie la liste sur place. Après l'appel à remove(2), la liste [1, 2, 2, 3] devient [1, 2, 3] - seule la première occurrence de 2 est supprimée, laissant le deuxième 2 en place. Pour supprimer toutes les occurrences, il faudrait appeler remove() plusieurs fois ou utiliser une approche différente comme une compréhension de liste.
-
-remove() - première occurrence uniquement :
-• [1, 2, 2, 3].remove(2) = None (retourne None)
-• remove(value) supprime uniquement la première occurrence
-• Les occurrences suivantes restent
-• Modifie la liste sur place
-• Liste modifiée : [1, 2, 2, 3] → [1, 2, 3]
-
-Comment ça fonctionne :
-• remove(2) appelé sur [1, 2, 2, 3]
-• Cherche la première occurrence de la valeur 2
-• Trouve le premier 2 à l'index 1, le supprime
-• Le deuxième 2 à l'index 2 reste (maintenant à l'index 1)
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-a = [1, 2, 2, 3]
-a.remove(2)         # None (retourne None)
-a                   # [1, 2, 3] (premier 2 supprimé)
-[1, 2, 2, 2, 3].remove(2) # [1, 2, 2, 3] (supprime uniquement le premier)
-
-Usages courants :
-• Supprimer la première occurrence : items.remove(value)
-• Suppression unique : list.remove(item)
-• Suppression du premier match
-• Modification sur place
-
-Exemple : [1, 2, 2, 3].remove(2) retourne None car remove() supprime uniquement la première occurrence de 2 (transformant [1, 2, 2, 3] en [1, 2, 3]), laissant la deuxième occurrence de 2 en place.`,
-  445: `La méthode clear() supprime tous les éléments d'une liste et retourne None. [1, 2, 3].clear() retourne None car clear() modifie la liste sur place, supprimant tous les éléments et laissant une liste vide. Après l'appel à clear(), la liste [1, 2, 3] devient [] - tous les éléments sont supprimés, mais l'objet liste lui-même existe toujours. C'est différent d'une réaffectation à une liste vide - clear() modifie l'objet existant.
-
-Méthode clear() :
-• [1, 2, 3].clear() = None (retourne None)
-• clear() supprime tous les éléments de la liste
-• Modifie la liste sur place
-• Retourne None (ne retourne pas une nouvelle liste)
-• Liste modifiée : [1, 2, 3] → []
-
-Comment ça fonctionne :
-• clear() appelé sur [1, 2, 3]
-• Supprime tous les éléments de la liste
-• La liste devient vide : []
-• L'objet liste d'origine existe toujours
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-a = [1, 2, 3]
-a.clear()           # None (retourne None)
-a                   # [] (la liste est maintenant vide)
-[1, 2, 3].clear()   # None (retourne None)
-
-Usages courants :
-• Vider la liste : items.clear()
-• Supprimer tous les éléments : list.clear()
-• Réinitialiser la liste
-• Modification sur place
-
-Exemple : [1, 2, 3].clear() retourne None car clear() supprime tous les éléments de la liste (transformant [1, 2, 3] en []), et la méthode elle-même retourne None plutôt que de retourner la liste vide.`,
-  446: `La différence clé entre pop() et remove() est la façon dont ils identifient l'élément à supprimer. pop() utilise un index (position) pour supprimer un élément, tandis que remove() utilise une valeur pour supprimer un élément. pop(index) supprime l'élément à l'index spécifié et le retourne, tandis que remove(value) supprime la première occurrence de la valeur spécifiée et retourne None. De plus, pop() retourne l'élément supprimé, tandis que remove() retourne None.
-
-pop() vs remove() :
-• pop(index) : supprime par index, retourne l'élément supprimé
-• remove(value) : supprime par valeur, retourne None
-• pop() peut supprimer n'importe quel élément par position
-• remove() ne supprime que le premier match par valeur
-• pop() lève IndexError si l'index est invalide
-• remove() lève ValueError si la valeur n'est pas trouvée
-
-Comment ça fonctionne :
-• pop(1) : supprime l'élément à l'index 1, retourne cet élément
-• remove(2) : cherche la valeur 2, supprime la première occurrence, retourne None
-• pop() nécessite de connaître la position
-• remove() nécessite de connaître la valeur
-• Les deux modifient la liste sur place
-
-Exemple :
-a = [1, 2, 3]
-a.pop(1)            # 2 (retourne l'élément à l'index 1)
-a                   # [1, 3] (élément supprimé)
-b = [1, 2, 3]
-b.remove(2)         # None (retourne None)
-b                   # [1, 3] (valeur 2 supprimée)
-
-Usages courants :
-• pop() : supprimer par position : item = list.pop(index)
-• remove() : supprimer par valeur : list.remove(value)
-• Choisir selon que vous connaissez la position ou la valeur
-• Distinction importante pour les opérations de suppression
-
-Exemple : La différence est que pop() utilise un index pour supprimer un élément et le retourne (ex. [1, 2, 3].pop(1) retourne 2), tandis que remove() utilise une valeur pour supprimer un élément et retourne None (ex. [1, 2, 3].remove(2) retourne None).`,
-  447: `Appeler pop() sur une liste vide lève une IndexError car il n'y a aucun élément à supprimer. Si vous essayez de faire un pop sur une liste vide comme [].pop(), Python lève une IndexError avec un message indiquant que vous essayez de faire un pop sur une liste vide. C'est différent d'autres méthodes qui pourraient retourner None ou une liste vide - pop() nécessite toujours au moins un élément pour exister.
-
-pop() sur liste vide :
-• [].pop() lève IndexError
-• Une liste vide n'a pas d'éléments à supprimer
-• IndexError indique une opération d'index invalide
-• Doit vérifier si la liste n'est pas vide avant de faire pop
-• Message d'erreur : "pop from empty list"
-
-Comment ça fonctionne :
-• pop() appelé sur la liste vide []
-• Cherche un élément à supprimer
-• Ne trouve aucun élément (la liste est vide)
-• Lève IndexError
-• Aucun élément à retourner
-
-Exemple :
-[].pop()            # IndexError: pop from empty list
-a = []
-a.pop()             # IndexError: pop from empty list
-if a:               # Vérifier d'abord
-    a.pop()         # Sans danger de faire pop
-
-Usages courants :
-• Gestion d'erreur : try/except pour IndexError
-• Vérifier d'abord : if items: items.pop()
-• Valider que la liste n'est pas vide
-• pop sans danger avec validation
-
-Exemple : Appeler pop() sur une liste vide lève une IndexError car il n'y a aucun élément à supprimer de la liste, et Python lève cette erreur pour indiquer que l'opération ne peut pas être effectuée sur une liste vide.`,
-  448: `Appeler remove() avec une valeur qui n'existe pas dans la liste lève une ValueError car la valeur ne peut pas être trouvée pour être supprimée. Si vous essayez de supprimer une valeur inexistante comme [1, 2, 3].remove(5), Python lève une ValueError avec un message indiquant que la valeur n'est pas dans la liste. C'est différent de pop(), qui lève IndexError pour des indices invalides - remove() lève ValueError pour des valeurs inexistantes.
-
-remove() avec valeur inexistante :
-• [1, 2, 3].remove(5) lève ValueError
-• La valeur 5 n'est pas trouvée dans la liste
-• ValueError indique valeur non trouvée
-• Doit vérifier si la valeur existe avant de supprimer
-• Message d'erreur : "list.remove(x): x not in list"
-
-Comment ça fonctionne :
-• remove(5) appelé sur [1, 2, 3]
-• Cherche la valeur 5 dans la liste
-• Ne trouve aucun match (la valeur n'existe pas)
-• Lève ValueError
-• Impossible de supprimer une valeur inexistante
-
-Exemple :
-[1, 2, 3].remove(5) # ValueError: list.remove(x): x not in list
-a = [1, 2, 3]
-a.remove(10)        # ValueError: list.remove(x): x not in list
-if 5 in a:          # Vérifier d'abord
-    a.remove(5)     # Sans danger de supprimer
-
-Usages courants :
-• Gestion d'erreur : try/except pour ValueError
-• Vérifier d'abord : if value in items: items.remove(value)
-• Valider que la valeur existe
-• Suppression sans danger avec validation
-
-Exemple : Appeler remove() avec une valeur inexistante lève une ValueError car Python ne peut pas trouver la valeur à supprimer de la liste, et cette erreur indique que l'opération ne peut pas être effectuée car la valeur n'est pas présente.`,
-  449: `La méthode pop() accepte les indices négatifs, et pop(-1) est équivalent à pop() sans argument - les deux suppriment et retournent le dernier élément. [1, 2, 3].pop(-1) retourne 3 car pop(-1) supprime l'élément à l'index -1 (qui est le dernier élément, 3) et le retourne. Après l'appel à pop(-1), la liste [1, 2, 3] devient [1, 2]. C'est cohérent avec le système d'indexation négative de Python où -1 fait référence au dernier élément.
-
-pop(-1) :
-• [1, 2, 3].pop(-1) = 3 (retourne le dernier élément)
-• pop(-1) supprime l'élément à l'index -1 (dernier)
-• Équivalent à pop() sans argument
-• Modifie la liste sur place
-• Liste modifiée : [1, 2, 3] → [1, 2]
-
-Comment ça fonctionne :
-• pop(-1) appelé sur [1, 2, 3]
-• L'index -1 fait référence au dernier élément (3)
-• Supprime l'élément à l'index -1
-• Retourne l'élément supprimé : 3
-• Modifie la liste d'origine : [1, 2]
-
-Exemple :
-a = [1, 2, 3]
-a.pop(-1)           # 3 (retourne le dernier)
-a                   # [1, 2] (liste modifiée)
-[1, 2, 3].pop(-1)   # 3 (identique à pop())
-[1, 2, 3].pop(-2)   # 2 (supprime l'avant-dernier)
-
-Usages courants :
-• Supprimer le dernier élément : last = items.pop(-1)
-• Indexation négative explicite : list.pop(-1)
-• Suppression du dernier élément
-• Cohérent avec l'indexation négative
-
-Exemple : [1, 2, 3].pop(-1) retourne 3 car pop(-1) supprime l'élément à l'index -1 (le dernier élément, qui est 3) de la liste et le retourne, laissant la liste à [1, 2]. C'est équivalent à appeler pop() sans argument.`,
-  450: `L'instruction del supprime un élément d'une liste par index et modifie la liste sur place. del [1, 2, 3][1] ne fonctionne pas car [1, 2, 3] est un littéral - il faut utiliser une variable. Cependant, conceptuellement, del list[index] supprime l'élément à cet index. Par exemple, si a = [1, 2, 3], alors del a[1] supprime l'élément à l'index 1, transformant [1, 2, 3] en [1, 3]. L'instruction del ne retourne rien (c'est une instruction, pas une expression).
-
-Instruction del :
-• del list[index] supprime l'élément à l'index
-• Modifie la liste sur place
-• Ne retourne pas de valeur (instruction, pas expression)
-• Similaire à pop() mais ne retourne pas l'élément supprimé
-• Doit utiliser avec une variable, pas un littéral
-
-Exemple :
-a = [1, 2, 3]
-del a[1]             # None (supprime l'élément à l'index 1)
-a                   # [1, 3] (liste modifiée)
-
-Usages courants :
-• Suppression par index : del items[index]
-• Suppression directe sans retour
-• Modification sur place
-• Alternative à pop() quand la valeur de retour n'est pas nécessaire
-
-Exemple : Si a = [1, 2, 3], del a[1] supprime l'élément à l'index 1 (2), transformant la liste en [1, 3]. del est une instruction, pas une expression, donc pas de valeur de retour.`,
-  451: `La méthode index() retourne l'index de la première occurrence d'une valeur dans une liste. [1, 2, 3].index(2) retourne 1 car index() parcourt la liste et trouve la valeur 2 à l'index 1 (le deuxième élément). La méthode index() lève une ValueError si la valeur n'est pas trouvée dans la liste. Utile pour trouver la position d'un élément quand on connaît sa valeur.
-
-Méthode index() :
-• [1, 2, 3].index(2) = 1 (retourne l'index de la valeur 2)
-• index(value) retourne le premier index où la valeur est trouvée
-• Cherche depuis le début de la liste
-• Retourne un index entier
-• Lève ValueError si la valeur n'est pas trouvée
-
-Comment ça fonctionne :
-• index(2) appelé sur [1, 2, 3]
-• Cherche la valeur 2 dans la liste
-• Trouve 2 à l'index 1 (deuxième élément)
-• Retourne l'index : 1
-• Lève ValueError si non trouvé
-
-Exemple :
-[1, 2, 3].index(2)  # 1 (index de 2)
-[1, 2, 3].index(1)  # 0 (index de 1)
-[1, 2, 3].index(5)  # ValueError (5 non trouvé)
-
-Usages courants :
-• Trouver la position : pos = items.index(value)
-• Obtenir l'index : idx = list.index(item)
-• Recherche de position
-• Conversion valeur-vers-index
-
-Exemple : [1, 2, 3].index(2) retourne 1 car index() parcourt la liste et trouve la valeur 2 à l'index 1 (le deuxième élément, puisque l'indexation commence à 0).`,
-  452: `La méthode index() retourne l'index de la première occurrence d'une valeur, même si la valeur apparaît plusieurs fois. [1, 2, 2, 3].index(2) retourne 1 car index() cherche depuis le début et trouve la première occurrence de 2 à l'index 1. Même si 2 apparaît aussi à l'index 2, index() ne retourne que la position de la première occurrence. Comportement cohérent - index() retourne toujours le premier match.
-
-index() - première occurrence :
-• [1, 2, 2, 3].index(2) = 1 (retourne le premier index)
-• index(value) retourne uniquement la première occurrence
-• Cherche depuis le début
-• S'arrête au premier match
-• Les occurrences suivantes sont ignorées
-
-Comment ça fonctionne :
-• index(2) appelé sur [1, 2, 2, 3]
-• Cherche la valeur 2 depuis le début
-• Trouve le premier 2 à l'index 1
-• Retourne l'index : 1 (première occurrence)
-• Ne continue pas pour trouver la deuxième occurrence
-
-Exemple :
-[1, 2, 2, 3].index(2) # 1 (première occurrence)
-[1, 2, 2, 2, 3].index(2) # 1 (première occurrence)
-[2, 2, 2].index(2)    # 0 (première occurrence)
-
-Usages courants :
-• Trouver la première position : pos = items.index(value)
-• Obtenir le premier index : idx = list.index(item)
-• Recherche du premier match
-• Conversion valeur-vers-index
-
-Exemple : [1, 2, 2, 3].index(2) retourne 1 car index() cherche depuis le début et retourne l'index de la première occurrence de 2 (à l'index 1), même si 2 apparaît aussi à l'index 2.`,
-  453: `La méthode count() retourne le nombre de fois qu'une valeur apparaît dans une liste. [1, 2, 3].count(2) retourne 1 car count() compte combien de fois la valeur 2 apparaît dans la liste, et elle apparaît une fois. La méthode count() parcourt toute la liste et compte toutes les occurrences de la valeur. Si la valeur n'apparaît pas, count() retourne 0 (ne lève jamais d'erreur).
-
-Méthode count() :
-• [1, 2, 3].count(2) = 1 (retourne le comptage)
-• count(value) retourne le nombre d'occurrences
-• Parcourt toute la liste
-• Compte toutes les occurrences
-• Retourne 0 si valeur non trouvée (pas d'erreur)
-
-Comment ça fonctionne :
-• count(2) appelé sur [1, 2, 3]
-• Cherche la valeur 2 dans toute la liste
-• Trouve une occurrence à l'index 1
-• Compte les occurrences : 1
-• Retourne le comptage : 1
-
-Exemple :
-[1, 2, 3].count(2)  # 1 (une occurrence)
-[1, 2, 2, 3].count(2) # 2 (deux occurrences)
-[1, 2, 3].count(5)  # 0 (zéro occurrence)
-
-Usages courants :
-• Compter les occurrences : count = items.count(value)
-• Obtenir la fréquence : freq = list.count(item)
-• Comptage de fréquence
-• Comptage d'occurrences
-
-Exemple : [1, 2, 3].count(2) retourne 1 car count() parcourt toute la liste et compte combien de fois la valeur 2 apparaît, et elle apparaît une fois à l'index 1.`,
-  454: `La méthode count() compte toutes les occurrences d'une valeur dans une liste, pas seulement la première. [1, 2, 2, 3].count(2) retourne 2 car count() parcourt toute la liste et compte combien de fois la valeur 2 apparaît - elle apparaît deux fois, à l'index 1 et à l'index 2. Contrairement à index(), qui ne retourne que la première occurrence, count() compte toutes les occurrences dans toute la liste.
-
-count() - toutes les occurrences :
-• [1, 2, 2, 3].count(2) = 2 (retourne le comptage total)
-• count(value) compte toutes les occurrences
-• Parcourt toute la liste
-• Compte chaque occurrence
-• Retourne le comptage total
-
-Comment ça fonctionne :
-• count(2) appelé sur [1, 2, 2, 3]
-• Cherche la valeur 2 dans toute la liste
-• Trouve des occurrences à l'index 1 et à l'index 2
-• Compte toutes les occurrences : 2
-• Retourne le comptage total : 2
-
-Exemple :
-[1, 2, 2, 3].count(2) # 2 (deux occurrences)
-[1, 2, 2, 2, 3].count(2) # 3 (trois occurrences)
-[2, 2, 2].count(2)    # 3 (trois occurrences)
-
-Usages courants :
-• Compter toutes les occurrences : count = items.count(value)
-• Obtenir la fréquence totale : freq = list.count(item)
-• Comptage de fréquence totale
-• Comptage de toutes les occurrences
-
-Exemple : [1, 2, 2, 3].count(2) retourne 2 car count() parcourt toute la liste et compte toutes les occurrences de 2, le trouvant à l'index 1 et à l'index 2, pour un comptage total de 2.`,
-  455: `La méthode count() retourne 0 lorsqu'une valeur n'est pas trouvée dans la liste, plutôt que de lever une erreur. [1, 2, 3].count(5) retourne 0 car count() parcourt toute la liste et ne trouve aucune occurrence de la valeur 5. Contrairement à index(), qui lève une ValueError quand une valeur n'est pas trouvée, count() retourne toujours un entier non négatif (0 ou plus) et ne lève jamais d'erreur.
-
-count() - valeur non trouvée :
-• [1, 2, 3].count(5) = 0 (retourne 0)
-• count(value) retourne 0 si valeur non trouvée
-• Aucune erreur levée
-• Sans danger à appeler avec n'importe quelle valeur
-• Retourne 0 pour les valeurs inexistantes
-
-Comment ça fonctionne :
-• count(5) appelé sur [1, 2, 3]
-• Cherche la valeur 5 dans toute la liste
-• Ne trouve aucune occurrence
-• Compte les occurrences : 0
-• Retourne 0 (pas d'erreur)
-
-Exemple :
-[1, 2, 3].count(5)  # 0 (non trouvé)
-[1, 2, 3].count(10) # 0 (non trouvé)
-[].count(5)         # 0 (liste vide)
-
-Usages courants :
-• Comptage sans danger : count = items.count(value) (ne lèvera pas d'erreur)
-• Vérifier la présence : if items.count(value) > 0:
-• Vérification de non-existence
-• Comptage d'occurrences sans danger
-
-Exemple : [1, 2, 3].count(5) retourne 0 car count() parcourt toute la liste et ne trouve aucune occurrence de 5, et count() retourne 0 pour les valeurs inexistantes plutôt que de lever une erreur.`,
-  456: `Appeler index() avec une valeur qui n'existe pas dans la liste lève une ValueError car la valeur ne peut pas être trouvée. Si vous essayez de trouver l'index d'une valeur inexistante comme [1, 2, 3].index(5), Python lève une ValueError avec un message indiquant que la valeur n'est pas dans la liste. C'est différent de count(), qui retourne 0 pour les valeurs inexistantes - index() doit trouver la valeur pour retourner son index.
-
-index() avec valeur inexistante :
-• [1, 2, 3].index(5) lève ValueError
-• La valeur 5 n'est pas trouvée dans la liste
-• ValueError indique valeur non trouvée
-• Doit vérifier si la valeur existe avant d'appeler index()
-• Message d'erreur : "list.index(x): x not in list"
-
-Comment ça fonctionne :
-• index(5) appelé sur [1, 2, 3]
-• Cherche la valeur 5 dans la liste
-• Ne trouve aucun match (la valeur n'existe pas)
-• Lève ValueError
-• Ne peut pas retourner l'index pour une valeur inexistante
-
-Exemple :
-[1, 2, 3].index(5)  # ValueError: list.index(x): x not in list
-a = [1, 2, 3]
-a.index(10)        # ValueError: list.index(x): x not in list
-if 5 in a:         # Vérifier d'abord
-    a.index(5)     # Sans danger d'appeler
-
-Usages courants :
-• Gestion d'erreur : try/except pour ValueError
-• Vérifier d'abord : if value in items: items.index(value)
-• Valider que la valeur existe
-• Recherche d'index sans danger avec validation
-
-Exemple : Appeler index() avec une valeur inexistante lève une ValueError car Python ne peut pas trouver la valeur dans la liste pour retourner son index, et cette erreur indique que l'opération ne peut pas être effectuée car la valeur n'est pas présente.`,
-  457: `La méthode index() peut prendre un deuxième argument (start) pour spécifier où commencer la recherche. [1, 2, 3].index(2, 1) retourne 1 car index(2, 1) cherche la valeur 2 à partir de l'index 1. La recherche commence à l'index de départ (inclusif) et continue jusqu'à la fin de la liste. Si la valeur est trouvée à ou après l'index de départ, index() retourne sa position.
-
-index() avec paramètre start :
-• [1, 2, 3].index(2, 1) = 1 (retourne l'index)
-• index(value, start) cherche à partir de l'index start
-• L'index start est inclusif (recherché)
-• La recherche continue jusqu'à la fin de la liste
-• Retourne la première occurrence à partir de start
-
-Comment ça fonctionne :
-• index(2, 1) appelé sur [1, 2, 3]
-• Commence à chercher à partir de l'index 1 (inclusif)
-• Cherche les indices 1, 2
-• Trouve 2 à l'index 1
-• Retourne l'index : 1
-
-Exemple :
-[1, 2, 3].index(2, 1)  # 1 (trouvé à l'index 1)
-[1, 2, 3].index(2, 0)  # 1 (cherche depuis l'index 0)
-[1, 2, 2, 3].index(2, 2) # 2 (trouve la deuxième occurrence)
-
-Usages courants :
-• Chercher depuis une position : idx = items.index(value, start)
-• Trouver après une position : pos = list.index(item, from_index)
-• Recherche limitée à une position
-• Recherche par plage
-
-Exemple : [1, 2, 3].index(2, 1) retourne 1 car index() cherche 2 à partir de l'index 1 (inclusif), trouve 2 à l'index 1, et retourne cet index.`,
-  458: `La méthode index() avec un paramètre start trouve la première occurrence d'une valeur à partir de l'index spécifié. [1, 2, 2, 3].index(2, 2) retourne 2 car index(2, 2) cherche la valeur 2 à partir de l'index 2, et trouve la deuxième occurrence de 2 à l'index 2. Utile pour trouver des occurrences après une certaine position, permettant d'ignorer la première occurrence si on sait où commencer à chercher.
-
-index() - trouver une occurrence à partir de start :
-• [1, 2, 2, 3].index(2, 2) = 2 (retourne l'index)
-• index(value, start) trouve la première à partir de start
-• L'index start est inclusif
-• Ignore les éléments avant l'index start
-• Retourne la première occurrence à partir de la position start
-
-Comment ça fonctionne :
-• index(2, 2) appelé sur [1, 2, 2, 3]
-• Commence à chercher à partir de l'index 2 (inclusif)
-• Ignore les indices 0 et 1 (ignore la première occurrence)
-• Cherche les indices 2, 3
-• Trouve 2 à l'index 2 (deuxième occurrence)
-• Retourne l'index : 2
-
-Exemple :
-[1, 2, 2, 3].index(2, 2) # 2 (trouve la deuxième occurrence)
-[1, 2, 2, 3].index(2, 0) # 1 (trouve la première occurrence)
-[1, 2, 2, 2, 3].index(2, 2) # 2 (trouve depuis l'index 2)
-
-Usages courants :
-• Trouver l'occurrence suivante : idx = items.index(value, from_index)
-• Ignorer le premier match : pos = list.index(item, after_pos)
-• Recherche d'occurrence suivante
-• Recherche basée sur la position
-
-Exemple : [1, 2, 2, 3].index(2, 2) retourne 2 car index() cherche 2 à partir de l'index 2 (inclusif), ignore la première occurrence à l'index 1, et trouve la deuxième occurrence à l'index 2.`,
-  459: `La méthode index() peut prendre un troisième argument (stop) pour spécifier où arrêter la recherche. [1, 2, 3].index(2, 1, 3) retourne 1 car index(2, 1, 3) cherche la valeur 2 à partir de l'index 1 (inclusif) jusqu'à (mais non inclus) l'index 3. L'index stop est exclusif, comme pour le slicing. Cela permet de chercher dans une plage spécifique de la liste.
-
-index() avec start et stop :
-• [1, 2, 3].index(2, 1, 3) = 1 (retourne l'index)
-• index(value, start, stop) cherche dans la plage [start, stop)
-• L'index start est inclusif (recherché)
-• L'index stop est exclusif (non recherché)
-• Retourne la première occurrence dans la plage
-
-Comment ça fonctionne :
-• index(2, 1, 3) appelé sur [1, 2, 3]
-• Cherche dans la plage [1, 3) (indices 1, 2)
-• L'index start 1 est inclusif
-• L'index stop 3 est exclusif
-• Trouve 2 à l'index 1
-• Retourne l'index : 1
-
-Exemple :
-[1, 2, 3].index(2, 1, 3)  # 1 (trouvé dans la plage)
-[1, 2, 3].index(2, 0, 2)  # 1 (trouvé dans la plage)
-[1, 2, 3].index(2, 2, 3)  # ValueError (pas dans la plage)
-
-Usages courants :
-• Chercher dans une plage : idx = items.index(value, start, stop)
-• Recherche bornée : pos = list.index(item, from_index, to_index)
-• Recherche limitée par plage
-• Recherche dans une sous-liste
-
-Exemple : [1, 2, 3].index(2, 1, 3) retourne 1 car index() cherche 2 dans la plage [1, 3) (indices 1 et 2, puisque stop est exclusif), et trouve 2 à l'index 1.`,
-  460: `La méthode index() lève une ValueError si la valeur n'est pas trouvée dans la plage spécifiée. [1, 2, 3].index(2, 0, 1) lève une ValueError car index(2, 0, 1) cherche la valeur 2 dans la plage [0, 1) (qui n'inclut que l'index 0, puisque stop est exclusif), mais la valeur 2 est à l'index 1, qui est hors de la plage de recherche. L'index stop est exclusif, donc même si 2 existe dans la liste, il n'est pas dans la plage spécifiée.
-
-index() - valeur hors plage :
-• [1, 2, 3].index(2, 0, 1) lève ValueError
-• Cherche dans la plage [0, 1) (index 0 uniquement)
-• La valeur 2 est à l'index 1 (hors plage)
-• L'index stop 1 est exclusif (non recherché)
-• Lève ValueError (valeur hors plage)
-
-Comment ça fonctionne :
-• index(2, 0, 1) appelé sur [1, 2, 3]
-• Cherche dans la plage [0, 1) (index 0 uniquement)
-• L'index stop 1 est exclusif
-• Trouve 1 à l'index 0, pas 2
-• La valeur 2 est à l'index 1 (hors plage)
-• Lève ValueError
-
-Exemple :
-[1, 2, 3].index(2, 0, 1)  # ValueError (2 pas dans la plage [0, 1))
-[1, 2, 3].index(2, 0, 2)  # 1 (trouvé dans la plage [0, 2))
-[1, 2, 3].index(3, 0, 2)  # ValueError (3 pas dans la plage [0, 2))
-
-Usages courants :
-• Gestion d'erreur : try/except pour ValueError
-• Validation de plage : vérifier si la valeur est dans la plage d'abord
-• Recherche bornée avec validation
-• Recherche limitée par plage
-
-Exemple : [1, 2, 3].index(2, 0, 1) lève une ValueError car index() cherche 2 dans la plage [0, 1) (index 0 uniquement, puisque stop est exclusif), mais 2 est à l'index 1, qui est hors de la plage de recherche.`,
-  461: `La fonction sorted() retourne une nouvelle liste triée sans modifier l'itérable d'origine. sorted([3, 1, 2]) retourne [1, 2, 3] car sorted() crée une nouvelle liste avec les éléments triés par ordre croissant. La liste originale [3, 1, 2] reste inchangée. sorted() fonctionne avec tout itérable (listes, tuples, chaînes, etc.).
-
-Fonction sorted() :
-• sorted([3, 1, 2]) = [1, 2, 3]
-• sorted() retourne une nouvelle liste triée
-• Ne modifie pas l'originale
-• Crée un nouvel objet liste
-• Liste d'origine inchangée
-
-Comment ça fonctionne :
-• sorted() appelé avec [3, 1, 2]
-• Crée une nouvelle liste
-• Trie les éléments : 1 < 2 < 3
-• Retourne [1, 2, 3]
-• Liste d'origine [3, 1, 2] inchangée
-
-Exemple :
-sorted([3, 1, 2])   # [1, 2, 3]
-sorted([5, 2, 8])   # [2, 5, 8]
-a = [3, 1, 2]
-sorted(a)           # [1, 2, 3] (a reste [3, 1, 2])
-
-Usages courants :
-• Obtenir une liste triée : result = sorted(items)
-• Tri sans modifier : sorted_list = sorted(original)
-• Création de liste triée
-• Tri non destructif
-
-Exemple : sorted([3, 1, 2]) retourne [1, 2, 3] car sorted() crée une nouvelle liste triée sans modifier la liste d'origine.`,
-  462: `La fonction sorted() avec reverse=True trie en ordre décroissant. sorted([3, 1, 2], reverse=True) retourne [3, 2, 1] car reverse=True inverse l'ordre du tri - du plus grand au plus petit. La liste originale reste inchangée. Équivalent à sorted() suivi de reverse(), mais en une seule opération.
-
-sorted() avec reverse=True :
-• sorted([3, 1, 2], reverse=True) = [3, 2, 1]
-• reverse=True trie en ordre décroissant
-• Du plus grand au plus petit
-• Crée une nouvelle liste
-• Liste d'origine inchangée
-
-Comment ça fonctionne :
-• sorted() appelé avec [3, 1, 2], reverse=True
-• Trie en ordre inverse : 3 > 2 > 1
-• Retourne [3, 2, 1]
-• Liste d'origine inchangée
-
-Exemple :
-sorted([3, 1, 2], reverse=True) # [3, 2, 1]
-sorted([1, 2, 3], reverse=True) # [3, 2, 1]
-
-Usages courants :
-• Tri décroissant : result = sorted(items, reverse=True)
-• Ordre du plus grand au plus petit
-• Tri inversé
-• Liste triée décroissante
-
-Exemple : sorted([3, 1, 2], reverse=True) retourne [3, 2, 1] car reverse=True trie la liste en ordre décroissant, du plus grand au plus petit.`,
-  463: `La méthode sort() trie la liste sur place et retourne None. [3, 1, 2].sort() retourne None car sort() modifie la liste d'origine : [3, 1, 2] devient [1, 2, 3]. Contrairement à sorted(), sort() ne crée pas une nouvelle liste - elle modifie la liste sur laquelle elle est appelée. La méthode elle-même retourne None.
-
-Méthode sort() :
-• [3, 1, 2].sort() = None (retourne None)
-• sort() trie la liste sur place
-• Modifie la liste d'origine
-• Ne retourne pas de nouvelle liste
-• Liste modifiée : [3, 1, 2] → [1, 2, 3]
-
-Comment ça fonctionne :
-• sort() appelé sur [3, 1, 2]
-• Trie les éléments sur place
-• Liste devient [1, 2, 3]
-• Retourne None (pas de valeur de retour)
-• Modification sur place
-
-Exemple :
-a = [3, 1, 2]
-a.sort()            # None (retourne None)
-a                   # [1, 2, 3] (liste modifiée)
-[3, 1, 2].sort()    # None (retourne None)
-
-Usages courants :
-• Trier sur place : items.sort()
-• Modification directe : list.sort()
-• Tri destructif
-• Tri in-place
-
-Exemple : [3, 1, 2].sort() retourne None car sort() modifie la liste sur place (transformant [3, 1, 2] en [1, 2, 3]), et la méthode elle-même retourne None.`,
-  464: `La méthode reverse() inverse la liste sur place et retourne None. [3, 1, 2].reverse() retourne None car reverse() modifie la liste d'origine : [3, 1, 2] devient [2, 1, 3]. L'ordre des éléments est inversé. Pas de nouvelle liste créée - modification sur place. La méthode elle-même retourne None.
-
-Méthode reverse() :
-• [3, 1, 2].reverse() = None (retourne None)
-• reverse() inverse la liste sur place
-• Modifie la liste d'origine
-• Ne retourne pas de nouvelle liste
-• Liste modifiée : [3, 1, 2] → [2, 1, 3]
-
-Comment ça fonctionne :
-• reverse() appelé sur [3, 1, 2]
-• Inverse l'ordre des éléments
-• Liste devient [2, 1, 3]
-• Retourne None (pas de valeur de retour)
-• Modification sur place
-
-Exemple :
-a = [3, 1, 2]
-a.reverse()         # None (retourne None)
-a                   # [2, 1, 3] (liste modifiée)
-[1, 2, 3].reverse() # None (retourne None)
-
-Usages courants :
-• Inverser sur place : items.reverse()
-• Modification directe : list.reverse()
-• Inversion destructrice
-• Inversion in-place
-
-Exemple : [3, 1, 2].reverse() retourne None car reverse() modifie la liste sur place (transformant [3, 1, 2] en [2, 1, 3]), et la méthode elle-même retourne None.`,
-  465: `La différence clé entre sort() et sorted() : sort() modifie la liste sur place et retourne None ; sorted() crée une nouvelle liste triée sans modifier l'originale. sort() est une méthode de liste (list.sort()) ; sorted() est une fonction built-in qui accepte tout itérable. Choisir sort() pour modifier la liste existante, sorted() pour obtenir une nouvelle liste triée sans toucher à l'originale.
-
-sort() vs sorted() :
-• sort() : modifie sur place, retourne None
-• sorted() : crée nouvelle liste, retourne la liste triée
-• sort() : méthode de liste uniquement
-• sorted() : fonction, accepte tout itérable
-• sort() : destructif
-• sorted() : non destructif
-
-Comment ça fonctionne :
-• list.sort() : trie list, la modifie, retourne None
-• sorted(list) : crée nouvelle liste triée, list inchangée
-• Choisir selon besoin de préserver l'originale
-
-Exemple :
-a = [3, 1, 2]
-a.sort()            # None, a = [1, 2, 3]
-b = [3, 1, 2]
-c = sorted(b)       # c = [1, 2, 3], b = [3, 1, 2] inchangé
-
-Usages courants :
-• sort() : modification sur place : items.sort()
-• sorted() : tri sans modifier : result = sorted(items)
-• Choisir selon que l'originale doit être préservée
-• Distinction importante pour le tri
-
-Exemple : sort() modifie la liste sur place et retourne None ; sorted() retourne une nouvelle liste triée sans modifier l'originale.`,
-  466: `La fonction reversed() retourne un itérateur inverse, pas une liste. reversed([1, 2, 3]) retourne un objet list_reverseiterator car reversed() crée un itérateur qui produit les éléments en ordre inverse, mais ne crée pas une nouvelle liste immédiatement. L'itérateur est paresseux - il calcule les éléments à la demande. Économise la mémoire pour les grandes séquences, mais le résultat n'est pas une liste - c'est un objet itérateur.
-
-Fonction reversed() :
-• reversed([1, 2, 3]) = objet list_reverseiterator
-• reversed() retourne un itérateur inverse
-• Ne crée pas de nouvelle liste immédiatement
-• L'itérateur calcule les éléments à la demande
-• Économise la mémoire pour les grandes séquences
-
-Comment ça fonctionne :
-• reversed() appelé avec [1, 2, 3]
-• Crée l'objet itérateur inverse
-• L'itérateur mémorise la liste et la position
-• Produit les éléments en inverse lors de l'itération
-• Retourne un objet itérateur, pas une liste
-
-Exemple :
-reversed([1, 2, 3])  # <list_reverseiterator object>
-list(reversed([1, 2, 3])) # [3, 2, 1] (convertit en liste)
-for x in reversed([1, 2, 3]):  # Itère : 3, 2, 1
-    print(x)
-
-Usages courants :
-• Itération inversée : for item in reversed(items):
-• Créer un itérateur inverse : rev_iter = reversed(list)
-• Inversion économe en mémoire
-• Itération inversée paresseuse
-
-Exemple : reversed([1, 2, 3]) retourne un objet list_reverseiterator car reversed() crée un itérateur qui produit les éléments en ordre inverse, mais ne crée pas une nouvelle liste - l'itérateur calcule les éléments à la demande lors de l'itération.`,
-  467: `La fonction list() peut convertir un itérateur inverse en liste. list(reversed([1, 2, 3])) retourne [3, 2, 1] car list() consomme l'itérateur créé par reversed([1, 2, 3]) et collecte tous les éléments dans une nouvelle liste. reversed() retourne un itérateur, et list() itère à travers cet itérateur, collectant les éléments inversés dans une liste. C'est ainsi qu'on obtient une vraie liste inversée à partir de reversed().
-
-list(reversed()) :
-• list(reversed([1, 2, 3])) = [3, 2, 1]
-• reversed() retourne un itérateur
-• list() consomme l'itérateur
-• Collecte les éléments dans une nouvelle liste
-• Crée la liste inversée
-
-Comment ça fonctionne :
-• reversed([1, 2, 3]) crée l'itérateur inverse
-• list() itère à travers l'itérateur
-• L'itérateur produit : 3, 2, 1 (en inverse)
-• list() collecte : [3, 2, 1]
-• Retourne une nouvelle liste inversée
-
-Exemple :
-list(reversed([1, 2, 3]))  # [3, 2, 1] (liste inversée)
-list(reversed([1, 2]))      # [2, 1] (liste inversée)
-list(reversed([]))          # [] (liste vide)
-
-Usages courants :
-• Obtenir une liste inversée : reversed_list = list(reversed(items))
-• Créer une copie inversée : rev = list(reversed(data))
-• Convertir l'itérateur en liste
-• Création de liste inversée
-
-Exemple : list(reversed([1, 2, 3])) retourne [3, 2, 1] car list() consomme l'itérateur créé par reversed() et collecte tous les éléments en ordre inverse dans une nouvelle liste.`,
-  468: `La différence clé entre [::-1] et reversed() : ce qu'ils retournent. [1, 2, 3][::-1] retourne une nouvelle liste [3, 2, 1] car le slicing avec un pas négatif crée immédiatement un nouvel objet liste. reversed([1, 2, 3]) retourne un objet list_reverseiterator car reversed() crée un itérateur qui produit les éléments à la demande. Les deux produisent des éléments inversés, mais [::-1] crée une liste immédiatement (plus de mémoire mais accès plus rapide), tandis que reversed() crée un itérateur (moins de mémoire mais nécessite une itération pour accéder).
-
-[::-1] vs reversed() :
-• [::-1] retourne une nouvelle liste immédiatement
-• reversed() retourne un objet itérateur
-• [::-1] crée un objet liste en mémoire
-• reversed() crée un itérateur paresseux
-• Les deux produisent des éléments inversés
-
-Comment ça fonctionne :
-• [1, 2, 3][::-1] : crée une nouvelle liste [3, 2, 1] immédiatement
-• reversed([1, 2, 3]) : crée un itérateur qui produit 3, 2, 1 à la demande
-• [::-1] utilise plus de mémoire (stocke la liste)
-• reversed() utilise moins de mémoire (calcule à la demande)
-• Les deux produisent le même ordre inversé
-
-Exemple :
-[1, 2, 3][::-1]      # [3, 2, 1] (nouvelle liste)
-reversed([1, 2, 3])  # <list_reverseiterator> (itérateur)
-list(reversed([1, 2, 3])) # [3, 2, 1] (doit convertir)
-
-Usages courants :
-• [::-1] : liste inversée immédiate : rev = items[::-1]
-• reversed() : itération économe en mémoire : for x in reversed(items):
-• Choisir selon besoins mémoire vs accès
-• Les deux utiles pour différents scénarios
-
-Exemple : [1, 2, 3][::-1] retourne une nouvelle liste [3, 2, 1] immédiatement, tandis que reversed([1, 2, 3]) retourne un itérateur qui produit les éléments inversés à la demande - les deux produisent le même ordre inversé, mais [::-1] crée un objet liste tandis que reversed() crée un itérateur.`,
-  469: `La fonction sorted() fonctionne avec tout itérable, y compris les listes de chaînes. sorted(['c', 'a', 'b']) retourne ['a', 'b', 'c'] car sorted() trie les chaînes alphabétiquement selon leurs valeurs Unicode/ASCII. Les chaînes sont comparées caractère par caractère selon leurs points de code, donc 'a' vient avant 'b', et 'b' avant 'c'. sorted() crée une nouvelle liste et ne modifie pas l'originale.
-
-sorted() avec chaînes :
-• sorted(['c', 'a', 'b']) = ['a', 'b', 'c']
-• sorted() fonctionne avec les listes de chaînes
-• Tri alphabétique (ordre Unicode)
-• Crée une nouvelle liste triée
-• Liste d'origine inchangée
-
-Comment ça fonctionne :
-• sorted() appelé avec ['c', 'a', 'b']
-• Compare les chaînes selon les valeurs Unicode
-• 'a' < 'b' < 'c' (ordre alphabétique)
-• Trie : ['a', 'b', 'c']
-• Retourne une nouvelle liste : ['a', 'b', 'c']
-
-Exemple :
-sorted(['c', 'a', 'b'])  # ['a', 'b', 'c']
-sorted(['z', 'a', 'm'])  # ['a', 'm', 'z']
-sorted(['A', 'a', 'B'])  # ['A', 'B', 'a'] (sensible à la casse)
-
-Usages courants :
-• Tri de chaînes : sorted_list = sorted(strings)
-• Ordre alphabétique : result = sorted(items)
-• Tri de chaînes
-• Ordonnancement de texte
-
-Exemple : sorted(['c', 'a', 'b']) retourne ['a', 'b', 'c'] car sorted() trie les chaînes alphabétiquement selon leurs valeurs Unicode, créant une nouvelle liste avec les éléments en ordre alphabétique.`,
-  470: `La fonction sorted() peut prendre un paramètre key pour personnaliser le tri. sorted([3, 1, 2], key=lambda x: -x) retourne [3, 2, 1] car la fonction key transforme chaque élément avant la comparaison. Ici, key=lambda x: -x négative chaque élément, donc les comparaisons utilisent -3, -1, -2, ce qui se trie comme -3 < -1 < -2 (décroissant), donnant [3, 2, 1] en ordre décroissant. La fonction key ne modifie pas les éléments dans le résultat - elle n'affecte que l'ordre de comparaison.
-
-sorted() avec key :
-• sorted([3, 1, 2], key=lambda x: -x) = [3, 2, 1]
-• Le paramètre key transforme les éléments pour la comparaison
-• lambda x: -x négative chaque élément
-• Trie en utilisant les valeurs négées : -3 < -1 < -2
-• Résultat : [3, 2, 1] (ordre décroissant)
-
-Comment ça fonctionne :
-• sorted() appelé avec [3, 1, 2], key=lambda x: -x
-• Applique la fonction key : -3, -1, -2 (négation)
-• Compare en utilisant les valeurs négées : -3 < -1 < -2
-• Trie en ordre décroissant (à cause de la négation)
-• Retourne une nouvelle liste : [3, 2, 1]
-
-Exemple :
-sorted([3, 1, 2], key=lambda x: -x)  # [3, 2, 1] (décroissant)
-sorted([1, 2, 3], key=lambda x: x**2) # [1, 2, 3] (carrés : 1 < 4 < 9)
-sorted(['abc', 'a', 'ab'], key=len)  # ['a', 'ab', 'abc'] (par longueur)
-
-Usages courants :
-• Tri personnalisé : sorted(items, key=func)
-• Tri décroissant : sorted(items, key=lambda x: -x)
-• Tri basé sur transformation
-• Critères de tri flexibles
-
-Exemple : sorted([3, 1, 2], key=lambda x: -x) retourne [3, 2, 1] car la fonction key négative chaque élément pour la comparaison, entraînant le tri de la liste en ordre décroissant (du plus grand au plus petit).`,
-  471: `La méthode copy() crée une copie superficielle d'une liste et la retourne. [1, 2, 3].copy() retourne [1, 2, 3] car copy() crée un nouvel objet liste avec les mêmes éléments. Une copie superficielle signifie que la liste externe est copiée, mais si la liste contient des objets imbriqués (comme d'autres listes), ces objets imbriqués ne sont pas copiés - ils sont partagés entre l'originale et la copie. Pour les listes plates (sans imbrication), la copie superficielle crée une liste totalement indépendante.
-
-Méthode copy() :
-• [1, 2, 3].copy() = [1, 2, 3] (nouvelle liste)
-• copy() crée une copie superficielle
-• Crée un nouvel objet liste
-• Les éléments sont copiés (non partagés)
-• Retourne une nouvelle liste
-
-Comment ça fonctionne :
-• copy() appelé sur [1, 2, 3]
-• Crée un nouvel objet liste
-• Copie les éléments dans la nouvelle liste : [1, 2, 3]
-• La nouvelle liste est indépendante de l'originale
-• Retourne la nouvelle liste : [1, 2, 3]
-
-Exemple :
-a = [1, 2, 3]
-b = a.copy()        # [1, 2, 3] (nouvelle liste)
-b.append(4)         # b = [1, 2, 3, 4]
-a                   # [1, 2, 3] (inchangée)
-
-Usages courants :
-• Créer des copies : new_list = items.copy()
-• Listes indépendantes : copy = list.copy()
-• Copie superficielle
-• Création de copie
-
-Exemple : [1, 2, 3].copy() retourne [1, 2, 3] car copy() crée un nouvel objet liste avec les mêmes éléments, donnant une copie superficielle de la liste originale.`,
-  472: `Le constructeur list() crée une copie superficielle lorsqu'il est appelé avec une liste comme argument. list([1, 2, 3]) retourne [1, 2, 3] car list() prend la liste [1, 2, 3] et crée un nouvel objet liste avec les mêmes éléments. C'est essentiellement identique à copy() - crée une copie superficielle où la liste externe est nouvelle, mais les objets imbriqués (s'il y en a) sont partagés. Pour les listes plates, cela crée une liste totalement indépendante.
-
-Constructeur list() :
-• list([1, 2, 3]) = [1, 2, 3] (nouvelle liste)
-• list() crée une copie superficielle
-• Crée un nouvel objet liste
-• Les éléments sont copiés (non partagés)
-• Retourne une nouvelle liste
-
-Comment ça fonctionne :
-• list() appelé avec [1, 2, 3]
-• Crée un nouvel objet liste
-• Copie les éléments dans la nouvelle liste : [1, 2, 3]
-• La nouvelle liste est indépendante de l'originale
-• Retourne la nouvelle liste : [1, 2, 3]
-
-Exemple :
-a = [1, 2, 3]
-b = list(a)         # [1, 2, 3] (nouvelle liste)
-b.append(4)         # b = [1, 2, 3, 4]
-a                   # [1, 2, 3] (inchangée)
-
-Usages courants :
-• Créer des copies : new_list = list(old_list)
-• Copie superficielle : copy = list(original)
-• Construction de liste
-• Création de copie
-
-Exemple : list([1, 2, 3]) retourne [1, 2, 3] car list() crée un nouvel objet liste avec les mêmes éléments, donnant une copie superficielle de la liste originale.`,
-  473: `Le slicing avec [:] crée une copie superficielle d'une liste. [1, 2, 3][:] retourne [1, 2, 3] car [:] signifie "du début à la fin", ce qui inclut tous les éléments, et le slicing crée un nouvel objet liste. C'est une des façons courantes de créer une copie superficielle - avec copy() et list(). Une copie superficielle signifie que la liste externe est copiée, mais les objets imbriqués (s'il y en a) sont partagés entre l'originale et la copie.
-
-Slicing [:] pour copier :
-• [1, 2, 3][:] = [1, 2, 3] (nouvelle liste)
-• [:] crée une copie superficielle
-• Inclut tous les éléments du début à la fin
-• Crée un nouvel objet liste
-• Retourne une nouvelle liste
-
-Comment ça fonctionne :
-• [:] appelé sur [1, 2, 3]
-• Crée un nouvel objet liste
-• Copie tous les éléments dans la nouvelle liste : [1, 2, 3]
-• La nouvelle liste est indépendante de l'originale
-• Retourne la nouvelle liste : [1, 2, 3]
-
-Exemple :
-a = [1, 2, 3]
-b = a[:]             # [1, 2, 3] (nouvelle liste)
-b.append(4)          # b = [1, 2, 3, 4]
-a                   # [1, 2, 3] (inchangée)
-
-Usages courants :
-• Créer des copies : new_list = items[:]
-• Copie superficielle : copy = list[:]
-• Création de copie
-• Duplication de liste
-
-Exemple : [1, 2, 3][:] retourne [1, 2, 3] car [:] crée une copie superficielle de toute la liste, donnant un nouvel objet liste avec les mêmes éléments.`,
-  474: `La différence entre copie superficielle et copie profonde est la gestion des objets imbriqués. Une copie superficielle crée un nouvel objet externe mais partage les objets imbriqués - si vous modifiez un objet imbriqué dans la copie, cela affecte l'originale. Une copie profonde crée de nouveaux objets pour la structure externe et tous les objets imbriqués - les modifications des objets imbriqués dans la copie n'affectent pas l'originale. Pour les listes plates (sans imbrication), copie superficielle et profonde donnent le même résultat.
-
-Copie superficielle vs copie profonde :
-• Copie superficielle : copie la liste externe, partage les objets imbriqués
-• Copie profonde : copie la liste externe et tous les objets imbriqués
-• Superficielle : modifications des objets imbriqués affectent l'originale
-• Profonde : modifications des objets imbriqués n'affectent pas l'originale
-• Pour listes plates : les deux se comportent pareil
-
-Comment ça fonctionne :
-• Superficielle : [[1], [2]].copy() → nouvelle liste externe, mais listes internes partagées
-• Profonde : copy.deepcopy([[1], [2]]) → nouvelle liste externe et nouvelles listes internes
-
-Exemple :
-a = [[1], [2]]
-b = a.copy()
-b[0].append(3)       # b = [[1, 3], [2]], a = [[1, 3], [2]] (partagé !)
-
-Usages courants :
-• Superficielle : listes plates ou quand le partage est accepté
-• Profonde : structures imbriquées à modifier indépendamment
-• Choisir selon structure des données
-• Distinction importante pour la copie
-
-Exemple : Une copie superficielle copie la structure externe mais partage les objets imbriqués ; une copie profonde copie aussi tous les objets imbriqués. Pour a = [[1],[2]] ; b = a.copy() ; b[0].append(3) modifie aussi a.`,
-  475: `La fonction copy.copy(obj) du module copy crée une copie superficielle. copy.copy([1, 2, 3]) retourne [1, 2, 3] car copy.copy() crée un nouvel objet liste avec les mêmes éléments. Pour les listes plates, le comportement est identique à list.copy(). La fonction copy.copy() fonctionne avec tout type d'objet, pas seulement les listes.
-
-copy.copy() :
-• copy.copy([1, 2, 3]) = [1, 2, 3] (nouvel objet)
-• copy.copy() crée une copie superficielle
-• Crée un nouvel objet
-• Pour listes plates : comme list.copy()
-• Fonctionne avec tout type d'objet
-
-Comment ça fonctionne :
-• copy.copy() appelé avec [1, 2, 3]
-• Crée un nouvel objet liste
-• Copie les éléments
-• Retourne la nouvelle liste
-
-Exemple :
-import copy
-copy.copy([1, 2, 3])  # [1, 2, 3] (nouvel objet)
-a = [1, 2, 3]
-b = copy.copy(a)     # [1, 2, 3], a inchangée si b modifiée
-
-Usages courants :
-• Copie superficielle générique : copy.copy(obj)
-• Objets non-listes : copy.copy(dict)
-• Module copy
-• Copie pour tout type
-
-Exemple : import copy ; copy.copy([1, 2, 3]) retourne [1, 2, 3] car copy.copy() crée une copie superficielle, un nouvel objet liste avec les mêmes éléments.`,
-  476: `La fonction copy.deepcopy(obj) crée une copie profonde. copy.deepcopy([1, 2, 3]) retourne [1, 2, 3]. Pour les structures imbriquées, copie aussi tous les objets imbriqués récursivement. Pour les listes plates, le résultat est visuellement identique à une copie superficielle, mais deepcopy crée une structure totalement indépendante à tous les niveaux.
-
-copy.deepcopy() :
-• copy.deepcopy([1, 2, 3]) = [1, 2, 3]
-• Crée une copie profonde
-• Pour structures imbriquées : copie aussi les objets imbriqués
-• Pour listes plates : comme copie superficielle visuellement
-• Totalement indépendant à tous les niveaux
-
-Comment ça fonctionne :
-• copy.deepcopy() parcourt récursivement la structure
-• Crée de nouveaux objets pour chaque niveau
-• Aucun partage entre copie et originale
-• Modifications de la copie n'affectent pas l'originale
-
-Exemple :
-import copy
-copy.deepcopy([1, 2, 3])  # [1, 2, 3]
-a = [[1], [2]]
-b = copy.deepcopy(a)
-b[0].append(3)           # a reste [[1], [2]] (inchangée)
-
-Usages courants :
-• Structures imbriquées : copy.deepcopy(nested_list)
-• Indépendance totale : deep = copy.deepcopy(data)
-• Copie récursive
-• Éviter le partage d'objets imbriqués
-
-Exemple : import copy ; copy.deepcopy([1, 2, 3]) retourne [1, 2, 3]. Pour structures imbriquées, deepcopy copie aussi tous les objets imbriqués.`,
-  477: `L'assignation crée une référence, pas une copie. a = [1, 2] ; b = a ; b.append(3) modifie aussi a car a et b pointent vers le même objet en mémoire. Aucune copie n'est créée - les deux variables référencent le même objet liste. C'est un comportement fondamental de Python : les variables stockent des références aux objets.
-
-Assignation = référence :
-• a = [1, 2] ; b = a → b référence le même objet que a
-• Pas de copie créée
-• Modifications via b affectent a
-• a et b pointent vers le même objet en mémoire
-• Référence partagée
-
-Comment ça fonctionne :
-• a = [1, 2] crée une liste, a y fait référence
-• b = a fait que b référence le même objet que a
-• b.append(3) modifie l'objet partagé
-• a et b voient tous deux [1, 2, 3]
-
-Exemple :
-a = [1, 2]
-b = a
-b.append(3)         # b = [1, 2, 3]
-a                   # [1, 2, 3] (modifiée aussi !)
-
-Usages courants :
-• Comprendre les références : pas de copie implicite
-• Éviter les effets de bord : utiliser copy() si nécessaire
-• Références d'objets
-• Modifications partagées
-
-Exemple : a = [1, 2] ; b = a ; b.append(3) modifie aussi a car a et b pointent vers le même objet - l'assignation crée une référence, pas une copie.`,
-  478: `La méthode copy() crée une liste indépendante. a = [1, 2] ; b = a.copy() ; b.append(3) ne modifie pas a. b est un nouvel objet liste, a reste [1, 2]. copy() crée une copie superficielle - un nouvel objet liste avec les mêmes éléments, de sorte que les modifications de b n'affectent pas a. Contrairement à l'assignation (b = a), copy() crée une vraie copie.
-
-copy() crée une liste indépendante :
-• a.copy() crée un nouvel objet liste
-• b et a sont des listes distinctes
-• b.append(3) modifie uniquement b
-• a reste [1, 2]
-• Indépendance totale pour listes plates
-
-Comment ça fonctionne :
-• a = [1, 2] crée la liste originale
-• b = a.copy() crée une nouvelle liste [1, 2]
-• b.append(3) ajoute à b uniquement : b = [1, 2, 3]
-• a n'est pas affectée : a = [1, 2]
-
-Exemple :
-a = [1, 2]
-b = a.copy()
-b.append(3)         # b = [1, 2, 3]
-a                   # [1, 2] (inchangée)
-
-Usages courants :
-• Créer des listes indépendantes : b = a.copy()
-• Modifier sans affecter l'originale
-• Copie pour modification
-• Éviter les effets de bord
-
-Exemple : a = [1, 2] ; b = a.copy() ; b.append(3) ne modifie pas a. b est un nouvel objet, a reste [1, 2].`,
-  479: `Une copie superficielle partage les objets imbriqués. a = [[1], [2]] ; b = a.copy() ; b[0].append(3) modifie aussi a car b[0] et a[0] pointent vers la même liste interne [1]. La copie superficielle crée une nouvelle liste externe, mais les éléments (les listes imbriquées) sont des références aux mêmes objets - pas de copie des objets imbriqués.
-
-Copie superficielle - partage des imbriqués :
-• a.copy() crée une nouvelle liste externe
-• Mais a[0] et b[0] référencent le même objet [1]
-• b[0].append(3) modifie l'objet partagé
-• a[0] voit aussi la modification : a = [[1, 3], [2]]
-• Objets imbriqués partagés
-
-Comment ça fonctionne :
-• a = [[1], [2]] : liste avec deux sous-listes
-• b = a.copy() : nouvelle liste externe, mais b[0] = a[0] (même objet)
-• b[0].append(3) : modifie la liste [1] partagée
-• a[0] et b[0] pointent vers [1, 3]
-
-Exemple :
-a = [[1], [2]]
-b = a.copy()
-b[0].append(3)       # b = [[1, 3], [2]]
-a                   # [[1, 3], [2]] (modifiée aussi !)
-
-Usages courants :
-• Comprendre la copie superficielle
-• Pour listes imbriquées : envisager deepcopy
-• Piège des copies superficielles
-• Partage d'objets imbriqués
-
-Exemple : a = [[1],[2]] ; b = a.copy() ; b[0].append(3) modifie aussi a car b[0] et a[0] pointent vers la même liste interne.`,
-  480: `Une copie profonde crée des objets imbriqués indépendants. a = [[1], [2]] ; b = copy.deepcopy(a) ; b[0].append(3) ne modifie pas a. copy.deepcopy() copie récursivement toute la structure - la liste externe et toutes les listes imbriquées sont de nouveaux objets. Modifications dans la copie n'affectent jamais l'originale.
-
-Copie profonde - indépendance des imbriqués :
-• copy.deepcopy(a) crée une structure totalement nouvelle
-• b[0] est une nouvelle liste, pas une référence à a[0]
-• b[0].append(3) modifie uniquement b[0]
-• a reste [[1], [2]] inchangée
-• Indépendance à tous les niveaux
-
-Comment ça fonctionne :
-• a = [[1], [2]] : liste avec deux sous-listes
-• b = copy.deepcopy(a) : nouvelles listes à tous les niveaux
-• b[0] est une copie de [1], pas la même référence
-• b[0].append(3) : b[0] = [1, 3], a[0] = [1] inchangé
-
-Exemple :
-import copy
-a = [[1], [2]]
-b = copy.deepcopy(a)
-b[0].append(3)       # b = [[1, 3], [2]]
-a                   # [[1], [2]] (inchangée)
-
-Usages courants :
-• Structures imbriquées à modifier indépendamment
-• Indépendance totale : deep = copy.deepcopy(nested)
-• Éviter le partage d'objets imbriqués
-• Copie récursive complète
-
-Exemple : b = copy.deepcopy(a) ; b[0].append(3) ne modifie pas a. a = [[1], [2]] reste inchangée car la copie profonde crée des objets imbriqués indépendants.`,
-  481: `L'unpacking de liste assigne les éléments d'une liste aux variables en une seule instruction. a, b, c = [1, 2, 3] assigne 1 à a, 2 à b et 3 à c car Python déplie les éléments de la liste et les assigne aux variables dans l'ordre. Le nombre de variables doit correspondre au nombre d'éléments dans la liste (ou utiliser * pour collecter les éléments restants). L'unpacking fonctionne avec tout type de séquence (listes, tuples, chaînes).
-
-Unpacking de liste :
-• a, b, c = [1, 2, 3] assigne : a=1, b=2, c=3
-• Déplie les éléments de la liste vers les variables
-• Les variables sont assignées dans l'ordre
-• Le nombre de variables doit correspondre aux éléments (ou utiliser *)
-• Fonctionne avec toute séquence
-
-Comment ça fonctionne :
-• [1, 2, 3] est la liste
-• a, b, c sont les variables
-• Python déplie les éléments : 1, 2, 3
-• Assigne dans l'ordre : a=1, b=2, c=3
-• Les trois variables sont assignées
-
-Exemple :
-a, b, c = [1, 2, 3]    # a=1, b=2, c=3
-x, y = ['a', 'b']      # x='a', y='b'
-a, b, c = (1, 2, 3)    # a=1, b=2, c=3 (tuples aussi)
-
-Usages courants :
-• Assignation multiple : a, b, c = items
-• Unpacking de séquences : x, y = point
-• Assignation propre de variables
-• Unpacking de séquences
-
-Exemple : a, b, c = [1, 2, 3] assigne 1 à a, 2 à b et 3 à c car Python déplie les éléments de la liste et les assigne aux variables dans l'ordre.`,
-  482: `L'opérateur * dans l'unpacking collecte les éléments restants dans une liste. a, *b = [1, 2, 3, 4] assigne 1 à a et [2, 3, 4] à b car *b collecte tous les éléments restants (2, 3, 4) dans une liste et les assigne à b. L'opérateur * doit apparaître sur exactement une variable et collecte tous les éléments supplémentaires. S'il n'y a pas d'éléments restants, * collecte une liste vide.
-
-Unpacking avec * :
-• a, *b = [1, 2, 3, 4] assigne : a=1, b=[2, 3, 4]
-• *b collecte les éléments restants dans une liste
-• Le premier élément va à a
-• Les éléments restants vont à b sous forme de liste
-• * doit apparaître sur exactement une variable
-
-Comment ça fonctionne :
-• [1, 2, 3, 4] est la liste
-• a, *b sont les variables
-• Python déplie : 1 vers a, [2, 3, 4] restant vers b
-• * collecte les éléments supplémentaires : [2, 3, 4]
-• Assignation : a=1, b=[2, 3, 4]
-
-Exemple :
-a, *b = [1, 2, 3, 4]  # a=1, b=[2, 3, 4]
-a, *b = [1, 2]        # a=1, b=[2]
-a, *b = [1]           # a=1, b=[]
-
-Usages courants :
-• Collecter le reste : first, *rest = items
-• Unpacking à longueur variable : head, *tail = data
-• Unpacking flexible
-• Éléments restants
-
-Exemple : a, *b = [1, 2, 3, 4] assigne 1 à a et [2, 3, 4] à b car *b collecte tous les éléments restants dans une liste.`,
-  483: `L'opérateur * au début collecte tous les éléments sauf le dernier dans une liste. *a, b = [1, 2, 3, 4] assigne [1, 2, 3] à a et 4 à b car *a collecte tous les éléments sauf le dernier (1, 2, 3) dans une liste, et b obtient le dernier élément (4). Utile pour séparer tout sauf le dernier élément du reste.
-
-* au début - tout sauf le dernier :
-• *a, b = [1, 2, 3, 4] assigne : a=[1, 2, 3], b=4
-• *a collecte tout sauf le dernier dans une liste
-• b obtient le dernier élément
-• Utile pour les motifs "tout sauf le dernier"
-• * doit apparaître sur exactement une variable
-
-Comment ça fonctionne :
-• [1, 2, 3, 4] est la liste
-• *a, b sont les variables
-• Python déplie : tout sauf le dernier [1, 2, 3] vers a, dernier 4 vers b
-• * collecte les éléments initiaux : [1, 2, 3]
-• Assignation : a=[1, 2, 3], b=4
-
-Exemple :
-*a, b = [1, 2, 3, 4]  # a=[1, 2, 3], b=4
-*a, b = [1, 2]        # a=[1], b=2
-*a, b = [1]           # a=[], b=1
-
-Usages courants :
-• Tout sauf le dernier : *rest, last = items
-• Séparer le dernier : *prefix, suffix = data
-• Unpacking flexible
-• Séparation du dernier élément
-
-Exemple : *a, b = [1, 2, 3, 4] assigne [1, 2, 3] à a et 4 à b car *a collecte tous les éléments sauf le dernier dans une liste, et b obtient le dernier élément.`,
-  484: `L'opérateur * obtient une liste vide s'il n'y a pas d'éléments restants à collecter. a, b, *c = [1, 2] assigne 1 à a, 2 à b et [] à c car il n'y a pas d'éléments restants après l'assignation à a et b, donc *c collecte une liste vide. Comportement cohérent - * crée toujours une liste, même vide, plutôt que d'assigner None.
-
-* obtient une liste vide si aucun restant :
-• a, b, *c = [1, 2] assigne : a=1, b=2, c=[]
-• Tous les éléments assignés à a et b
-• Aucun élément restant pour *c
-• *c collecte une liste vide (pas None)
-• * crée toujours un type liste
-
-Comment ça fonctionne :
-• [1, 2] est la liste
-• a, b, *c sont les variables
-• Python déplie : 1 vers a, 2 vers b
-• Aucun élément restant
-• *c collecte une liste vide : []
-
-Exemple :
-a, b, *c = [1, 2]     # a=1, b=2, c=[]
-a, *b = [1]           # a=1, b=[]
-*a, b, c = [1, 2]     # a=[], b=1, c=2
-
-Usages courants :
-• Unpacking sans danger : first, second, *rest = items (rest peut être vide)
-• Unpacking variable : *prefix, suffix = data
-• Unpacking flexible
-• Éléments restants optionnels
-
-Exemple : a, b, *c = [1, 2] assigne 1 à a, 2 à b et [] à c car tous les éléments sont assignés à a et b, donc *c collecte une liste vide (pas None).`,
-  485: `L'unpacking dans un littéral de liste utilise l'opérateur * pour déplier les itérables et les combiner en une seule liste. [*[1, 2], *[3, 4]] retourne [1, 2, 3, 4] car *[1, 2] déplie les éléments 1 et 2, et *[3, 4] déplie les éléments 3 et 4, et ils sont combinés en une seule liste. Équivalent à [1, 2] + [3, 4], mais utilise la syntaxe d'unpacking.
-
-Unpacking dans littéral de liste :
-• [*[1, 2], *[3, 4]] = [1, 2, 3, 4]
-• * déplie l'itérable en éléments individuels
-• Les éléments sont combinés en une seule liste
-• Équivalent à la concaténation
-• Fonctionne avec tout itérable
-
-Comment ça fonctionne :
-• [*[1, 2], *[3, 4]] déplie les deux listes
-• *[1, 2] s'étend en 1, 2
-• *[3, 4] s'étend en 3, 4
-• Combinés en liste : [1, 2, 3, 4]
-• Retourne une nouvelle liste : [1, 2, 3, 4]
-
-Exemple :
-[*[1, 2], *[3, 4]]    # [1, 2, 3, 4]
-[*[1, 2], 5]          # [1, 2, 5]
-[*range(3), *range(3)] # [0, 1, 2, 0, 1, 2]
-
-Usages courants :
-• Combiner des listes : combined = [*list1, *list2]
-• Fusionner des itérables : result = [*items1, *items2]
-• Combinaison de listes
-• Fusion d'itérables
-
-Exemple : [*[1, 2], *[3, 4]] retourne [1, 2, 3, 4] car l'opérateur * déplie les deux listes en éléments individuels, qui sont ensuite combinés en une seule liste.`,
-  486: `Les deux [1, 2] + [3] et [*[1, 2], 3] créent la même liste [1, 2, 3], mais avec une syntaxe différente. [1, 2] + [3] utilise l'opérateur + pour concaténer les listes, tandis que [*[1, 2], 3] utilise l'unpacking dans un littéral de liste pour déplier [1, 2] en éléments et les combiner avec 3. Les deux produisent le même résultat - une nouvelle liste contenant [1, 2, 3]. Le choix entre les deux est une question de style ou de contexte.
-
-+ vs unpacking :
-• [1, 2] + [3] = [1, 2, 3] (concaténation)
-• [*[1, 2], 3] = [1, 2, 3] (unpacking)
-• Les deux créent la même liste
-• Syntaxe différente, même résultat
-• Les deux créent une nouvelle liste
-
-Comment ça fonctionne :
-• [1, 2] + [3] : l'opérateur + concatène les listes → [1, 2, 3]
-• [*[1, 2], 3] : * déplie [1, 2] en 1, 2, combine avec 3 → [1, 2, 3]
-• Les deux produisent le même résultat : [1, 2, 3]
-• Les deux créent un nouvel objet liste
-• Approches syntaxiques différentes
-
-Exemple :
-[1, 2] + [3]          # [1, 2, 3] (concaténation)
-[*[1, 2], 3]          # [1, 2, 3] (unpacking)
-[1, 2] + [3] == [*[1, 2], 3] # True (même résultat)
-
-Usages courants :
-• Combiner des listes : result = list1 + list2 ou [*list1, *list2]
-• Créer des listes : combined = [*items, new_item]
-• Création de listes
-• Syntaxe flexible
-
-Exemple : Les deux [1, 2] + [3] et [*[1, 2], 3] créent [1, 2, 3] car + concatène les listes tandis que l'unpacking déplie les itérables - les deux produisent le même résultat avec une syntaxe différente.`,
-  487: `La fonction max() trouve et retourne l'élément maximum d'un itérable. max([1, 2, 3]) retourne 3 car max() compare tous les éléments de la liste et retourne la plus grande valeur. max() fonctionne avec tout itérable contenant des éléments comparables (nombres, chaînes, etc.) et retourne l'élément avec la valeur maximale selon les règles de comparaison de Python.
-
-Fonction max() :
-• max([1, 2, 3]) = 3 (retourne le maximum)
-• max() trouve le plus grand élément
-• Compare tous les éléments
-• Retourne la valeur maximale
-• Fonctionne avec tout itérable
-
-Comment ça fonctionne :
-• max() appelé avec [1, 2, 3]
-• Compare les éléments : 1, 2, 3
-• Trouve le maximum : 3
-• Retourne le maximum : 3
-• Lève ValueError si itérable vide
-
-Exemple :
-max([1, 2, 3])        # 3 (maximum)
-max([5, 1, 9])        # 9 (maximum)
-max(['a', 'b', 'c'])  # 'c' (lexicographiquement le plus grand)
-max([])               # ValueError (vide)
-
-Usages courants :
-• Trouver le maximum : largest = max(items)
-• Obtenir la valeur max : max_val = max(data)
-• Recherche du maximum
-• Opérations de comparaison
-
-Exemple : max([1, 2, 3]) retourne 3 car max() compare tous les éléments de la liste (1, 2, 3) et retourne la plus grande valeur, qui est 3.`,
-  488: `La fonction min() trouve et retourne l'élément minimum d'un itérable. min([1, 2, 3]) retourne 1 car min() compare tous les éléments de la liste et retourne la plus petite valeur. min() fonctionne avec tout itérable contenant des éléments comparables (nombres, chaînes, etc.) et retourne l'élément avec la valeur minimale selon les règles de comparaison de Python.
-
-Fonction min() :
-• min([1, 2, 3]) = 1 (retourne le minimum)
-• min() trouve le plus petit élément
-• Compare tous les éléments
-• Retourne la valeur minimale
-• Fonctionne avec tout itérable
-
-Comment ça fonctionne :
-• min() appelé avec [1, 2, 3]
-• Compare les éléments : 1, 2, 3
-• Trouve le minimum : 1
-• Retourne le minimum : 1
-• Lève ValueError si itérable vide
-
-Exemple :
-min([1, 2, 3])        # 1 (minimum)
-min([5, 1, 9])        # 1 (minimum)
-min(['a', 'b', 'c'])  # 'a' (lexicographiquement le plus petit)
-min([])               # ValueError (vide)
-
-Usages courants :
-• Trouver le minimum : smallest = min(items)
-• Obtenir la valeur min : min_val = min(data)
-• Recherche du minimum
-• Opérations de comparaison
-
-Exemple : min([1, 2, 3]) retourne 1 car min() compare tous les éléments de la liste (1, 2, 3) et retourne la plus petite valeur, qui est 1.`,
-  489: `La fonction sum() additionne tous les éléments d'un itérable et retourne le total. sum([1, 2, 3]) retourne 6 car sum() itère à travers la liste et additionne toutes les valeurs : 1 + 2 + 3 = 6. sum() fonctionne avec les itérables contenant des nombres (entiers, flottants) et retourne la somme de tous les éléments. Si l'itérable est vide, sum() retourne 0 (l'identité additive).
-
-Fonction sum() :
-• sum([1, 2, 3]) = 6 (retourne la somme)
-• sum() additionne tous les éléments
-• Itère à travers l'itérable
-• Retourne le total
-• Retourne 0 si itérable vide
-
-Comment ça fonctionne :
-• sum() appelé avec [1, 2, 3]
-• Additionne : 1 + 2 + 3 = 6
-• Retourne 6
-• Retourne 0 si liste vide
-
-Exemple :
-sum([1, 2, 3])        # 6
-sum([1, 2, 3, 4])    # 10
-sum([])               # 0 (vide)
-
-Usages courants :
-• Additionner des listes : total = sum(numbers)
-• Somme de séquence : result = sum(data)
-• Agrégation
-• Calcul de total
-
-Exemple : sum([1, 2, 3]) retourne 6 car sum() additionne tous les éléments (1 + 2 + 3 = 6).`,
-  490: `La fonction sum() peut prendre un deuxième argument (start) pour commencer l'addition. sum([1, 2, 3], 10) retourne 16 car sum() commence avec 10 et additionne les éléments : 10 + 1 + 2 + 3 = 16. Par défaut start=0, donc sum([1, 2, 3]) équivaut à sum([1, 2, 3], 0). Le paramètre start est utile pour accumuler à partir d'une valeur initiale.
-
-sum() avec start :
-• sum([1, 2, 3], 10) = 16
-• start=10 : 10 + 1 + 2 + 3 = 16
-• Par défaut start=0
-• start est la valeur initiale
-• Retourne start + somme des éléments
-
-Comment ça fonctionne :
-• sum([1, 2, 3], 10) : commence à 10
-• Additionne : 10 + 1 = 11, 11 + 2 = 13, 13 + 3 = 16
-• Retourne 16
-
-Exemple :
-sum([1, 2, 3], 10)    # 16 (10 + 1 + 2 + 3)
-sum([1, 2], 100)      # 103 (100 + 1 + 2)
-sum([], 5)            # 5 (start si vide)
-
-Usages courants :
-• Accumulation avec valeur initiale : total = sum(items, start)
-• Somme avec décalage
-• Agrégation personnalisée
-• Valeur initiale
-
-Exemple : sum([1, 2, 3], 10) retourne 16 car 10 + 1 + 2 + 3 = 16.`,
-  491: `La fonction any() retourne True si au moins un élément de l'itérable est truthy. any([False, False, True]) retourne True car True est truthy. any() parcourt les éléments et retourne True dès qu'un élément truthy est trouvé. any() retourne False si tous les éléments sont falsy, et retourne False pour un itérable vide.
-
-Fonction any() :
-• any([False, False, True]) = True
-• any() retourne True si au moins un élément truthy
-• Retourne False si tous falsy
-• any([]) = False (itérable vide)
-• Court-circuit : s'arrête au premier truthy
-
-Comment ça fonctionne :
-• any() appelé avec [False, False, True]
-• Évalue : False (falsy), False (falsy), True (truthy)
-• Trouve True, retourne True immédiatement
-• Court-circuit : ne vérifie pas le reste si truthy trouvé
-
-Exemple :
-any([False, False, True])  # True
-any([False, False])       # False
-any([])                   # False (vide)
-
-Usages courants :
-• Vérifier si au moins un vrai : if any(conditions):
-• Validation : if any(x > 0 for x in items):
-• Test d'existence
-• Conditions multiples
-
-Exemple : any([False, False, True]) retourne True car True est truthy. any([]) retourne False.`,
-  492: `L'opérateur * répète une liste un nombre de fois donné. [1, 2, 3] * 2 retourne [1, 2, 3, 1, 2, 3] car * répète toute la liste 2 fois, concaténant les répétitions. Crée un nouvel objet liste. La liste d'origine n'est pas modifiée. Le multiplicateur doit être un entier positif (ou 0 pour une liste vide).
-
-Répétition de liste avec * :
-• [1, 2, 3] * 2 = [1, 2, 3, 1, 2, 3]
-• * répète toute la liste N fois
-• Crée un nouvel objet liste
-• Liste d'origine inchangée
-• Éléments répétés en séquence
-
-Comment ça fonctionne :
-• [1, 2, 3] est la liste
-• * 2 signifie répéter 2 fois
-• Répète : [1, 2, 3], [1, 2, 3]
-• Concatène les répétitions
-• Retourne [1, 2, 3, 1, 2, 3]
-
-Exemple :
-[1, 2, 3] * 2        # [1, 2, 3, 1, 2, 3]
-['a'] * 3             # ['a', 'a', 'a']
-
-Usages courants :
-• Répéter des motifs : pattern = items * n
-• Créer des doublons : repeated = list * n
-• Multiplication de liste
-• Génération de motif
-
-Exemple : [1, 2, 3] * 2 retourne [1, 2, 3, 1, 2, 3] car * répète toute la liste 2 fois.`,
-  493: `L'opérateur == compare les valeurs des éléments, pas leurs types. [1, 2] == [1.0, 2.0] retourne True car 1 == 1.0 et 2 == 2.0 en Python - les entiers et les flottants avec la même valeur numérique sont considérés égaux. Même valeur numérique malgré int vs float. La comparaison est basée sur l'égalité des valeurs, pas l'identité des types.
-
-== compare les valeurs :
-• [1, 2] == [1.0, 2.0] = True
-• == compare les valeurs des éléments
-• 1 == 1.0 (valeur égale)
-• 2 == 2.0 (valeur égale)
-• Les types peuvent différer si les valeurs sont égales
-
-Comment ça fonctionne :
-• Compare élément par élément : 1 == 1.0 → True, 2 == 2.0 → True
-• Tous les éléments correspondent
-• Retourne True
-
-Exemple :
-[1, 2] == [1.0, 2.0]  # True
-[1, 2] == [1, 2.0]   # True
-
-Usages courants :
-• Comparaison de valeur : if list1 == list2:
-• Égalité numérique
-• Comparaison tolérante au type
-• Vérification de contenu
-
-Exemple : [1, 2] == [1.0, 2.0] retourne True car == compare les valeurs des éléments (1 == 1.0 et 2 == 2.0), pas les types.`,
-  494: `L'opérateur == exige la même longueur et les mêmes éléments aux mêmes positions. [1, 2] == [1, 2, 3] retourne False car les longueurs diffèrent (2 vs 3). Même si les deux premiers éléments correspondent, la liste [1, 2, 3] a un élément supplémentaire. Un même début est insuffisant - les listes doivent avoir exactement les mêmes éléments dans le même ordre.
-
-== exige même longueur :
-• [1, 2] == [1, 2, 3] = False
-• Longueurs différentes : 2 vs 3
-• Même début insuffisant
-• Doit avoir exactement les mêmes éléments
-• Même ordre requis
-
-Comment ça fonctionne :
-• [1, 2] a 2 éléments
-• [1, 2, 3] a 3 éléments
-• Longueurs différentes → False
-• Pas besoin de comparer davantage
-
-Exemple :
-[1, 2] == [1, 2, 3]  # False
-[1, 2, 3] == [1, 2]  # False
-
-Usages courants :
-• Comparaison stricte : if list1 == list2:
-• Vérification de contenu exact
-• Égalité de séquences
-• Validation de structure
-
-Exemple : [1, 2] == [1, 2, 3] retourne False car les longueurs diffèrent (2 vs 3). Un même début est insuffisant.`,
-  495: `L'opérateur != vérifie si les listes sont différentes. [1, 2] != [1, 3] retourne True car le deuxième élément diffère (2 vs 3). != est la négation de == - retourne True si les listes ne sont pas égales (éléments ou ordre différents), False si elles sont égales. Compare élément par élément et retourne True dès qu'une différence est trouvée.
-
-Opérateur != :
-• [1, 2] != [1, 3] = True
-• != vérifie si les listes diffèrent
-• Le deuxième élément diffère : 2 vs 3
-• Retourne True (listes différentes)
-• Négation de ==
-
-Comment ça fonctionne :
-• Compare élément par élément : 1 == 1, 2 != 3
-• Trouve une différence au deuxième élément
-• Retourne True
-
-Exemple :
-[1, 2] != [1, 3]     # True
-[1, 2] != [1, 2]    # False
-
-Usages courants :
-• Vérifier la différence : if list1 != list2:
-• Inégalité
-• Comparaison négative
-• Validation de non-égalité
-
-Exemple : [1, 2] != [1, 3] retourne True car le deuxième élément diffère (2 vs 3).`,
-  496: `Lors de la comparaison de listes de longueurs différentes, une liste plus courte est inférieure à une liste plus longue si elle en est un préfixe. [1, 2] < [1, 2, 3] retourne True car [1, 2] est un préfixe de [1, 2, 3] - tous les éléments de [1, 2] correspondent aux éléments correspondants de [1, 2, 3], et une liste plus courte qui est un préfixe est considérée comme inférieure. Ordre lexicographique cohérent.
-
-Liste plus courte < plus longue (préfixe) :
-• [1, 2] < [1, 2, 3] = True
-• [1, 2] est un préfixe de [1, 2, 3]
-• Tous les éléments correspondent : 1 == 1, 2 == 2
-• Liste plus courte < plus longue quand préfixe
-• Ordre lexicographique
-
-Comment ça fonctionne :
-• Compare élément par élément : 1 == 1, 2 == 2
-• [1, 2] s'arrête, [1, 2, 3] continue
-• Préfixe plus court considéré inférieur
-• Retourne True
-
-Exemple :
-[1, 2] < [1, 2, 3]  # True (préfixe)
-[1, 2] < [1, 2]     # False (égal)
-
-Usages courants :
-• Comparaison de préfixe : if prefix < full_list:
-• Tri lexicographique
-• Ordonnancement de séquences
-• Comparaison de structure
-
-Exemple : [1, 2] < [1, 2, 3] retourne True car [1, 2] est un préfixe de [1, 2, 3] (ordre lexicographique).`,
-  497: `Lors de la comparaison de listes de longueurs différentes, une liste plus longue est supérieure à une liste plus courte si la plus courte est un préfixe. [1, 2, 3] > [1, 2] retourne True car [1, 2] est un préfixe de [1, 2, 3] - tous les éléments de [1, 2] correspondent, et la liste plus longue est considérée comme supérieure. C'est l'inverse de [1, 2] < [1, 2, 3]. Ordre lexicographique cohérent.
-
-Liste plus longue > plus courte (préfixe) :
-• [1, 2, 3] > [1, 2] = True
-• [1, 2] est un préfixe de [1, 2, 3]
-• Liste plus longue > plus courte quand préfixe
-• Inverse de < pour le même cas
-• Ordre lexicographique
-
-Comment ça fonctionne :
-• Compare élément par élément : 1 == 1, 2 == 2
-• [1, 2] s'arrête, [1, 2, 3] a un élément de plus
-• Liste plus longue considérée supérieure
-• Retourne True
-
-Exemple :
-[1, 2, 3] > [1, 2]  # True (préfixe)
-[1, 2, 3] > [1, 2, 3] # False (égal)
-
-Usages courants :
-• Comparaison de préfixe : if full_list > prefix:
-• Tri lexicographique
-• Ordonnancement de séquences
-• Comparaison de structure
-
-Exemple : [1, 2, 3] > [1, 2] retourne True car la liste plus longue est supérieure quand la plus courte est un préfixe (ordre lexicographique).`,
-  498: `La précédence des opérateurs détermine l'ordre des opérations. [1, 2] + [3] * 2 retourne [1, 2, 3, 3] car * a une précédence supérieure à +, donc [3] * 2 est évalué en premier, créant [3, 3], puis [1, 2] + [3, 3] les concatène pour créer [1, 2, 3, 3]. L'opérateur * lie plus étroitement que +, donc la multiplication s'effectue avant l'addition.
-
-Précédence des opérateurs :
-• [1, 2] + [3] * 2 = [1, 2, 3, 3]
-• * a une précédence supérieure à +
-• [3] * 2 évalué en premier : [3, 3]
-• Puis [1, 2] + [3, 3] : [1, 2, 3, 3]
-• Multiplication avant addition
-
-Comment ça fonctionne :
-• Expression : [1, 2] + [3] * 2
-• Précédence : * avant +
-• Étape 1 : [3] * 2 = [3, 3] (multiplication en premier)
-• Étape 2 : [1, 2] + [3, 3] = [1, 2, 3, 3] (addition en second)
-• Retourne : [1, 2, 3, 3]
-
-Exemple :
-[1, 2] + [3] * 2     # [1, 2, 3, 3] (* en premier)
-([1, 2] + [3]) * 2   # [1, 2, 3, 1, 2, 3] (parenthèses changent l'ordre)
-[3] * 2 + [1, 2]     # [3, 3, 1, 2] (* en premier)
-
-Usages courants :
-• Comprendre la précédence : result = items1 + items2 * n
-• Ordre des opérateurs : combined = list1 + list2 * repeat
-• Prise de conscience de la précédence
-• Évaluation des expressions
-
-Exemple : [1, 2] + [3] * 2 retourne [1, 2, 3, 3] car * a une précédence supérieure à +, donc [3] * 2 est évalué en premier (créant [3, 3]), puis [1, 2] + [3, 3] les concatène.`,
-  499: `Les parenthèses écrasent la précédence des opérateurs et changent l'ordre des opérations. ([1, 2] + [3]) * 2 retourne [1, 2, 3, 1, 2, 3] car les parenthèses forcent l'opération + en premier : ([1, 2] + [3]) crée [1, 2, 3], puis * 2 répète cette liste deux fois, créant [1, 2, 3, 1, 2, 3]. Sans parenthèses, * s'effectuerait en premier à cause de la précédence.
-
-Les parenthèses changent l'ordre :
-• ([1, 2] + [3]) * 2 = [1, 2, 3, 1, 2, 3]
-• Les parenthèses écrasent la précédence
-• [1, 2] + [3] évalué en premier : [1, 2, 3]
-• Puis [1, 2, 3] * 2 : [1, 2, 3, 1, 2, 3]
-• Addition avant multiplication
-
-Comment ça fonctionne :
-• Expression : ([1, 2] + [3]) * 2
-• Parenthèses : forcent + en premier
-• Étape 1 : ([1, 2] + [3]) = [1, 2, 3] (addition en premier)
-• Étape 2 : [1, 2, 3] * 2 = [1, 2, 3, 1, 2, 3] (multiplication en second)
-• Retourne : [1, 2, 3, 1, 2, 3]
-
-Exemple :
-([1, 2] + [3]) * 2   # [1, 2, 3, 1, 2, 3] (+ en premier)
-[1, 2] + [3] * 2     # [1, 2, 3, 3] (* en premier, pas de parenthèses)
-([1, 2] + [3, 4]) * 2 # [1, 2, 3, 4, 1, 2, 3, 4]
-
-Usages courants :
-• Contrôler l'ordre : result = (list1 + list2) * n
-• Groupement explicite : combined = (items1 + items2) * repeat
-• Contrôle de la précédence
-• Groupement d'expressions
-
-Exemple : ([1, 2] + [3]) * 2 retourne [1, 2, 3, 1, 2, 3] car les parenthèses forcent l'opération + en premier (créant [1, 2, 3]), puis * 2 répète cette liste deux fois.`,
-  500: `La fonction len() retourne le nombre total d'éléments dans une liste. len([1, 2] + [3, 4]) retourne 4 car + concatène les deux listes en [1, 2, 3, 4], qui a 4 éléments. La longueur d'une liste concaténée est la somme des longueurs des listes originales. len() compte tous les éléments dans la liste résultante, quelle que soit la façon dont la liste a été créée.
-
-len() de liste concaténée :
-• len([1, 2] + [3, 4]) = 4
-• + concatène : [1, 2] + [3, 4] = [1, 2, 3, 4]
-• len() compte tous les éléments : 4
-• Longueur = somme des longueurs originales : 2 + 2 = 4
-• Retourne le décompte total
-
-Comment ça fonctionne :
-• Expression : [1, 2] + [3, 4]
-• Concaténation : [1, 2, 3, 4]
-• len() compte les éléments : 1, 2, 3, 4
-• Décompte total : 4
-• Retourne : 4
-
-Exemple :
-len([1, 2] + [3, 4]) # 4 (2 + 2 = 4)
-len([1] + [2, 3])    # 3 (1 + 2 = 3)
-len([1, 2, 3] + [])  # 3 (3 + 0 = 3)
-
-Usages courants :
-• Obtenir la longueur totale : total = len(list1 + list2)
-• Calculer la taille combinée : count = len(items1 + items2)
-• Décompte total
-• Longueur combinée
-
-Exemple : len([1, 2] + [3, 4]) retourne 4 car + concatène les listes en [1, 2, 3, 4], qui a 4 éléments, et len() compte tous les éléments de la liste concaténée.`,
-  501: `Les accolades {} avec des paires clé-valeur créent un dictionnaire en Python. {'a': 1, 'b': 2} est un dictionnaire contenant deux paires clé-valeur : 'a' mappe vers 1 et 'b' mappe vers 2. Les dictionnaires sont des collections non ordonnées (en Python 3.7+ ils conservent l'ordre d'insertion) qui associent des clés à des valeurs. Les clés doivent être de types immuables (chaînes, nombres, tuples), et les valeurs peuvent être de tout type. C'est le type de mapping principal de Python.
-
-Création de dictionnaire :
-• {'a': 1, 'b': 2} = dictionnaire avec deux paires
-• Accolades {} avec paires clé:valeur
-• Les clés mappent vers les valeurs : 'a' → 1, 'b' → 2
-• Les clés doivent être immuables
-• Les valeurs peuvent être de tout type
-
-Comment ça fonctionne :
-• Python reconnaît {} avec paires clé:valeur comme dictionnaire
-• 'a': 1 crée le mapping de 'a' vers 1
-• 'b': 2 crée le mapping de 'b' vers 2
-• Crée l'objet dictionnaire en mémoire
-• Retourne le type dictionnaire
-
-Exemple :
-{'a': 1, 'b': 2}         # Dictionnaire de chaînes vers entiers
-{1: 'a', 2: 'b'}         # Dictionnaire d'entiers vers chaînes
-{'name': 'Alice', 'age': 30}  # Types de valeurs mixtes
-{}                       # Dictionnaire vide
-
-Usages courants :
-• Stockage clé-valeur : data = {'key': value}
-• Mapping de relations : mapping = {k: v for k, v in pairs}
-• Configuration : config = {'setting': value}
-• Structures de données
-
-Exemple : {'a': 1, 'b': 2} crée un objet dictionnaire contenant deux paires clé-valeur, où 'a' mappe vers 1 et 'b' mappe vers 2.`,
-  502: `Les accolades vides {} créent un dictionnaire vide en Python. {} est un littéral de dictionnaire qui ne contient aucune paire clé-valeur. Les dictionnaires vides sont falsy en contexte booléen (ils s'évaluent à False), mais ce sont toujours des objets dictionnaire valides. Les dictionnaires vides sont utiles comme placeholders ou points de départ pour construire des dictionnaires dynamiquement. Note : {} crée un dictionnaire vide, pas un ensemble vide - les ensembles nécessitent set() ou au moins un élément.
-
-Dictionnaire vide :
-• {} = dictionnaire vide (aucune paire clé-valeur)
-• Accolades sans contenu à l'intérieur
-• Objet dictionnaire valide, longueur nulle
-• Falsy en contexte booléen : bool({}) = False
-• Longueur 0 : len({}) = 0
-
-Comment ça fonctionne :
-• Python reconnaît {} comme littéral de dictionnaire vide
-• Crée un objet dictionnaire sans paires
-• Reste un type dictionnaire valide
-• Peut être utilisé immédiatement pour des opérations
-• Retourne l'objet dictionnaire vide
-
-Exemple :
-{}                   # Dictionnaire vide
-bool({})             # False (falsy)
-len({})              # 0 (longueur nulle)
-{}['key'] = 'value'  # {'key': 'value'} (peut ajouter des paires)
-
-Usages courants :
-• Initialisation : result = {}
-• Placeholders : data = {}
-• Points de départ pour construire des dictionnaires
-• Valeurs de retour pour des résultats vides
-
-Exemple : {} crée un objet dictionnaire vide, qui est un dictionnaire valide sans paires clé-valeur et de longueur 0.`,
-  503: `Appeler dict() sans arguments crée un dictionnaire vide, équivalent à {}. dict() est la fonction constructeur qui crée des dictionnaires, et lorsqu'elle est appelée sans arguments, elle crée un objet dictionnaire vide. C'est fonctionnellement identique à utiliser le littéral de dictionnaire vide {}. Le constructeur dict() peut aussi être appelé avec des arguments pour créer des dictionnaires à partir d'autres structures.
-
-dict() sans arguments :
-• dict() = {} (dictionnaire vide)
-• Fonction constructeur sans arguments
-• Crée un objet dictionnaire vide
-• Équivalent au littéral {}
-• Retourne un dictionnaire vide
-
-Comment ça fonctionne :
-• dict() appelé sans arguments
-• Crée un nouvel objet dictionnaire vide
-• Retourne le dictionnaire vide : {}
-• Même résultat que le littéral {}
-• Prêt pour les opérations
-
-Exemple :
-dict()               # {} (dictionnaire vide)
-dict() == {}         # True (équivalent)
-len(dict())          # 0 (longueur nulle)
-dict()['key'] = 'value' # {'key': 'value'} (peut ajouter des paires)
-
-Usages courants :
-• Créer des dictionnaires vides : items = dict()
-• Initialisation : data = dict()
-• Alternative au littéral {}
-• Préférence de syntaxe constructeur
-
-Exemple : dict() retourne {} car appeler le constructeur dict sans arguments crée un objet dictionnaire vide, équivalent au littéral de dictionnaire vide {}.`,
-  504: `Le constructeur dict() peut créer un dictionnaire à partir d'une liste de paires clé-valeur (tuples). dict([('a', 1), ('b', 2)]) retourne {'a': 1, 'b': 2} car dict() itère sur la liste de tuples, traitant chaque tuple comme une paire clé-valeur où le premier élément est la clé et le second est la valeur. C'est utile pour convertir des données structurées (comme des paires d'une autre source) en dictionnaire.
-
-dict() à partir d'une liste de tuples :
-• dict([('a', 1), ('b', 2)]) = {'a': 1, 'b': 2}
-• dict() crée un dictionnaire à partir d'une liste de tuples (clé, valeur)
-• Chaque tuple devient une paire clé-valeur
-• Premier élément = clé, second élément = valeur
-• Retourne l'objet dictionnaire
-
-Comment ça fonctionne :
-• dict() appelé avec [('a', 1), ('b', 2)]
-• Itère sur la liste de tuples
-• ('a', 1) devient clé 'a' → valeur 1
-• ('b', 2) devient clé 'b' → valeur 2
-• Retourne le dictionnaire : {'a': 1, 'b': 2}
-
-Exemple :
-dict([('a', 1), ('b', 2)])  # {'a': 1, 'b': 2}
-dict([(1, 'a'), (2, 'b')])  # {1: 'a', 2: 'b'}
-dict([('x', 10), ('y', 20)]) # {'x': 10, 'y': 20}
-
-Usages courants :
-• Conversion de paires : mapping = dict(pairs)
-• Création à partir de tuples : data = dict(tuple_list)
-• Conversion liste-vers-dict
-• Conversion de paires
-
-Exemple : dict([('a', 1), ('b', 2)]) retourne {'a': 1, 'b': 2} car dict() crée un dictionnaire à partir de la liste de tuples, traitant chaque tuple comme une paire clé-valeur.`,
-  505: `Le constructeur dict() peut créer un dictionnaire à partir d'arguments nommés. dict(a=1, b=2) retourne {'a': 1, 'b': 2} car dict() traite chaque argument nommé comme une paire clé-valeur où le nom du paramètre devient la clé (comme chaîne) et la valeur de l'argument devient la valeur. C'est une façon pratique de créer des dictionnaires quand les clés sont des identifiants Python valides (chaînes qui peuvent être des noms de variables).
-
-dict() avec arguments nommés :
-• dict(a=1, b=2) = {'a': 1, 'b': 2}
-• dict() crée un dictionnaire à partir des arguments nommés
-• Les noms des paramètres deviennent les clés (comme chaînes)
-• Les valeurs des arguments deviennent les valeurs
-• Les clés doivent être des identifiants valides
-
-Comment ça fonctionne :
-• dict() appelé avec les arguments nommés a=1, b=2
-• Le paramètre 'a' devient la clé 'a' (chaîne)
-• La valeur 1 devient la valeur 1
-• Le paramètre 'b' devient la clé 'b' (chaîne)
-• La valeur 2 devient la valeur 2
-• Retourne le dictionnaire : {'a': 1, 'b': 2}
-
-Exemple :
-dict(a=1, b=2)        # {'a': 1, 'b': 2}
-dict(x=10, y=20)      # {'x': 10, 'y': 20}
-dict(name='Alice', age=30) # {'name': 'Alice', 'age': 30}
-
-Usages courants :
-• Créer des dictionnaires : data = dict(key=value)
-• Syntaxe pratique : mapping = dict(a=1, b=2)
-• Création par mot-clé
-• Dictionnaires de paramètres nommés
-
-Exemple : dict(a=1, b=2) retourne {'a': 1, 'b': 2} car dict() crée un dictionnaire à partir des arguments nommés, où chaque nom de paramètre devient une clé chaîne et sa valeur devient la valeur correspondante.`,
-  506: `L'accès aux dictionnaires utilise les crochets avec la clé pour récupérer la valeur correspondante. {'a': 1, 'b': 2}['a'] retourne 1 car ['a'] accède à la valeur associée à la clé 'a'. La clé est spécifiée entre crochets après le dictionnaire, et Python retourne la valeur mappée à cette clé. Si la clé n'existe pas, une KeyError est levée.
-
-Accès au dictionnaire :
-• {'a': 1, 'b': 2}['a'] = 1 (retourne la valeur pour la clé)
-• Crochets [] avec la clé
-• Retourne la valeur associée à la clé
-• La clé doit exister (sinon KeyError)
-• Accès par clé, pas par index
-
-Comment ça fonctionne :
-• {'a': 1, 'b': 2} est le dictionnaire
-• ['a'] est la clé entre crochets
-• Python recherche la clé 'a' dans le dictionnaire
-• Trouve le mapping : 'a' → 1
-• Retourne la valeur : 1
-
-Exemple :
-{'a': 1, 'b': 2}['a']  # 1 (valeur pour la clé 'a')
-{'a': 1, 'b': 2}['b']  # 2 (valeur pour la clé 'b')
-{'a': 1, 'b': 2}['c']  # KeyError (la clé 'c' n'existe pas)
-
-Usages courants :
-• Obtenir des valeurs : value = dict[key]
-• Accéder aux données : data = items[key]
-• Accès par clé
-• Recherche dans le dictionnaire
-
-Exemple : {'a': 1, 'b': 2}['a'] retourne 1 car Python recherche la clé 'a' dans le dictionnaire et retourne la valeur correspondante, qui est 1.`,
-  507: `L'accès aux dictionnaires récupère la valeur associée à une clé spécifique. {'a': 1, 'b': 2}['b'] retourne 2 car ['b'] accède à la valeur associée à la clé 'b'. Python recherche la clé 'b' dans le dictionnaire, trouve le mapping 'b' → 2, et retourne la valeur 2. L'accès aux dictionnaires est basé sur les clés, pas sur les index comme les listes - vous utilisez la clé pour trouver la valeur.
-
-Accès par clé :
-• {'a': 1, 'b': 2}['b'] = 2 (retourne la valeur pour la clé)
-• Crochets [] avec la clé 'b'
-• Retourne la valeur associée à la clé 'b'
-• Recherche par clé (pas par index)
-• Retourne la valeur : 2
-
-Comment ça fonctionne :
-• {'a': 1, 'b': 2} est le dictionnaire
-• ['b'] est la clé entre crochets
-• Python recherche la clé 'b' dans le dictionnaire
-• Trouve le mapping : 'b' → 2
-• Retourne la valeur : 2
-
-Exemple :
-{'a': 1, 'b': 2}['b']  # 2 (valeur pour la clé 'b')
-{'x': 10, 'y': 20}['y'] # 20 (valeur pour la clé 'y')
-{'a': 1, 'b': 2}['c']  # KeyError (la clé n'existe pas)
-
-Usages courants :
-• Obtenir des valeurs : value = dict[key]
-• Accéder aux données : data = items[key]
-• Recherche par clé
-• Récupération depuis le dictionnaire
-
-Exemple : {'a': 1, 'b': 2}['b'] retourne 2 car Python recherche la clé 'b' dans le dictionnaire et retourne la valeur correspondante, qui est 2.`,
-  508: `Accéder à une clé inexistante dans un dictionnaire avec les crochets [] lève une KeyError. Si vous essayez d'accéder à une clé qui n'existe pas comme {'a': 1, 'b': 2}['c'], Python lève une KeyError avec un message indiquant que la clé n'a pas été trouvée. C'est différent de la méthode .get(), qui retourne None (ou une valeur par défaut si fournie) pour les clés inexistantes. KeyError indique que la clé n'existe pas dans le dictionnaire.
-
-Accès à une clé inexistante :
-• {'a': 1, 'b': 2}['c'] lève KeyError
-• La clé 'c' n'existe pas dans le dictionnaire
-• L'accès par crochets [] lève KeyError
-• Doit utiliser .get() pour un accès sûr
-• Message d'erreur : "KeyError: 'c'"
-
-Comment ça fonctionne :
-• Accès à ['c'] sur {'a': 1, 'b': 2}
-• Python recherche la clé 'c' dans le dictionnaire
-• Ne trouve pas de correspondance (la clé n'existe pas)
-• Lève KeyError
-• Ne peut pas retourner de valeur pour une clé inexistante
-
-Exemple :
-{'a': 1, 'b': 2}['c']  # KeyError: 'c'
-d = {'a': 1, 'b': 2}
-d['x']                 # KeyError: 'x'
-if 'c' in d:           # Vérifier d'abord
-    d['c']             # Accès sûr
-
-Usages courants :
-• Gestion d'erreurs : try/except pour KeyError
-• Vérifier d'abord : if key in dict: dict[key]
-• Accès sûr : value = dict.get(key)
-• Validation d'existence de clé
-
-Exemple : Accéder à une clé inexistante comme {'a': 1, 'b': 2}['c'] lève une KeyError car Python ne peut pas trouver la clé 'c' dans le dictionnaire, et l'accès par crochets exige que la clé existe.`,
-  509: `La fonction len() retourne le nombre de paires clé-valeur dans un dictionnaire. len({'a': 1, 'b': 2}) retourne 2 car le dictionnaire contient deux paires clé-valeur : 'a': 1 et 'b': 2. len() compte les paires, pas les clés ou valeurs individuellement - chaque paire clé-valeur compte comme une unité. C'est cohérent avec le fonctionnement de len() sur les autres collections - il retourne le nombre d'éléments dans la collection.
-
-len() sur dictionnaire :
-• len({'a': 1, 'b': 2}) = 2 (nombre de paires)
-• len() compte les paires clé-valeur
-• Chaque paire compte pour un
-• Retourne un décompte entier
-• Fonctionne avec tout dictionnaire
-
-Comment ça fonctionne :
-• len() appelé avec {'a': 1, 'b': 2}
-• Compte les paires clé-valeur dans le dictionnaire
-• Trouve deux paires : 'a': 1, 'b': 2
-• Retourne le décompte : 2
-• Retourne l'entier : 2
-
-Exemple :
-len({'a': 1, 'b': 2})  # 2 (deux paires)
-len({'a': 1})          # 1 (une paire)
-len({})                # 0 (dictionnaire vide)
-len({'a': 1, 'b': 2, 'c': 3}) # 3 (trois paires)
-
-Usages courants :
-• Vérifier la taille : if len(dict) > 0:
-• Obtenir le décompte : count = len(data)
-• Validation de taille
-• Comptage de paires
-
-Exemple : len({'a': 1, 'b': 2}) retourne 2 car len() compte le nombre de paires clé-valeur dans le dictionnaire, qui est 2.`,
-  510: `Un dictionnaire vide a une longueur de 0 car il ne contient aucune paire clé-valeur. len({}) retourne 0 car le dictionnaire vide {} a zéro paire. len() compte le nombre de paires clé-valeur dans un dictionnaire, et un dictionnaire vide a naturellement zéro paire. Les dictionnaires vides sont falsy en contexte booléen mais restent des objets dictionnaire valides.
-
-Longueur du dictionnaire vide :
-• len({}) = 0 (zéro paire)
-• Le dictionnaire vide ne contient aucune paire
-• La longueur est 0 par définition
-• Objet dictionnaire valide, juste vide
-• Falsy mais existe
-
-Comment ça fonctionne :
-• len() prend le dictionnaire vide {} comme argument
-• Compte les paires clé-valeur dans le dictionnaire
-• Trouve zéro paire
-• Retourne 0
-• Les dictionnaires vides retournent toujours 0
-
-Exemple :
-len({})               # 0 (dictionnaire vide)
-len(dict())           # 0 (dictionnaire vide)
-bool({})              # False (falsy mais existe)
-{}['key'] = 'value'   # {'key': 'value'} (peut ajouter des paires)
-
-Usages courants :
-• Vérifier si vide : if len(items) == 0:
-• Validation : if len(data) > 0:
-• Vérification de vide
-• Vérification de taille
-
-Exemple : len({}) retourne 0 car le dictionnaire vide contient zéro paire clé-valeur, et len() compte et retourne le nombre de paires (qui est 0 pour un dictionnaire vide).`,
-  511: `La méthode get() retourne la valeur associée à une clé, ou None si la clé n'existe pas. {'a': 1, 'b': 2}.get('a') retourne 1 car get() recherche la clé 'a' dans le dictionnaire et retourne sa valeur. Contrairement à l'accès par crochets [], get() ne lève pas d'erreur si la clé n'existe pas - elle retourne None (ou une valeur par défaut si fournie). Cela rend get() plus sûre pour accéder à des clés potentiellement absentes.
-
-Méthode get() :
-• {'a': 1, 'b': 2}.get('a') = 1 (retourne la valeur)
-• get(key) retourne la valeur pour la clé
-• Retourne None si la clé n'est pas trouvée (pas de défaut)
-• Accès sûr (pas de KeyError)
-• Fonctionne avec toute clé
-
-Comment ça fonctionne :
-• get('a') appelé sur {'a': 1, 'b': 2}
-• Recherche la clé 'a' dans le dictionnaire
-• Trouve le mapping : 'a' → 1
-• Retourne la valeur : 1
-• Pas d'erreur si la clé n'est pas trouvée
-
-Exemple :
-{'a': 1, 'b': 2}.get('a')  # 1 (valeur pour la clé)
-{'a': 1, 'b': 2}.get('c')  # None (clé non trouvée, pas d'erreur)
-{'a': 1, 'b': 2}.get('b')  # 2 (valeur pour la clé)
-
-Usages courants :
-• Accès sûr : value = dict.get(key)
-• Éviter KeyError : data = items.get(key)
-• Accès à valeur par défaut
-• Recherche dictionnaire sûre
-
-Exemple : {'a': 1, 'b': 2}.get('a') retourne 1 car get() recherche la clé 'a' dans le dictionnaire et retourne sa valeur, qui est 1.`,
-  512: `La méthode get() retourne None quand une clé n'existe pas et qu'aucune valeur par défaut n'est fournie. {'a': 1, 'b': 2}.get('c') retourne None car get() recherche la clé 'c' dans le dictionnaire, ne la trouve pas, et retourne None au lieu de lever une erreur. C'est la façon sûre d'accéder aux valeurs du dictionnaire - elle ne lève jamais de KeyError, mais retourne None pour les clés absentes (sauf si vous fournissez une valeur par défaut).
-
-get() - clé non trouvée :
-• {'a': 1, 'b': 2}.get('c') = None
-• get(key) retourne None si la clé n'est pas trouvée
-• Pas de défaut fourni
-• Pas d'erreur levée (contrairement à [])
-• Méthode d'accès sûre
-
-Comment ça fonctionne :
-• get('c') appelé sur {'a': 1, 'b': 2}
-• Recherche la clé 'c' dans le dictionnaire
-• Ne trouve pas de correspondance (la clé n'existe pas)
-• Retourne None (pas d'erreur)
-• Comportement sûr
-
-Exemple :
-{'a': 1, 'b': 2}.get('c')  # None (non trouvé, pas d'erreur)
-{'a': 1, 'b': 2}.get('x')  # None (non trouvé, pas d'erreur)
-{'a': 1, 'b': 2}.get('c', 0) # 0 (non trouvé, retourne le défaut)
-
-Usages courants :
-• Accès sûr : value = dict.get(key) (peut être None)
-• Vérifier l'existence : if dict.get(key): ...
-• Gestion du défaut : result = items.get(key) or default
-• Accès sans erreur
-
-Exemple : {'a': 1, 'b': 2}.get('c') retourne None car get() recherche la clé 'c' dans le dictionnaire, ne la trouve pas, et retourne None au lieu de lever une KeyError.`,
-  513: `La méthode get() peut prendre un second argument comme valeur par défaut à retourner si la clé n'existe pas. {'a': 1, 'b': 2}.get('c', 0) retourne 0 car get() recherche la clé 'c' dans le dictionnaire, ne la trouve pas, et retourne la valeur par défaut (0) au lieu de None. C'est utile quand vous voulez une valeur spécifique pour les clés absentes plutôt que None.
-
-get() avec défaut :
-• {'a': 1, 'b': 2}.get('c', 0) = 0 (retourne le défaut)
-• get(key, default) retourne default si la clé n'est pas trouvée
-• Valeur par défaut fournie
-• Pas d'erreur levée
-• Accès sûr avec repli
-
-Comment ça fonctionne :
-• get('c', 0) appelé sur {'a': 1, 'b': 2}
-• Recherche la clé 'c' dans le dictionnaire
-• Ne trouve pas de correspondance (la clé n'existe pas)
-• Retourne la valeur par défaut : 0
-• Pas d'erreur levée
-
-Exemple :
-{'a': 1, 'b': 2}.get('c', 0)  # 0 (non trouvé, retourne le défaut)
-{'a': 1, 'b': 2}.get('c', 'missing') # 'missing' (retourne le défaut)
-{'a': 1, 'b': 2}.get('a', 0)  # 1 (trouvé, retourne la valeur réelle)
-
-Usages courants :
-• Valeurs par défaut : value = dict.get(key, default)
-• Valeurs de repli : data = items.get(key, fallback)
-• Accès sûr avec défauts
-• Accès sans erreur avec repli
-
-Exemple : {'a': 1, 'b': 2}.get('c', 0) retourne 0 car get() recherche la clé 'c' dans le dictionnaire, ne la trouve pas, et retourne la valeur par défaut 0 au lieu de None ou de lever une erreur.`,
-  514: `La méthode get() retourne la valeur réelle si la clé existe, même si une valeur par défaut est fournie. {'a': 1, 'b': 2}.get('a', 0) retourne 1 car get() trouve la clé 'a' dans le dictionnaire et retourne sa valeur réelle (1), ignorant la valeur par défaut (0). La valeur par défaut n'est utilisée que quand la clé n'existe pas - si la clé existe, get() retourne la valeur réelle associée à cette clé.
-
-get() avec clé existante :
-• {'a': 1, 'b': 2}.get('a', 0) = 1 (retourne la valeur réelle)
-• get(key, default) retourne la valeur réelle si la clé existe
-• Valeur par défaut ignorée quand la clé est trouvée
-• Retourne la valeur du dictionnaire
-• Le défaut n'est utilisé que si la clé est absente
-
-Comment ça fonctionne :
-• get('a', 0) appelé sur {'a': 1, 'b': 2}
-• Recherche la clé 'a' dans le dictionnaire
-• Trouve le mapping : 'a' → 1
-• Retourne la valeur réelle : 1 (ignore le défaut 0)
-• Le défaut n'est utilisé que si la clé n'est pas trouvée
-
-Exemple :
-{'a': 1, 'b': 2}.get('a', 0)  # 1 (trouvé, retourne la valeur réelle)
-{'a': 1, 'b': 2}.get('b', 10) # 2 (trouvé, retourne la valeur réelle)
-{'a': 1, 'b': 2}.get('c', 0)  # 0 (non trouvé, retourne le défaut)
-
-Usages courants :
-• Accès sûr avec repli : value = dict.get(key, default)
-• Toujours retourner une valeur : result = items.get(key, 0)
-• Gestion des défauts
-• Valeurs de repli
-
-Exemple : {'a': 1, 'b': 2}.get('a', 0) retourne 1 car get() trouve la clé 'a' dans le dictionnaire et retourne sa valeur réelle (1), ignorant la valeur par défaut (0), qui n'est utilisée que quand la clé n'existe pas.`,
-  515: `La méthode setdefault() retourne la valeur existante si la clé existe déjà dans le dictionnaire. {'a': 1}.setdefault('a', 2) retourne 1 car setdefault() trouve que la clé 'a' existe déjà avec la valeur 1, et retourne cette valeur existante, ignorant la valeur par défaut (2). Contrairement à get(), setdefault() ne fait pas que retourner une valeur - si la clé n'existe pas, elle assigne la clé à la valeur par défaut et la retourne.
-
-setdefault() avec clé existante :
-• {'a': 1}.setdefault('a', 2) = 1 (retourne la valeur existante)
-• setdefault(key, default) retourne la valeur existante si la clé existe
-• Valeur par défaut ignorée quand la clé est trouvée
-• Dictionnaire inchangé (la clé existe déjà)
-• Retourne la valeur du dictionnaire
-
-Comment ça fonctionne :
-• setdefault('a', 2) appelé sur {'a': 1}
-• Recherche la clé 'a' dans le dictionnaire
-• Trouve le mapping existant : 'a' → 1
-• Retourne la valeur existante : 1 (ignore le défaut 2)
-• Dictionnaire inchangé : {'a': 1}
-
-Exemple :
-{'a': 1}.setdefault('a', 2)  # 1 (retourne la valeur existante)
-{'a': 1}.setdefault('a', 10) # 1 (retourne la valeur existante)
-{'a': 1}                     # {'a': 1} (inchangé)
-
-Usages courants :
-• Obtenir ou définir : value = dict.setdefault(key, default)
-• S'assurer que la clé existe : dict.setdefault(key, [])
-• Initialisation par défaut
-• Récupération ou création de valeur
-
-Exemple : {'a': 1}.setdefault('a', 2) retourne 1 car setdefault() trouve que la clé 'a' existe déjà avec la valeur 1, et retourne cette valeur existante, ignorant la valeur par défaut (2).`,
-  516: `La méthode setdefault() assigne la clé à la valeur par défaut et la retourne si la clé n'existe pas. {'a': 1}.setdefault('b', 2) retourne 2 car setdefault() recherche la clé 'b' dans le dictionnaire, ne la trouve pas, assigne 'b' à la valeur par défaut (2), et retourne cette valeur. C'est différent de get() - setdefault() modifie le dictionnaire si la clé est absente, tandis que get() ne modifie pas le dictionnaire.
-
-setdefault() avec clé absente :
-• {'a': 1}.setdefault('b', 2) = 2 (assigne et retourne le défaut)
-• setdefault(key, default) assigne key à default si absent
-• Modifie le dictionnaire sur place
-• Retourne la valeur par défaut
-• Dictionnaire modifié : {'a': 1} → {'a': 1, 'b': 2}
-
-Comment ça fonctionne :
-• setdefault('b', 2) appelé sur {'a': 1}
-• Recherche la clé 'b' dans le dictionnaire
-• Ne trouve pas de correspondance (la clé n'existe pas)
-• Assigne 'b' à la valeur par défaut : 2
-• Retourne la valeur par défaut : 2
-• Dictionnaire modifié : {'a': 1, 'b': 2}
-
-Exemple :
-{'a': 1}.setdefault('b', 2)  # 2 (assigne 'b' à 2, retourne 2)
-{'a': 1}                     # {'a': 1, 'b': 2} (modifié)
-{'a': 1}.setdefault('c', 0)  # 0 (assigne 'c' à 0, retourne 0)
-
-Usages courants :
-• Initialiser les défauts : value = dict.setdefault(key, default)
-• S'assurer que la clé existe : dict.setdefault(key, [])
-• Création par défaut
-• Initialisation de valeur
-
-Exemple : {'a': 1}.setdefault('b', 2) retourne 2 car setdefault() ne trouve pas la clé 'b' dans le dictionnaire, assigne 'b' à la valeur par défaut (2), et retourne cette valeur, modifiant le dictionnaire en {'a': 1, 'b': 2}.`,
-  517: `La différence clé entre get() et setdefault() est de savoir si elles modifient le dictionnaire. get() ne fait que récupérer des valeurs - elle retourne None (ou un défaut) si la clé n'existe pas, mais ne modifie jamais le dictionnaire. setdefault() récupère des valeurs si la clé existe, mais si la clé n'existe pas, elle assigne la clé à la valeur par défaut et la retourne, modifiant le dictionnaire. Les deux retournent la même valeur quand la clé existe, mais seule setdefault() modifie le dictionnaire quand la clé est absente.
-
-get() vs setdefault() :
-• get(key, default) : retourne la valeur ou le défaut, ne modifie jamais le dict
-• setdefault(key, default) : retourne la valeur ou le défaut, assigne la clé si absente
-• get() est en lecture seule (ne modifie pas le dict)
-• setdefault() modifie le dict si la clé est absente
-• Les deux retournent la même valeur quand la clé existe
-
-Comment ça fonctionne :
-• get('c', 0) : recherche 'c', non trouvé, retourne 0, dict inchangé
-• setdefault('c', 0) : recherche 'c', non trouvé, assigne 'c' à 0, retourne 0, dict modifié
-• Les deux retournent la valeur quand la clé existe
-• Seule setdefault() modifie quand absente
-
-Exemple :
-d = {'a': 1}
-d.get('b', 0)        # 0 (retourne 0, d inchangé : {'a': 1})
-d.setdefault('b', 0) # 0 (retourne 0, d modifié : {'a': 1, 'b': 0})
-
-Usages courants :
-• get() : accès en lecture seule sûr : value = dict.get(key, default)
-• setdefault() : s'assurer que la clé existe : value = dict.setdefault(key, default)
-• Choisir selon si on veut modifier le dict
-• Distinction importante pour le comportement du dictionnaire
-
-Exemple : La différence est que get() ne fait que récupérer des valeurs et ne modifie jamais le dictionnaire (ex. {'a': 1}.get('b', 0) retourne 0 mais ne change pas le dict), tandis que setdefault() modifie le dictionnaire si la clé est absente (ex. {'a': 1}.setdefault('b', 0) retourne 0 et ajoute 'b': 0 au dict).`,
-  518: `La méthode pop() supprime une paire clé-valeur d'un dictionnaire et retourne la valeur. {'a': 1, 'b': 2}.pop('a') retourne 1 car pop() trouve la clé 'a' dans le dictionnaire, supprime la paire 'a': 1, et retourne la valeur 1. Après l'appel pop('a'), le dictionnaire devient {'b': 2} - la paire clé-valeur est supprimée. pop() modifie le dictionnaire sur place et retourne la valeur supprimée.
-
-Méthode pop() :
-• {'a': 1, 'b': 2}.pop('a') = 1 (retourne la valeur supprimée)
-• pop(key) supprime la paire clé-valeur
-• Modifie le dictionnaire sur place
-• Retourne la valeur supprimée
-• Dictionnaire modifié : {'a': 1, 'b': 2} → {'b': 2}
-
-Comment ça fonctionne :
-• pop('a') appelé sur {'a': 1, 'b': 2}
-• Recherche la clé 'a' dans le dictionnaire
-• Trouve le mapping : 'a' → 1
-• Supprime la paire 'a': 1 du dictionnaire
-• Retourne la valeur supprimée : 1
-• Dictionnaire modifié : {'b': 2}
-
-Exemple :
-d = {'a': 1, 'b': 2}
-d.pop('a')            # 1 (retourne la valeur supprimée)
-d                     # {'b': 2} (modifié)
-{'a': 1, 'b': 2}.pop('b') # 2 (retourne la valeur supprimée)
-
-Usages courants :
-• Supprimer des paires : value = dict.pop(key)
-• Obtenir et supprimer : removed = items.pop(key)
-• Nettoyage de dictionnaire
-• Modification sur place
-
-Exemple : {'a': 1, 'b': 2}.pop('a') retourne 1 car pop() supprime la paire clé-valeur 'a': 1 du dictionnaire et retourne la valeur supprimée, laissant le dictionnaire comme {'b': 2}.`,
-  519: `La méthode pop() lève une KeyError quand elle est appelée avec une clé inexistante et qu'aucune valeur par défaut n'est fournie. {'a': 1, 'b': 2}.pop('c') lève une KeyError car pop() recherche la clé 'c' dans le dictionnaire, ne la trouve pas, et lève une erreur puisqu'il n'y a pas de valeur à supprimer et retourner. C'est différent de get(), qui retourne None pour les clés absentes - pop() exige que la clé existe (ou qu'une valeur par défaut soit fournie) car elle supprime la paire.
-
-pop() - clé non trouvée :
-• {'a': 1, 'b': 2}.pop('c') lève KeyError
-• La clé 'c' n'existe pas dans le dictionnaire
-• pop() exige que la clé existe (pas de défaut)
-• Lève KeyError (impossible de supprimer une clé inexistante)
-• Message d'erreur : "KeyError: 'c'"
-
-Comment ça fonctionne :
-• pop('c') appelé sur {'a': 1, 'b': 2}
-• Recherche la clé 'c' dans le dictionnaire
-• Ne trouve pas de correspondance (la clé n'existe pas)
-• Ne peut pas supprimer une paire inexistante
-• Lève KeyError
-• Aucune valeur à retourner
-
-Exemple :
-{'a': 1, 'b': 2}.pop('c')  # KeyError: 'c'
-d = {'a': 1, 'b': 2}
-d.pop('x')                 # KeyError: 'x'
-if 'c' in d:               # Vérifier d'abord
-    d.pop('c')             # Suppression sûre
-
-Usages courants :
-• Gestion d'erreurs : try/except pour KeyError
-• Vérifier d'abord : if key in dict: dict.pop(key)
-• Suppression sûre : value = dict.pop(key, default)
-• Validation d'existence de clé
-
-Exemple : Appeler pop() avec une clé inexistante comme {'a': 1, 'b': 2}.pop('c') lève une KeyError car pop() ne peut pas supprimer une paire clé-valeur qui n'existe pas, et aucune valeur par défaut n'a été fournie.`,
-  520: `La méthode pop() peut prendre un second argument comme valeur par défaut à retourner si la clé n'existe pas, sans modifier le dictionnaire. {'a': 1, 'b': 2}.pop('c', 0) retourne 0 car pop() recherche la clé 'c' dans le dictionnaire, ne la trouve pas, et retourne la valeur par défaut (0) sans lever d'erreur. Contrairement à pop() sans défaut, cette version ne lève pas de KeyError - elle retourne simplement la valeur par défaut. Le dictionnaire reste inchangé car il n'y avait pas de paire à supprimer.
-
-pop() avec défaut :
-• {'a': 1, 'b': 2}.pop('c', 0) = 0 (retourne le défaut)
-• pop(key, default) retourne default si la clé n'est pas trouvée
-• Pas d'erreur levée (contrairement à pop() sans défaut)
-• Dictionnaire inchangé (aucune paire à supprimer)
-• Retourne la valeur par défaut
-
-Comment ça fonctionne :
-• pop('c', 0) appelé sur {'a': 1, 'b': 2}
-• Recherche la clé 'c' dans le dictionnaire
-• Ne trouve pas de correspondance (la clé n'existe pas)
-• Ne peut pas supprimer une paire inexistante
-• Retourne la valeur par défaut : 0 (pas d'erreur)
-• Dictionnaire inchangé : {'a': 1, 'b': 2}
-
-Exemple :
-{'a': 1, 'b': 2}.pop('c', 0)  # 0 (non trouvé, retourne le défaut)
-{'a': 1, 'b': 2}.pop('c', 'missing') # 'missing' (retourne le défaut)
-{'a': 1, 'b': 2}              # {'a': 1, 'b': 2} (inchangé)
-
-Usages courants :
-• Suppression sûre : value = dict.pop(key, default)
-• Gestion du défaut : removed = items.pop(key, fallback)
-• Suppression sans erreur
-• Pop sûr avec repli
-
-Exemple : {'a': 1, 'b': 2}.pop('c', 0) retourne 0 car pop() recherche la clé 'c' dans le dictionnaire, ne la trouve pas, et retourne la valeur par défaut (0) sans lever d'erreur, laissant le dictionnaire inchangé.`,
-  521: `La méthode keys() retourne un objet vue qui affiche toutes les clés du dictionnaire. {'a': 1, 'b': 2}.keys() retourne un objet dict_keys(['a', 'b']) car keys() crée une vue des clés du dictionnaire. Un objet vue est une vue dynamique du dictionnaire – elle reflète les modifications apportées au dictionnaire. La vue n'est pas une liste, mais elle peut être convertie en liste avec list(). Les vues sont économes en mémoire et se mettent à jour automatiquement quand le dictionnaire change.
-
-Méthode keys() :
-• {'a': 1, 'b': 2}.keys() = dict_keys(['a', 'b'])
-• keys() retourne un objet vue dict_keys
-• La vue reflète les clés du dictionnaire
-• Pas une liste (mais peut être convertie)
-• Se met à jour automatiquement quand le dict change
-
-Comment ça fonctionne :
-• keys() appelé sur {'a': 1, 'b': 2}
-• Crée un objet vue des clés
-• La vue contient : 'a', 'b'
-• Retourne la vue dict_keys : dict_keys(['a', 'b'])
-• La vue se met à jour si le dictionnaire change
-
-Exemple :
-{'a': 1, 'b': 2}.keys()  # dict_keys(['a', 'b'])
-list({'a': 1, 'b': 2}.keys()) # ['a', 'b'] (converti en liste)
-for key in {'a': 1, 'b': 2}.keys():  # Itère : 'a', 'b'
-    print(key)
-
-Usages courants :
-• Obtenir les clés : keys = dict.keys()
-• Itérer les clés : for key in dict.keys():
-• Itération des clés
-• Accès aux clés du dictionnaire
-
-Exemple : {'a': 1, 'b': 2}.keys() retourne un objet vue dict_keys(['a', 'b']) car keys() crée une vue dynamique de toutes les clés du dictionnaire, qui peut être itérée ou convertie en liste.`,
-  522: `La fonction list() peut convertir une vue dict_keys en liste. list({'a': 1, 'b': 2}.keys()) retourne ['a', 'b'] car list() consomme l'objet vue créé par keys() et collecte toutes les clés dans une nouvelle liste. La méthode keys() retourne un objet vue, et list() itère sur cette vue en collectant toutes les clés dans une liste. C'est ainsi qu'on obtient une vraie liste de clés à partir de keys().
-
-list(keys()) :
-• list({'a': 1, 'b': 2}.keys()) = ['a', 'b']
-• keys() retourne une vue dict_keys
-• list() consomme la vue
-• Collecte les clés dans une nouvelle liste
-• Crée une liste de clés
-
-Comment ça fonctionne :
-• keys() appelé sur {'a': 1, 'b': 2}
-• Retourne la vue dict_keys : ['a', 'b']
-• list() itère sur la vue
-• Collecte les clés : 'a', 'b'
-• Retourne la nouvelle liste : ['a', 'b']
-
-Exemple :
-list({'a': 1, 'b': 2}.keys())  # ['a', 'b'] (liste des clés)
-list({'x': 10, 'y': 20}.keys()) # ['x', 'y'] (liste des clés)
-list({}.keys())                 # [] (liste vide)
-
-Usages courants :
-• Obtenir la liste des clés : key_list = list(dict.keys())
-• Créer une liste de clés : keys = list(items.keys())
-• Convertir la vue en liste
-• Création de liste de clés
-
-Exemple : list({'a': 1, 'b': 2}.keys()) retourne ['a', 'b'] car list() consomme la vue dict_keys créée par keys() et collecte toutes les clés dans une nouvelle liste.`,
-  523: `La méthode values() retourne un objet vue qui affiche toutes les valeurs du dictionnaire. {'a': 1, 'b': 2}.values() retourne un objet dict_values([1, 2]) car values() crée une vue des valeurs du dictionnaire. Un objet vue est une vue dynamique du dictionnaire – elle reflète les modifications apportées au dictionnaire. La vue n'est pas une liste, mais elle peut être convertie en liste avec list(). Les vues sont économes en mémoire et se mettent à jour automatiquement quand le dictionnaire change.
-
-Méthode values() :
-• {'a': 1, 'b': 2}.values() = dict_values([1, 2])
-• values() retourne un objet vue dict_values
-• La vue reflète les valeurs du dictionnaire
-• Pas une liste (mais peut être convertie)
-• Se met à jour automatiquement quand le dict change
-
-Comment ça fonctionne :
-• values() appelé sur {'a': 1, 'b': 2}
-• Crée un objet vue des valeurs
-• La vue contient : 1, 2
-• Retourne la vue dict_values : dict_values([1, 2])
-• La vue se met à jour si le dictionnaire change
-
-Exemple :
-{'a': 1, 'b': 2}.values()  # dict_values([1, 2])
-list({'a': 1, 'b': 2}.values()) # [1, 2] (converti en liste)
-for value in {'a': 1, 'b': 2}.values():  # Itère : 1, 2
-    print(value)
-
-Usages courants :
-• Obtenir les valeurs : values = dict.values()
-• Itérer les valeurs : for value in dict.values():
-• Itération des valeurs
-• Accès aux valeurs du dictionnaire
-
-Exemple : {'a': 1, 'b': 2}.values() retourne un objet vue dict_values([1, 2]) car values() crée une vue dynamique de toutes les valeurs du dictionnaire, qui peut être itérée ou convertie en liste.`,
-  524: `La fonction list() peut convertir une vue dict_values en liste. list({'a': 1, 'b': 2}.values()) retourne [1, 2] car list() consomme l'objet vue créé par values() et collecte toutes les valeurs dans une nouvelle liste. La méthode values() retourne un objet vue, et list() itère sur cette vue en collectant toutes les valeurs dans une liste. C'est ainsi qu'on obtient une vraie liste de valeurs à partir de values().
-
-list(values()) :
-• list({'a': 1, 'b': 2}.values()) = [1, 2]
-• values() retourne une vue dict_values
-• list() consomme la vue
-• Collecte les valeurs dans une nouvelle liste
-• Crée une liste de valeurs
-
-Comment ça fonctionne :
-• values() appelé sur {'a': 1, 'b': 2}
-• Retourne la vue dict_values : [1, 2]
-• list() itère sur la vue
-• Collecte les valeurs : 1, 2
-• Retourne la nouvelle liste : [1, 2]
-
-Exemple :
-list({'a': 1, 'b': 2}.values())  # [1, 2] (liste des valeurs)
-list({'x': 10, 'y': 20}.values()) # [10, 20] (liste des valeurs)
-list({}.values())                 # [] (liste vide)
-
-Usages courants :
-• Obtenir la liste des valeurs : value_list = list(dict.values())
-• Créer une liste de valeurs : values = list(items.values())
-• Convertir la vue en liste
-• Création de liste de valeurs
-
-Exemple : list({'a': 1, 'b': 2}.values()) retourne [1, 2] car list() consomme la vue dict_values créée par values() et collecte toutes les valeurs dans une nouvelle liste.`,
-  525: `La méthode items() retourne un objet vue qui affiche toutes les paires clé-valeur du dictionnaire sous forme de tuples. {'a': 1, 'b': 2}.items() retourne un objet dict_items([('a', 1), ('b', 2)]) car items() crée une vue des paires clé-valeur du dictionnaire, où chaque paire est représentée par un tuple (clé, valeur). Un objet vue est une vue dynamique du dictionnaire – elle reflète les modifications apportées au dictionnaire. La vue n'est pas une liste, mais elle peut être convertie en liste avec list().
-
-Méthode items() :
-• {'a': 1, 'b': 2}.items() = dict_items([('a', 1), ('b', 2)])
-• items() retourne un objet vue dict_items
-• La vue contient des tuples (clé, valeur)
-• Pas une liste (mais peut être convertie)
-• Se met à jour automatiquement quand le dict change
-
-Comment ça fonctionne :
-• items() appelé sur {'a': 1, 'b': 2}
-• Crée un objet vue des paires clé-valeur
-• La vue contient : ('a', 1), ('b', 2)
-• Retourne la vue dict_items : dict_items([('a', 1), ('b', 2)])
-• La vue se met à jour si le dictionnaire change
-
-Exemple :
-{'a': 1, 'b': 2}.items()  # dict_items([('a', 1), ('b', 2)])
-list({'a': 1, 'b': 2}.items()) # [('a', 1), ('b', 2)] (converti en liste)
-for key, value in {'a': 1, 'b': 2}.items():  # Itère : ('a', 1), ('b', 2)
-    print(key, value)
-
-Usages courants :
-• Obtenir les paires : pairs = dict.items()
-• Itérer les paires : for key, value in dict.items():
-• Itération des paires
-• Accès aux paires du dictionnaire
-
-Exemple : {'a': 1, 'b': 2}.items() retourne un objet vue dict_items([('a', 1), ('b', 2)]) car items() crée une vue dynamique de toutes les paires clé-valeur du dictionnaire sous forme de tuples, qui peut être itérée ou convertie en liste.`,
-  526: `La fonction list() peut convertir une vue dict_items en liste de tuples. list({'a': 1, 'b': 2}.items()) retourne [('a', 1), ('b', 2)] car list() consomme l'objet vue créé par items() et collecte toutes les paires clé-valeur sous forme de tuples dans une nouvelle liste. La méthode items() retourne un objet vue, et list() itère sur cette vue en collectant toutes les paires comme tuples (clé, valeur) dans une liste. C'est ainsi qu'on obtient une vraie liste de paires clé-valeur à partir de items().
-
-list(items()) :
-• list({'a': 1, 'b': 2}.items()) = [('a', 1), ('b', 2)]
-• items() retourne une vue dict_items
-• list() consomme la vue
-• Collecte les paires comme tuples dans une nouvelle liste
-• Crée une liste de tuples (clé, valeur)
-
-Comment ça fonctionne :
-• items() appelé sur {'a': 1, 'b': 2}
-• Retourne la vue dict_items : [('a', 1), ('b', 2)]
-• list() itère sur la vue
-• Collecte les paires comme tuples : ('a', 1), ('b', 2)
-• Retourne la nouvelle liste : [('a', 1), ('b', 2)]
-
-Exemple :
-list({'a': 1, 'b': 2}.items())  # [('a', 1), ('b', 2)] (liste de tuples)
-list({'x': 10, 'y': 20}.items()) # [('x', 10), ('y', 20)] (liste de tuples)
-list({}.items())                 # [] (liste vide)
-
-Usages courants :
-• Obtenir la liste des paires : pair_list = list(dict.items())
-• Créer une liste de paires : pairs = list(items.items())
-• Convertir la vue en liste
-• Création de liste de paires
-
-Exemple : list({'a': 1, 'b': 2}.items()) retourne [('a', 1), ('b', 2)] car list() consomme la vue dict_items créée par items() et collecte toutes les paires clé-valeur sous forme de tuples dans une nouvelle liste.`,
-  527: `L'opérateur in vérifie l'appartenance des clés dans un dictionnaire, pas l'appartenance des valeurs. 'a' in {'a': 1, 'b': 2} retourne True car in recherche la clé 'a' dans le dictionnaire et la trouve. L'opérateur in pour les dictionnaires ne vérifie que les clés, pas les valeurs – il ne parcourt pas les valeurs. Il est important de retenir : in avec les dictionnaires est basé sur les clés, pas sur les valeurs.
-
-Opérateur in avec dictionnaire :
-• 'a' in {'a': 1, 'b': 2} = True
-• in vérifie si la clé existe dans le dictionnaire
-• Ne recherche que dans les clés (pas les valeurs)
-• Retourne True si la clé est trouvée
-• Retourne False si la clé n'est pas trouvée
-
-Comment ça fonctionne :
-• 'a' est la valeur à vérifier
-• in est l'opérateur d'appartenance
-• {'a': 1, 'b': 2} est le dictionnaire
-• Recherche la clé 'a' dans le dictionnaire
-• Trouve la clé 'a', retourne True
-
-Exemple :
-'a' in {'a': 1, 'b': 2}  # True (la clé 'a' existe)
-'c' in {'a': 1, 'b': 2}  # False (la clé 'c' n'existe pas)
-1 in {'a': 1, 'b': 2}    # False (1 est une valeur, pas une clé)
-
-Usages courants :
-• Vérifier l'existence d'une clé : if key in dict:
-• Validation de clé : if item in items:
-• Vérification d'appartenance des clés
-• Vérification des clés du dictionnaire
-
-Exemple : 'a' in {'a': 1, 'b': 2} retourne True car l'opérateur in vérifie si 'a' existe comme clé dans le dictionnaire, et il trouve la clé 'a'.`,
-  528: `L'opérateur in vérifie l'appartenance des clés dans un dictionnaire, pas l'appartenance des valeurs. 1 in {'a': 1, 'b': 2} retourne False car in recherche la clé 1 dans le dictionnaire, mais les clés sont 'a' et 'b' (chaînes), pas 1. Même si 1 est une valeur du dictionnaire, in ne vérifie que les clés. Pour vérifier si une valeur existe, il faut utiliser .values() ou itérer sur les valeurs.
-
-Opérateur in – clés uniquement :
-• 1 in {'a': 1, 'b': 2} = False
-• in vérifie si la clé existe dans le dictionnaire
-• Ne recherche que dans les clés (pas les valeurs)
-• La clé 1 n'existe pas (les clés sont 'a', 'b')
-• Retourne False (clé non trouvée)
-
-Comment ça fonctionne :
-• 1 est la valeur à vérifier
-• in est l'opérateur d'appartenance
-• {'a': 1, 'b': 2} est le dictionnaire
-• Recherche la clé 1 dans le dictionnaire
-• Les clés sont 'a' et 'b', pas 1
-• Retourne False (clé non trouvée)
-
-Exemple :
-1 in {'a': 1, 'b': 2}    # False (1 n'est pas une clé)
-2 in {'a': 1, 'b': 2}    # False (2 n'est pas une clé)
-'a' in {'a': 1, 'b': 2}  # True ('a' est une clé)
-
-Usages courants :
-• Comprendre que in vérifie les clés : if value in dict: (vérifie les clés !)
-• Vérifier les valeurs : if value in dict.values(): (vérifie les valeurs)
-• Appartenance clé vs valeur
-• Vérification d'appartenance dans un dictionnaire
-
-Exemple : 1 in {'a': 1, 'b': 2} retourne False car l'opérateur in vérifie si 1 existe comme clé dans le dictionnaire, mais les clés sont 'a' et 'b', pas 1. L'opérateur in ne vérifie que les clés, pas les valeurs.`,
-  529: `L'opérateur in avec .values() vérifie l'appartenance des valeurs dans le dictionnaire. 1 in {'a': 1, 'b': 2}.values() retourne True car .values() retourne une vue de toutes les valeurs, et in vérifie si 1 existe dans ces valeurs. C'est ainsi qu'on vérifie si une valeur (et non une clé) existe dans un dictionnaire – il faut utiliser .values() car in avec un dictionnaire directement ne vérifie que les clés.
-
-in avec .values() :
-• 1 in {'a': 1, 'b': 2}.values() = True
-• .values() retourne une vue de toutes les valeurs
-• in vérifie si la valeur existe dans la vue des valeurs
-• Recherche dans les valeurs (pas les clés)
-• Retourne True si la valeur est trouvée
-
-Comment ça fonctionne :
-• 1 est la valeur à vérifier
-• in est l'opérateur d'appartenance
-• {'a': 1, 'b': 2}.values() est la vue des valeurs : [1, 2]
-• Recherche la valeur 1 dans la vue des valeurs
-• Trouve la valeur 1, retourne True
-
-Exemple :
-1 in {'a': 1, 'b': 2}.values()  # True (1 est une valeur)
-3 in {'a': 1, 'b': 2}.values()  # False (3 n'est pas une valeur)
-'a' in {'a': 1, 'b': 2}.values() # False ('a' n'est pas une valeur)
-
-Usages courants :
-• Vérifier l'existence d'une valeur : if value in dict.values():
-• Appartenance des valeurs : if item in items.values():
-• Vérification d'appartenance basée sur les valeurs
-• Vérification des valeurs du dictionnaire
-
-Exemple : 1 in {'a': 1, 'b': 2}.values() retourne True car .values() retourne une vue de toutes les valeurs (1, 2), et l'opérateur in vérifie si 1 existe dans ces valeurs, ce qui est le cas.`,
-  530: `L'opérateur in avec .items() vérifie l'appartenance d'une paire clé-valeur dans le dictionnaire. ('a', 1) in {'a': 1, 'b': 2}.items() retourne True car .items() retourne une vue de toutes les paires clé-valeur sous forme de tuples, et in vérifie si le tuple ('a', 1) existe dans ces paires. C'est ainsi qu'on vérifie si une paire clé-valeur spécifique existe dans un dictionnaire – il faut utiliser .items() et fournir la paire comme tuple.
-
-in avec .items() :
-• ('a', 1) in {'a': 1, 'b': 2}.items() = True
-• .items() retourne une vue de tous les tuples (clé, valeur)
-• in vérifie si le tuple existe dans la vue des items
-• Recherche dans les paires (pas les clés ou valeurs individuellement)
-• Retourne True si la paire est trouvée
-
-Comment ça fonctionne :
-• ('a', 1) est le tuple à vérifier
-• in est l'opérateur d'appartenance
-• {'a': 1, 'b': 2}.items() est la vue des items : [('a', 1), ('b', 2)]
-• Recherche le tuple ('a', 1) dans la vue des items
-• Trouve la paire ('a', 1), retourne True
-
-Exemple :
-('a', 1) in {'a': 1, 'b': 2}.items()  # True (la paire existe)
-('a', 2) in {'a': 1, 'b': 2}.items()  # False (la paire n'existe pas)
-('c', 1) in {'a': 1, 'b': 2}.items()  # False (la paire n'existe pas)
-
-Usages courants :
-• Vérifier l'existence d'une paire : if (key, value) in dict.items():
-• Appartenance des paires : if pair in items.items():
-• Vérification d'appartenance basée sur les paires
-• Vérification des paires du dictionnaire
-
-Exemple : ('a', 1) in {'a': 1, 'b': 2}.items() retourne True car .items() retourne une vue de toutes les paires clé-valeur sous forme de tuples [('a', 1), ('b', 2)], et l'opérateur in vérifie si le tuple ('a', 1) existe dans ces paires, ce qui est le cas.`,
-  531: `L'affectation avec des crochets ajoute une nouvelle paire clé-valeur à un dictionnaire si la clé n'existe pas. Si d = {'a': 1} puis d['b'] = 2, le dictionnaire d devient {'a': 1, 'b': 2} car l'affectation avec une nouvelle clé ajoute cette paire clé-valeur au dictionnaire. C'est ainsi qu'on ajoute de nouvelles paires à un dictionnaire – il suffit d'affecter une valeur à une nouvelle clé avec la notation à crochets.
-
-Affectation de dictionnaire – ajout :
-• d = {'a': 1}; d['b'] = 2; d = {'a': 1, 'b': 2}
-• L'affectation avec une nouvelle clé ajoute la paire
-• d['b'] = 2 crée la nouvelle clé 'b' avec la valeur 2
-• Modifie le dictionnaire sur place
-• Dictionnaire modifié : {'a': 1} → {'a': 1, 'b': 2}
-
-Comment ça fonctionne :
-• d = {'a': 1} crée le dictionnaire
-• d['b'] = 2 affecte la valeur 2 à la clé 'b'
-• La clé 'b' n'existe pas, donc elle est ajoutée
-• Crée la nouvelle paire : 'b': 2
-• Dictionnaire modifié : {'a': 1, 'b': 2}
-
-Exemple :
-d = {'a': 1}
-d['b'] = 2            # Ajoute 'b': 2
-d                    # {'a': 1, 'b': 2}
-d['c'] = 3            # Ajoute 'c': 3
-d                    # {'a': 1, 'b': 2, 'c': 3}
-
-Usages courants :
-• Ajouter des paires : dict[key] = value
-• Construire des dictionnaires : items[key] = data
-• Modification de dictionnaire
-• Ajout de paires
-
-Exemple : Si d = {'a': 1} puis d['b'] = 2, le dictionnaire d devient {'a': 1, 'b': 2} car l'affectation avec une nouvelle clé ajoute cette paire clé-valeur au dictionnaire.`,
-  532: `L'affectation avec des crochets met à jour une paire clé-valeur existante si la clé existe déjà. Si d = {'a': 1} puis d['a'] = 2, le dictionnaire d devient {'a': 2} car l'affectation avec une clé existante met à jour la valeur de cette clé. L'ancienne valeur (1) est remplacée par la nouvelle (2). C'est ainsi qu'on modifie des paires existantes dans un dictionnaire.
-
-Affectation de dictionnaire – mise à jour :
-• d = {'a': 1}; d['a'] = 2; d = {'a': 2}
-• L'affectation avec une clé existante met à jour la valeur
-• d['a'] = 2 change la valeur de la clé 'a' de 1 à 2
-• Modifie le dictionnaire sur place
-• Dictionnaire modifié : {'a': 1} → {'a': 2}
-
-Comment ça fonctionne :
-• d = {'a': 1} crée le dictionnaire
-• d['a'] = 2 affecte la valeur 2 à la clé 'a'
-• La clé 'a' existe, donc sa valeur est mise à jour
-• Remplace l'ancienne valeur : 1 → 2
-• Dictionnaire modifié : {'a': 2}
-
-Exemple :
-d = {'a': 1}
-d['a'] = 2            # Met à jour 'a': 1 en 'a': 2
-d                    # {'a': 2}
-d['a'] = 10           # Met à jour 'a': 2 en 'a': 10
-d                    # {'a': 10}
-
-Usages courants :
-• Mettre à jour les valeurs : dict[key] = new_value
-• Modifier des dictionnaires : items[key] = updated_data
-• Modification de dictionnaire
-• Mises à jour de valeurs
-
-Exemple : Si d = {'a': 1} puis d['a'] = 2, le dictionnaire d devient {'a': 2} car l'affectation avec une clé existante met à jour la valeur de cette clé, remplaçant 1 par 2.`,
-  533: `La méthode update() fusionne un autre dictionnaire dans le dictionnaire actuel et retourne None. {'a': 1}.update({'b': 2}) retourne None car update() modifie le dictionnaire sur place. Après l'appel à update({'b': 2}), le dictionnaire {'a': 1} devient {'a': 1, 'b': 2} – les nouvelles paires clé-valeur du dictionnaire argument sont ajoutées au dictionnaire original. update() ne retourne pas le dictionnaire modifié – elle retourne None.
-
-Méthode update() :
-• {'a': 1}.update({'b': 2}) = None (retourne None)
-• update() fusionne un autre dict dans le dict actuel
-• Modifie le dictionnaire sur place
-• Retourne None (ne retourne pas le nouveau dict)
-• Dictionnaire modifié : {'a': 1} → {'a': 1, 'b': 2}
-
-Comment ça fonctionne :
-• update({'b': 2}) appelé sur {'a': 1}
-• Fusionne {'b': 2} dans {'a': 1}
-• Ajoute la nouvelle clé 'b' avec la valeur 2
-• Modifie le dictionnaire original : {'a': 1, 'b': 2}
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-d = {'a': 1}
-d.update({'b': 2})    # None (retourne None)
-d                     # {'a': 1, 'b': 2} (modifié)
-{'a': 1}.update({'b': 2}) # None (retourne None)
-
-Usages courants :
-• Fusionner des dictionnaires : dict1.update(dict2)
-• Ajouter plusieurs paires : items.update(new_items)
-• Fusion de dictionnaires
-• Modification sur place
-
-Exemple : {'a': 1}.update({'b': 2}) retourne None car update() modifie le dictionnaire sur place (changeant {'a': 1} en {'a': 1, 'b': 2}), et la méthode elle-même retourne None plutôt que le dictionnaire modifié.`,
-  534: `La méthode update() fusionne les paires clé-valeur d'un autre dictionnaire dans le dictionnaire actuel. Si d = {'a': 1} puis d.update({'b': 2}), le dictionnaire d devient {'a': 1, 'b': 2} car update() ajoute les paires clé-valeur du dictionnaire argument au dictionnaire original. Les nouvelles clés sont ajoutées, et si des clés existent déjà, leurs valeurs sont mises à jour. update() modifie le dictionnaire sur place.
-
-update() – ajout de paires :
-• d = {'a': 1}; d.update({'b': 2}); d = {'a': 1, 'b': 2}
-• update() fusionne les paires du dictionnaire argument
-• Ajoute la nouvelle clé 'b' avec la valeur 2
-• Modifie le dictionnaire sur place
-• Dictionnaire modifié : {'a': 1} → {'a': 1, 'b': 2}
-
-Comment ça fonctionne :
-• d = {'a': 1} crée le dictionnaire
-• d.update({'b': 2}) fusionne {'b': 2} dans d
-• Ajoute la nouvelle clé 'b' avec la valeur 2
-• Modifie le dictionnaire original : {'a': 1, 'b': 2}
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-d = {'a': 1}
-d.update({'b': 2})    # None (retourne None)
-d                     # {'a': 1, 'b': 2} (modifié)
-d.update({'c': 3, 'd': 4}) # Ajoute plusieurs paires
-d                     # {'a': 1, 'b': 2, 'c': 3, 'd': 4}
-
-Usages courants :
-• Fusionner des dictionnaires : dict1.update(dict2)
-• Ajouter plusieurs paires : items.update(new_items)
-• Combinaison de dictionnaires
-• Fusion sur place
-
-Exemple : Si d = {'a': 1} puis d.update({'b': 2}), le dictionnaire d devient {'a': 1, 'b': 2} car update() fusionne les paires clé-valeur de {'b': 2} dans le dictionnaire original.`,
-  535: `La méthode update() écrase les clés existantes avec les nouvelles valeurs du dictionnaire argument. Si d = {'a': 1} puis d.update({'a': 2}), le dictionnaire d devient {'a': 2} car update() trouve que la clé 'a' existe déjà, et elle écrase la valeur existante (1) par la nouvelle valeur (2) du dictionnaire argument. update() ajoute à la fois de nouvelles clés et met à jour les clés existantes.
-
-update() – écrasement :
-• d = {'a': 1}; d.update({'a': 2}); d = {'a': 2}
-• update() écrase les clés existantes
-• La clé 'a' existe, la valeur est mise à jour : 1 → 2
-• Modifie le dictionnaire sur place
-• Dictionnaire modifié : {'a': 1} → {'a': 2}
-
-Comment ça fonctionne :
-• d = {'a': 1} crée le dictionnaire
-• d.update({'a': 2}) fusionne {'a': 2} dans d
-• La clé 'a' existe déjà
-• Écrase la valeur existante : 1 → 2
-• Dictionnaire modifié : {'a': 2}
-
-Exemple :
-d = {'a': 1}
-d.update({'a': 2})    # None (retourne None)
-d                     # {'a': 2} (valeur mise à jour)
-d.update({'a': 10, 'b': 20}) # Met à jour 'a', ajoute 'b'
-d                     # {'a': 10, 'b': 20}
-
-Usages courants :
-• Mettre à jour les valeurs : dict.update({key: new_value})
-• Fusionner avec écrasement : items.update(updates)
-• Mises à jour de dictionnaire
-• Écrasement de valeurs
-
-Exemple : Si d = {'a': 1} puis d.update({'a': 2}), le dictionnaire d devient {'a': 2} car update() écrase la clé existante 'a' avec la nouvelle valeur 2 du dictionnaire argument.`,
-  536: `La méthode popitem() supprime et retourne une paire clé-valeur arbitraire du dictionnaire sous forme de tuple. {'a': 1, 'b': 2}.popitem() retourne ('b', 2) ou ('a', 1) car popitem() supprime une paire et la retourne comme tuple (clé, valeur). En Python 3.7+, les dictionnaires conservent l'ordre d'insertion, donc popitem() supprime et retourne la dernière paire insérée (LIFO – Last In First Out). Dans les versions antérieures, popitem() supprime une paire arbitraire.
-
-Méthode popitem() :
-• {'a': 1, 'b': 2}.popitem() = ('b', 2) ou ('a', 1) (retourne un tuple)
-• popitem() supprime et retourne une paire
-• Retourne un tuple (clé, valeur)
-• Modifie le dictionnaire sur place
-• En Python 3.7+ : supprime la dernière paire insérée (LIFO)
-
-Comment ça fonctionne :
-• popitem() appelé sur {'a': 1, 'b': 2}
-• Supprime une paire clé-valeur
-• Retourne la paire comme tuple : (clé, valeur)
-• En Python 3.7+ : supprime la dernière insérée ('b', 2)
-• Dictionnaire modifié : {'a': 1} ou {'b': 2}
-
-Exemple :
-d = {'a': 1, 'b': 2}
-d.popitem()           # ('b', 2) (retourne la dernière paire en 3.7+)
-d                     # {'a': 1} (paire supprimée)
-d.popitem()           # ('a', 1) (retourne la dernière paire)
-d                     # {} (vide)
-
-Usages courants :
-• Supprimer des paires : key, value = dict.popitem()
-• Obtenir et supprimer : pair = items.popitem()
-• Nettoyage de dictionnaire
-• Suppression LIFO
-
-Exemple : {'a': 1, 'b': 2}.popitem() retourne ('b', 2) ou ('a', 1) car popitem() supprime une paire clé-valeur du dictionnaire et la retourne comme tuple (clé, valeur). En Python 3.7+, elle supprime la dernière paire insérée (LIFO).`,
-  537: `La méthode popitem() sur un dictionnaire à un seul élément retourne cette unique paire clé-valeur. {'a': 1}.popitem() retourne ('a', 1) car popitem() supprime la seule paire clé-valeur du dictionnaire et la retourne comme tuple (clé, valeur). Après l'appel à popitem(), le dictionnaire devient vide {}. C'est utile pour supprimer la dernière paire restante d'un dictionnaire.
-
-popitem() sur un dict à un seul élément :
-• {'a': 1}.popitem() = ('a', 1) (retourne un tuple)
-• popitem() supprime la seule paire
-• Retourne un tuple (clé, valeur)
-• Modifie le dictionnaire sur place
-• Dictionnaire modifié : {'a': 1} → {}
-
-Comment ça fonctionne :
-• popitem() appelé sur {'a': 1}
-• Supprime la seule paire clé-valeur : 'a': 1
-• Retourne la paire comme tuple : ('a', 1)
-• Le dictionnaire devient vide : {}
-• Retourne le tuple : ('a', 1)
-
-Exemple :
-d = {'a': 1}
-d.popitem()           # ('a', 1) (retourne la seule paire)
-d                     # {} (vide)
-{'x': 10}.popitem()   # ('x', 10) (retourne la seule paire)
-
-Usages courants :
-• Supprimer la dernière paire : key, value = dict.popitem()
-• Obtenir et supprimer : pair = items.popitem()
-• Suppression d'un seul élément
-• Vidage de dictionnaire
-
-Exemple : {'a': 1}.popitem() retourne ('a', 1) car popitem() supprime la seule paire clé-valeur du dictionnaire et la retourne comme tuple (clé, valeur), laissant le dictionnaire vide.`,
-  538: `L'appel à popitem() sur un dictionnaire vide lève une KeyError car il n'y a aucune paire clé-valeur à supprimer. Si vous tentez de faire un pop sur un dictionnaire vide comme {}.popitem(), Python lève une KeyError avec un message indiquant que vous essayez de faire un pop sur un dictionnaire vide. C'est similaire à pop() sur une liste vide – il n'y a rien à supprimer, donc une erreur est levée.
-
-popitem() sur dict vide :
-• {}.popitem() lève KeyError
-• Un dictionnaire vide n'a aucune paire à supprimer
-• KeyError indique une opération invalide
-• Il faut vérifier que le dict n'est pas vide avant de faire un pop
-• Message d'erreur : "popitem(): dictionary is empty"
-
-Comment ça fonctionne :
-• popitem() appelé sur le dictionnaire vide {}
-• Recherche une paire clé-valeur à supprimer
-• Ne trouve aucune paire (le dictionnaire est vide)
-• Lève KeyError
-• Aucune paire à retourner
-
-Exemple :
-{}.popitem()          # KeyError: popitem(): dictionary is empty
-d = {}
-d.popitem()           # KeyError: popitem(): dictionary is empty
-if d:                 # Vérifier d'abord
-    d.popitem()       # Pop en sécurité
-
-Usages courants :
-• Gestion d'erreurs : try/except pour KeyError
-• Vérifier d'abord : if dict: dict.popitem()
-• Validation que le dict n'est pas vide
-• Pop sécurisé avec validation
-
-Exemple : L'appel à popitem() sur un dictionnaire vide lève une KeyError car il n'y a aucune paire clé-valeur à supprimer du dictionnaire, et Python lève cette erreur pour indiquer que l'opération ne peut pas être effectuée sur un dictionnaire vide.`,
-  539: `La méthode clear() supprime toutes les paires clé-valeur d'un dictionnaire et retourne None. {'a': 1, 'b': 2}.clear() retourne None car clear() modifie le dictionnaire sur place, supprimant toutes les paires et laissant un dictionnaire vide. Après l'appel à clear(), le dictionnaire {'a': 1, 'b': 2} devient {} – toutes les paires sont supprimées, mais l'objet dictionnaire lui-même existe toujours. Cela diffère du réassignation à un dictionnaire vide – clear() modifie l'objet existant.
-
-Méthode clear() :
-• {'a': 1, 'b': 2}.clear() = None (retourne None)
-• clear() supprime toutes les paires clé-valeur
-• Modifie le dictionnaire sur place
-• Retourne None (ne retourne pas le nouveau dict)
-• Dictionnaire modifié : {'a': 1, 'b': 2} → {}
-
-Comment ça fonctionne :
-• clear() appelé sur {'a': 1, 'b': 2}
-• Supprime toutes les paires clé-valeur
-• Le dictionnaire devient vide : {}
-• L'objet dictionnaire original existe toujours
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-d = {'a': 1, 'b': 2}
-d.clear()            # None (retourne None)
-d                    # {} (le dictionnaire est maintenant vide)
-{'a': 1, 'b': 2}.clear() # None (retourne None)
-
-Usages courants :
-• Vider le dictionnaire : dict.clear()
-• Supprimer tous les éléments : items.clear()
-• Réinitialisation du dictionnaire
-• Modification sur place
-
-Exemple : {'a': 1, 'b': 2}.clear() retourne None car clear() supprime toutes les paires clé-valeur du dictionnaire (changeant {'a': 1, 'b': 2} en {}), et la méthode elle-même retourne None plutôt que le dictionnaire vide.`,
-  540: `La méthode clear() vide un dictionnaire en supprimant toutes les paires clé-valeur. Si d = {'a': 1} puis d.clear(), le dictionnaire d devient {} car clear() supprime toutes les paires du dictionnaire. L'objet dictionnaire lui-même existe toujours, mais ne contient aucune paire. Cela diffère du réassignation d = {} – clear() modifie l'objet existant, tandis que la réassignation crée un nouvel objet (ce qui compte si d'autres variables référencent le même dictionnaire).
-
-clear() vide le dictionnaire :
-• d = {'a': 1}; d.clear(); d = {}
-• clear() supprime toutes les paires
-• Le dictionnaire devient vide
-• L'objet original existe toujours
-• Toutes les paires sont supprimées
-
-Comment ça fonctionne :
-• d = {'a': 1} crée le dictionnaire
-• d.clear() supprime toutes les paires
-• Le dictionnaire devient vide : {}
-• L'objet dictionnaire original inchangé (simplement vidé)
-• Retourne None (pas de valeur de retour)
-
-Exemple :
-d = {'a': 1}
-d.clear()            # None (retourne None)
-d                    # {} (vide)
-a = {'x': 1, 'y': 2}
-b = a                # b référence le même dict que a
-a.clear()            # Vide à la fois a et b
-b                    # {} (aussi vide, même objet)
-
-Usages courants :
-• Vider le dictionnaire : dict.clear()
-• Supprimer tous les éléments : items.clear()
-• Réinitialisation du dictionnaire
-• Vidage sur place
-
-Exemple : Si d = {'a': 1} puis d.clear(), le dictionnaire d devient {} car clear() supprime toutes les paires clé-valeur du dictionnaire, le laissant vide.`,
-  541: `La méthode copy() crée une copie superficielle d'un dictionnaire et la retourne. {'a': 1, 'b': 2}.copy() retourne {'a': 1, 'b': 2} car copy() crée un nouvel objet dictionnaire avec les mêmes paires clé-valeur. Une copie superficielle signifie que le dictionnaire externe est copié, mais si le dictionnaire contient des objets imbriqués (comme des listes ou d'autres dictionnaires), ces objets imbriqués ne sont pas copiés – ils sont partagés entre l'original et la copie. Pour les dictionnaires plats (sans imbrication), la copie superficielle crée un dictionnaire totalement indépendant.
-
-Méthode copy() :
-• {'a': 1, 'b': 2}.copy() = {'a': 1, 'b': 2} (nouveau dict)
-• copy() crée une copie superficielle
-• Crée un nouvel objet dictionnaire
-• Les paires clé-valeur sont copiées (pas partagées)
-• Retourne le nouveau dictionnaire
-
-Comment ça fonctionne :
-• copy() appelé sur {'a': 1, 'b': 2}
-• Crée un nouvel objet dictionnaire
-• Copie les paires clé-valeur dans le nouveau dictionnaire : {'a': 1, 'b': 2}
-• Le nouveau dictionnaire est indépendant de l'original
-• Retourne le nouveau dictionnaire : {'a': 1, 'b': 2}
-
-Exemple :
-a = {'a': 1, 'b': 2}
-b = a.copy()         # {'a': 1, 'b': 2} (nouveau dict)
-b['c'] = 3           # b = {'a': 1, 'b': 2, 'c': 3}
-a                    # {'a': 1, 'b': 2} (inchangé)
-
-Usages courants :
-• Créer des copies : new_dict = dict.copy()
-• Dictionnaires indépendants : copy = items.copy()
-• Copie superficielle
-• Création de copie
-
-Exemple : {'a': 1, 'b': 2}.copy() retourne {'a': 1, 'b': 2} car copy() crée un nouvel objet dictionnaire avec les mêmes paires clé-valeur, résultant en une copie superficielle du dictionnaire original.`,
-  542: `Le constructeur dict() crée une copie superficielle lorsqu'il est appelé avec un dictionnaire comme argument. dict({'a': 1, 'b': 2}) retourne {'a': 1, 'b': 2} car dict() prend le dictionnaire {'a': 1, 'b': 2} et crée un nouvel objet dictionnaire avec les mêmes paires clé-valeur. C'est essentiellement la même chose qu'utiliser copy() – il crée une copie superficielle où le dictionnaire externe est nouveau, mais les objets imbriqués (s'il y en a) sont partagés. Pour les dictionnaires plats, cela crée un dictionnaire totalement indépendant.
-
-Constructeur dict() :
-• dict({'a': 1, 'b': 2}) = {'a': 1, 'b': 2} (nouveau dict)
-• dict() crée une copie superficielle
-• Crée un nouvel objet dictionnaire
-• Les paires clé-valeur sont copiées (pas partagées)
-• Retourne le nouveau dictionnaire
-
-Comment ça fonctionne :
-• dict() appelé avec {'a': 1, 'b': 2}
-• Crée un nouvel objet dictionnaire
-• Copie les paires clé-valeur dans le nouveau dictionnaire : {'a': 1, 'b': 2}
-• Le nouveau dictionnaire est indépendant de l'original
-• Retourne le nouveau dictionnaire : {'a': 1, 'b': 2}
-
-Exemple :
-a = {'a': 1, 'b': 2}
-b = dict(a)          # {'a': 1, 'b': 2} (nouveau dict)
-b['c'] = 3           # b = {'a': 1, 'b': 2, 'c': 3}
-a                    # {'a': 1, 'b': 2} (inchangé)
-
-Usages courants :
-• Créer des copies : new_dict = dict(old_dict)
-• Copie superficielle : copy = dict(original)
-• Construction de dictionnaire
-• Création de copie
-
-Exemple : dict({'a': 1, 'b': 2}) retourne {'a': 1, 'b': 2} car dict() crée un nouvel objet dictionnaire avec les mêmes paires clé-valeur, résultant en une copie superficielle du dictionnaire original.`,
-  543: `L'opérateur ** dépaquette les dictionnaires et les fusionne en un nouveau dictionnaire. {**{'a': 1}, **{'b': 2}} retourne {'a': 1, 'b': 2} car ** dépaquette chaque dictionnaire, étalant ses paires clé-valeur dans le nouveau littéral dictionnaire. Le premier **{'a': 1} se dépaquette en 'a': 1, et le second **{'b': 2} se dépaquette en 'b': 2, résultant en {'a': 1, 'b': 2}. C'est une façon concise de fusionner des dictionnaires en Python 3.5+.
-
-Dépaquetage ** pour fusion :
-• {**{'a': 1}, **{'b': 2}} = {'a': 1, 'b': 2}
-• ** dépaquette les paires clé-valeur du dictionnaire
-• Premier dict se dépaquette : 'a': 1
-• Second dict se dépaquette : 'b': 2
-• Fusionne en nouveau dictionnaire : {'a': 1, 'b': 2}
-
-Comment ça fonctionne :
-• {**{'a': 1}, **{'b': 2}} crée un nouveau dictionnaire
-• **{'a': 1} se dépaquette en 'a': 1
-• **{'b': 2} se dépaquette en 'b': 2
-• Combine les paires : {'a': 1, 'b': 2}
-• Retourne le nouveau dictionnaire fusionné
-
-Exemple :
-{**{'a': 1}, **{'b': 2}}        # {'a': 1, 'b': 2}
-{**{'x': 10}, **{'y': 20}}      # {'x': 10, 'y': 20}
-{**{'a': 1}, **{'b': 2}, **{'c': 3}} # {'a': 1, 'b': 2, 'c': 3}
-
-Usages courants :
-• Fusionner des dictionnaires : merged = {**dict1, **dict2}
-• Combiner des dicts : combined = {**a, **b, **c}
-• Fusion de dictionnaires
-• Dépaquetage de dictionnaires
-
-Exemple : {**{'a': 1}, **{'b': 2}} retourne {'a': 1, 'b': 2} car ** dépaquette chaque dictionnaire, étalant leurs paires clé-valeur dans un nouveau littéral dictionnaire, les fusionnant efficacement.`,
-  544: `Lors du dépaquetage de dictionnaires avec des clés qui se chevauchent, les dictionnaires plus tardifs écrasent les plus anciens. {**{'a': 1}, **{'a': 2}} retourne {'a': 2} car le premier **{'a': 1} fixe 'a': 1, puis le second **{'a': 2} l'écrase avec 'a': 2. L'ordre compte – les dictionnaires dépaquetés plus tard prennent le pas sur les dictionnaires dépaquetés plus tôt en cas de conflits de clés. C'est utile pour fusionner des dictionnaires quand on veut que les valeurs tardives remplacent les plus anciennes.
-
-Dépaquetage ** avec conflits :
-• {**{'a': 1}, **{'a': 2}} = {'a': 2}
-• Premier dict se dépaquette : 'a': 1
-• Second dict se dépaquette : 'a': 2
-• Le dict plus tardif écrase le plus ancien : 'a': 2 gagne
-• Résultat : {'a': 2}
-
-Comment ça fonctionne :
-• {**{'a': 1}, **{'a': 2}} crée un nouveau dictionnaire
-• **{'a': 1} se dépaquette en 'a': 1
-• **{'a': 2} se dépaquette en 'a': 2
-• Le second écrase le premier : 'a': 2
-• Retourne : {'a': 2}
-
-Exemple :
-{**{'a': 1}, **{'a': 2}}        # {'a': 2} (le plus tardif gagne)
-{**{'x': 10}, **{'x': 20}}     # {'x': 20} (le plus tardif gagne)
-{**{'a': 1, 'b': 2}, **{'a': 3}} # {'a': 3, 'b': 2} (le plus tardif écrase)
-
-Usages courants :
-• Fusionner avec écrasement : merged = {**base, **updates}
-• Mettre à jour les valeurs : combined = {**old, **new}
-• Mises à jour de dictionnaire
-• Comportement d'écrasement
-
-Exemple : {**{'a': 1}, **{'a': 2}} retourne {'a': 2} car lors du dépaquetage de dictionnaires avec la même clé, le dictionnaire plus tardif écrase le plus ancien, donc 'a': 2 prend le pas sur 'a': 1.`,
-  545: `L'opérateur | fusionne deux dictionnaires et retourne un nouveau dictionnaire (Python 3.9+). {'a': 1} | {'b': 2} retourne {'a': 1, 'b': 2} car | combine les paires clé-valeur des deux dictionnaires en un nouveau dictionnaire. L'opérateur | crée un nouvel objet dictionnaire – il ne modifie pas les dictionnaires originaux. C'est une façon claire et lisible de fusionner des dictionnaires introduite en Python 3.9.
-
-Opérateur | pour fusion :
-• {'a': 1} | {'b': 2} = {'a': 1, 'b': 2}
-• L'opérateur | fusionne les dictionnaires
-• Crée un nouvel objet dictionnaire
-• Combine les paires clé-valeur des deux
-• Retourne le nouveau dictionnaire fusionné
-
-Comment ça fonctionne :
-• {'a': 1} | {'b': 2} fusionne deux dictionnaires
-• Prend les paires de gauche : 'a': 1
-• Prend les paires de droite : 'b': 2
-• Combine en nouveau dict : {'a': 1, 'b': 2}
-• Retourne le nouveau dictionnaire (originaux inchangés)
-
-Exemple :
-{'a': 1} | {'b': 2}           # {'a': 1, 'b': 2}
-{'x': 10} | {'y': 20}         # {'x': 10, 'y': 20}
-{'a': 1, 'b': 2} | {'c': 3}   # {'a': 1, 'b': 2, 'c': 3}
-
-Usages courants :
-• Fusionner des dictionnaires : merged = dict1 | dict2
-• Combiner des dicts : combined = a | b | c
-• Fusion de dictionnaires
-• Syntaxe de fusion claire
-
-Exemple : {'a': 1} | {'b': 2} retourne {'a': 1, 'b': 2} car l'opérateur | fusionne les paires clé-valeur des deux dictionnaires en un nouveau dictionnaire (Python 3.9+).`,
-  546: `Lors de l'utilisation de l'opérateur | avec des clés qui se chevauchent, les valeurs du dictionnaire de droite écrasent celles du dictionnaire de gauche. {'a': 1} | {'a': 2} retourne {'a': 2} car l'opérateur | prend la clé 'a' du dictionnaire de droite (valeur 2) et écrase la valeur du dictionnaire de gauche (valeur 1). Le dictionnaire de droite a la priorité en cas de conflits de clés. C'est utile pour mettre à jour des dictionnaires quand on veut que les valeurs du membre droit remplacent celles du membre gauche.
-
-Opérateur | avec conflits :
-• {'a': 1} | {'a': 2} = {'a': 2}
-• L'opérateur | fusionne les dictionnaires
-• La clé 'a' existe dans les deux
-• Le dict de droite écrase celui de gauche : 'a': 2 gagne
-• Résultat : {'a': 2}
-
-Comment ça fonctionne :
-• {'a': 1} | {'a': 2} fusionne deux dictionnaires
-• Le dict de gauche a : 'a': 1
-• Le dict de droite a : 'a': 2
-• Le droit écrase le gauche : 'a': 2
-• Retourne : {'a': 2}
-
-Exemple :
-{'a': 1} | {'a': 2}           # {'a': 2} (le droit gagne)
-{'x': 10} | {'x': 20}         # {'x': 20} (le droit gagne)
-{'a': 1, 'b': 2} | {'a': 3}   # {'a': 3, 'b': 2} (le droit écrase)
-
-Usages courants :
-• Fusionner avec écrasement : merged = base | updates
-• Mettre à jour les valeurs : combined = old | new
-• Mises à jour de dictionnaire
-• Comportement d'écrasement
-
-Exemple : {'a': 1} | {'a': 2} retourne {'a': 2} car l'opérateur | écrase les valeurs du dictionnaire de gauche avec celles du dictionnaire de droite en cas de conflits de clés, donc 'a': 2 prend le pas.`,
-  547: `L'opérateur |= met à jour un dictionnaire sur place en fusionnant un autre dictionnaire en lui (Python 3.9+). Si d = {'a': 1} puis d |= {'b': 2}, le dictionnaire d devient {'a': 1, 'b': 2} car |= fusionne les paires clé-valeur de {'b': 2} dans le dictionnaire existant d. Contrairement à | qui crée un nouveau dictionnaire, |= modifie le dictionnaire existant sur place. C'est similaire à update() mais avec une syntaxe plus concise.
-
-Opérateur |= (mise à jour sur place) :
-• d = {'a': 1}; d |= {'b': 2}; d = {'a': 1, 'b': 2}
-• |= met à jour le dictionnaire sur place
-• Fusionne le dict de droite dans le dict de gauche
-• Modifie le dictionnaire existant
-• Retourne None (mais modifie d)
-
-Comment ça fonctionne :
-• d = {'a': 1} crée le dictionnaire
-• d |= {'b': 2} fusionne {'b': 2} dans d
-• Ajoute la nouvelle clé 'b' avec la valeur 2
-• Modifie le dictionnaire original : {'a': 1, 'b': 2}
-• Retourne None (mais d est modifié)
-
-Exemple :
-d = {'a': 1}
-d |= {'b': 2}         # None (retourne None)
-d                     # {'a': 1, 'b': 2} (modifié)
-d |= {'c': 3}         # Ajoute 'c': 3
-d                     # {'a': 1, 'b': 2, 'c': 3}
-
-Usages courants :
-• Fusion sur place : dict1 |= dict2
-• Mettre à jour des dictionnaires : items |= updates
-• Modification de dictionnaire
-• Syntaxe de mise à jour concise
-
-Exemple : Si d = {'a': 1} puis d |= {'b': 2}, le dictionnaire d devient {'a': 1, 'b': 2} car |= fusionne les paires clé-valeur de {'b': 2} dans le dictionnaire existant d, le modifiant sur place (Python 3.9+).`,
-  548: `La différence clé entre | et |= est de savoir s'ils modifient le dictionnaire existant ou en créent un nouveau. | crée un nouveau dictionnaire en fusionnant deux dictionnaires, en laissant les originaux inchangés. |= modifie le dictionnaire de gauche sur place en fusionnant le dictionnaire de droite en lui. | sert à créer de nouveaux dictionnaires, tandis que |= sert à mettre à jour des dictionnaires existants. Les deux fusionnent des dictionnaires, mais | est non destructif (crée du nouveau) tandis que |= est destructif (modifie l'existant).
-
-| vs |= :
-• | crée un nouveau dictionnaire (non destructif)
-• |= modifie le dictionnaire existant (destructif)
-• | retourne un nouveau dict, les originaux inchangés
-• |= retourne None, modifie le dict de gauche
-• Les deux fusionnent des dictionnaires
-
-Comment ça fonctionne :
-• d1 | d2 : crée un nouveau dict, d1 et d2 inchangés
-• d1 |= d2 : modifie d1, fusionne d2 dans d1
-• | sert à créer de nouveaux dicts fusionnés
-• |= sert à mettre à jour des dicts existants
-• Choisir selon qu'on veut modifier l'original ou non
-
-Exemple :
-a = {'a': 1}
-b = {'b': 2}
-c = a | b            # {'a': 1, 'b': 2} (nouveau dict)
-a                    # {'a': 1} (inchangé)
-a |= b               # None (retourne None)
-a                    # {'a': 1, 'b': 2} (modifié)
-
-Usages courants :
-• | : créer de nouveaux dicts fusionnés : merged = dict1 | dict2
-• |= : mettre à jour des dicts existants : dict1 |= dict2
-• Choisir selon qu'on modifie ou non l'original
-• Distinction importante pour le comportement des dictionnaires
-
-Exemple : La différence est que | crée un nouveau dictionnaire en fusionnant deux dictionnaires (ex : {'a': 1} | {'b': 2} retourne {'a': 1, 'b': 2} sans modifier les originaux), tandis que |= modifie le dictionnaire de gauche sur place (ex : d |= {'b': 2} modifie d pour inclure {'b': 2}).`,
-  549: `Une copie superficielle partage les objets imbriqués entre l'original et la copie. Si a = {'a': [1]} et b = a.copy(), alors b['a'].append(2) fait que a devient {'a': [1, 2]} car copy() crée une copie superficielle – le dictionnaire externe est nouveau, mais la liste imbriquée [1] est partagée entre a et b. Quand vous modifiez la liste imbriquée via b, vous modifiez le même objet liste auquel a fait référence aussi. C'est pourquoi les copies superficielles peuvent être problématiques avec des objets mutables imbriqués.
-
-Copie superficielle avec imbrication :
-• a = {'a': [1]}; b = a.copy(); b['a'].append(2); a = {'a': [1, 2]}
-• copy() crée une copie superficielle
-• Le dict externe est nouveau, la liste imbriquée est partagée
-• Modifier la liste imbriquée affecte les deux dicts
-• La copie superficielle partage les objets imbriqués
-
-Comment ça fonctionne :
-• a = {'a': [1]} crée un dict avec une liste imbriquée
-• b = a.copy() crée un nouveau dict mais partage la liste
-• b['a'].append(2) modifie la liste partagée
-• a et b référencent le même objet liste
-• a devient {'a': [1, 2]} (liste modifiée)
-
-Exemple :
-a = {'a': [1]}
-b = a.copy()         # b = {'a': [1]} (nouveau dict, liste partagée)
-b['a'].append(2)     # Modifie la liste partagée
-a                    # {'a': [1, 2]} (liste modifiée)
-b                    # {'a': [1, 2]} (même liste)
-
-Usages courants :
-• Comprendre les limites de la copie superficielle
-• Quand utiliser la copie profonde : import copy; b = copy.deepcopy(a)
-• Comportement des objets imbriqués
-• Conscience du comportement des copies
-
-Exemple : Si a = {'a': [1]} et b = a.copy(), alors b['a'].append(2) fait que a devient {'a': [1, 2]} car copy() crée une copie superficielle où la liste imbriquée [1] est partagée entre les deux dictionnaires, donc la modifier via l'un affecte l'autre.`,
-  550: `La fonction deepcopy() du module copy crée une copie profonde où les objets imbriqués sont également copiés, les rendant indépendants. copy.deepcopy({'a': [1]}) retourne {'a': [1]} où la liste imbriquée [1] est un nouvel objet liste indépendant. Contrairement à la copie superficielle, la copie profonde copie récursivement tous les objets imbriqués, donc les modifications des objets imbriqués dans la copie n'affectent pas l'original. C'est la solution au problème de la copie superficielle avec les objets mutables imbriqués.
-
-Fonction deepcopy() :
-• copy.deepcopy({'a': [1]}) = {'a': [1]} (copie profonde)
-• deepcopy() crée une copie profonde
-• Copie récursivement tous les objets imbriqués
-• Les objets imbriqués sont indépendants
-• Pas de références partagées
-
-Comment ça fonctionne :
-• copy.deepcopy({'a': [1]}) crée une copie profonde
-• Copie le dictionnaire externe
-• Copie récursivement la liste imbriquée [1]
-• Crée un nouvel objet liste (pas partagé)
-• Retourne la copie indépendante : {'a': [1]}
-
-Exemple :
-import copy
-a = {'a': [1]}
-b = copy.deepcopy(a) # b = {'a': [1]} (copie profonde)
-b['a'].append(2)     # Modifie la liste de b
-a                    # {'a': [1]} (inchangé, indépendant)
-b                    # {'a': [1, 2]} (modifié)
-
-Usages courants :
-• Créer des copies indépendantes : copy = copy.deepcopy(original)
-• Éviter les références partagées : deep = copy.deepcopy(nested)
-• Copie profonde
-• Objets imbriqués indépendants
-
-Exemple : copy.deepcopy({'a': [1]}) retourne {'a': [1]} où la liste imbriquée [1] est un nouvel objet liste indépendant car deepcopy() copie récursivement tous les objets imbriqués, les rendant totalement indépendants de l'original.`,
-  551: `Les compréhensions de dictionnaire permettent de créer des dictionnaires de façon concise. {x: x*2 for x in [1, 2, 3]} retourne {1: 2, 2: 4, 3: 6} car la compréhension itère sur [1, 2, 3] et crée des paires clé-valeur où chaque clé est x et chaque valeur est x*2.
-
-Concepts clés :
-• {x: x*2 for x in [1, 2, 3]} = {1: 2, 2: 4, 3: 6}
-• Syntaxe de compréhension : {key: value for item in iterable}
-• Itère sur [1, 2, 3]
-• Pour chaque x : crée la paire x: x*2
-• Retourne un nouveau dictionnaire
-
-Comment ça fonctionne :
-• La compréhension itère : x = 1, 2, 3
-• Pour x = 1 : crée la paire 1: 1*2 = 1: 2
-• Pour x = 2 : crée la paire 2: 2*2 = 2: 4
-• Pour x = 3 : crée la paire 3: 3*2 = 3: 6
-• Retourne : {1: 2, 2: 4, 3: 6}
-
-Exemple :
-{x: x*2 for x in [1, 2, 3]}        # {1: 2, 2: 4, 3: 6}
-{x: x**2 for x in [1, 2, 3]}       # {1: 1, 2: 4, 3: 9}
-{x: len(x) for x in ['a', 'ab', 'abc']} # {'a': 1, 'ab': 2, 'abc': 3}
-
-Usages courants :
-• Créer des dictionnaires : dict = {k: v for k, v in pairs}
-• Transformer des données : mapping = {x: transform(x) for x in items}
-• Création de dictionnaires
-• Construction efficace de dictionnaires
-
-Exemple : {x: x*2 for x in [1, 2, 3]} retourne {1: 2, 2: 4, 3: 6} car la compréhension de dictionnaire itère sur [1, 2, 3] et crée des paires clé-valeur où chaque clé est x et chaque valeur est x*2.`,
-  552: `Les compréhensions de dictionnaire fonctionnent avec tout itérable, y compris range(). {x: x**2 for x in range(3)} retourne {0: 0, 1: 1, 2: 4} car range(3) génère 0, 1, 2, et la compréhension crée des paires clé-valeur où chaque clé est x et chaque valeur est x**2 (x au carré).
-
-Concepts clés :
-• {x: x**2 for x in range(3)} = {0: 0, 1: 1, 2: 4}
-• range(3) génère : 0, 1, 2
-• Pour chaque x : crée la paire x: x**2
-• Retourne un nouveau dictionnaire
-• Fonctionne avec tout itérable
-
-Comment ça fonctionne :
-• range(3) génère : 0, 1, 2
-• Pour x = 0 : crée la paire 0: 0**2 = 0: 0
-• Pour x = 1 : crée la paire 1: 1**2 = 1: 1
-• Pour x = 2 : crée la paire 2: 2**2 = 2: 4
-• Retourne : {0: 0, 1: 1, 2: 4}
-
-Exemple :
-{x: x**2 for x in range(3)}        # {0: 0, 1: 1, 2: 4}
-{x: x*10 for x in range(5)}        # {0: 0, 1: 10, 2: 20, 3: 30, 4: 40}
-{x: chr(65+x) for x in range(3)}   # {0: 'A', 1: 'B', 2: 'C'}
-
-Usages courants :
-• Séquences numériques : dict = {x: f(x) for x in range(n)}
-• Générer des correspondances : mapping = {i: value for i in range(n)}
-• Dictionnaires basés sur range
-• Création séquentielle de dictionnaires
-
-Exemple : {x: x**2 for x in range(3)} retourne {0: 0, 1: 1, 2: 4} car range(3) génère 0, 1, 2, et la compréhension crée des paires clé-valeur où chaque clé est x et chaque valeur est x**2.`,
-  553: `Les compréhensions de dictionnaire peuvent itérer sur les éléments existants en utilisant .items(). {k: v*2 for k, v in {'a': 1, 'b': 2}.items()} retourne {'a': 2, 'b': 4} car .items() renvoie des tuples (clé, valeur), déballés en k et v, et la compréhension crée de nouvelles paires où les clés restent identiques mais les valeurs sont doublées.
-
-Concepts clés :
-• {k: v*2 for k, v in {'a': 1, 'b': 2}.items()} = {'a': 2, 'b': 4}
-• .items() renvoie des tuples (clé, valeur)
-• Déballage en k, v
-• Crée de nouvelles paires : k: v*2
-• Retourne le dictionnaire transformé
-
-Comment ça fonctionne :
-• {'a': 1, 'b': 2}.items() renvoie : ('a', 1), ('b', 2)
-• Déballage : k='a', v=1 et k='b', v=2
-• Pour ('a', 1) : crée la paire 'a': 1*2 = 'a': 2
-• Pour ('b', 2) : crée la paire 'b': 2*2 = 'b': 4
-• Retourne : {'a': 2, 'b': 4}
-
-Exemple :
-{k: v*2 for k, v in {'a': 1, 'b': 2}.items()}  # {'a': 2, 'b': 4}
-{k: v**2 for k, v in {'x': 3, 'y': 4}.items()} # {'x': 9, 'y': 16}
-{k: str(v) for k, v in {'a': 1, 'b': 2}.items()} # {'a': '1', 'b': '2'}
-
-Usages courants :
-• Transformer les valeurs : new = {k: transform(v) for k, v in old.items()}
-• Opérations sur les valeurs : updated = {k: v*2 for k, v in data.items()}
-• Transformation de dictionnaires
-• Modification des valeurs
-
-Exemple : {k: v*2 for k, v in {'a': 1, 'b': 2}.items()} retourne {'a': 2, 'b': 4} car la compréhension itère sur les éléments, déballant chaque tuple (clé, valeur), et crée de nouvelles paires où les valeurs sont doublées tandis que les clés restent identiques.`,
-  554: `Les compréhensions de dictionnaire peuvent inclure des filtres conditionnels avec if. {x: x for x in [1, 2, 3] if x > 1} retourne {2: 2, 3: 3} car la condition if x > 1 filtre les éléments, en n'incluant que les valeurs x supérieures à 1.
-
-Concepts clés :
-• {x: x for x in [1, 2, 3] if x > 1} = {2: 2, 3: 3}
-• La condition if filtre les éléments
-• N'inclut que les x où x > 1
-• Exclut 1, inclut 2 et 3
-• Retourne le dictionnaire filtré
-
-Comment ça fonctionne :
-• Itère sur [1, 2, 3]
-• Pour x = 1 : si 1 > 1 est False, ignorer
-• Pour x = 2 : si 2 > 1 est True, crée la paire 2: 2
-• Pour x = 3 : si 3 > 1 est True, crée la paire 3: 3
-• Retourne : {2: 2, 3: 3}
-
-Exemple :
-{x: x for x in [1, 2, 3] if x > 1}        # {2: 2, 3: 3}
-{x: x*2 for x in [1, 2, 3] if x % 2 == 0}  # {2: 4} (seulement pairs)
-{x: x for x in range(5) if x % 2 == 1}     # {1: 1, 3: 3} (seulement impairs)
-
-Usages courants :
-• Filtrer les dictionnaires : filtered = {k: v for k, v in items if condition}
-• Création conditionnelle : dict = {x: f(x) for x in items if predicate(x)}
-• Filtrage de dictionnaires
-• Création conditionnelle de dictionnaires
-
-Exemple : {x: x for x in [1, 2, 3] if x > 1} retourne {2: 2, 3: 3} car la condition if x > 1 filtre les éléments, en n'incluant que les valeurs supérieures à 1, donc 1 est exclu mais 2 et 3 sont inclus.`,
-  555: `Les compréhensions de dictionnaire peuvent utiliser des expressions ternaires dans la partie valeur. {x: 'even' if x%2==0 else 'odd' for x in [1, 2, 3]} retourne {1: 'odd', 2: 'even', 3: 'odd'} car l'expression ternaire 'even' if x%2==0 else 'odd' s'évalue à 'even' quand x est pair et 'odd' quand x est impair.
-
-Concepts clés :
-• {x: 'even' if x%2==0 else 'odd' for x in [1, 2, 3]} = {1: 'odd', 2: 'even', 3: 'odd'}
-• Ternaire : 'even' if x%2==0 else 'odd'
-• Évalue la condition pour chaque x
-• Retourne 'even' si pair, 'odd' si impair
-• Crée des valeurs conditionnelles
-
-Comment ça fonctionne :
-• Itère sur [1, 2, 3]
-• Pour x = 1 : 1%2==0 est False, valeur = 'odd', crée 1: 'odd'
-• Pour x = 2 : 2%2==0 est True, valeur = 'even', crée 2: 'even'
-• Pour x = 3 : 3%2==0 est False, valeur = 'odd', crée 3: 'odd'
-• Retourne : {1: 'odd', 2: 'even', 3: 'odd'}
-
-Exemple :
-{x: 'even' if x%2==0 else 'odd' for x in [1, 2, 3]}  # {1: 'odd', 2: 'even', 3: 'odd'}
-{x: 'big' if x > 5 else 'small' for x in [3, 7, 2]}  # {3: 'small', 7: 'big', 2: 'small'}
-{x: 'pos' if x > 0 else 'neg' for x in [-1, 1, 0]}   # {-1: 'neg', 1: 'pos', 0: 'neg'}
-
-Usages courants :
-• Valeurs conditionnelles : dict = {k: 'A' if condition else 'B' for k in items}
-• Correspondance de valeurs : mapping = {x: 'type1' if pred(x) else 'type2' for x in items}
-• Création conditionnelle de dictionnaires
-• Expressions ternaires dans les compréhensions
-
-Exemple : {x: 'even' if x%2==0 else 'odd' for x in [1, 2, 3]} retourne {1: 'odd', 2: 'even', 3: 'odd'} car l'expression ternaire s'évalue à 'even' quand x est pair et 'odd' quand x est impair, créant des valeurs conditionnelles dans le dictionnaire.`,
-  556: `Les compréhensions de dictionnaire peuvent transformer les clés avec des expressions. {str(x): x for x in [1, 2, 3]} retourne {'1': 1, '2': 2, '3': 3} car str(x) convertit chaque entier x en sa représentation chaîne, qui devient la clé, tandis que x reste la valeur.
-
-Concepts clés :
-• {str(x): x for x in [1, 2, 3]} = {'1': 1, '2': 2, '3': 3}
-• str(x) transforme la clé en chaîne
-• La valeur reste x (entier)
-• Crée des clés chaîne à partir de valeurs entières
-• Retourne le dictionnaire transformé
-
-Comment ça fonctionne :
-• Itère sur [1, 2, 3]
-• Pour x = 1 : str(1) = '1', crée la paire '1': 1
-• Pour x = 2 : str(2) = '2', crée la paire '2': 2
-• Pour x = 3 : str(3) = '3', crée la paire '3': 3
-• Retourne : {'1': 1, '2': 2, '3': 3}
-
-Exemple :
-{str(x): x for x in [1, 2, 3]}        # {'1': 1, '2': 2, '3': 3}
-{x: str(x) for x in [1, 2, 3]}         # {1: '1', 2: '2', 3: '3'} (transforme la valeur)
-{chr(65+x): x for x in range(3)}       # {'A': 0, 'B': 1, 'C': 2}
-
-Usages courants :
-• Transformation de clés : dict = {transform(k): v for k, v in items}
-• Conversion de type : mapping = {str(k): k for k in numbers}
-• Formatage de clés
-• Transformation de clés de dictionnaire
-
-Exemple : {str(x): x for x in [1, 2, 3]} retourne {'1': 1, '2': 2, '3': 3} car str(x) convertit chaque entier x en sa représentation chaîne pour la clé, en conservant l'entier comme valeur.`,
-  557: `Les compréhensions de dictionnaire peuvent avoir des boucles imbriquées et utiliser des tuples comme clés. {(x, y): x+y for x in [1, 2] for y in [3, 4]} retourne {(1, 3): 4, (1, 4): 5, (2, 3): 5, (2, 4): 6} car les boucles imbriquées itèrent sur toutes les combinaisons : pour chaque x dans [1, 2] et chaque y dans [3, 4], elle crée une paire clé-valeur où la clé est le tuple (x, y) et la valeur est x+y.
-
-Concepts clés :
-• {(x, y): x+y for x in [1, 2] for y in [3, 4]} = {(1, 3): 4, (1, 4): 5, (2, 3): 5, (2, 4): 6}
-• Boucles imbriquées : for x in [1, 2] for y in [3, 4]
-• Crée toutes les combinaisons
-• La clé est le tuple (x, y)
-• La valeur est x+y
-
-Comment ça fonctionne :
-• Boucle externe : x = 1, 2
-• Boucle interne : y = 3, 4
-• Combinaisons : (1,3), (1,4), (2,3), (2,4)
-• Pour (1, 3) : crée la paire (1, 3): 1+3 = (1, 3): 4
-• Pour (1, 4) : crée la paire (1, 4): 1+4 = (1, 4): 5
-• Pour (2, 3) : crée la paire (2, 3): 2+3 = (2, 3): 5
-• Pour (2, 4) : crée la paire (2, 4): 2+4 = (2, 4): 6
-• Retourne : {(1, 3): 4, (1, 4): 5, (2, 3): 5, (2, 4): 6}
-
-Exemple :
-{(x, y): x+y for x in [1, 2] for y in [3, 4]}  # {(1, 3): 4, (1, 4): 5, (2, 3): 5, (2, 4): 6}
-{(i, j): i*j for i in [1, 2] for j in [2, 3]}  # {(1, 2): 2, (1, 3): 3, (2, 2): 4, (2, 3): 6}
-
-Usages courants :
-• Produits cartésiens : dict = {(x, y): f(x, y) for x in xs for y in ys}
-• Correspondances de coordonnées : mapping = {(i, j): value for i in range(n) for j in range(m)}
-• Itération imbriquée
-• Clés tuple
-
-Exemple : {(x, y): x+y for x in [1, 2] for y in [3, 4]} retourne {(1, 3): 4, (1, 4): 5, (2, 3): 5, (2, 4): 6} car les boucles imbriquées créent toutes les combinaisons de x et y, en utilisant les tuples (x, y) comme clés et x+y comme valeurs.`,
-  558: `Les compréhensions de dictionnaire peuvent itérer sur des itérables zippés pour créer des paires clé-valeur. {x: y for x, y in zip([1, 2], [3, 4])} retourne {1: 3, 2: 4} car zip([1, 2], [3, 4]) associe les éléments des deux listes : (1, 3) et (2, 4), qui sont déballés en x et y, créant des paires de dictionnaire où x est la clé et y la valeur.
-
-Concepts clés :
-• {x: y for x, y in zip([1, 2], [3, 4])} = {1: 3, 2: 4}
-• zip([1, 2], [3, 4]) associe : (1, 3), (2, 4)
-• Déballage en x, y
-• Crée les paires x: y
-• Retourne le dictionnaire
-
-Comment ça fonctionne :
-• zip([1, 2], [3, 4]) renvoie : (1, 3), (2, 4)
-• Déballage : x=1, y=3 et x=2, y=4
-• Pour (1, 3) : crée la paire 1: 3
-• Pour (2, 4) : crée la paire 2: 4
-• Retourne : {1: 3, 2: 4}
-
-Exemple :
-{x: y for x, y in zip([1, 2], [3, 4])}        # {1: 3, 2: 4}
-{k: v for k, v in zip(['a', 'b'], [1, 2])}    # {'a': 1, 'b': 2}
-{str(i): i*2 for i, j in zip([1, 2], [3, 4])} # {'1': 2, '2': 4} (utilise i)
-
-Usages courants :
-• Créer à partir de listes : dict = {k: v for k, v in zip(keys, values)}
-• Associer des données : mapping = {x: y for x, y in zip(list1, list2)}
-• Dictionnaire à partir de listes parallèles
-• Création basée sur zip
-
-Exemple : {x: y for x, y in zip([1, 2], [3, 4])} retourne {1: 3, 2: 4} car zip() associe les éléments des deux listes, et la compréhension crée des paires de dictionnaire où le premier élément est la clé et le second la valeur.`,
-  559: `Les compréhensions de dictionnaire avec des itérables vides créent des dictionnaires vides. {x: x for x in []} retourne {} car lorsque l'itérable est vide, il n'y a pas d'éléments à parcourir, donc aucune paire clé-valeur n'est créée, ce qui donne un dictionnaire vide.
-
-Concepts clés :
-• {x: x for x in []} = {} (dictionnaire vide)
-• L'itérable vide [] n'a pas d'éléments
-• Aucune itération n'occurre
-• Aucune paire créée
-• Retourne un dictionnaire vide
-
-Comment ça fonctionne :
-• La compréhension itère sur []
-• Trouve aucun élément
-• Aucune itération n'occurre
-• Aucune paire clé-valeur créée
-• Retourne : {}
-
-Exemple :
-{x: x for x in []}              # {} (vide)
-{x: x*2 for x in []}            # {} (vide)
-{x: x for x in range(0)}        # {} (range vide)
-{k: v for k, v in [].items()}   # {} (vide, si [] avait items())
-
-Usages courants :
-• Résultats vides : dict = {k: v for k, v in items if condition} (peut être vide)
-• Création conditionnelle : result = {x: f(x) for x in items if pred(x)}
-• Création de dictionnaires vides
-• Cas limites des compréhensions
-
-Exemple : {x: x for x in []} retourne {} car lorsque l'itérable est vide, il n'y a pas d'éléments à parcourir, donc aucune paire clé-valeur n'est créée, ce qui donne un dictionnaire vide.`,
-  560: `Les compréhensions de dictionnaire avec conditions filtrent les éléments avant de créer les paires. {x: x*2 for x in [1, 2] if x > 0} retourne {1: 2, 2: 4} car la condition if x > 0 vérifie chaque élément, et puisque 1 et 2 sont supérieurs à 0, les deux passent le filtre et des paires sont créées.
-
-Concepts clés :
-• {x: x*2 for x in [1, 2] if x > 0} = {1: 2, 2: 4}
-• if x > 0 filtre les éléments
-• Les deux 1 et 2 passent la condition (tous deux > 0)
-• Crée des paires pour les deux : 1: 2, 2: 4
-• Retourne le dictionnaire filtré
-
-Comment ça fonctionne :
-• Itère sur [1, 2]
-• Pour x = 1 : si 1 > 0 est True, crée la paire 1: 1*2 = 1: 2
-• Pour x = 2 : si 2 > 0 est True, crée la paire 2: 2*2 = 2: 4
-• Les deux passent la condition
-• Retourne : {1: 2, 2: 4}
-
-Exemple :
-{x: x*2 for x in [1, 2] if x > 0}        # {1: 2, 2: 4} (tous passent)
-{x: x*2 for x in [-1, 1, 2] if x > 0}   # {1: 2, 2: 4} (-1 filtré)
-{x: x**2 for x in [1, 2, 3] if x % 2 == 0} # {2: 4} (seulement pairs)
-
-Usages courants :
-• Filtrer et transformer : dict = {k: transform(v) for k, v in items if condition}
-• Création conditionnelle : result = {x: f(x) for x in items if predicate(x)}
-• Filtrage de dictionnaires
-• Création conditionnelle de dictionnaires
-
-Exemple : {x: x*2 for x in [1, 2] if x > 0} retourne {1: 2, 2: 4} car la condition if x > 0 filtre les éléments, et puisque 1 et 2 sont supérieurs à 0, les deux passent le filtre et des paires sont créées avec les valeurs doublées.`,
-  561: `Les dictionnaires sont comparés par contenu, pas par ordre d'insertion. {'a': 1, 'b': 2} == {'b': 2, 'a': 1} retourne True car les deux dictionnaires contiennent les mêmes paires clé-valeur : 'a': 1 et 'b': 2. L'opérateur == vérifie si les dictionnaires ont les mêmes clés et les mêmes valeurs pour chaque clé, quel que soit l'ordre d'insertion.
-
-Concepts clés :
-• {'a': 1, 'b': 2} == {'b': 2, 'a': 1} = True
-• == compare le contenu (clés et valeurs)
-• L'ordre n'a pas d'importance pour l'égalité
-• Mêmes clés et mêmes valeurs = égaux
-• Retourne True (égaux)
-
-Comment ça fonctionne :
-• {'a': 1, 'b': 2} a les clés : 'a', 'b' avec valeurs : 1, 2
-• {'b': 2, 'a': 1} a les clés : 'a', 'b' avec valeurs : 1, 2
-• Mêmes clés : 'a', 'b' (ordre ignoré)
-• Mêmes valeurs : 1, 2 (clés correspondantes)
-• Retourne : True (égaux)
-
-Exemple :
-{'a': 1, 'b': 2} == {'b': 2, 'a': 1}  # True (même contenu)
-{'a': 1} == {'b': 1}                  # False (clés différentes)
-{'a': 1} == {'a': 2}                  # False (valeurs différentes)
-
-Usages courants :
-• Comparer des dictionnaires : if dict1 == dict2:
-• Égalité de contenu : equal = (items1 == items2)
-• Comparaison de dictionnaires
-• Vérification d'égalité
-
-Exemple : {'a': 1, 'b': 2} == {'b': 2, 'a': 1} retourne True car les deux dictionnaires contiennent les mêmes paires clé-valeur, et la comparaison d'égalité vérifie le contenu quel que soit l'ordre.`,
-  562: `Les dictionnaires avec des valeurs différentes pour les mêmes clés ne sont pas égaux. {'a': 1} == {'a': 2} retourne False car les deux dictionnaires ont la même clé 'a', mais des valeurs différentes : 1 vs 2. L'opérateur == vérifie si toutes les clés correspondent et si toutes les valeurs correspondantes sont égales.
-
-Concepts clés :
-• {'a': 1} == {'a': 2} = False
-• Les deux ont la clé 'a'
-• Valeurs différentes : 1 vs 2
-• Valeurs différentes = pas égaux
-• Retourne False (pas égaux)
-
-Comment ça fonctionne :
-• {'a': 1} a la clé 'a' avec valeur 1
-• {'a': 2} a la clé 'a' avec valeur 2
-• Mêmes clés : 'a' (correspond)
-• Valeurs différentes : 1 vs 2 (ne correspond pas)
-• Retourne : False (pas égaux)
-
-Exemple :
-{'a': 1} == {'a': 2}                  # False (valeurs différentes)
-{'a': 1, 'b': 2} == {'a': 1, 'b': 3} # False (valeurs différentes)
-{'a': 1} == {'a': 1}                  # True (valeurs identiques)
-
-Usages courants :
-• Comparer des dictionnaires : if dict1 == dict2:
-• Vérification des valeurs : equal = (items1 == items2)
-• Comparaison de dictionnaires
-• Validation d'égalité
-
-Exemple : {'a': 1} == {'a': 2} retourne False car les deux dictionnaires ont la même clé 'a' mais des valeurs différentes (1 vs 2), donc ils ne sont pas égaux.`,
-  563: `Les dictionnaires avec des ensembles de clés différents ne sont pas égaux. {'a': 1} == {'a': 1, 'b': 2} retourne False car le premier dictionnaire n'a que la clé 'a', alors que le second a les clés 'a' et 'b'. L'opérateur == vérifie si les deux dictionnaires ont exactement les mêmes clés.
-
-Concepts clés :
-• {'a': 1} == {'a': 1, 'b': 2} = False
-• Premier dict a les clés : 'a'
-• Second dict a les clés : 'a', 'b'
-• Ensembles de clés différents = pas égaux
-• Retourne False (pas égaux)
-
-Comment ça fonctionne :
-• {'a': 1} a les clés : 'a' (une clé)
-• {'a': 1, 'b': 2} a les clés : 'a', 'b' (deux clés)
-• Ensembles de clés différents : {'a'} vs {'a', 'b'}
-• Ensembles de clés différents (même si les clés communes correspondent)
-• Retourne : False (pas égaux)
-
-Exemple :
-{'a': 1} == {'a': 1, 'b': 2}         # False (clés différentes)
-{'a': 1, 'b': 2} == {'a': 1}         # False (clés différentes)
-{'a': 1} == {'a': 1}                 # True (mêmes clés et valeurs)
-
-Usages courants :
-• Comparer des dictionnaires : if dict1 == dict2:
-• Vérification des clés : equal = (items1 == items2)
-• Comparaison de dictionnaires
-• Validation d'égalité
-
-Exemple : {'a': 1} == {'a': 1, 'b': 2} retourne False car les dictionnaires ont des ensembles de clés différents (l'un n'a que 'a', l'autre 'a' et 'b'), donc ils ne sont pas égaux.`,
-  564: `L'opérateur != vérifie si deux dictionnaires sont différents. {'a': 1} != {'a': 2} retourne True car != est la négation de == - il retourne True quand les dictionnaires ne sont pas égaux. Puisque {'a': 1} et {'a': 2} ont la même clé 'a' mais des valeurs différentes (1 vs 2), ils ne sont pas égaux, donc != retourne True.
-
-Concepts clés :
-• {'a': 1} != {'a': 2} = True
-• != vérifie si les dictionnaires diffèrent
-• Même clé 'a', valeurs différentes : 1 vs 2
-• Valeurs différentes = pas égaux
-• Retourne True (pas égaux)
-
-Comment ça fonctionne :
-• {'a': 1} a la clé 'a' avec valeur 1
-• {'a': 2} a la clé 'a' avec valeur 2
-• Mêmes clés : 'a' (correspond)
-• Valeurs différentes : 1 vs 2 (ne correspond pas)
-• Pas égaux, donc != retourne : True
-
-Exemple :
-{'a': 1} != {'a': 2}                 # True (valeurs différentes)
-{'a': 1} != {'a': 1}                 # False (valeurs identiques)
-{'a': 1} != {'b': 1}                 # True (clés différentes)
-
-Usages courants :
-• Vérifier les différences : if dict1 != dict2:
-• Détection de différences : different = (items1 != items2)
-• Comparaison de dictionnaires
-• Vérification d'inégalité
-
-Exemple : {'a': 1} != {'a': 2} retourne True car != vérifie si les dictionnaires diffèrent, et puisque {'a': 1} et {'a': 2} ont la même clé mais des valeurs différentes, ils ne sont pas égaux, donc != retourne True.`,
-  565: `L'opérateur is vérifie si deux variables référencent le même objet, pas s'ils ont le même contenu. {'a': 1} is {'a': 1} retourne False car chaque littéral de dictionnaire crée un nouvel objet dictionnaire, donc même si les deux dictionnaires ont le même contenu, ce sont des objets différents en mémoire.
-
-Concepts clés :
-• {'a': 1} is {'a': 1} = False
-• is vérifie l'identité d'objet (même objet)
-• Chaque littéral dict crée un nouvel objet
-• Objets différents (même contenu)
-• Retourne False (objets différents)
-
-Comment ça fonctionne :
-• {'a': 1} crée un nouvel objet dictionnaire A
-• {'a': 1} crée un nouvel objet dictionnaire B
-• Les objets A et B sont différents (adresses mémoire différentes)
-• is vérifie si même objet (même adresse mémoire)
-• Objets différents, donc is retourne : False
-
-Exemple :
-{'a': 1} is {'a': 1}                 # False (objets différents)
-{'a': 1} == {'a': 1}                 # True (même contenu)
-a = {'a': 1}
-b = a
-a is b                                # True (même objet)
-
-Usages courants :
-• Vérifier l'identité d'objet : if dict1 is dict2:
-• Vérification de référence : same = (items1 is items2)
-• Identité d'objet
-• Égalité de référence
-
-Exemple : {'a': 1} is {'a': 1} retourne False car chaque littéral de dictionnaire crée un nouvel objet, donc même si les deux dictionnaires ont le même contenu, ce sont des objets différents, et is vérifie l'identité d'objet, pas l'égalité de contenu.`,
-  566: `Un objet est toujours identique à lui-même. Si d = {'a': 1} et ensuite d is d, cela retourne True car d is d signifie « d est-il le même objet que d », ce qui est toujours vrai. L'opérateur is vérifie si deux variables référencent le même objet, et une variable se réfère toujours à elle-même.
-
-Concepts clés :
-• d = {'a': 1}; d is d = True
-• is vérifie l'identité d'objet (même objet)
-• d is d signifie « d est-il le même que d »
-• Toujours True (objet identique à lui-même)
-• Retourne True (même objet)
-
-Comment ça fonctionne :
-• d = {'a': 1} assigne l'objet dictionnaire à d
-• d is d vérifie si d est le même objet que d
-• Même variable (même référence)
-• Même objet (même adresse mémoire)
-• Retourne : True (toujours vrai)
-
-Exemple :
-d = {'a': 1}
-d is d                                # True (toujours vrai)
-a = {'a': 1}
-b = {'a': 1}
-a is b                                # False (objets différents)
-a is a                                # True (toujours vrai)
-
-Usages courants :
-• Vérifier l'auto-identité : if obj is obj:
-• Validation de référence : same = (items is items)
-• Vérification d'auto-identité
-• Toujours vrai pour la même variable
-
-Exemple : Si d = {'a': 1} et ensuite d is d, cela retourne True car d est toujours le même objet que d - un objet est toujours identique à lui-même.`,
-  567: `Les dictionnaires vides sont falsy en contexte booléen. bool({}) retourne False car un dictionnaire vide n'a aucune paire clé-valeur, donc il s'évalue à False en contexte booléen. C'est cohérent avec les règles de vérité Python - les collections vides sont falsy.
-
-Concepts clés :
-• bool({}) = False (falsy)
-• Le dictionnaire vide n'a pas de paires
-• Pas de contenu = falsy
-• Retourne False en contexte booléen
-• Utile pour vérifier si le dict a du contenu
-
-Comment ça fonctionne :
-• bool() appelé avec le dictionnaire vide {}
-• Vérifie si le dictionnaire a du contenu
-• Trouve aucune paire clé-valeur
-• Pas de contenu = falsy
-• Retourne : False
-
-Exemple :
-bool({})                              # False (falsy)
-bool({'a': 1})                        # True (truthy)
-if {}:                                # False (la condition est False)
-    print("not empty")
-
-Usages courants :
-• Vérifier si vide : if dict: ... (falsy si vide)
-• Validation : if not dict: return {}
-• Vérification du vide
-• Contrôle de vérité
-
-Exemple : bool({}) retourne False car les dictionnaires vides sont falsy en contexte booléen - ils n'ont pas de contenu, donc ils s'évaluent à False.`,
-  568: `Les dictionnaires non vides sont truthy en contexte booléen. bool({'a': 1}) retourne True car un dictionnaire non vide a au moins une paire clé-valeur, donc il s'évalue à True en contexte booléen. C'est cohérent avec les règles de vérité Python - les collections non vides sont truthy.
-
-Concepts clés :
-• bool({'a': 1}) = True (truthy)
-• Le dictionnaire non vide a des paires
-• A du contenu = truthy
-• Retourne True en contexte booléen
-• Utile pour vérifier si le dict a du contenu
-
-Comment ça fonctionne :
-• bool() appelé avec le dictionnaire non vide {'a': 1}
-• Vérifie si le dictionnaire a du contenu
-• Trouve au moins une paire clé-valeur : 'a': 1
-• A du contenu = truthy
-• Retourne : True
-
-Exemple :
-bool({'a': 1})                        # True (truthy)
-bool({})                              # False (falsy)
-if {'a': 1}:                          # True (la condition est True)
-    print("not empty")
-
-Usages courants :
-• Vérifier si non vide : if dict: ... (truthy si non vide)
-• Validation : if dict: process(dict)
-• Vérification de contenu
-• Contrôle de vérité
-
-Exemple : bool({'a': 1}) retourne True car les dictionnaires non vides sont truthy en contexte booléen - ils ont du contenu, donc ils s'évaluent à True.`,
-  569: `Les dictionnaires ne supportent pas l'opérateur + pour la concaténation. {'a': 1, 'b': 2} + {'c': 3} lève une TypeError car l'opérateur + n'est pas défini pour les dictionnaires. Pour fusionner des dictionnaires, utilisez | (Python 3.9+), ** ou update().
-
-Concepts clés :
-• {'a': 1, 'b': 2} + {'c': 3} lève TypeError
-• L'opérateur + n'est pas supporté pour les dictionnaires
-• TypeError: unsupported operand type(s) for +: 'dict' and 'dict'
-• Utiliser | ou update() ou ** pour fusionner
-• Impossible de concaténer des dictionnaires
-
-Comment ça fonctionne :
-• {'a': 1, 'b': 2} + {'c': 3} tente d'ajouter des dictionnaires
-• Python cherche l'implémentation de + sur dict
-• Trouve aucun opérateur + pour le type dict
-• Lève TypeError
-• Impossible d'effectuer l'opération
-
-Exemple :
-{'a': 1, 'b': 2} + {'c': 3}           # TypeError
-{'a': 1, 'b': 2} | {'c': 3}           # {'a': 1, 'b': 2, 'c': 3} (fonctionne)
-{**{'a': 1, 'b': 2}, **{'c': 3}}      # {'a': 1, 'b': 2, 'c': 3} (fonctionne)
-
-Usages courants :
-• Fusionner des dictionnaires : utiliser dict1 | dict2 (Python 3.9+)
-• Fusion : utiliser {**dict1, **dict2}
-• Fusion : utiliser dict1.update(dict2)
-• Utiliser la méthode appropriée pour fusionner
-
-Exemple : {'a': 1, 'b': 2} + {'c': 3} lève une TypeError car les dictionnaires ne supportent pas l'opérateur + - utilisez l'opérateur |, le déballage ** ou update() pour fusionner des dictionnaires.`,
-  570: `Les dictionnaires ne supportent pas l'opérateur * pour la répétition. {'a': 1} * 2 lève une TypeError car l'opérateur * n'est pas défini pour les dictionnaires. L'opérateur * fonctionne pour les listes, tuples et chaînes, mais pas pour les dictionnaires. Les dictionnaires ont des clés uniques, donc répéter un dictionnaire n'aurait pas de sens.
-
-Concepts clés :
-• {'a': 1} * 2 lève TypeError
-• L'opérateur * n'est pas supporté pour les dictionnaires
-• TypeError: unsupported operand type(s) for *: 'dict' and 'int'
-• Impossible de répéter des dictionnaires (exigence de clés uniques)
-• Utiliser d'autres méthodes pour dupliquer
-
-Comment ça fonctionne :
-• {'a': 1} * 2 tente de multiplier le dictionnaire
-• Python cherche l'implémentation de * sur dict
-• Trouve aucun opérateur * pour le type dict
-• Lève TypeError
-• Impossible d'effectuer l'opération
-
-Exemple :
-{'a': 1} * 2                          # TypeError
-[1, 2] * 2                            # [1, 2, 1, 2] (fonctionne pour les listes)
-{'a': 1, 'b': 2} * 3                  # TypeError
-
-Usages courants :
-• Copier des dictionnaires : utiliser dict.copy() ou dict(dict)
-• Fusionner des dictionnaires : utiliser dict1 | dict2 ou {**dict1, **dict2}
-• Ne pas utiliser * pour les dictionnaires
-• Utiliser les méthodes appropriées
-
-Exemple : {'a': 1} * 2 lève une TypeError car les dictionnaires ne supportent pas l'opérateur * - les dictionnaires ont des clés uniques, donc la répétition n'a pas de sens, et vous devriez utiliser copy() ou dict() pour créer des copies.`,
-  571: `Les vues de dictionnaire sont dynamiques - elles reflètent les modifications du dictionnaire. Si d = {'a': 1, 'b': 2}, k = d.keys(), et ensuite d['c'] = 3, list(k) retourne ['a', 'b', 'c'] car la vue keys() reflète les modifications du dictionnaire. Quand vous ajoutez une nouvelle clé 'c', la vue l'inclut automatiquement lors de l'itération ou de la conversion en liste.
-
-Concepts clés :
-• d = {'a': 1, 'b': 2}; k = d.keys(); d['c'] = 3; list(k) = ['a', 'b', 'c']
-• keys() crée une vue dynamique
-• La vue reflète les modifications du dictionnaire
-• L'ajout de 'c' met à jour la vue
-• Retourne les clés courantes : ['a', 'b', 'c']
-
-Comment ça fonctionne :
-• d = {'a': 1, 'b': 2} crée le dictionnaire
-• k = d.keys() crée une vue (pas un instantané)
-• d['c'] = 3 ajoute la nouvelle clé 'c'
-• La vue inclut automatiquement 'c' (dynamique)
-• list(k) convertit la vue : ['a', 'b', 'c']
-
-Exemple :
-d = {'a': 1, 'b': 2}
-k = d.keys()           # dict_keys(['a', 'b'])
-d['c'] = 3             # Ajoute 'c'
-list(k)                # ['a', 'b', 'c'] (inclut 'c')
-
-Usages courants :
-• Vues dynamiques : k = dict.keys() (reflète les changements)
-• Itération en direct : for key in dict.keys(): (toujours à jour)
-• Surveillance de dictionnaires
-• Conscience du comportement des vues
-
-Exemple : Si d = {'a': 1, 'b': 2}, k = d.keys(), et ensuite d['c'] = 3, list(k) retourne ['a', 'b', 'c'] car la vue keys() reflète les modifications du dictionnaire, donc elle inclut la clé nouvellement ajoutée 'c'.`,
-  572: `Les vues de dictionnaire sont dynamiques - elles reflètent les modifications du dictionnaire. Si d = {'a': 1}, v = d.values(), et ensuite d['b'] = 2, list(v) retourne [1, 2] car la vue values() reflète les modifications. Quand vous ajoutez la paire 'b': 2, la vue inclut automatiquement la nouvelle valeur 2.
-
-Concepts clés :
-• d = {'a': 1}; v = d.values(); d['b'] = 2; list(v) = [1, 2]
-• values() crée une vue dynamique
-• La vue reflète les modifications du dictionnaire
-• L'ajout de 'b': 2 met à jour la vue
-• Retourne les valeurs courantes : [1, 2]
-
-Comment ça fonctionne :
-• d = {'a': 1} crée le dictionnaire
-• v = d.values() crée une vue (pas un instantané)
-• d['b'] = 2 ajoute la paire 'b': 2
-• La vue inclut automatiquement 2 (dynamique)
-• list(v) convertit la vue : [1, 2]
-
-Exemple :
-d = {'a': 1}
-v = d.values()         # dict_values([1])
-d['b'] = 2             # Ajoute 'b': 2
-list(v)                # [1, 2] (inclut 2)
-
-Usages courants :
-• Vues dynamiques : v = dict.values() (reflète les changements)
-• Itération en direct : for value in dict.values(): (toujours à jour)
-• Surveillance de dictionnaires
-• Conscience du comportement des vues
-
-Exemple : Si d = {'a': 1}, v = d.values(), et ensuite d['b'] = 2, list(v) retourne [1, 2] car la vue values() reflète les modifications du dictionnaire, donc elle inclut la valeur nouvellement ajoutée 2.`,
-  573: `Les vues de dictionnaire sont dynamiques - elles reflètent les modifications du dictionnaire. Si d = {'a': 1}, i = d.items(), et ensuite d['b'] = 2, list(i) retourne [('a', 1), ('b', 2)] car la vue items() reflète les modifications. Quand vous ajoutez la paire 'b': 2, la vue inclut automatiquement la nouvelle paire ('b', 2).
-
-Concepts clés :
-• d = {'a': 1}; i = d.items(); d['b'] = 2; list(i) = [('a', 1), ('b', 2)]
-• items() crée une vue dynamique
-• La vue reflète les modifications du dictionnaire
-• L'ajout de 'b': 2 met à jour la vue
-• Retourne les paires courantes : [('a', 1), ('b', 2)]
-
-Comment ça fonctionne :
-• d = {'a': 1} crée le dictionnaire
-• i = d.items() crée une vue (pas un instantané)
-• d['b'] = 2 ajoute la paire 'b': 2
-• La vue inclut automatiquement ('b', 2) (dynamique)
-• list(i) convertit la vue : [('a', 1), ('b', 2)]
-
-Exemple :
-d = {'a': 1}
-i = d.items()          # dict_items([('a', 1)])
-d['b'] = 2             # Ajoute 'b': 2
-list(i)                # [('a', 1), ('b', 2)] (inclut ('b', 2))
-
-Usages courants :
-• Vues dynamiques : i = dict.items() (reflète les changements)
-• Itération en direct : for k, v in dict.items(): (toujours à jour)
-• Surveillance de dictionnaires
-• Conscience du comportement des vues
-
-Exemple : Si d = {'a': 1}, i = d.items(), et ensuite d['b'] = 2, list(i) retourne [('a', 1), ('b', 2)] car la vue items() reflète les modifications du dictionnaire, donc elle inclut la paire nouvellement ajoutée ('b', 2).`,
-  574: `Itérer directement sur un dictionnaire itère sur ses clés. for k in {'a': 1, 'b': 2}: print(k) affiche 'a' puis 'b' car lorsqu'on itère sur un dictionnaire dans une boucle for, Python itère sur les clés, pas les valeurs ni les paires clé-valeur. C'est équivalent à itérer sur .keys().
-
-Concepts clés :
-• for k in {'a': 1, 'b': 2}: print(k) affiche 'a' puis 'b'
-• Itérer le dict itère sur les clés
-• Affiche les clés : 'a', 'b'
-• Pas les valeurs ni les paires
-• Équivalent à for k in dict.keys():
-
-Comment ça fonctionne :
-• for k in {'a': 1, 'b': 2} itère sur le dictionnaire
-• Python itère sur les clés : 'a', 'b'
-• Première itération : k = 'a', affiche 'a'
-• Deuxième itération : k = 'b', affiche 'b'
-• Affiche : 'a' puis 'b'
-
-Exemple :
-for k in {'a': 1, 'b': 2}:
-    print(k)           # Affiche : 'a' puis 'b'
-for k in {'a': 1, 'b': 2}.keys():
-    print(k)           # Même : 'a' puis 'b'
-
-Usages courants :
-• Itérer les clés : for key in dict: (raccourci)
-• Itération de clés : for k in items: (itère les clés)
-• Accès aux clés de dictionnaire
-• Motif d'itération courant
-
-Exemple : for k in {'a': 1, 'b': 2}: print(k) affiche 'a' puis 'b' car itérer directement sur un dictionnaire itère sur ses clés, pas ses valeurs ni ses paires clé-valeur.`,
-  575: `Itérer sur .values() itère sur les valeurs du dictionnaire. for v in {'a': 1, 'b': 2}.values(): print(v) affiche 1 puis 2 car .values() retourne une vue de toutes les valeurs, et itérer sur cette vue donne les valeurs, pas les clés. C'est ainsi qu'on itère spécifiquement sur les valeurs.
-
-Concepts clés :
-• for v in {'a': 1, 'b': 2}.values(): print(v) affiche 1 puis 2
-• .values() retourne une vue des valeurs
-• Itérer la vue donne les valeurs
-• Affiche les valeurs : 1, 2
-• Pas les clés ni les paires
-
-Comment ça fonctionne :
-• {'a': 1, 'b': 2}.values() retourne la vue : [1, 2]
-• for v in view itère sur les valeurs
-• Première itération : v = 1, affiche 1
-• Deuxième itération : v = 2, affiche 2
-• Affiche : 1 puis 2
-
-Exemple :
-for v in {'a': 1, 'b': 2}.values():
-    print(v)           # Affiche : 1 puis 2
-for v in {'x': 10, 'y': 20}.values():
-    print(v)           # Affiche : 10 puis 20
-
-Usages courants :
-• Itérer les valeurs : for value in dict.values():
-• Itération de valeurs : for v in items.values(): (itère les valeurs)
-• Accès aux valeurs de dictionnaire
-• Itération spécifique aux valeurs
-
-Exemple : for v in {'a': 1, 'b': 2}.values(): print(v) affiche 1 puis 2 car itérer sur .values() itère sur les valeurs du dictionnaire, pas ses clés ni ses paires clé-valeur.`,
-  576: `Itérer sur .items() itère sur les paires clé-valeur et les déballle. for k, v in {'a': 1, 'b': 2}.items(): print(k, v) affiche 'a' 1 puis 'b' 2 car .items() retourne une vue de tuples (clé, valeur), et itérer avec k, v déballle chaque tuple, assignant la clé à k et la valeur à v. C'est ainsi qu'on itère sur les clés et valeurs ensemble.
-
-Concepts clés :
-• for k, v in {'a': 1, 'b': 2}.items(): print(k, v) affiche 'a' 1 puis 'b' 2
-• .items() retourne une vue de tuples (clé, valeur)
-• k, v déballle chaque tuple
-• k reçoit la clé, v reçoit la valeur
-• Affiche les clés et valeurs ensemble
-
-Comment ça fonctionne :
-• {'a': 1, 'b': 2}.items() retourne la vue : [('a', 1), ('b', 2)]
-• for k, v in view déballle chaque tuple
-• Première itération : k='a', v=1, affiche 'a' 1
-• Deuxième itération : k='b', v=2, affiche 'b' 2
-• Affiche : 'a' 1 puis 'b' 2
-
-Exemple :
-for k, v in {'a': 1, 'b': 2}.items():
-    print(k, v)        # Affiche : 'a' 1 puis 'b' 2
-for key, value in {'x': 10, 'y': 20}.items():
-    print(key, value)  # Affiche : 'x' 10 puis 'y' 20
-
-Usages courants :
-• Itérer les paires : for k, v in dict.items():
-• Itération clé-valeur : for key, value in items.items(): (itère les paires)
-• Accès aux paires de dictionnaire
-• Clés et valeurs ensemble
-
-Exemple : for k, v in {'a': 1, 'b': 2}.items(): print(k, v) affiche 'a' 1 puis 'b' 2 car itérer sur .items() avec déballage itère sur les paires clé-valeur, assignant la clé à k et la valeur à v.`,
-  577: `La fonction list() convertit un dictionnaire en liste de ses clés. list({'a': 1, 'b': 2}) retourne ['a', 'b'] car list() itère sur le dictionnaire, qui itère sur les clés, et collecte ces clés dans une liste. C'est équivalent à list(dict.keys()).
-
-Concepts clés :
-• list({'a': 1, 'b': 2}) = ['a', 'b']
-• list() itère sur le dictionnaire
-• L'itération du dictionnaire donne les clés
-• Collecte les clés dans une liste
-• Retourne une liste de clés
-
-Comment ça fonctionne :
-• list() appelé avec {'a': 1, 'b': 2}
-• Itère sur le dictionnaire (clés : 'a', 'b')
-• Collecte les clés : 'a', 'b'
-• Retourne une nouvelle liste : ['a', 'b']
-• Même que list(dict.keys())
-
-Exemple :
-list({'a': 1, 'b': 2})                # ['a', 'b'] (clés)
-list({'a': 1, 'b': 2}.keys())         # ['a', 'b'] (même)
-list({'x': 10, 'y': 20})              # ['x', 'y'] (clés)
-
-Usages courants :
-• Obtenir la liste des clés : key_list = list(dict)
-• Convertir les clés : keys = list(items)
-• Création de liste de clés
-• Extraction des clés de dictionnaire
-
-Exemple : list({'a': 1, 'b': 2}) retourne ['a', 'b'] car list() itère sur le dictionnaire, qui itère sur les clés, et collecte ces clés dans une liste.`,
-  578: `La fonction tuple() convertit un dictionnaire en tuple de ses clés. tuple({'a': 1, 'b': 2}) retourne ('a', 'b') car tuple() itère sur le dictionnaire, qui itère sur les clés, et collecte ces clés dans un tuple. C'est équivalent à tuple(dict.keys()).
-
-Concepts clés :
-• tuple({'a': 1, 'b': 2}) = ('a', 'b')
-• tuple() itère sur le dictionnaire
-• L'itération du dictionnaire donne les clés
-• Collecte les clés dans un tuple
-• Retourne un tuple de clés
-
-Comment ça fonctionne :
-• tuple() appelé avec {'a': 1, 'b': 2}
-• Itère sur le dictionnaire (clés : 'a', 'b')
-• Collecte les clés : 'a', 'b'
-• Retourne un nouveau tuple : ('a', 'b')
-• Même que tuple(dict.keys())
-
-Exemple :
-tuple({'a': 1, 'b': 2})               # ('a', 'b') (clés)
-tuple({'a': 1, 'b': 2}.keys())        # ('a', 'b') (même)
-tuple({'x': 10, 'y': 20})             # ('x', 'y') (clés)
-
-Usages courants :
-• Obtenir le tuple des clés : key_tuple = tuple(dict)
-• Convertir les clés : keys = tuple(items)
-• Création de tuple de clés
-• Extraction des clés de dictionnaire
-
-Exemple : tuple({'a': 1, 'b': 2}) retourne ('a', 'b') car tuple() itère sur le dictionnaire, qui itère sur les clés, et collecte ces clés dans un tuple.`,
-  579: `La fonction set() convertit un dictionnaire en ensemble de ses clés. set({'a': 1, 'b': 2}) retourne {'a', 'b'} car set() itère sur le dictionnaire, qui itère sur les clés, et collecte ces clés dans un ensemble. C'est équivalent à set(dict.keys()).
-
-Concepts clés :
-• set({'a': 1, 'b': 2}) = {'a', 'b'}
-• set() itère sur le dictionnaire
-• L'itération du dictionnaire donne les clés
-• Collecte les clés dans un ensemble
-• Retourne un ensemble de clés
-
-Comment ça fonctionne :
-• set() appelé avec {'a': 1, 'b': 2}
-• Itère sur le dictionnaire (clés : 'a', 'b')
-• Collecte les clés : 'a', 'b'
-• Retourne un nouvel ensemble : {'a', 'b'}
-• Même que set(dict.keys())
-
-Exemple :
-set({'a': 1, 'b': 2})                 # {'a', 'b'} (clés)
-set({'a': 1, 'b': 2}.keys())          # {'a', 'b'} (même)
-set({'x': 10, 'y': 20})               # {'x', 'y'} (clés)
-
-Usages courants :
-• Obtenir l'ensemble des clés : key_set = set(dict)
-• Convertir les clés : keys = set(items)
-• Création d'ensemble de clés
-• Extraction des clés de dictionnaire
-
-Exemple : set({'a': 1, 'b': 2}) retourne {'a', 'b'} car set() itère sur le dictionnaire, qui itère sur les clés, et collecte ces clés dans un ensemble.`,
-  580: `La fonction sorted() trie un dictionnaire par ses clés et retourne une liste des clés triées. sorted({'c': 3, 'a': 1, 'b': 2}) retourne ['a', 'b', 'c'] car sorted() itère sur le dictionnaire, qui itère sur les clés, et trie ces clés. C'est équivalent à sorted(dict.keys()).
-
-Concepts clés :
-• sorted({'c': 3, 'a': 1, 'b': 2}) = ['a', 'b', 'c']
-• sorted() itère sur le dictionnaire
-• L'itération du dictionnaire donne les clés
-• Trie les clés alphabétiquement
-• Retourne une liste triée des clés
-
-Comment ça fonctionne :
-• sorted() appelé avec {'c': 3, 'a': 1, 'b': 2}
-• Itère sur le dictionnaire (clés : 'c', 'a', 'b')
-• Trie les clés : 'a' < 'b' < 'c'
-• Retourne la liste triée : ['a', 'b', 'c']
-• Même que sorted(dict.keys())
-
-Exemple :
-sorted({'c': 3, 'a': 1, 'b': 2})      # ['a', 'b', 'c'] (clés triées)
-sorted({'x': 10, 'a': 1, 'z': 20})    # ['a', 'x', 'z'] (clés triées)
-sorted({'3': 3, '1': 1, '2': 2})      # ['1', '2', '3'] (clés triées)
-
-Usages courants :
-• Trier les clés : sorted_keys = sorted(dict)
-• Tri des clés : keys = sorted(items)
-• Tri de liste de clés
-• Ordre des clés de dictionnaire
-
-Exemple : sorted({'c': 3, 'a': 1, 'b': 2}) retourne ['a', 'b', 'c'] car sorted() itère sur le dictionnaire, qui itère sur les clés, et trie ces clés alphabétiquement dans une liste.`,
-  581: `La méthode fromkeys() est une méthode de classe qui crée un dictionnaire à partir d'un itérable de clés. {'a': 1}.fromkeys(['a', 'b']) retourne {'a': None, 'b': None} car fromkeys() est une méthode de classe qui ignore le dictionnaire d'instance et crée un nouveau dictionnaire avec les clés données. Quand aucune valeur n'est fournie, toutes les valeurs valent None par défaut.
-
-Concepts clés :
-• {'a': 1}.fromkeys(['a', 'b']) = {'a': None, 'b': None}
-• fromkeys() est une méthode de classe (ignore l'instance)
-• Crée un nouveau dictionnaire avec les clés données
-• Les valeurs valent None par défaut si non fourni
-• Utile pour l'initialisation
-
-Comment ça fonctionne :
-• fromkeys(['a', 'b']) appelé sur {'a': 1}
-• Ignore le dictionnaire d'instance {'a': 1}
-• Crée un nouveau dictionnaire avec les clés : 'a', 'b'
-• Les valeurs valent None par défaut (non fourni)
-• Retourne : {'a': None, 'b': None}
-
-Exemple :
-{'a': 1}.fromkeys(['a', 'b'])         # {'a': None, 'b': None}
-dict.fromkeys(['a', 'b'])             # {'a': None, 'b': None} (même)
-{'x': 10}.fromkeys(['x', 'y', 'z'])  # {'x': None, 'y': None, 'z': None}
-
-Usages courants :
-• Initialiser des dictionnaires : dict = dict.fromkeys(keys)
-• Valeurs par défaut : data = dict.fromkeys(keys, default)
-• Initialisation de clés
-• Création de dictionnaires
-
-Exemple : {'a': 1}.fromkeys(['a', 'b']) retourne {'a': None, 'b': None} car fromkeys() est une méthode de classe qui crée un nouveau dictionnaire avec les clés données, et quand aucune valeur n'est fournie, toutes les valeurs valent None.`,
-  582: `La méthode fromkeys() peut prendre un second argument comme valeur par défaut pour toutes les clés. dict.fromkeys(['a', 'b'], 0) retourne {'a': 0, 'b': 0} car fromkeys() crée un nouveau dictionnaire avec les clés données, et quand une valeur est fournie, toutes les clés sont définies à cette valeur. Utile pour initialiser des dictionnaires avec une même valeur par défaut.
-
-Concepts clés :
-• dict.fromkeys(['a', 'b'], 0) = {'a': 0, 'b': 0}
-• fromkeys() crée un nouveau dictionnaire avec les clés
-• Le second argument définit la valeur pour toutes les clés
-• Toutes les clés ont la même valeur : 0
-• Utile pour l'initialisation
-
-Comment ça fonctionne :
-• fromkeys(['a', 'b'], 0) appelé sur la classe dict
-• Crée un nouveau dictionnaire avec les clés : 'a', 'b'
-• Définit toutes les valeurs à 0 (second argument)
-• Retourne : {'a': 0, 'b': 0}
-
-Exemple :
-dict.fromkeys(['a', 'b'], 0)          # {'a': 0, 'b': 0}
-dict.fromkeys(['x', 'y'], 'default')  # {'x': 'default', 'y': 'default'}
-dict.fromkeys(['1', '2'], [])         # {'1': [], '2': []} (même référence liste !)
-
-Usages courants :
-• Initialiser avec des valeurs par défaut : dict = dict.fromkeys(keys, default)
-• Valeurs par défaut : data = dict.fromkeys(keys, 0)
-• Initialisation de clés avec valeurs
-• Création de dictionnaires avec valeurs par défaut
-
-Exemple : dict.fromkeys(['a', 'b'], 0) retourne {'a': 0, 'b': 0} car fromkeys() crée un nouveau dictionnaire avec les clés données, et quand une valeur (0) est fournie, toutes les clés sont définies à cette valeur.`,
-  583: `La méthode fromkeys() est une méthode de classe qui crée un nouveau dictionnaire, en ignorant le dictionnaire d'instance. {'a': 1, 'b': 2}.fromkeys(['c', 'd']) retourne {'c': None, 'd': None} car fromkeys() ignore le dictionnaire d'instance {'a': 1, 'b': 2} et crée un nouveau dictionnaire avec les clés ['c', 'd']. Le dictionnaire d'instance n'est pas utilisé ni modifié - fromkeys() crée toujours un nouveau dictionnaire.
-
-Concepts clés :
-• {'a': 1, 'b': 2}.fromkeys(['c', 'd']) = {'c': None, 'd': None}
-• fromkeys() est une méthode de classe (ignore l'instance)
-• Crée un nouveau dictionnaire avec les clés données
-• Le dictionnaire d'instance {'a': 1, 'b': 2} n'est pas utilisé
-• Retourne un nouveau dictionnaire
-
-Comment ça fonctionne :
-• fromkeys(['c', 'd']) appelé sur {'a': 1, 'b': 2}
-• Ignore le dictionnaire d'instance {'a': 1, 'b': 2}
-• Crée un nouveau dictionnaire avec les clés : 'c', 'd'
-• Les valeurs valent None par défaut (non fourni)
-• Retourne : {'c': None, 'd': None}
-
-Exemple :
-{'a': 1, 'b': 2}.fromkeys(['c', 'd']) # {'c': None, 'd': None} (nouveau dict)
-{'x': 10}.fromkeys(['a', 'b'])        # {'a': None, 'b': None} (nouveau dict)
-dict.fromkeys(['a', 'b'])             # {'a': None, 'b': None} (même)
-
-Usages courants :
-• Créer de nouveaux dictionnaires : dict = dict.fromkeys(keys)
-• Initialisation : data = items.fromkeys(new_keys, default)
-• Utilisation de méthode de classe
-• Création de dictionnaires
-
-Exemple : {'a': 1, 'b': 2}.fromkeys(['c', 'd']) retourne {'c': None, 'd': None} car fromkeys() est une méthode de classe qui ignore le dictionnaire d'instance et crée un nouveau dictionnaire avec les clés données.`,
-  584: `La fonction max() sur un dictionnaire retourne la clé maximale. max({'a': 1, 'b': 2, 'c': 3}) retourne 'c' car max() itère sur le dictionnaire, qui itère sur les clés, et retourne la clé maximale. Les clés sont comparées selon leur ordre naturel (lexicographique pour les chaînes). C'est équivalent à max(dict.keys()).
-
-Concepts clés :
-• max({'a': 1, 'b': 2, 'c': 3}) = 'c'
-• max() itère sur le dictionnaire (clés)
-• Compare les clés : 'a' < 'b' < 'c'
-• Retourne la clé maximale : 'c'
-• Pas la valeur maximale (valeur 3)
-
-Comment ça fonctionne :
-• max() appelé avec {'a': 1, 'b': 2, 'c': 3}
-• Itère sur le dictionnaire (clés : 'a', 'b', 'c')
-• Compare les clés : 'a' < 'b' < 'c' (lexicographique)
-• Trouve la clé maximale : 'c'
-• Retourne : 'c'
-
-Exemple :
-max({'a': 1, 'b': 2, 'c': 3})        # 'c' (clé max)
-max({'x': 10, 'a': 1, 'z': 20})      # 'z' (clé max)
-max({'1': 1, '2': 2, '3': 3})        # '3' (clé max, chaîne)
-
-Usages courants :
-• Trouver la clé max : max_key = max(dict)
-• Comparaison de clés : largest = max(items)
-• Ordre des clés de dictionnaire
-• Recherche de clé maximale
-
-Exemple : max({'a': 1, 'b': 2, 'c': 3}) retourne 'c' car max() itère sur le dictionnaire, qui itère sur les clés, et retourne la clé maximale 'c' (lexicographiquement la plus grande).`,
-  585: `La fonction min() sur un dictionnaire retourne la clé minimale. min({'a': 1, 'b': 2, 'c': 3}) retourne 'a' car min() itère sur le dictionnaire, qui itère sur les clés, et retourne la clé minimale. Les clés sont comparées selon leur ordre naturel. C'est équivalent à min(dict.keys()).
-
-Concepts clés :
-• min({'a': 1, 'b': 2, 'c': 3}) = 'a'
-• min() itère sur le dictionnaire (clés)
-• Compare les clés : 'a' < 'b' < 'c'
-• Retourne la clé minimale : 'a'
-• Pas la valeur minimale (valeur 1)
-
-Comment ça fonctionne :
-• min() appelé avec {'a': 1, 'b': 2, 'c': 3}
-• Itère sur le dictionnaire (clés : 'a', 'b', 'c')
-• Compare les clés : 'a' < 'b' < 'c' (lexicographique)
-• Trouve la clé minimale : 'a'
-• Retourne : 'a'
-
-Exemple :
-min({'a': 1, 'b': 2, 'c': 3})        # 'a' (clé min)
-min({'x': 10, 'a': 1, 'z': 20})      # 'a' (clé min)
-min({'1': 1, '2': 2, '3': 3})        # '1' (clé min, chaîne)
-
-Usages courants :
-• Trouver la clé min : min_key = min(dict)
-• Comparaison de clés : smallest = min(items)
-• Ordre des clés de dictionnaire
-• Recherche de clé minimale
-
-Exemple : min({'a': 1, 'b': 2, 'c': 3}) retourne 'a' car min() itère sur le dictionnaire, qui itère sur les clés, et retourne la clé minimale 'a' (lexicographiquement la plus petite).`,
-  586: `La fonction max() sur .values() retourne la valeur maximale. max({'a': 1, 'b': 2, 'c': 3}.values()) retourne 3 car .values() retourne une vue de toutes les valeurs [1, 2, 3], et max() trouve la valeur maximale. Les valeurs sont comparées selon leur ordre naturel. C'est ainsi qu'on trouve la valeur maximale dans un dictionnaire.
-
-Concepts clés :
-• max({'a': 1, 'b': 2, 'c': 3}.values()) = 3
-• .values() retourne une vue des valeurs : [1, 2, 3]
-• max() compare les valeurs : 1 < 2 < 3
-• Retourne la valeur maximale : 3
-• Pas la clé maximale (clé 'c')
-
-Comment ça fonctionne :
-• {'a': 1, 'b': 2, 'c': 3}.values() retourne la vue : [1, 2, 3]
-• max() appelé avec la vue des valeurs
-• Compare les valeurs : 1 < 2 < 3 (numérique)
-• Trouve la valeur maximale : 3
-• Retourne : 3
-
-Exemple :
-max({'a': 1, 'b': 2, 'c': 3}.values()) # 3 (valeur max)
-max({'x': 10, 'y': 20}.values())       # 20 (valeur max)
-max({'a': 'z', 'b': 'a'}.values())     # 'z' (valeur max, chaîne)
-
-Usages courants :
-• Trouver la valeur max : max_value = max(dict.values())
-• Comparaison de valeurs : largest = max(items.values())
-• Ordre des valeurs de dictionnaire
-• Recherche de valeur maximale
-
-Exemple : max({'a': 1, 'b': 2, 'c': 3}.values()) retourne 3 car .values() retourne une vue de toutes les valeurs [1, 2, 3], et max() trouve la valeur maximale, qui est 3.`,
-  587: `La fonction sum() sur .values() additionne toutes les valeurs du dictionnaire. sum({'a': 1, 'b': 2, 'c': 3}.values()) retourne 6 car .values() retourne une vue de toutes les valeurs [1, 2, 3], et sum() les additionne : 1 + 2 + 3 = 6. C'est ainsi qu'on additionne toutes les valeurs d'un dictionnaire.
-
-Concepts clés :
-• sum({'a': 1, 'b': 2, 'c': 3}.values()) = 6
-• .values() retourne une vue des valeurs : [1, 2, 3]
-• sum() additionne toutes les valeurs : 1 + 2 + 3
-• Retourne la somme : 6
-• Fonctionne avec les valeurs numériques
-
-Comment ça fonctionne :
-• {'a': 1, 'b': 2, 'c': 3}.values() retourne la vue : [1, 2, 3]
-• sum() appelé avec la vue des valeurs
-• Additionne toutes les valeurs : 1 + 2 + 3
-• Calcule la somme : 6
-• Retourne : 6
-
-Exemple :
-sum({'a': 1, 'b': 2, 'c': 3}.values()) # 6 (1 + 2 + 3)
-sum({'x': 10, 'y': 20}.values())       # 30 (10 + 20)
-sum({}.values())                        # 0 (vide, pas de valeurs)
-
-Usages courants :
-• Additionner les valeurs : total = sum(dict.values())
-• Agrégation de valeurs : sum = sum(items.values())
-• Somme des valeurs de dictionnaire
-• Opérations sur valeurs numériques
-
-Exemple : sum({'a': 1, 'b': 2, 'c': 3}.values()) retourne 6 car .values() retourne une vue de toutes les valeurs [1, 2, 3], et sum() les additionne : 1 + 2 + 3 = 6.`,
-  588: `La fonction all() sur .values() vérifie si toutes les valeurs sont truthy. all({'a': 1, 'b': 0}.values()) retourne False car .values() retourne une vue de toutes les valeurs [1, 0], et all() vérifie si toutes les valeurs sont truthy. Puisque 1 est truthy mais 0 est falsy, all() retourne False - elle exige que toutes les valeurs soient truthy. C'est ainsi qu'on vérifie si toutes les valeurs d'un dictionnaire sont truthy.
-
-Concepts clés :
-• all({'a': 1, 'b': 0}.values()) = False
-• .values() retourne une vue des valeurs : [1, 0]
-• all() vérifie si toutes les valeurs sont truthy
-• 1 est truthy, 0 est falsy
-• Pas toutes truthy, retourne False
-
-Comment ça fonctionne :
-• {'a': 1, 'b': 0}.values() retourne la vue : [1, 0]
-• all() appelé avec la vue des valeurs
-• Vérifie chaque valeur : 1 (truthy), 0 (falsy)
-• 1 est truthy, 0 est falsy
-• Pas toutes truthy, retourne : False
-
-Exemple :
-all({'a': 1, 'b': 0}.values())        # False (0 est falsy)
-all({'a': 1, 'b': 2}.values())        # True (toutes truthy)
-all({'a': 0, 'b': 0}.values())        # False (toutes falsy)
-
-Usages courants :
-• Vérifier si toutes truthy : if all(dict.values()):
-• Validation de valeur : valid = all(items.values())
-• Vérification des valeurs de dictionnaire
-• Validation de vérité
-
-Exemple : all({'a': 1, 'b': 0}.values()) retourne False car .values() retourne une vue de toutes les valeurs [1, 0], et all() vérifie si toutes les valeurs sont truthy - puisque 1 est truthy mais 0 est falsy, all() retourne False.`,
-  589: `La fonction any() sur .values() vérifie si au moins une valeur est truthy. any({'a': 0, 'b': 0}.values()) retourne False car .values() retourne une vue de toutes les valeurs [0, 0], et any() vérifie si au moins une valeur est truthy. Puisque les deux 0 sont falsy, any() retourne False - elle exige au moins une valeur truthy. C'est ainsi qu'on vérifie si au moins une valeur d'un dictionnaire est truthy.
-
-Concepts clés :
-• any({'a': 0, 'b': 0}.values()) = False
-• .values() retourne une vue des valeurs : [0, 0]
-• any() vérifie si au moins une valeur est truthy
-• 0 est falsy, 0 est falsy
-• Aucune valeur truthy, retourne False
-
-Comment ça fonctionne :
-• {'a': 0, 'b': 0}.values() retourne la vue : [0, 0]
-• any() appelé avec la vue des valeurs
-• Vérifie chaque valeur : 0 (falsy), 0 (falsy)
-• Les deux 0 et 0 sont falsy
-• Aucune valeur truthy, retourne : False
-
-Exemple :
-any({'a': 0, 'b': 0}.values())        # False (toutes falsy)
-any({'a': 0, 'b': 1}.values())        # True (1 est truthy)
-any({'a': 1, 'b': 2}.values())        # True (toutes truthy)
-
-Usages courants :
-• Vérifier si une truthy : if any(dict.values()):
-• Validation de valeur : has_truthy = any(items.values())
-• Vérification des valeurs de dictionnaire
-• Détection de vérité
-
-Exemple : any({'a': 0, 'b': 0}.values()) retourne False car .values() retourne une vue de toutes les valeurs [0, 0], et any() vérifie si au moins une valeur est truthy - puisque les deux 0 sont falsy, any() retourne False.`,
-  590: `L'opérateur or retourne la première valeur truthy ou la dernière valeur si toutes sont falsy. {'a': 1, 'b': 2}.get('a') or {'a': 1, 'b': 2}.get('c') retourne 1 car get('a') retourne 1 (truthy), et or retourne la première valeur truthy. Puisque 1 est truthy, or retourne 1 sans évaluer la seconde expression. C'est un motif courant pour fournir des valeurs de repli.
-
-Concepts clés :
-• {'a': 1, 'b': 2}.get('a') or {'a': 1, 'b': 2}.get('c') = 1
-• get('a') retourne 1 (truthy)
-• or retourne la première valeur truthy
-• Retourne 1 (sans évaluer le second get())
-• Évaluation en court-circuit
-
-Comment ça fonctionne :
-• get('a') appelé sur {'a': 1, 'b': 2}
-• Retourne 1 (la clé 'a' existe)
-• or vérifie si 1 est truthy (oui)
-• Retourne 1 (première valeur truthy)
-• N'évalue pas get('c') (court-circuit)
-
-Exemple :
-{'a': 1, 'b': 2}.get('a') or get('c')  # 1 (première truthy)
-{'a': 0, 'b': 2}.get('a') or get('c')  # None (0 est falsy, 'c' non trouvée)
-{'a': 1}.get('c') or 0                 # 0 (None est falsy, utilise 0)
-
-Usages courants :
-• Valeurs de repli : value = dict.get(key) or default
-• Fournir des valeurs par défaut : result = items.get(key) or fallback
-• Motifs de valeur par défaut
-• Évaluation en court-circuit
-
-Exemple : {'a': 1, 'b': 2}.get('a') or {'a': 1, 'b': 2}.get('c') retourne 1 car get('a') retourne 1 (truthy), et or retourne la première valeur truthy, donc retourne 1 sans évaluer le second get().`,
-  591: `Les clés entières fonctionnent dans les dictionnaires. {1: 'a', 2: 'b', 3: 'c'}[1] retourne 'a' car les dictionnaires peuvent utiliser des entiers comme clés, et accéder à [1] cherche la clé 1 dans le dictionnaire, qui correspond à la valeur 'a'. Les clés de dictionnaire peuvent être de tout type hashable (types immuables comme entiers, chaînes, tuples), pas seulement des chaînes.
-
-Concepts clés :
-• {1: 'a', 2: 'b', 3: 'c'}[1] = 'a'
-• Les clés entières fonctionnent dans les dictionnaires
-• La clé 1 correspond à la valeur 'a'
-• Les dictionnaires supportent tout type de clé hashable
-• Retourne la valeur : 'a'
-
-Comment ça fonctionne :
-• {1: 'a', 2: 'b', 3: 'c'} crée un dictionnaire avec des clés entières
-• [1] accède à la clé 1 dans le dictionnaire
-• Trouve la correspondance : 1 → 'a'
-• Retourne la valeur : 'a'
-
-Exemple :
-{1: 'a', 2: 'b', 3: 'c'}[1]            # 'a' (clé entière)
-{10: 'x', 20: 'y'}[10]                # 'x' (clé entière)
-{0: 'zero', 1: 'one'}[0]              # 'zero' (clé entière)
-
-Usages courants :
-• Clés numériques : dict = {1: value1, 2: value2}
-• Dictionnaires basés sur ID : items = {id: data for id, data in pairs}
-• Dictionnaires à clés entières
-• Types de clés flexibles
-
-Exemple : {1: 'a', 2: 'b', 3: 'c'}[1] retourne 'a' car les dictionnaires peuvent utiliser des entiers comme clés, et accéder à [1] cherche la clé 1, qui correspond à la valeur 'a'.`,
-  592: `Les clés tuple fonctionnent dans les dictionnaires car les tuples sont immuables et hashables. {(1, 2): 'a', (3, 4): 'b'}[(1, 2)] retourne 'a' car les dictionnaires peuvent utiliser des tuples comme clés, et accéder à [(1, 2)] cherche la clé tuple (1, 2) dans le dictionnaire, qui correspond à la valeur 'a'. Les clés tuple sont utiles pour les clés composites ou l'indexation multidimensionnelle.
-
-Concepts clés :
-• {(1, 2): 'a', (3, 4): 'b'}[(1, 2)] = 'a'
-• Les clés tuple fonctionnent dans les dictionnaires (immuables)
-• La clé (1, 2) correspond à la valeur 'a'
-• Les tuples sont hashables (peuvent être clés)
-• Retourne la valeur : 'a'
-
-Comment ça fonctionne :
-• {(1, 2): 'a', (3, 4): 'b'} crée un dictionnaire avec des clés tuple
-• [(1, 2)] accède à la clé tuple (1, 2) dans le dictionnaire
-• Trouve la correspondance : (1, 2) → 'a'
-• Retourne la valeur : 'a'
-
-Exemple :
-{(1, 2): 'a', (3, 4): 'b'}[(1, 2)]     # 'a' (clé tuple)
-{(1, 1): 'x', (2, 2): 'y'}[(1, 1)]    # 'x' (clé tuple)
-{('a', 1): 'z', ('b', 2): 'w'}[('a', 1)] # 'z' (clé tuple)
-
-Usages courants :
-• Clés composites : dict = {(x, y): value for x, y in pairs}
-• Indexation multidimensionnelle : items = {(row, col): data}
-• Dictionnaires à clés tuple
-• Structures de clés complexes
-
-Exemple : {(1, 2): 'a', (3, 4): 'b'}[(1, 2)] retourne 'a' car les dictionnaires peuvent utiliser des tuples comme clés (les tuples sont immuables et hashables), et accéder à [(1, 2)] cherche la clé tuple (1, 2), qui correspond à la valeur 'a'.`,
-  593: `Les clés liste ne fonctionnent pas dans les dictionnaires car les listes sont mutables et non hashables. {[1, 2]: 'a'} lève une TypeError car les clés de dictionnaire doivent être hashables (immuables), et les listes sont mutables, donc elles ne peuvent pas être utilisées comme clés. Python exige des clés hashables pour les utiliser dans la table de hachage interne du dictionnaire. Pour utiliser des données de type liste comme clés, convertissez-les en tuples (immuables et hashables).
-
-Concepts clés :
-• {[1, 2]: 'a'} lève TypeError
-• Les listes sont mutables (ne peuvent pas être clés)
-• Les clés de dictionnaire doivent être hashables
-• TypeError: unhashable type: 'list'
-• Impossible d'utiliser les listes comme clés
-
-Comment ça fonctionne :
-• {[1, 2]: 'a'} tente de créer un dictionnaire avec une clé liste
-• Python tente de hacher la liste [1, 2]
-• Les listes sont mutables (ne peuvent pas être hashées)
-• Lève TypeError
-• Impossible d'utiliser des types mutables comme clés
-
-Exemple :
-{[1, 2]: 'a'}                          # TypeError: unhashable type: 'list'
-{[]: 'a'}                              # TypeError: unhashable type: 'list'
-{tuple([1, 2]): 'a'}                  # {(1, 2): 'a'} (fonctionne avec tuple)
-
-Usages courants :
-• Comprendre les exigences des clés : les clés doivent être hashables
-• Convertir en tuples : key = tuple(list)
-• Validation du type de clé
-• Types hashables uniquement
-
-Exemple : {[1, 2]: 'a'} lève une TypeError car les listes sont mutables et non hashables, donc elles ne peuvent pas être utilisées comme clés de dictionnaire. Utilisez des tuples à la place : {tuple([1, 2]): 'a'}.`,
-  594: `Les clés dictionnaire ne fonctionnent pas dans les dictionnaires car les dictionnaires eux-mêmes sont mutables et non hashables. {{'a': 1}: 'b'} lève une TypeError car les clés de dictionnaire doivent être hashables (immuables), et les dictionnaires sont mutables, donc ils ne peuvent pas être utilisés comme clés. Pour utiliser des données de type dictionnaire comme clés, convertissez-les en types immuables (comme des tuples de paires clé-valeur).
-
-Concepts clés :
-• {{'a': 1}: 'b'} lève TypeError
-• Les dictionnaires sont mutables (ne peuvent pas être clés)
-• Les clés de dictionnaire doivent être hashables
-• TypeError: unhashable type: 'dict'
-• Impossible d'utiliser les dictionnaires comme clés
-
-Comment ça fonctionne :
-• {{'a': 1}: 'b'} tente de créer un dictionnaire avec une clé dict
-• Python tente de hacher le dict {'a': 1}
-• Les dictionnaires sont mutables (ne peuvent pas être hashés)
-• Lève TypeError
-• Impossible d'utiliser des types mutables comme clés
-
-Exemple :
-{{'a': 1}: 'b'}                        # TypeError: unhashable type: 'dict'
-{{}: 'empty'}                          # TypeError: unhashable type: 'dict'
-{tuple({'a': 1}.items()): 'b'}        # {(('a', 1),): 'b'} (fonctionne avec tuple)
-
-Usages courants :
-• Comprendre les exigences des clés : les clés doivent être hashables
-• Convertir en tuples : key = tuple(dict.items())
-• Validation du type de clé
-• Types hashables uniquement
-
-Exemple : {{'a': 1}: 'b'} lève une TypeError car les dictionnaires sont mutables et non hashables, donc ils ne peuvent pas être utilisés comme clés de dictionnaire. Utilisez des tuples d'items à la place : {tuple({'a': 1}.items()): 'b'}.`,
-  595: `None, True et False peuvent être des clés de dictionnaire car ils sont hashables (immuables). {None: 'a', True: 'b', False: 'c'}[None] retourne 'a' car None est une clé de dictionnaire valide, et accéder à [None] cherche la clé None dans le dictionnaire, qui correspond à la valeur 'a'. None, True et False sont des valeurs hashables (identités fixes), donc ils peuvent être utilisés comme clés de dictionnaire.
-
-Concepts clés :
-• {None: 'a', True: 'b', False: 'c'}[None] = 'a'
-• None, True, False peuvent être des clés de dictionnaire
-• Ils sont hashables (immuables)
-• La clé None correspond à la valeur 'a'
-• Retourne la valeur : 'a'
-
-Comment ça fonctionne :
-• {None: 'a', True: 'b', False: 'c'} crée un dictionnaire avec des clés None/True/False
-• [None] accède à la clé None dans le dictionnaire
-• Trouve la correspondance : None → 'a'
-• Retourne la valeur : 'a'
-
-Exemple :
-{None: 'a', True: 'b', False: 'c'}[None]  # 'a' (clé None)
-{None: 'a', True: 'b', False: 'c'}[True]  # 'b' (clé True)
-{None: 'a', True: 'b', False: 'c'}[False] # 'c' (clé False)
-
-Usages courants :
-• Clés booléennes/None : dict = {None: default, True: true_val, False: false_val}
-• Clés à valeurs spéciales : items = {None: value1, True: value2}
-• Clés de dictionnaire avec valeurs spéciales
-• Valeurs hashables comme clés
-
-Exemple : {None: 'a', True: 'b', False: 'c'}[None] retourne 'a' car None, True et False sont tous hashables et peuvent être utilisés comme clés de dictionnaire, et accéder à [None] cherche la clé None, qui correspond à la valeur 'a'.`,
-  596: `L'entier 1 et le float 1.0 sont considérés comme la même clé dans les dictionnaires car ils ont la même valeur de hachage. {1: 'a', 1.0: 'b'}[1] retourne 'b' car 1 et 1.0 ont la même valeur de hachage, donc ils sont considérés comme la même clé. Quand vous créez un dictionnaire avec 1 et 1.0 comme clés, la valeur ultérieure ('b') écrase la valeur antérieure ('a'). En accédant à [1], Python traite 1 et 1.0 comme la même clé, donc retourne 'b'.
-
-Concepts clés :
-• {1: 'a', 1.0: 'b'}[1] = 'b'
-• 1 et 1.0 ont la même valeur de hachage
-• Ils sont considérés comme la même clé
-• La valeur ultérieure ('b') écrase l'antérieure ('a')
-• Retourne : 'b'
-
-Comment ça fonctionne :
-• {1: 'a', 1.0: 'b'} crée un dictionnaire
-• 1 et 1.0 ont la même valeur de hachage (même clé)
-• La valeur ultérieure 'b' écrase 'a'
-• Le dictionnaire devient {1: 'b'} (ou {1.0: 'b'})
-• [1] accède à la même clé, retourne 'b'
-
-Exemple :
-{1: 'a', 1.0: 'b'}[1]                 # 'b' (même clé)
-{1: 'a', 1.0: 'b'}[1.0]               # 'b' (même clé)
-{2: 'x', 2.0: 'y'}                    # {2: 'y'} (même clé)
-
-Usages courants :
-• Comprendre l'égalité de hachage : 1 == 1.0 (même hachage)
-• Égalité de clé : même hachage = même clé
-• Comportement des clés numériques
-• Égalité de clé basée sur le hachage
-
-Exemple : {1: 'a', 1.0: 'b'}[1] retourne 'b' car 1 et 1.0 ont la même valeur de hachage, donc ils sont considérés comme la même clé dans le dictionnaire, et la valeur ultérieure 'b' écrase la valeur antérieure 'a'.`,
-  597: `L'entier 1 et le float 1.0 sont considérés comme la même clé dans les dictionnaires car ils ont la même valeur de hachage. {1: 'a', 1.0: 'b'} retourne {1: 'b'} car 1 et 1.0 ont la même valeur de hachage, donc ils sont considérés comme la même clé. Quand vous créez un dictionnaire avec 1 et 1.0 comme clés, la valeur ultérieure ('b') écrase l'antérieure ('a'), ne laissant qu'une seule paire clé-valeur.
-
-Concepts clés :
-• {1: 'a', 1.0: 'b'} = {1: 'b'}
-• 1 et 1.0 ont la même valeur de hachage (même clé)
-• La valeur ultérieure 'b' écrase 'a'
-• Le dictionnaire n'a qu'une paire : {1: 'b'}
-• 1 et 1.0 accèdent à la même entrée
-
-Comment ça fonctionne :
-• {1: 'a', 1.0: 'b'} crée un dictionnaire
-• D'abord définit 1: 'a'
-• Puis définit 1.0: 'b' (même clé que 1)
-• 'b' écrase 'a'
-• Le dictionnaire devient {1: 'b'} (ou {1.0: 'b'})
-
-Exemple :
-{1: 'a', 1.0: 'b'}                    # {1: 'b'} (même clé)
-{2: 'x', 2.0: 'y'}                    # {2: 'y'} (même clé)
-{3: 'z', 3.0: 'w'}                    # {3: 'w'} (même clé)
-
-Usages courants :
-• Comprendre l'égalité de hachage : 1 == 1.0 (même hachage)
-• Écrasement de clé : la valeur ultérieure l'emporte
-• Comportement des clés numériques
-• Égalité de clé basée sur le hachage
-
-Exemple : {1: 'a', 1.0: 'b'} retourne {1: 'b'} car 1 et 1.0 ont la même valeur de hachage, donc ils sont considérés comme la même clé, et la valeur ultérieure 'b' écrase la valeur antérieure 'a'.`,
-  598: `L'entier 1 et le float 1.0 sont considérés comme la même clé dans les dictionnaires car ils ont la même valeur de hachage. Si d = {}, d[1] = 'a', et ensuite d[1.0] = 'b', le dictionnaire d devient {1: 'b'} car 1 et 1.0 ont la même valeur de hachage, donc ils sont considérés comme la même clé. Quand vous assignez d[1] = 'a', cela définit la valeur à 'a', mais quand vous assignez d[1.0] = 'b', cela écrase la même clé (1 et 1.0 étant la même clé), ne laissant que {1: 'b'}.
-
-Concepts clés :
-• d = {}; d[1] = 'a'; d[1.0] = 'b'; d = {1: 'b'}
-• 1 et 1.0 ont la même valeur de hachage (même clé)
-• d[1] = 'a' définit la valeur à 'a'
-• d[1.0] = 'b' écrase la même clé à 'b'
-• Le dictionnaire n'a qu'une paire : {1: 'b'}
-
-Comment ça fonctionne :
-• d = {} crée un dictionnaire vide
-• d[1] = 'a' définit la clé 1 à la valeur 'a'
-• d[1.0] = 'b' définit la clé 1.0 à la valeur 'b'
-• 1 et 1.0 sont la même clé (même hachage)
-• 'b' écrase 'a', d devient {1: 'b'}
-
-Exemple :
-d = {}
-d[1] = 'a'                             # d = {1: 'a'}
-d[1.0] = 'b'                           # d = {1: 'b'} (écrase)
-d                                      # {1: 'b'}
-
-Usages courants :
-• Comprendre l'égalité de hachage : 1 == 1.0 (même hachage)
-• Assignment de clé : l'assignation ultérieure l'emporte
-• Comportement des clés numériques
-• Égalité de clé basée sur le hachage
-
-Exemple : Si d = {}, d[1] = 'a', et ensuite d[1.0] = 'b', le dictionnaire d devient {1: 'b'} car 1 et 1.0 ont la même valeur de hachage, donc ils sont considérés comme la même clé, et l'assignation d[1.0] = 'b' écrase la valeur de d[1] = 'a'.`,
-  599: `La méthode pop() retourne la valeur réelle si la clé existe, même si une valeur par défaut est fournie. {'a': 1, 'b': 2}.pop('a', 'default') retourne 1 car pop() trouve la clé 'a' dans le dictionnaire et retourne sa valeur réelle (1), en ignorant la valeur par défaut ('default'). La valeur par défaut n'est utilisée que quand la clé n'existe pas - si la clé existe, pop() retourne la valeur réelle associée.
-
-Concepts clés :
-• {'a': 1, 'b': 2}.pop('a', 'default') = 1
-• pop(key, default) retourne la valeur réelle si la clé existe
-• La valeur par défaut ignorée quand la clé est trouvée
-• Retourne la valeur du dictionnaire
-• La valeur par défaut utilisée uniquement si la clé manque
-
-Comment ça fonctionne :
-• pop('a', 'default') appelé sur {'a': 1, 'b': 2}
-• Cherche la clé 'a' dans le dictionnaire
-• Trouve la correspondance : 'a' → 1
-• Retourne la valeur réelle : 1 (ignore la valeur par défaut 'default')
-• Dictionnaire modifié : {'b': 2} (paire supprimée)
-
-Exemple :
-{'a': 1, 'b': 2}.pop('a', 'default')   # 1 (retourne la valeur réelle)
-{'a': 1, 'b': 2}.pop('b', 0)          # 2 (retourne la valeur réelle)
-{'a': 1, 'b': 2}.pop('c', 'default')   # 'default' (clé non trouvée)
-
-Usages courants :
-• Supprimer des paires : value = dict.pop(key, default)
-• Obtenir et supprimer : removed = items.pop(key, fallback)
-• Suppression sécurisée avec repli
-• Gestion de la valeur par défaut
-
-Exemple : {'a': 1, 'b': 2}.pop('a', 'default') retourne 1 car pop() trouve la clé 'a' dans le dictionnaire et retourne sa valeur réelle (1), en ignorant la valeur par défaut ('default'), qui n'est utilisée que quand la clé n'existe pas.`,
-  600: `La méthode pop() retourne la valeur par défaut si la clé n'existe pas et qu'une valeur par défaut est fournie. {'a': 1, 'b': 2}.pop('c', 'default') retourne 'default' car pop() cherche la clé 'c' dans le dictionnaire, ne la trouve pas, et retourne la valeur par défaut ('default') sans lever d'erreur. Contrairement à pop() sans valeur par défaut, cette version ne lève pas de KeyError - elle retourne simplement la valeur par défaut. Le dictionnaire reste inchangé car il n'y avait pas de paire à supprimer.
-
-Concepts clés :
-• {'a': 1, 'b': 2}.pop('c', 'default') = 'default'
-• pop(key, default) retourne la valeur par défaut si la clé n'est pas trouvée
-• Aucune erreur levée (contrairement à pop() sans valeur par défaut)
-• Le dictionnaire reste inchangé (pas de paire à supprimer)
-• Retourne la valeur par défaut
-
-Comment ça fonctionne :
-• pop('c', 'default') appelé sur {'a': 1, 'b': 2}
-• Cherche la clé 'c' dans le dictionnaire
-• Ne trouve pas de correspondance (la clé n'existe pas)
-• Impossible de supprimer une paire inexistante
-• Retourne la valeur par défaut : 'default' (pas d'erreur)
-• Dictionnaire inchangé : {'a': 1, 'b': 2}
-
-Exemple :
-{'a': 1, 'b': 2}.pop('c', 'default')   # 'default' (non trouvée, retourne valeur par défaut)
-{'a': 1, 'b': 2}.pop('c', 0)          # 0 (non trouvée, retourne valeur par défaut)
-{'a': 1, 'b': 2}                      # {'a': 1, 'b': 2} (inchangé)
-
-Usages courants :
-• Suppression sécurisée : value = dict.pop(key, default)
-• Gestion de la valeur par défaut : removed = items.pop(key, fallback)
-• Suppression sans erreur
-• pop sécurisé avec repli
-
-Exemple : {'a': 1, 'b': 2}.pop('c', 'default') retourne 'default' car pop() cherche la clé 'c' dans le dictionnaire, ne la trouve pas, et retourne la valeur par défaut ('default') sans lever d'erreur, en laissant le dictionnaire inchangé.`,
-  601: `Le mot-clé def définit une fonction en Python. def func(x): return x * 2 définit une fonction nommée func qui prend un paramètre x et retourne x * 2. L'instruction def crée un objet fonction et l'assigne au nom func. C'est une définition de fonction, pas un appel - pour appeler la fonction, vous utiliseriez func(5) qui retournerait 10.
-
-Concepts clés :
-• def func(x): return x * 2 définit une fonction
-• def est le mot-clé pour la définition de fonction
-• func est le nom de la fonction
-• (x) est la liste des paramètres
-• return x * 2 est le corps
-• Crée l'objet fonction, ne l'exécute pas
-
-Comment ça fonctionne :
-• def func(x): crée la définition de fonction
-• Nom de fonction : func
-• Paramètre : x
-• Corps : return x * 2
-• Objet fonction créé et assigné au nom func
-• Pour appeler : func(5) retourne 10
-
-Exemple :
-def func(x): return x * 2  # Définit la fonction
-func(5)                    # 10 (appelle la fonction)
-func(3)                    # 6 (appelle la fonction)
-
-Usages courants :
-• Définir des fonctions : def nom_fonction(params): corps
-• Créer du code réutilisable : def calculate(x): return x * 2
-• Définition de fonctions
-• Organisation du code
-
-Exemple : def func(x): return x * 2 définit une fonction nommée func qui prend le paramètre x et retourne x * 2. C'est une définition - la fonction est créée mais non exécutée tant qu'elle n'est pas appelée.`,
-  602: `Le mot-clé def avec pass définit une fonction vide. def func(): pass définit une fonction nommée func sans paramètres et avec un corps vide (pass est un placeholder qui ne fait rien). Cela crée une fonction valide qui retourne None quand elle est appelée.
-
-Concepts clés :
-• def func(): pass définit une fonction vide
-• func est le nom de la fonction
-• () signifie aucun paramètre
-• pass est le placeholder (ne fait rien)
-• La fonction retourne None quand elle est appelée
-
-Comment ça fonctionne :
-• def func(): crée la définition de fonction
-• Nom de fonction : func
-• Aucun paramètre : ()
-• Corps : pass (placeholder)
-• Objet fonction créé
-• Quand appelée : func() retourne None
-
-Exemple :
-def func(): pass          # Définit une fonction vide
-func()                    # None (retourne None)
-def placeholder(): pass   # Placeholder pour code futur
-
-Usages courants :
-• Fonctions placeholder : def func(): pass (à implémenter)
-• Fonctions vides : def stub(): pass
-• Exigence de syntaxe : pass nécessaire pour corps vide
-• Stubs de fonctions
-
-Exemple : def func(): pass définit une fonction vide nommée func sans paramètres. L'instruction pass est un placeholder qui ne fait rien, ce qui en fait une fonction valide qui retourne None quand elle est appelée.`,
-  603: `Une instruction return sans valeur retourne None. def func(): return définit une fonction qui retourne explicitement None. Quand vous utilisez return sans valeur, Python retourne None. C'est équivalent à return None ou à l'absence d'instruction return - les trois font que la fonction retourne None.
-
-Concepts clés :
-• def func(): return définit une fonction qui retourne None
-• return sans valeur retourne None
-• Équivalent à return None
-• Équivalent à pas d'instruction return
-• La fonction retourne None
-
-Comment ça fonctionne :
-• def func(): crée la définition de fonction
-• Nom de fonction : func
-• Aucun paramètre : ()
-• Corps : return (sans valeur)
-• Quand appelée : func() retourne None
-• Retour explicite de None
-
-Exemple :
-def func(): return        # Retourne None
-func()                    # None
-def func(): return None   # Même : None
-def func(): pass          # Même : None (pas de return)
-
-Usages courants :
-• Retour explicite de None : def func(): return
-• Intention claire : retourner None explicitement
-• Terminaison de fonction
-• Motif de retour None
-
-Exemple : def func(): return définit une fonction qui retourne explicitement None. L'instruction return sans valeur retourne None, rendant clair que la fonction retourne intentionnellement None.`,
-  604: `Retourner plusieurs valeurs en Python crée un tuple. def func(): return 1, 2 définit une fonction qui retourne un tuple (1, 2). Quand vous écrivez return 1, 2, Python crée automatiquement un tuple - la virgule crée le tuple, pas les parenthèses. C'est la façon Python de retourner plusieurs valeurs - vous pouvez les déballer à l'appel : a, b = func() assigne 1 à a et 2 à b.
-
-Concepts clés :
-• def func(): return 1, 2 définit une fonction qui retourne un tuple
-• return 1, 2 crée le tuple (1, 2)
-• La virgule crée le tuple (parenthèses optionnelles)
-• Retourne un seul objet tuple
-• Peut être déballé : a, b = func()
-
-Comment ça fonctionne :
-• def func(): crée la définition de fonction
-• Nom de fonction : func
-• Aucun paramètre : ()
-• Corps : return 1, 2
-• La virgule crée le tuple : (1, 2)
-• Quand appelée : func() retourne (1, 2)
-
-Exemple :
-def func(): return 1, 2   # Retourne (1, 2)
-func()                    # (1, 2) (tuple)
-a, b = func()            # a = 1, b = 2 (déballage)
-
-Usages courants :
-• Retourner plusieurs valeurs : return x, y
-• Retour tuple : return (1, 2) (même que return 1, 2)
-• Retour de plusieurs valeurs
-• Déballage des retours
-
-Exemple : def func(): return 1, 2 définit une fonction qui retourne un tuple (1, 2). La virgule crée le tuple, donc return 1, 2 est équivalent à return (1, 2).`,
-  605: `Les fonctions sans instruction return retournent automatiquement None. Si une fonction n'a pas d'instruction return, quand elle a fini de s'exécuter, elle retourne implicitement None. C'est le comportement par défaut de Python - toute fonction retourne une valeur, et si aucune instruction return n'est exécutée, la fonction retourne None.
-
-Concepts clés :
-• Une fonction sans return retourne None
-• Retour implicite de None
-• Comportement par défaut en Python
-• Toute fonction retourne une valeur
-• None est retourné si aucun return exécuté
-
-Comment ça fonctionne :
-• La fonction exécute son corps
-• Atteint la fin de la fonction
-• Aucune instruction return rencontrée
-• Retourne implicitement None
-• L'appel de fonction s'évalue à None
-
-Exemple :
-def func(): pass          # Pas de return, retourne None
-func()                    # None
-def func(): print("hi")   # Pas de return, retourne None
-result = func()           # result = None
-
-Usages courants :
-• Fonctions sans return : def func(): corps (retourne None)
-• Fonctions à effets de bord : def print_data(): print(x) (retourne None)
-• Retour implicite de None
-• Comportement de retour par défaut
-
-Exemple : Si une fonction n'a pas d'instruction return, elle retourne automatiquement None quand elle a fini de s'exécuter. C'est le comportement par défaut de Python - toute fonction retourne une valeur, et None est la valeur par défaut.`,
-  606: `Les fonctions peuvent avoir plusieurs paramètres. def func(x, y): return x + y définit une fonction nommée func qui prend deux paramètres x et y et retourne leur somme. Les paramètres sont listés entre parenthèses séparés par des virgules. Lors de l'appel, vous fournissez des arguments pour chaque paramètre : func(1, 2) passe 1 à x et 2 à y, retournant 3.
-
-Concepts clés :
-• def func(x, y): return x + y définit une fonction avec deux paramètres
-• x et y sont les paramètres
-• Paramètres séparés par des virgules
-• La fonction prend deux arguments à l'appel
-• Retourne la somme des paramètres
-
-Comment ça fonctionne :
-• def func(x, y): crée la définition de fonction
-• Nom : func
-• Paramètres : x, y
-• Corps : return x + y
-• Quand appelée : func(1, 2) assigne 1 à x, 2 à y, retourne 3
-
-Exemple :
-def func(x, y): return x + y  # Deux paramètres
-func(1, 2)                    # 3 (1 + 2)
-func(5, 10)                   # 15 (5 + 10)
-
-Usages courants :
-• Entrées multiples : def calculate(x, y): return x + y
-• Listes de paramètres : def process(a, b, c): corps
-• Fonctions à plusieurs paramètres
-• Paramètres de fonctions
-
-Exemple : def func(x, y): return x + y définit une fonction avec deux paramètres x et y qui retourne leur somme. Quand on appelle func(1, 2), elle retourne 3.`,
-  607: `Appeler une fonction avec des arguments positionnels passe les valeurs dans l'ordre. Si def func(x, y): return x + y, alors func(1, 2) retourne 3 car 1 est passé au premier paramètre x et 2 au second paramètre y, donc la fonction retourne 1 + 2 = 3. Les arguments positionnels sont associés aux paramètres par position - le premier argument va au premier paramètre, le second au second, etc.
-
-Concepts clés :
-• func(1, 2) avec def func(x, y): return x + y retourne 3
-• 1 est passé à x (premier paramètre)
-• 2 est passé à y (second paramètre)
-• La fonction retourne x + y = 1 + 2 = 3
-• Arguments associés par position
-
-Comment ça fonctionne :
-• func(1, 2) appelle la fonction func
-• Premier argument 1 assigné au premier paramètre x
-• Second argument 2 assigné au second paramètre y
-• La fonction exécute : return x + y
-• Retourne : 1 + 2 = 3
-
-Exemple :
-def func(x, y): return x + y
-func(1, 2)                    # 3 (positionnel : 1→x, 2→y)
-func(5, 10)                   # 15 (positionnel : 5→x, 10→y)
-
-Usages courants :
-• Appeler des fonctions : result = func(arg1, arg2)
-• Passage d'arguments positionnels : func(1, 2, 3)
-• Invocation de fonction
-• Passage d'arguments
-
-Exemple : Si def func(x, y): return x + y, alors func(1, 2) retourne 3 car 1 est passé à x et 2 à y (arguments positionnels), donc la fonction retourne 1 + 2 = 3.`,
-  608: `Appeler une fonction avec des arguments nommés passe les valeurs par nom de paramètre. Si def func(x, y): return x + y, alors func(x=1, y=2) retourne 3 car x=1 assigne explicitement 1 au paramètre x et y=2 assigne 2 au paramètre y. Les arguments nommés sont associés par nom, pas par position, ce qui rend les appels plus lisibles et permet de passer les arguments dans n'importe quel ordre.
-
-Concepts clés :
-• func(x=1, y=2) avec def func(x, y): return x + y retourne 3
-• x=1 assigne 1 au paramètre x
-• y=2 assigne 2 au paramètre y
-• La fonction retourne x + y = 1 + 2 = 3
-• Arguments associés par nom
-
-Comment ça fonctionne :
-• func(x=1, y=2) appelle la fonction func
-• x=1 assigne 1 au paramètre x
-• y=2 assigne 2 au paramètre y
-• La fonction exécute : return x + y
-• Retourne : 1 + 2 = 3
-
-Exemple :
-def func(x, y): return x + y
-func(x=1, y=2)               # 3 (nommé : x=1, y=2)
-func(y=2, x=1)               # 3 (même, l'ordre n'a pas d'importance)
-
-Usages courants :
-• Appeler des fonctions : result = func(param1=value1, param2=value2)
-• Passage d'arguments nommés : func(x=1, y=2)
-• Appels lisibles
-• Passage d'arguments nommés
-
-Exemple : Si def func(x, y): return x + y, alors func(x=1, y=2) retourne 3 car x=1 assigne 1 à x et y=2 assigne 2 à y (arguments nommés), donc la fonction retourne 1 + 2 = 3.`,
-  609: `Vous pouvez mélanger arguments positionnels et nommés dans un appel. Si def func(x, y): return x + y, alors func(1, y=2) retourne 3 car 1 est passé positionnellement à x et y=2 est passé comme argument nommé à y. Les arguments positionnels doivent précéder les arguments nommés - vous ne pouvez pas avoir un argument nommé suivi d'un positionnel.
-
-Concepts clés :
-• func(1, y=2) avec def func(x, y): return x + y retourne 3
-• 1 est l'argument positionnel (va à x)
-• y=2 est l'argument nommé (va à y)
-• La fonction retourne x + y = 1 + 2 = 3
-• Positionnel avant nommé
-
-Comment ça fonctionne :
-• func(1, y=2) appelle la fonction func
-• 1 est positionnel, assigné au premier paramètre x
-• y=2 est nommé, assigné au paramètre y
-• La fonction exécute : return x + y
-• Retourne : 1 + 2 = 3
-
-Exemple :
-def func(x, y): return x + y
-func(1, y=2)                 # 3 (mixte : 1→x, y=2)
-func(x=1, 2)                 # SyntaxError (nommé avant positionnel non autorisé)
-
-Usages courants :
-• Appels mixtes : result = func(1, param2=value)
-• Passage flexible : func(pos1, keyword=value)
-• Mélange positionnel et nommé
-• Flexibilité des appels
-
-Exemple : Si def func(x, y): return x + y, alors func(1, y=2) retourne 3 car 1 est passé positionnellement à x et y=2 est passé comme argument nommé à y, donc la fonction retourne 1 + 2 = 3.`,
-  610: `Les fonctions avec paramètres par défaut peuvent être appelées sans fournir d'arguments. Si def func(x=1): return x, alors func() retourne 1 car x a une valeur par défaut de 1, donc quand func() est appelée sans arguments, x utilise sa valeur par défaut 1. Les paramètres par défaut permettent d'appeler les fonctions avec moins d'arguments.
-
-Concepts clés :
-• func() avec def func(x=1): return x retourne 1
-• x a une valeur par défaut 1
-• Aucun argument fourni pour x
-• x utilise la valeur par défaut : 1
-• La fonction retourne 1
-
-Comment ça fonctionne :
-• func() appelle la fonction func
-• Aucun argument fourni pour le paramètre x
-• x a une valeur par défaut 1
-• x utilise la valeur par défaut : x = 1
-• La fonction exécute : return x
-• Retourne : 1
-
-Exemple :
-def func(x=1): return x
-func()                      # 1 (utilise x=1 par défaut)
-func(5)                     # 5 (remplace la valeur par défaut)
-
-Usages courants :
-• Paramètres optionnels : def process(data, verbose=False):
-• Valeurs par défaut : def calculate(x, y=0): return x + y
-• Appels de fonctions flexibles
-• Fonctions à paramètres par défaut
-
-Exemple : Si def func(x=1): return x, alors func() retourne 1 car x a une valeur par défaut de 1, donc quand on appelle sans arguments, x utilise sa valeur par défaut et la fonction retourne 1.`,
-  611: `Les paramètres par défaut permettent d'appeler les fonctions avec moins d'arguments. def func(x=1): return x définit une fonction avec un paramètre par défaut x=1. Si aucun argument n'est fourni pour x, la valeur 1 sera utilisée. Le paramètre est optionnel.
-
-Paramètres par défaut :
-• def func(x=1): return x définit une fonction avec paramètre par défaut
-• x=1 définit la valeur par défaut à 1
-• Le paramètre x est optionnel
-• On peut appeler func() (utilise x=1) ou func(5) (utilise x=5)
-• Le défaut permet d'omettre l'argument
-
-Comment ça fonctionne :
-• def func(x=1): crée la définition de fonction
-• Nom de fonction : func
-• Le paramètre x a la valeur par défaut 1
-• Si aucun argument fourni : x = 1
-• Si argument fourni : x = valeur de l'argument
-
-Exemple :
-def func(x=1): return x
-func()                    # 1 (utilise défaut x=1)
-func(5)                    # 5 (remplace le défaut)
-
-Usages courants :
-• Paramètres optionnels : def process(data, verbose=False):
-• Valeurs par défaut : def calculate(x, y=0): return x + y
-• Appels flexibles
-• Fonctions à paramètres par défaut
-
-Exemple : def func(x=1): return x définit une fonction avec un paramètre par défaut x=1, ce qui signifie qu'en cas d'appel sans arguments, x utilise sa valeur par défaut 1.`,
-  612: `Passer un argument à une fonction avec paramètre par défaut remplace le défaut. Si def func(x=1): return x, alors func(2) retourne 2 car l'argument 2 est passé à x, remplaçant la valeur par défaut 1. La valeur par défaut n'est utilisée que lorsqu'aucun argument n'est fourni - si un argument est fourni, il a priorité sur le défaut.
-
-Argument remplace le défaut :
-• func(2) avec def func(x=1): return x retourne 2
-• L'argument 2 est passé au paramètre x
-• Remplace la valeur par défaut 1
-• La fonction retourne 2 (pas le défaut 1)
-• Le défaut n'est utilisé que si aucun argument fourni
-
-Comment ça fonctionne :
-• func(2) appelle la fonction func
-• L'argument 2 est fourni pour le paramètre x
-• x utilise la valeur 2 (pas le défaut 1)
-• La fonction exécute : return x
-• Retourne : 2
-
-Exemple :
-def func(x=1): return x
-func(2)                    # 2 (remplace défaut x=1)
-func(5)                    # 5 (remplace défaut x=1)
-func()                      # 1 (utilise défaut x=1)
-
-Usages courants :
-• Remplacer les défauts : func(valeur) (remplace le défaut)
-• Appels flexibles : func() ou func(valeur)
-• Priorité des arguments
-• Comportement des paramètres par défaut
-
-Exemple : Si def func(x=1): return x, alors func(2) retourne 2 car l'argument 2 remplace la valeur par défaut 1, donc x = 2 et la fonction retourne 2.`,
-  613: `Les paramètres requis doivent précéder les paramètres par défaut dans la définition de fonction. def func(x, y=2): return x + y définit une fonction avec un paramètre requis x et un paramètre par défaut y=2. C'est valide car le paramètre requis x précède le paramètre par défaut y. Vous pouvez appeler func(1) (utilise y=2 par défaut) ou func(1, 3) (remplace y par 3). Cet ordre est imposé par la syntaxe Python.
-
-Requis avant défaut :
-• def func(x, y=2): return x + y définit correctement la fonction
-• x est un paramètre requis (sans défaut)
-• y est un paramètre par défaut (y=2)
-• Les paramètres requis doivent venir en premier
-• Valide : requis avant défaut
-
-Comment ça fonctionne :
-• def func(x, y=2): crée la définition de fonction
-• Nom de fonction : func
-• Le paramètre x est requis (sans défaut)
-• Le paramètre y a la valeur par défaut 2
-• Le paramètre requis x précède le paramètre par défaut y
-
-Exemple :
-def func(x, y=2): return x + y
-func(1)                    # 3 (utilise défaut y=2 : 1 + 2)
-func(1, 3)                 # 4 (remplace défaut : 1 + 3)
-
-Usages courants :
-• Paramètres mixtes : def process(data, verbose=False):
-• Requis et optionnel : def calculate(x, y=0): return x + y
-• Ordre des paramètres
-• Requis avant défaut
-
-Exemple : def func(x, y=2): return x + y définit une fonction avec un paramètre requis x et un paramètre par défaut y=2. Le paramètre requis x précède le paramètre par défaut y, ce qui est correct.`,
-  614: `Lors de l'appel d'une fonction avec paramètres requis et par défaut, on peut omettre les arguments des paramètres par défaut. Si def func(x, y=2): return x + y, alors func(1) retourne 3 car 1 est passé au paramètre requis x et y utilise sa valeur par défaut 2, donc la fonction retourne 1 + 2 = 3. Il faut fournir des arguments pour tous les paramètres requis, mais on peut omettre ceux des paramètres par défaut.
-
-Utiliser le défaut pour le second paramètre :
-• func(1) avec def func(x, y=2): return x + y retourne 3
-• 1 est passé au paramètre requis x
-• y utilise la valeur par défaut 2 (aucun argument fourni)
-• La fonction retourne x + y = 1 + 2 = 3
-• Valeur par défaut utilisée pour y
-
-Comment ça fonctionne :
-• func(1) appelle la fonction func
-• L'argument 1 est fourni pour le paramètre requis x
-• Aucun argument fourni pour le paramètre par défaut y
-• y utilise la valeur par défaut : y = 2
-• La fonction exécute : return x + y
-• Retourne : 1 + 2 = 3
-
-Exemple :
-def func(x, y=2): return x + y
-func(1)                    # 3 (utilise défaut y=2 : 1 + 2)
-func(1, 5)                 # 6 (remplace défaut : 1 + 5)
-
-Usages courants :
-• Omettre les défauts : func(required) (utilise les défauts)
-• Paramètres optionnels : func(data) (utilise les défauts)
-• Usage des paramètres par défaut
-• Appels de fonctions flexibles
-
-Exemple : Si def func(x, y=2): return x + y, alors func(1) retourne 3 car 1 est passé à x et y utilise sa valeur par défaut 2, donc la fonction retourne 1 + 2 = 3.`,
-  615: `Les paramètres par défaut doivent venir après les paramètres non-défaut dans la définition de fonction. def func(x=1, y): return x + y lève une SyntaxError car x a une valeur par défaut mais y non, et les paramètres par défaut doivent venir après les paramètres non-défaut. Python impose cet ordre - les paramètres requis (sans défaut) doivent venir en premier, suivis des paramètres par défaut.
-
-Défaut après requis :
-• def func(x=1, y): return x + y lève SyntaxError
-• x a une valeur par défaut (x=1)
-• y est requis (sans défaut)
-• Les paramètres par défaut doivent venir après les requis
-• SyntaxError : argument non-défaut suit argument par défaut
-
-Comment ça fonctionne :
-• def func(x=1, y): tente de définir la fonction
-• x a la valeur par défaut 1
-• y est requis (sans défaut)
-• Le paramètre requis y vient après le paramètre par défaut x
-• Lève SyntaxError (ordrage invalide)
-
-Exemple :
-def func(x=1, y): return x + y  # SyntaxError
-def func(y, x=1): return x + y  # Valide (requis avant défaut)
-
-Usages courants :
-• Comprendre la syntaxe : les paramètres requis doivent venir en premier
-• Ordre des paramètres : requis, puis défauts
-• Éviter les erreurs de syntaxe
-• Règles de définition de fonction
-
-Exemple : def func(x=1, y): return x + y lève une SyntaxError car les paramètres par défaut doivent venir après les paramètres non-défaut - le paramètre requis y doit venir avant le paramètre par défaut x.`,
-  616: `Utiliser un objet mutable (comme une liste) comme paramètre par défaut est problématique car la valeur par défaut est créée une fois et partagée entre tous les appels. def func(x=[]): x.append(1); return x définit une fonction avec un paramètre par défaut mutable, ce qui est un piège courant en Python. La liste [] est créée une fois à la définition de la fonction, et le même objet liste est réutilisé pour tous les appels. Les modifications persistent donc entre les appels, ce qui n'est généralement pas souhaité.
-
-Paramètre par défaut mutable :
-• def func(x=[]): x.append(1); return x définit une fonction avec défaut mutable
-• La valeur par défaut [] est créée une fois (à la définition)
-• Le même objet liste est réutilisé pour tous les appels
-• Les modifications persistent entre les appels
-• Piège courant (généralement non souhaité)
-
-Comment ça fonctionne :
-• def func(x=[]): crée la définition de fonction
-• La valeur par défaut [] est créée une fois (à la définition)
-• Le même objet liste partagé entre les appels
-• Premier appel : x est [], append(1), retourne [1]
-• Second appel : x est [1] (même liste !), append(1), retourne [1, 1]
-
-Exemple :
-def func(x=[]): x.append(1); return x
-func()                      # [1] (premier appel)
-func()                      # [1, 1] (second appel, liste persistante !)
-func()                      # [1, 1, 1] (troisième appel, liste grandit !)
-
-Usages courants :
-• Comprendre le piège : les défauts mutables sont partagés
-• Éviter les défauts mutables : utiliser None
-• Erreur Python courante
-• Comportement des paramètres par défaut
-
-Exemple : def func(x=[]): x.append(1); return x définit une fonction avec un paramètre par défaut mutable. La liste [] est créée une fois et partagée entre tous les appels, donc les modifications persistent, ce qui n'est généralement pas souhaité.`,
-  617: `Utiliser None comme valeur par défaut et créer un nouvel objet mutable dans la fonction est un motif courant pour éviter les problèmes de défauts mutables. def func(x=None): x = x or []; x.append(1); return x définit une fonction qui gère les défauts mutables de façon sûre. Si x est None (défaut), x = x or [] crée une nouvelle liste, assurant que chaque appel obtient sa propre liste. Ce motif évite le problème du partage des défauts mutables.
-
-Motif sûr pour défaut mutable :
-• def func(x=None): x = x or []; x.append(1); return x utilise le motif sûr
-• Le défaut est None (immuable)
-• x = x or [] crée une nouvelle liste si x est None
-• Chaque appel obtient sa propre liste (non partagée)
-• Évite le piège du défaut mutable
-
-Comment ça fonctionne :
-• def func(x=None): crée la définition de fonction
-• Valeur par défaut None (immuable)
-• x = x or [] crée une nouvelle liste si x est None
-• Premier appel : x est None, crée nouveau [], append(1), retourne [1]
-• Second appel : x est None, crée nouveau [], append(1), retourne [1] (liste fraîche !)
-
-Exemple :
-def func(x=None): x = x or []; x.append(1); return x
-func()                      # [1] (premier appel, nouvelle liste)
-func()                      # [1] (second appel, nouvelle liste, pas [1, 1] !)
-func([10])                  # [10, 1] (utilise la liste fournie)
-
-Usages courants :
-• Défauts mutables sûrs : def func(x=None): x = x or []
-• Éviter l'état partagé : utiliser None comme défaut
-• Motif Python courant
-• Contournement du défaut mutable
-
-Exemple : def func(x=None): x = x or []; x.append(1); return x définit une fonction qui gère les défauts mutables en utilisant None comme défaut et en créant une nouvelle liste dans la fonction si besoin, évitant le problème du partage des défauts mutables.`,
-  618: `Les paramètres par défaut mutables accumulent les changements entre les appels car le même objet est réutilisé. Si def func(x=[]): x.append(1); return x, alors func(); func() fait que le second appel retourne [1, 1] car la liste par défaut [] est créée une fois et partagée. Le premier appel append(1), faisant [1], et le second commence avec [1] (même liste) et append(1) à nouveau, donnant [1, 1].
-
-Défaut mutable - accumulation :
-• func(); func() avec def func(x=[]): x.append(1); return x retourne [1, 1]
-• La liste par défaut [] est partagée entre les appels
-• Premier appel : x est [], append(1), retourne [1]
-• Second appel : x est [1] (même liste !), append(1), retourne [1, 1]
-• La liste accumule les changements
-
-Comment ça fonctionne :
-• def func(x=[]): crée la définition de fonction
-• La valeur par défaut [] est créée une fois (à la définition)
-• Même objet liste partagé entre les appels
-• Premier appel : x est [], append(1), retourne [1]
-• Second appel : x est [1] (même liste !), append(1), retourne [1, 1]
-
-Exemple :
-def func(x=[]): x.append(1); return x
-func()                      # [1] (premier appel)
-func()                      # [1, 1] (second appel, liste accumulée !)
-
-Usages courants :
-• Comprendre les défauts mutables : accumulation des changements
-• Démontrer le piège : état partagé
-• Comportement des défauts mutables
-• Erreur Python courante
-
-Exemple : Si def func(x=[]): x.append(1); return x, alors func(); func() fait que le second appel retourne [1, 1] car la liste par défaut [] est partagée entre les appels, donc le premier appel la modifie en [1], et le second continue avec [1] et append(1) à nouveau.`,
-  619: `Les fonctions peuvent avoir plusieurs paramètres par défaut. def func(x=1, y=2, z=3): return x, y, z définit une fonction avec trois paramètres par défaut, chacun ayant sa propre valeur. Tous les paramètres ont des défauts, donc on peut appeler la fonction avec 0, 1, 2 ou 3 arguments. Si on fournit des arguments, ils sont assignés aux paramètres dans l'ordre, à partir du premier. Cela permet des appels flexibles avec différents nombres d'arguments.
-
-Paramètres par défaut multiples :
-• def func(x=1, y=2, z=3): return x, y, z définit une fonction avec plusieurs défauts
-• Les trois paramètres ont des valeurs par défaut
-• x défaut 1, y défaut 2, z défaut 3
-• On peut appeler avec 0, 1, 2 ou 3 arguments
-• Les arguments sont assignés dans l'ordre
-
-Comment ça fonctionne :
-• def func(x=1, y=2, z=3): crée la définition de fonction
-• Nom de fonction : func
-• Tous les paramètres ont des défauts : x=1, y=2, z=3
-• Les arguments sont assignés aux paramètres dans l'ordre
-• Les arguments manquants utilisent les défauts
-
-Exemple :
-def func(x=1, y=2, z=3): return x, y, z
-func()                      # (1, 2, 3) (tous les défauts)
-func(10)                    # (10, 2, 3) (seul x remplacé)
-func(10, 20)                # (10, 20, 3) (x et y remplacés)
-
-Usages courants :
-• Paramètres optionnels multiples : def process(data, verbose=False, output=None):
-• Fonctions flexibles : def create(width=100, height=100, color='blue'):
-• Paramètres par défaut multiples
-• Appels de fonctions flexibles
-
-Exemple : def func(x=1, y=2, z=3): return x, y, z définit une fonction avec plusieurs paramètres par défaut. Tous les paramètres ont des défauts, donc on peut l'appeler avec 0, 1, 2 ou 3 arguments.`,
-  620: `Lors de l'appel d'une fonction avec plusieurs paramètres par défaut, les arguments sont assignés aux paramètres dans l'ordre, à partir du premier. Si def func(x=1, y=2, z=3): return x, y, z, alors func(10) retourne (10, 2, 3) car l'argument 10 est assigné au premier paramètre x, et y et z utilisent leurs valeurs par défaut 2 et 3. Les arguments sont associés aux paramètres positionnellement, de gauche à droite.
-
-Premier argument au premier paramètre :
-• func(10) avec def func(x=1, y=2, z=3): return x, y, z retourne (10, 2, 3)
-• L'argument 10 est assigné au premier paramètre x
-• y utilise la valeur par défaut 2
-• z utilise la valeur par défaut 3
-• Les arguments sont assignés dans l'ordre
-
-Comment ça fonctionne :
-• func(10) appelle la fonction func
-• L'argument 10 est fourni
-• Assigné au premier paramètre x : x = 10
-• y utilise le défaut : y = 2
-• z utilise le défaut : z = 3
-• La fonction exécute : return x, y, z
-• Retourne : (10, 2, 3)
-
-Exemple :
-def func(x=1, y=2, z=3): return x, y, z
-func(10)                    # (10, 2, 3) (x=10, y=2, z=3)
-func(10, 20)                # (10, 20, 3) (x=10, y=20, z=3)
-func(10, 20, 30)            # (10, 20, 30) (tous remplacés)
-
-Usages courants :
-• Assignation positionnelle : func(arg1) (va au premier param)
-• Appels flexibles : func(valeur) ou func(valeur1, valeur2)
-• Association des arguments
-• Comportement des paramètres par défaut
-
-Exemple : Si def func(x=1, y=2, z=3): return x, y, z, alors func(10) retourne (10, 2, 3) car 10 est assigné à x (premier paramètre), et y et z utilisent leurs valeurs par défaut 2 et 3.`,
-  621: `La syntaxe *args permet à une fonction d'accepter un nombre variable d'arguments positionnels. def func(*args): return args définit une fonction qui collecte tous les arguments positionnels dans un tuple nommé args. Le * devant args indique à Python de collecter tous les arguments positionnels supplémentaires dans un tuple. La fonction peut ainsi être appelée avec n'importe quel nombre d'arguments, accessibles comme tuple dans la fonction.
-
-Paramètre *args :
-• def func(*args): return args définit une fonction avec *args
-• *args collecte les arguments positionnels variables
-• Collecte tous les arguments positionnels dans un tuple
-• La fonction peut accepter n'importe quel nombre d'arguments
-• Les arguments sont accessibles comme tuple : args
-
-Comment ça fonctionne :
-• def func(*args): crée la définition de fonction
-• Nom de fonction : func
-• *args collecte tous les arguments positionnels dans un tuple
-• Lors de l'appel func(1, 2, 3) : args = (1, 2, 3)
-• Retourne le tuple des arguments
-
-Exemple :
-def func(*args): return args
-func(1, 2, 3)              # (1, 2, 3) (tous les arguments collectés)
-func(1)                     # (1,) (un seul argument)
-func()                      # () (aucun argument, tuple vide)
-
-Usages courants :
-• Arguments variables : def process(*items): for item in items:
-• Fonctions flexibles : def sum_values(*numbers): return sum(numbers)
-• Arguments positionnels variables
-• Flexibilité des fonctions
-
-Exemple : def func(*args): return args définit une fonction qui collecte tous les arguments positionnels dans un tuple nommé args, permettant d'accepter n'importe quel nombre d'arguments.`,
-  622: `Lors de l'appel d'une fonction avec *args, tous les arguments positionnels sont collectés dans un tuple. Si def func(*args): return args, alors func(1, 2, 3) retourne (1, 2, 3) car *args collecte tous les arguments positionnels (1, 2, 3) dans un tuple nommé args. La fonction peut accepter n'importe quel nombre d'arguments, tous collectés dans le tuple args.
-
-Collection *args :
-• func(1, 2, 3) avec def func(*args): return args retourne (1, 2, 3)
-• Les arguments 1, 2, 3 sont positionnels
-• *args collecte tous les arguments dans un tuple
-• args = (1, 2, 3) dans la fonction
-• Retourne le tuple : (1, 2, 3)
-
-Comment ça fonctionne :
-• func(1, 2, 3) appelle la fonction func
-• Les arguments 1, 2, 3 sont positionnels
-• *args collecte tous les arguments : args = (1, 2, 3)
-• La fonction exécute : return args
-• Retourne : (1, 2, 3)
-
-Exemple :
-def func(*args): return args
-func(1, 2, 3)              # (1, 2, 3) (tuple des arguments)
-func(1, 2, 3, 4, 5)        # (1, 2, 3, 4, 5) (tuple)
-func('a', 'b')              # ('a', 'b') (tuple)
-
-Usages courants :
-• Collecter les arguments : def sum_values(*numbers): return sum(numbers)
-• Arguments variables : def process(*items): for item in items:
-• Appels de fonctions flexibles
-• Collection en tuple
-
-Exemple : Si def func(*args): return args, alors func(1, 2, 3) retourne (1, 2, 3) car *args collecte tous les arguments positionnels dans un tuple nommé args.`,
-  623: `Lors de l'appel d'une fonction avec *args sans arguments, args devient un tuple vide. Si def func(*args): return args, alors func() retourne () car *args collecte les arguments positionnels, et quand aucun argument n'est fourni, il collecte dans un tuple vide. C'est différent d'une liste vide - *args crée toujours un tuple, même vide.
-
-*args sans arguments :
-• func() avec def func(*args): return args retourne ()
-• Aucun argument fourni
-• *args collecte dans un tuple vide
-• args = () dans la fonction
-• Retourne le tuple vide : ()
-
-Comment ça fonctionne :
-• func() appelle la fonction func
-• Aucun argument fourni
-• *args collecte dans un tuple vide : args = ()
-• La fonction exécute : return args
-• Retourne : () (tuple vide)
-
-Exemple :
-def func(*args): return args
-func()                      # () (tuple vide)
-func(1)                     # (1,) (tuple à un élément)
-func(1, 2)                  # (1, 2) (tuple)
-
-Usages courants :
-• Gérer l'absence d'arguments : if not args: return default
-• Vérifier le tuple vide : if len(args) == 0:
-• Gestion des arguments variables
-• Collection en tuple
-
-Exemple : Si def func(*args): return args, alors func() retourne () car *args collecte les arguments positionnels dans un tuple, et quand aucun argument n'est fourni, il crée un tuple vide.`,
-  624: `Les paramètres requis peuvent précéder *args dans la définition de fonction. def func(x, *args): return x, args définit une fonction avec un paramètre requis x suivi de *args. Le paramètre requis x reçoit le premier argument, et *args collecte tous les arguments positionnels restants dans un tuple. Cela permet d'avoir à la fois des paramètres requis et des arguments positionnels variables.
-
-Paramètre requis avant *args :
-• def func(x, *args): return x, args définit correctement la fonction
-• x est un paramètre requis (doit être fourni)
-• *args collecte les arguments positionnels restants
-• Les paramètres requis doivent précéder *args
-• Valide : requis avant *args
-
-Comment ça fonctionne :
-• def func(x, *args): crée la définition de fonction
-• Nom de fonction : func
-• Le paramètre x est requis (sans défaut)
-• *args collecte les arguments positionnels restants
-• Le paramètre requis x précède *args
-
-Exemple :
-def func(x, *args): return x, args
-func(1, 2, 3)              # (1, (2, 3)) (x=1, args=(2, 3))
-func(1)                     # (1, ()) (x=1, args=())
-func(1, 2)                  # (1, (2,)) (x=1, args=(2,))
-
-Usages courants :
-• Paramètres mixtes : def process(first, *rest): process(first); process(*rest)
-• Requis et variable : def calculate(base, *values): return base + sum(values)
-• Ordre des paramètres
-• Requis avant *args
-
-Exemple : def func(x, *args): return x, args définit une fonction avec un paramètre requis x qui doit précéder *args, permettant d'avoir des paramètres requis et des arguments positionnels variables.`,
-  625: `Lors de l'appel d'une fonction avec paramètre requis et *args, le premier argument va au paramètre requis et le reste à *args. Si def func(x, *args): return x, args, alors func(1, 2, 3) retourne (1, (2, 3)) car 1 est assigné à x (paramètre requis), et 2, 3 sont collectés dans *args comme tuple (2, 3). La fonction retourne un tuple contenant x et args.
-
-Distribution des arguments :
-• func(1, 2, 3) avec def func(x, *args): return x, args retourne (1, (2, 3))
-• Le premier argument 1 va au paramètre requis x
-• Les arguments restants 2, 3 vont à *args
-• args = (2, 3) (tuple)
-• Retourne le tuple : (x, args) = (1, (2, 3))
-
-Comment ça fonctionne :
-• func(1, 2, 3) appelle la fonction func
-• Le premier argument 1 est assigné au paramètre requis x
-• Les arguments restants 2, 3 sont collectés dans *args
-• args = (2, 3) (tuple)
-• La fonction exécute : return x, args
-• Retourne : (1, (2, 3))
-
-Exemple :
-def func(x, *args): return x, args
-func(1, 2, 3)              # (1, (2, 3)) (x=1, args=(2, 3))
-func(10, 20, 30, 40)       # (10, (20, 30, 40)) (x=10, args=(20, 30, 40))
-func(5)                     # (5, ()) (x=5, args=())
-
-Usages courants :
-• Séparer le premier du reste : def process(first, *rest): process(first); process(*rest)
-• Requis et variable : def calculate(base, *values): return base + sum(values)
-• Distribution des arguments
-• Assignation des paramètres
-
-Exemple : Si def func(x, *args): return x, args, alors func(1, 2, 3) retourne (1, (2, 3)) car 1 est assigné à x et 2, 3 sont collectés dans *args comme tuple.`,
-  626: `La syntaxe **kwargs permet à une fonction d'accepter un nombre variable d'arguments nommés. def func(**kwargs): return kwargs définit une fonction qui collecte tous les arguments nommés dans un dictionnaire nommé kwargs. Le ** devant kwargs indique à Python de collecter tous les arguments nommés supplémentaires dans un dictionnaire. La fonction peut ainsi être appelée avec n'importe quel nombre d'arguments nommés, accessibles comme dictionnaire dans la fonction.
-
-Paramètre **kwargs :
-• def func(**kwargs): return kwargs définit une fonction avec **kwargs
-• **kwargs collecte les arguments nommés variables
-• Collecte tous les arguments nommés dans un dictionnaire
-• La fonction peut accepter n'importe quel nombre d'arguments nommés
-• Les arguments sont accessibles comme dictionnaire : kwargs
-
-Comment ça fonctionne :
-• def func(**kwargs): crée la définition de fonction
-• Nom de fonction : func
-• **kwargs collecte tous les arguments nommés dans un dictionnaire
-• Lors de l'appel func(a=1, b=2) : kwargs = {'a': 1, 'b': 2}
-• Retourne le dictionnaire des arguments
-
-Exemple :
-def func(**kwargs): return kwargs
-func(a=1, b=2)             # {'a': 1, 'b': 2} (tous les arguments collectés)
-func(x=10, y=20)           # {'x': 10, 'y': 20} (tous collectés)
-func()                      # {} (aucun argument nommé, dict vide)
-
-Usages courants :
-• Arguments nommés variables : def process(**options): use options
-• Fonctions flexibles : def create(**attributes): return object(**attributes)
-• Arguments nommés variables
-• Collection en dictionnaire
-
-Exemple : def func(**kwargs): return kwargs définit une fonction qui collecte tous les arguments nommés dans un dictionnaire nommé kwargs, permettant d'accepter n'importe quel nombre d'arguments nommés.`,
-  627: `Lors de l'appel d'une fonction avec **kwargs, tous les arguments nommés sont collectés dans un dictionnaire. Si def func(**kwargs): return kwargs, alors func(a=1, b=2) retourne {'a': 1, 'b': 2} car **kwargs collecte tous les arguments nommés (a=1, b=2) dans un dictionnaire nommé kwargs. La fonction peut accepter n'importe quel nombre d'arguments nommés, tous collectés dans le dictionnaire kwargs.
-
-Collection **kwargs :
-• func(a=1, b=2) avec def func(**kwargs): return kwargs retourne {'a': 1, 'b': 2}
-• Les arguments a=1, b=2 sont des arguments nommés
-• **kwargs collecte tous les arguments nommés dans un dictionnaire
-• kwargs = {'a': 1, 'b': 2} dans la fonction
-• Retourne le dictionnaire : {'a': 1, 'b': 2}
-
-Comment ça fonctionne :
-• func(a=1, b=2) appelle la fonction func
-• Les arguments a=1, b=2 sont des arguments nommés
-• **kwargs collecte tous les arguments : kwargs = {'a': 1, 'b': 2}
-• La fonction exécute : return kwargs
-• Retourne : {'a': 1, 'b': 2}
-
-Exemple :
-def func(**kwargs): return kwargs
-func(a=1, b=2)             # {'a': 1, 'b': 2} (dictionnaire des arguments)
-func(x=10, y=20, z=30)     # {'x': 10, 'y': 20, 'z': 30} (dictionnaire)
-func()                      # {} (aucun argument nommé, dict vide)
-
-Usages courants :
-• Collecter les arguments nommés : def process(**options): use options['key']
-• Arguments nommés variables : def create(**attributes): return object(**attributes)
-• Collection en dictionnaire
-• Appels de fonctions flexibles
-
-Exemple : Si def func(**kwargs): return kwargs, alors func(a=1, b=2) retourne {'a': 1, 'b': 2} car **kwargs collecte tous les arguments nommés dans un dictionnaire nommé kwargs.`,
-  628: `Lors de l'appel d'une fonction avec **kwargs sans arguments nommés, kwargs devient un dictionnaire vide. Si def func(**kwargs): return kwargs, alors func() retourne {} car **kwargs collecte les arguments nommés, et quand aucun argument nommé n'est fourni, il collecte dans un dictionnaire vide. C'est différent d'un tuple vide - **kwargs crée toujours un dictionnaire, même vide.
-
-**kwargs sans arguments :
-• func() avec def func(**kwargs): return kwargs retourne {}
-• Aucun argument nommé fourni
-• **kwargs collecte dans un dictionnaire vide
-• kwargs = {} dans la fonction
-• Retourne le dictionnaire vide : {}
-
-Comment ça fonctionne :
-• func() appelle la fonction func
-• Aucun argument nommé fourni
-• **kwargs collecte dans un dictionnaire vide : kwargs = {}
-• La fonction exécute : return kwargs
-• Retourne : {} (dictionnaire vide)
-
-Exemple :
-def func(**kwargs): return kwargs
-func()                      # {} (dictionnaire vide)
-func(a=1)                   # {'a': 1} (dictionnaire à une clé)
-func(a=1, b=2)              # {'a': 1, 'b': 2} (dictionnaire)
-
-Usages courants :
-• Gérer l'absence d'arguments nommés : if not kwargs: return default
-• Vérifier le dictionnaire vide : if len(kwargs) == 0:
-• Gestion des arguments nommés variables
-• Collection en dictionnaire
-
-Exemple : Si def func(**kwargs): return kwargs, alors func() retourne {} car **kwargs collecte les arguments nommés dans un dictionnaire, et quand aucun argument nommé n'est fourni, il crée un dictionnaire vide.`,
-  629: `Les fonctions peuvent avoir tous les types de paramètres ensemble : paramètres requis, *args et **kwargs. def func(x, *args, **kwargs): return x, args, kwargs définit une fonction avec un paramètre requis x, des arguments positionnels variables *args et des arguments nommés variables **kwargs. L'ordre est important : les paramètres requis d'abord, puis *args, puis **kwargs. Cela permet une flexibilité maximale dans les appels de fonction.
-
-Tous les types de paramètres :
-• def func(x, *args, **kwargs): return x, args, kwargs définit une fonction avec tous les types
-• x est un paramètre requis
-• *args collecte les arguments positionnels restants dans un tuple
-• **kwargs collecte les arguments nommés dans un dictionnaire
-• Ordre : requis, *args, **kwargs
-• Flexibilité maximale
-
-Comment ça fonctionne :
-• def func(x, *args, **kwargs): crée la définition de fonction
-• Nom de fonction : func
-• Le paramètre x est requis (sans défaut)
-• *args collecte les arguments positionnels restants
-• **kwargs collecte les arguments nommés
-• Ordre : requis, *args, **kwargs
-
-Exemple :
-def func(x, *args, **kwargs): return x, args, kwargs
-func(1, 2, 3, a=4)         # (1, (2, 3), {'a': 4}) (tous les types)
-func(1, a=2)                # (1, (), {'a': 2}) (requis + kwargs)
-func(1, 2, a=3)             # (1, (2,), {'a': 3}) (tous les types)
-
-Usages courants :
-• Flexibilité maximale : def process(required, *args, **kwargs): handle all
-• Fonctions wrapper : def wrapper(func, *args, **kwargs): return func(*args, **kwargs)
-• Tous les types de paramètres
-• Flexibilité des fonctions
-
-Exemple : def func(x, *args, **kwargs): return x, args, kwargs définit une fonction avec tous les types de paramètres, permettant une flexibilité maximale avec requis, positionnels variables et nommés variables.`,
-  630: `Lors de l'appel d'une fonction avec tous les types de paramètres, les arguments sont distribués appropriément. Si def func(x, *args, **kwargs): return x, args, kwargs, alors func(1, 2, 3, a=4) retourne (1, (2, 3), {'a': 4}) car 1 est assigné à x (paramètre requis), 2 et 3 sont collectés dans *args comme (2, 3), et a=4 est collecté dans **kwargs comme {'a': 4}. Les arguments positionnels vont aux paramètres requis et *args, les arguments nommés vont à **kwargs.
-
-Distribution des arguments :
-• func(1, 2, 3, a=4) avec def func(x, *args, **kwargs): return x, args, kwargs retourne (1, (2, 3), {'a': 4})
-• Le premier argument 1 va au paramètre requis x
-• Les arguments positionnels restants 2, 3 vont à *args
-• L'argument nommé a=4 va à **kwargs
-• Retourne le tuple : (x, args, kwargs) = (1, (2, 3), {'a': 4})
-
-Comment ça fonctionne :
-• func(1, 2, 3, a=4) appelle la fonction func
-• Le premier argument 1 est assigné au paramètre requis x
-• Les arguments positionnels 2, 3 sont collectés dans *args : args = (2, 3)
-• L'argument nommé a=4 est collecté dans **kwargs : kwargs = {'a': 4}
-• La fonction exécute : return x, args, kwargs
-• Retourne : (1, (2, 3), {'a': 4})
-
-Exemple :
-def func(x, *args, **kwargs): return x, args, kwargs
-func(1, 2, 3, a=4)         # (1, (2, 3), {'a': 4})
-func(10, 20, x=30)          # TypeError (x déjà assigné positionnellement !)
-func(10, 20, y=30)          # (10, (20,), {'y': 30})
-
-Usages courants :
-• Distribution des arguments : def process(required, *args, **kwargs): distribute
-• Fonctions wrapper : def wrapper(func, *args, **kwargs): return func(*args, **kwargs)
-• Gestion flexible des arguments
-• Assignation des paramètres
-
-Exemple : Si def func(x, *args, **kwargs): return x, args, kwargs, alors func(1, 2, 3, a=4) retourne (1, (2, 3), {'a': 4}) car 1 va à x, 2 et 3 à *args, et a=4 à **kwargs.`,
-  631: `Lambda crée une fonction anonyme (sans nom). lambda x: x * 2 crée une fonction anonyme qui prend le paramètre x et retourne x * 2. Les fonctions lambda sont des fonctions concises sur une seule ligne définies avec le mot-clé lambda, suivi des paramètres (x), deux-points (:), et une expression (x * 2). Les lambda peuvent être utilisées partout où des objets fonction sont requis, mais elles sont limitées à une seule expression et ne peuvent pas contenir d'instructions.
-
-Fonction lambda :
-• lambda x: x * 2 crée une fonction anonyme
-• Le mot-clé lambda crée la fonction
-• x est le paramètre
-• x * 2 est l'expression (retournée)
-• La fonction n'a pas de nom (anonyme)
-• Une seule expression
-
-Comment ça fonctionne :
-• lambda x: x * 2 crée un objet fonction
-• La fonction prend le paramètre x
-• Retourne x * 2 (expression évaluée)
-• Objet fonction créé mais non appelé
-• Peut être assignée : f = lambda x: x * 2
-
-Exemple :
-lambda x: x * 2              # Objet fonction anonyme
-(lambda x: x * 2)(5)         # 10 (appelée avec 5)
-f = lambda x: x * 2; f(5)    # 10 (assignée puis appelée)
-
-Usages courants :
-• Fonctions anonymes : lambda x: x * 2
-• Callbacks : map(lambda x: x * 2, [1, 2, 3])
-• Fonctions courtes : sorted(items, key=lambda x: x[1])
-• Fonctions lambda
-• Fonctions en une ligne
-
-Exemple : lambda x: x * 2 crée une fonction anonyme qui prend le paramètre x et retourne x * 2. Les fonctions lambda sont des fonctions concises en une ligne sans nom.`,
-  632: `Les fonctions lambda peuvent être appelées immédiatement en plaçant les arguments entre parenthèses après l'expression lambda. (lambda x: x * 2)(5) retourne 10 car la fonction lambda lambda x: x * 2 est définie et immédiatement appelée avec l'argument 5. La lambda prend 5 comme x, évalue x * 2 (5 * 2), et retourne 10. C'est le motif d'expression de fonction invoquée immédiatement (IIFE).
-
-Appel de fonction lambda :
-• (lambda x: x * 2)(5) retourne 10
-• Fonction lambda créée : lambda x: x * 2
-• Immédiatement appelée avec l'argument : (5)
-• x = 5, évalue x * 2 = 5 * 2 = 10
-• Retourne 10
-
-Comment ça fonctionne :
-• (lambda x: x * 2)(5) crée et appelle la fonction
-• Fonction lambda définie : lambda x: x * 2
-• L'argument 5 est passé au paramètre x
-• Expression évaluée : x * 2 = 5 * 2 = 10
-• Retourne 10
-
-Exemple :
-(lambda x: x * 2)(5)         # 10 (appel immédiat)
-(lambda x: x ** 2)(4)        # 16 (appel immédiat)
-(lambda x: x + 1)(10)        # 11 (appel immédiat)
-
-Usages courants :
-• Invocation immédiate : (lambda x: f(x))(value)
-• Usage unique : (lambda x: x * 2)(5)
-• Appels lambda
-• Invocation de fonction anonyme
-
-Exemple : (lambda x: x * 2)(5) retourne 10 car la fonction lambda lambda x: x * 2 est immédiatement appelée avec l'argument 5, donc x = 5 et elle retourne 5 * 2 = 10.`,
-  633: `Les fonctions lambda peuvent avoir zéro paramètre. lambda: 42 crée une fonction anonyme sans paramètres qui retourne 42. Quand une lambda n'a pas de paramètres, on utilise lambda suivi de deux-points (:) et de l'expression. C'est utile pour créer des fonctions constantes ou des fonctions sans paramètre d'entrée. Pour l'appeler : (lambda: 42)().
-
-Lambda sans paramètres :
-• lambda: 42 crée une fonction anonyme sans paramètres
-• Le mot-clé lambda crée la fonction
-• Aucun paramètre (vide avant les deux-points)
-• 42 est l'expression (retournée)
-• La fonction retourne toujours 42
-
-Comment ça fonctionne :
-• lambda: 42 crée un objet fonction
-• La fonction ne prend aucun paramètre
-• Retourne toujours 42 (expression évaluée)
-• Objet fonction créé mais non appelé
-• Peut être appelée : (lambda: 42)()
-
-Exemple :
-lambda: 42                   # Fonction anonyme sans paramètres
-(lambda: 42)()               # 42 (appelée sans arguments)
-f = lambda: 42; f()          # 42 (assignée puis appelée)
-
-Usages courants :
-• Fonctions constantes : lambda: default_value
-• Fonctions sans paramètre : lambda: get_current_time()
-• Lambda sans paramètres
-• Motif de fonction constante
-
-Exemple : lambda: 42 crée une fonction anonyme sans paramètres qui retourne toujours 42. Les lambda peuvent avoir zéro ou plusieurs paramètres.`,
-  634: `Les fonctions lambda sans paramètres sont appelées avec des parenthèses vides. (lambda: 42)() retourne 42 car la fonction lambda lambda: 42 est immédiatement appelée sans arguments (parenthèses vides ()). La lambda n'a pas de paramètres, donc elle n'attend pas d'arguments lors de l'appel. Elle évalue simplement l'expression 42 et la retourne.
-
-Appel lambda sans paramètres :
-• (lambda: 42)() retourne 42
-• Fonction lambda créée : lambda: 42
-• Immédiatement appelée sans arguments : ()
-• Expression évaluée : 42
-• Retourne 42
-
-Comment ça fonctionne :
-• (lambda: 42)() crée et appelle la fonction
-• Fonction lambda définie : lambda: 42
-• Aucun argument fourni (parenthèses vides)
-• Expression évaluée : 42
-• Retourne 42
-
-Exemple :
-(lambda: 42)()               # 42 (appelée sans arguments)
-(lambda: 'hello')()          # 'hello' (appelée sans arguments)
-(lambda: [1, 2, 3])()        # [1, 2, 3] (appelée sans arguments)
-
-Usages courants :
-• Invocation immédiate : (lambda: value)()
-• Fonctions constantes : f = lambda: default; f()
-• Appels lambda
-• Invocation de fonction sans paramètre
-
-Exemple : (lambda: 42)() retourne 42 car la fonction lambda lambda: 42 est immédiatement appelée sans arguments, donc elle évalue et retourne 42.`,
-  635: `Les fonctions lambda peuvent avoir plusieurs paramètres séparés par des virgules. lambda x, y: x + y crée une fonction anonyme avec deux paramètres x et y qui retourne leur somme x + y. Les lambda peuvent avoir n'importe quel nombre de paramètres, comme les fonctions normales, mais sont limitées à une seule expression. Pour l'appeler : (lambda x, y: x + y)(3, 4).
-
-Lambda à plusieurs paramètres :
-• lambda x, y: x + y crée une fonction anonyme avec deux paramètres
-• Le mot-clé lambda crée la fonction
-• x, y sont les paramètres (séparés par des virgules)
-• x + y est l'expression (retournée)
-• La fonction prend deux arguments lors de l'appel
-
-Comment ça fonctionne :
-• lambda x, y: x + y crée un objet fonction
-• La fonction prend les paramètres x et y
-• Retourne x + y (expression évaluée)
-• Objet fonction créé mais non appelé
-• Peut être appelée : (lambda x, y: x + y)(3, 4)
-
-Exemple :
-lambda x, y: x + y           # Fonction anonyme à deux paramètres
-(lambda x, y: x + y)(3, 4)   # 7 (appelée avec 3, 4)
-(lambda a, b, c: a * b + c)(2, 3, 4) # 10 (trois paramètres)
-
-Usages courants :
-• Paramètres multiples : lambda x, y: x + y
-• Fonctions à deux arguments : sorted(items, key=lambda x, y: (x[1], y[0]))
-• Lambda à plusieurs paramètres
-• Fonctions multi-paramètres
-
-Exemple : lambda x, y: x + y crée une fonction anonyme avec deux paramètres x et y qui retourne leur somme. Les lambda peuvent avoir n'importe quel nombre de paramètres.`,
-  636: `Les fonctions lambda à plusieurs paramètres sont appelées avec des arguments dans le même ordre. (lambda x, y: x + y)(3, 4) retourne 7 car la fonction lambda lambda x, y: x + y est immédiatement appelée avec les arguments 3 et 4. Les arguments sont assignés aux paramètres dans l'ordre : x = 3 et y = 4, puis l'expression x + y s'évalue à 3 + 4 = 7, qui est retournée.
-
-Appel lambda à plusieurs paramètres :
-• (lambda x, y: x + y)(3, 4) retourne 7
-• Fonction lambda créée : lambda x, y: x + y
-• Immédiatement appelée avec arguments : (3, 4)
-• x = 3, y = 4 (assignés dans l'ordre)
-• Expression évaluée : x + y = 3 + 4 = 7
-
-Comment ça fonctionne :
-• (lambda x, y: x + y)(3, 4) crée et appelle la fonction
-• Fonction lambda définie : lambda x, y: x + y
-• Arguments 3, 4 passés aux paramètres x, y
-• x = 3, y = 4 (assignés dans l'ordre)
-• Expression évaluée : x + y = 3 + 4 = 7
-• Retourne 7
-
-Exemple :
-(lambda x, y: x + y)(3, 4)   # 7 (3 + 4)
-(lambda x, y: x * y)(5, 6)   # 30 (5 * 6)
-(lambda a, b: a ** b)(2, 3)  # 8 (2 ** 3)
-
-Usages courants :
-• Invocation immédiate : (lambda x, y: f(x, y))(a, b)
-• Fonctions à deux arguments : (lambda x, y: x + y)(1, 2)
-• Appels lambda
-• Invocation de fonction multi-paramètre
-
-Exemple : (lambda x, y: x + y)(3, 4) retourne 7 car la lambda lambda x, y: x + y est immédiatement appelée avec 3 et 4, donc x = 3, y = 4, et elle retourne 3 + 4 = 7.`,
-  637: `Les fonctions lambda peuvent être assignées à des variables, devenant ainsi des fonctions nommées. f = lambda x: x**2; f(5) retourne 25 car la fonction lambda lambda x: x**2 est assignée à la variable f, puis f(5) appelle la fonction avec l'argument 5. Assignée à une variable, une lambda fonctionne comme une fonction régulière - on peut l'appeler plusieurs fois, la passer en argument, etc. Cependant, def est généralement préféré pour les fonctions nommées car plus lisible.
-
-Lambda assignée à une variable :
-• f = lambda x: x**2; f(5) retourne 25
-• Fonction lambda créée : lambda x: x**2
-• Assignée à la variable f
-• f(5) appelle la fonction avec l'argument 5
-• Retourne 25 (5 ** 2)
-
-Comment ça fonctionne :
-• f = lambda x: x**2 crée la fonction et l'assigne à f
-• La variable f contient maintenant l'objet fonction
-• f(5) appelle la fonction stockée dans f
-• L'argument 5 est passé au paramètre x
-• Expression évaluée : x**2 = 5**2 = 25
-• Retourne 25
-
-Exemple :
-f = lambda x: x**2
-f(5)                        # 25 (appelée avec 5)
-f(3)                        # 9 (appelée avec 3)
-f(10)                       # 100 (appelée avec 10)
-
-Usages courants :
-• Lambda nommée : f = lambda x: x**2 (moins courant, préférer def)
-• Lambda réutilisable : func = lambda x: transform(x)
-• Assignation de lambda
-• Objets fonction
-
-Exemple : f = lambda x: x**2; f(5) retourne 25 car la lambda lambda x: x**2 est assignée à f, puis f(5) l'appelle avec 5, retournant 5**2 = 25.`,
-  638: `Les fonctions lambda peuvent contenir des expressions conditionnelles (opérateurs ternaires). lambda x: x if x > 0 else 0 crée une fonction anonyme qui prend le paramètre x et retourne x si x > 0, sinon retourne 0. Les lambda peuvent utiliser des expressions if-else (mais pas des instructions if-else) car limitées à une seule expression. La syntaxe est valeur_si_vrai if condition else valeur_si_faux.
-
-Lambda avec conditionnelle :
-• lambda x: x if x > 0 else 0 crée une fonction anonyme avec conditionnelle
-• Le mot-clé lambda crée la fonction
-• x est le paramètre
-• x if x > 0 else 0 est l'expression conditionnelle
-• Retourne x si x > 0, sinon retourne 0
-
-Comment ça fonctionne :
-• lambda x: x if x > 0 else 0 crée un objet fonction
-• La fonction prend le paramètre x
-• Évalue la condition : x > 0
-• Si True : retourne x
-• Si False : retourne 0
-
-Exemple :
-lambda x: x if x > 0 else 0  # Fonction conditionnelle
-(lambda x: x if x > 0 else 0)(5)   # 5 (x > 0, retourne x)
-(lambda x: x if x > 0 else 0)(-5)  # 0 (x <= 0, retourne 0)
-
-Usages courants :
-• Lambda conditionnelle : lambda x: x if condition else default
-• Ternaire dans lambda : lambda x: 'big' if x > 10 else 'small'
-• Expressions conditionnelles
-• Lambda avec conditions
-
-Exemple : lambda x: x if x > 0 else 0 crée une fonction anonyme avec une expression conditionnelle qui retourne x si x > 0, sinon 0.`,
-  639: `Les fonctions lambda avec expressions conditionnelles évaluent la condition et retournent la valeur appropriée. (lambda x: x if x > 0 else 0)(-5) retourne 0 car la lambda lambda x: x if x > 0 else 0 est immédiatement appelée avec l'argument -5. La condition x > 0 s'évalue à False (car -5 n'est pas supérieur à 0), donc la branche else est prise, retournant 0 au lieu de x.
-
-Évaluation conditionnelle lambda :
-• (lambda x: x if x > 0 else 0)(-5) retourne 0
-• Fonction lambda créée : lambda x: x if x > 0 else 0
-• Immédiatement appelée avec argument : (-5)
-• x = -5, condition évaluée : -5 > 0 est False
-• Branche else prise : retourne 0 (pas x)
-
-Comment ça fonctionne :
-• (lambda x: x if x > 0 else 0)(-5) crée et appelle la fonction
-• Fonction lambda définie : lambda x: x if x > 0 else 0
-• L'argument -5 est passé au paramètre x
-• Condition évaluée : x > 0 → -5 > 0 → False
-• Branche else exécutée : retourne 0
-
-Exemple :
-(lambda x: x if x > 0 else 0)(-5)  # 0 (condition False, retourne 0)
-(lambda x: x if x > 0 else 0)(5)   # 5 (condition True, retourne x)
-(lambda x: x if x > 0 else 0)(0)   # 0 (condition False, retourne 0)
-
-Usages courants :
-• Évaluation conditionnelle : (lambda x: x if condition else default)(value)
-• Ternaire dans lambda : (lambda x: 'pos' if x > 0 else 'neg')(-5)
-• Expressions conditionnelles
-• Lambda avec conditions
-
-Exemple : (lambda x: x if x > 0 else 0)(-5) retourne 0 car la condition -5 > 0 est False, donc la branche else est prise et 0 est retourné.`,
-  640: `La différence clé entre def et lambda est que def crée une fonction nommée tandis que lambda crée une fonction anonyme. def func(x): return x * 2 crée une fonction nommée func, tandis que lambda x: x * 2 crée une fonction sans nom. De plus, les fonctions def peuvent contenir plusieurs instructions, tandis que les lambda sont limitées à une seule expression. def est généralement préféré pour les fonctions nommées, lambda pour les fonctions courtes en une ligne utilisées comme arguments.
-
-def vs lambda :
-• def crée une fonction nommée, lambda crée une fonction anonyme
-• def peut avoir plusieurs instructions, lambda limité à une seule expression
-• def préféré pour fonctions nommées, lambda pour fonctions courtes inline
-• Les fonctions def ont des noms, les lambda non (sauf si assignées)
-• Les deux créent des objets fonction
-
-Comment ça fonctionne :
-• def func(x): return x * 2 crée une fonction nommée 'func'
-• lambda x: x * 2 crée une fonction anonyme (sans nom)
-• def peut avoir : plusieurs instructions, docstrings, annotations
-• lambda peut avoir : une seule expression
-• lambda souvent utilisée comme argument : map(lambda x: x*2, [1,2,3])
-
-Exemple :
-def func(x): return x * 2  # Fonction nommée 'func'
-lambda x: x * 2            # Fonction anonyme (sans nom)
-f = lambda x: x * 2        # Assignée à une variable (essentiellement nommée)
-
-Usages courants :
-• def : fonctions nommées, plusieurs instructions : def process(x): ...; ...; return result
-• lambda : fonctions courtes inline, une expression : map(lambda x: x*2, items)
-• Définition de fonction
-• Fonctions lambda
-
-Exemple : La différence est que def crée une fonction nommée (ex. def func(x): return x * 2 crée la fonction 'func'), tandis que lambda crée une fonction anonyme (ex. lambda x: x * 2 crée une fonction sans nom). Les fonctions def peuvent contenir plusieurs instructions, les lambda une seule expression.`,
-  641: `Les fonctions retournent des valeurs avec l'instruction return. def func(): return 1 définit une fonction qui retourne la valeur 1 lors de l'appel. L'instruction return sort immédiatement de la fonction et renvoie la valeur spécifiée. Les fonctions peuvent retourner n'importe quel type - nombres, chaînes, listes, dictionnaires, objets, etc. Si aucune instruction return n'est exécutée, la fonction retourne None implicitement.
-
-Instruction return :
-• def func(): return 1 définit une fonction qui retourne 1
-• L'instruction return sort de la fonction
-• Retourne la valeur spécifiée : 1
-• L'appel de fonction s'évalue à la valeur retournée
-• Peut retourner n'importe quel type
-
-Comment ça fonctionne :
-• def func(): crée la définition de fonction
-• Nom de fonction : func
-• Aucun paramètre : ()
-• Corps : return 1
-• Lors de l'appel : func() retourne 1
-
-Exemple :
-def func(): return 1
-func()                      # 1 (retourne 1)
-result = func()             # result = 1
-print(func())               # 1 (affiche la valeur retournée)
-
-Usages courants :
-• Retourner des valeurs : def calculate(): return result
-• Résultats de fonction : def get_value(): return value
-• Instruction return
-• Valeurs de retour
-
-Exemple : def func(): return 1 définit une fonction qui retourne la valeur 1 lors de l'appel. L'instruction return sort immédiatement de la fonction et renvoie la valeur.`,
-  642: `Appeler une fonction qui retourne une valeur s'évalue à cette valeur. Si def func(): return 1, alors func() retourne 1 car l'appel exécute l'instruction return, qui sort de la fonction et retourne la valeur 1. L'appel func() s'évalue à la valeur retournée, donc il peut être utilisé dans des expressions, assigné à des variables ou affiché.
-
-Appel de fonction retourne la valeur :
-• func() avec def func(): return 1 retourne 1
-• L'appel s'évalue à la valeur retournée
-• return 1 s'exécute quand la fonction est appelée
-• L'appel devient 1
-• Peut être utilisé dans des expressions
-
-Comment ça fonctionne :
-• func() appelle la fonction func
-• La fonction exécute : return 1
-• L'instruction return sort de la fonction
-• L'appel s'évalue à la valeur retournée : 1
-• Retourne : 1
-
-Exemple :
-def func(): return 1
-func()                      # 1 (retourne 1)
-result = func()             # result = 1
-print(func())               # 1 (affiche 1)
-func() * 2                  # 2 (utilise la valeur retournée : 1 * 2)
-
-Usages courants :
-• Utiliser les valeurs de retour : result = func()
-• Dans des expressions : total = calculate() + 10
-• Usage des valeurs de retour
-• Évaluation des appels
-
-Exemple : Si def func(): return 1, alors func() retourne 1 car l'appel exécute l'instruction return, qui retourne 1, et l'appel s'évalue à cette valeur.`,
-  643: `Retourner plusieurs valeurs en Python crée un tuple. def func(): return 1, 2, 3 définit une fonction qui retourne un tuple (1, 2, 3) car quand on écrit return 1, 2, 3, Python crée automatiquement un tuple - la virgule crée le tuple, pas les parenthèses. C'est la façon Python de retourner plusieurs valeurs - on peut les déballer à l'appel : a, b, c = func() assigne 1 à a, 2 à b et 3 à c.
-
-Valeurs de retour multiples :
-• def func(): return 1, 2, 3 définit une fonction qui retourne un tuple
-• return 1, 2, 3 crée le tuple (1, 2, 3)
-• La virgule crée le tuple (parenthèses optionnelles)
-• Retourne un seul objet tuple
-• Peut être déballé : a, b, c = func()
-
-Comment ça fonctionne :
-• def func(): crée la définition de fonction
-• Nom de fonction : func
-• Aucun paramètre : ()
-• Corps : return 1, 2, 3
-• La virgule crée le tuple : (1, 2, 3)
-• Lors de l'appel : func() retourne (1, 2, 3)
-
-Exemple :
-def func(): return 1, 2, 3
-func()                      # (1, 2, 3) (retourne le tuple)
-a, b, c = func()            # a=1, b=2, c=3 (déballage)
-
-Usages courants :
-• Retourner plusieurs valeurs : return x, y, z
-• Retour tuple : return (1, 2, 3) (même que return 1, 2, 3)
-• Retour de plusieurs valeurs
-• Déballage des valeurs de retour
-
-Exemple : def func(): return 1, 2, 3 définit une fonction qui retourne un tuple (1, 2, 3). La virgule crée le tuple, donc return 1, 2, 3 est équivalent à return (1, 2, 3).`,
-  644: `Appeler une fonction qui retourne plusieurs valeurs retourne un tuple. Si def func(): return 1, 2, 3, alors func() retourne (1, 2, 3) car la virgule dans return 1, 2, 3 crée un tuple. L'appel s'évalue à un tuple contenant toutes les valeurs retournées. On peut déballer ce tuple : a, b, c = func() assigne chaque valeur à une variable, ou l'utiliser comme tuple.
-
-La fonction retourne un tuple :
-• func() avec def func(): return 1, 2, 3 retourne (1, 2, 3)
-• Les valeurs multiples dans return créent un tuple
-• L'appel s'évalue au tuple
-• Retourne un seul objet tuple
-• Peut être déballé ou utilisé comme tuple
-
-Comment ça fonctionne :
-• func() appelle la fonction func
-• La fonction exécute : return 1, 2, 3
-• La virgule crée le tuple : (1, 2, 3)
-• L'instruction return retourne le tuple
-• L'appel s'évalue à : (1, 2, 3)
-
-Exemple :
-def func(): return 1, 2, 3
-func()                      # (1, 2, 3) (retourne le tuple)
-a, b, c = func()            # a=1, b=2, c=3 (déballage)
-result = func()             # result = (1, 2, 3) (tuple)
-
-Usages courants :
-• Retourner plusieurs valeurs : return x, y, z (retourne un tuple)
-• Retour tuple : result = func() (result est un tuple)
-• Retour de plusieurs valeurs
-• Déballage de tuple
-
-Exemple : Si def func(): return 1, 2, 3, alors func() retourne (1, 2, 3) car retourner plusieurs valeurs crée un tuple, et l'appel s'évalue à ce tuple.`,
-  645: `On peut déballer plusieurs valeurs de retour avec le déballage de tuple. Si def func(): return 1, 2, alors a, b = func() assigne 1 à a et 2 à b car func() retourne un tuple (1, 2), et l'affectation a, b = (1, 2) déballle le tuple, assignant chaque élément à la variable correspondante. C'est un motif courant pour les fonctions qui retournent plusieurs valeurs - on peut les déballer directement dans des variables.
-
-Déballage des valeurs de retour :
-• a, b = func() avec def func(): return 1, 2 assigne a=1, b=2
-• func() retourne le tuple (1, 2)
-• Le déballage a, b = (1, 2) assigne 1 à a, 2 à b
-• Chaque valeur va à la variable correspondante
-• Motif courant pour retours multiples
-
-Comment ça fonctionne :
-• func() appelle la fonction func
-• func() retourne le tuple (1, 2)
-• a, b = (1, 2) déballle le tuple
-• a = 1, b = 2
-• Les variables reçoivent les valeurs
-
-Exemple :
-def func(): return 1, 2
-a, b = func()               # a=1, b=2 (déballage direct)
-x, y = func()               # x=1, y=2 (réutilise le motif)
-result = func()             # result = (1, 2) (sans déballage)
-
-Usages courants :
-• Déballage des retours : a, b = func()
-• Assignation multiple : x, y = get_coords()
-• Retours multiples
-• Déballage de tuple
-
-Exemple : Si def func(): return 1, 2, alors a, b = func() assigne 1 à a et 2 à b car func() retourne le tuple (1, 2), et le déballage a, b = (1, 2) assigne chaque élément à la variable correspondante.`,
-  646: `Une instruction return sans valeur retourne None. def func(): return définit une fonction qui retourne explicitement None. Quand on utilise return sans valeur, Python retourne None. C'est équivalent à return None ou à l'absence d'instruction return - les trois font que la fonction retourne None. Utiliser explicitement return sans valeur peut clarifier que la fonction retourne intentionnellement None.
-
-Return sans valeur :
-• def func(): return définit une fonction qui retourne None
-• return sans valeur retourne None
-• Équivalent à return None
-• Équivalent à pas d'instruction return
-• La fonction retourne None
-
-Comment ça fonctionne :
-• def func(): crée la définition de fonction
-• Nom de fonction : func
-• Aucun paramètre : ()
-• Corps : return (sans valeur)
-• Lors de l'appel : func() retourne None
-• Retour explicite de None
-
-Exemple :
-def func(): return        # Retourne None
-func()                    # None
-def func(): return None   # Même : None
-def func(): pass          # Même : None (pas de return)
-
-Usages courants :
-• Retour explicite de None : def func(): return
-• Intention claire : retourner None explicitement
-• Terminaison de fonction
-• Motif de retour None
-
-Exemple : def func(): return définit une fonction qui retourne explicitement None. L'instruction return sans valeur retourne None, rendant clair que la fonction retourne intentionnellement None.`,
-  647: `Appeler une fonction avec return sans valeur retourne None. Si def func(): return, alors func() retourne None car l'appel exécute l'instruction return sans valeur, qui fait que Python retourne None. L'appel func() s'évalue donc à None. C'est équivalent à func() avec def func(): pass ou def func(): return None - les trois retournent None.
-
-Appel avec return sans valeur :
-• func() avec def func(): return retourne None
-• L'instruction return sans valeur retourne None
-• L'appel s'évalue à None
-• Équivalent à return None
-• Comportement cohérent
-
-Comment ça fonctionne :
-• func() appelle la fonction func
-• La fonction exécute : return (sans valeur)
-• Python retourne None implicitement
-• L'appel s'évalue à : None
-• Retourne : None
-
-Exemple :
-def func(): return
-func()                    # None (retourne None)
-result = func()           # result = None
-if func() is None:       # True (vérification)
-
-Usages courants :
-• Fonctions vides : def stub(): return (retourne None)
-• Retour explicite : return (None)
-• Comportement de retour
-• Valeur None
-
-Exemple : Si def func(): return, alors func() retourne None car l'appel exécute l'instruction return sans valeur, qui retourne None.`,
-  648: `Les fonctions sans instruction return retournent implicitement None. Si une fonction n'a pas d'instruction return, quand elle termine son exécution, elle retourne implicitement None. C'est le comportement par défaut de Python - toute fonction retourne une valeur, et si aucune instruction return n'est exécutée, la fonction retourne None. C'est pourquoi les fonctions sans retour explicite peuvent encore être utilisées dans des expressions - elles retournent None, une valeur valide (bien que souvent peu utile).
-
-Pas d'instruction return :
-• Une fonction sans return retourne None
-• Retour implicite de None
-• Comportement par défaut en Python
-• Toute fonction retourne une valeur
-• None est retourné si aucun return exécuté
-
-Comment ça fonctionne :
-• La fonction exécute son corps
-• Atteint la fin de la fonction
-• Aucune instruction return rencontrée
-• Retourne implicitement None
-• L'appel s'évalue à None
-
-Exemple :
-def func(): pass          # Pas de return, retourne None
-func()                    # None
-def func(): print("hi")   # Pas de return, retourne None
-result = func()           # result = None
-
-Usages courants :
-• Fonctions sans return : def func(): body (retourne None)
-• Fonctions à effets de bord : def print_data(): print(x) (retourne None)
-• Retour implicite de None
-• Comportement de retour par défaut
-
-Exemple : Si une fonction n'a pas d'instruction return, elle retourne automatiquement None quand elle termine. C'est le comportement par défaut de Python - toute fonction retourne une valeur, et None est la valeur par défaut.`,
-  649: `Appeler une fonction sans instruction return retourne None. Si def func(): pass, alors func() retourne None car pass est un placeholder qui ne fait rien, et la fonction atteint sa fin sans exécuter d'instruction return. Python retourne implicitement None dans ce cas. C'est équivalent à def func(): return ou def func(): return None - les trois font que func() retourne None.
-
-Appel sans return :
-• func() avec def func(): pass retourne None
-• pass ne fait rien
-• La fonction atteint sa fin
-• Aucun return exécuté
-• Retour implicite : None
-
-Comment ça fonctionne :
-• func() appelle la fonction func
-• La fonction exécute : pass (ne fait rien)
-• La fonction atteint sa fin
-• Aucun return rencontré
-• Python retourne implicitement None
-
-Exemple :
-def func(): pass
-func()                    # None (retourne None implicitement)
-def stub(): pass
-stub()                    # None (même comportement)
-
-Usages courants :
-• Fonctions placeholder : def func(): pass (à implémenter)
-• Stubs : def stub(): pass (retourne None)
-• Comportement implicite
-• Valeur None
-
-Exemple : Si def func(): pass, alors func() retourne None car la fonction n'a pas d'instruction return et atteint sa fin, ce qui déclenche le retour implicite de None.`,
-  650: `Les fonctions peuvent retourner n'importe quel type de valeur, y compris des listes. def func(): return [1, 2, 3] définit une fonction qui retourne la liste [1, 2, 3] lors de l'appel. L'instruction return peut retourner n'importe quel objet Python : nombres, chaînes, listes, dictionnaires, tuples, objets personnalisés, etc. Retourner une liste est courant pour les fonctions qui collectent ou génèrent des données séquentielles.
-
-Retour de liste :
-• def func(): return [1, 2, 3] définit une fonction qui retourne une liste
-• return [1, 2, 3] retourne la liste
-• Les fonctions peuvent retourner tout type
-• Listes, dictionnaires, tuples, objets...
-• Retour de structures de données
-
-Comment ça fonctionne :
-• def func(): crée la définition de fonction
-• Nom de fonction : func
-• Aucun paramètre : ()
-• Corps : return [1, 2, 3]
-• Lors de l'appel : func() retourne [1, 2, 3]
-
-Exemple :
-def func(): return [1, 2, 3]
-func()                      # [1, 2, 3] (retourne la liste)
-items = func()              # items = [1, 2, 3]
-func()[0]                   # 1 (accès par index)
-
-Usages courants :
-• Retourner des collections : def get_items(): return [1, 2, 3]
-• Génération de données : def generate(): return [x for x in range(5)]
-• Retours de listes
-• Structures de données
-
-Exemple : def func(): return [1, 2, 3] définit une fonction qui retourne la liste [1, 2, 3] lors de l'appel. Les fonctions peuvent retourner n'importe quel type de valeur en Python.`,
-  651: `Les fonctions peuvent accéder aux variables globales (définies à l'extérieur de la fonction). Si x = 1; def func(): return x; func(), alors func() retourne 1 car la fonction peut lire les variables globales. Quand une fonction référence une variable non définie localement, Python cherche dans la portée englobante (portée globale) et trouve x = 1, donc utilise cette valeur. C'est ce qu'on appelle la recherche de variable – Python parcourt de la portée locale à la globale.
-
-Accès variable globale :
-• x = 1; def func(): return x; func() retourne 1
-• x = 1 définit la variable globale
-• func() référence x (non défini localement)
-• Python cherche dans la portée globale, trouve x = 1
-• Retourne la valeur globale : 1
-
-Comment ça fonctionne :
-• x = 1 crée la variable globale x = 1
-• def func(): crée la définition de fonction
-• La fonction référence x (non défini dans la fonction)
-• Python parcourt de la portée locale à la globale
-• Trouve x = 1 dans la portée globale
-• Retourne : 1
-
-Exemple :
-x = 1
-def func(): return x
-func()                      # 1 (accède à x global)
-x = 10
-func()                      # 10 (accède toujours à x global)
-
-Usages courants :
-• Lire les globaux : def func(): return global_var
-• Accès global : def calculate(): return base * rate
-• Recherche de variable
-• Accès aux variables globales
-
-Exemple : Si x = 1; def func(): return x; func(), alors func() retourne 1 car la fonction peut accéder à la variable globale x, et Python trouve x = 1 dans la portée globale.`,
-  652: `L'affectation à une variable à l'intérieur d'une fonction crée une variable locale, même si une variable globale du même nom existe. Si x = 1; def func(): x = 2; return x; func(), alors func() retourne 2 car x = 2 à l'intérieur de la fonction crée une variable locale x qui masque (cache) la variable globale x. Quand la fonction référence x, elle utilise la variable locale x = 2, pas la globale x = 1. C'est la règle de portée de Python – l'affectation crée une variable locale.
-
-Affectation locale :
-• x = 1; def func(): x = 2; return x; func() retourne 2
-• x = 1 définit la variable globale
-• x = 2 dans la fonction crée la variable locale x
-• La variable locale masque la variable globale
-• La fonction utilise x local = 2
-• Retourne la valeur locale : 2
-
-Comment ça fonctionne :
-• x = 1 crée la variable globale x = 1
-• def func(): crée la définition de fonction
-• x = 2 dans la fonction crée la variable locale x = 2
-• x local masque x global
-• return x utilise x local = 2
-• Retourne : 2
-
-Exemple :
-x = 1
-def func(): x = 2; return x
-func()                      # 2 (utilise x local = 2)
-x                           # 1 (x global inchangé)
-
-Usages courants :
-• Variables locales : def func(): x = value (crée local)
-• Masquage : x local masque x global
-• Création de variable locale
-• Portée des fonctions
-
-Exemple : Si x = 1; def func(): x = 2; return x; func(), alors func() retourne 2 car l'affectation x = 2 dans la fonction crée une variable locale x qui masque la variable globale x, donc la fonction utilise x local = 2.`,
-  653: `L'affectation à une variable à l'intérieur d'une fonction ne modifie pas la variable globale du même nom. Si x = 1; def func(): x = 2; func(); x, alors x retourne 1 car x = 2 à l'intérieur de la fonction crée une variable locale x, qui n'affecte pas la variable globale x.
-
-Concepts clés :
-• x = 1; def func(): x = 2; func(); x retourne 1
-• x = 1 définit la variable globale
-• x = 2 dans la fonction crée la variable locale x
-• La variable locale n'affecte pas la variable globale
-• x globale reste 1
-
-Comment ça fonctionne :
-• x = 1 crée la variable globale x = 1
-• def func(): crée la définition de fonction
-• x = 2 dans la fonction crée la variable locale x = 2
-• func() s'exécute (x local = 2, n'affecte pas la globale)
-• func() retourne (x local est détruite)
-• x évalue la variable globale x = 1
-
-Exemple :
-x = 1
-def func(): x = 2  # Crée x local = 2
-func()                      # x local = 2 (n'affecte pas la globale)
-x                           # 1 (x globale inchangée)
-
-Usages courants :
-• Comprendre la portée : les variables locales n'affectent pas les globales
-• Indépendance : def func(): local = value (indépendant)
-• Local vs global
-• Portée des variables
-
-Exemple : Si x = 1; def func(): x = 2; func(); x, alors x retourne 1 car x = 2 dans la fonction crée une variable locale qui n'affecte pas la variable globale x qui reste 1.`,
-  654: `Le mot-clé global permet à une fonction de modifier une variable globale. Si x = 1; def func(): global x; x = 2; func(); x, alors x retourne 2 car global x indique à Python que x dans la fonction fait référence à la variable globale x. L'affectation x = 2 modifie la variable globale, la faisant passer de 1 à 2.
-
-Concepts clés :
-• x = 1; def func(): global x; x = 2; func(); x retourne 2
-• global x indique à Python d'utiliser la variable globale x
-• x = 2 dans la fonction modifie la variable globale x
-• x globale passe de 1 à 2
-
-Comment ça fonctionne :
-• x = 1 crée la variable globale x = 1
-• def func(): crée la définition de fonction
-• global x indique à Python que x fait référence à la variable globale
-• x = 2 dans la fonction modifie x globale
-• func() s'exécute (x globale devient 2)
-
-Exemple :
-x = 1
-def func(): global x; x = 2  # Modifie x globale
-func()                      # x globale devient 2
-x                           # 2 (x globale modifiée)
-
-Usages courants :
-• Modifier les globales : def func(): global var; var = new_value
-• Modification globale : def update(): global counter; counter += 1
-• Mot-clé global
-• Modification de variable globale
-
-Exemple : Si x = 1; def func(): global x; x = 2; func(); x, alors x retourne 2 car le mot-clé global indique à Python d'utiliser la variable globale x, donc x = 2 dans la fonction modifie la variable globale.`,
-  655: `Les fonctions imbriquées peuvent accéder aux variables des fonctions englobantes. Si def outer(): x = 1; def inner(): return x; return inner(); outer(), alors outer() retourne 1 car inner() peut accéder à la variable locale x = 1 de outer(). C'est une fermeture (closure) : la fonction intérieure « ferme » sur les variables de la fonction extérieure.
-
-Concepts clés :
-• def outer(): x = 1; def inner(): return x; return inner(); outer() retourne 1
-• outer() définit la variable locale x = 1
-• inner() est définie dans outer()
-• inner() peut accéder à x de outer()
-• inner() retourne x = 1
-
-Comment ça fonctionne :
-• outer() crée la définition de fonction
-• outer() définit la variable locale x = 1
-• inner() est définie dans outer()
-• inner() référence x (non défini dans inner())
-• Python cherche dans la portée englobante, trouve x = 1 dans outer()
-• inner() retourne x = 1
-
-Exemple :
-def outer():
-    x = 1
-    def inner(): return x
-    return inner()
-outer()                      # 1 (inner accède à x de outer)
-
-Usages courants :
-• Fonctions imbriquées : def outer(): x = value; def inner(): use x
-• Fermetures : def factory(x): def inner(): return x; return inner
-• Accès aux variables
-• Comportement des fermetures
-
-Exemple : Si def outer(): x = 1; def inner(): return x; return inner(); outer(), alors outer() retourne 1 car inner() accède à la variable locale x = 1 de outer(), ce qui constitue une fermeture.`,
-  656: `Les fermetures peuvent capturer les paramètres de la fonction englobante. Si def outer(x): def inner(): return x; return inner; f = outer(5); f(), alors f() retourne 5 car outer(5) crée une fermeture où inner() capture le paramètre x = 5. Lorsque inner est retournée et assignée à f, elle conserve la valeur x = 5.
-
-Concepts clés :
-• def outer(x): def inner(): return x; return inner; f = outer(5); f() retourne 5
-• outer(5) crée une fermeture avec x = 5
-• inner() capture x = 5 de la fonction outer
-• inner est retournée et assignée à f
-• f() appelle inner(), qui retourne x capturé = 5
-
-Comment ça fonctionne :
-• outer(5) appelle outer avec x = 5
-• outer() définit inner() qui référence x
-• inner() capture x = 5
-• outer() retourne l'objet fonction inner
-• f = inner
-• f() appelle inner(), qui retourne x capturé = 5
-
-Exemple :
-def outer(x): def inner(): return x; return inner
-f = outer(5)                  # f est inner qui a capturé x = 5
-f()                          # 5 (retourne x capturé = 5)
-g = outer(10)
-g()                          # 10 (retourne x capturé = 10)
-
-Usages courants :
-• Fonctions usine : def make_multiplier(n): return lambda x: x * n
-• Fermetures : def create_closure(x): def inner(): return x; return inner
-• Capture de paramètre
-• Comportement des fermetures
-
-Exemple : Si def outer(x): def inner(): return x; return inner; f = outer(5); f(), alors f() retourne 5 car inner() capture le paramètre x = 5 de outer dans une fermeture.`,
-  657: `Les variables locales ne sont pas accessibles à l'extérieur de la fonction. Si def func(): x = 1; return x; func(); x, alors x lève une NameError car x est une variable locale définie dans func(), et les variables locales n'existent que dans la fonction où elles sont définies.
-
-Concepts clés :
-• def func(): x = 1; return x; func(); x lève NameError
-• x = 1 dans la fonction crée la variable locale x
-• Les variables locales n'existent que dans la fonction
-• Après le retour de func(), x local est détruite
-• x à l'extérieur lève NameError
-
-Comment ça fonctionne :
-• def func(): crée la définition de fonction
-• x = 1 dans la fonction crée la variable locale x = 1
-• func() s'exécute : retourne 1, x local détruite
-• x à l'extérieur tente d'accéder à x
-• x n'est pas défini dans la portée globale
-
-Exemple :
-def func(): x = 1; return x
-func()                      # 1 (retourne x local)
-x                           # NameError: name 'x' is not defined
-
-Usages courants :
-• Comprendre la portée : les variables locales ne sont pas accessibles à l'extérieur
-• Durée de vie : les variables locales sont détruites après le retour
-• Local vs global
-• Portée des variables
-
-Exemple : Si def func(): x = 1; return x; func(); x, alors x lève une NameError car x est une variable locale définie dans func().`,
-  658: `Les fonctions peuvent accéder aux variables globales et utiliser les paramètres. Si x = 1; def func(y): return x + y; func(2), alors func(2) retourne 3 car la fonction accède à la variable globale x = 1 et utilise le paramètre y = 2, retournant x + y = 1 + 2 = 3.
-
-Concepts clés :
-• x = 1; def func(y): return x + y; func(2) retourne 3
-• x = 1 définit la variable globale
-• func(y) a le paramètre y
-• func(2) passe y = 2
-• return x + y utilise x global = 1 et paramètre y = 2
-
-Comment ça fonctionne :
-• x = 1 crée la variable globale x = 1
-• def func(y): crée la fonction avec le paramètre y
-• func(2) appelle la fonction avec y = 2
-• return x + y référence x global = 1 et paramètre y = 2
-
-Exemple :
-x = 1
-def func(y): return x + y
-func(2)                      # 3 (x global=1 + paramètre y=2)
-func(5)                      # 6 (x global=1 + paramètre y=5)
-
-Usages courants :
-• Utiliser globales et paramètres : def calculate(y): return global_var + y
-• Accès mixte : def process(param): return base + param
-• Accès global et paramètre
-• Portée des variables
-
-Exemple : Si x = 1; def func(y): return x + y; func(2), alors func(2) retourne 3 car la fonction accède à x global = 1 et utilise le paramètre y = 2.`,
-  659: `L'affectation à une variable dans une fonction la rend locale, ce qui empêche de la lire avant affectation. Si def func(): x = x + 1; return x; func(), alors func() lève une UnboundLocalError car x = x + 1 affecte à x, ce qui la rend locale, mais x est référencée à droite (x + 1) avant d'être affectée.
-
-Concepts clés :
-• def func(): x = x + 1; return x; func() lève UnboundLocalError
-• x = x + 1 affecte à x (rend x local)
-• Python détermine que x est locale
-• x est lue dans x + 1 avant affectation
-• x non encore affectée (non liée)
-
-Comment ça fonctionne :
-• def func(): crée la définition de fonction
-• x = x + 1 affecte à x (rend x local)
-• Python détermine que x est locale (à cause de l'affectation)
-• Tente d'évaluer x + 1 (lit x)
-• x est locale mais pas encore affectée
-
-Exemple :
-def func(): x = x + 1; return x
-func()                      # UnboundLocalError
-# Correction : def func(): global x; x = x + 1; return x
-
-Usages courants :
-• Comprendre l'erreur : l'affectation rend la variable locale
-• Corriger : utiliser global si on modifie une globale
-• Liaison de variable locale
-• UnboundLocalError
-
-Exemple : Si def func(): x = x + 1; return x; func(), alors func() lève une UnboundLocalError car x = x + 1 rend x locale, mais x est référencée dans x + 1 avant d'être affectée.`,
-  660: `Les fonctions peuvent appeler les fonctions intégrées. Si def func(): return len([1, 2, 3]); func(), alors func() retourne 3 car la fonction appelle len() avec [1, 2, 3], qui retourne 3. Les fonctions ont accès à toutes les fonctions intégrées (len, print, range, etc.).
-
-Concepts clés :
-• def func(): return len([1, 2, 3]); func() retourne 3
-• La fonction peut appeler les fonctions intégrées
-• len([1, 2, 3]) est appelée dans la fonction
-• len() retourne 3 (longueur de la liste)
-• La fonction retourne 3
-
-Comment ça fonctionne :
-• def func(): crée la définition de fonction
-• Corps : return len([1, 2, 3])
-• len([1, 2, 3]) est appelée, retourne 3
-• La fonction retourne 3
-
-Exemple :
-def func(): return len([1, 2, 3])
-func()                      # 3 (retourne le résultat de len)
-def func(): return sum([1, 2, 3])  # Retourne 6
-def func(): return max([1, 2, 3])  # Retourne 3
-
-Usages courants :
-• Utilisation des intégrées : def func(): return len(data)
-• Composition : def process(): return sorted(items)
-• Accès aux fonctions intégrées
-• Capacités des fonctions
-
-Exemple : Si def func(): return len([1, 2, 3]); func(), alors func() retourne 3 car la fonction appelle len() avec [1, 2, 3].`,
-  661: `Une fonction récursive s'appelle elle-même pour résoudre un problème. Si def fact(n): return 1 if n <= 1 else n * fact(n-1); fact(5), alors fact(5) retourne 120 car fact(5) appelle fact(4), qui appelle fact(3), etc., jusqu'à fact(1) qui retourne 1 (cas de base). Puis chaque appel multiplie par n : 5 * 4 * 3 * 2 * 1 = 120.
-
-Concepts clés :
-• def fact(n): return 1 if n <= 1 else n * fact(n-1); fact(5) retourne 120
-• fact(5) appelle fact(4), qui appelle fact(3), etc.
-• Cas de base : n <= 1 retourne 1 (arrête la récursion)
-• Cas récursif : n * fact(n-1) (s'appelle elle-même)
-
-Comment ça fonctionne :
-• fact(5) appelle fact(4) : 5 * fact(4)
-• fact(4) appelle fact(3) : 4 * fact(3)
-• fact(3) appelle fact(2) : 3 * fact(2)
-• fact(2) appelle fact(1) : 2 * fact(1)
-• fact(1) retourne 1 (cas de base)
-
-Exemple :
-def fact(n): return 1 if n <= 1 else n * fact(n-1)
-fact(5)                      # 120 (5 * 4 * 3 * 2 * 1)
-fact(3)                      # 6 (3 * 2 * 1)
-fact(1)                      # 1 (cas de base)
-
-Usages courants :
-• Algorithmes récursifs : def factorial(n): return base if condition else recursive
-• Diviser pour régner : def solve(problem): return solve(smaller_problem)
-• Fonctions récursives
-• Décomposition de problème
-
-Exemple : Si def fact(n): return 1 if n <= 1 else n * fact(n-1); fact(5), alors fact(5) retourne 120 car la fonction s'appelle elle-même jusqu'au cas de base, puis multiplie toutes les valeurs.`,
-  662: `La suite de Fibonacci est calculée récursivement : chaque nombre est la somme des deux précédents. Si def fib(n): return n if n < 2 else fib(n-1) + fib(n-2); fib(5), alors fib(5) retourne 5 car fib(5) = fib(4) + fib(3), etc. Le cas de base est n < 2, qui retourne n.
-
-Concepts clés :
-• def fib(n): return n if n < 2 else fib(n-1) + fib(n-2); fib(5) retourne 5
-• Cas de base : n < 2 retourne n (fib(0)=0, fib(1)=1)
-• Cas récursif : fib(n-1) + fib(n-2)
-
-Comment ça fonctionne :
-• fib(5) appelle fib(4) + fib(3)
-• fib(4) appelle fib(3) + fib(2)
-• fib(3) appelle fib(2) + fib(1)
-• fib(2) appelle fib(1) + fib(0) = 1 + 0 = 1
-• En remontant : fib(3)=2, fib(4)=3, fib(5)=5
-
-Exemple :
-def fib(n): return n if n < 2 else fib(n-1) + fib(n-2)
-fib(5)                      # 5 (5ᵉ nombre de Fibonacci)
-fib(6)                      # 8
-fib(0)                      # 0 (cas de base)
-
-Usages courants :
-• Suites récursives : def fibonacci(n): return base if condition else recursive
-• Séquence mathématique : fib(n) = fib(n-1) + fib(n-2)
-• Algorithmes récursifs
-
-Exemple : Si def fib(n): return n if n < 2 else fib(n-1) + fib(n-2); fib(5), alors fib(5) retourne 5 car la fonction calcule le 5ᵉ nombre de Fibonacci (0, 1, 1, 2, 3, 5).`,
-  663: `Une fonction récursive de comptage compte de n jusqu'à 1. Si def count(n): return 0 if n <= 0 else 1 + count(n-1); count(5), alors count(5) retourne 5 car count(5) = 1 + count(4) = ... = 1 + 1 + 1 + 1 + 1 + 0 = 5. Le cas de base est n <= 0, qui retourne 0.
-
-Concepts clés :
-• def count(n): return 0 if n <= 0 else 1 + count(n-1); count(5) retourne 5
-• Cas de base : n <= 0 retourne 0
-• Cas récursif : 1 + count(n-1)
-
-Comment ça fonctionne :
-• count(5) appelle 1 + count(4)
-• count(4) appelle 1 + count(3)
-• count(3) appelle 1 + count(2)
-• count(2) appelle 1 + count(1)
-• count(1) appelle 1 + count(0)
-• count(0) retourne 0 (cas de base)
-
-Exemple :
-def count(n): return 0 if n <= 0 else 1 + count(n-1)
-count(5)                     # 5 (compte 5 nombres)
-count(10)                    # 10
-count(0)                     # 0 (cas de base)
-
-Usages courants :
-• Comptage récursif : def count(n): return base if condition else 1 + recursive
-• Comptage de séquences
-• Algorithmes récursifs
-
-Exemple : Si def count(n): return 0 if n <= 0 else 1 + count(n-1); count(5), alors count(5) retourne 5 car la fonction compte de 5 à 1.`,
-  664: `Une fonction récursive peut sommer les éléments d'une liste en ajoutant le premier à la somme du reste. Si def sum_list(lst): return 0 if not lst else lst[0] + sum_list(lst[1:]); sum_list([1,2,3]), alors sum_list([1,2,3]) retourne 6 car 1 + sum_list([2,3]) = 1 + 2 + sum_list([3]) = 1 + 2 + 3 + 0 = 6.
-
-Concepts clés :
-• def sum_list(lst): return 0 if not lst else lst[0] + sum_list(lst[1:]); sum_list([1,2,3]) retourne 6
-• Cas de base : not lst retourne 0 (liste vide)
-• Cas récursif : lst[0] + sum_list(lst[1:])
-
-Comment ça fonctionne :
-• sum_list([1,2,3]) appelle 1 + sum_list([2,3])
-• sum_list([2,3]) appelle 2 + sum_list([3])
-• sum_list([3]) appelle 3 + sum_list([])
-• sum_list([]) retourne 0 (cas de base)
-
-Exemple :
-def sum_list(lst): return 0 if not lst else lst[0] + sum_list(lst[1:])
-sum_list([1,2,3])           # 6 (1 + 2 + 3)
-sum_list([10, 20])          # 30
-sum_list([])                # 0 (cas de base)
-
-Usages courants :
-• Somme récursive : def sum_list(lst): return base if empty else first + recursive
-• Traitement de liste
-• Algorithmes récursifs
-
-Exemple : Si def sum_list(lst): return 0 if not lst else lst[0] + sum_list(lst[1:]); sum_list([1,2,3]), alors sum_list([1,2,3]) retourne 6.`,
-  665: `Une fonction récursive de puissance calcule x^n en multipliant x par x^(n-1). Si def power(x, n): return 1 if n == 0 else x * power(x, n-1); power(2, 3), alors power(2, 3) retourne 8 car 2 * power(2, 2) = 2 * 2 * power(2, 1) = 2 * 2 * 2 * 1 = 8.
-
-Concepts clés :
-• def power(x, n): return 1 if n == 0 else x * power(x, n-1); power(2, 3) retourne 8
-• Cas de base : n == 0 retourne 1 (x^0 = 1)
-• Cas récursif : x * power(x, n-1)
-
-Comment ça fonctionne :
-• power(2, 3) appelle 2 * power(2, 2)
-• power(2, 2) appelle 2 * power(2, 1)
-• power(2, 1) appelle 2 * power(2, 0)
-• power(2, 0) retourne 1 (cas de base)
-
-Exemple :
-def power(x, n): return 1 if n == 0 else x * power(x, n-1)
-power(2, 3)                  # 8 (2^3 = 8)
-power(3, 2)                  # 9 (3^2 = 9)
-power(5, 0)                  # 1 (cas de base)
-
-Usages courants :
-• Puissance récursive : def power(x, n): return base if condition else x * recursive
-• Opérations mathématiques : x^n = x * x^(n-1)
-• Algorithmes récursifs
-
-Exemple : Si def power(x, n): return 1 if n == 0 else x * power(x, n-1); power(2, 3), alors power(2, 3) retourne 8.`,
-  666: `Une fonction récursive sans cas de base provoque une récursion infinie, qui lève éventuellement une RecursionError. Python a une limite de récursion (environ 1000), donc après un certain nombre d'appels, Python lève une RecursionError pour éviter un débordement de pile.
-
-Concepts clés :
-• Une fonction récursive sans cas de base provoque une récursion infinie
-• La fonction s'appelle elle-même indéfiniment
-• Chaque appel crée un nouvel appel sur la pile
-• La pile grandit jusqu'à la limite
-• Lève RecursionError
-
-Comment ça fonctionne :
-• La fonction s'appelle elle-même
-• Aucun cas de base pour arrêter
-• func() → func() → func() → ...
-• La limite de récursion est atteinte (~1000)
-• Lève RecursionError
-
-Exemple :
-def func(): return func()  # Pas de cas de base !
-func()                      # RecursionError (récursion infinie)
-
-Usages courants :
-• Comprendre la récursion : toujours un cas de base
-• Éviter les erreurs : s'assurer qu'un cas de base existe
-• Limites de récursion
-
-Exemple : Une fonction récursive sans cas de base provoque une récursion infinie, qui lève une RecursionError.`,
-  667: `Une fonction qui s'appelle elle-même sans cas de base provoque une récursion infinie. Si def func(): return func(); func(), alors func() lève une RecursionError car func() appelle func() qui appelle func(), etc., sans condition d'arrêt.
-
-Concepts clés :
-• def func(): return func(); func() lève RecursionError
-• func() appelle func() (pas de cas de base)
-• Continue indéfiniment : func() → func() → func() → ...
-• La pile grandit jusqu'à la limite
-• Lève RecursionError
-
-Comment ça fonctionne :
-• func() appelle la fonction func
-• La fonction exécute : return func()
-• Appelle func() à nouveau (appel récursif)
-• Continue : func() → func() → func() → ...
-• Limite de récursion atteinte (~1000)
-
-Exemple :
-def func(): return func()  # Pas de cas de base !
-func()                      # RecursionError: maximum recursion depth exceeded
-
-Usages courants :
-• Comprendre les erreurs de récursion : besoin d'un cas de base
-• Débogage de récursion
-• Limites de récursion
-
-Exemple : Si def func(): return func(); func(), alors func() lève une RecursionError car la fonction s'appelle elle-même infiniment.`,
-  668: `Une fonction récursive peut inverser une chaîne en inversant le reste et en concaténant le premier caractère. Si def reverse(s): return '' if not s else reverse(s[1:]) + s[0]; reverse('abc'), alors reverse('abc') retourne 'cba' car reverse('abc') = reverse('bc') + 'a' = ... = '' + 'c' + 'b' + 'a' = 'cba'.
-
-Concepts clés :
-• def reverse(s): return '' if not s else reverse(s[1:]) + s[0]; reverse('abc') retourne 'cba'
-• Cas de base : not s retourne '' (chaîne vide)
-• Cas récursif : reverse(s[1:]) + s[0]
-
-Comment ça fonctionne :
-• reverse('abc') appelle reverse('bc') + 'a'
-• reverse('bc') appelle reverse('c') + 'b'
-• reverse('c') appelle reverse('') + 'c'
-• reverse('') retourne '' (cas de base)
-
-Exemple :
-def reverse(s): return '' if not s else reverse(s[1:]) + s[0]
-reverse('abc')               # 'cba' (inversé)
-reverse('hello')             # 'olleh'
-reverse('')                  # '' (cas de base)
-
-Usages courants :
-• Inversion récursive : def reverse(s): return base if empty else recursive + first
-• Traitement de chaîne
-• Algorithmes récursifs
-
-Exemple : Si def reverse(s): return '' if not s else reverse(s[1:]) + s[0]; reverse('abc'), alors reverse('abc') retourne 'cba'.`,
-  669: `L'algorithme d'Euclide calcule le PGCD récursivement. Si def gcd(a, b): return a if b == 0 else gcd(b, a % b); gcd(48, 18), alors gcd(48, 18) retourne 6 car gcd(48, 18) = gcd(18, 12) = gcd(12, 6) = gcd(6, 0) = 6.
-
-Concepts clés :
-• def gcd(a, b): return a if b == 0 else gcd(b, a % b); gcd(48, 18) retourne 6
-• Cas de base : b == 0 retourne a (PGCD trouvé)
-• Cas récursif : gcd(b, a % b)
-
-Comment ça fonctionne :
-• gcd(48, 18) appelle gcd(18, 48 % 18) = gcd(18, 12)
-• gcd(18, 12) appelle gcd(12, 18 % 12) = gcd(12, 6)
-• gcd(12, 6) appelle gcd(6, 12 % 6) = gcd(6, 0)
-• gcd(6, 0) retourne 6 (cas de base)
-
-Exemple :
-def gcd(a, b): return a if b == 0 else gcd(b, a % b)
-gcd(48, 18)                 # 6 (PGCD de 48 et 18)
-gcd(100, 25)                # 25
-gcd(17, 13)                 # 1
-
-Usages courants :
-• PGCD récursif : def gcd(a, b): return a if b == 0 else gcd(b, a % b)
-• Algorithme d'Euclide : PGCD(a, b) = PGCD(b, a % b)
-• Algorithmes récursifs
-
-Exemple : Si def gcd(a, b): return a if b == 0 else gcd(b, a % b); gcd(48, 18), alors gcd(48, 18) retourne 6.`,
-  670: `Une fonction récursive peut calculer la longueur d'une liste en ajoutant 1 pour chaque élément. Si def length(lst): return 0 if not lst else 1 + length(lst[1:]); length([1,2,3]), alors length([1,2,3]) retourne 3 car 1 + length([2,3]) = 1 + 1 + length([3]) = 1 + 1 + 1 + 0 = 3.
-
-Concepts clés :
-• def length(lst): return 0 if not lst else 1 + length(lst[1:]); length([1,2,3]) retourne 3
-• Cas de base : not lst retourne 0 (liste vide)
-• Cas récursif : 1 + length(lst[1:])
-
-Comment ça fonctionne :
-• length([1,2,3]) appelle 1 + length([2,3])
-• length([2,3]) appelle 1 + length([3])
-• length([3]) appelle 1 + length([])
-• length([]) retourne 0 (cas de base)
-
-Exemple :
-def length(lst): return 0 if not lst else 1 + length(lst[1:])
-length([1,2,3])             # 3 (longueur de la liste)
-length([10, 20, 30, 40])   # 4
-length([])                  # 0 (cas de base)
-
-Usages courants :
-• Longueur récursive : def length(lst): return base if empty else 1 + recursive
-• Traitement de liste
-• Algorithmes récursifs
-
-Exemple : Si def length(lst): return 0 if not lst else 1 + length(lst[1:]); length([1,2,3]), alors length([1,2,3]) retourne 3.`,
-  671: `Une fonction d'ordre supérieur prend une autre fonction en paramètre. Si def apply(func, x): return func(x); apply(lambda x: x*2, 5), alors apply(lambda x: x*2, 5) retourne 10 car apply() prend func (une fonction) et x (une valeur), puis appelle func(x). Ici (lambda x: x*2)(5) = 10.
-
-Concepts clés :
-• def apply(func, x): return func(x); apply(lambda x: x*2, 5) retourne 10
-• apply() prend la fonction func en paramètre
-• Prend la valeur x en paramètre
-• Appelle func(x) dans apply()
-
-Comment ça fonctionne :
-• apply(lambda x: x*2, 5) appelle apply
-• Premier argument : lambda x: x*2 (objet fonction)
-• Deuxième argument : 5 (valeur)
-• apply() appelle func(x) : (lambda x: x*2)(5)
-• Lambda évalue : 5 * 2 = 10
-
-Exemple :
-def apply(func, x): return func(x)
-apply(lambda x: x*2, 5)     # 10 (applique la fonction à la valeur)
-apply(lambda x: x**2, 3)    # 9
-apply(len, 'hello')          # 5
-
-Usages courants :
-• Fonctions d'ordre supérieur : def apply(func, x): return func(x)
-• Application de fonction
-• Fonction en paramètre
-
-Exemple : Si def apply(func, x): return func(x); apply(lambda x: x*2, 5), alors apply(lambda x: x*2, 5) retourne 10.`,
-  672: `Une fonction usine retourne une autre fonction. Si def make_multiplier(n): return lambda x: x * n; f = make_multiplier(3); f(4), alors f(4) retourne 12 car make_multiplier(3) retourne une lambda qui capture n = 3. La fonction retournée f multiplie son argument par 3 : 4 * 3 = 12.
-
-Concepts clés :
-• def make_multiplier(n): return lambda x: x * n; f = make_multiplier(3); f(4) retourne 12
-• make_multiplier(3) retourne une fonction qui capture n = 3
-• La fonction retournée multiplie l'argument par 3
-• f = make_multiplier(3) assigne la fonction retournée à f
-• f(4) appelle la fonction retournée avec 4
-
-Comment ça fonctionne :
-• make_multiplier(3) appelle make_multiplier
-• Paramètre n = 3
-• Retourne lambda x: x * n (capture n = 3)
-• f = lambda x: x * 3
-• f(4) appelle la lambda avec x = 4
-
-Exemple :
-def make_multiplier(n): return lambda x: x * n
-f = make_multiplier(3)      # f est lambda x: x * 3
-f(4)                        # 12 (4 * 3)
-g = make_multiplier(5)
-g(4)                        # 20 (4 * 5)
-
-Usages courants :
-• Fonctions usine : def make_adder(n): return lambda x: x + n
-• Création de fermetures
-• Fonctions spécialisées
-
-Exemple : Si def make_multiplier(n): return lambda x: x * n; f = make_multiplier(3); f(4), alors f(4) retourne 12.`,
-  673: `La composition de fonctions combine deux fonctions en une. Si def compose(f, g): return lambda x: f(g(x)); compose(lambda x: x+1, lambda x: x*2)(3), alors le résultat est 7 car compose() crée une fonction qui applique d'abord g, puis f : g(3) = 6, f(6) = 7.
-
-Concepts clés :
-• def compose(f, g): return lambda x: f(g(x)); compose(lambda x: x+1, lambda x: x*2)(3) retourne 7
-• compose() combine deux fonctions
-• Retourne une nouvelle fonction : lambda x: f(g(x))
-• Applique g d'abord : g(x), puis f : f(g(x))
-
-Comment ça fonctionne :
-• compose(lambda x: x+1, lambda x: x*2) crée la fonction composée
-• f = lambda x: x+1 (ajoute 1)
-• g = lambda x: x*2 (multiplie par 2)
-• compose() retourne lambda x: f(g(x))
-• compose(..., ...)(3) appelle avec x = 3
-• g(3) = 6, f(6) = 7
-
-Exemple :
-def compose(f, g): return lambda x: f(g(x))
-compose(lambda x: x+1, lambda x: x*2)(3)  # 7 (f(g(3)) = f(6) = 7)
-compose(lambda x: x*2, lambda x: x+1)(3)  # 8 (g(3)=4, f(4)=8)
-
-Usages courants :
-• Composition de fonctions : def compose(f, g): return lambda x: f(g(x))
-• Combinaison de fonctions
-• Programmation fonctionnelle
-
-Exemple : Si def compose(f, g): return lambda x: f(g(x)); compose(lambda x: x+1, lambda x: x*2)(3), alors le résultat est 7 car on applique g d'abord (3 * 2 = 6), puis f (6 + 1 = 7).`,
-  674: `La fonction map() retourne un objet map (itérateur), pas une liste. map(lambda x: x*2, [1, 2, 3]) retourne un objet map car map() applique une fonction à chaque élément et retourne un itérateur qui produit les résultats à la demande. Pour obtenir une liste, utilisez list().
-
-Concepts clés :
-• map(lambda x: x*2, [1, 2, 3]) retourne un objet map
-• map() applique la fonction à chaque élément
-• Retourne un itérateur (évaluation paresseuse)
-• Ne calcule pas toutes les valeurs immédiatement
-• Produit les valeurs à la demande
-
-Comment ça fonctionne :
-• map(lambda x: x*2, [1, 2, 3]) crée un objet map
-• map() applique lambda x: x*2 à chaque élément
-• Crée un itérateur qui produit : 2, 4, 6
-• L'itérateur ne calcule qu'à l'itération
-• Retourne un objet map (itérateur)
-
-Exemple :
-map(lambda x: x*2, [1, 2, 3])  # <map object> (itérateur)
-list(map(lambda x: x*2, [1, 2, 3])) # [2, 4, 6] (converti en liste)
-for x in map(lambda x: x*2, [1, 2, 3]):
-    print(x)
-
-Usages courants :
-• Mapping : map(func, items) (retourne un itérateur)
-• Conversion : list(map(func, items)) (convertit en liste)
-• Évaluation paresseuse
-• Création d'itérateur
-
-Exemple : map(lambda x: x*2, [1, 2, 3]) retourne un objet map car map() applique la fonction à chaque élément et retourne un itérateur.`,
-  675: `La fonction list() convertit un objet map (itérateur) en liste. list(map(lambda x: x*2, [1, 2, 3])) retourne [2, 4, 6] car map() retourne un objet map qui applique lambda x: x*2 à chaque élément, et list() consomme l'itérateur pour collecter les valeurs en liste.
-
-Concepts clés :
-• list(map(lambda x: x*2, [1, 2, 3])) retourne [2, 4, 6]
-• map() retourne un objet map (itérateur)
-• list() consomme l'itérateur
-• Collecte les valeurs en liste
-• Crée la liste : [2, 4, 6]
-
-Comment ça fonctionne :
-• map(lambda x: x*2, [1, 2, 3]) crée un objet map
-• L'objet map produit : 2, 4, 6 (lors de l'itération)
-• list() itère à travers l'objet map
-• Collecte les valeurs : 2, 4, 6
-• Retourne la liste : [2, 4, 6]
-
-Exemple :
-list(map(lambda x: x*2, [1, 2, 3]))  # [2, 4, 6] (converti en liste)
-list(map(lambda x: x**2, [1, 2, 3])) # [1, 4, 9]
-list(map(str, [1, 2, 3]))            # ['1', '2', '3']
-
-Usages courants :
-• Convertir map en liste : list(map(func, items))
-• Obtenir les résultats : results = list(map(transform, data))
-• Consommation d'itérateur
-• Création de liste
-
-Exemple : list(map(lambda x: x*2, [1, 2, 3])) retourne [2, 4, 6] car list() consomme l'itérateur map.`,
-  676: `La fonction filter() retourne un objet filter (itérateur), pas une liste. filter(lambda x: x > 2, [1, 2, 3, 4]) retourne un objet filter car filter() applique un prédicat à chaque élément et retourne un itérateur qui ne produit que les éléments pour lesquels le prédicat est True.
-
-Concepts clés :
-• filter(lambda x: x > 2, [1, 2, 3, 4]) retourne un objet filter
-• filter() applique une fonction prédicat à chaque élément
-• Retourne un itérateur (évaluation paresseuse)
-• Ne produit que les éléments où le prédicat est True
-• Ne calcule pas toutes les valeurs immédiatement
-
-Comment ça fonctionne :
-• filter(lambda x: x > 2, [1, 2, 3, 4]) crée un objet filter
-• filter() teste lambda x: x > 2 pour chaque élément
-• Crée un itérateur qui produit : 3, 4 (où la condition est True)
-• L'itérateur ne calcule qu'à l'itération
-• Retourne un objet filter (itérateur)
-
-Exemple :
-filter(lambda x: x > 2, [1, 2, 3, 4])  # <filter object> (itérateur)
-list(filter(lambda x: x > 2, [1, 2, 3, 4])) # [3, 4] (converti en liste)
-for x in filter(lambda x: x > 2, [1, 2, 3, 4]):
-    print(x)
-
-Usages courants :
-• Filtrage : filter(predicate, items) (retourne un itérateur)
-• Conversion : list(filter(predicate, items)) (convertit en liste)
-• Évaluation paresseuse
-• Création d'itérateur
-
-Exemple : filter(lambda x: x > 2, [1, 2, 3, 4]) retourne un objet filter qui produit uniquement 3 et 4.`,
-  677: `La fonction list() convertit un objet filter (itérateur) en liste. list(filter(lambda x: x > 2, [1, 2, 3, 4])) retourne [3, 4] car filter() retourne un objet filter qui applique lambda x: x > 2, et list() consomme l'itérateur en collectant uniquement les éléments où x > 2 est True.
-
-Concepts clés :
-• list(filter(lambda x: x > 2, [1, 2, 3, 4])) retourne [3, 4]
-• filter() retourne un objet filter (itérateur)
-• list() consomme l'itérateur
-• Collecte les valeurs filtrées en liste
-• Crée la liste : [3, 4]
-
-Comment ça fonctionne :
-• filter(lambda x: x > 2, [1, 2, 3, 4]) crée un objet filter
-• L'objet filter produit : 3, 4 (où x > 2 est True)
-• list() itère à travers l'objet filter
-• Collecte les valeurs : 3, 4
-• Retourne la liste : [3, 4]
-
-Exemple :
-list(filter(lambda x: x > 2, [1, 2, 3, 4]))  # [3, 4] (converti en liste)
-list(filter(lambda x: x % 2 == 0, [1, 2, 3, 4])) # [2, 4]
-list(filter(lambda x: len(x) > 3, ['a', 'ab', 'abc', 'abcd'])) # ['abcd']
-
-Usages courants :
-• Convertir filter en liste : list(filter(predicate, items))
-• Obtenir les résultats filtrés
-• Consommation d'itérateur
-• Création de liste
-
-Exemple : list(filter(lambda x: x > 2, [1, 2, 3, 4])) retourne [3, 4] car list() consomme l'itérateur filter.`,
-  678: `La fonction reduce() de functools accumule les valeurs en appliquant une fonction cumulativement. from functools import reduce; reduce(lambda x, y: x + y, [1, 2, 3, 4]) retourne 10 car reduce() applique lambda x, y: x + y : (1+2) → 3, (3+3) → 6, (6+4) → 10.
-
-Concepts clés :
-• from functools import reduce; reduce(lambda x, y: x + y, [1, 2, 3, 4]) retourne 10
-• reduce() accumule les valeurs avec la fonction
-• Applique la fonction cumulativement : (1+2) → 3, (3+3) → 6, (6+4) → 10
-• Réduit l'itérable à une seule valeur
-• Retourne le résultat accumulé : 10
-
-Comment ça fonctionne :
-• reduce(lambda x, y: x + y, [1, 2, 3, 4]) commence avec les deux premiers éléments
-• Premier : 1 + 2 = 3 (résultat accumulé)
-• Deuxième : 3 + 3 = 6 (résultat accumulé)
-• Troisième : 6 + 4 = 10 (résultat accumulé)
-• Retourne : 10
-
-Exemple :
-from functools import reduce
-reduce(lambda x, y: x + y, [1, 2, 3, 4])  # 10 (1+2+3+4)
-reduce(lambda x, y: x * y, [1, 2, 3, 4])  # 24 (1*2*3*4)
-reduce(lambda x, y: x if x > y else y, [1, 3, 2, 4]) # 4 (max)
-
-Usages courants :
-• Accumulation : reduce(func, items) (réduit à une valeur)
-• Opérations cumulatives : reduce(lambda x, y: x + y, items)
-• Réduction fonctionnelle
-• Réduction d'itérable
-
-Exemple : from functools import reduce; reduce(lambda x, y: x + y, [1, 2, 3, 4]) retourne 10 car reduce() applique la fonction cumulativement.`,
-  679: `La fonction sorted() accepte un paramètre key pour un tri personnalisé. sorted([3, 1, 2], key=lambda x: -x) retourne [3, 2, 1] car la fonction key=lambda x: -x transforme chaque élément avant comparaison. La négation fait trier en ordre décroissant.
-
-Concepts clés :
-• sorted([3, 1, 2], key=lambda x: -x) retourne [3, 2, 1]
-• Le paramètre key transforme les éléments pour la comparaison
-• lambda x: -x négatie chaque élément
-• Tri avec les valeurs négées : -3 < -1 < -2
-• Résultat : [3, 2, 1] (ordre décroissant)
-
-Comment ça fonctionne :
-• sorted() appelé avec [3, 1, 2], key=lambda x: -x
-• Applique la fonction key : -3, -1, -2 (négées)
-• Compare avec les valeurs négées : -3 < -1 < -2
-• Trie en ordre décroissant
-• Retourne la nouvelle liste : [3, 2, 1]
-
-Exemple :
-sorted([3, 1, 2], key=lambda x: -x)  # [3, 2, 1] (décroissant)
-sorted(['abc', 'a', 'ab'], key=len)  # ['a', 'ab', 'abc'] (par longueur)
-sorted([1, 2, 3], key=lambda x: x**2) # [1, 2, 3] (carrés : 1 < 4 < 9)
-
-Usages courants :
-• Tri personnalisé : sorted(items, key=func)
-• Tri décroissant : sorted(items, key=lambda x: -x)
-• Tri par transformation
-• Critères de tri flexibles
-
-Exemple : sorted([3, 1, 2], key=lambda x: -x) retourne [3, 2, 1] car la fonction key négative fait trier en ordre décroissant.`,
-  680: `La fonction max() peut prendre un paramètre key pour trouver l'élément ayant la valeur transformée maximale. max([1, 2, 3], key=lambda x: -x) retourne 1 car la fonction key négative fait que max cherche l'élément avec la valeur négée maximale (-1), qui correspond à l'élément 1.
-
-Concepts clés :
-• max([1, 2, 3], key=lambda x: -x) retourne 1
-• Le paramètre key transforme les éléments pour la comparaison
-• lambda x: -x négatie : -1, -2, -3
-• max trouve la valeur négée maximale : -1
-• -1 correspond à l'élément original 1
-• Retourne l'élément original : 1
-
-Comment ça fonctionne :
-• max() appelé avec [1, 2, 3], key=lambda x: -x
-• Applique la fonction key : -1, -2, -3 (négées)
-• Compare avec les valeurs négées : -1 > -2 > -3
-• max trouve l'élément avec la valeur négée maximale : -1
-• -1 correspond à l'élément original 1
-
-Exemple :
-max([1, 2, 3], key=lambda x: -x)  # 1 (valeur négée max -1)
-max(['abc', 'a', 'ab'], key=len)  # 'abc' (longueur max 3)
-min([1, 2, 3], key=lambda x: -x)  # 3 (valeur négée min -3)
-
-Usages courants :
-• max personnalisé : max(items, key=func)
-• max par transformation : max(items, key=lambda x: transform(x))
-• Sélection par clé
-
-Exemple : max([1, 2, 3], key=lambda x: -x) retourne 1 car max trouve l'élément avec la valeur négée maximale (-1).`,
-  681: `Les fonctions ont un attribut __name__ qui contient le nom de la fonction. Si def func(): pass; func.__name__, alors func.__name__ retourne 'func' car __name__ est un attribut spécial qui stocke le nom de la fonction sous forme de chaîne.
-
-Concepts clés :
-• def func(): pass; func.__name__ retourne 'func'
-• __name__ contient le nom de la fonction en chaîne
-• Défini automatiquement à la définition
-• Retourne le nom de la fonction : 'func'
-
-Comment ça fonctionne :
-• def func(): pass crée la définition de fonction
-• Python définit automatiquement func.__name__ = 'func'
-• L'attribut __name__ stocke le nom
-• func.__name__ accède à l'attribut
-
-Exemple :
-def func(): pass
-func.__name__                # 'func' (nom de la fonction)
-def my_function(): pass
-my_function.__name__         # 'my_function'
-
-Usages courants :
-• Introspection : print(func.__name__) (débogage)
-• Code dynamique : code utilisant les noms de fonctions
-• Attributs de fonction
-• Métadonnées de fonction
-
-Exemple : Si def func(): pass; func.__name__, alors func.__name__ retourne 'func'.`,
-  682: `Les fonctions ont un attribut __doc__ qui contient la docstring. Si def func(): \"\"\"doc\"\"\"; pass; func.__doc__, alors func.__doc__ retourne 'doc' car __doc__ stocke la docstring, la chaîne littérale apparaissant comme première instruction du corps.
-
-Concepts clés :
-• def func(): \"\"\"doc\"\"\"; pass; func.__doc__ retourne 'doc'
-• __doc__ contient la docstring (chaîne de documentation)
-• La docstring est la première instruction du corps
-• Retourne la docstring : 'doc'
-• None si pas de docstring
-
-Comment ça fonctionne :
-• def func(): \"\"\"doc\"\"\"; pass crée la définition
-• \"\"\"doc\"\"\" est la docstring (première instruction)
-• Python définit func.__doc__ = 'doc'
-• __doc__ stocke la docstring
-
-Exemple :
-def func(): \"\"\"doc\"\"\"; pass
-func.__doc__                # 'doc' (docstring)
-def func(): \"\"\"C'est a function.\"\"\"; pass
-func.__doc__                # 'C'est a function.'
-
-Usages courants :
-• Documentation : def func(): \"\"\"doc\"\"\"; print(func.__doc__)
-• Introspection : help(func) utilise __doc__
-• Documentation de fonction
-
-Exemple : Si def func(): \"\"\"doc\"\"\"; pass; func.__doc__, alors func.__doc__ retourne 'doc'.`,
-  683: `L'attribut __doc__ est None si une fonction n'a pas de docstring. Si def func(): pass; func.__doc__, alors func.__doc__ retourne None car la fonction n'a pas de docstring. __doc__ ne contient une valeur que si une docstring est fournie.
-
-Concepts clés :
-• def func(): pass; func.__doc__ retourne None
-• La fonction n'a pas de docstring
-• L'attribut __doc__ est None (pas une chaîne vide)
-• État par défaut pour les fonctions sans documentation
-
-Comment ça fonctionne :
-• def func(): pass crée la définition
-• Pas de docstring dans le corps
-• Python définit func.__doc__ = None (par défaut)
-• func.__doc__ accède à l'attribut
-
-Exemple :
-def func(): pass
-func.__doc__                # None (pas de docstring)
-def func(): \"\"\"doc\"\"\"; pass
-func.__doc__                # 'doc' (a une docstring)
-
-Usages courants :
-• Vérifier la docstring : if func.__doc__: print(func.__doc__)
-• Vérification de documentation : has_doc = func.__doc__ is not None
-
-Exemple : Si def func(): pass; func.__doc__, alors func.__doc__ retourne None.`,
-  684: `Les fonctions ont un attribut __defaults__ qui contient un tuple des valeurs par défaut des paramètres. Si def func(x, y=2): pass; func.__defaults__, alors func.__defaults__ retourne (2,) car __defaults__ stocke les valeurs par défaut dans un tuple, dans l'ordre des paramètres ayant des valeurs par défaut.
-
-Concepts clés :
-• def func(x, y=2): pass; func.__defaults__ retourne (2,)
-• __defaults__ contient un tuple des valeurs par défaut
-• Seuls les paramètres avec valeurs par défaut sont inclus
-• Ordre de gauche à droite
-• Retourne le tuple : (2,)
-
-Comment ça fonctionne :
-• def func(x, y=2): pass crée la définition
-• Le paramètre x n'a pas de valeur par défaut (pas dans __defaults__)
-• Le paramètre y a la valeur par défaut 2 (dans __defaults__)
-• Python définit func.__defaults__ = (2,)
-
-Exemple :
-def func(x, y=2): pass
-func.__defaults__           # (2,) (seul y a une valeur par défaut)
-def func(x, y=2, z=3): pass
-func.__defaults__           # (2, 3) (y et z ont des valeurs par défaut)
-def func(x): pass
-func.__defaults__           # None (pas de valeurs par défaut)
-
-Usages courants :
-• Introspection : print(func.__defaults__)
-• Valeurs par défaut : defaults = func.__defaults__
-
-Exemple : Si def func(x, y=2): pass; func.__defaults__, alors func.__defaults__ retourne (2,).`,
-  685: `Les fonctions ont un attribut __code__ qui contient l'objet code. Si def func(*args, **kwargs): pass; func.__code__, alors func.__code__ retourne un objet code car __code__ stocke le bytecode compilé et les métadonnées du code.
-
-Concepts clés :
-• def func(*args, **kwargs): pass; func.__code__ retourne un objet code
-• __code__ contient l'objet code de la fonction
-• L'objet code stocke le bytecode compilé
-• Contient les métadonnées : arguments, variables, constantes
-• Objet interne Python
-
-Comment ça fonctionne :
-• def func(*args, **kwargs): pass crée la définition
-• Python compile le corps en bytecode
-• Crée un objet code avec bytecode et métadonnées
-• Python définit func.__code__ = code_object
-
-Exemple :
-def func(*args, **kwargs): pass
-func.__code__               # <code object> (objet code)
-func.__code__.co_argcount   # 0 (nombre d'arguments)
-func.__code__.co_varnames   # ('args', 'kwargs') (noms des variables)
-
-Usages courants :
-• Introspection : func.__code__.co_varnames (noms des variables)
-• Inspection du code : func.__code__.co_consts (constantes)
-
-Exemple : Si def func(*args, **kwargs): pass; func.__code__, alors func.__code__ retourne un objet code.`,
-  686: `La fonction callable() vérifie si un objet est appelable. Si def func(): pass; callable(func), alors callable(func) retourne True car func est un objet fonction, et les fonctions sont appelables.
-
-Concepts clés :
-• def func(): pass; callable(func) retourne True
-• callable() vérifie si l'objet est appelable
-• Les fonctions sont appelables
-• Retourne True pour les objets appelables
-
-Comment ça fonctionne :
-• def func(): pass crée l'objet fonction
-• func est une fonction (appelable)
-• callable(func) vérifie si func est appelable
-• Les fonctions sont appelables (peuvent être appelées)
-
-Exemple :
-def func(): pass
-callable(func)              # True (les fonctions sont appelables)
-callable(5)                 # False (les entiers ne sont pas appelables)
-callable(str)               # True (les classes sont appelables)
-
-Usages courants :
-• Vérifier si appelable : if callable(obj): obj()
-• Vérification de type : is_callable = callable(item)
-
-Exemple : Si def func(): pass; callable(func), alors callable(func) retourne True.`,
-  687: `Les entiers ne sont pas des objets appelables. callable(5) retourne False car les entiers ne peuvent pas être appelés comme des fonctions (on ne peut pas faire 5()). callable() retourne True uniquement pour les objets qui peuvent être appelés.
-
-Concepts clés :
-• callable(5) retourne False
-• Les entiers ne sont pas appelables
-• Impossible d'appeler un entier : 5() lève TypeError
-• callable() retourne False pour les objets non appelables
-
-Comment ça fonctionne :
-• callable(5) vérifie si 5 est appelable
-• 5 est un entier (non appelable)
-• Les entiers ne peuvent pas être appelés comme des fonctions
-• 5() lèverait TypeError
-
-Exemple :
-callable(5)                 # False (les entiers ne sont pas appelables)
-callable('hello')           # False (les chaînes ne sont pas appelables)
-callable([1, 2, 3])         # False (les listes ne sont pas appelables)
-callable(lambda x: x)       # True (les fonctions sont appelables)
-
-Usages courants :
-• Vérification de type : if callable(obj): obj() else utiliser obj
-• Appel sécurisé : callable(func) and func()
-
-Exemple : callable(5) retourne False car les entiers ne sont pas appelables.`,
-  688: `La fonction type() retourne le type d'un objet. Si def func(): return 1; type(func), alors type(func) retourne <class 'function'> car func est un objet fonction, et les fonctions sont de type function.
-
-Concepts clés :
-• def func(): return 1; type(func) retourne <class 'function'>
-• type() retourne le type de l'objet
-• Les fonctions sont de type function
-• Retourne la classe function
-
-Comment ça fonctionne :
-• def func(): return 1 crée l'objet fonction
-• func est un objet fonction
-• type(func) vérifie le type de func
-• Les fonctions sont de type function
-
-Exemple :
-def func(): return 1
-type(func)                  # <class 'function'> (type fonction)
-type(5)                     # <class 'int'>
-type('hello')               # <class 'str'>
-
-Usages courants :
-• Vérification de type : if type(obj) == type(lambda: None): ...
-• Inspection de type : print(type(func))
-
-Exemple : Si def func(): return 1; type(func), alors type(func) retourne <class 'function'>.`,
-  689: `La fonction hasattr() vérifie si un objet possède un attribut. Si def func(): pass; hasattr(func, '__name__'), alors hasattr(func, '__name__') retourne True car les fonctions ont un attribut __name__.
-
-Concepts clés :
-• def func(): pass; hasattr(func, '__name__') retourne True
-• hasattr() vérifie si l'objet possède l'attribut
-• Les fonctions ont l'attribut __name__
-• Retourne True si l'attribut existe
-• Retourne False sinon
-
-Comment ça fonctionne :
-• def func(): pass crée l'objet fonction
-• Les fonctions ont l'attribut __name__ automatiquement
-• hasattr(func, '__name__') vérifie si __name__ existe
-• L'attribut existe
-
-Exemple :
-def func(): pass
-hasattr(func, '__name__')   # True (les fonctions ont __name__)
-hasattr(func, '__doc__')    # True
-hasattr(5, '__name__')      # False (les entiers n'ont pas __name__)
-
-Usages courants :
-• Vérification d'attribut : if hasattr(obj, 'attr'): utiliser obj.attr
-• Accès sécurisé : hasattr(func, '__doc__') and func.__doc__
-
-Exemple : Si def func(): pass; hasattr(func, '__name__'), alors hasattr(func, '__name__') retourne True.`,
-  690: `Les fonctions peuvent avoir des attributs personnalisés. Si def func(): pass; func.attr = 'value'; func.attr, alors func.attr retourne 'value' car on peut assigner des attributs personnalisés aux objets fonction. Les fonctions sont des objets, donc elles peuvent avoir des attributs.
-
-Concepts clés :
-• def func(): pass; func.attr = 'value'; func.attr retourne 'value'
-• Les fonctions peuvent avoir des attributs personnalisés
-• Assignment : func.attr = 'value' crée l'attribut
-• Accès : func.attr récupère la valeur
-• Les fonctions sont des objets (peuvent avoir des attributs)
-
-Comment ça fonctionne :
-• def func(): pass crée l'objet fonction
-• func.attr = 'value' assigne l'attribut personnalisé
-• L'attribut 'attr' est créé sur l'objet fonction
-• func.attr accède à l'attribut
-
-Exemple :
-def func(): pass
-func.attr = 'value'         # Assigne l'attribut personnalisé
-func.attr                   # 'value' (accède à l'attribut)
-func.count = 0
-func.count                  # 0
-
-Usages courants :
-• Stocker des métadonnées : func.metadata = {'author': 'Alice'}
-• État de fonction : func.call_count = 0
-• Attributs personnalisés
-
-Exemple : Si def func(): pass; func.attr = 'value'; func.attr, alors func.attr retourne 'value'.`,
-  691: `Les fonctions ont un attribut __annotations__ qui contient les annotations de type. Si def func(x): return x; func.__annotations__, alors func.__annotations__ retourne {} car la fonction n'a pas d'annotations de type, donc __annotations__ est un dictionnaire vide.
-
-Concepts clés :
-• def func(x): return x; func.__annotations__ retourne {}
-• __annotations__ contient les annotations de type en dictionnaire
-• Pas d'annotations dans la fonction (dict vide)
-• État par défaut : {} (dictionnaire vide)
-
-Comment ça fonctionne :
-• def func(x): return x crée la définition
-• Pas d'annotations fournies (pas de : ou ->)
-• Python définit func.__annotations__ = {} (dict vide)
-• __annotations__ stocke les annotations
-
-Exemple :
-def func(x): return x
-func.__annotations__       # {} (vide, pas d'annotations)
-def func(x: int): return x
-func.__annotations__       # {'x': <class 'int'>} (a des annotations)
-
-Usages courants :
-• Annotations de type : def func(x: int) -> int: (a des annotations)
-• Vérification de type : def func(x): (pas d'annotations, {} vide)
-
-Exemple : Si def func(x): return x; func.__annotations__, alors func.__annotations__ retourne {}.`,
-  692: `Les fonctions avec annotations de type les stockent dans __annotations__. Si def func(x: int) -> int: return x; func.__annotations__, alors func.__annotations__ retourne {'x': <class 'int'>, 'return': <class 'int'>} car __annotations__ stocke les annotations en dictionnaire où les clés sont les noms des paramètres ou 'return' pour le type de retour.
-
-Concepts clés :
-• def func(x: int) -> int: return x; func.__annotations__ retourne {'x': <class 'int'>, 'return': <class 'int'>}
-• __annotations__ contient les annotations en dictionnaire
-• 'x': <class 'int'> (annotation du paramètre)
-• 'return': <class 'int'> (annotation du type de retour)
-• Retourne le dictionnaire des annotations
-
-Comment ça fonctionne :
-• def func(x: int) -> int: return x crée la définition
-• x: int est l'annotation du paramètre
-• -> int est l'annotation du type de retour
-• Python définit func.__annotations__ = {'x': int, 'return': int}
-
-Exemple :
-def func(x: int) -> int: return x
-func.__annotations__       # {'x': <class 'int'>, 'return': <class 'int'>}
-def func(x: str, y: int) -> str: return x
-func.__annotations__       # {'x': <class 'str'>, 'y': <class 'int'>, 'return': <class 'str'>}
-
-Usages courants :
-• Annotations de type : def func(x: int) -> int: (annotations)
-• Vérification de type statique
-• Documentation de fonction
-
-Exemple : Si def func(x: int) -> int: return x; func.__annotations__, alors func.__annotations__ retourne {'x': <class 'int'>, 'return': <class 'int'>}.`,
-  693: `Appeler une fonction avec trop d'arguments lève une TypeError. Si def func(x, y): return x + y; func(1, 2, 3), alors func(1, 2, 3) lève une TypeError car la fonction attend 2 arguments (x et y), mais 3 sont fournis (1, 2, 3).
-
-Concepts clés :
-• def func(x, y): return x + y; func(1, 2, 3) lève TypeError
-• La fonction attend 2 arguments (x et y)
-• 3 arguments fournis (1, 2, 3)
-• Trop d'arguments
-• Lève TypeError : func() takes 2 positional arguments but 3 were given
-
-Comment ça fonctionne :
-• func(1, 2, 3) appelle la fonction func
-• La fonction attend 2 arguments (x, y)
-• 3 arguments fournis : 1, 2, 3
-• Les deux premiers sont assignés : x=1, y=2
-• Le troisième argument 3 n'a pas de paramètre correspondant
-• Lève TypeError
-
-Exemple :
-def func(x, y): return x + y
-func(1, 2, 3)              # TypeError: func() takes 2 positional arguments but 3 were given
-func(1, 2)                 # 3 (nombre correct)
-
-Usages courants :
-• Comprendre les erreurs : trop d'arguments lève TypeError
-• Validation des arguments
-
-Exemple : Si def func(x, y): return x + y; func(1, 2, 3), alors func(1, 2, 3) lève une TypeError.`,
-  694: `Appeler une fonction avec trop peu d'arguments lève une TypeError. Si def func(x, y): return x + y; func(1), alors func(1) lève une TypeError car la fonction attend 2 arguments (x et y), mais un seul (1) est fourni.
-
-Concepts clés :
-• def func(x, y): return x + y; func(1) lève TypeError
-• La fonction attend 2 arguments (x et y)
-• Un seul argument fourni (1)
-• Pas assez d'arguments
-• Lève TypeError : func() missing 1 required positional argument: 'y'
-
-Comment ça fonctionne :
-• func(1) appelle la fonction func
-• La fonction attend 2 arguments (x, y)
-• Un seul argument fourni : 1
-• Premier argument assigné : x=1
-• Le paramètre y n'a pas d'argument
-• Lève TypeError
-
-Exemple :
-def func(x, y): return x + y
-func(1)                     # TypeError: func() missing 1 required positional argument: 'y'
-func(1, 2)                  # 3 (nombre correct)
-
-Usages courants :
-• Comprendre les erreurs : pas assez d'arguments lève TypeError
-• Validation des arguments
-
-Exemple : Si def func(x, y): return x + y; func(1), alors func(1) lève une TypeError.`,
-  695: `Les arguments nommés peuvent être dans n'importe quel ordre après les arguments positionnels. Si def func(x, y, z): return x + y + z; func(1, z=3, y=2), alors func(1, z=3, y=2) retourne 6 car 1 est passé positionnellement à x, et z=3 et y=2 sont des arguments nommés qui peuvent être dans n'importe quel ordre.
-
-Concepts clés :
-• def func(x, y, z): return x + y + z; func(1, z=3, y=2) retourne 6
-• 1 est l'argument positionnel (va à x)
-• z=3 et y=2 sont des arguments nommés (l'ordre n'a pas d'importance)
-• Les arguments nommés sont associés par nom, pas par position
-• Retourne : 1 + 2 + 3 = 6
-
-Comment ça fonctionne :
-• func(1, z=3, y=2) appelle la fonction func
-• Premier argument 1 est positionnel, assigné à x : x=1
-• z=3 est argument nommé, assigné à z : z=3
-• y=2 est argument nommé, assigné à y : y=2
-• La fonction exécute : return x + y + z
-• Retourne : 1 + 2 + 3 = 6
-
-Exemple :
-def func(x, y, z): return x + y + z
-func(1, z=3, y=2)          # 6 (arguments nommés dans n'importe quel ordre)
-func(1, y=2, z=3)          # 6 (même résultat, ordre différent)
-func(1, 2, 3)              # 6 (tous positionnels)
-
-Usages courants :
-• Appels flexibles : func(pos1, keyword2=value2, keyword3=value3)
-• Arguments nommés : func(value, param2=value2, param3=value3)
-
-Exemple : Si def func(x, y, z): return x + y + z; func(1, z=3, y=2), alors func(1, z=3, y=2) retourne 6.`,
-  696: `On peut mélanger arguments positionnels et nommés. Si def func(x, y, z): return x + y + z; func(1, 2, z=3), alors func(1, 2, z=3) retourne 6 car 1 et 2 sont passés positionnellement à x et y, et z=3 est passé comme argument nommé à z.
-
-Concepts clés :
-• def func(x, y, z): return x + y + z; func(1, 2, z=3) retourne 6
-• 1, 2 sont les arguments positionnels (vont à x, y)
-• z=3 est l'argument nommé (va à z)
-• Positionnels avant nommés
-• Retourne : 1 + 2 + 3 = 6
-
-Comment ça fonctionne :
-• func(1, 2, z=3) appelle la fonction func
-• Premier argument 1 est positionnel, assigné à x : x=1
-• Deuxième argument 2 est positionnel, assigné à y : y=2
-• z=3 est argument nommé, assigné à z : z=3
-• La fonction exécute : return x + y + z
-• Retourne : 1 + 2 + 3 = 6
-
-Exemple :
-def func(x, y, z): return x + y + z
-func(1, 2, z=3)            # 6 (mixte : pos1, pos2, nommé3)
-func(1, z=3, y=2)          # 6 (mixte : pos1, nommé2, nommé3)
-func(1, 2, 3)              # 6 (tous positionnels)
-
-Usages courants :
-• Appels flexibles : func(pos1, pos2, keyword3=value)
-• Arguments mixtes
-
-Exemple : Si def func(x, y, z): return x + y + z; func(1, 2, z=3), alors func(1, 2, z=3) retourne 6.`,
-  697: `Les arguments positionnels ne peuvent pas venir après les arguments nommés. Si def func(x, y, z): return x + y + z; func(1, z=3, 2), alors func(1, z=3, 2) lève une SyntaxError car l'argument positionnel 2 vient après l'argument nommé z=3.
-
-Concepts clés :
-• def func(x, y, z): return x + y + z; func(1, z=3, 2) lève SyntaxError
-• 1 est l'argument positionnel
-• z=3 est l'argument nommé
-• 2 est l'argument positionnel (vient après le nommé)
-• Invalide : positionnel après nommé
-
-Comment ça fonctionne :
-• func(1, z=3, 2) tente d'appeler la fonction func
-• Premier argument 1 est positionnel, assigné à x : x=1
-• z=3 est argument nommé, assigné à z : z=3
-• 2 est argument positionnel, mais vient après l'argument nommé
-• Syntaxe invalide
-
-Exemple :
-def func(x, y, z): return x + y + z
-func(1, z=3, 2)            # SyntaxError: positional argument follows keyword argument
-func(1, 2, z=3)            # 6 (valide : positionnels avant nommés)
-
-Usages courants :
-• Comprendre la syntaxe : positionnels avant nommés
-• Ordre des arguments
-
-Exemple : Si def func(x, y, z): return x + y + z; func(1, z=3, 2), alors func(1, z=3, 2) lève une SyntaxError.`,
-  698: `Les paramètres après *args sont nommés uniquement (keyword-only) : ils ne peuvent être passés qu'en arguments nommés. Si def func(*args, x): return args, x; func(1, 2, x=3), alors func(1, 2, x=3) retourne ((1, 2), 3) car *args collecte les arguments positionnels (1, 2), et x doit être passé comme argument nommé (x=3).
-
-Concepts clés :
-• def func(*args, x): return args, x; func(1, 2, x=3) retourne ((1, 2), 3)
-• *args collecte les arguments positionnels (1, 2)
-• x est un paramètre nommé uniquement (après *args)
-• x doit être passé comme nommé : x=3
-• Retourne le tuple : (args, x) = ((1, 2), 3)
-
-Comment ça fonctionne :
-• func(1, 2, x=3) appelle la fonction func
-• Arguments 1, 2 sont positionnels, collectés dans *args : args = (1, 2)
-• x=3 est argument nommé, assigné à x : x=3
-• La fonction exécute : return args, x
-• Retourne : ((1, 2), 3)
-
-Exemple :
-def func(*args, x): return args, x
-func(1, 2, x=3)            # ((1, 2), 3) (x doit être nommé)
-func(1, 2, 3)              # TypeError (x doit être nommé)
-func(x=3)                  # ((), 3) (args vide, x nommé)
-
-Usages courants :
-• Paramètres nommés uniquement : def func(*args, keyword_only): ...
-• Forcer les mots-clés : def process(*items, strict=True): ...
-
-Exemple : Si def func(*args, x): return args, x; func(1, 2, x=3), alors func(1, 2, x=3) retourne ((1, 2), 3).`,
-  699: `Les paramètres après un * nu sont nommés uniquement (keyword-only). Si def func(x, *, y): return x + y; func(1, y=2), alors func(1, y=2) retourne 3 car x est passé positionnellement (1), et y est passé comme argument nommé (y=2) car il vient après le *.
-
-Concepts clés :
-• def func(x, *, y): return x + y; func(1, y=2) retourne 3
-• x est un paramètre régulier (peut être positionnel)
-• * sépare les paramètres
-• y est un paramètre nommé uniquement (après *)
-• y doit être passé comme nommé : y=2
-• Retourne : 1 + 2 = 3
-
-Comment ça fonctionne :
-• func(1, y=2) appelle la fonction func
-• L'argument 1 est positionnel, assigné à x : x=1
-• y=2 est argument nommé, assigné à y : y=2
-• y doit être nommé (vient après *)
-• La fonction exécute : return x + y
-• Retourne : 1 + 2 = 3
-
-Exemple :
-def func(x, *, y): return x + y
-func(1, y=2)                # 3 (y doit être nommé)
-func(1, 2)                  # TypeError (y doit être nommé)
-func(x=1, y=2)              # 3 (les deux nommés)
-
-Usages courants :
-• Paramètres nommés uniquement : def process(data, *, strict=True): ...
-• Forcer les mots-clés : def create(*, name, value): ...
-
-Exemple : Si def func(x, *, y): return x + y; func(1, y=2), alors func(1, y=2) retourne 3.`,
-  700: `Les paramètres avant / sont positionnels uniquement ; ceux après * sont nommés uniquement. Si def func(x, /, y, *, z): return x + y + z; func(1, 2, z=3), alors func(1, 2, z=3) retourne 6 car x est positionnel uniquement, y est régulier, et z est nommé uniquement.
-
-Concepts clés :
-• def func(x, /, y, *, z): return x + y + z; func(1, 2, z=3) retourne 6
-• x est positionnel uniquement (avant /, doit être positionnel)
-• y est régulier (entre / et *, peut être positionnel ou nommé)
-• z est nommé uniquement (après *, doit être nommé)
-• Retourne : 1 + 2 + 3 = 6
-
-Comment ça fonctionne :
-• func(1, 2, z=3) appelle la fonction func
-• L'argument 1 est positionnel, assigné à x : x=1 (positionnel uniquement)
-• L'argument 2 est positionnel, assigné à y : y=2 (régulier)
-• z=3 est argument nommé, assigné à z : z=3 (nommé uniquement)
-• La fonction exécute : return x + y + z
-• Retourne : 1 + 2 + 3 = 6
-
-Exemple :
-def func(x, /, y, *, z): return x + y + z
-func(1, 2, z=3)            # 6 (x positionnel, y régulier, z nommé)
-func(1, y=2, z=3)          # 6 (x positionnel, y nommé, z nommé)
-func(x=1, 2, z=3)          # TypeError (x ne peut pas être nommé)
-
-Usages courants :
-• Positionnel uniquement : def process(data, /, options): ...
-• Nommé uniquement : def create(*, name, value): ...
-• Contrôle fin des paramètres
-
-Exemple : Si def func(x, /, y, *, z): return x + y + z; func(1, 2, z=3), alors func(1, 2, z=3) retourne 6.`,
+• Validez entrée fromhex (espaces).`,
+  518: `bytes.fromhex("68656c6c6f") vaut b"hello" : parse une chaîne hex (souvent sans 0x).
+
+Débutant :
+• Chaque paire = un octet.
+
+Intermédiaire :
+• Espaces entre paires souvent tolérés.
+
+Expert :
+• Lever ValueError si longueur impaire ou caractères invalides.
+
+Concepts clés :
+• fromhex construction.
+
+Distinctions clés :
+• inverse de .hex().
+
+Fonctionnement :
+• Lit nibbles, combine en octets.
+
+Exécution étape par étape :
+1. Chaîne hex.
+2. Produit 5 octets.
+
+Ordre des opérations :
+• méthode statique.
+
+Cas d'utilisation courants :
+• Entrer clés hex.
+
+Cas limites :
+• casse généralement ignorée.
+
+Considérations de performance :
+• O(len).
+
+Exemples :
+• bytes.fromhex("ff")
+
+Remarques :
+• Validez source.`,
+  519: `b"hello" == "hello" vaut False : bytes et str sont des types distincts ; == ne convertit pas.
+
+Débutant :
+• Même texte logique mais types différents.
+
+Intermédiaire :
+• Comparez après decode ou encode.
+
+Expert :
+• Évitez == mixte ; intention claire.
+
+Concepts clés :
+• typage fort, comparaison.
+
+Distinctions clés :
+• == ne “promote” pas bytes→str.
+
+Fonctionnement :
+• bytes.__eq__ retourne NotImplemented ou False face à str.
+
+Exécution étape par étape :
+1. Types différents.
+2. False.
+
+Ordre des opérations :
+• ==.
+
+Cas d'utilisation courants :
+• Piège débutant lecture fichier.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1) échec rapide.
+
+Exemples :
+• b"a" == b"a"
+
+Remarques :
+• Tests unitaires : harmonisez types.`,
+  520: `b"abc".decode() + "def" vaut "abcdef" : decode() produit str puis + concatène deux str.
+
+Débutant :
+• Plus entre str uniquement ici.
+
+Intermédiaire :
+• decode() sans argument utilise défaut plateforme souvent utf-8 en Python 3.
+
+Expert :
+• Spécifiez encoding explicite en code robuste.
+
+Concepts clés :
+• conversion puis concaténation.
+
+Distinctions clés :
+• pas bytes+str direct.
+
+Fonctionnement :
+• decode puis str.__add__.
+
+Exécution étape par étape :
+1. b"abc" → "abc".
+2. +"def".
+3. "abcdef".
+
+Ordre des opérations :
+• decode d'abord.
+
+Cas d'utilisation courants :
+• Assembler texte après lecture binaire.
+
+Cas limites :
+• decode peut échouer.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• b"".decode() + ""
+
+Remarques :
+• f-string ou join pour plusieurs morceaux.`,
+  521: `"café".encode("utf-8") produit une séquence d'octets : c, a, f en ASCII puis deux octets pour é (UTF-8 typique).
+
+Débutant :
+• encode renvoie bytes, pas str.
+
+Intermédiaire :
+• UTF-8 est variable : caractères ASCII = 1 octet.
+
+Expert :
+• Normaliser (NFC) avant encodage si égalité importante.
+
+Concepts clés :
+• Texte Unicode → octets UTF-8.
+
+Distinctions clés :
+• len(str) vs len(bytes) pour même mot accentué.
+
+Fonctionnement :
+• Codec UTF-8 mappe points de code → octets.
+
+Exécution étape par étape :
+1. str "café".
+2. encode utf-8.
+3. bytes longueur > len(str) si accents.
+
+Ordre des opérations :
+• Appel méthode encode.
+
+Cas d'utilisation courants :
+• Stockage fichier, API JSON bytes.
+
+Cas limites :
+• Caractères non encodables selon codec.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• "é".encode()
+
+Remarques :
+• Spécifiez toujours utf-8 en interop.`,
+  522: `len("café") vaut 4 : len sur str compte les points de code Unicode (c, a, f, é), pas les octets UTF-8.
+
+Débutant :
+• Quatre caractères utilisateur visibles ici.
+
+Intermédiaire :
+• Émojis peuvent être plusieurs points de code (combinaisons).
+
+Expert :
+• grapheme vs codepoint : len ne compte pas les glyphes humains.
+
+Concepts clés :
+• len str = nombre de codepoints.
+
+Distinctions clés :
+• comparer avec len(.encode()).
+
+Fonctionnement :
+• Compte éléments internes str.
+
+Exécution étape par étape :
+1. Points de code 4.
+2. len 4.
+
+Ordre des opérations :
+• O(1) CPython.
+
+Cas d'utilisation courants :
+• Limites de saisie UI.
+
+Cas limites :
+• Normalisation peut changer nombre de codepoints.
+
+Considérations de performance :
+• O(1) stocké.
+
+Exemples :
+• len("😀")  # souvent 1 ou 2 selon séquence
+
+Remarques :
+• unicodedata pour analyses fines.`,
+  523: `len("café".encode("utf-8")) vaut 5 : trois lettres ASCII (1 octet chacune) + é en UTF-8 (souvent 2 octets) → 3+2=5.
+
+Débutant :
+• len sur bytes compte octets.
+
+Intermédiaire :
+• Même texte : deux longueurs différentes selon type.
+
+Expert :
+• UTF-8 maximal 4 octets par point de code.
+
+Concepts clés :
+• taille mémoire octets vs longueur texte.
+
+Distinctions clés :
+• str len vs bytes len.
+
+Fonctionnement :
+• encode puis compte octets.
+
+Exécution étape par étape :
+1. Encoder café.
+2. len → 5.
+
+Ordre des opérations :
+• encode puis len.
+
+Cas d'utilisation courants :
+• buffers réseau, quotas taille.
+
+Cas limites :
+• autres encodages : longueurs différentes.
+
+Considérations de performance :
+• O(n) encode.
+
+Exemples :
+• len("a".encode("utf-16le"))
+
+Remarques :
+• Ne supposez pas 1 char = 1 octet.`,
+  524: `"hello".encode("ascii") vaut b"hello" : tout est dans la plage ASCII 0–127.
+
+Débutant :
+• ASCII est sous-ensemble de UTF-8 identique pour ces caractères.
+
+Intermédiaire :
+• encode ascii refuse >127.
+
+Expert :
+• utile pour protocoles 7-bit.
+
+Concepts clés :
+• codec ascii strict.
+
+Distinctions clés :
+• ascii vs utf-8 pour non ASCII.
+
+Fonctionnement :
+• Vérifie chaque codepoint ≤127.
+
+Exécution étape par étape :
+1. "hello" pur ASCII.
+2. bytes identiques.
+
+Ordre des opérations :
+• encode.
+
+Cas d'utilisation courants :
+• SMTP ancien, contraintes héritées.
+
+Cas limites :
+• accent → UnicodeEncodeError.
+
+Considérations de performance :
+• rapide.
+
+Exemples :
+• "ASCII".encode("ascii")
+
+Remarques :
+• utf-8 préféré aujourd'hui par défaut.`,
+  525: `"café".encode("ascii") lève UnicodeEncodeError : é dépasse la plage ASCII.
+
+Débutant :
+• ascii n'accepte pas les accents.
+
+Intermédiaire :
+• Utilisez utf-8 ou errors="replace"/"ignore" si contrainte ASCII souple.
+
+Expert :
+• normaliser vers ASCII translittéré est autre problème.
+
+Concepts clés :
+• erreur d'encodage stricte.
+
+Distinctions clés :
+• échec explicite vs remplacement.
+
+Fonctionnement :
+• codec lève quand caractère hors plage.
+
+Exécution étape par étape :
+1. Parcourt "café".
+2. Rencontre é.
+3. UnicodeEncodeError.
+
+Ordre des opérations :
+• encode strict.
+
+Cas d'utilisation courants :
+• détecter données non ASCII trop tôt.
+
+Cas limites :
+• errors= change comportement.
+
+Considérations de performance :
+• échec avant fin.
+
+Exemples :
+• "€".encode("ascii","ignore")
+
+Remarques :
+• validez jeux de caractères en amont.`,
+  526: `b"hello".decode("ascii") vaut "hello" : octets ASCII → str identique.
+
+Débutant :
+• symétrique d'encode pour ASCII pur.
+
+Intermédiaire :
+• octet >127 avec ascii strict → UnicodeDecodeError.
+
+Expert :
+• utf-8 est sur-ensemble ; ascii subset.
+
+Concepts clés :
+• decode ascii.
+
+Distinctions clés :
+• ascii decode vs utf-8 decode sur mêmes octets ASCII identiques.
+
+Fonctionnement :
+• interprète chaque octet comme codepoint identique.
+
+Exécution étape par étape :
+1. b"hello".
+2. str cinq lettres.
+
+Ordre des opérations :
+• decode.
+
+Cas d'utilisation courants :
+• payloads garantis 7-bit.
+
+Cas limites :
+• données binaires bruitées.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• b"\x00".decode("ascii")
+
+Remarques :
+• vérifiez que le contenu est vraiment texte.`,
+  527: `len("😀".encode("utf-8")) vaut 4 : l'émoji a un seul codepoint souvent mais UTF-8 utilise 4 octets (F0 9F 98 80 typiquement).
+
+Débutant :
+• len(bytes) ≠ len(str) pour émojis.
+
+Intermédiaire :
+• utile pour quotas réseau.
+
+Expert :
+• UTF-16 aurait autre taille.
+
+Concepts clés :
+• emoji, utf-8 multioctet.
+
+Distinctions clés :
+• glyphe vs octets.
+
+Fonctionnement :
+• encode utf-8 standard.
+
+Exécution étape par étape :
+1. str un glyphe.
+2. encode.
+3. 4 octets.
+
+Ordre des opérations :
+• encode puis len.
+
+Cas d'utilisation courants :
+• Twitter-like limits bytes.
+
+Cas limites :
+• modificateurs ZWJ changent grapheme.
+
+Considérations de performance :
+• O(1) len après encode.
+
+Exemples :
+• len("a".encode())
+
+Remarques :
+• testez avec vrais emojis cibles.`,
+  528: `len("😀") vaut souvent 1 : un point de code (U+1F600) dans la str standard.
+
+Débutant :
+• len compte codepoints, pas octets.
+
+Intermédiaire :
+• séquences avec modificateurs peuvent donner len>1 pour un “visuel”.
+
+Expert :
+• voir grapheme clusters Unicode.
+
+Concepts clés :
+• len str et émojis.
+
+Distinctions clés :
+• 528 vs 527 même glyphe.
+
+Fonctionnement :
+• stocke codepoint(s).
+
+Exécution étape par étape :
+1. U+1F600.
+2. len 1.
+
+Ordre des opérations :
+• direct.
+
+Cas d'utilisation courants :
+• validation longueur “caractères”.
+
+Cas limites :
+• ZWJ sequences.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• len("family_emoji_ZWJ")
+
+Remarques :
+• libraries tierces pour graphemes.`,
+  529: `ord("A") vaut 65 : code point Unicode de A latin majuscule (identique ASCII).
+
+Débutant :
+• ord inverse de chr pour BMP.
+
+Intermédiaire :
+• str doit être longueur 1.
+
+Expert :
+• surrogate pairs en narrow build historique rare aujourd'hui.
+
+Concepts clés :
+• ord, codepoint.
+
+Distinctions clés :
+• ord sur str un caractère vs byte int.
+
+Fonctionnement :
+• lit unique codepoint.
+
+Exécution étape par étape :
+1. "A".
+2. 65.
+
+Ordre des opérations :
+• ord.
+
+Cas d'utilisation courants :
+• calculs ASCII.
+
+Cas limites :
+• len≠1 TypeError.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• ord("é")
+
+Remarques :
+• chr pour inverse.`,
+  530: `ord("a") vaut 97 : minuscule latine.
+
+Débutant :
+• différent de A majuscule.
+
+Intermédiaire :
+• écart 32 entre majuscule et minuscule ASCII.
+
+Expert :
+• .lower() préférable que maths manuelles.
+
+Concepts clés :
+• table ASCII/Unicode basique.
+
+Distinctions clés :
+• 97 vs 65.
+
+Fonctionnement :
+• même mécanisme ord.
+
+Exécution étape par étape :
+1. "a".
+2. 97.
+
+Ordre des opérations :
+• ord.
+
+Cas d'utilisation courants :
+• puzzles, César.
+
+Cas limites :
+• lettres hors latin : autres codes.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• ord("0")
+
+Remarques :
+• pas supposer continuité alphabets.`,
+  531: `ord("0") vaut 48 : chiffre zéro ASCII, pas la valeur entière 0.
+
+Débutant :
+• distingue caractère '0' et nombre 0.
+
+Intermédiaire :
+• int("0") est 0, ord("0") est 48.
+
+Expert :
+• fullwidth digits ont autres codepoints.
+
+Concepts clés :
+• chiffre ASCII vs int.
+
+Distinctions clés :
+• ord vs int().
+
+Fonctionnement :
+• codepoint du glyphe.
+
+Exécution étape par étape :
+1. "0".
+2. 48.
+
+Ordre des opérations :
+• ord.
+
+Cas d'utilisation courants :
+• parsing manuel.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• ord("9")  # 57
+
+Remarques :
+• utilisez int() pour valeur numérique.`,
+  532: `chr(65) vaut 'A' : même idée que pour chr(65) déjà vue ailleurs, ici focus sur table ASCII majuscules.
+
+Débutant :
+• 65–90 pour A–Z.
+
+Intermédiaire :
+• chr hors plage valide → erreur ou comportement défini selon version.
+
+Expert :
+• voir PEP sur narrow/wide builds si legacy.
+
+Concepts clés :
+• chr, alphabet ASCII majuscule.
+
+Distinctions clés :
+• chr vs bytes([65]).
+
+Fonctionnement :
+• construit str un caractère.
+
+Exécution étape par étape :
+1. 65.
+2. "A".
+
+Ordre des opérations :
+• chr.
+
+Cas d'utilisation courants :
+• générer séries A–Z.
+
+Cas limites :
+• plage unicode.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• chr(90)  # 'Z'
+
+Remarques :
+• string.ascii_uppercase pour constantes.`,
+  533: `chr(97) vaut 'a' : minuscule latine, code 97.
+
+Débutant :
+• suite logique après majuscules.
+
+Intermédiaire :
+• 97–122 pour a–z.
+
+Expert :
+• locale n'affecte pas chr (codepoint abstrait).
+
+Concepts clés :
+• minuscules ASCII.
+
+Distinctions clés :
+• 97 vs 65 pour même lettre.
+
+Fonctionnement :
+• chr standard.
+
+Exécution étape par étape :
+1. 97.
+2. "a".
+
+Ordre des opérations :
+• chr.
+
+Cas d'utilisation courants :
+• boucles alphabet.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• chr(122)
+
+Remarques :
+• string.ascii_lowercase.`,
+  534: `chr(48) vaut '0' : caractère chiffre zéro, pas chaîne vide.
+
+Débutant :
+• 48–57 pour '0'–'9'.
+
+Intermédiaire :
+• utile pour construire texte depuis codes.
+
+Expert :
+• pour valeur numérique, int('0').
+
+Concepts clés :
+• digits ASCII.
+
+Distinctions clés :
+• chr(48) vs "".
+
+Fonctionnement :
+• chr.
+
+Exécution étape par étape :
+1. 48.
+2. "0".
+
+Ordre des opérations :
+• chr.
+
+Cas d'utilisation courants :
+• formats maison.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• chr(57)
+
+Remarques :
+• str.isdigit() pour validation.`,
+  535: `chr(ord("A") + 32) vaut 'a' : passage majuscule → minuscule ASCII par offset +32.
+
+Débutant :
+• astuce historique ASCII pour A–Z.
+
+Intermédiaire :
+• ne marche pas pour toutes écritures.
+
+Expert :
+• .lower() gère Unicode correctement.
+
+Concepts clés :
+• relation ASCII casse.
+
+Distinctions clés :
+• arithmétique codepoint vs méthode str.
+
+Fonctionnement :
+• ord puis addition puis chr.
+
+Exécution étape par étape :
+1. ord('A')=65.
+2. +32 → 97.
+3. chr → 'a'.
+
+Ordre des opérations :
+• intérieur puis chr.
+
+Cas d'utilisation courants :
+• exercices pédagogiques.
+
+Cas limites :
+• hors A–Z : résultats absurdes.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• chr(ord('Z')+32)
+
+Remarques :
+• en production : .lower().`,
+  536: `type(None) est NoneType : None est singleton de cette classe.
+
+Débutant :
+• None représente l'absence de valeur voulue.
+
+Intermédiaire :
+• une seule instance None partagée.
+
+Expert :
+• sous-classes de NoneType interdites.
+
+Concepts clés :
+• None, NoneType.
+
+Distinctions clés :
+• None vs 0 vs False.
+
+Fonctionnement :
+• builtin singleton.
+
+Exécution étape par étape :
+1. Objet None.
+2. type → NoneType.
+
+Ordre des opérations :
+• type().
+
+Cas d'utilisation courants :
+• défaut optionnel, fin de liste chaînée.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• type(None)()
+
+Remarques :
+• is None idiomatique.`,
+  537: `None == None vaut True : égalité par valeur pour le singleton None.
+
+Débutant :
+• deux références None comparées.
+
+Intermédiaire :
+• cohérent avec unique instance.
+
+Expert :
+• __eq__ de NoneType.
+
+Concepts clés :
+• égalité singleton.
+
+Distinctions clés :
+• == None vs is None (préféré).
+
+Fonctionnement :
+• comparaison identité/valeur converge.
+
+Exécution étape par étape :
+1. None == None.
+2. True.
+
+Ordre des opérations :
+• ==.
+
+Cas d'utilisation courants :
+• tests triviaux.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• (None,) == (None,)
+
+Remarques :
+• style : if x is None.`,
+  538: `None is None vaut True : même objet singleton.
+
+Débutant :
+• is teste identité.
+
+Intermédiaire :
+• PEP 8 recommande is None.
+
+Expert :
+• pas de sous-classes None à confondre.
+
+Concepts clés :
+• is avec None.
+
+Distinctions clés :
+• is None vs == None.
+
+Fonctionnement :
+• compare ids.
+
+Exécution étape par étape :
+1. None is None.
+2. True.
+
+Ordre des opérations :
+• is.
+
+Cas d'utilisation courants :
+• garde clauses défaut.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• x = None; x is None
+
+Remarques :
+• évite surcharges __eq__ custom.`,
+  539: `bool(None) vaut False : None est falsy.
+
+Débutant :
+• dans if None: ne s'exécute pas.
+
+Intermédiaire :
+• parmi les singletons falsy avec False, 0, "", [], etc.
+
+Expert :
+• test explicite is None vs if not x.
+
+Concepts clés :
+• vérité de None.
+
+Distinctions clés :
+• None faux mais pas égal à False.
+
+Fonctionnement :
+• bool hook sur NoneType.
+
+Exécution étape par étape :
+1. None.
+2. False.
+
+Ordre des opérations :
+• bool().
+
+Cas d'utilisation courants :
+• patterns optionnels.
+
+Cas limites :
+• if not x attrape None et 0 et "".
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• bool([])
+
+Remarques :
+• soyez explicite si 0 valide.`,
+  540: `None == 0 vaut False : None n'est pas le nombre zéro.
+
+Débutant :
+• types et notions différentes.
+
+Intermédiaire :
+• évitez confusions SQL NULL vs 0.
+
+Expert :
+• __eq__ de int ne considère pas None égal.
+
+Concepts clés :
+• None vs int 0.
+
+Distinctions clés :
+• trois-valued logic hors Python standard.
+
+Fonctionnement :
+• comparaison déléguée → False.
+
+Exécution étape par étape :
+1. None == 0.
+2. False.
+
+Ordre des opérations :
+• ==.
+
+Cas d'utilisation courants :
+• API où absent ≠ zéro.
+
+Cas limites :
+• numpy.nan autre histoire.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• None == False  # False
+
+Remarques :
+• documentez sémantique “manquant”.`,
+  541: `None == False vaut False : None n'est pas le booléen False.
+
+Débutant :
+• Trois concepts : None, False, 0 sont distincts.
+
+Intermédiaire :
+• if not None et if not False se comportent pareil mais valeurs différentes.
+
+Expert :
+• SQL NULL analogie imparfaite.
+
+Concepts clés :
+• None vs False.
+
+Distinctions clés :
+• bool(None) est False mais None n'est pas False.
+
+Fonctionnement :
+• comparaison == déléguée → False.
+
+Exécution étape par étape :
+1. None == False.
+2. False.
+
+Ordre des opérations :
+• ==.
+
+Cas d'utilisation courants :
+• API où absent ≠ faux booléen.
+
+Cas limites :
+• numpy/pandas autres sémantiques.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• None is False  # False
+
+Remarques :
+• Tests explicites is None / is False.`,
+  542: `None == "" vaut False : absence de valeur n'est pas chaîne vide.
+
+Débutant :
+• None n'est pas un str.
+
+Intermédiaire :
+• if not x attrape les deux ; distinguez avec is None.
+
+Expert :
+• JSON null vs "".
+
+Concepts clés :
+• None vs str vide.
+
+Distinctions clés :
+• trois états : None, "", whitespace.
+
+Fonctionnement :
+• __eq__ ne matche pas None à "".
+
+Exécution étape par étape :
+1. None == "".
+2. False.
+
+Ordre des opérations :
+• ==.
+
+Cas d'utilisation courants :
+• formulaires optionnels.
+
+Cas limites :
+• pandas NaN.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• bool("") vs bool(None)
+
+Remarques :
+• validez schémas explicitement.`,
+  543: `x = None puis x is None vaut True : test idiomatique du singleton.
+
+Débutant :
+• is compare identité.
+
+Intermédiaire :
+• PEP 8 : is None.
+
+Expert :
+• évite surcharges __eq__.
+
+Concepts clés :
+• is None.
+
+Distinctions clés :
+• is vs ==.
+
+Fonctionnement :
+• compare id(x) à id(None).
+
+Exécution étape par étape :
+1. x lie None.
+2. x is None → True.
+
+Ordre des opérations :
+• assignation puis is.
+
+Cas d'utilisation courants :
+• paramètres optionnels.
+
+Cas limites :
+• mocks.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• def f(x=None): return x is None
+
+Remarques :
+• pas if x seul si 0 valide.`,
+  544: `Sans return, une fonction renvoie None implicitement.
+
+Débutant :
+• None est la valeur par défaut.
+
+Intermédiaire :
+• return sans expression aussi None.
+
+Expert :
+• annotations -> None.
+
+Concepts clés :
+• return implicite.
+
+Distinctions clés :
+• procédure vs fonction.
+
+Fonctionnement :
+• bytecode insère None.
+
+Exécution étape par étape :
+1. Corps exécuté.
+2. None renvoyé.
+
+Ordre des opérations :
+• fin fonction.
+
+Cas d'utilisation courants :
+• effets de bord.
+
+Cas limites :
+• générateurs.
+
+Considérations de performance :
+• négligeable.
+
+Exemples :
+• def f(): pass; f()
+
+Remarques :
+• mypy détecte oublis.`,
+  545: `Après def f(): pass, type(f()) est NoneType : l'appel renvoie None.
+
+Débutant :
+• pass ne produit pas de valeur.
+
+Intermédiaire :
+• type(None) alias NoneType.
+
+Expert :
+• type(f) reste function.
+
+Concepts clés :
+• NoneType.
+
+Distinctions clés :
+• type(f) vs type(f()).
+
+Fonctionnement :
+• call retour None.
+
+Exécution étape par étape :
+1. f().
+2. None.
+3. type → NoneType.
+
+Ordre des opérations :
+• call puis type.
+
+Cas d'utilisation courants :
+• stubs.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• type((lambda: None)())
+
+Remarques :
+• documentez contrat.`,
+  546: `def f(): return puis f() is None : True car return nu renvoie None.
+
+Débutant :
+• return seul ≡ return None conceptuellement.
+
+Intermédiaire :
+• style explicite return None si ambigu.
+
+Expert :
+• bytecode charge None.
+
+Concepts clés :
+• return vide.
+
+Distinctions clés :
+• early exit.
+
+Fonctionnement :
+• None produit.
+
+Exécution étape par étape :
+1. Appel f.
+2. None.
+3. is None True.
+
+Ordre des opérations :
+• appel puis is.
+
+Cas d'utilisation courants :
+• parseurs.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• assert (lambda: None)() is None
+
+Remarques :
+• tests lisibles.`,
+  547: `[None, None, None] == [None] * 3 vaut True : égalité élément par élément ; trois None égaux.
+
+Débutant :
+• == structurelle.
+
+Intermédiaire :
+• *3 duplique référence None, pas un problème pour ==.
+
+Expert :
+• piège différent avec [[]]*3.
+
+Concepts clés :
+• list ==, répétition.
+
+Distinctions clés :
+• == vs is sur listes entières.
+
+Fonctionnement :
+• __eq__ liste.
+
+Exécution étape par étape :
+1. Compare trois positions.
+2. True.
+
+Ordre des opérations :
+• ==.
+
+Cas d'utilisation courants :
+• sentinelles.
+
+Cas limites :
+• longueurs différentes.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• [1]*3 == [1,1,1]
+
+Remarques :
+• mutable interne autre cas.`,
+  548: `str(None) vaut "None" : texte du mot, pas chaîne vide.
+
+Débutant :
+• debug print.
+
+Intermédiaire :
+• JSON null ≠ "None".
+
+Expert :
+• i18n fixe anglais.
+
+Concepts clés :
+• str(None).
+
+Distinctions clés :
+• str(None) vs "".
+
+Fonctionnement :
+• __str__ NoneType.
+
+Exécution étape par étape :
+1. None.
+2. "None".
+
+Ordre des opérations :
+• str().
+
+Cas d'utilisation courants :
+• logs concaténés.
+
+Cas limites :
+• ne parsez pas "None".
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• repr(None)
+
+Remarques :
+• sérialisation dédiée.`,
+  549: `repr(None) vaut "None" : ici identique à str pour le singleton.
+
+Débutant :
+• REPL cohérent.
+
+Intermédiaire :
+• objectif réévaluation limité.
+
+Expert :
+• f"{x!r}".
+
+Concepts clés :
+• repr NoneType.
+
+Distinctions clés :
+• repr vs str ici égaux.
+
+Fonctionnement :
+• repr builtin.
+
+Exécution étape par étape :
+1. None.
+2. 'None'.
+
+Ordre des opérations :
+• repr().
+
+Cas d'utilisation courants :
+• logs techniques.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• ascii(None)
+
+Remarques :
+• utile debug.`,
+  550: `None in [1, None, 3] vaut True : in trouve l'élément None au milieu.
+
+Débutant :
+• scan linéaire.
+
+Intermédiaire :
+• None == None à la position.
+
+Expert :
+• set avec None OK.
+
+Concepts clés :
+• __contains__ liste.
+
+Distinctions clés :
+• None in list vs clé dict.
+
+Fonctionnement :
+• compare chaque élément.
+
+Exécution étape par étape :
+1. Parcourt liste.
+2. Trouve None.
+3. True.
+
+Ordre des opérations :
+• in.
+
+Cas d'utilisation courants :
+• données avec trous.
+
+Cas limites :
+• NaN special.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• 0 in [0,1]
+
+Remarques :
+• index pour position.`,
+  551: `id(42) == id(42) vaut True : même expression, même petit int souvent mis en cache.
+
+Débutant :
+• id entier identité mémoire.
+
+Intermédiaire :
+• CPython small int cache.
+
+Expert :
+• ne pas dépendre pour grands entiers.
+
+Concepts clés :
+• id, int cache.
+
+Distinctions clés :
+• portable logique évite id.
+
+Fonctionnement :
+• réutilisation objet int.
+
+Exécution étape par étape :
+1. Deux id(42).
+2. égaux.
+
+Ordre des opérations :
+• appels id.
+
+Cas d'utilisation courants :
+• debug rare.
+
+Cas limites :
+• grands int.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• id(None)==id(None)
+
+Remarques :
+• peu utile métier.`,
+  552: `a = []; b = []; a is b vaut False : deux listes vides distinctes.
+
+Débutant :
+• is ≠ contenu.
+
+Intermédiaire :
+• == serait True.
+
+Expert :
+• shallow copy nouvelle id.
+
+Concepts clés :
+• identité list.
+
+Distinctions clés :
+• is vs ==.
+
+Fonctionnement :
+• deux allocations.
+
+Exécution étape par étape :
+1. Liste a.
+2. Liste b.
+3. is False.
+
+Ordre des opérations :
+• créations puis is.
+
+Cas d'utilisation courants :
+• éviter partage accidentel.
+
+Cas limites :
+• a=b=[] puis True.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• [] is []
+
+Remarques :
+• alias explicite si besoin.`,
+  553: `a = [1, 2]; b = [1, 2]; a == b vaut True : égalité structurelle.
+
+Débutant :
+• éléments égaux ordre égal.
+
+Intermédiaire :
+• récursif sur conteneurs.
+
+Expert :
+• [1] == [1.0] True.
+
+Concepts clés :
+• list __eq__.
+
+Distinctions clés :
+• == True, is souvent False.
+
+Fonctionnement :
+• paire à paire.
+
+Exécution étape par étape :
+1. 1==1, 2==2.
+2. True.
+
+Ordre des opérations :
+• ==.
+
+Cas d'utilisation courants :
+• tests.
+
+Cas limites :
+• types incomparables TypeError.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• [1,2]==[1,2]
+
+Remarques :
+• attention int/float.`,
+  554: `a = [1, 2]; b = [1, 2]; a is b vaut False : objets distincts.
+
+Débutant :
+• même contenu, identités différentes.
+
+Intermédiaire :
+• copie shallow.
+
+Expert :
+• pas d'interning listes.
+
+Concepts clés :
+• is list.
+
+Distinctions clés :
+• is vs ==.
+
+Fonctionnement :
+• ids différents.
+
+Exécution étape par étape :
+1. Deux listes.
+2. is False.
+
+Ordre des opérations :
+• is.
+
+Cas d'utilisation courants :
+• détecter alias.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• a=b=[1]; a is b
+
+Remarques :
+• partage volontaire b=a.`,
+  555: `a = [1, 2]; b = a; a is b vaut True : alias même liste.
+
+Débutant :
+• un objet deux noms.
+
+Intermédiaire :
+• mutation visible via les deux.
+
+Expert :
+• refcounting.
+
+Concepts clés :
+• référence partagée.
+
+Distinctions clés :
+• alias vs copie.
+
+Fonctionnement :
+• même id.
+
+Exécution étape par étape :
+1. Crée liste.
+2. b référence même.
+3. is True.
+
+Ordre des opérations :
+• assign puis is.
+
+Cas d'utilisation courants :
+• modifier liste argument.
+
+Cas limites :
+• rebind casse lien.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• def f(l): l.append(1)
+
+Remarques :
+• documentez mutation.`,
+  556: `a = "hello"; b = "hello"; a is b souvent True en CPython (internage), mais == reste le test texte portable.
+
+Débutant :
+• effet visible identique souvent.
+
+Intermédiaire :
+• ne pas coder métier sur is.
+
+Expert :
+• str construites dynamiquement : is peut False.
+
+Concepts clés :
+• internage str.
+
+Distinctions clés :
+• littéraux vs runtime.
+
+Fonctionnement :
+• même objet ou non.
+
+Exécution étape par étape :
+1. Deux noms.
+2. is souvent True.
+
+Ordre des opérations :
+• is.
+
+Cas d'utilisation courants :
+• curiosité CPython.
+
+Cas limites :
+• longues str.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• "a"*1000
+
+Remarques :
+• == portable.`,
+  557: `a = (1, 2); b = (1, 2); a == b vaut True : tuples comparés élément par élément.
+
+Débutant :
+• immuables, contenu détermine ==.
+
+Intermédiaire :
+• is peut False malgré == True.
+
+Expert :
+• hashable si éléments hashables.
+
+Concepts clés :
+• tuple __eq__.
+
+Distinctions clés :
+• tuple vs list comparaisons.
+
+Fonctionnement :
+• compare positions.
+
+Exécution étape par étape :
+1. 1==1,2==2.
+2. True.
+
+Ordre des opérations :
+• ==.
+
+Cas d'utilisation courants :
+• clés dict composées.
+
+Cas limites :
+• éléments non ordonnables.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• (1,)==(1,)
+
+Remarques :
+• virgule singleton.`,
+  558: `type(42) == int vaut True : la classe renvoyée est int.
+
+Débutant :
+• type donne la classe.
+
+Intermédiaire :
+• comparaison de types avec ==.
+
+Expert :
+• sous-classes : isinstance plus souple.
+
+Concepts clés :
+• type, ==.
+
+Distinctions clés :
+• type vs isinstance.
+
+Fonctionnement :
+• int == int.
+
+Exécution étape par étape :
+1. type(42)→int.
+2. True.
+
+Ordre des opérations :
+• type puis ==.
+
+Cas d'utilisation courants :
+• introspection rare.
+
+Cas limites :
+• mocks.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• type([])==list
+
+Remarques :
+• isinstance préféré héritage.`,
+  559: `type(42) is int vaut True : objet type int unique.
+
+Débutant :
+• is sur classes built-in.
+
+Intermédiaire :
+• singleton type.
+
+Expert :
+• cohérent avec int identité stable.
+
+Concepts clés :
+• identité classe int.
+
+Distinctions clés :
+• is vs == souvent pareil.
+
+Fonctionnement :
+• même objet type.
+
+Exécution étape par étape :
+1. type(42).
+2. is int.
+
+Ordre des opérations :
+• type puis is.
+
+Cas d'utilisation courants :
+• tests stricts.
+
+Cas limites :
+• bool subclass int pour isinstance pas pour type.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• type(True) is bool
+
+Remarques :
+• voir 560 pour isinstance(True,int).`,
+  560: `isinstance(True, int) vaut True : bool est sous-classe de int (héritage historique).
+
+Débutant :
+• surprise fréquente.
+
+Intermédiaire :
+• True+1 vaut 2.
+
+Expert :
+• exclure bool : type(x) is int.
+
+Concepts clés :
+• MRO bool→int.
+
+Distinctions clés :
+• isinstance vs type is.
+
+Fonctionnement :
+• recherche sous-classe.
+
+Exécution étape par étape :
+1. True instance bool.
+2. bool subclass int.
+3. True.
+
+Ordre des opérations :
+• isinstance.
+
+Cas d'utilisation courants :
+• piège validation types.
+
+Cas limites :
+• tests 1 vs True.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• issubclass(bool,int)
+
+Remarques :
+• PEP explique design.`,
+  561: `isinstance(42, (int, float)) vaut True : 42 est int, accepté par le tuple de types.
+
+Débutant :
+• OR sur types.
+
+Intermédiaire :
+• ordre gauche-droite court-circuite logiquement.
+
+Expert :
+• ABC numbers.Real.
+
+Concepts clés :
+• isinstance forme tuple.
+
+Distinctions clés :
+• union runtime vs typing Union.
+
+Fonctionnement :
+• teste chaque type.
+
+Exécution étape par étape :
+1. 42 int.
+2. match int.
+3. True.
+
+Ordre des opérations :
+• isinstance.
+
+Cas d'utilisation courants :
+• APIs numériques.
+
+Cas limites :
+• enregistrement ABC.
+
+Considérations de performance :
+• O(k).
+
+Exemples :
+• isinstance(3.14,(int,float))
+
+Remarques :
+• évitez bool si vous voulez seulement int.`,
+  562: `issubclass(bool, int) vaut True : bool hérite explicitement de int.
+
+Débutant :
+• relation de sous-classe.
+
+Intermédiaire :
+• explique isinstance(True,int).
+
+Expert :
+• modèle objet unique Python.
+
+Concepts clés :
+• issubclass, héritage.
+
+Distinctions clés :
+• subclass vs instance.
+
+Fonctionnement :
+• MRO bool→int.
+
+Exécution étape par étape :
+1. bool, int.
+2. True.
+
+Ordre des opérations :
+• issubclass.
+
+Cas d'utilisation courants :
+• introspection rare.
+
+Cas limites :
+• pas instance : issubclass(1,int) TypeError.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• issubclass(int,object)
+
+Remarques :
+• documentation officielle data model.`,
+  563: `type(id("hello")) est int : en CPython, id retourne un entier non négatif (identité).
+
+Débutant :
+• id est nombre, pas objet spécial.
+
+Intermédiaire :
+• taille dépend plateforme 32/64 bits.
+
+Expert :
+• après libération objet, id peut être réutilisé.
+
+Concepts clés :
+• id retour, type int.
+
+Distinctions clés :
+• id vs pointeur C exposé.
+
+Fonctionnement :
+• CPython Py_ssize_t.
+
+Exécution étape par étape :
+1. id(...)
+2. int.
+
+Ordre des opérations :
+• id puis type.
+
+Cas d'utilisation courants :
+• debug bas niveau.
+
+Cas limites :
+• implémentations autres langages.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• id(None)
+
+Remarques :
+• ne sérialisez pas id comme clé stable long terme.`,
+  564: `id(obj) retourne un entier identifiant l'objet pendant sa durée de vie (CPython : adresse mémoire souvent).
+
+Débutant :
+• unique parmi objets simultanés.
+
+Intermédiaire :
+• deux objets différents id différents.
+
+Expert :
+• cycle de vie et réutilisation.
+
+Concepts clés :
+• identité objet.
+
+Distinctions clés :
+• id vs hash.
+
+Fonctionnement :
+• compteur/adresse selon VM.
+
+Exécution étape par étape :
+1. Objet vivant.
+2. Entier id.
+
+Ordre des opérations :
+• id().
+
+Cas d'utilisation courants :
+• détecter alias, debug.
+
+Cas limites :
+• objets immuateurs réutilisés.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• a=[]; id(a)
+
+Remarques :
+• pas pour égalité logique.`,
+  565: `a = None; b = None; a is b vaut True : un seul singleton None.
+
+Débutant :
+• toutes références None identiques.
+
+Intermédiaire :
+• économie mémoire.
+
+Expert :
+• NoneType non sous-classable.
+
+Concepts clés :
+• singleton None.
+
+Distinctions clés :
+• is None toujours True entre noms None.
+
+Fonctionnement :
+• même objet.
+
+Exécution étape par étape :
+1. Deux noms None.
+2. is True.
+
+Ordre des opérations :
+• is.
+
+Cas d'utilisation courants :
+• défauts multiples.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• None is None
+
+Remarques :
+• test is None idiomatique.`,
+  566: `int(3.9) vaut 3 : troncature vers zéro (pas floor négatif comme floor()).
+
+Débutant :
+• partie décimale jetée.
+
+Intermédiaire :
+• math.floor diffère pour négatifs.
+
+Expert :
+• arrondi binaire float avant conversion.
+
+Concepts clés :
+• conversion float→int tronquée.
+
+Distinctions clés :
+• int() vs round() vs math.floor.
+
+Fonctionnement :
+• __trunc__ ou équivalent.
+
+Exécution étape par étape :
+1. 3.9.
+2. 3.
+
+Ordre des opérations :
+• int().
+
+Cas d'utilisation courants :
+• indexation discrète.
+
+Cas limites :
+• nan inf ValueError.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• int(-3.9)  # -3
+
+Remarques :
+• attention signe vs floor.`,
+  567: `int(-3.9) vaut -3 : troncature vers zéro, donc vers le haut pour négatif.
+
+Débutant :
+• pas -4 (ce serait floor).
+
+Intermédiaire :
+• même règle que positif symétrique “couper décimale”.
+
+Expert :
+• math.floor(-3.9) == -4.
+
+Concepts clés :
+• troncature signée.
+
+Distinctions clés :
+• int vs floor négatif.
+
+Fonctionnement :
+• direction vers 0.
+
+Exécution étape par étape :
+1. -3.9.
+2. -3.
+
+Ordre des opérations :
+• int().
+
+Cas d'utilisation courants :
+• conversions discrètes.
+
+Cas limites :
+• très grands float.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• int(2.999)
+
+Remarques :
+• documentez règle métier arrondi.`,
+  568: `int(True) vaut 1 : bool est sous-type int avec valeurs 1 et 0.
+
+Débutant :
+• True se comporte comme 1 en arithmétique.
+
+Intermédiaire :
+• int(False) vaut 0.
+
+Expert :
+• préférez explicite if booleans.
+
+Concepts clés :
+• bool→int.
+
+Distinctions clés :
+• True vs 1 identité différente.
+
+Fonctionnement :
+• conversion numérique.
+
+Exécution étape par étape :
+1. True.
+2. 1.
+
+Ordre des opérations :
+• int().
+
+Cas d'utilisation courants :
+• sommes de flags.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• int(True)+int(False)
+
+Remarques :
+• style : évitez magie bool en maths.`,
+  569: `int(False) vaut 0.
+
+Débutant :
+• correspond à valeur arithmétique.
+
+Intermédiaire :
+• cohérent avec sum([False,False]) tricks.
+
+Expert :
+• lisibilité : préférez 0 explicite.
+
+Concepts clés :
+• False→0.
+
+Distinctions clés :
+• False vs 0.
+
+Fonctionnement :
+• int conversion.
+
+Exécution étape par étape :
+1. False.
+2. 0.
+
+Ordre des opérations :
+• int().
+
+Cas d'utilisation courants :
+• comptage conditionnel compact.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• sum([True, True, False])
+
+Remarques :
+• explicite > astuce.`,
+  570: `float("inf") produit l'infini positif IEEE 754.
+
+Débutant :
+• dépasse tout float fini.
+
+Intermédiaire :
+• inf + 1 == inf.
+
+Expert :
+• math.isinf teste.
+
+Concepts clés :
+• inf float.
+
+Distinctions clés :
+• inf vs très grand fini.
+
+Fonctionnement :
+• parse string "inf".
+
+Exécution étape par étape :
+1. str inf.
+2. float inf.
+
+Ordre des opérations :
+• float().
+
+Cas d'utilisation courants :
+• algorithmes init min/max.
+
+Cas limites :
+• inf - inf nan.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• float("Infinity")
+
+Remarques :
+• sérialisation JSON attention.`,
+  571: `float("-inf") est l'infini négatif.
+
+Débutant :
+• plus petit que tout fini.
+
+Intermédiaire :
+• -inf < x < inf pour x fini.
+
+Expert :
+• comparaisons totales avec inf.
+
+Concepts clés :
+• -inf.
+
+Distinctions clés :
+• signe.
+
+Fonctionnement :
+• parse.
+
+Exécution étape par étape :
+1. "-inf".
+2. -inf.
+
+Ordre des opérations :
+• float().
+
+Cas d'utilisation courants :
+• optimisation, limites.
+
+Cas limites :
+• opérations indéterminées.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• math.inf avec signe
+
+Remarques :
+• tests math.isinf.`,
+  572: `float("nan") produit Not a Number : valeur spéciale IEEE.
+
+Débutant :
+• représente indéterminé 0/0 etc.
+
+Intermédiaire :
+• nan != nan en général.
+
+Expert :
+• math.isnan.
+
+Concepts clés :
+• NaN float.
+
+Distinctions clés :
+• nan vs None.
+
+Fonctionnement :
+• bit pattern IEEE.
+
+Exécution étape par étape :
+1. parse "nan".
+2. nan.
+
+Ordre des opérations :
+• float().
+
+Cas d'utilisation courants :
+• données scientifiques manquantes.
+
+Cas limites :
+• contagieux dans ops.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• float("NaN")
+
+Remarques :
+• ne testez pas == nan.`,
+  573: `float("nan") == float("nan") vaut False : NaN n'est pas égal à lui-même par définition IEEE.
+
+Débutant :
+• piège tests ==.
+
+Intermédiaire :
+• utiliser math.isnan.
+
+Expert :
+• plusieurs nan bit patterns possibles.
+
+Concepts clés :
+• comparaison NaN.
+
+Distinctions clés :
+• is nan pas non plus fiable entre deux conversions ? (nan is nan peut être True pour même objet mais == False).
+
+Fonctionnement :
+• __eq__ renvoie False.
+
+Exécution étape par étape :
+1. Deux nan peut-être objets distincts.
+2. == False.
+
+Ordre des opérations :
+• ==.
+
+Cas d'utilisation courants :
+• tests scientifiques.
+
+Cas limites :
+• pandas isna.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• math.isnan(float('nan'))
+
+Remarques :
+• documentez politique NaN.`,
+  574: `float("inf") > 1_000_000 vaut True : inf dépasse tout réel fini.
+
+Débutant :
+• comparaison ordre étendu.
+
+Intermédiaire :
+• inf == inf True malgré nan différent.
+
+Expert :
+• partial ordering.
+
+Concepts clés :
+• comparaison inf.
+
+Distinctions clés :
+• inf vs max float fini.
+
+Fonctionnement :
+• règles IEEE ordering.
+
+Exécution étape par étape :
+1. inf vs 1e6.
+2. True.
+
+Ordre des opérations :
+• >.
+
+Cas d'utilisation courants :
+• bornes algorithmes.
+
+Cas limites :
+• inf > inf False.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• -inf < 0
+
+Remarques :
+• math.isfinite.`,
+  575: `bool(0.0) vaut False : float zéro est falsy.
+
+Débutant :
+• comme int 0.
+
+Intermédiaire :
+• -0.0 aussi falsy.
+
+Expert :
+• très petits non-zero truthy.
+
+Concepts clés :
+• vérité float.
+
+Distinctions clés :
+• 0.0 vs None.
+
+Fonctionnement :
+• __bool__ float.
+
+Exécution étape par étape :
+1. 0.0.
+2. False.
+
+Ordre des opérations :
+• bool().
+
+Cas d'utilisation courants :
+• if x: avec résultat float.
+
+Cas limites :
+• nan truthy.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• bool(0.0001)
+
+Remarques :
+• explicite x != 0.0 si nan à traiter.`,
+  576: `bool(0j) vaut False : zéro complexe est falsy ; tout autre complexe truthy.
+
+Débutant :
+• seule la paire (0,0) faux.
+
+Intermédiaire :
+• pas d'ordre total sur complexe sauf ==.
+
+Expert :
+• partie réelle et imaginaire nulles.
+
+Concepts clés :
+• vérité complex.
+
+Distinctions clés :
+• 0j vs 0.
+
+Fonctionnement :
+• __bool__ complex.
+
+Exécution étape par étape :
+1. 0+0j.
+2. False.
+
+Ordre des opérations :
+• bool().
+
+Cas d'utilisation courants :
+• rare ; signaux DSP.
+
+Cas limites :
+• nan parties ?
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• bool(1j)
+
+Remarques :
+• pas de comparaison < entre complexes.`,
+  577: `bool(()) vaut False : tuple vide falsy.
+
+Débutant :
+• conteneur vide → faux.
+
+Intermédiaire :
+• tuple non vide truthy même si éléments falsy ? (False,) truthy car non vide.
+
+Expert :
+• len 0 décide.
+
+Concepts clés :
+• vérité tuple.
+
+Distinctions clés :
+• () vs (None,) truthy.
+
+Fonctionnement :
+• longueur 0.
+
+Exécution étape par étape :
+1. ().
+2. False.
+
+Ordre des opérations :
+• bool().
+
+Cas d'utilisation courants :
+• if args:.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• bool((1,))
+
+Remarques :
+• pattern *args.`,
+  578: `bool({}) vaut False : dict vide falsy.
+
+Débutant :
+• comme liste vide.
+
+Intermédiaire :
+• dict avec entrées truthy même si valeurs falsy.
+
+Expert :
+• ordre préservé 3.7+.
+
+Concepts clés :
+• vérité dict.
+
+Distinctions clés :
+• {} set vs dict ; dict vide {}.
+
+Fonctionnement :
+• len 0.
+
+Exécution étape par étape :
+1. {}.
+2. False.
+
+Ordre des opérations :
+• bool().
+
+Cas d'utilisation courants :
+• if config:.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• bool({"a":1})
+
+Remarques :
+• set() vide aussi faux.`,
+  579: `bool(set()) vaut False : ensemble vide falsy.
+
+Débutant :
+• pas d'éléments.
+
+Intermédiaire :
+• set non vide truthy.
+
+Expert :
+• frozenset idem règle.
+
+Concepts clés :
+• vérité set.
+
+Distinctions clés :
+• set() vs {} dict attention syntaxe.
+
+Fonctionnement :
+• len 0.
+
+Exécution étape par étape :
+1. set().
+2. False.
+
+Ordre des opérations :
+• bool().
+
+Cas d'utilisation courants :
+• if visited:.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• bool({1})
+
+Remarques :
+• set() pour vide, pas {}.`,
+  580: `bool(frozenset()) vaut False : comme set, immuable vide falsy.
+
+Débutant :
+• même règle de vérité.
+
+Intermédiaire :
+• frozenset non vide truthy.
+
+Expert :
+• peut être clé dict si immuable nested rules.
+
+Concepts clés :
+• frozenset vérité.
+
+Distinctions clés :
+• frozenset vs set vérité identique.
+
+Fonctionnement :
+• len 0.
+
+Exécution étape par étape :
+1. frozenset().
+2. False.
+
+Ordre des opérations :
+• bool().
+
+Cas d'utilisation courants :
+• clés composites immuables.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• bool(frozenset({1}))
+
+Remarques :
+• hashable si contenu hashable.`,
+  581: `"hello"[100:] vaut '' : slice start au-delà de la longueur avec pas positif donne chaîne vide (pas d'erreur).
+
+Débutant :
+• slicing clame les bornes.
+
+Intermédiaire :
+• cohérent list/str/bytes.
+
+Expert :
+• CPython optimise.
+
+Concepts clés :
+• slice start > len.
+
+Distinctions clés :
+• [100] indexerait → IndexError.
+
+Fonctionnement :
+• normalisation bornes.
+
+Exécution étape par étape :
+1. len 5, start 100.
+2. vide.
+
+Ordre des opérations :
+• [] slice.
+
+Cas d'utilisation courants :
+• queue optionnelle.
+
+Cas limites :
+• pas négatif change règles.
+
+Considérations de performance :
+• O(1) création vide.
+
+Exemples :
+• "hi"[10:]
+
+Remarques :
+• diffère d'autres langages.`,
+  582: `"hello"[-100:] vaut "hello" : start très négatif ramené au début.
+
+Débutant :
+• équivalent à [:] ici.
+
+Intermédiaire :
+• pas IndexError.
+
+Expert :
+• normalisation max(0, len+start).
+
+Concepts clés :
+• slice start négatif clampé.
+
+Distinctions clés :
+• vs index -100 seul.
+
+Fonctionnement :
+• calcule début effectif 0.
+
+Exécution étape par étape :
+1. start trop petit.
+2. prend toute chaîne.
+
+Ordre des opérations :
+• slice.
+
+Cas d'utilisation courants :
+• suffixes avec offset variable.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(n) copie.
+
+Exemples :
+• s[-1000:]
+
+Remarques :
+• lisibilité : préférez s si intention “tout”.`,
+  583: `"hello"[2:100] vaut "llo" : stop au-delà de la fin est tronqué à len.
+
+Débutant :
+• pas d'erreur.
+
+Intermédiaire :
+• utile quand stop calculé dynamiquement.
+
+Expert :
+• symétrie avec start.
+
+Concepts clés :
+• stop clampé.
+
+Distinctions clés :
+• [2:5] vs [2:100] ici égal si len=5.
+
+Fonctionnement :
+• min(stop,len).
+
+Exécution étape par étape :
+1. indices 2..4.
+2. "llo".
+
+Ordre des opérations :
+• slice.
+
+Cas d'utilisation courants :
+• parsers flux.
+
+Cas limites :
+• pas négatif.
+
+Considérations de performance :
+• O(k).
+
+Exemples :
+• "abc"[:999]
+
+Remarques :
+• simplifie bornes max.`,
+  584: `"" + "" vaut "" : neutre concaténation.
+
+Débutant :
+• identité pour + sur str.
+
+Intermédiaire :
+• idempotence ajouter vide.
+
+Expert :
+• optimisation possible.
+
+Concepts clés :
+• concaténation vide.
+
+Distinctions clés :
+• "" vs None.
+
+Fonctionnement :
+• crée nouvelle str vide ou internée.
+
+Exécution étape par étape :
+1. deux "".
+2. "".
+
+Ordre des opérations :
+• +.
+
+Cas d'utilisation courants :
+• accumulateurs initialisés.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• "a" + ""
+
+Remarques :
+• join sur [""] ok.`,
+  585: `"" * 1000 vaut "" : répéter zéro caractères reste vide.
+
+Débutant :
+• 1000 * 0 longueur.
+
+Intermédiaire :
+• tout n donne "".
+
+Expert :
+• cohérent mathématique.
+
+Concepts clés :
+• répétition str vide.
+
+Distinctions clés :
+• vs "x"*0.
+
+Fonctionnement :
+• longueur n * 0.
+
+Exécution étape par étape :
+1. "" * 1000.
+2. "".
+
+Ordre des opérations :
+• *.
+
+Cas d'utilisation courants :
+• edge cases générateurs.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• rapide.
+
+Exemples :
+• "" * (-5)  # ''
+
+Remarques :
+• cohérent list [].`,
+  586: `"a" * 0 vaut '' : répétition zéro fois.
+
+Débutant :
+• comme list.
+
+Intermédiaire :
+• négatif souvent ''.
+
+Expert :
+• TypeError si n pas int.
+
+Concepts clés :
+• * 0.
+
+Distinctions clés :
+• vs "a"*1.
+
+Fonctionnement :
+• allocation vide.
+
+Exécution étape par étape :
+1. "a", 0.
+2. "".
+
+Ordre des opérations :
+• *.
+
+Cas d'utilisation courants :
+• boucles n=0.
+
+Cas limites :
+• float interdit.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• "ab"*0
+
+Remarques :
+• pratique pour padding dynamique.`,
+  587: `"hello"[1:1] vaut '' : slice vide car start==stop.
+
+Débutant :
+• stop exclus : rien à prendre.
+
+Intermédiaire :
+• position valide entre caractères.
+
+Expert :
+• insertion logique slices.
+
+Concepts clés :
+• slice vide.
+
+Distinctions clés :
+• [1:1] vs [1:2].
+
+Fonctionnement :
+• zéro caractères.
+
+Exécution étape par étape :
+1. start 1 stop 1.
+2. "".
+
+Ordre des opérations :
+• slice.
+
+Cas d'utilisation courants :
+• découpage fenêtre nulle.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• s[i:i]
+
+Remarques :
+• utile insertions conceptuelles.`,
+  588: `"hello"[3:1] vaut '' : avec pas positif par défaut, start>end donne vide.
+
+Débutant :
+• pas d'erreur, résultat vide.
+
+Intermédiaire :
+• utiliser pas négatif pour parcourir en arrière.
+
+Expert :
+• cohérent list.
+
+Concepts clés :
+• slice start>end step 1.
+
+Distinctions clés :
+• vs [3:1:-1] non vide.
+
+Fonctionnement :
+• détecte intervalle vide.
+
+Exécution étape par étape :
+1. 3>1 pas +1.
+2. "".
+
+Ordre des opérations :
+• slice.
+
+Cas d'utilisation courants :
+• bornes calculées croisées.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• "abc"[2:0]
+
+Remarques :
+• vérifiez signe du pas.`,
+  589: `" ".isspace() vaut True : espace est whitespace.
+
+Débutant :
+• méthode teste tous caractères whitespace.
+
+Intermédiaire :
+• un seul espace suffit ici.
+
+Expert :
+• couvre tab newline etc. si chaîne mixte doit être entièrement whitespace.
+
+Concepts clés :
+• str.isspace.
+
+Distinctions clés :
+• isspace vs strip()==''.
+
+Fonctionnement :
+• catégorie Unicode.
+
+Exécution étape par étape :
+1. " ".
+2. True.
+
+Ordre des opérations :
+• méthode.
+
+Cas d'utilisation courants :
+• valider ligne vide visuelle.
+
+Cas limites :
+• "" False.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• "\t".isspace()
+
+Remarques :
+• pas “champ vide métier”.`,
+  590: `"\n\t".isspace() vaut True : tous caractères sont whitespace.
+
+Débutant :
+• mélange ok si chacun whitespace.
+
+Intermédiaire :
+• pas besoin d'être uniforme.
+
+Expert :
+• caractères Unicode espace fine inclus.
+
+Concepts clés :
+• whitespace mixte.
+
+Distinctions clés :
+• contient vs uniquement.
+
+Fonctionnement :
+• teste chaque char.
+
+Exécution étape par étape :
+1. \n et \t.
+2. True.
+
+Ordre des opérations :
+• isspace.
+
+Cas d'utilisation courants :
+• lignes blanches.
+
+Cas limites :
+• "a\n" False.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• "  \n  ".isspace()
+
+Remarques :
+• combinez strip pour bords.`,
+  591: `"123".isdigit() vaut True : tous caractères sont décimaux.
+
+Débutant :
+• uniquement chiffres 0-9 (et équivalents Unicode “decimal”).
+
+Intermédiaire :
+• pas de signe ni point.
+
+Expert :
+• isdecimal plus strict parfois.
+
+Concepts clés :
+• isdigit.
+
+Distinctions clés :
+• isdigit vs isnumeric.
+
+Fonctionnement :
+• catégorie Unicode par caractère.
+
+Exécution étape par étape :
+1. 1,2,3.
+2. True.
+
+Ordre des opérations :
+• méthode.
+
+Cas d'utilisation courants :
+• valider entier texte avant int().
+
+Cas limites :
+• "" False.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• "²".isdigit()  # peut varier
+
+Remarques :
+• testez locales chiffres arabes etc.`,
+  592: `"12.3".isdigit() vaut False : le point n'est pas un chiffre.
+
+Débutant :
+• float texte ne passe pas.
+
+Intermédiaire :
+• utiliser regex ou try float.
+
+Expert :
+• séparateur locale virgule.
+
+Concepts clés :
+• rejet point.
+
+Distinctions clés :
+• isdigit vs float parsing.
+
+Fonctionnement :
+• '.' échoue test.
+
+Exécution étape par étape :
+1. rencontre '.'.
+2. False.
+
+Ordre des opérations :
+• isdigit.
+
+Cas d'utilisation courants :
+• filtrer entiers stricts.
+
+Cas limites :
+• exposant scientifique.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• "5".isdigit()
+
+Remarques :
+• float() séparé.`,
+  593: `"-5".isdigit() vaut False : le signe moins n'est pas un digit.
+
+Débutant :
+• int("-5") ok mais isdigit non.
+
+Intermédiaire :
+• enlever signe puis tester si besoin.
+
+Expert :
+• lstrip('-+') risqué sans valider.
+
+Concepts clés :
+• signe vs digits.
+
+Distinctions clés :
+• parsing vs classification caractères.
+
+Fonctionnement :
+• '-' stoppe digit-only.
+
+Exécution étape par étape :
+1. premier char -.
+2. False.
+
+Ordre des opérations :
+• isdigit.
+
+Cas d'utilisation courants :
+• UI entiers positifs seulement.
+
+Cas limites :
+• espaces avant signe.
+
+Considérations de performance :
+• O(1) échec tôt.
+
+Exemples :
+• "+3".isdigit()
+
+Remarques :
+• strip sign explicitement.`,
+  594: `"abc123".isalnum() vaut True : lettres et chiffres seulement, sans espace ni ponctuation.
+
+Débutant :
+• alphanumérique.
+
+Intermédiaire :
+• underscore _ n'est pas alnum.
+
+Expert :
+• Unicode lettres comptent.
+
+Concepts clés :
+• isalnum.
+
+Distinctions clés :
+• isalnum vs isidentifier.
+
+Fonctionnement :
+• chaque char letter or digit.
+
+Exécution étape par étape :
+1. a,b,c,1,2,3.
+2. True.
+
+Ordre des opérations :
+• isalnum.
+
+Cas d'utilisation courants :
+• mots de passe simples, tokens.
+
+Cas limites :
+• "" False.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• "café2".isalnum()
+
+Remarques :
+• pas d'espaces.`,
+  595: `"abc 123".isalnum() vaut False : espace interdit.
+
+Débutant :
+• espace casse la chaîne.
+
+Intermédiaire :
+• retirer espaces puis tester si besoin métier.
+
+Expert :
+• attention normalisation.
+
+Concepts clés :
+• espace non alnum.
+
+Distinctions clés :
+• isalnum stricte.
+
+Fonctionnement :
+• espace → False.
+
+Exécution étape par étape :
+1. rencontre espace.
+2. False.
+
+Ordre des opérations :
+• isalnum.
+
+Cas d'utilisation courants :
+• rejeter tokens avec blancs.
+
+Cas limites :
+• tabulation idem.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• "abc_123".isalnum()  # False
+
+Remarques :
+• underscore ≠ alnum.`,
+  596: `"hello".isidentifier() vaut True : nom Python lexical valide.
+
+Débutant :
+• commence lettre ou underscore, puis lettres chiffres underscores.
+
+Intermédiaire :
+• ne vérifie pas mots-clés.
+
+Expert :
+• Unicode lettres possibles.
+
+Concepts clés :
+• isidentifier.
+
+Distinctions clés :
+• isidentifier vs iskeyword.
+
+Fonctionnement :
+• grammaire NAME.
+
+Exécution étape par étape :
+1. scan hello.
+2. True.
+
+Ordre des opérations :
+• méthode.
+
+Cas d'utilisation courants :
+• valider noms dynamiques.
+
+Cas limites :
+• "class" True isidentifier mais keyword.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• "_x".isidentifier()
+
+Remarques :
+• combinez keyword.iskeyword.`,
+  597: `"2hello".isidentifier() vaut False : ne peut pas commencer par chiffre.
+
+Débutant :
+• règle lexicale.
+
+Intermédiaire :
+• préfixe underscore si besoin.
+
+Expert :
+• normalisation automatique.
+
+Concepts clés :
+• premier caractère.
+
+Distinctions clés :
+• isdigit début vs reste.
+
+Fonctionnement :
+• rejet leading digit.
+
+Exécution étape par étape :
+1. '2' début.
+2. False.
+
+Ordre des opérations :
+• isidentifier.
+
+Cas d'utilisation courants :
+• éviter SyntaxError futurs.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1) échec.
+
+Exemples :
+• "h2".isidentifier()
+
+Remarques :
+• valide avant exec.`,
+  598: `"for".isidentifier() vaut True : lexicalement c'est un nom valide.
+
+Débutant :
+• surprise : mot-clé quand même “identifiant lexical”.
+
+Intermédiaire :
+• assigner à for interdit syntaxiquement autrement.
+
+Expert :
+• soft keywords 3.10+ autre catégorie.
+
+Concepts clés :
+• identifier vs keyword.
+
+Distinctions clés :
+• isidentifier True mais reserved.
+
+Fonctionnement :
+• test pattern only.
+
+Exécution étape par étape :
+1. "for".
+2. True isidentifier.
+
+Ordre des opérations :
+• méthode.
+
+Cas d'utilisation courants :
+• avant codegen.
+
+Cas limites :
+• mots réservés.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• "lambda".isidentifier()
+
+Remarques :
+• toujours tester keyword.`,
+  599: `keyword.iskeyword("for") vaut True après import keyword : liste officielle mots réservés.
+
+Débutant :
+• bloque assignations noms.
+
+Intermédiaire :
+• import requis.
+
+Expert :
+• soft keywords gérés séparément.
+
+Concepts clés :
+• module keyword.
+
+Distinctions clés :
+• iskeyword vs isidentifier.
+
+Fonctionnement :
+• ensemble frozen.
+
+Exécution étape par étape :
+1. import keyword.
+2. iskeyword("for") True.
+
+Ordre des opérations :
+• appel fonction.
+
+Cas d'utilisation courants :
+• validateurs DSL.
+
+Cas limites :
+• version Python liste évolue.
+
+Considérations de performance :
+• O(1) lookup set.
+
+Exemples :
+• keyword.iskeyword("async")
+
+Remarques :
+• mettez import en tête fichier.`,
+  600: `type(1+2j) est complex : les littéraux a+bj créent nombres complexes.
+
+Débutant :
+• partie imaginaire suffixe j.
+
+Intermédiaire :
+• float underlying réel et imaginaire.
+
+Expert :
+• cmath module ops.
+
+Concepts clés :
+• type complex, littéral j.
+
+Distinctions clés :
+• complex vs float int.
+
+Fonctionnement :
+• construction complex(re,im).
+
+Exécution étape par étape :
+1. addition 1 et 2j ? expression 1+2j littéral en fait.
+2. type complex.
+
+Ordre des opérations :
+• littéral ou op selon expression ; ici 1+2j est un littéral syntaxique en Python.
+
+Cas d'utilisation courants :
+• signal, physique.
+
+Cas limites :
+• pas de ordre <.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• complex(2,3)
+
+Remarques :
+• j pas i comme ingénieur.`,
+  601: `10 + 5 * 2 vaut 20 : la multiplication * a une priorité plus forte que l'addition +, donc on calcule d'abord 5 * 2 puis on ajoute 10.
+
+Débutant :
+• Sans parenthèses, * et / passent avant + et -.
+• Ici : 5 * 2 = 10, puis 10 + 10 = 20.
+
+Intermédiaire :
+• Les opérateurs de même niveau se lisent de gauche à droite (sauf **).
+• Les parenthèses changent totalement l'ordre.
+
+Expert :
+• Voir la table de priorité officielle ; ** est le plus liant.
+
+Concepts clés :
+• Précédence, associativité, PEMDAS adapté à Python.
+
+Distinctions clés :
+• 10 + 5 * 2 ≠ (10 + 5) * 2.
+
+Fonctionnement :
+• L'arbre syntaxique place * plus bas que +.
+
+Exécution étape par étape :
+1. Évaluer 5 * 2 → 10.
+2. Évaluer 10 + 10 → 20.
+
+Ordre des opérations :
+• * avant +.
+
+Cas d'utilisation courants :
+• Formules sans tout parenthéser.
+
+Cas limites :
+• Mélange float/int promeut vers float si besoin.
+
+Considérations de performance :
+• Négligeable pour scalaires.
+
+Exemples :
+• 2 + 3 * 4  # 14
+
+Remarques :
+• Parenthèses explicites évitent les erreurs de lecture.`,
+  602: `(10 + 5) * 2 vaut 30 : les parenthèses forcent d'abord l'addition, puis la multiplication.
+
+Débutant :
+• Tout ce qui est entre parenthèses est évalué en premier.
+• Ici 10 + 5 = 15, puis 15 * 2 = 30.
+
+Intermédiaire :
+• Parenthèses imbriquées : l'intérieur le plus profond d'abord.
+
+Expert :
+• Les tuples (a, b) utilisent aussi des parenthèses mais autre grammaire.
+
+Concepts clés :
+• Groupement explicite.
+
+Distinctions clés :
+• Avec vs sans parenthèses change radicalement le résultat.
+
+Fonctionnement :
+• Le parseur construit une sous-expression prioritaire.
+
+Exécution étape par étape :
+1. 10 + 5 → 15.
+2. 15 * 2 → 30.
+
+Ordre des opérations :
+• Parenthèses puis *.
+
+Cas d'utilisation courants :
+• Moyennes, facteurs communs.
+
+Cas limites :
+• Trop de parenthèses nuisent à la lisibilité.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• (1 + 2) * 3
+
+Remarques :
+• Style : n'ajoutez des parenthèses que si nécessaire ou pour clarté.`,
+  603: `10 / 2 vaut 5.0 en Python 3 : l'opérateur / est la division « vraie » qui renvoie toujours un float, même si le quotient est entier.
+
+Débutant :
+• Le résultat a une partie décimale (souvent .0).
+
+Intermédiaire :
+• Ce n'est pas la division entière ; pour ça, utilisez //.
+
+Expert :
+• Python 2 mélangeait comportements ; Python 3 unifie avec float.
+
+Concepts clés :
+• Division vraie, float.
+
+Distinctions clés :
+• / vs //.
+
+Fonctionnement :
+• __truediv__ sur int/float.
+
+Exécution étape par étape :
+1. Convertir si besoin en float pour le chemin de calcul.
+2. Produit 5.0.
+
+Ordre des opérations :
+• / a priorité classique multiplicative.
+
+Cas d'utilisation courants :
+• Moyennes, proportions exactes.
+
+Cas limites :
+• Division par zéro → ZeroDivisionError.
+
+Considérations de performance :
+• float plus coûteux que int mais marginal.
+
+Exemples :
+• 1 / 2  # 0.5
+
+Remarques :
+• math.floor(a/b) si besoin d'entier.`,
+  604: `10 // 3 vaut 3 : la division entière (floor division) tronque vers moins l'infini.
+
+Débutant :
+• Pas de partie décimale dans le résultat int.
+
+Intermédiaire :
+• Pour les négatifs, // n'est pas la même chose que int(truncate) vers zéro.
+
+Expert :
+• // appelle __floordiv__.
+
+Concepts clés :
+• Floor division, int résultat typique.
+
+Distinctions clés :
+• 10 // 3 vs 10 / 3.
+
+Fonctionnement :
+• math.floor(a/b) pour des positifs simples.
+
+Exécution étape par étape :
+1. Quotient réel ≈ 3.33.
+2. Plancher → 3.
+
+Ordre des opérations :
+• Même famille que * en priorité.
+
+Cas d'utilisation courants :
+• Indexation par blocs, pagination.
+
+Cas limites :
+• float // float donne float floor.
+
+Considérations de performance :
+• Rapide.
+
+Exemples :
+• 7 // 2  # 3
+
+Remarques :
+• divmod donne quotient et reste.`,
+  605: `10 % 3 vaut 1 : le modulo renvoie le reste de la division euclidienne compatible avec //.
+
+Débutant :
+• 3 * 3 = 9, reste 1 pour arriver à 10.
+
+Intermédiaire :
+• Signe du résultat suit le diviseur en Python (convention définie).
+
+Expert :
+• pow(a, b, m) combine puissance et modulo efficacement.
+
+Concepts clés :
+• Reste, congruence.
+
+Distinctions clés :
+• % pour math ; pas pour formatage de str (autre opérateur legacy).
+
+Fonctionnement :
+• a - (a // b) * b.
+
+Exécution étape par étape :
+1. // puis multiplication puis soustraction.
+
+Ordre des opérations :
+• Même priorité que *.
+
+Cas d'utilisation courants :
+• Pair/impair, cycles, hash.
+
+Cas limites :
+• modulo 0 interdit.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• 15 % 5  # 0
+
+Remarques :
+• Attention aux négatifs : tester sur cas réels.`,
+  606: `2 ** 3 vaut 8 : ** est l'exponentiation (puissance).
+
+Débutant :
+• 2 multiplié par lui-même 3 fois.
+
+Intermédiaire :
+• ** lie plus fort que * et +.
+
+Expert :
+• Pour matrices, @ est distinct ; ** reste scalaire/objet surchargé.
+
+Concepts clés :
+• Puissance entière ou float.
+
+Distinctions clés :
+• ** vs pow() deux arguments.
+
+Fonctionnement :
+• __pow__.
+
+Exécution étape par étape :
+1. Base 2, exposant 3.
+2. 8.
+
+Ordre des opérations :
+• ** très prioritaire.
+
+Cas d'utilisation courants :
+• Croissance, surfaces, bits.
+
+Cas limites :
+• 0**0 convention 1 en Python.
+
+Considérations de performance :
+• Exposants énormes explosent.
+
+Exemples :
+• 10 ** 2  # 100
+
+Remarques :
+• math.pow retourne toujours float.`,
+  607: `2 ** 2 ** 3 vaut 256 : ** est associatif à droite, donc 2 ** (2 ** 3) = 2 ** 8.
+
+Débutant :
+• On calcule d'abord l'exposant du haut : 2**3 = 8.
+
+Intermédiaire :
+• Pas (2**2)**3 qui serait 64.
+
+Expert :
+• Seul ** est right-associative parmi les opérateurs binaires usuels.
+
+Concepts clés :
+• Associativité à droite.
+
+Distinctions clés :
+• Chaîne de ** vs chaîne de + (gauche-droite).
+
+Fonctionnement :
+• Parse tree groupe à droite.
+
+Exécution étape par étape :
+1. 2**3 → 8.
+2. 2**8 → 256.
+
+Ordre des opérations :
+• ** d'abord à droite.
+
+Cas d'utilisation courants :
+• Tours imbriqués exponentiels rares ; surtout piège examen.
+
+Cas limites :
+• Overflow mental ; utiliser des parenthèses.
+
+Considérations de performance :
+• Croissance exponentielle.
+
+Exemples :
+• 3**2**2  # 81
+
+Remarques :
+• Parenthèses rendent l'intention évidente.`,
+  608: `10 / 0 lève ZeroDivisionError : la division par zéro est interdite pour / et //.
+
+Débutant :
+• Aucun nombre réel standard ne convient.
+
+Intermédiaire :
+• Même 0.0 dénominateur interdit.
+
+Expert :
+• float('inf') n'est pas produit par /0 en Python pur.
+
+Concepts clés :
+• Erreur runtime arithmétique.
+
+Distinctions clés :
+• 0/10 OK vs 10/0.
+
+Fonctionnement :
+• Vérification dénominateur.
+
+Exécution étape par étape :
+1. Évaluation tente division.
+2. Exception.
+
+Ordre des opérations :
+• N/A (échec).
+
+Cas d'utilisation courants :
+• Garde-fous avant division.
+
+Cas limites :
+• numpy peut donner inf selon contexte.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• try/except ZeroDivisionError
+
+Remarques :
+• Testez dénominateur ou utilisez une epsilon.`,
+  609: `0 / 10 vaut 0.0 : zéro numérateur donne zéro en float pour la division vraie.
+
+Débutant :
+• Résultat est float.
+
+Intermédiaire :
+• 0 // 10 vaut 0 int.
+
+Expert :
+• signes : 0.0 a signe 0.0 ambigu en IEEE rarement visible ici.
+
+Concepts clés :
+• Zéro en numérateur OK.
+
+Distinctions clés :
+• 0/10 vs 10/0.
+
+Fonctionnement :
+• Division standard.
+
+Exécution étape par étape :
+1. 0 divisé par 10.
+2. 0.0.
+
+Ordre des opérations :
+• /.
+
+Cas d'utilisation courants :
+• Probabilités nulles.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• trivial.
+
+Exemples :
+• 0.0 / 5
+
+Remarques :
+• Comparer avec tolérance pour floats.`,
+  610: `10 * 0 vaut 0 : multiplication par zéro annule.
+
+Débutant :
+• Résultat int 0 ici.
+
+Intermédiaire :
+• 10 * 0.0 → 0.0 float si un opérande float.
+
+Expert :
+• Anneau des nombres : élément absorbant.
+
+Concepts clés :
+• Zéro multiplicatif.
+
+Distinctions clés :
+• int vs float selon promotion.
+
+Fonctionnement :
+• __mul__.
+
+Exécution étape par étape :
+1. 10 * 0.
+2. 0.
+
+Ordre des opérations :
+• * avec même priorité que /.
+
+Cas d'utilisation courants :
+• Réinitialiser accumulations.
+
+Cas limites :
+• 0 * inf nan en IEEE float.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• 0 * 1_000_000
+
+Remarques :
+• Attention contexte float avancé.`,
+  611: `abs(-5) vaut 5 : valeur absolue retire le signe.
+
+Débutant :
+• Distance à zéro sur la droite réelle.
+
+Intermédiaire :
+• abs fonctionne aussi sur complexes (module).
+
+Expert :
+• __abs__ surchargeable.
+
+Concepts clés :
+• Magnitude, signe.
+
+Distinctions clés :
+• abs vs copysign.
+
+Fonctionnement :
+• builtin abs.
+
+Exécution étape par étape :
+1. -5.
+2. 5.
+
+Ordre des opérations :
+• appel fonction.
+
+Cas d'utilisation courants :
+• Différences, tolérances.
+
+Cas limites :
+• abs sur bool (sous-type int).
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• abs(3-10)
+
+Remarques :
+• math.fabs pour float strict.`,
+  612: `abs(5) vaut 5 : déjà positif, inchangé.
+
+Débutant :
+• abs ne diminue jamais la valeur pour réels positifs.
+
+Intermédiaire :
+• idempotent sur R+.
+
+Expert :
+• |x| pour réels.
+
+Concepts clés :
+• Positif stable par abs.
+
+Distinctions clés :
+• abs(0) est 0.
+
+Fonctionnement :
+• test signe.
+
+Exécution étape par étape :
+1. 5 positif.
+2. 5.
+
+Ordre des opérations :
+• abs.
+
+Cas d'utilisation courants :
+• normalisation entrée.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• abs(0)
+
+Remarques :
+• combinez avec min/max pour bornes.`,
+  613: `round(3.49) vaut 3 : arrondi à l'entier le plus proche ; ici .49 est en dessous de .5.
+
+Débutant :
+• round sans second argument → int (ou long int) proche.
+
+Intermédiaire :
+• Les ties .5 suivent arrondi au pair (banquier).
+
+Expert :
+• Erreurs binaires des floats peuvent décaler le tie.
+
+Concepts clés :
+• Arrondi, float.
+
+Distinctions clés :
+• round vs int(truncate).
+
+Fonctionnement :
+• __round__.
+
+Exécution étape par étape :
+1. 3.49.
+2. plus proche 3.
+
+Ordre des opérations :
+• appel round.
+
+Cas d'utilisation courants :
+• affichage entier.
+
+Cas limites :
+• round(2.675, 2) surprise classique.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• round(-2.4)
+
+Remarques :
+• Decimal pour finance stricte.`,
+  614: `round(3.51) vaut 4 : .51 dépasse la moitié, entier supérieur.
+
+Débutant :
+• Demi-distance à 3 et 4 : plus proche de 4.
+
+Intermédiaire :
+• round(x, n) pour n décimales.
+
+Expert :
+• ties pairs pour .5 exact.
+
+Concepts clés :
+• Arrondi supérieur ici.
+
+Distinctions clés :
+• floor vs ceil vs round.
+
+Fonctionnement :
+• algorithme round builtin.
+
+Exécution étape par étape :
+1. 3.51.
+2. 4.
+
+Ordre des opérations :
+• round.
+
+Cas d'utilisation courants :
+• comptage humain.
+
+Cas limites :
+• float imprécis.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• round(1.5)  # 2 pair
+
+Remarques :
+• math.floor/ceil si règle fixe.`,
+  615: `round(3.5) vaut 4 en Python 3 : à tie exact .5, arrondi au pair le plus proche (3.5 → 4 car 4 pair).
+
+Débutant :
+• Diffère de « toujours vers le haut ».
+
+Intermédiaire :
+• round(4.5) → 4 (pair).
+
+Expert :
+• Stabilité statistique sur séries.
+
+Concepts clés :
+• Round half to even.
+
+Distinctions clés :
+• Python vs Excel parfois.
+
+Fonctionnement :
+• spec IEEE-like pour ties.
+
+Exécution étape par étape :
+1. 3.5 tie.
+2. choisit 4.
+
+Ordre des opérations :
+• round.
+
+Cas d'utilisation courants :
+• agrégats neutres biais.
+
+Cas limites :
+• floats non représentables.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• round(2.5)
+
+Remarques :
+• documentez règle métier si différente.`,
+  616: `min(5, 10, 2) vaut 2 : minimum parmi plusieurs arguments positionnels.
+
+Débutant :
+• compare tous et garde le plus petit.
+
+Intermédiaire :
+• min(iterable) autre forme.
+
+Expert :
+• key= pour critère custom.
+
+Concepts clés :
+• Minimum, comparaison.
+
+Distinctions clés :
+• min vs sorted()[0].
+
+Fonctionnement :
+• parcourt arguments.
+
+Exécution étape par étape :
+1. Compare 5,10,2.
+2. 2 gagne.
+
+Ordre des opérations :
+• appel fonction.
+
+Cas d'utilisation courants :
+• bornes, jeux.
+
+Cas limites :
+• types non ordonnables TypeError.
+
+Considérations de performance :
+• O(n) arguments.
+
+Exemples :
+• min([7,1,9])
+
+Remarques :
+• default= pour iterable vide (3.4+).`,
+  617: `max(5, 10, 2) vaut 10 : symétrique de min.
+
+Débutant :
+• plus grande valeur.
+
+Intermédiaire :
+• key= pour tuples etc.
+
+Expert :
+• heapq.nlargest pour k meilleurs efficacement.
+
+Concepts clés :
+• Maximum.
+
+Distinctions clés :
+• max vs tri complet.
+
+Fonctionnement :
+• compare et retient.
+
+Exécution étape par étape :
+1. Parcourt 5,10,2.
+2. 10.
+
+Ordre des opérations :
+• appel.
+
+Cas d'utilisation courants :
+• normalisation, scores.
+
+Cas limites :
+• vide sans default erreur.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• max("banana")  # lettre max ordre lexico
+
+Remarques :
+• prudence types mixtes.`,
+  618: `pow(3, 2) vaut 9 : puissance, équivalent à 3**2.
+
+Débutant :
+• trois au carré.
+
+Intermédiaire :
+• pow peut prendre trois arguments pour modulo.
+
+Expert :
+• trois arguments utilisent algo exponentiation modulaire rapide.
+
+Concepts clés :
+• Exponentiation builtin.
+
+Distinctions clés :
+• pow vs ** vs math.pow.
+
+Fonctionnement :
+• __pow__ ou chemin optimisé.
+
+Exécution étape par étape :
+1. Base 3 exp 2.
+2. 9.
+
+Ordre des opérations :
+• appel fonction.
+
+Cas d'utilisation courants :
+• crypto, grands entiers.
+
+Cas limites :
+• overflow rare en int Python (arbitraire).
+
+Considérations de performance :
+• mod trois args efficace.
+
+Exemples :
+• pow(2,10)
+
+Remarques :
+• ** souvent plus lisible pour deux args.`,
+  619: `pow(2, 3, 5) vaut 3 : calcule 2**3 mod 5 soit 8 mod 5 = 3 sans grossir intermédiaire autant.
+
+Débutant :
+• troisième argument = modulo.
+
+Intermédiaire :
+• utile cryptographie.
+
+Expert :
+• complexité logarithmique en exposant.
+
+Concepts clés :
+• Exponentiation modulaire.
+
+Distinctions clés :
+• (2**3)%5 équivalent mais moins efficace pour grands nombres.
+
+Fonctionnement :
+• réductions répétées.
+
+Exécution étape par étape :
+1. 2**3 = 8.
+2. 8 % 5 = 3.
+
+Ordre des opérations :
+• fonction ternaire intégrée.
+
+Cas d'utilisation courants :
+• RSA pédagogique, PRNG.
+
+Cas limites :
+• m=0 ou négatif : erreur.
+
+Considérations de performance :
+• bien meilleur que pow puis % pour géants.
+
+Exemples :
+• pow(10, 9, 7)
+
+Remarques :
+• toujours m premier si >1.`,
+  620: `sum([1, 2, 3]) vaut 6 : additionne tous les éléments de l'itérable.
+
+Débutant :
+• départ 0 par défaut.
+
+Intermédiaire :
+• sum([]) vaut 0.
+
+Expert :
+• start permet autre neutre (attention types).
+
+Concepts clés :
+• Réduction somme.
+
+Distinctions clés :
+• sum vs boucle manuelle.
+
+Fonctionnement :
+• accumulate.
+
+Exécution étape par étape :
+1. Itère 1,2,3.
+2. total 6.
+
+Ordre des opérations :
+• appel sum.
+
+Cas d'utilisation courants :
+• totaux, scores.
+
+Cas limites :
+• str dans liste TypeError sans start compatible.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• sum(range(5))
+
+Remarques :
+• math.fsum pour précision float.`,
+  621: `divmod(10, 3) vaut (3, 1) : couple (quotient //, reste %) cohérent.
+
+Débutant :
+• Un seul appel pour les deux valeurs.
+
+Intermédiaire :
+• divmod(a,b) équivalent à (a // b, a % b) pour int positifs usuels.
+
+Expert :
+• peut être plus efficace qu'un double calcul interne.
+
+Concepts clés :
+• Quotient-reste simultané.
+
+Distinctions clés :
+• divmod vs séparer // et %.
+
+Fonctionnement :
+• implémentation unifiée.
+
+Exécution étape par étape :
+1. 10 // 3 → 3.
+2. 10 % 3 → 1.
+3. tuple (3,1).
+
+Ordre des opérations :
+• appel unique.
+
+Cas d'utilisation courants :
+• conversions base, horloges.
+
+Cas limites :
+• b=0 ZeroDivisionError.
+
+Considérations de performance :
+• un passage.
+
+Exemples :
+• divmod(7,2)
+
+Remarques :
+• déballage q,r = divmod(...).`,
+  622: `sorted([3, 1, 2]) vaut [1, 2, 3] : nouvelle liste triée, l'original inchangé.
+
+Débutant :
+• ordre croissant par défaut.
+
+Intermédiaire :
+• ne mute pas la liste passée.
+
+Expert :
+• TimSort stable O(n log n).
+
+Concepts clés :
+• sorted vs .sort.
+
+Distinctions clés :
+• retour nouvelle liste.
+
+Fonctionnement :
+• copie puis tri.
+
+Exécution étape par étape :
+1. Matérialise éléments.
+2. Trie.
+3. Retourne liste.
+
+Ordre des opérations :
+• appel sorted.
+
+Cas d'utilisation courants :
+• affichage ordonné sans effet de bord.
+
+Cas limites :
+• éléments non comparables TypeError.
+
+Considérations de performance :
+• mémoire O(n) copie.
+
+Exemples :
+• sorted("cba")
+
+Remarques :
+• key= pour critère.`,
+  623: `sorted([3, 1, 2], reverse=True) vaut [3, 2, 1] : ordre décroissant.
+
+Débutant :
+• reverse=True inverse le sens du tri.
+
+Intermédiaire :
+• stable : égalités gardent ordre relatif.
+
+Expert :
+• pas équivalent à sorted puis [::-1] si key complexe.
+
+Concepts clés :
+• Tri décroissant.
+
+Distinctions clés :
+• reverse param vs slice inverse.
+
+Fonctionnement :
+• même algorithme, comparaison inversée.
+
+Exécution étape par étape :
+1. Trie avec flag reverse.
+2. [3,2,1].
+
+Ordre des opérations :
+• sorted kwargs.
+
+Cas d'utilisation courants :
+• classements DESC.
+
+Cas limites :
+• types hétérogènes.
+
+Considérations de performance :
+• O(n log n).
+
+Exemples :
+• sorted([1,2,3], reverse=True)
+
+Remarques :
+• pour clé inverse, key=lambda x: -x attention types.`,
+  624: `5 ** 0 vaut 1 : toute base non nulle à la puissance 0 donne 1.
+
+Débutant :
+• convention mathématique usuelle.
+
+Intermédiaire :
+• 0**0 est 1 en Python (convention).
+
+Expert :
+• définition algébrique anneau.
+
+Concepts clés :
+• Exposant zéro.
+
+Distinctions clés :
+• 5**0 vs 0**5.
+
+Fonctionnement :
+• règle puissance.
+
+Exécution étape par étape :
+1. 5**0.
+2. 1.
+
+Ordre des opérations :
+• **.
+
+Cas d'utilisation courants :
+• formules fermées.
+
+Cas limites :
+• 0**0 débat math mais Python fixe.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• 100**0
+
+Remarques :
+• expliquez 0**0 aux débutants.`,
+  625: `0 ** 5 vaut 0 : zéro multiplié répété reste zéro.
+
+Débutant :
+• zéro à toute puissance positive nulle.
+
+Intermédiaire :
+• 0**0 cas spécial =1.
+
+Expert :
+• limite analytique différente en analyse.
+
+Concepts clés :
+• Zéro puissance positive.
+
+Distinctions clés :
+• 0**5 vs 5**0.
+
+Fonctionnement :
+• multiplication répétée dégénérée.
+
+Exécution étape par étape :
+1. 0**5.
+2. 0.
+
+Ordre des opérations :
+• **.
+
+Cas d'utilisation courants :
+• annulation polynômes.
+
+Cas limites :
+• exposant négatif sur 0 erreur.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• 0**1
+
+Remarques :
+• pas de 1/0 ici.`,
+  626: `1 ** 100 vaut 1 : un reste identité pour l'exponentiation.
+
+Débutant :
+• multiplier 1 par lui-même toujours 1.
+
+Intermédiaire :
+• utile en simplifications symboliques.
+
+Expert :
+• en modulo, voir ordre multiplicatif.
+
+Concepts clés :
+• Identité multiplicative.
+
+Distinctions clés :
+• 1**n vs n**1.
+
+Fonctionnement :
+• **.
+
+Exécution étape par étape :
+1. 1**100.
+2. 1.
+
+Ordre des opérations :
+• **.
+
+Cas d'utilisation courants :
+• bases triviales.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• optimisé.
+
+Exemples :
+• (-1)**2 vs (-1)**3
+
+Remarques :
+• signes avec base -1.`,
+  627: `5 ** 1 vaut 5 : exposant un est neutre.
+
+Débutant :
+• puissance 1 ne change pas la base.
+
+Intermédiaire :
+• identité droite de **.
+
+Expert :
+• en algèbre logarithmes.
+
+Concepts clés :
+• Exposant 1.
+
+Distinctions clés :
+• vs *1 identique valeur souvent.
+
+Fonctionnement :
+• **.
+
+Exécution étape par étape :
+1. 5**1.
+2. 5.
+
+Ordre des opérations :
+• **.
+
+Cas d'utilisation courants :
+• formules générales n=1.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• x**1 pour x variable
+
+Remarques :
+• simplifiez en review.`,
+  628: `5 % 5 vaut 0 : reste de division par soi-même.
+
+Débutant :
+• multiple exact.
+
+Intermédiaire :
+• a % a toujours 0 pour a non nul.
+
+Expert :
+• congruence mod a.
+
+Concepts clés :
+• Reste nul.
+
+Distinctions clés :
+• % vs /.
+
+Fonctionnement :
+• 5 - (5//5)*5.
+
+Exécution étape par étape :
+1. quotient 1 reste 0.
+
+Ordre des opérations :
+• %.
+
+Cas d'utilisation courants :
+• test divisibilité.
+
+Cas limites :
+• a=0 interdit.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• n % n
+
+Remarques :
+• n % 1 toujours 0.`,
+  629: `5 % 3 vaut 2 : reste classique.
+
+Débutant :
+• 3*1=3, il manque 2 pour 5.
+
+Intermédiaire :
+• lié à divmod(5,3).
+
+Expert :
+• signes avec négatifs : suivre doc Python.
+
+Concepts clés :
+• Modulo positif ici.
+
+Distinctions clés :
+• math.fmod float différent signe.
+
+Fonctionnement :
+• définition Python %.
+
+Exécution étape par étape :
+1. 5 mod 3.
+2. 2.
+
+Ordre des opérations :
+• %.
+
+Cas d'utilisation courants :
+• alternance, ruban.
+
+Cas limites :
+• b=0.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• 9 % 4
+
+Remarques :
+• tests unitaires sur négatifs.`,
+  630: `3 % 5 vaut 3 : si dividende < diviseur positif, reste = dividende.
+
+Débutant :
+• pas assez pour un pack complet de 5.
+
+Intermédiaire :
+• propriété 0 <= r < |b| pour b>0.
+
+Expert :
+• cohérent avec horloge.
+
+Concepts clés :
+• Petit dividende.
+
+Distinctions clés :
+• 3%5 vs 5%3.
+
+Fonctionnement :
+• quotient 0.
+
+Exécution étape par étape :
+1. 0*5 + 3.
+2. reste 3.
+
+Ordre des opérations :
+• %.
+
+Cas d'utilisation courants :
+• wrap indices.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• 1 % 100
+
+Remarques :
+• indexation modulo n.`,
+  631: `2 * 3 + 4 vaut 10 : * avant +, donc 6 + 4.
+
+Débutant :
+• multiplication d'abord.
+
+Intermédiaire :
+• ajoutez parenthèses si vous voulez (2*(3+4)).
+
+Expert :
+• mélange types promeut.
+
+Concepts clés :
+• Précédence * +.
+
+Distinctions clés :
+• vs 2 * (3+4)=14.
+
+Fonctionnement :
+• parse tree.
+
+Exécution étape par étape :
+1. 2*3=6.
+2. 6+4=10.
+
+Ordre des opérations :
+• * puis +.
+
+Cas d'utilisation courants :
+• polynômes légers.
+
+Cas limites :
+• floats.
+
+Considérations de performance :
+• trivial.
+
+Exemples :
+• 1 + 2 * 3
+
+Remarques :
+• PEP 8 espaces autour opérateurs.`,
+  632: `2 + 3 * 4 vaut 14 : 3*4 d'abord puis +2.
+
+Débutant :
+• même règle : * gagne.
+
+Intermédiaire :
+• erreur classique : penser (2+3)*4.
+
+Expert :
+• notations scientifiques.
+
+Concepts clés :
+• Ordre multiplicatif.
+
+Distinctions clés :
+• 632 vs 631 valeurs différentes.
+
+Fonctionnement :
+• évaluation standard.
+
+Exécution étape par étape :
+1. 3*4=12.
+2. 2+12=14.
+
+Ordre des opérations :
+• * puis +.
+
+Cas d'utilisation courants :
+• aire + marge.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• trivial.
+
+Exemples :
+• 10 + 20 / 5  # 14.0
+
+Remarques :
+• / et * même palier gauche-droite.`,
+  633: `(2 + 3) * 4 vaut 20 : parenthèses changent l'ordre.
+
+Débutant :
+• 2+3=5 puis *4.
+
+Intermédiaire :
+• pattern facteur commun explicite.
+
+Expert :
+• distributivité lecture.
+
+Concepts clés :
+• Groupement.
+
+Distinctions clés :
+• vs 2+3*4.
+
+Fonctionnement :
+• sous-arbre prioritaire.
+
+Exécution étape par étape :
+1. 2+3=5.
+2. 5*4=20.
+
+Ordre des opérations :
+• parenthèses puis *.
+
+Cas d'utilisation courants :
+• tarifs packagés.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• trivial.
+
+Exemples :
+• (a+b)*c patterns
+
+Remarques :
+• lisibilité > économie parenthèses.`,
+  634: `2 ** 3 + 4 vaut 12 : ** très prioritaire : 8 + 4.
+
+Débutant :
+• puissance avant addition.
+
+Intermédiaire :
+• 2**(3+4) serait différent.
+
+Expert :
+• chaîne ** droite associative seulement entre **.
+
+Concepts clés :
+• ** vs +.
+
+Distinctions clés :
+• 2**3+4 vs 2+3**4.
+
+Fonctionnement :
+• évalue ** d'abord.
+
+Exécution étape par étape :
+1. 2**3=8.
+2. 8+4=12.
+
+Ordre des opérations :
+• ** puis +.
+
+Cas d'utilisation courants :
+• croissance + offset.
+
+Cas limites :
+• grands **.
+
+Considérations de performance :
+• ** peut coûter.
+
+Exemples :
+• 10 + 2**8
+
+Remarques :
+• parenthèses si doute.`,
+  635: `2 + 3 ** 4 vaut 83 : 3**4=81 puis +2.
+
+Débutant :
+• la base de la puissance est 3 ici, pas 2+3.
+
+Intermédiaire :
+• erreur : (2+3)**4.
+
+Expert :
+• notation algèbre.
+
+Concepts clés :
+• ** avant +.
+
+Distinctions clés :
+• 635 vs 636.
+
+Fonctionnement :
+• parse.
+
+Exécution étape par étape :
+1. 3**4=81.
+2. 2+81=83.
+
+Ordre des opérations :
+• ** puis +.
+
+Cas d'utilisation courants :
+• séries géométriques décalées.
+
+Cas limites :
+• overflow mental.
+
+Considérations de performance :
+• ** domine coût.
+
+Exemples :
+• 1 + 2**10
+
+Remarques :
+• comparez avec (2+3)**4=625.`,
+  636: `(2 + 3) ** 4 vaut 625 : base 5 puissance 4.
+
+Débutant :
+• parenthèses forcent somme avant puissance.
+
+Intermédiaire :
+• croissance rapide.
+
+Expert :
+• binôme lié combinatoire.
+
+Concepts clés :
+• (a+b)**n.
+
+Distinctions clés :
+• vs 2+3**4.
+
+Fonctionnement :
+• 5**4.
+
+Exécution étape par étape :
+1. 2+3=5.
+2. 5**4=625.
+
+Ordre des opérations :
+• parenthèses puis **.
+
+Cas d'utilisation courants :
+• volume hypercube côté somme.
+
+Cas limites :
+• overflow int rare Python.
+
+Considérations de performance :
+• exponentiel en n.
+
+Exemples :
+• (1+1)**10
+
+Remarques :
+• attention coût n grand.`,
+  637: `10 / 2 * 4 vaut 20.0 : / et * même priorité, associativité gauche-droite : (10/2)*4.
+
+Débutant :
+• de gauche à droite après égalité de priorité.
+
+Intermédiaire :
+• pas de multiplication mystérieuse avant division.
+
+Expert :
+• PEMDAS simplifié trompe ici ; lire tableau officiel.
+
+Concepts clés :
+• Gauche à droite pour * /.
+
+Distinctions clés :
+• vs 10 / (2*4).
+
+Fonctionnement :
+• 10/2 puis *4.
+
+Exécution étape par étape :
+1. 10/2=5.0.
+2. 5.0*4=20.0.
+
+Ordre des opérations :
+• / puis *.
+
+Cas d'utilisation courants :
+• conversions chaînées.
+
+Cas limites :
+• floats.
+
+Considérations de performance :
+• trivial.
+
+Exemples :
+• 12 / 3 * 2
+
+Remarques :
+• parenthèses si lecture ambiguë.`,
+  638: `10 * 2 / 4 vaut 5.0 : gauche à droite (10*2)/4.
+
+Débutant :
+• * puis / au même niveau.
+
+Intermédiaire :
+• 20.0 / 4.
+
+Expert :
+• commutativité multiplication ne sauve pas mélange /.
+
+Concepts clés :
+• Ordre * /.
+
+Distinctions clés :
+• vs 10 * (2/4).
+
+Fonctionnement :
+• 10*2=20 puis /4.
+
+Exécution étape par étape :
+1. 20.
+2. 5.0.
+
+Ordre des opérations :
+• * puis /.
+
+Cas d'utilisation courants :
+• moyennes pondérées simples.
+
+Cas limites :
+• division par zéro plus bas.
+
+Considérations de performance :
+• trivial.
+
+Exemples :
+• 8 * 3 / 4
+
+Remarques :
+• float mid-way.`,
+  639: `10 - 2 - 3 vaut 5 : - associatif à gauche : (10-2)-3.
+
+Débutant :
+• soustractions enchaînées gauche-droite.
+
+Intermédiaire :
+• pas 10-(2-3) sauf parenthèses.
+
+Expert :
+• relation avec addition négative.
+
+Concepts clés :
+• Associativité gauche -.
+
+Distinctions clés :
+• 10-2-3 vs 10-(2-3).
+
+Fonctionnement :
+• 8 puis -3.
+
+Exécution étape par étape :
+1. 10-2=8.
+2. 8-3=5.
+
+Ordre des opérations :
+• gauche à droite.
+
+Cas d'utilisation courants :
+• soldes successifs.
+
+Cas limites :
+• floats.
+
+Considérations de performance :
+• trivial.
+
+Exemples :
+• 100 - 10 - 5
+
+Remarques :
+• utilisez += -= accumulators clairs.`,
+  640: `10 + 2 - 3 vaut 9 : + et - même priorité, gauche-droite : (10+2)-3.
+
+Débutant :
+• addition puis soustraction.
+
+Intermédiaire :
+• équivalent à 10 + (2-3)=9 aussi par associativité des additions signées.
+
+Expert :
+• groupement mathématique réel identique pour + - enchaînés.
+
+Concepts clés :
+• + - gauche à droite.
+
+Distinctions clés :
+• cohérent lecture linéaire.
+
+Fonctionnement :
+• 12 puis -3.
+
+Exécution étape par étape :
+1. 10+2=12.
+2. 12-3=9.
+
+Ordre des opérations :
+• + puis -.
+
+Cas d'utilisation courants :
+• ajustements cumulatifs.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• trivial.
+
+Exemples :
+• 1 + 1 - 1 + 1
+
+Remarques :
+• pour floats, réordonner peut changer bitwise.`,
+  641: `float("3.14") vaut 3.14 (float) : parse une chaîne décimale en nombre flottant binaire.
+
+Débutant :
+• La str doit représenter un nombre valide.
+
+Intermédiaire :
+• underscore dans la chaîne autorisé (versions récentes).
+
+Expert :
+• erreurs de représentation binaire possibles pour certaines décimales.
+
+Concepts clés :
+• Conversion str → float.
+
+Distinctions clés :
+• float("3.14") vs int("3.14") erreur.
+
+Fonctionnement :
+• analyse lexicale puis construction float.
+
+Exécution étape par étape :
+1. Lit "3.14".
+2. Objet float proche.
+
+Ordre des opérations :
+• appel float().
+
+Cas d'utilisation courants :
+• input utilisateur, CSV.
+
+Cas limites :
+• "nan", "inf" parsables.
+
+Considérations de performance :
+• O(len).
+
+Exemples :
+• float("-2.5")
+
+Remarques :
+• Decimal pour décimal exact.`,
+  642: `int("42") vaut 42 : entier depuis représentation décimale en texte.
+
+Débutant :
+• pas de partie fractionnaire dans la chaîne pour int simple.
+
+Intermédiaire :
+• base optionnelle int(s, base).
+
+Expert :
+• int(" 42 ") avec espaces OK.
+
+Concepts clés :
+• Parsing entier.
+
+Distinctions clés :
+• int("42.0") ValueError.
+
+Fonctionnement :
+• conversion digit par digit.
+
+Exécution étape par étape :
+1. "42".
+2. 42.
+
+Ordre des opérations :
+• int().
+
+Cas d'utilisation courants :
+• formulaires.
+
+Cas limites :
+• overflow théorique rare en Python int.
+
+Considérations de performance :
+• O(len).
+
+Exemples :
+• int("0")
+
+Remarques :
+• valider avant int().`,
+  643: `str(42) vaut "42" : représentation décimale par défaut de l'entier.
+
+Débutant :
+• type résultat str.
+
+Intermédiaire :
+• str sur float donne notation complète souvent "3.0".
+
+Expert :
+• __str__ sur int.
+
+Concepts clés :
+• int → str.
+
+Distinctions clés :
+• str vs repr parfois identiques pour int.
+
+Fonctionnement :
+• formatage décimal.
+
+Exécution étape par étape :
+1. 42.
+2. "42".
+
+Ordre des opérations :
+• str().
+
+Cas d'utilisation courants :
+• concaténation, logs.
+
+Cas limites :
+• très grands int : str longue.
+
+Considérations de performance :
+• O(digits).
+
+Exemples :
+• str(-7)
+
+Remarques :
+• f"{42}" équivalent pratique.`,
+  644: `int(3.7) vaut 3 : troncature vers zéro depuis float.
+
+Débutant :
+• pas un arrondi au plus proche.
+
+Intermédiaire :
+• math.floor diffère pour négatifs.
+
+Expert :
+• perte d'information.
+
+Concepts clés :
+• float → int tronqué.
+
+Distinctions clés :
+• int(3.7) vs round(3.7).
+
+Fonctionnement :
+• __int__ float.
+
+Exécution étape par étape :
+1. 3.7.
+2. 3.
+
+Ordre des opérations :
+• int().
+
+Cas d'utilisation courants :
+• index depuis float.
+
+Cas limites :
+• nan ValueError.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• int(9.99)
+
+Remarques :
+• math.trunc synonyme conceptuel.`,
+  645: `int(-3.7) vaut -3 : troncature vers zéro, donc vers le haut sur l'axe négatif.
+
+Débutant :
+• pas -4 (ce serait floor).
+
+Intermédiaire :
+• symétrique de positif.
+
+Expert :
+• floor(-3.7) = -4.
+
+Concepts clés :
+• Troncature signée.
+
+Distinctions clés :
+• int vs floor négatif.
+
+Fonctionnement :
+• couper partie fractionnelle vers 0.
+
+Exécution étape par étape :
+1. -3.7.
+2. -3.
+
+Ordre des opérations :
+• int().
+
+Cas d'utilisation courants :
+• conversions discrètes signées.
+
+Cas limites :
+• très grands float.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• int(-0.9)  # 0
+
+Remarques :
+• documentez règle vs floor.`,
+  646: `float(5) vaut 5.0 : promotion entier → float exact pour petits entiers.
+
+Débutant :
+• point décimal implicite.
+
+Intermédiaire :
+• grand int peut perdre précision si trop grand pour mantisse.
+
+Expert :
+• float a précision finie.
+
+Concepts clés :
+• int → float.
+
+Distinctions clés :
+• 5 vs 5.0 type différent.
+
+Fonctionnement :
+• conversion exacte si représentable.
+
+Exécution étape par étape :
+1. int 5.
+2. 5.0.
+
+Ordre des opérations :
+• float().
+
+Cas d'utilisation courants :
+• mélange arithmétique float.
+
+Cas limites :
+• int géant.
+
+Considérations de performance :
+• O(1) petits.
+
+Exemples :
+• float(True)  # 1.0
+
+Remarques :
+• attention perte au-delà de 2**53.`,
+  647: `str(1.0 + 2) vaut "3.0" : d'abord addition promeut vers float 3.0, puis str affiche la forme float.
+
+Débutant :
+• 1.0 + 2 = 3.0.
+
+Intermédiaire :
+• str inclut souvent .0.
+
+Expert :
+• format géné ou f-string contrôle l'affichage.
+
+Concepts clés :
+• Promotion float, str format.
+
+Distinctions clés :
+• str(3) "3" vs str(3.0) "3.0".
+
+Fonctionnement :
+• add puis __str__ float.
+
+Exécution étape par étape :
+1. 1.0+2 → 3.0.
+2. str → "3.0".
+
+Ordre des opérations :
+• + puis str.
+
+Cas d'utilisation courants :
+• logs mixtes int/float.
+
+Cas limites :
+• repr peut différer.
+
+Considérations de performance :
+• trivial.
+
+Exemples :
+• str(2+2.0)
+
+Remarques :
+• strip .0 si besoin métier (avec prudence).`,
+  648: `type(3.14 + 1) est float : littéraux et promotion mènent à float.
+
+Débutant :
+• 3.14 + 1 = 4.14.
+
+Intermédiaire :
+• int + float → float.
+
+Expert :
+• type du résultat reflète la « catégorie » dominante float.
+
+Concepts clés :
+• type(), arithmétique mixte.
+
+Distinctions clés :
+• type(1+2) int vs ici float.
+
+Fonctionnement :
+• résultat binaire float.
+
+Exécution étape par étape :
+1. Addition.
+2. type → float.
+
+Ordre des opérations :
+• + puis type.
+
+Cas d'utilisation courants :
+• vérifier pipeline numérique.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• type(2 * 3.0)
+
+Remarques :
+• isinstance(x,(int,float)) pour accepter les deux.`,
+  649: `type(1 + 2) est int : deux int donnent int pour + (sauf overflow théorique ; Python int illimité).
+
+Débutant :
+• somme d'entiers reste entière.
+
+Intermédiaire :
+• / ferait float même si divisible.
+
+Expert :
+• True est int sous-classe : 1+True possible.
+
+Concepts clés :
+• int stable pour + * - // % ** entiers.
+
+Distinctions clés :
+• type(1+2) vs type(1.+2).
+
+Fonctionnement :
+• int __add__.
+
+Exécution étape par étape :
+1. 1+2=3.
+2. type int.
+
+Ordre des opérations :
+• + puis type.
+
+Cas d'utilisation courants :
+• compteurs.
+
+Cas limites :
+• N/A en Python 3 int.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• type(5//2)
+
+Remarques :
+• // garde int.`,
+  650: `type(1.0 * 2) est float : un opérande float promeut le produit en float.
+
+Débutant :
+• 1.0 * 2 = 2.0.
+
+Intermédiaire :
+• type résultat float même si valeur entière .0.
+
+Expert :
+• math.isclose pour tester valeur sans piéger sur type.
+
+Concepts clés :
+• Promotion float dans *.
+
+Distinctions clés :
+• type(1*2) int.
+
+Fonctionnement :
+• float __mul__ ou coercition.
+
+Exécution étape par étape :
+1. 1.0*2 → 2.0.
+2. type float.
+
+Ordre des opérations :
+• * puis type.
+
+Cas d'utilisation courants :
+• physique, stats.
+
+Cas limites :
+• inf * 0 nan.
+
+Considérations de performance :
+• float un peu plus lourd.
+
+Exemples :
+• type(2/1)
+
+Remarques :
+• 2.0 est float, pas int.`,
+  651: `La question porte sur (est-ce que) '1' + '1' égal à '2' : la réponse est non, car avec deux chaînes le + concatène : on obtient '11', pas l'addition arithmétique 1+1.
+
+Débutant :
+• Deux opérandes str → + = collage de texte.
+
+Intermédiaire :
+• Pour obtenir 2 : int('1') + int('1').
+
+Expert :
+• Mélanger str et int sans conversion → TypeError sur +.
+
+Concepts clés :
+• Surcharge de + selon le type (str vs nombres).
+
+Distinctions clés :
+• '1'+'1' vs 1+1.
+
+Fonctionnement :
+• Python appelle la concaténation sur str.
+
+Exécution étape par étape :
+1. Lit les littéraux '1' et '1'.
+2. Applique + sur str → '11'.
+3. Compare à '2' → faux.
+
+Ordre des opérations :
+• Pas d'arbre d'expressions ici : une seule concaténation.
+
+Cas d'utilisation courants :
+• Construire du texte depuis des morceaux.
+
+Cas limites :
+• Chaînes vides : '' + '1' → '1'.
+
+Considérations de performance :
+• Concaténations répétées : préférer join ou list.
+
+Exemples :
+• 'ab' + 'cd' → 'abcd'
+
+Remarques :
+• Toujours typer explicitement les entrées utilisateur.`,
+  652: `int('1') + int('1') vaut 2 : chaque appel int() produit un entier, puis + est l'addition numérique.
+
+Débutant :
+• int sur chiffres décimaux en texte → int.
+
+Intermédiaire :
+• Les appels int() s'évaluent avant la somme.
+
+Expert :
+• int('ff', 16) montre que le 2e paramètre change la base de lecture.
+
+Concepts clés :
+• Conversion puis arithmétique.
+
+Distinctions clés :
+• vs '1'+'1' → '11'.
+
+Fonctionnement :
+• int('1') → 1, idem, puis 1+1.
+
+Exécution étape par étape :
+1. Premier int('1') → 1.
+2. Second int('1') → 1.
+3. 1 + 1 → 2.
+
+Ordre des opérations :
+• Arguments du + évalués de gauche à droite.
+
+Cas d'utilisation courants :
+• Sommer deux champs saisis en str.
+
+Cas limites :
+• int('') → ValueError.
+
+Considérations de performance :
+• Négligeable pour deux conversions.
+
+Exemples :
+• int('10') + int('20') → 30
+
+Remarques :
+• strip() utile si espaces parasites.`,
+  653: `'5' * 2 vaut '55' : la multiplication str × int répète la chaîne, ce n'est pas 5×2=10.
+
+Débutant :
+• str * int ≥ 0 → répétition.
+
+Intermédiaire :
+• Équivalent à '5' + '5'.
+
+Expert :
+• int * str est aussi valide par symétrie.
+
+Concepts clés :
+• Répétition de chaîne.
+
+Distinctions clés :
+• vs 5 * 2 → 10.
+
+Fonctionnement :
+• L'entier indique le nombre de copies concaténées.
+
+Exécution étape par étape :
+1. Opérandes '5' et 2.
+2. Répétition deux fois → '55'.
+
+Ordre des opérations :
+• Une seule opération binaire.
+
+Cas d'utilisation courants :
+• Bordures, padding d'espaces.
+
+Cas limites :
+• * 0 → ''.
+
+Considérations de performance :
+• Très grandes répétitions → mémoire.
+
+Exemples :
+• '-' * 3 → '---'
+
+Remarques :
+• float comme multiplicateur → TypeError.`,
+  654: `5 * 2 vaut 10 : les deux opérandes sont numériques, donc * est la multiplication entière.
+
+Débutant :
+• int * int → int (ici).
+
+Intermédiaire :
+• Si un float intervient, le résultat devient souvent float.
+
+Expert :
+• Pas de débordement fixe en Python 3 int.
+
+Concepts clés :
+• Multiplication arithmétique.
+
+Distinctions clés :
+• vs '5' * 2 → chaîne.
+
+Fonctionnement :
+• Produit mathématique 5×2.
+
+Exécution étape par étape :
+1. 5 et 2 évalués.
+2. * → 10.
+
+Ordre des opérations :
+• * avant + dans les expressions mixtes (hors ce cas).
+
+Cas d'utilisation courants :
+• Aires, totaux, compteurs.
+
+Cas limites :
+• Très grands int restent exacts.
+
+Considérations de performance :
+• Opération primitive rapide.
+
+Exemples :
+• 3 * 4 → 12
+
+Remarques :
+• Pour du texte répété, utiliser str * n.`,
+  655: `Les chaînes hello et world avec + donnent helloworld : concaténation sans espace automatique.
+
+Débutant :
+• + entre str joint bout à bout.
+
+Intermédiaire :
+• Ajouter un espace : 'hello ' + 'world' ou + ' ' +.
+
+Expert :
+• f-strings ou format pour lisibilité sur morceaux nombreux.
+
+Concepts clés :
+• Concaténation littérale.
+
+Distinctions clés :
+• vs join avec séparateur.
+
+Fonctionnement :
+• Nouvelle chaîne allouée avec les deux morceaux.
+
+Exécution étape par étape :
+1. 'hello'.
+2. 'world'.
+3. Résultat 'helloworld'.
+
+Ordre des opérations :
+• Gauche à droite si plusieurs +.
+
+Cas d'utilisation courants :
+• Prénom + nom, URL + chemin.
+
+Cas limites :
+• Très longues chaînes → coût mémoire cumulé.
+
+Considérations de performance :
+• join sur liste souvent mieux en boucle.
+
+Exemples :
+• 'a' + 'b' + 'c' → 'abc'
+
+Remarques :
+• Ne pas confondre avec addition numérique.`,
+  656: `Les chaînes cinq et trois en texte avec + donnent 53 en collant les caractères, pas la somme 8 : même piège que pour un plus un en str.
+
+Débutant :
+• Lecture digit par digit comme texte.
+
+Intermédiaire :
+• int('5')+int('3') → 8.
+
+Expert :
+• zfill et formats pour aligner sans concat piégeuse.
+
+Concepts clés :
+• Typage des littéraux.
+
+Distinctions clés :
+• '53' str vs 53 int.
+
+Fonctionnement :
+• Collage '5' puis '3'.
+
+Exécution étape par étape :
+1. Deux str.
+2. + → '53'.
+
+Ordre des opérations :
+• Une seule concaténation.
+
+Cas d'utilisation courants :
+• Codes concaténés (attention au sens métier).
+
+Cas limites :
+• '' + '5' → '5'.
+
+Considérations de performance :
+• Identique à toute concaténation courte.
+
+Exemples :
+• '0' + '7' → '07' (texte)
+
+Remarques :
+• Valider isdigit() avant int() si besoin.`,
+  657: `int('5') + int('3') vaut 8 : conversions explicites puis addition.
+
+Débutant :
+• Même idée que int('1')+int('1').
+
+Intermédiaire :
+• Ordre d'évaluation des deux int() garanti avant +.
+
+Expert :
+• Erreurs de base : int('5', 16) changerait la sémantique.
+
+Concepts clés :
+• Pipeline texte → nombre → opération.
+
+Distinctions clés :
+• vs '5'+'3'.
+
+Fonctionnement :
+• 5 + 3.
+
+Exécution étape par étape :
+1. int('5') → 5.
+2. int('3') → 3.
+3. Somme → 8.
+
+Ordre des opérations :
+• Appels de fonction puis binaire +.
+
+Cas d'utilisation courants :
+• Addition de deux champs formulaire.
+
+Cas limites :
+• Espaces : int(' 5 ') OK en Python 3.
+
+Considérations de performance :
+• Deux parses courts.
+
+Exemples :
+• int('12') + int('30') → 42
+
+Remarques :
+• float() si décimales.`,
+  658: `La chaîne abc répétée zéro fois produit une chaîne vide : zéro répétition.
+
+Débutant :
+• n=0 est le cas limite utile.
+
+Intermédiaire :
+• Cohérent avec la vision "n copies concaténées".
+
+Expert :
+• '' * n → '' pour tout n ≥ 0.
+
+Concepts clés :
+• Répétition dégénérée.
+
+Distinctions clés :
+• vs liste vide ou None.
+
+Fonctionnement :
+• Aucun caractère copié.
+
+Exécution étape par étape :
+1. 'abc' et 0.
+2. Résultat ''.
+
+Ordre des opérations :
+• binaire * une fois.
+
+Cas d'utilisation courants :
+• Réinitialiser un accumulateur str.
+
+Cas limites :
+• n négatif → ValueError.
+
+Considérations de performance :
+• Instantané.
+
+Exemples :
+• 'x' * 0 → ''
+
+Remarques :
+• * -1 interdit pour str.`,
+  659: `La séquence abc en str fois 1 redonne abc : une seule répétition, même contenu.
+
+Débutant :
+• Identité logique du facteur 1.
+
+Intermédiaire :
+• Nouvel objet str peut être créé selon l'implémentation ; contenu identique.
+
+Expert :
+• Ne pas confondre avec copie profonde d'objets mutables.
+
+Concepts clés :
+• Élément neutre de la répétition.
+
+Distinctions clés :
+• vs * 2.
+
+Fonctionnement :
+• Une concaténation de un seul morceau.
+
+Exécution étape par étape :
+1. 'abc', 1.
+2. 'abc'.
+
+Ordre des opérations :
+• Direct.
+
+Cas d'utilisation courants :
+• Branches qui normalisent un facteur.
+
+Cas limites :
+• '' * 1 → ''.
+
+Considérations de performance :
+• Minimal.
+
+Exemples :
+• 'z' * 1 → 'z'
+
+Remarques :
+• Peu usité sauf pour symétrie d'API.`,
+  660: `La chaîne abc répétée trois fois donne abcabcabc : trois copies collées.
+
+Débutant :
+• Répétition visible sur un mot court.
+
+Intermédiaire :
+• Équivalent à trois concaténations successives.
+
+Expert :
+• Sur très grand multiplicateur, attention mémoire O(len×n).
+
+Concepts clés :
+• Répétition str × int > 1.
+
+Distinctions clés :
+• vs 3 * 'abc' (identique en résultat).
+
+Fonctionnement :
+• Boucle interne de copie.
+
+Exécution étape par étape :
+1. Multiplicateur 3.
+2. Produit 'abcabcabc'.
+
+Ordre des opérations :
+• Une opération.
+
+Cas d'utilisation courants :
+• Motifs, tests, bordures ASCII.
+
+Cas limites :
+• n=0 déjà vu.
+
+Considérations de performance :
+• Pré-allocation efficace en CPython.
+
+Exemples :
+• '[]' * 2 → '[][]'
+
+Remarques :
+• join préférable pour listes de morceaux variables.`,
+  661: `10 > 5 a pour résultat True : comparaison numérique stricte "strictement supérieur".
+
+Débutant :
+• Résultat type bool.
+
+Intermédiaire :
+• 10 et 5 sont int comparables directement.
+
+Expert :
+• Mix int/float OK ; mix nombre et str → TypeError en Python 3.
+
+Concepts clés :
+• Opérateur > sur nombres.
+
+Distinctions clés :
+• vs >= (égalité incluse).
+
+Fonctionnement :
+• Appel __gt__ ou équivalent.
+
+Exécution étape par étape :
+1. 10, 5.
+2. Comparaison → True.
+
+Ordre des opérations :
+• Une comparaison.
+
+Cas d'utilisation courants :
+• if seuil, tri, validations.
+
+Cas limites :
+• NaN float : comparaisons toujours False sauf != True.
+
+Considérations de performance :
+• Primitives rapides.
+
+Exemples :
+• 3 > 3 → False
+
+Remarques :
+• Sur str, ordre lexicographique.`,
+  662: `5 < 10 vaut True : le membre de gauche est plus petit.
+
+Débutant :
+• < signifie "strictement inférieur".
+
+Intermédiaire :
+• Chaînes comparées caractère par caractère (ordre Unicode).
+
+Expert :
+• Types non ordonnés ensemble → TypeError.
+
+Concepts clés :
+• Comparaison ordonnée.
+
+Distinctions clés :
+• vs <=.
+
+Fonctionnement :
+• Vérifie ordre strict.
+
+Exécution étape par étape :
+1. 5, 10.
+2. True.
+
+Ordre des opérations :
+• binaire une fois.
+
+Cas d'utilisation courants :
+• Plages ouvertes (bornes).
+
+Cas limites :
+• Égalité : 5 < 5 → False.
+
+Considérations de performance :
+• O(1) pour int.
+
+Exemples :
+• -1 < 0 → True
+
+Remarques :
+• Enchaîner : a < b < c.`,
+  663: `10 >= 10 vaut True : "supérieur ou égal" est vrai si égalité.
+
+Débutant :
+• >= combine > ou ==.
+
+Intermédiaire :
+• utile pour bornes inclusives max.
+
+Expert :
+• Sur float, attention aux arrondis si égalité exacte requise.
+
+Concepts clés :
+• Comparaison inclusive.
+
+Distinctions clés :
+• vs > seul.
+
+Fonctionnement :
+• Test (a > b) or (a == b) équivalent logique.
+
+Exécution étape par étape :
+1. 10, 10.
+2. True.
+
+Ordre des opérations :
+• Une comparaison.
+
+Cas d'utilisation courants :
+• age >= 18.
+
+Cas limites :
+• NaN : toujours faux pour comparaisons reflexives sauf !=.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• 0 >= 0 → True
+
+Remarques :
+• Lisible pour seuils inclusifs.`,
+  664: `5 <= 10 vaut True : la borne supérieure est atteinte côté droit seulement ici (5 plus petit que 10).
+
+Débutant :
+• <= = inférieur ou égal.
+
+Intermédiaire :
+• Symétrie conceptuelle avec >=.
+
+Expert :
+• Enchaînements 0 < x <= 100 idiomatiques.
+
+Concepts clés :
+• Borne haute inclusive possible.
+
+Distinctions clés :
+• vs <.
+
+Fonctionnement :
+• (5 < 10) or (5 == 10) → ici seulement le premier vrai.
+
+Exécution étape par étape :
+1. 5, 10.
+2. True.
+
+Ordre des opérations :
+• Une comparaison.
+
+Cas d'utilisation courants :
+• if x <= limite.
+
+Cas limites :
+• 10 <= 5 → False.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• 7 <= 7 → True
+
+Remarques :
+• Préférer <= pour intervalles fermés à droite.`,
+  665: `10 == 10 vaut True : égalité de valeur avec ==.
+
+Débutant :
+• == ne regarde pas l'identité d'objet.
+
+Intermédiaire :
+• 10 == 10.0 → True (valeurs égales).
+
+Expert :
+• __eq__ peut être surchargé sur classes perso.
+
+Concepts clés :
+• Égalité structurelle.
+
+Distinctions clés :
+• vs is (identité).
+
+Fonctionnement :
+• Comparaison par valeur.
+
+Exécution étape par étape :
+1. Deux 10.
+2. True.
+
+Ordre des opérations :
+• binaire.
+
+Cas d'utilisation courants :
+• Tests unitaires, conditions.
+
+Cas limites :
+• float arrondi : 0.1+0.2 == 0.3 souvent False.
+
+Considérations de performance :
+• Rapide pour int.
+
+Exemples :
+• 'a' == 'a' → True
+
+Remarques :
+• is None recommandé pour None.`,
+  666: `10 != 5 vaut True : inégalité vraie quand les valeurs diffèrent.
+
+Débutant :
+• != est la négation logique de == pour le résultat booléen.
+
+Intermédiaire :
+• Équivalent à not (10 == 5) ici.
+
+Expert :
+• Sur NaN, != peut être True même si == False des deux côtés.
+
+Concepts clés :
+• Test de différence.
+
+Distinctions clés :
+• vs is not.
+
+Fonctionnement :
+• Renvoie True si valeurs non égales.
+
+Exécution étape par étape :
+1. 10, 5.
+2. True.
+
+Ordre des opérations :
+• une comparaison.
+
+Cas d'utilisation courants :
+• if x != 0.
+
+Cas limites :
+• 10 != 10 → False.
+
+Considérations de performance :
+• identique à ==.
+
+Exemples :
+• 'x' != 'y' → True
+
+Remarques :
+• Pour None, x is not None est idiomatique.`,
+  667: `10 == 5 vaut False : deux entiers distincts.
+
+Débutant :
+• == exige même valeur.
+
+Intermédiaire :
+• Pas d'erreur : simple booléen.
+
+Expert :
+• Fractions ou Decimal pour égalité rationnelle exacte ailleurs.
+
+Concepts clés :
+• Faux positifs impossibles ici.
+
+Distinctions clés :
+• vs 10 == 10.
+
+Fonctionnement :
+• __eq__ retourne False.
+
+Exécution étape par étape :
+1. 10, 5.
+2. False.
+
+Ordre des opérations :
+• direct.
+
+Cas d'utilisation courants :
+• Garde-fous dans if.
+
+Cas limites :
+• None : None == None True mais cas différent.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• 0 == 1 → False
+
+Remarques :
+• Utiliser approx pour floats.`,
+  668: `5 > 10 vaut False : 5 n'est pas au-dessus de 10.
+
+Débutant :
+• > strict.
+
+Intermédiaire :
+• Symétrie logique avec 10 < 5.
+
+Expert :
+• Sur listes, > n'est pas défini en Python 3 (TypeError).
+
+Concepts clés :
+• Comparaison fausse.
+
+Distinctions clés :
+• vs 10 > 5 True.
+
+Fonctionnement :
+• retour booléen False.
+
+Exécution étape par étape :
+1. 5, 10.
+2. False.
+
+Ordre des opérations :
+• une comparaison.
+
+Cas d'utilisation courants :
+• rejeter valeurs trop petites.
+
+Cas limites :
+• Égalité : 5 > 5 False.
+
+Considérations de performance :
+• minime.
+
+Exemples :
+• 1 > 2 → False
+
+Remarques :
+• Lire toujours de gauche à droite.`,
+  669: `10 < 5 vaut False : 10 n'est pas strictement inférieur à 5.
+
+Débutant :
+• Sens de la comparaison.
+
+Intermédiaire :
+• Inverse de 5 < 10.
+
+Expert :
+• Chaînes : ordre lexico, pas longueur d'abord sauf préfixes.
+
+Concepts clés :
+• Faux sur nombres ordonnés.
+
+Distinctions clés :
+• vs 5 < 10.
+
+Fonctionnement :
+• __lt__ retourne False.
+
+Exécution étape par étape :
+1. 10, 5.
+2. False.
+
+Ordre des opérations :
+• simple.
+
+Cas d'utilisation courants :
+• validation min < val.
+
+Cas limites :
+• 10 < 10 False.
+
+Considérations de performance :
+• O(1) int.
+
+Exemples :
+• 2 < 1 → False
+
+Remarques :
+• Dessiner la droite numérique aide.`,
+  670: `5 >= 10 vaut False : 5 n'est ni plus grand ni égal à 10.
+
+Débutant :
+• Les deux parties du >= doivent échouer pour donner False ici.
+
+Intermédiaire :
+• Équivalent à not (5 < 10)? Non : 5<10 est True donc >= faux, cohérent.
+
+Expert :
+• Chaînages : 5 >= 10 >= 3 → (5>=10) and (10>=3) → False.
+
+Concepts clés :
+• Test de borne haute côté gauche.
+
+Distinctions clés :
+• vs 10 >= 5 True.
+
+Fonctionnement :
+• (5>10) or (5==10) → False.
+
+Exécution étape par étape :
+1. 5, 10.
+2. False.
+
+Ordre des opérations :
+• une comparaison.
+
+Cas d'utilisation courants :
+• if score >= seuil échoue ici.
+
+Cas limites :
+• floats voisins.
+
+Considérations de performance :
+• négligeable.
+
+Exemples :
+• 3 >= 4 → False
+
+Remarques :
+• Pour intervalle, combiner >= et <=.`,
+  671: `5 == 5 and 10 > 5 vaut True : and exige les deux sous-expressions vraies.
+
+Débutant :
+• and a une priorité plus basse que == et > ici.
+
+Intermédiaire :
+• Court-circuit : si la gauche était False, la droite ne s'évalue pas.
+
+Expert :
+• Les opérandes peuvent être non bool après test de vérité (hors ce cas pur bool).
+
+Concepts clés :
+• Conjonction logique.
+
+Distinctions clés :
+• vs or.
+
+Fonctionnement :
+• Évalue 5==5 → True, puis 10>5 → True, puis True and True.
+
+Exécution étape par étape :
+1. 5 == 5 → True.
+2. 10 > 5 → True.
+3. True and True → True.
+
+Ordre des opérations :
+• Comparaisons avant and.
+
+Cas d'utilisation courants :
+• Conditions composées.
+
+Cas limites :
+• 0 and 1 → 0 (valeur, pas bool strict) en contexte général.
+
+Considérations de performance :
+• Court-circuit évite coût à droite.
+
+Exemples :
+• True and False → False
+
+Remarques :
+• Utiliser parenthèses si mélange avec or.`,
+  672: `5 == 5 and 5 > 10 vaut False : la deuxième comparaison est fausse.
+
+Débutant :
+• Un seul False suffit pour and.
+
+Intermédiaire :
+• La gauche True force l'évaluation de la droite.
+
+Expert :
+• Si la gauche avait été False, la droite ne s'exécuterait pas.
+
+Concepts clés :
+• Échec sur la deuxième condition.
+
+Distinctions clés :
+• vs 671 où les deux sont vraies.
+
+Fonctionnement :
+• True and False → False.
+
+Exécution étape par étape :
+1. 5 == 5 → True.
+2. 5 > 10 → False.
+3. True and False → False.
+
+Ordre des opérations :
+• Comparaisons puis and.
+
+Cas d'utilisation courants :
+• Valider plusieurs critères simultanés.
+
+Cas limites :
+• Ne pas compter sur l'évaluation droite si gauche fausse.
+
+Considérations de performance :
+• Mettre le test le plus probable faux en premier pour gagner.
+
+Exemples :
+• 1 == 1 and 2 > 3 → False
+
+Remarques :
+• Lire and comme "et aussi".`,
+  673: `5 == 10 or 10 > 5 vaut True : or vrai si au moins une branche vraie.
+
+Débutant :
+• Ici la gauche est fausse mais la droite vraie.
+
+Intermédiaire :
+• Court-circuit : True à gauche aurait sauté la droite.
+
+Expert :
+• pattern valeur or défaut (hors bool purs).
+
+Concepts clés :
+• Disjonction inclusive.
+
+Distinctions clés :
+• vs and.
+
+Fonctionnement :
+• False or True → True.
+
+Exécution étape par étape :
+1. 5 == 10 → False.
+2. 10 > 5 → True.
+3. False or True → True.
+
+Ordre des opérations :
+• Comparaisons puis or.
+
+Cas d'utilisation courants :
+• Alternatives acceptables.
+
+Cas limites :
+• False or False → False.
+
+Considérations de performance :
+• Mettre condition la plus probable vraie à gauche.
+
+Exemples :
+• 0 == 1 or 2 == 2 → True
+
+Remarques :
+• xor n'existe pas en mot-clé ; utiliser != sur bool ou ^.`,
+  674: `5 == 10 or 5 > 10 vaut False : les deux comparaisons échouent.
+
+Débutant :
+• or nécessite au moins un True.
+
+Intermédiaire :
+• Les deux membres sont évalués ici car gauche fausse.
+
+Expert :
+• Chaîner plusieurs or : aucun True → False final.
+
+Concepts clés :
+• Double échec logique.
+
+Distinctions clés :
+• vs 673.
+
+Fonctionnement :
+• False or False → False.
+
+Exécution étape par étape :
+1. 5 == 10 → False.
+2. 5 > 10 → False.
+3. False or False → False.
+
+Ordre des opérations :
+• Comparaisons puis or.
+
+Cas d'utilisation courants :
+• Rejeter si aucune option ne tient.
+
+Cas limites :
+• Avec effets de bord à droite, l'évaluation peut s'arrêter tôt si gauche True.
+
+Considérations de performance :
+• Court-circuit à gauche.
+
+Exemples :
+• False or False → False
+
+Remarques :
+• not (A or B) ≡ (not A) and (not B).`,
+  675: `not 5 == 10 vaut True : not a une priorité plus faible que == en Python, donc c'est not (5 == 10).
+
+Débutant :
+• 5 == 10 est False, not False → True.
+
+Intermédiaire :
+• Parenthèses explicites clarifient : not (5 == 10).
+
+Expert :
+• not 5 == 10 n'est pas (not 5) == 10 (illégal : not sur int).
+
+Concepts clés :
+• Négation d'une comparaison.
+
+Distinctions clés :
+• vs 5 != 10 (même résultat ici).
+
+Fonctionnement :
+• Évalue == puis inverse le bool.
+
+Exécution étape par étape :
+1. 5 == 10 → False.
+2. not False → True.
+
+Ordre des opérations :
+• == avant not (liaison du not au résultat de la comparaison).
+
+Cas d'utilisation courants :
+• if not condition.
+
+Cas limites :
+• not sur types : vérité Python (truthiness).
+
+Considérations de performance :
+• négligeable.
+
+Exemples :
+• not True → False
+
+Remarques :
+• Préférer != pour la lisibilité quand c'est équivalent.`,
+  676: `not 5 == 5 vaut False : la comparaison est True, inversée en False.
+
+Débutant :
+• not inverse le booléen obtenu.
+
+Intermédiaire :
+• Équivalent à 5 != 5 (faux).
+
+Expert :
+• Attention aux objets personnalisés avec __bool__.
+
+Concepts clés :
+• Négation d'une égalité vraie.
+
+Distinctions clés :
+• vs not 5 == 10.
+
+Fonctionnement :
+• not True → False.
+
+Exécution étape par étape :
+1. 5 == 5 → True.
+2. not True → False.
+
+Ordre des opérations :
+• == puis not.
+
+Cas d'utilisation courants :
+• refuser quand égalité attendue.
+
+Cas limites :
+• not not True → True.
+
+Considérations de performance :
+• trivial.
+
+Exemples :
+• not (1 < 2) → False
+
+Remarques :
+• Lire de droite à gauche pour repérer le sous-arbre not.`,
+  677: `5 < 10 < 15 vaut True : comparaison chaînée = (5 < 10) and (10 < 15).
+
+Débutant :
+• Le milieu 10 est réutilisé, pas réécrit deux fois.
+
+Intermédiaire :
+• Toutes les comparaisons doivent passer.
+
+Expert :
+• a < f(x) < b évalue f(x) une seule fois (important si f coûteux).
+
+Concepts clés :
+• Sucre syntaxique du and.
+
+Distinctions clés :
+• vs (5 < 10) and (5 < 15) (différent).
+
+Fonctionnement :
+• Vérifie chaîne croissante stricte.
+
+Exécution étape par étape :
+1. 5 < 10 → True.
+2. 10 < 15 → True.
+3. True and True → True.
+
+Ordre des opérations :
+• Chaînage traduit en ands binaires.
+
+Cas d'utilisation courants :
+• 0 < x < 100.
+
+Cas limites :
+• 5 < 10 < 5 → False (deuxième lien faux).
+
+Considérations de performance :
+• Une seule évaluation du terme central.
+
+Exemples :
+• 1 < 2 < 3 → True
+
+Remarques :
+• Mélanger < et > est valide mais à lire avec soin.`,
+  678: `15 > 10 > 5 vaut True : chaînage descendant (15 > 10) and (10 > 5).
+
+Débutant :
+• Même mécanisme que le chaînage croissant.
+
+Intermédiaire :
+• Idiom pour suite strictement décroissante.
+
+Expert :
+• Équivalent propre à trois comparaisons séquentielles sur le même pivot.
+
+Concepts clés :
+• Chaîne décroissante stricte.
+
+Distinctions clés :
+• vs 5 < 10 < 15.
+
+Fonctionnement :
+• Deux > composés par and implicite.
+
+Exécution étape par étape :
+1. 15 > 10 → True.
+2. 10 > 5 → True.
+3. True and True → True.
+
+Ordre des opérations :
+• Chaînage.
+
+Cas d'utilisation courants :
+• Vérifier ordre tri décroissant local.
+
+Cas limites :
+• 15 > 10 > 20 → False.
+
+Considérations de performance :
+• central évalué une fois.
+
+Exemples :
+• 3 > 2 > 1 → True
+
+Remarques :
+• Très lisible pour bornes doubles.`,
+  679: `5 == 5 == 5 vaut True : chaînage d'égalités = (5 == 5) and (5 == 5).
+
+Débutant :
+• Les trois littéraux sont égaux deux à deux ici.
+
+Intermédiaire :
+• Ne pas confondre avec "les trois mêmes objets" (identité).
+
+Expert :
+• Cas pathologique : a == b == c peut être True sans a is c (objets distincts égaux).
+
+Concepts clés :
+• Égalité pairwise sur la chaîne.
+
+Distinctions clés :
+• vs (5 == 5) == 5 où le membre droit compare bool à int (False en Python).
+
+Fonctionnement :
+• True and True → True.
+
+Exécution étape par étape :
+1. 5 == 5 → True.
+2. 5 == 5 → True (milieu commun).
+3. True and True → True.
+
+Ordre des opérations :
+• Chaînage ==.
+
+Cas d'utilisation courants :
+• Vérifier plusieurs égalités alignées.
+
+Cas limites :
+• 5 == 5 == 10 → False.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• x == y == z pour trois nombres égaux.
+
+Remarques :
+• (5==5)==5 est une autre expression (faux).`,
+  680: `5 != 10 != 15 vaut True : chaînage (5 != 10) and (10 != 15).
+
+Débutant :
+• Vérifie deux inégalités adjacentes, pas "tous différents entre eux" au sens ensemble.
+
+Intermédiaire :
+• 5 et 15 peuvent être égaux dans d'autres motifs ; ici ils sont différents aussi par coïncidence.
+
+Expert :
+• Pour exiger que trois variables soient deux à deux différentes, il faut d'autres tests (a!=b, a!=c, b!=c).
+
+Concepts clés :
+• Inégalité chaînée.
+
+Distinctions clés :
+• vs not (5 == 10 == 15).
+
+Fonctionnement :
+• True and True → True.
+
+Exécution étape par étape :
+1. 5 != 10 → True.
+2. 10 != 15 → True.
+3. True and True → True.
+
+Ordre des opérations :
+• Chaînage !=.
+
+Cas d'utilisation courants :
+• Détecter progression sans plateaux égaux.
+
+Cas limites :
+• 5 != 5 != 5 → False (premier lien faux).
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• 1 != 2 != 3 → True
+
+Remarques :
+• Lire toujours le pivot central deux fois.`,
+  681: `5 in [1, 2, 3, 4, 5] vaut True : appartenance séquentielle (liste).
+
+Débutant :
+• in parcourt jusqu'à trouver une égalité.
+
+Intermédiaire :
+• Complexité O(n) liste.
+
+Expert :
+• set ou dict pour tests d'appartenance fréquents O(1) amorti.
+
+Concepts clés :
+• Test de présence.
+
+Distinctions clés :
+• vs index() qui lève si absent.
+
+Fonctionnement :
+• __contains__ sur list.
+
+Exécution étape par étape :
+1. Parcourt éléments.
+2. Trouve 5 → True.
+
+Ordre des opérations :
+• Une opération in.
+
+Cas d'utilisation courants :
+• if valeur in options.
+
+Cas limites :
+• [[]] contenant listes mutables rare pour débutants.
+
+Considérations de performance :
+• list longue → coûteux.
+
+Exemples :
+• 'b' in ['a','b'] → True
+
+Remarques :
+• Égalité par == élément par élément.`,
+  682: `10 in [1, 2, 3, 4, 5] vaut False : 10 n'apparaît pas dans cette liste finie.
+
+Débutant :
+• in retourne False si aucune égalité.
+
+Intermédiaire :
+• Pas d'exception : booléen seulement.
+
+Expert :
+• Sur générateur infini, attention à la non-terminaison (hors cas fini ici).
+
+Concepts clés :
+• Absence dans la collection.
+
+Distinctions clés :
+• vs 681.
+
+Fonctionnement :
+• Scan complet jusqu'à la fin.
+
+Exécution étape par étape :
+1. Compare 10 à chaque élément.
+2. Aucun match → False.
+
+Ordre des opérations :
+• Une expression in.
+
+Cas d'utilisation courants :
+• Filtrer entrées invalides.
+
+Cas limites :
+• Liste vide : toujours False pour tout x.
+
+Considérations de performance :
+• n comparaisons max.
+
+Exemples :
+• 99 in [1,2,3] → False
+
+Remarques :
+• Utiliser set pour grands volumes.`,
+  683: `5 not in [1, 2, 3] vaut True : 5 est absent de cette liste courte.
+
+Débutant :
+• not in = négation de in.
+
+Intermédiaire :
+• Équivalent à not (5 in [1,2,3]).
+
+Expert :
+• L'optimiseur peut réécrire mais sémantique identique.
+
+Concepts clés :
+• Test d'absence lisible.
+
+Distinctions clés :
+• vs in.
+
+Fonctionnement :
+• in puis inversion logique du bool.
+
+Exécution étape par étape :
+1. 5 in [1,2,3] → False.
+2. not False → True (via not in).
+
+Ordre des opérations :
+• not in opérateur unique.
+
+Cas d'utilisation courants :
+• if x not in seen.
+
+Cas limites :
+• même coût que in.
+
+Considérations de performance :
+• Préférer set pour répétitions.
+
+Exemples :
+• 'z' not in 'abc' → True
+
+Remarques :
+• Style Pythonique pour exclusions.`,
+  684: `1 not in [1, 2, 3] vaut False : 1 est bien présent en tête de liste.
+
+Débutant :
+• not in faux dès la première occurrence trouvée.
+
+Intermédiaire :
+• Arrêt dès match sur in interne.
+
+Expert :
+• Doublons : présent si au moins une occurrence.
+
+Concepts clés :
+• Présence détectée.
+
+Distinctions clés :
+• vs 683.
+
+Fonctionnement :
+• in True → not in False.
+
+Exécution étape par étape :
+1. 1 in liste → True immédiatement.
+2. not in → False.
+
+Ordre des opérations :
+• not in.
+
+Cas d'utilisation courants :
+• Vérifier qu'une valeur n'est PAS dans une whitelist (échoue ici).
+
+Cas limites :
+• Liste vide : x not in [] toujours True pour tout x.
+
+Considérations de performance :
+• meilleur cas O(1) si premier élément.
+
+Exemples :
+• 2 not in [2] → False
+
+Remarques :
+• Lire not in comme une seule unité.`,
+  685: `'a' in 'abc' vaut True : sous-chaîne d'un seul caractère trouvée.
+
+Débutant :
+• in sur str cherche une sous-séquence contiguë.
+
+Intermédiaire :
+• Sensible à la casse : 'A' in 'abc' faux.
+
+Expert :
+• Complexité worst-case liée à l'algorithme de recherche (CPython optimisé).
+
+Concepts clés :
+• Sous-chaîne.
+
+Distinctions clés :
+• vs caractère par caractère manuel.
+
+Fonctionnement :
+• find-like interne.
+
+Exécution étape par étape :
+1. Cherche 'a' dans 'abc'.
+2. Position 0 → True.
+
+Ordre des opérations :
+• une opération.
+
+Cas d'utilisation courants :
+• if '@' in email.
+
+Cas limites :
+• '' in toute chaîne → True.
+
+Considérations de performance :
+• Pour motifs complexes, regex.
+
+Exemples :
+• 'bc' in 'abc' → True
+
+Remarques :
+• Ne pas confondre avec list de caractères (conceptuel).`,
+  686: `'x' in 'abc' vaut False : aucune occurrence de la sous-chaîne 'x'.
+
+Débutant :
+• Retour booléen sans erreur.
+
+Intermédiaire :
+• 'x' not in 'abc' serait True.
+
+Expert :
+• Normalisation Unicode peut surprendre pour caractères composés.
+
+Concepts clés :
+• Absence de motif.
+
+Distinctions clés :
+• vs 685.
+
+Fonctionnement :
+• Parcours ou Boyer-Moore-like selon impl.
+
+Exécution étape par étape :
+1. Recherche 'x'.
+2. Échec → False.
+
+Ordre des opérations :
+• simple.
+
+Cas d'utilisation courants :
+• valider absence de caractère interdit.
+
+Cas limites :
+• chaîne vide : 'x' in '' False.
+
+Considérations de performance :
+• court-circuit possible.
+
+Exemples :
+• 'xyz' in 'abc' → False
+
+Remarques :
+• Pour pattern, utiliser regex ou startswith/endswith.`,
+  687: `5 is 5 vaut True en pratique pour petits int : CPython met en cache certains entiers (singletons -5..256 typiquement).
+
+Débutant :
+• is teste l'identité (même objet), pas seulement la valeur.
+
+Intermédiaire :
+• Deux littéraux 5 peuvent partager la même adresse.
+
+Expert :
+• Ne pas coder en dépendant du cache ; pour les valeurs, utiliser ==.
+
+Concepts clés :
+• Identité sur int mis en cache.
+
+Distinctions clés :
+• vs 5 == 5 (valeur).
+
+Fonctionnement :
+• id(a) == id(b).
+
+Exécution étape par étape :
+1. Deux objets int 5 souvent identiques.
+2. is → True.
+
+Ordre des opérations :
+• binaire is.
+
+Cas d'utilisation courants :
+• Surtout None, True, False avec is.
+
+Cas limites :
+• Grands int calculés différemment : is peut être False malgré == True.
+
+Considérations de performance :
+• is est très rapide.
+
+Exemples :
+• None is None → True
+
+Remarques :
+• Règle d'style : is pour singletons seulement.`,
+  688: `Deux listes littérales [1, 2] et [1, 2] avec is donnent False : deux objets distincts même si le contenu est égal.
+
+Débutant :
+• is faux ≠ contenu différent ; ici contenu égal mais objets différents.
+
+Intermédiaire :
+• [1,2] == [1,2] serait True.
+
+Expert :
+• Seule une assignation partage l'identité : a=b; a is b True.
+
+Concepts clés :
+• Nouvelle liste à chaque littéral.
+
+Distinctions clés :
+• == valeur vs is identité.
+
+Fonctionnement :
+• Deux allocations séparées.
+
+Exécution étape par étape :
+1. Crée liste A.
+2. Crée liste B.
+3. A is B → False.
+
+Ordre des opérations :
+• is.
+
+Cas d'utilisation courants :
+• Détecter si deux références pointent sur le même objet.
+
+Cas limites :
+• objets internés rares pas concernés.
+
+Considérations de performance :
+• Deux constructions O(n) petit ici.
+
+Exemples :
+• a = [1]; a is a → True
+
+Remarques :
+• Toujours == pour comparer le contenu des listes.`,
+  689: `5 is not 10 vaut True : deux entiers distincts, identités différentes.
+
+Débutant :
+• is not est la négation de is.
+
+Intermédiaire :
+• Même remarque de cache : ici 5 et 10 sont clairement distincts.
+
+Expert :
+• x is not None idiomatique.
+
+Concepts clés :
+• Objets différents.
+
+Distinctions clés :
+• vs 5 != 10 (valeur aussi vraie).
+
+Fonctionnement :
+• not (5 is 10).
+
+Exécution étape par étape :
+1. 5 is 10 → False.
+2. is not → True.
+
+Ordre des opérations :
+• is not opérateur unique.
+
+Cas d'utilisation courants :
+• if ref is not sentinel.
+
+Cas limites :
+• confondre is not avec (is (not x)) — parenthèses.
+
+Considérations de performance :
+• rapide.
+
+Exemples :
+• [] is not [] → True
+
+Remarques :
+• Lire is not comme un seul opérateur.`,
+  690: `None is None vaut True : None est un singleton ; toutes les références pointent sur le même objet.
+
+Débutant :
+• Une seule instance None en mémoire.
+
+Intermédiaire :
+• Toujours écrire is None, pas == None (style et robustesse avec __eq__).
+
+Expert :
+• NoneType non sous-classable.
+
+Concepts clés :
+• Singleton None.
+
+Distinctions clés :
+• vs x is None pour variable x aussi True si x vaut None.
+
+Fonctionnement :
+• Identité garantie par le langage.
+
+Exécution étape par étape :
+1. Deux références None.
+2. Même id → True.
+
+Ordre des opérations :
+• is.
+
+Cas d'utilisation courants :
+• paramètres optionnels par défaut None.
+
+Cas limites :
+• pas de "plusieurs None" distincts.
+
+Considérations de performance :
+• comparaison d'identité minimale.
+
+Exemples :
+• a = None; b = None; a is b → True
+
+Remarques :
+• PEP 8 impose is / is not pour None.`,
+  691: `-5 est l'entier négatif cinq : le moins unaire change le signe du littéral 5.
+
+Débutant :
+• - s'applique à un seul nombre ici.
+
+Intermédiaire :
+• Fonctionne aussi sur float : -3.14.
+
+Expert :
+• __neg__ sur types numériques personnalisés.
+
+Concepts clés :
+• Opposé arithmétique.
+
+Distinctions clés :
+• vs soustraction binaire 0-5 (même résultat ici).
+
+Fonctionnement :
+• Crée la valeur opposée.
+
+Exécution étape par étape :
+1. Littéral 5.
+2. Unaire - → -5.
+
+Ordre des opérations :
+• Unaires avant * / sur expressions mixtes.
+
+Cas d'utilisation courants :
+• soldes, températures, déplacements.
+
+Cas limites :
+• -0 est 0.
+
+Considérations de performance :
+• trivial.
+
+Exemples :
+• x = 3; -x → -3
+
+Remarques :
+• Deux moins consécutifs : voir 693.`,
+  692: `+5 vaut 5 : le plus unaire est une no-op numérique (souvent omis en style Python).
+
+Débutant :
+• Pas de changement de signe.
+
+Intermédiaire :
+• Utile par symétrie avec - ou pour clarifier une expression.
+
+Expert :
+• Peut appeler __pos__ sur types exotiques.
+
+Concepts clés :
+• Identité numérique unaire.
+
+Distinctions clés :
+• vs -5.
+
+Fonctionnement :
+• Retourne la même valeur avec type préservé (int reste int).
+
+Exécution étape par étape :
+1. 5.
+2. + unaire → 5.
+
+Ordre des opérations :
+• comme les autres unaires.
+
+Cas d'utilisation courants :
+• rare ; notation explicite.
+
+Cas limites :
+• + sur bool True → 1 (int) en arithmétique.
+
+Considérations de performance :
+• négligeable.
+
+Exemples :
+• +(-2) → -2
+
+Remarques :
+• On écrit presque toujours 5 sans +.`,
+  693: `--5 vaut 5 : le lexer regroupe comme -(-5), double négation.
+
+Débutant :
+• Deux signes moins devant 5.
+
+Intermédiaire :
+• Pas une soustraction binaire (il manque un terme gauche).
+
+Expert :
+• ---5 interprété comme -(-(-5)) → -5.
+
+Concepts clés :
+• Composition de deux opposés.
+
+Distinctions clés :
+• vs -5 seul.
+
+Fonctionnement :
+• Applique - deux fois successivement.
+
+Exécution étape par étape :
+1. -5 (premier unaire sur 5).
+2. -( -5 ) → 5.
+
+Ordre des opérations :
+• unaires associés au littéral le plus proche.
+
+Cas d'utilisation courants :
+• simplifier expressions algébriques.
+
+Cas limites :
+• lisibilité : préférer parenthèses.
+
+Considérations de performance :
+• trivial.
+
+Exemples :
+• --(-3) → -3
+
+Remarques :
+• -(-5) explicite est plus clair que --5 pour débutants.`,
+  694: `-(-5) vaut 5 : parenthèses forcent l'ordre visuel, même résultat que --5.
+
+Débutant :
+• L'intérieur est -5, l'extérieur prend l'opposé → 5.
+
+Intermédiaire :
+• Montre la structure d'arbre clairement.
+
+Expert :
+• Même analyse que double négation en maths.
+
+Concepts clés :
+• Opposé d'un négatif.
+
+Distinctions clés :
+• vs -(0-5) (binaire).
+
+Fonctionnement :
+• Évalue (-5) puis unaire externe.
+
+Exécution étape par étape :
+1. Sous-expression -5.
+2. Opposé → 5.
+
+Ordre des opérations :
+• parenthèses puis unaire.
+
+Cas d'utilisation courants :
+• annuler un signe stocké négatif.
+
+Cas limites :
+• -(-0.0) peut être 0.0 avec signe IEEE subtil.
+
+Considérations de performance :
+• trivial.
+
+Exemples :
+• -(-10) → 10
+
+Remarques :
+• Pédagogique pour lier notation parenthésée et unaire.`,
+  695: `0 // 5 vaut 0 : division entière du zéro par un non-zéro.
+
+Débutant :
+• // est la division plancher (floor) qui tombe vers moins l'infini.
+
+Intermédiaire :
+• 0 divisé par 5 donne quotient 0, reste 0.
+
+Expert :
+• Contrairement à 5 // 0 qui lève ZeroDivisionError.
+
+Concepts clés :
+• Floor division avec numérateur nul.
+
+Distinctions clés :
+• vs 5 // 0 erreur.
+
+Fonctionnement :
+• floor(0/5) en nombres réels → 0.
+
+Exécution étape par étape :
+1. 0 et 5.
+2. // → 0.
+
+Ordre des opérations :
+• une opération.
+
+Cas d'utilisation courants :
+• compteurs initialisés à zéro.
+
+Cas limites :
+• 0 // -5 → 0 aussi (quotient 0).
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• 0 // 1 → 0
+
+Remarques :
+• float // int donne float floor en Python 3.`,
+  696: `5 // 1 vaut 5 : tout entier divisé par 1 reste entier avec quotient lui-même.
+
+Débutant :
+• // avec diviseur 1 est stable pour les positifs.
+
+Intermédiaire :
+• Pour négatifs, // arrondit vers le bas : -3 // 1 → -3.
+
+Expert :
+• Lien avec % : a == (a//b)*b + a%b.
+
+Concepts clés :
+• Identité quotient par 1.
+
+Distinctions clés :
+• vs 5 / 1 → 5.0 float.
+
+Fonctionnement :
+• floor(5/1)=5.
+
+Exécution étape par étape :
+1. 5, 1.
+2. // → 5.
+
+Ordre des opérations :
+• simple.
+
+Cas d'utilisation courants :
+• normalisation avant autres ops.
+
+Cas limites :
+• grands int exacts.
+
+Considérations de performance :
+• rapide.
+
+Exemples :
+• 42 // 1 → 42
+
+Remarques :
+• Utiliser / pour vraie division flottante.`,
+  697: `0 % 5 vaut 0 : le reste de la division euclidienne "vue Python" quand le dividende est 0.
+
+Débutant :
+• 0 = 0*5 + 0.
+
+Intermédiaire :
+• 0 % n pour n≠0 est toujours 0.
+
+Expert :
+• 5 % 0 lève une erreur (diviseur nul interdit).
+
+Concepts clés :
+• Modulo avec dividende nul.
+
+Distinctions clés :
+• vs 5 % 0.
+
+Fonctionnement :
+• reste nul.
+
+Exécution étape par étape :
+1. 0, 5.
+2. % → 0.
+
+Ordre des opérations :
+• une opération.
+
+Cas d'utilisation courants :
+• reset de compteur modulo.
+
+Cas limites :
+• signes : -0 % 5 → 0.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• 0 % 100 → 0
+
+Remarques :
+• Le signe du reste suit le diviseur en Python 3.`,
+  698: `5 % 1 vaut 0 : tout entier est multiple de 1, reste 0.
+
+Débutant :
+• "modulo 1" teste souvent la partie fractionnaire ailleurs (ici entier pur).
+
+Intermédiaire :
+• Cohérent avec 5 // 1 == 5 et formule division.
+
+Expert :
+• float 5.5 % 1 → 0.5 (partie décimale).
+
+Concepts clés :
+• Reste nul pour diviseur 1.
+
+Distinctions clés :
+• vs 1 % 5 → 1.
+
+Fonctionnement :
+• 5 = 5*1 + 0.
+
+Exécution étape par étape :
+1. 5, 1.
+2. % → 0.
+
+Ordre des opérations :
+• direct.
+
+Cas d'utilisation courants :
+• vérifier entier avec x % 1 == 0 sur float.
+
+Cas limites :
+• négatifs : -5 % 1 → 0 en Python 3.
+
+Considérations de performance :
+• minimal.
+
+Exemples :
+• 9 % 1 → 0
+
+Remarques :
+• Ne pas confondre avec division.`,
+  699: `round(2.5) vaut 2 : arrondi demi au pair (banker's rounding, IEEE tie-to-even).
+
+Débutant :
+• 2.5 est exactement entre 2 et 3 ; Python choisit le pair 2.
+
+Intermédiaire :
+• Diffère de l'école "toujours vers le haut à .5".
+
+Expert :
+• round(x, ndigits) change le comportement sur les flottants (représentation binaire).
+
+Concepts clés :
+• Tie-to-even sur .5 exact.
+
+Distinctions clés :
+• vs round(3.5) → 4 (autre demi).
+
+Fonctionnement :
+• builtins round sur float.
+
+Exécution étape par étape :
+1. Évalue 2.5.
+2. Arrondi sans ndigits → int 2.
+
+Ordre des opérations :
+• appel round().
+
+Cas d'utilisation courants :
+• stats pour réduire biais systématique.
+
+Cas limites :
+• 2.5 float binaire peut ne pas être exactement demi (rare surprise).
+
+Considérations de performance :
+• C natif.
+
+Exemples :
+• round(4.5) → 4
+
+Remarques :
+• Decimal pour contrôle décimal exact.`,
+  700: `round(3.5) vaut 4 : autre cas .5, le pair le plus proche est 4 (pas 3).
+
+Débutant :
+• 3 et 4 encadrent 3.5 ; le pair gagnant est 4.
+
+Intermédiaire :
+• Même règle que 699 mais pivot différent.
+
+Expert :
+• Comparer avec round(2.5)→2 pour voir la parité.
+
+Concepts clés :
+• Arrondi demi au pair pour 3.5.
+
+Distinctions clés :
+• vs round(3.4) → 3.
+
+Fonctionnement :
+• tie-to-even vers 4.
+
+Exécution étape par étape :
+1. Flottant 3.5.
+2. round → 4.
+
+Ordre des opérations :
+• appel fonction.
+
+Cas d'utilisation courants :
+• même que 699, autre valeur pédagogique.
+
+Cas limites :
+• représentation float du 3.5 est exacte en binaire (cas 1/2).
+
+Considérations de performance :
+• identique round(2.5).
+
+Exemples :
+• round(5.5) → 6
+
+Remarques :
+• Toujours documenter la règle métier si finance stricte.`,
   701: `Le mot-clé class définit une nouvelle classe. Si class MyClass: pass, alors cela définit une classe nommée MyClass. L'instruction class crée un objet classe, qui sert de modèle pour créer des instances (objets). L'instruction pass est un placeholder qui ne fait rien - elle est utilisée quand un corps de classe est vide. Les classes sont fondamentales pour la programmation orientée objet en Python, permettant de définir des types personnalisés avec attributs et méthodes.
 
 Concepts clés :

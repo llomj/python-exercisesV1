@@ -18,6 +18,7 @@
 - **Glossary Source of Truth**: The `glossary.md` file is the master reference.
 - **Consistency Rule**: All definitions must be consistent with `glossary.md`.
 - **Pre-Change Check**: Agents must always consult `ps.md` and `planning.md` before making changes.
+- **Task Tracker Check (MANDATORY)**: Agents must always consult `task.md` before starting work and must update `task.md` after each completed batch with current progress and next IDs.
 - **Debugging Reference**: Agents must always consult `ps.md` for debugging information and urgent issues.
 
 ## 4. The 3,300-Question Genome Goal

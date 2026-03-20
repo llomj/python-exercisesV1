@@ -1,0 +1,279 @@
+# Task Tracker - Level 1 In-Depth Explanations (EN/FR)
+
+## Objective
+
+Complete and maintain high-quality, unique in-depth explanations for Level 1 with strict English/French parity.
+
+- Scope: IDs `301-600` (Level 1).
+- Current working file: `src/data/detailedExplanationsTranslations.ts` (French in-depth content).
+- Goal per ID:
+  - Keep `Beginner / Intermediate / Expert` (or `Debutant / Intermediaire / Expert`) structure intact.
+  - Ensure the full 10-section in-depth block exists and is unique to that specific question.
+  - Ensure French mirrors English depth and structure (no placeholders).
+
+## 10-Section Standard (Must Exist Per ID)
+
+### English headings (exact order)
+1. `Key Concepts:`
+2. `Key Distinctions:`
+3. `How It Works:`
+4. `Step-by-Step Execution:`
+5. `Order of Operations:`
+6. `Common Use Cases:`
+7. `Edge Cases:`
+8. `Performance Considerations:`
+9. `Examples:`
+10. `Notes:`
+
+### French headings (exact order)
+1. `Concepts cles :`
+2. `Distinctions cles :`
+3. `Fonctionnement :`
+4. `Execution etape par etape :`
+5. `Ordre des operations :`
+6. `Cas d'utilisation courants :`
+7. `Cas limites :`
+8. `Considerations de performance :`
+9. `Exemples :`
+10. `Remarques :`
+
+## Progress Log (Level 1 FR)
+
+### 2026-03-19 — realignment with `QUESTIONS_BANK` (Level 1 = IDs 301–600)
+
+- **Source fix (earlier):** Level 0 bank slice = 300 questions so IDs **301–600** are unique to Level 1 (`src/questionsBank.ts`).
+- **French detailed map:** Rebuilt / corrected misaligned ranges that still contained **list-loop** content for **string / f-string** questions.
+- **Done this session:**
+  - **301–320** — already aligned (types, identifiers, comments intro).
+  - **321–337** — replaced (strings, slicing, comments) via `scripts/patch-fr-l1-321-337.mjs` (then fixed TS backticks / `\\u` where needed).
+  - **422–450** — replaced (immutability, `str`/`repr`, f-strings, `format`, `%`) via `scripts/patch-fr-l1-422-450.mjs`.
+- **451–600 (2026-03-19 suite):** Rebuilt French detailed text to match `QUESTIONS_BANK` Level 1. Scripts: `scripts/patch-fr-l1-451-500.mjs` + fragments `scripts/fr-l1-frags/fr-451-460.mjs` … `fr-491-500.mjs` ; `scripts/patch-fr-l1-501-600.mjs` + `fr-501-520.mjs` … `fr-581-600.mjs`. **Level 1 FR map 451–600 is aligned** (verify spot-checks: 451 string `+=`, 500 `type is str`, 511 `bytearray`, 551 `id(42)`, 600 `complex`).
+- **Still to audit (optional):** IDs **301–420** were fixed in earlier sessions (incl. 321–337, 422–450); re-spot-check **401–420** vs bank if any duplicate blocks remain elsewhere in the file.
+
+### Confirmed completed before this tracker
+- IDs `402-411` completed with full in-depth French structure.
+- Prior batches had been advanced through `421`.
+
+### Completed in the latest work session
+- IDs `422-425` upgraded to full in-depth French structure:
+  - `422`: list repetition with `*`
+  - `423`: list multiplied by `0`
+  - `424`: membership with `in` (true case)
+  - `425`: membership with `in` (false case)
+- IDs `426-431` upgraded to full in-depth French structure:
+  - `426`: list equality `==` (same order/content)
+  - `427`: list equality with different order
+  - `428`: identity `is` vs value equality
+  - `429`: lexicographic list comparison
+  - `430`: prefix/length lexicographic rule
+  - `431`: `append()` mutates list and returns `None`
+- IDs `432-441` upgraded to full in-depth French structure:
+  - `432`: `extend()` with list
+  - `433`: `insert(index, value)`
+  - `434`: `insert(0, value)` at start
+  - `435`: `insert()` with out-of-range index
+  - `436`: `append()` vs `extend()`
+  - `437`: `+` vs `extend()`
+  - `438`: `append([x])` nested list behavior
+  - `439`: `extend([x])` flat add behavior
+  - `440`: `extend()` with string iterable
+  - `441`: `pop()` without index
+- IDs `442-451` upgraded to full in-depth French structure:
+  - `442`: `pop(index)` behavior
+  - `443`: `remove(value)` first match
+  - `444`: `remove()` with duplicates
+  - `445`: `clear()` in-place reset
+  - `446`: `pop()` vs `remove()`
+  - `447`: `pop()` on empty list (`IndexError`)
+  - `448`: `remove()` missing value (`ValueError`)
+  - `449`: `pop(-1)` and negative index behavior
+  - `450`: `del` by index (no return value)
+  - `451`: `index(value)` first occurrence
+- IDs `452-461` upgraded to full in-depth French structure:
+  - `452`: `index()` with duplicates (first occurrence)
+  - `453`: `count()` basics
+  - `454`: `count()` counts all occurrences
+  - `455`: `count()` returns `0` when absent
+  - `456`: `index()` absent value (`ValueError`)
+  - `457`: `index(value, start)`
+  - `458`: `index()` from later start position
+  - `459`: `index(value, start, stop)`
+  - `460`: `index()` value outside search range
+  - `461`: `sorted()` returns new sorted list
+- IDs `462-471` upgraded to full in-depth French structure:
+  - `462`: `sorted(..., reverse=True)`
+  - `463`: `list.sort()` in-place / returns `None`
+  - `464`: `list.reverse()` in-place
+  - `465`: `sort` vs `sorted`
+  - `466`: `reversed()` iterator
+  - `467`: `list(reversed(...))`
+  - `468`: slice `[::-1]` vs `reversed()`
+  - `469`: `sorted` on strings (character order)
+  - `470`: `sorted(..., key=...)`
+  - `471`: `list.copy()` shallow copy
+- IDs `472-481` upgraded to full in-depth French structure:
+  - `472`: `list(iterable)` / copy-like from list
+  - `473`: slice `[:]` shallow copy
+  - `474`: shallow vs deep copy concept
+  - `475`: `copy.copy` shallow generic
+  - `476`: `copy.deepcopy` nested independence
+  - `477`: assignment alias vs copy
+  - `478`: `list.copy()` flat independence
+  - `479`: shallow copy shares nested mutables
+  - `480`: deepcopy isolates nested lists
+  - `481`: unpacking `a, b, c = [1, 2, 3]`
+- IDs `482-491` upgraded to full in-depth French structure:
+  - `482`: `a, *b = [...]` (star collects rest)
+  - `483`: `*a, b = [...]` (prefix star, last scalar)
+  - `484`: star target gets `[]` when no remainder
+  - `485`: list display splat `[*a, *b]`
+  - `486`: `[1,2]+[3]` vs `[*[1,2], 3]` same flat result
+  - `487`: `max()` on iterable
+  - `488`: `min()` on iterable
+  - `489`: `sum()` default start 0
+  - `490`: `sum(iterable, start)`
+  - `491`: `any()` truthy short-circuit
+- IDs `492-501` upgraded to full in-depth French structure:
+  - `492`: list repetition with `*` (int multiplier)
+  - `493`: list `==` with int vs float elements (value equality)
+  - `494`: `==` False when lengths differ
+  - `495`: list `!=`
+  - `496`: lexicographic `<` with prefix rule
+  - `497`: lexicographic `>` (longer wins when prefix)
+  - `498`: operator precedence `[1,2] + [3] * 2`
+  - `499`: parentheses `([1,2] + [3]) * 2`
+  - `500`: `len` of concatenated lists
+  - `501`: dict literal `{'a': 1, 'b': 2}`
+- IDs `502-511` upgraded to full in-depth French structure:
+  - `502`: empty dict `{}` vs set
+  - `503`: `dict()` empty constructor
+  - `504`: `dict` from iterable of pairs (e.g. list of tuples)
+  - `505`: `dict(a=1, b=2)` keyword keys
+  - `506`: `d['a']` subscription lookup
+  - `507`: `d['b']` subscription lookup
+  - `508`: missing key → `KeyError`
+  - `509`: `len(dict)` counts key-value pairs
+  - `510`: `len({})` is 0
+  - `511`: `.get('a')` returns value when present
+- IDs `512-521` upgraded to full in-depth French structure:
+  - `512`: `.get(k)` missing key → `None`
+  - `513`: `.get(k, default)` on missing key (note: args evaluated eagerly)
+  - `514`: `.get(k, default)` when key exists → stored value
+  - `515`: `.setdefault(k, default)` key exists → existing value, no write
+  - `516`: `.setdefault` on missing key → insert and return default
+  - `517`: `get` vs `setdefault` (mutation on miss)
+  - `518`: `.pop(k)` removes pair, returns value
+  - `519`: `.pop(k)` missing key → `KeyError`
+  - `520`: `.pop(k, default)` missing key → default, dict unchanged
+  - `521`: `.keys()` → `dict_keys` live view
+- IDs `522-531` upgraded to full in-depth French structure:
+  - `522`: `list(d.keys())` snapshot / materialization
+  - `523`: `.values()` → `dict_values` view
+  - `524`: `list(d.values())` snapshot
+  - `525`: `.items()` → `dict_items` view
+  - `526`: `list(d.items())` list of pairs
+  - `527`: `key in dict` tests keys only
+  - `528`: value-only int not found via `in dict`
+  - `529`: `value in dict.values()`
+  - `530`: `(key, value) in dict.items()`
+  - `531`: `d[new_key] = value` inserts new entry
+- Maintenance: removed accidental duplicate old entries for IDs `518-521` that appeared after the `512-521` upgrade (file had two `518`–`521` blocks in a row).
+- IDs `532-551` upgraded to full in-depth French structure:
+  - `532`: `d[k] = v` overwrites existing key
+  - `533`: `.update(...)` returns `None`
+  - `534`: `update` adds new keys from another mapping
+  - `535`: `update` overwrites existing keys
+  - `536`: `popitem()` LIFO insertion order (3.7+)
+  - `537`: `popitem()` on single-item dict
+  - `538`: `popitem()` on empty dict → `KeyError`
+  - `539`: `.clear()` returns `None`, same dict object
+  - `540`: `clear()` visible through all aliases
+  - `541`: `.copy()` shallow copy of dict
+  - `542`: `dict(d)` shallow copy from mapping
+  - `543`: `{**a, **b}` merge into new dict
+  - `544`: `{**...}` last mapping wins on key clash
+  - `545`: `a | b` merge (3.9+), new dict
+  - `546`: `|` right-hand wins on duplicate keys
+  - `547`: `|=` in-place merge (3.9+)
+  - `548`: `|` vs `|=` (new dict vs mutate)
+  - `549`: shallow copy shares nested mutables
+  - `550`: `copy.deepcopy` for nested independence
+  - `551`: dict comprehension `{k: v for ...}`
+- IDs `552-571` upgraded to full in-depth French structure:
+  - `552`-`556`: `range` en compréhension dict, `items()` unpack, filtre `if`, ternaire en valeur, clés calculées (`str(x)`)
+  - `557`-`561`: boucles `for` imbriquées / clés tuple, `zip`, itérable vide → `{}`, filtre + transformation, `==` sur dicts (ordre ignoré)
+  - `562`-`564`: `==` faux (valeurs différentes / clés différentes), `!=`
+  - `565`-`566`: `is` sur littéraux vs `d is d`
+  - `567`-`568`: `bool({})` / dict non vide truthy
+  - `569`-`570`: `+` et `*` interdits sur dict
+  - `571`: vue `.keys()` dynamique après mutation
+- IDs `572-581` upgraded to full in-depth French structure:
+  - `572`-`573`: vues `.values()` / `.items()` dynamiques
+  - `574`-`576`: itération `for k in d`, `.values()`, `.items()` avec déballage
+  - `577`-`580`: `list(d)`, `tuple(d)`, `set(d)`, `sorted(d)` (clés)
+  - `581`: `dict.fromkeys` / appel sur instance ignorée, défaut `None`
+- IDs `582-591` upgraded to full in-depth French structure:
+  - `582`: `fromkeys(..., valeur)` — une seule référence (piège mutables)
+  - `583`: `fromkeys` sur instance, clés neuves, instance ignorée
+  - `584`-`585`: `max(d)` / `min(d)` sur les clés
+  - `586`-`587`: `max` / `sum` sur `.values()`
+  - `588`-`589`: `all` / `any` sur `.values()`
+  - `590`: motif `.get(...) or ...` et piège des valeurs falsy légitimes
+  - `591`: clés entières
+- IDs `592-600` upgraded to full in-depth French structure:
+  - `592`: clés tuple composites (hashables, ordre compte)
+  - `593`: listes non hashables comme clés → TypeError
+  - `594`: dicts non hashables comme clés → TypeError
+  - `595`: clés `None` / `True` / `False`
+  - `596`-`598`: `1` vs `1.0` même clé (lookup, littéral, assignations)
+  - `599`-`600`: `.pop(k, default)` branche présent / absent
+
+### Current checkpoint
+- Last fully updated ID in this latest pass: `600`.
+- **Level 1 range `301-600`**: French in-depth block (10 sections + tiers) is **complete** for this tracker pass.
+- **Next (project-dependent)**: spot-check English/French parity per ID, or extend the same pattern to Level 2+ (`601+`) per `planning.md` / `AGENTS.md`.
+
+## Progress Log (Level 2 FR — IDs 601–900)
+
+### 2026-03-19 — realignment with `QUESTIONS_BANK` (Level 2 = IDs 601–900)
+
+- **Problem:** French detailed entries for `601+` still used **function / `def`** boilerplate while the bank tests **numeric operators, precedence, conversions**, etc.
+- **Done:** **601–650** replaced with bank-aligned French (10-section style: Débutant → Remarques). Fragments: `scripts/fr-l2-frags/fr-l2-601-620.mjs`, `fr-l2-621-640.mjs`, `fr-l2-641-650.mjs`. Splice script: `scripts/patch-fr-l2-601-650.mjs`. Build verified: `npm run build` (includes `inject-precache.js`).
+- **Done (suite):** **651–700** — chaînes, comparaisons, and/or/not, chaînages, in/not in, is, unaires, //, %, round(.5). Fragments: `fr-l2-651-670.mjs`, `fr-l2-671-690.mjs`, `fr-l2-691-700.mjs`. Patch: `scripts/patch-fr-l2-651-700.mjs`. Build OK.
+- **Next:** **701–750** (puis jusqu'à **900**) ; repérer les marqueurs (701 actuellement encore contenu « class » hors niveau 2 — aligner sur `level2_intermediate_a.ts` pour les textes de banque).
+
+## Remaining Work
+
+### Immediate next batches
+1. Optional: audit `301-600` for any regression or glossary drift.
+2. If continuing the same workstream: start Level 2 French in-depth at `601+` in small batches.
+
+### Remaining range
+- None for `592-600` (closed).
+
+## Quality Rules (Non-Negotiable)
+
+- Each ID must be uniquely written (no copy/paste templates across different questions).
+- French must match English depth and section parity.
+- No placeholder lines (e.g., "see above", generic fallback text).
+- Keep explanations pedagogical: concrete examples, edge cases, and execution logic.
+
+## Verification Workflow
+
+For each batch:
+1. Read target question IDs from `src/questionsBank.ts`.
+2. Update corresponding IDs in `src/data/detailedExplanationsTranslations.ts`.
+3. Verify headings and structure consistency.
+4. Run build checks after edits.
+5. Update this `task.md` checkpoint (completed IDs + next target).
+
+## Blocking Issue Log
+
+- A prior session hit disk-space errors (`No space left on device`) during edits.
+- If this occurs again:
+  1. Free disk space.
+  2. Resume from the last checkpoint in this file.
+
+## Next Action (when resuming)
+
+Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2 French realignment: **601–700 done**; resume at **701** (batch toward **900**).

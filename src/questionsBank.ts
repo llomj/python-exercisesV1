@@ -51,7 +51,7 @@ import { level10IntermediateA } from './data/questions/level10_intermediate_a';
 import { level10IntermediateB } from './data/questions/level10_intermediate_b';
 import { level10ExpertA } from './data/questions/level10_expert_a';
 import { level10ExpertB } from './data/questions/level10_expert_b';
-import { QUESTIONS_PER_SUBLEVEL } from './constants';
+import { QUESTIONS_PER_LEVEL, QUESTIONS_PER_SUBLEVEL } from './constants';
 
 // GENERATOR ENGINE
 // Assigns BEGINNER for the first third, INTERMEDIATE for the second third, EXPERT for the last third.
@@ -85,7 +85,8 @@ const generateLevel = (level: number, stage: PersonaStage, patterns: ((i: number
 };
 
 export const QUESTIONS_BANK: Question[] = [
-  ...generateLevel(0, PersonaStage.TADPOLE, level0Patterns, 1),
+  // Level 0 must contribute exactly QUESTIONS_PER_LEVEL (300) so IDs 301–600 stay unique Level 1.
+  ...generateLevel(0, PersonaStage.TADPOLE, level0Patterns.slice(0, QUESTIONS_PER_LEVEL), 1),
   ...generateLevel(1, PersonaStage.PLANKTON, [...level1Patterns, ...level1IntermediateA, ...level1IntermediateB, ...level1ExpertA, ...level1ExpertB], 301),
   ...generateLevel(2, PersonaStage.SHRIMP, [...level2Patterns, ...level2IntermediateA, ...level2IntermediateB, ...level2ExpertA, ...level2ExpertB], 601),
   ...generateLevel(3, PersonaStage.CRAB, [...level3Patterns, ...level3IntermediateA, ...level3IntermediateB, ...level3ExpertA, ...level3ExpertB], 901),
