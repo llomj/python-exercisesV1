@@ -1,5 +1,8 @@
 # Python Exercises Learn - AI Agent Operational Rules
 
+## 0. Language Rule
+- **Always reply in English**: Agents must always answer and reply to the user in English, regardless of the user's language or the app's UI language (e.g. French mode). Do not respond in French or other languages unless the user explicitly asks for a translation.
+
 ## 1. Genome Checkpoint (STRICT STATE)
 - **Target**: 3300 Questions (Level 0: 300 + Levels 1–10: 300 each = 3300 total).
 - **Current Progress**: 3300 / 3300 Questions

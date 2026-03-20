@@ -240,13 +240,53 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
 - **Problem:** French detailed entries for `601+` still used **function / `def`** boilerplate while the bank tests **numeric operators, precedence, conversions**, etc.
 - **Done:** **601–650** replaced with bank-aligned French (10-section style: Débutant → Remarques). Fragments: `scripts/fr-l2-frags/fr-l2-601-620.mjs`, `fr-l2-621-640.mjs`, `fr-l2-641-650.mjs`. Splice script: `scripts/patch-fr-l2-601-650.mjs`. Build verified: `npm run build` (includes `inject-precache.js`).
 - **Done (suite):** **651–700** — chaînes, comparaisons, and/or/not, chaînages, in/not in, is, unaires, //, %, round(.5). Fragments: `fr-l2-651-670.mjs`, `fr-l2-671-690.mjs`, `fr-l2-691-700.mjs`. Patch: `scripts/patch-fr-l2-651-700.mjs`. Build OK.
-- **Next:** **701–750** (puis jusqu'à **900**) ; repérer les marqueurs (701 actuellement encore contenu « class » hors niveau 2 — aligner sur `level2_intermediate_a.ts` pour les textes de banque).
+- **Done (suite):** **701–750** — math.sqrt, floor/ceil/trunc, pi/e, inf/nan, isnan/isinf/isfinite, log/log10/log2, factorial, gcd/lcm, comb/perm, divmod, round, fsum, copysign, pow, isclose, degrees/radians, hypot. Fragment: `fr-l2-701-750.mjs`. Patch: `scripts/patch-fr-l2-701-750.mjs`. Build OK.
+- **Done (suite):** **751–800** — math.fabs, modf, prod, remainder, isqrt, dist, fmod, exp, pow(0,0), tau, inf+1, 0.1+0.2 gotcha, underscores, b/o/x literals, int(1e3), float overflow, sys.float_info, 2/3+1/3, abs, divmod/round, max/min/sorted, sum, pow mod, bool. Fragment: `fr-l2-751-800.mjs`. Patch: `scripts/patch-fr-l2-751-800.mjs`. Build OK.
+- **Done (suite):** **801–850** — Decimal, Fractions, Complex, Bitwise (level2_expert_a). Fragment: `fr-l2-801-850.mjs`. Patch: `scripts/patch-fr-l2-801-850.mjs`. Build OK.
+- **Done (suite):** **851–900** — float imprecision, inf/nan, epsilon, negative zero, copysign, arbitrary int, float overflow, int base, bin/hex/oct, bit_length, from_bytes/to_bytes, format, isinstance, bool, sum booleans (level2_expert_b). Fragment: `fr-l2-851-900.mjs`. Patch: `scripts/patch-fr-l2-851-900.mjs`. Build OK.
+- **Level 2 FR 601–900 complete.**
+
+## Progress Log (Level 3 FR — IDs 901–1200)
+
+### 2026-03-20 — Level 3 French in-depth (conditionals, loops, dicts, etc.)
+
+- **Done:** **901–950** — conditionals, booleans, logic (True/False, and/or/not, comparisons, == vs is, in/not in). Fragment: `fr-l3-901-950.mjs`. Patch: `patch-fr-l3-901-950.mjs`. Build OK.
+- **Done:** **951–1000** — truthiness, if/elif/else, ternary, and/or short-circuit. Fragment: `fr-l3-951-1000.mjs`. Patch: `patch-fr-l3-951-1000.mjs`. Build OK.
+- **Done:** **1001–1050** — any/all, nested ternaries, guard clauses, bool/truthiness, or/and fallbacks. Fragment: `fr-l3-1001-1050.mjs`. Patch: `patch-fr-l3-1001-1050.mjs`. Build OK.
+- **Done:** **1051–1100** — precedence, parens, not, chained comparisons, any/all, dict.get, lambda, bool/int. Fragment: `fr-l3-1051-1100.mjs`. Patch: `patch-fr-l3-1051-1100.mjs`. Build OK.
+- **Done:** **1101–1150** — match/case (3.10), walrus operator (3.8). Fragment: `fr-l3-1101-1150.mjs`. Patch: `patch-fr-l3-1101-1150.mjs`. Build OK.
+- **Done:** **1151–1200** — truthiness edge cases, bool gotchas, advanced conditionals. Fragment: `fr-l3-1151-1200.mjs`. Patch: `patch-fr-l3-1151-1200.mjs`. Build OK.
+- **Level 3 FR 901–1200 complete.**
 
 ## Remaining Work
 
+### Progress Log (Level 4 FR — IDs 1201–1500)
+
+### 2026-03-20 — Level 4 French in-depth (Loops, range, for/while, comprehensions)
+
+- **Done:** **1201–1250** — `level4.ts` Q1–50. Fragment: `fr-l4-1201-1250.mjs`. Patch: `patch-fr-l4-1201-1250.mjs`. Build OK.
+- **Done:** **1251–1300** — `level4.ts` Q51–96 + `level4_for_loops` Q1–4. Fragment: `fr-l4-1251-1300.mjs`. Patch: `patch-fr-l4-1251-1300.mjs`. Build OK.
+- **Done:** **1301–1350** — `level4_for_loops` Q5–54. Fragment: `fr-l4-1301-1350.mjs`. Patch: `patch-fr-l4-1301-1350.mjs`. Build OK.
+- **Done:** **1351–1400** — `level4_for_loops` Q55–100 + `level4_while_batch1` Q1–4. Fragment: `fr-l4-1351-1400.mjs`. Patch: `patch-fr-l4-1351-1400.mjs`. Build OK.
+- **Done:** **1401–1450** — `level4_while_batch1` Q5–26, `level4_while_loops` (26), `level4_while_batch3` Q1–2. Fragment: `fr-l4-1401-1450.mjs`. Patch: `patch-fr-l4-1401-1450.mjs`. Build OK.
+- **Done:** **1451–1500** — `level4_while_batch3` Q3–26, `level4_while_batch4` (26). Fragment: `fr-l4-1451-1500.mjs`. Patch: `patch-fr-l4-1451-1500.mjs`. Build OK.
+- **Level 4 FR 1201–1500 complete.**
+
+### Progress Log (Level 5 FR — IDs 1501–1800)
+
+### 2026-03-20 — Level 5 French in-depth (lists, comprehensions, sets, collections)
+
+- **Done:** **1501–1550** — `level5.ts` Q1–50. Fragment: `fr-l5-1501-1550.mjs`. Patch: `patch-fr-l5-1501-1550.mjs`. Build OK.
+- **Done:** **1551–1600** — `level5.ts` Q51–100. Fragment: `fr-l5-1551-1600.mjs`. Patch: `patch-fr-l5-1551-1600.mjs`. Build OK.
+- **Done:** **1601–1650** — `level5_intermediate_a.ts` Q1–50. Fragment: `fr-l5-1601-1650.mjs`. Patch: `patch-fr-l5-1601-1650.mjs`. Build OK.
+- **Done:** **1651–1700** — `level5_intermediate_b.ts` Q1–50. Fragment: `fr-l5-1651-1700.mjs`. Patch: `patch-fr-l5-1651-1700.mjs`. Build OK.
+- **Done:** **1701–1750** — `level5_expert_a.ts` Q1–50. Fragment: `fr-l5-1701-1750.mjs`. Patch: `patch-fr-l5-1701-1750.mjs`. Build OK.
+- **Done:** **1751–1800** — `level5_expert_b.ts` Q1–50. Fragment: `fr-l5-1751-1800.mjs`. Patch: `patch-fr-l5-1751-1800.mjs`. Build OK.
+- **Level 5 FR 1501–1800 complete.**
+
 ### Immediate next batches
-1. Optional: audit `301-600` for any regression or glossary drift.
-2. If continuing the same workstream: start Level 2 French in-depth at `601+` in small batches.
+1. Level 6 FR (IDs **1801–2100**): fragments + patches per `QUESTIONS_BANK`.
+2. Optional: audit `301-600` for any regression or glossary drift.
 
 ### Remaining range
 - None for `592-600` (closed).
@@ -276,4 +316,4 @@ For each batch:
 
 ## Next Action (when resuming)
 
-Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2 French realignment: **601–700 done**; resume at **701** (batch toward **900**).
+Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2 French realignment: **601–900 done**. Next: Level 3 (IDs 901+) or audit/spot-check.
