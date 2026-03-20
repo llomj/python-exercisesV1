@@ -113009,1415 +113009,2006 @@ Exemples :
 
 Remarques :
 • Réponse : True (1re option).`,
-  2651: `Lorsqu'une classe hérite d'un attribut, elle peut y accéder via le MRO, mais il n'apparaît pas dans le __dict__ propre de la sous-classe.
+  2651: `Qu'est-ce qu'un descripteur en Python ?
+
+Débutant :
+• C'est un objet qui implémente au moins une des méthodes __get__, __set__ ou __delete__.
+
+Intermédiaire :
+• Python l'utilise dans la résolution de obj.attr sur la classe : le descripteur peut intercepter lecture/écriture/suppression.
+
+Expert :
+• @property, les fonctions (méthodes liées), staticmethod et classmethod s'appuient tous sur ce protocole.
 
 Concepts clés :
-• B.__dict__ ne contient que les attributs définis directement sur B
-• Les attributs hérités vivent dans le __dict__ de la classe parente
-• Python recherche les attributs à travers la chaîne MRO
-• "x" in B.__dict__ ne vérifie que le namespace propre de B
+• Protocole descripteur = hook sur l'accès attribut.
 
-Comment ça fonctionne :
-• class A: x = 1 définit x dans A.__dict__
-• class B(A): pass ne définit rien dans B.__dict__
-• B.x fonctionne car Python trouve x dans A via le MRO
-• Mais "x" in B.__dict__ est False car B n'a pas de propre x
+Distinctions clés :
+• Ce n'est ni un décorateur générique ni un générateur ni une built-in isolée.
 
-Exemple :
-class A:
-    x = 1
-class B(A): pass
-"x" in A.__dict__  # True
-"x" in B.__dict__  # False
-B.x                # 1 (trouvé via MRO)
+Fonctionnement :
+• Attribut de classe pointant vers un objet avec __get__ (et éventuellement __set__/__delete__).
 
-Usages courants :
-• Inspecter les attributs qu'une classe définit elle-même
-• Comprendre la résolution vs propriété des attributs
-• Déboguer les chaînes d'héritage`,
-  2652: `Lorsqu'une sous-classe redéfinit un attribut, il est stocké dans le __dict__ propre de la sous-classe, masquant la version du parent.
+Exécution étape par étape :
+• Lecture de C().x : Python trouve x dans la classe ; si descripteur, appelle __get__(desc, instance, owner).
 
-Concepts clés :
-• B définit x = 2, donc "x" est dans B.__dict__
-• Cela masque le x = 1 de A
-• A.__dict__["x"] reste 1
-• B.__dict__["x"] est 2
+Ordre des opérations :
+• type(obj).__getattribute__ orchestre data descriptor, puis __dict__ instance, puis non-data, etc.
 
-Comment ça fonctionne :
-• class B(A): x = 2 crée un nouvel attribut x dans le namespace de B
-• B.__dict__ contient maintenant "x"
-• A.x reste 1, B.x est 2
+Cas d'utilisation courants :
+• Validation, lazy loading, propriétés, ORM.
 
-Exemple :
-class A:
-    x = 1
-class B(A):
-    x = 2
-"x" in B.__dict__  # True
-B.__dict__["x"]    # 2
-A.__dict__["x"]    # 1
+Cas limites :
+• Descripteur défini sur l'instance : ignoré pour l'accès normal (doit être attribut de classe).
 
-Usages courants :
-• Comprendre le masquage d'attributs
-• Surcharger les attributs de classe dans les sous-classes
-• Inspecter les namespaces de classe`,
-  2653: `Les méthodes suivent les mêmes règles que les attributs — les méthodes héritées vivent dans le __dict__ du parent, pas dans celui de l'enfant.
+Considérations de performance :
+• Chaque accès peut coûter un appel Python supplémentaire.
+
+Exemples :
+• class D: __get__ return 42 sur attribut de classe.
+
+Remarques :
+• Réponse : objet définissant __get__, __set__ ou __delete__ (1re option).`,
+  2652: `Méthodes du protocole descripteur
+
+Débutant :
+• Les trois noms à retenir : __get__, __set__, __delete__.
+
+Intermédiaire :
+• Un seul suffit pour être descripteur ; les trois sont optionnels mais composent le protocole complet.
+
+Expert :
+• __get__(self, obj, owner) ; __set__(self, obj, value) ; __delete__(self, obj).
 
 Concepts clés :
-• B hérite de f depuis A
-• B.__dict__ ne contient pas "f"
-• B().f() fonctionne encore via la recherche MRO
-• Seul le fait de surcharger f dans B le placerait dans B.__dict__
+• Contrôle lecture / écriture / suppression d'un attribut nommé.
 
-Comment ça fonctionne :
-• class A: def f(self): ... stocke f dans A.__dict__
-• class B(A): pass ne stocke rien dans B.__dict__
-• B().f() trouve f dans A via l'ordre de résolution des méthodes
+Distinctions clés :
+• Pas __init__/__new__/__del__ ni context manager ni itérateur.
 
-Exemple :
-class A:
-    def f(self): return 1
-class B(A): pass
-"f" in A.__dict__  # True
-"f" in B.__dict__  # False
-B().f()            # 1 (trouvé via MRO)
+Fonctionnement :
+• Appelés par le mécanisme d'attributs de type.
 
-Usages courants :
-• Vérifier quelles méthodes une classe définit elle-même
-• Comprendre l'héritage vs définition des méthodes`,
-  2654: `Les attributs d'instance créés avec self.attr sont stockés dans __dict__ de l'instance, quel que soit l'__init__ qui les a créés.
+Exécution étape par étape :
+• Selon l'opération (get/set/del), la méthode correspondante est invoquée si présente.
 
-Concepts clés :
-• A.__init__ définit self.x = 1
-• B hérite de __init__ depuis A
-• Quand B() est appelé, self.x = 1 stocke x sur l'instance
-• b.__dict__ contient "x"
+Ordre des opérations :
+• getattribute avant retour brut depuis __dict__ selon type de descripteur.
 
-Comment ça fonctionne :
-• B() appelle l'__init__ hérité de A(self)
-• self.x = 1 crée x sur l'instance b
-• b.__dict__ == {"x": 1}
-• "x" in b.__dict__ est True
+Cas d'utilisation courants :
+• Implémenter des champs calculés ou contrôlés.
 
-Exemple :
-class A:
-    def __init__(self):
-        self.x = 1
-class B(A): pass
-b = B()
-b.__dict__          # {"x": 1}
-"x" in b.__dict__   # True
+Cas limites :
+• Accès depuis la classe : obj peut être None dans __get__.
 
-Usages courants :
-• Comprendre où vivent les attributs d'instance
-• Distinguer attributs d'instance et attributs de classe`,
-  2655: `La méthode __subclasses__() renvoie une liste des sous-classes immédiates (directes) d'une classe. Elle utilise des références faibles en interne.
+Considérations de performance :
+• N/A pour usages normaux.
+
+Exemples :
+• property combine ces hooks via un objet property.
+
+Remarques :
+• Réponse : __get__, __set__, __delete__ (1re option).`,
+  2653: `Descripteur de données (data descriptor)
+
+Débutant :
+• Il définit __set__ ou __delete__ en plus de __get__ (souvent les deux premiers).
+
+Intermédiaire :
+• Priorité sur la valeur stockée dans __dict__ de l'instance pour ce nom.
+
+Expert :
+• C'est ce qui empêche d'écraser une property en faisant instance.__dict__['x'] = ... dans les cas usuels.
 
 Concepts clés :
-• A.__subclasses__() renvoie les sous-classes directes de A
-• B est une sous-classe directe de A, donc elle apparaît dans la liste
-• Seules les sous-classes directes sont incluses, pas les petits-enfants
-• Le résultat est une liste d'objets classe
+• « Data » = présence de __set__ ou __delete__.
 
-Comment ça fonctionne :
-• Python suit les sous-classes via des références faibles
-• Quand class B(A) est définie, A enregistre B
-• A.__subclasses__() renvoie [<class 'B'>]
+Distinctions clés :
+• Pas « seulement __get__ » ni __init__/__del__.
 
-Exemple :
-class A: pass
-class B(A): pass
-class C(A): pass
-class D(B): pass
-A.__subclasses__()  # [<class 'B'>, <class 'C'>]
-B.__subclasses__()  # [<class 'D'>]
+Fonctionnement :
+• Recherche MRO : descripteurs de données en premier.
 
-Usages courants :
-• Trouver toutes les implémentations d'une classe de base
-• Systèmes de plugins/registre
-• Introspection de frameworks`,
-  2656: `__subclasses__() renvoie toutes les sous-classes directes. B et C héritent tous deux de A, donc len(A.__subclasses__()) est 2.
+Exécution étape par étape :
+• Lecture : __get__ du descripteur même si clé présente en __dict__.
 
-Concepts clés :
-• B(A) et C(A) sont tous deux sous-classes directes de A
-• __subclasses__() compte chaque sous-classe directe
-• Les sous-classes indirectes (enfants de B ou C) ne sont pas comptées
+Ordre des opérations :
+• Data descriptor avant dict instance.
 
-Comment ça fonctionne :
-• class B(A) enregistre B comme sous-classe de A
-• class C(A) enregistre C comme sous-classe de A
-• A.__subclasses__() renvoie [B, C]
-• len() de cette liste est 2
+Cas d'utilisation courants :
+• Champs validés, propriétés avec setter.
 
-Exemple :
-class A: pass
-class B(A): pass
-class C(A): pass
-len(A.__subclasses__())  # 2
+Cas limites :
+• property en lecture seule expose quand même un __set__ qui lève AttributeError : reste data descriptor.
 
-Usages courants :
-• Compter les implémentations
-• Découverte de plugins
-• Patterns de registre`,
-  2657: `Quand le parent et l'enfant définissent __slots__, l'enfant obtient les slots des deux. Le __slots__ de l'enfant ne doit lister que les NOUVEAUX slots.
+Considérations de performance :
+• Interception systématique.
+
+Exemples :
+• Desc avec __get__ + __set__ qui écrit dans _privé.
+
+Remarques :
+• Réponse : __get__ et __set__ (ou __delete__) (1re option).`,
+  2654: `Descripteur non-data
+
+Débutant :
+• Seulement __get__, pas __set__ ni __delete__.
+
+Intermédiaire :
+• L'instance peut masquer le descripteur en plaçant la clé dans son __dict__.
+
+Expert :
+• Les fonctions en tant qu'attributs de classe sont des non-data descriptors.
 
 Concepts clés :
-• A définit __slots__ = ("x",)
-• B(A) définit __slots__ = ("y",) — ajoute y
-• Les instances de B ont les slots x et y
-• NE PAS redéclarer les slots du parent dans __slots__ de l'enfant
+• Liaison paresseuse via __get__ sans contrôle d'écriture via le protocole.
 
-Comment ça fonctionne :
-• b = B() crée une instance avec les slots x et y
-• b.x = 1 utilise le slot x de A
-• b.y = 2 utilise le slot y de B
-• (b.x, b.y) renvoie (1, 2)
+Distinctions clés :
+• Pas « les deux __get__ et __set__ ».
 
-Exemple :
-class A:
-    __slots__ = ("x",)
-class B(A):
-    __slots__ = ("y",)
-b = B()
-b.x = 1
-b.y = 2
-(b.x, b.y)  # (1, 2)
+Fonctionnement :
+• Après échec data descriptor, Python consulte __dict__ puis non-data.
 
-Usages courants :
-• Hiérarchies d'héritage économes en mémoire
-• Étendre les classes avec slots par de nouveaux attributs`,
-  2658: `Si une classe enfant ne définit pas __slots__, elle obtient automatiquement un __dict__, permettant des attributs arbitraires en plus des slots hérités.
+Exécution étape par étape :
+• c.x lit le dict si 'x' y est, sinon appelle __get__ du descripteur.
 
-Concepts clés :
-• A a __slots__ = ("x",) — pas de __dict__ sur les instances de A
-• B(A) n'a pas __slots__ — les instances de B ont un __dict__
-• Les instances de B peuvent utiliser le slot x de A ET stocker des attributs extra dans __dict__
-• b.z = 3 est stocké dans b.__dict__
+Ordre des opérations :
+• dict instance avant non-data descriptor.
 
-Comment ça fonctionne :
-• b = B() a à la fois le slot x (de A) et __dict__ (de B)
-• b.x = 1 utilise le slot
-• b.z = 3 utilise __dict__
-• Les deux sont accessibles
+Cas d'utilisation courants :
+• Méthodes, staticmethod, classmethod, cache par attribut instance.
 
-Exemple :
-class A:
-    __slots__ = ("x",)
-class B(A): pass
-b = B()
-b.x = 1
-b.z = 3
-(b.x, b.z)      # (1, 3)
-hasattr(b, "__dict__")  # True
+Cas limites :
+• Shadowing accidentel si on assigne au même nom sur l'instance.
 
-Usages courants :
-• Comprendre le comportement de l'héritage des slots
-• Mélanger classes avec et sans slots`,
-  2659: `Un seul underscore initial est une convention de nommage signifiant "privé par convention" — cela ne restreint pas l'accès.
+Considérations de performance :
+• Accès dict souvent très rapide une fois l'attribut copié.
+
+Exemples :
+• self.meth = lambda ... remplace la méthode pour cette instance seulement.
+
+Remarques :
+• Réponse : seulement __get__ (sans __set__) (1re option).`,
+  2655: `Priorité des data descriptors
+
+Débutant :
+• Ils passent avant le dictionnaire d'attributs de l'instance.
+
+Intermédiaire :
+• Même si l'instance a déjà une entrée pour ce nom, le data descriptor gagne à la lecture (et contrôle l'écriture).
+
+Expert :
+• Chaîne type(obj).__getattribute__ : MRO pour data descriptors d'abord.
 
 Concepts clés :
-• self._x = 1 est une convention pour "usage interne"
-• Aucune restriction d'accès n'est appliquée
-• Les sous-classes peuvent accéder librement à _x
-• B().get_x() renvoie self._x qui vaut 1
+• Garantir l'invariant du descripteur.
 
-Comment ça fonctionne :
-• A.__init__ définit self._x = 1
-• B hérite de __init__ depuis A
-• B().get_x() accède à self._x — renvoie 1
-• Pas de name mangling ni restriction
+Distinctions clés :
+• Pas avant le __dict__ de la classe en tant que « module globals » ni builtins en premier.
 
-Exemple :
-class A:
-    def __init__(self):
-        self._x = 1
-class B(A):
-    def get_x(self):
-        return self._x
-B().get_x()  # 1
+Fonctionnement :
+• Tableau de priorité documenté dans le modèle descripteur CPython.
 
-Usages courants :
-• Indiquer des attributs internes/privés par convention
-• Pas d'application réelle — juste un signal aux développeurs`,
-  2660: `Les attributs à double underscore déclenchent le name mangling — le nom d'attribut est préfixé avec _ClassName. Donc __x dans A devient _A__x, et __x dans B chercherait _B__x.
+Exécution étape par étape :
+• c.__dict__['x']='instance' puis c.x peut encore retourner la valeur du descripteur.
 
-Concepts clés :
-• self.__x = 1 dans A.__init__ stocke _A__x sur l'instance
-• self.__x dans B.get_x cherche _B__x (nom mangle de B)
-• _B__x n'existe pas — seul _A__x existe
-• Cela lève AttributeError
+Ordre des opérations :
+• Data descriptor > __dict__ instance > non-data > __dict__ classe...
 
-Comment ça fonctionne :
-• A.__init__: self.__x = 1 → self._A__x = 1
-• B.get_x: return self.__x → return self._B__x
-• _B__x n'a jamais été défini, donc AttributeError
-• C'est le mécanisme de name mangling de Python
+Cas d'utilisation courants :
+• @property qui ne peut pas être contournée par assignation directe au dict.
 
-Exemple :
-class A:
-    def __init__(self):
-        self.__x = 1
-class B(A):
-    def get_x(self):
-        return self.__x  # cherche _B__x
-B().get_x()  # AttributeError: 'B' object n'a pas attribute '_B__x'
+Cas limites :
+• Objets sans __dict__ (slots) : mêmes règles conceptuelles sur le mécanisme.
 
-Usages courants :
-• Comprendre le comportement du name mangling
-• Éviter l'accès accidentel aux attributs dans les sous-classes`,
-  2661: `Vous pouvez accéder aux attributs name-manglés en utilisant la forme mangle _ClassName__attr directement.
+Considérations de performance :
+• Coût d'interception à chaque accès.
+
+Exemples :
+• Prop avec __set__ no-op pour forcer data.
+
+Remarques :
+• Réponse : __dict__ de l'instance (1re option).`,
+  2656: `Priorité des non-data descriptors
+
+Débutant :
+• Plus basse que le __dict__ de l'instance pour la lecture.
+
+Intermédiaire :
+• Si la clé est dans instance.__dict__, on ne consulte pas __get__ du descripteur de classe.
+
+Expert :
+• D'où la différence fondamentale avec les data descriptors.
 
 Concepts clés :
-• self.__x dans A devient self._A__x
-• Vous pouvez y accéder comme self._A__x depuis n'importe où
-• Cela contourne la protection du name mangling
-• B.get_x utilise self._A__x — renvoie 1
+• Permet cache ou override par instance.
 
-Comment ça fonctionne :
-• A.__init__: self.__x = 1 → stocké comme _A__x
-• B.get_x: return self._A__x → lit directement _A__x
-• Le nom manglé existe sur l'instance
-• Renvoie 1
+Distinctions clés :
+• Pas « plus haute » ni « égale » ni au-dessus des data descriptors.
 
-Exemple :
-class A:
-    def __init__(self):
-        self.__x = 1
-class B(A):
-    def get_x(self):
-        return self._A__x
-B().get_x()  # 1
+Fonctionnement :
+• Étape 2 du lookup : dict instance avant non-data en classe.
 
-Usages courants :
-• Accéder aux attributs privés du parent si nécessaire
-• Tests et débogage des attributs name-manglés`,
-  2662: `Le name mangling de Python transforme tout identifiant avec deux underscores ou plus en tête et au plus un underscore en queue en _ClassName__attr.
+Exécution étape par étape :
+• Premier accès : descripteur ; assignation instance.attr : dict gagne ensuite.
 
-Concepts clés :
-• __attr devient _ClassName__attr
-• ClassName est la classe où l'attribut est défini
-• S'applique aux attributs et méthodes
-• Les dunders (__attr__) ne sont PAS manglés (deux underscores en queue)
+Ordre des opérations :
+• Vérification ordre data → dict → non-data.
 
-Comment ça fonctionne :
-• class Foo: self.__bar = 1 stocke self._Foo__bar
-• class Sub(Foo): self.__bar serait self._Sub__bar
-• Le mangling a lieu à la compilation
-• Il empêche les écrasements accidentels dans les sous-classes
+Cas d'utilisation courants :
+• Attacher des données sur self sans changer la méthode de classe.
 
-Exemple :
-class MyClass:
-    def __init__(self):
-        self.__secret = 42
-obj = MyClass()
-obj._MyClass__secret  # 42
+Cas limites :
+• delattr pour enlever l'ombre et retrouver le descripteur.
 
-Usages courants :
-• Éviter les conflits de noms d'attributs dans les sous-classes
-• Attributs pseudo-privés dans les classes`,
-  2663: `Un seul underscore initial est purement une convention en Python — il signale aux autres développeurs que l'attribut est destiné à un usage interne.
+Considérations de performance :
+• Une fois en dict, accès direct.
+
+Exemples :
+• Monkey-patch d'une méthode sur une instance.
+
+Remarques :
+• Réponse : plus basse que le __dict__ de l'instance (1re option).`,
+  2657: `@property : quel type de descripteur ?
+
+Débutant :
+• Descripteur de données.
+
+Intermédiaire :
+• Même lecture seule, l'objet property fournit des hooks qui comptent comme data (setter interdit ou présent).
+
+Expert :
+• Empêche le shadowing accidentel depuis __dict__.
 
 Concepts clés :
-• _attr signifie "privé par convention"
-• Aucune restriction d'accès n'est appliquée par Python
-• Toujours entièrement accessible de l'extérieur de la classe
-• PEP 8 recommande ceci pour les attributs internes
+• Intégration haut niveau du protocole.
 
-Comment ça fonctionne :
-• self._name = "internal" — convention seulement
-• obj._name fonctionne encore depuis n'importe où
-• Les linters peuvent avertir sur l'accès aux attributs _
-• from module import * ignore les noms préfixés par _
+Distinctions clés :
+• Pas non-data comme staticmethod.
 
-Exemple :
-class Config:
-    def __init__(self):
-        self._secret = "hidden"
-c = Config()
-c._secret  # "hidden" — accessible !
+Fonctionnement :
+• property(fget, fset, fdel, doc).
 
-Usages courants :
-• Marquer les APIs internes
-• Signaler "ne pas utiliser directement"
-• Variables privées au niveau du module`,
-  2664: `Un double underscore initial déclenche le mécanisme de name mangling de Python, qui renomme l'attribut pour inclure le nom de la classe.
+Exécution étape par étape :
+• Lecture appelle fget via __get__ du descripteur property.
 
-Concepts clés :
-• __attr déclenche le name mangling
-• Devient _ClassName__attr en interne
-• Rend l'accès accidentel depuis les sous-classes plus difficile
-• Pas une vraie confidentialité — toujours accessible via le nom manglé
+Ordre des opérations :
+• Comme tout data descriptor dans la résolution.
 
-Comment ça fonctionne :
-• self.__x = 1 devient self._ClassName__x = 1
-• Dans une sous-classe self.__x devient self._SubClass__x
-• Des classes différentes obtiennent des noms manglés différents
-• Empêche les collisions de noms accidentelles dans l'héritage
+Cas d'utilisation courants :
+• Surface attribut avec logique derrière.
 
-Exemple :
-class Parent:
-    def __init__(self):
-        self.__val = 10
-p = Parent()
-# p.__val        # AttributeError
-p._Parent__val   # 10 — accessible via le nom manglé
+Cas limites :
+• property sans setter : assignation lève AttributeError via le chemin data.
 
-Usages courants :
-• Éviter les collisions de noms d'attributs dans les hiérarchies profondes
-• Attributs pseudo-privés (plus fort que le simple underscore)`,
-  2665: `Les noms dunder (double underscore des deux côtés) comme __init__, __str__, __repr__ ne sont PAS soumis au name mangling. Ils sont réservés aux méthodes spéciales de Python.
+Considérations de performance :
+• Très faible overhead.
+
+Exemples :
+• aire = property(lambda self: self.w*self.h).
+
+Remarques :
+• Réponse : data descriptor (1re option).`,
+  2658: `@staticmethod
+
+Débutant :
+• Non-data descriptor : seulement __get__ qui renvoie la fonction brute.
+
+Intermédiaire :
+• Aucun self ni cls injecté à l'appel.
+
+Expert :
+• Peut être masqué par une entrée dans __dict__ de l'instance (comme toute fonction en classe).
 
 Concepts clés :
-• __attr__ (underscores avant et après) = dunder
-• Les dunders ne sont jamais manglés
-• Ils sont réservés aux méthodes spéciales/magiques de Python
-• Seul __attr (leading only) déclenche le mangling
+• Fonction « rangée » dans la classe sans liaison.
 
-Comment ça fonctionne :
-• __init__ reste __init__ — pas de mangling
-• __str__ reste __str__ — pas de mangling
-• __private (pas d'underscores en queue) → _ClassName__private
-• __dunder__ (des deux côtés) → __dunder__ (inchangé)
+Distinctions clés :
+• Pas data descriptor.
 
-Exemple :
-class Foo:
-    def __init__(self):   # PAS manglé
-        self.__bar = 1    # manglé en _Foo__bar
-    def __repr__(self):   # PAS manglé
-        return "Foo"
+Fonctionnement :
+• staticmethod.__get__ retourne func original.
 
-Usages courants :
-• Comprendre quels noms sont manglés
-• Implémenter correctement les méthodes magiques`,
-  2666: `Un compteur au niveau de la classe incrémenté dans __init__ donne à chaque instance un ID séquentiel unique.
+Exécution étape par étape :
+• C.f et C().f donnent la même callable sans premier argument implicite.
 
-Concepts clés :
-• A.class_id est un attribut de classe partagé par toutes les instances
-• Chaque appel __init__ incrémente A.class_id
-• self.id capture le compteur actuel
-• a1 obtient id=1, a2 obtient id=2
+Ordre des opérations :
+• Lookup comme fonction en namespace classe.
 
-Comment ça fonctionne :
-• A.class_id commence à 0
-• a1 = A(): class_id devient 1, a1.id = 1
-• a2 = A(): class_id devient 2, a2.id = 2
-• (a1.id, a2.id) vaut (1, 2)
+Cas d'utilisation courants :
+• Utilitaires groupés sémantiquement sous la classe.
 
-Exemple :
-class A:
-    class_id = 0
-    def __init__(self):
-        A.class_id += 1
-        self.id = A.class_id
-a1 = A()   # id=1
-a2 = A()   # id=2
-a3 = A()   # id=3
-(a1.id, a2.id)  # (1, 2)
+Cas limites :
+• Héritage : toujours la fonction wrappée, pas de late binding spécial.
 
-Usages courants :
-• IDs auto-incrémentés
-• Compter les instances créées
-• Patterns de suivi d'instances`,
-  2667: `__init_subclass__ est un hook qui s'exécute automatiquement quand une classe est sous-classée. Il reçoit la nouvelle sous-classe comme cls.
+Considérations de performance :
+• Identique à un appel de fonction normale.
+
+Exemples :
+• Math.add statique.
+
+Remarques :
+• Réponse : non-data descriptor (1re option).`,
+  2659: `@classmethod
+
+Débutant :
+• Non-data descriptor ; __get__ produit une méthode liée à la classe.
+
+Intermédiaire :
+• Le premier argument reçu est cls (sous-classe réelle à l'appel).
+
+Expert :
+• Fabriques alternatives : from_config(cls).
 
 Concepts clés :
-• __init_subclass__ est appelé quand une sous-classe est créée
-• cls est la nouvelle sous-classe (B), pas le parent (A)
-• Il peut modifier la sous-classe avant son utilisation
-• Introduit dans Python 3.6
+• Binding sur le type plutôt que l'instance.
 
-Comment ça fonctionne :
-• class B(A): pass déclenche A.__init_subclass__(B)
-• cls.parent_name = "A" définit parent_name sur B
-• B.parent_name vaut "A"
+Distinctions clés :
+• Pas data descriptor ni « métaclasse méthode » au sens strict.
 
-Exemple :
-class A:
-    def __init_subclass__(cls, **kw):
-        super().__init_subclass__(**kw)
-        cls.parent_name = "A"
-class B(A): pass
-B.parent_name  # "A"
+Fonctionnement :
+• classmethod.__get__ injecte cls.
 
-Usages courants :
-• Systèmes d'enregistrement de plugins
-• Configuration automatique des classes
-• Remplacer les métaclasses simples`,
-  2668: `Les types immuables comme int doivent être personnalisés via __new__ car la valeur est fixée au moment de la création, avant que __init__ s'exécute.
+Exécution étape par étape :
+• Sub.create() passe Sub comme cls.
 
-Concepts clés :
-• int est immuable — la valeur doit être définie dans __new__
-• __new__ crée l'objet réel
-• super().__new__(cls, val) crée un int avec la valeur val
-• Positive(5) est un int de valeur 5
-• Positive(5) + 3 utilise l'addition int normale → 8
+Ordre des opérations :
+• Résolution comme fonction + descripteur non-data.
 
-Comment ça fonctionne :
-• Positive(5) appelle __new__ avec val=5
-• val >= 0, donc pas de ValueError
-• super().__new__(Positive, 5) crée int avec valeur 5
-• Positive(5) + 3 = 8 (hérite de l'arithmétique int)
+Cas d'utilisation courants :
+• Constructeurs nommés, registres par sous-classe.
 
-Exemple :
-class Positive(int):
-    def __new__(cls, val):
-        if val < 0:
-            raise ValueError("Must be positive")
-        return super().__new__(cls, val)
-Positive(5) + 3   # 8
-Positive(0) * 2   # 0
+Cas limites :
+• Peut être shadowé sur une instance si assignation au même nom.
 
-Usages courants :
-• Types numériques contraints
-• Sous-classes personnalisées de int/str/tuple
-• Types de valeurs spécifiques au domaine`,
-  2669: `La méthode __new__ valide l'entrée avant de créer l'objet. Pour des valeurs négatives, elle lève ValueError.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• datetime.fromtimestamp (style API).
+
+Remarques :
+• Réponse : non-data descriptor (1re option).`,
+  2660: `print(C().x) avec __get__ qui retourne 42
+
+Débutant :
+• Affiche 42.
+
+Intermédiaire :
+• L'accès à .x déclenche Desc.__get__.
+
+Expert :
+• C.x depuis la classe passe obj=None à __get__ mais retourne quand même 42 ici.
 
 Concepts clés :
-• Positive(-1) appelle __new__ avec val=-1
-• val < 0 est True → raise ValueError
-• L'objet n'est jamais créé
-• C'est la validation dans __new__
+• Descripteur minimal lecture seule.
 
-Comment ça fonctionne :
-• __new__ vérifie si val < 0
-• -1 < 0 est True
-• ValueError est levée
-• Aucun objet Positive n'est créé
+Distinctions clés :
+• Pas None ni erreur ni l'objet Desc affiché.
 
-Exemple :
-class Positive(int):
-    def __new__(cls, val):
-        if val < 0:
-            raise ValueError
-        return super().__new__(cls, val)
-Positive(5)   # 5 (fonctionne bien)
-Positive(-1)  # ValueError
+Fonctionnement :
+• Valeur de retour de __get__ devient résultat de l'expression d'attribut.
 
-Usages courants :
-• Validation d'entrée pour les types immuables
-• Garantir l'intégrité des données à la création
-• Types contraints personnalisés`,
-  2670: `Sous-classer float et surcharger __repr__ permet de personnaliser l'affichage. Le format :.1% multiplie par 100 et ajoute %.
+Exécution étape par étape :
+• Instanciation C() ; lecture x ; __get__ ; print.
 
-Concepts clés :
-• Percentage(0.75) crée un float de valeur 0.75
-• __repr__ est surchargé pour utiliser le format pourcentage
-• f"{self:.1%}" formate 0.75 comme "75.0%"
-• .1 signifie une décimale, % signifie multiplier par 100 et ajouter %
+Ordre des opérations :
+• print reçoit l'int 42.
 
-Comment ça fonctionne :
-• self vaut 0.75 (un float)
-• :.1% multiplie par 100 → 75.0, ajoute %
-• f"{0.75:.1%}" → "75.0%"
-• repr(Percentage(0.75)) renvoie "75.0%"
+Cas d'utilisation courants :
+• Attribut calculé constant ou mock pédagogique.
 
-Exemple :
-class Percentage(float):
-    def __repr__(self):
-        return f"{self:.1%}"
-repr(Percentage(0.75))   # '75.0%'
-repr(Percentage(0.5))    # '50.0%'
-repr(Percentage(1.0))    # '100.0%'
+Cas limites :
+• Si __get__ levait, print ne s'exécuterait pas.
 
-Usages courants :
-• Types numériques spécifiques au domaine avec affichage personnalisé
-• Calculs financiers et statistiques
-• Sortie lisible pour ratios et pourcentages`,
-  2671: `Le pattern Template Method définit la structure d'un algorithme dans une méthode de la classe de base, en reportant les étapes spécifiques aux sous-classes.
+Considérations de performance :
+• Un appel Python par lecture.
+
+Exemples :
+• Compteur en lecture via descripteur.
+
+Remarques :
+• Réponse : 42 (1re option).`,
+  2661: `Descripteur __get__ et __set__ : c.x = 5 puis print(c.x)
+
+Débutant :
+• __set__ met 5 dans obj._x ; __get__ renvoie _x*2 donc 10.
+
+Intermédiaire :
+• La valeur « stockée » n'est pas 10 dans _x.
+
+Expert :
+• Pattern transformation à la lecture.
 
 Concepts clés :
-• La classe de base définit l'algorithme global (la "méthode template")
-• Les étapes individuelles sont des méthodes que les sous-classes peuvent surcharger
-• La structure de l'algorithme reste la même ; seules les étapes changent
-• Utilise l'héritage et la surcharge de méthodes
+• Écriture et lecture asymétriques.
 
-Comment ça fonctionne :
-• La classe de base a une méthode qui appelle plusieurs méthodes d'étape
-• Les sous-classes surchargent les méthodes d'étape pour personnaliser le comportement
-• La méthode template elle-même n'est pas surchargée
+Distinctions clés :
+• Pas 5 ni None.
 
-Exemple :
-class Report:
-    def generate(self):
-        return self.header() + self.body() + self.footer()
-    def header(self): return "=== Report ===\\n"
-    def body(self): return "No data\\n"
-    def footer(self): return "=== End ==="
+Fonctionnement :
+• Affectation appelle __set__ ; lecture appelle __get__.
 
-class SalesReport(Report):
-    def body(self): return "Sales: $1000\\n"
+Exécution étape par étape :
+• c.x = 5 → _x=5 ; print lit → 5*2.
 
-SalesReport().generate()  # Utilise body() surchargée
+Ordre des opérations :
+• Assignation complète avant print.
 
-Usages courants :
-• Frameworks de génération de documents
-• Patterns de boucle de jeu
-• Pipelines de traitement de données`,
-  2672: `La méthode template est celle qui définit la structure globale de l'algorithme en appelant d'autres méthodes en séquence.
+Cas d'utilisation courants :
+• Unités, pourcentages, champs dérivés.
 
-Concepts clés :
-• generate() appelle header(), body(), et footer()
-• generate() définit le squelette de l'algorithme
-• header() et footer() sont les étapes personnalisables
-• Les sous-classes surchargent les étapes, pas la méthode template
+Cas limites :
+• Premier accès get sans set : AttributeError sur _x si absent.
 
-Comment ça fonctionne :
-• generate() orchestre l'algorithme
-• Elle appelle self.header(), self.body(), self.footer()
-• Les sous-classes surchargent header/body/footer pour personnaliser la sortie
-• La structure de generate() reste inchangée
+Considérations de performance :
+• Deux hooks par cycle read/write.
 
-Exemple :
-class Report:
-    def generate(self):  # méthode template
-        return self.header() + self.body() + self.footer()
-    def header(self): return "=Head=\\n"
-    def footer(self): return "=End="
+Exemples :
+• Prix TTC seulement à l'affichage.
 
-Usages courants :
-• Définir des structures d'algorithme fixes
-• Permettre la personnalisation des étapes individuelles`,
-  2673: `Le pattern Strategy encapsule des algorithmes interchangeables et les injecte dans un objet contexte, privilégiant la composition sur l'héritage.
+Remarques :
+• Réponse : 10 (1re option).`,
+  2662: `Rôle de __set_name__ sur un descripteur
+
+Débutant :
+• Appelé automatiquement quand le descripteur devient attribut de classe, pour connaître owner et name.
+
+Intermédiaire :
+• Python ≥ 3.6 ; moment = création de la classe, pas instanciation.
+
+Expert :
+• Permet stocker self.name pour messages d'erreur ou clé __dict__ interne.
 
 Concepts clés :
-• Le pattern Strategy utilise la composition (has-a) pas l'héritage (is-a)
-• Le comportement est injecté comme objet ou fonction
-• Les algorithmes peuvent être échangés à l'exécution
-• Suit le principe Open/Closed
+• Introspection du nom d'attribut sans le répéter au constructeur.
 
-Comment ça fonctionne :
-• Définir une famille d'algorithmes (stratégies)
-• L'objet contexte détient une référence à une stratégie
-• Le contexte délègue le travail à la stratégie
-• La stratégie peut être changée sans modifier le contexte
+Distinctions clés :
+• Ne renomme pas la classe ni ne crée seul un nouvel attribut magiquement sans __set__/__get__.
 
-Exemple :
-class Sorter:
-    def __init__(self, strategy):
-        self.strategy = strategy
-    def sort(self, data):
-        return self.strategy(data)
+Fonctionnement :
+• Hook du processus de construction de classe.
 
-s = Sorter(sorted)
-s.sort([3, 1, 2])  # [1, 2, 3]
+Exécution étape par étape :
+• class Body: age = Validator() → Validator.__set_name__(Person, 'age').
 
-s.strategy = lambda d: sorted(d, reverse=True)
-s.sort([3, 1, 2])  # [3, 2, 1]
+Ordre des opérations :
+• Après création de l'instance de descripteur, avant utilisation.
 
-Usages courants :
-• Algorithmes de tri
-• Stratégies de traitement des paiements
-• Stratégies de validation`,
-  2674: `C'est un exemple concret du pattern Strategy. Le Sorter délègue le tri à quelle que soit la fonction stratégie fournie.
+Cas d'utilisation courants :
+• Validators, dataclass-like fields manuels.
 
-Concepts clés :
-• Sorter détient une stratégie (la fonction built-in sorted)
-• sort() délègue à self.strategy(data)
-• sorted([3, 1, 2]) renvoie [1, 2, 3]
-• La stratégie peut être échangée sans modifier Sorter
+Cas limites :
+• Descripteur créé inline deux fois : deux noms différents si deux attributs.
 
-Comment ça fonctionne :
-• Sorter(sorted) stocke sorted comme stratégie
-• s.sort([3, 1, 2]) appelle sorted([3, 1, 2])
-• Renvoie [1, 2, 3]
+Considérations de performance :
+• Une fois par classe.
 
-Exemple :
-s = Sorter(sorted)
-s.sort([3, 1, 2])  # [1, 2, 3]
+Exemples :
+• TypeError « age must be int » avec nom correct.
 
-s2 = Sorter(lambda d: sorted(d, reverse=True))
-s2.sort([3, 1, 2])  # [3, 2, 1]
+Remarques :
+• Réponse : appelé quand le descripteur est assigné comme attribut de classe (1re option).`,
+  2663: `Pattern TypedField avec __set_name__ et isinstance
 
-Usages courants :
-• Algorithmes branchables
-• Sélection d'algorithme à l'exécution
-• Tests avec stratégies mock`,
-  2675: `Le pattern Factory Method définit une interface pour créer des objets mais laisse les sous-classes décider quelle classe instancier.
+Débutant :
+• Validation de type à l'assignation : attributs contrôlés.
+
+Intermédiaire :
+• Stocke dans obj.__dict__[self.name] pour éviter récursion sur le même nom.
+
+Expert :
+• Variante légère avant Pydantic pour petits modèles.
 
 Concepts clés :
-• Une méthode est responsable de créer les objets
-• Les sous-classes peuvent surcharger pour changer le type d'objet créé
-• Découple la création d'objet de l'utilisation
-• Utilise souvent @classmethod en Python
+• isinstance(val, self.typ) garde-fou runtime.
 
-Comment ça fonctionne :
-• La classe de base définit une méthode factory
-• La méthode factory crée et renvoie un objet
-• Les sous-classes surchargent pour renvoyer différents types
-• Le code client utilise la méthode factory, pas la construction directe
+Distinctions clés :
+• Pas singleton, factory, observer.
 
-Exemple :
-class Animal:
-    def __init__(self, sound):
-        self.sound = sound
-    @classmethod
-    def create(cls, sound):
-        return cls(sound)
+Fonctionnement :
+• __set__ gate ; lecture peut passer par dict simple si pas de __get__ ici.
 
-class Dog(Animal): pass
+Exécution étape par étape :
+• Assignation mauvais type → TypeError.
 
-Dog.create("woof").sound  # "woof"
+Ordre des opérations :
+• isinstance avant écriture.
 
-Usages courants :
-• Création d'objets avec configuration complexe
-• Systèmes de plugins
-• Fabriques de connexions base de données`,
-  2676: `Quand Dog.create("woof") est appelé, cls est Dog. Donc cls(sound) est Dog("woof"), ce qui définit self.sound = "woof".
+Cas d'utilisation courants :
+• Config typée, petits records.
 
-Concepts clés :
-• @classmethod reçoit la classe comme cls
-• Dog.create("woof") → cls est Dog
-• cls(sound) → Dog("woof")
-• Dog.__init__ définit self.sound = "woof"
+Cas limites :
+• Sous-types (bool sous int) : isinstance(True, int) True en Python.
 
-Comment ça fonctionne :
-• create est un classmethod hérité de Animal
-• Dog.create("woof") passe Dog comme cls
-• cls("woof") crée une instance Dog
-• self.sound = "woof" dans __init__
-• .sound renvoie "woof"
+Considérations de performance :
+• isinstance rapide pour types built-in.
 
-Exemple :
-class Animal:
-    @classmethod
-    def create(cls, sound):
-        return cls(sound)
-class Dog(Animal):
-    def __init__(self, sound):
-        self.sound = sound
-Dog.create("woof").sound  # "woof"
-type(Dog.create("woof"))  # <class 'Dog'>
+Exemples :
+• port: TypedField(int).
 
-Usages courants :
-• Constructeurs alternatifs
-• Création d'objets polymorphique
-• Points d'extension de frameworks`,
-  2677: `Le pattern Observer définit une dépendance un-à-plusieurs entre objets pour que lorsqu'un objet change d'état, tous ses dépendants soient notifiés automatiquement.
+Remarques :
+• Réponse : attributs à type vérifié / type-checked attributes (1re option).`,
+  2664: `À quoi sert __get__ sur les fonctions ?
+
+Débutant :
+• Créer les méthodes liées : lier self (ou cls pour classmethod) à l'appel.
+
+Intermédiaire :
+• Fonction en __dict__ de classe + __get__ = descripteur non-data.
+
+Expert :
+• bound method = fonction + instance référencée.
 
 Concepts clés :
-• Le sujet (observable) maintient une liste d'observateurs
-• Quand l'état change, le sujet notifie tous les observateurs
-• Les observateurs s'enregistrent/désenregistrent dynamiquement
-• Découple le sujet de ses observateurs
+• Explication du « self implicite ».
 
-Comment ça fonctionne :
-• Le sujet a des méthodes subscribe/unsubscribe/notify
-• Les observateurs s'enregistrent via subscribe
-• Quand l'état du sujet change, il appelle notify
-• La méthode update de chaque observateur est appelée
+Distinctions clés :
+• Pas retourner le nom ni supprimer la fonction.
 
-Exemple :
-class Event:
-    def __init__(self):
-        self._handlers = []
-    def subscribe(self, handler):
-        self._handlers.append(handler)
-    def fire(self, data):
-        for h in self._handlers:
-            h(data)
+Fonctionnement :
+• function.__get__(obj, owner) → method wrapper.
 
-Usages courants :
-• Systèmes d'événements GUI
-• Messagerie pub/sub
-• Programmation réactive
-• Architecture MVC`,
-  2678: `C'est une implémentation concrète du pattern Observer avec un système d'événements simple.
+Exécution étape par étape :
+• c.f sans () donne bound method ; avec () injecte c comme premier arg.
 
-Concepts clés :
-• Event stocke les handlers dans une liste
-• subscribe ajoute une fonction handler
-• fire appelle tous les handlers avec les données fournies
-• Un handler était souscrit, donc results obtient un élément
+Ordre des opérations :
+• Lookup attribut puis préparation callable.
 
-Comment ça fonctionne :
-• e.subscribe(lambda d: results.append(d)) enregistre un handler
-• e.fire("hello") appelle le handler avec "hello"
-• Le handler ajoute "hello" à results
-• results vaut ["hello"]
+Cas d'utilisation courants :
+• Toute OOP instance.
 
-Exemple :
-e = Event()
-results = []
-e.subscribe(lambda d: results.append(d))
-e.subscribe(lambda d: results.append(d.upper()))
-e.fire("hello")
-results  # ["hello", "HELLO"]
+Cas limites :
+• Fonction unbound depuis classe en Py3 : toujours function pour C.f souvent.
 
-Usages courants :
-• Architectures orientées événements
-• Enregistrement de callbacks
-• Communication découplée entre composants`,
-  2679: `Le principe de substitution de Liskov (LSP) énonce que les objets d'une superclasse doivent être remplaçables par des objets de ses sous-classes sans affecter la correction du programme.
+Considérations de performance :
+• bound method léger.
+
+Exemples :
+• C.__dict__['greet'].__get__(c,C) équivalent à accès c.greet.
+
+Remarques :
+• Réponse : lier self pour méthode liée (1re option).`,
+  2665: `C.__dict__["f"] pour def f(self)
+
+Débutant :
+• C'est l'objet fonction Python brut.
+
+Intermédiaire :
+• Ce n'est pas une bound method : pas d'instance encore liée.
+
+Expert :
+• c.f applique le protocole descripteur ; accès direct __dict__ le contourne.
 
 Concepts clés :
-• Si S est une sous-classe de T, vous devez pouvoir utiliser S partout où T est attendu
-• La sous-classe doit honorer le contrat du parent
-• Les méthodes surchargées ne doivent pas casser les garanties du parent
-• Les violations indiquent souvent une faute de conception
+• Méthode = fonction stockée dans le mapping de la classe.
 
-Comment ça fonctionne :
-• La classe de base définit un contrat (comportement attendu)
-• La sous-classe doit remplir ce contrat
-• Si la sous-classe brise les invariants du parent, LSP est violé
-• Violation classique : Square étendant Rectangle
+Distinctions clés :
+• Pas None ni staticmethod par défaut.
 
-Exemple de violation LSP :
-class Rectangle:
-    def __init__(self, w, h):
-        self.w = w; self.h = h
-    def area(self): return self.w * self.h
+Fonctionnement :
+• Même objet que C.f en Python 3 pour fonction normale.
 
-class Square(Rectangle):
-    def __init__(self, s):
-        super().__init__(s, s)
-    # Si on permet de définir w indépendamment,
-    # l'invariant square (w==h) se brise → violation LSP
+Exécution étape par étape :
+• Pas d'appel __get__ implicite sur la lecture __dict__.
 
-Usages courants :
-• Concevoir des hiérarchies de classes robustes
-• Revue de code et refactorisation
-• Conformité aux principes SOLID`,
-  2680: `Le problème classique Square/Rectangle illustre la violation du principe de substitution de Liskov.
+Ordre des opérations :
+• Indexation dict avant wrapping.
 
-Concepts clés :
-• Rectangle permet w et h indépendants
-• Square exige w == h à tout moment
-• Si on définit square.w = 5, square.h doit-il aussi changer ?
-• Le code attendant le comportement Rectangle casse avec Square
+Cas d'utilisation courants :
+• Introspection, wrappers, tests.
 
-Comment ça fonctionne :
-• La fonction attend Rectangle : définit r.w = 4, r.h = 5, vérifie area == 20
-• Si vous passez un Square, définir w et h indépendamment casse l'invariant square
-• Soit h change silencieusement (surprenant), soit l'aire est fausse
-• Cela viole LSP — Square ne peut pas se substituer à Rectangle
+Cas limites :
+• Méthode décorée : type différent (classmethod descriptor, etc.).
 
-Exemple :
-def test_rect(r):
-    r.w = 4
-    r.h = 5
-    assert r.area() == 20  # Échoue pour Square !
+Considérations de performance :
+• Accès dict O(1).
 
-sq = Square(3)
-test_rect(sq)  # Erreur d'assertion — Square ne peut pas se comporter comme Rectangle
+Exemples :
+• type(C.__dict__['f']) is function.
 
-Usages courants :
-• Exemple classique des principes SOLID
-• Question d'entretien
-• Discussions sur les patterns de conception`,
-  2681: `Le principe Open/Closed énonce que les entités logicielles doivent être ouvertes à l'extension mais fermées à la modification.
+Remarques :
+• Réponse : objet fonction (1re option).`,
+  2666: `Shape(ABC) avec area abstraite : Shape()
+
+Débutant :
+• TypeError : classe abstraite non instanciable.
+
+Intermédiaire :
+• Le message cite les méthodes abstraites manquantes.
+
+Expert :
+• ABCMeta + __abstractmethods__.
 
 Concepts clés :
-• Ouvert à l'extension : vous pouvez ajouter un nouveau comportement
-• Fermé à la modification : le code existant ne devrait pas changer
-• Utiliser héritage, interfaces ou composition pour étendre
-• Empêche de casser la fonctionnalité existante
+• Contrat : sous-classe concrète doit implémenter.
 
-Comment ça fonctionne :
-• Au lieu de modifier une classe pour ajouter un comportement, l'étendre
-• Utiliser les classes de base abstraites pour définir les interfaces
-• La nouvelle fonctionnalité est ajoutée en créant de nouvelles sous-classes
-• Le code existant reste intact
+Distinctions clés :
+• Pas SyntaxError ni None ni instance créée.
 
-Exemple :
-from abc import ABC, abstractmethod
+Fonctionnement :
+• __call__ de la méta vérifie avant de retourner l'instance.
 
-class Shape(ABC):
-    @abstractmethod
-    def area(self): pass
+Exécution étape par étape :
+• Tentative construction → échec immédiat.
 
-class Circle(Shape):
-    def __init__(self, r): self.r = r
-    def area(self): return 3.14 * self.r ** 2
+Ordre des opérations :
+• Aucun __init__ utilisateur exécuté si échec.
 
-class Square(Shape):
-    def __init__(self, s): self.s = s
-    def area(self): return self.s ** 2
+Cas d'utilisation courants :
+• Interfaces, plugins.
 
-Usages courants :
-• Architectures de plugins
-• Frameworks extensibles
-• Conformité à la conception SOLID`,
-  2682: `Le principe de responsabilité unique énonce qu'une classe ne doit avoir qu'une seule raison de changer, c'est-à-dire une seule tâche ou responsabilité.
+Cas limites :
+• @abstractmethod sur staticmethod : règles subtiles de composition.
 
-Concepts clés :
-• Une classe = une responsabilité
-• "Raison de changer" = un acteur ou exigence
-• Si une classe fait trop, la diviser
-• Conduit à des classes plus petites et focalisées
+Considérations de performance :
+• N/A.
 
-Comment ça fonctionne :
-• Une classe qui gère à la fois le stockage ET le formatage a deux responsabilités
-• Si le stockage change, la classe change ; si le formatage change, elle change
-• Diviser en deux classes : une pour le stockage, une pour le formatage
-• Chacune n'a qu'une seule raison de changer
+Exemples :
+• class Concrete(Shape): def area(self): return 0 → OK.
 
-Exemple de violation :
-class Report:
-    def calculate(self): ...   # logique métier
-    def format_html(self): ... # présentation
-    def save_to_db(self): ...  # persistance
+Remarques :
+• Réponse : TypeError (1re option).`,
+  2667: `Circle implémente area → print(Circle().area())
 
-Meilleur design :
-class ReportCalculator: ...
-class ReportFormatter: ...
-class ReportSaver: ...
+Débutant :
+• Affiche 3.14.
 
-Usages courants :
-• Organisation du code
-• Réduction du couplage
-• Rendre les classes plus faciles à tester`,
-  2683: `Le principe de ségrégation d'interface énonce que les clients ne doivent pas être forcés de dépendre d'interfaces qu'ils n'utilisent pas.
+Intermédiaire :
+• Sous-classe concrète : instanciation permise.
+
+Expert :
+• L'appel area() utilise la résolution MRO sur Circle.
 
 Concepts clés :
-• Préférer de nombreuses petites interfaces spécifiques à une grande générale
-• Aucun client ne doit être forcé d'implémenter des méthodes inutiles
-• Diviser les interfaces trop larges en interfaces plus petites par rôle
-• Chaque interface doit avoir un objectif clair
+• Satisfaction du contrat ABC.
 
-Comment ça fonctionne :
-• Une grande interface Worker avec work(), eat(), sleep() force toutes les implémentations à définir toutes les méthodes
-• Un Worker Robot ne mange ni ne dort
-• Diviser en interfaces Workable, Eatable, Sleepable
-• Robot implémente seulement Workable
+Distinctions clés :
+• Pas TypeError.
 
-Exemple :
-from abc import ABC, abstractmethod
+Fonctionnement :
+• Circle() puis .area() retourne le float du code.
 
-class Workable(ABC):
-    @abstractmethod
-    def work(self): pass
+Exécution étape par étape :
+• Pas d'abstraction résiduelle.
 
-class Eatable(ABC):
-    @abstractmethod
-    def eat(self): pass
+Ordre des opérations :
+• Appel méthode après création instance.
 
-class Human(Workable, Eatable):
-    def work(self): return "working"
-    def eat(self): return "eating"
+Cas d'utilisation courants :
+• Hiérarchie de formes géométriques.
 
-class Robot(Workable):
-    def work(self): return "working"
+Cas limites :
+• float affiché peut varier format REPL ; ici valeur littérale.
 
-Usages courants :
-• Conception d'API
-• Interfaces microservices
-• Contrats de plugins`,
-  2684: `Le principe d'inversion de dépendance énonce que les modules de haut niveau ne doivent pas dépendre des modules de bas niveau ; les deux doivent dépendre d'abstractions.
+Considérations de performance :
+• N/A.
 
-Concepts clés :
-• Dépendre des abstractions (interfaces/classes abstraites)
-• Ne pas dépendre directement des implémentations concrètes
-• Les modules de haut niveau définissent ce dont ils ont besoin (interface)
-• Les modules de bas niveau implémentent cette interface
+Exemples :
+• Carré avec return 100.
 
-Comment ça fonctionne :
-• Au lieu de : class App utilise MySQLDatabase directement
-• Définir : class Database(ABC) avec méthodes abstraites
-• App dépend de Database (abstraction)
-• MySQLDatabase implémente Database
-• Vous pouvez échanger les implémentations sans modifier App
+Remarques :
+• Réponse : 3.14 (1re option).`,
+  2668: `Que force @abstractmethod sur les sous-classes ?
 
-Exemple :
-from abc import ABC, abstractmethod
+Débutant :
+• Fournir une implémentation concrète de la méthode décorée (ou rester abstrait).
 
-class Database(ABC):
-    @abstractmethod
-    def save(self, data): pass
+Intermédiaire :
+• Sinon instanciation de la sous-classe impossible.
 
-class MySQLDB(Database):
-    def save(self, data): return f"MySQL: {data}"
-
-class App:
-    def __init__(self, db: Database):
-        self.db = db
-    def store(self, data):
-        return self.db.save(data)
-
-Usages courants :
-• Injection de dépendance
-• Tests avec mocks
-• Implémentations interchangeables`,
-  2685: `Utiliser ABC pour définir une interface Plugin est une application classique du principe d'inversion de dépendance — le code dépend de l'abstraction Plugin plutôt que des implémentations spécifiques.
+Expert :
+• Peut combiner avec super() pour template method.
 
 Concepts clés :
-• Plugin(ABC) définit une interface abstraite
-• @abstractmethod execute() doit être implémenté par les sous-classes
-• Le code qui utilise Plugin dépend de l'abstraction
-• De nouveaux plugins peuvent être ajoutés sans modifier le code existant
+• Obligation d'override pour classes concrètes.
 
-Comment ça fonctionne :
-• Plugin définit ce qu'un plugin doit faire (execute)
-• Les plugins concrets implémentent l'interface
-• L'application dépend de Plugin (abstraction)
-• Toute classe implémentant execute() peut être utilisée comme plugin
+Distinctions clés :
+• Pas forcer super().__init__ ni métaclasse explicite obligatoire.
 
-Exemple :
-from abc import ABC, abstractmethod
+Fonctionnement :
+• Flag __isabstractmethod__ sur la fonction.
 
-class Plugin(ABC):
-    @abstractmethod
-    def execute(self): pass
+Exécution étape par étape :
+• Calcul __abstractmethods__ à la fin de la création de classe.
 
-class LogPlugin(Plugin):
-    def execute(self): return "Logging..."
+Ordre des opérations :
+• Agrégation sur toute la MRO.
 
-class AuthPlugin(Plugin):
-    def execute(self): return "Authenticating..."
+Cas d'utilisation courants :
+• API plug-in uniforme.
 
-def run_plugin(p: Plugin):
-    return p.execute()
+Cas limites :
+• Classe intermédiaire peut rester ABC partielle.
 
-Usages courants :
-• Architectures de plugins
-• Points d'extension de frameworks
-• Conception de modules découplés`,
-  2686: `Le pattern Singleton garantit qu'une classe n'a qu'une seule instance. Chaque appel au constructeur renvoie le même objet.
+Considérations de performance :
+• N/A.
 
-Concepts clés :
-• _instance stocke l'instance unique (commence à None)
-• __new__ vérifie si _instance existe
-• Si non, crée une nouvelle instance et la stocke
-• Si oui, renvoie l'instance existante
-• s1 is s2 est True — même objet
+Exemples :
+• Animal.speak abstrait → Dog.speak concret.
 
-Comment ça fonctionne :
-• Singleton() première fois : _instance est None → créer nouveau → stocker dans _instance
-• Singleton() deuxième fois : _instance existe → renvoyer le même objet
-• s1 et s2 sont le même objet
-• s1 is s2 → True
+Remarques :
+• Réponse : implémenter la méthode décorée (1re option).`,
+  2669: `Une classe abstraite peut-elle avoir des méthodes concrètes ?
 
-Exemple :
-class Singleton:
-    _instance = None
-    def __new__(cls):
-        if not cls._instance:
-            cls._instance = super().__new__(cls)
-        return cls._instance
-s1 = Singleton()
-s2 = Singleton()
-s1 is s2  # True
-id(s1) == id(s2)  # True
+Débutant :
+• Oui.
 
-Usages courants :
-• gestionnaires de configuration
-• Pools de connexions base de données
-• Instances de logger
-• Gestionnaires de cache`,
-  2687: `Une métaclasse peut intercepter la création d'instance en surchargeant __call__. Quand vous appelez Foo(), Python appelle en fait Meta.__call__(Foo).
+Intermédiaire :
+• Seules les méthodes marquées abstraites doivent être surchargées par les sous-classes concrètes.
+
+Expert :
+• Pattern template method : méthode concrète appelle des hooks abstraits.
 
 Concepts clés :
-• type.__call__ est ce qui crée les instances d'une classe
-• La métaclasse surcharge __call__ pour ajouter un comportement personnalisé
-• super().__call__(*a, **kw) effectue la création normale
-• Le print s'exécute avant/pendant la création d'instance
+• ABC ≠ interface 100 % vide.
 
-Comment ça fonctionne :
-• Foo() déclenche Meta.__call__(Foo)
-• Meta.__call__ imprime f"Creating {cls.__name__}" → "Creating Foo"
-• super().__call__() appelle type.__call__ → crée l'instance Foo
-• Renvoie la nouvelle instance Foo
+Distinctions clés :
+• Pas limité aux staticmethod/classmethod seuls.
 
-Exemple :
-class Meta(type):
-    def __call__(cls, *a, **kw):
-        print(f"Creating {cls.__name__}")
-        return super().__call__(*a, **kw)
+Fonctionnement :
+• Héritage normal pour le code concret partagé.
 
-class Foo(metaclass=Meta): pass
-f = Foo()  # imprime : Creating Foo
+Exécution étape par étape :
+• describe() peut appeler self.area() abstrait dans la base — exécution seulement quand self est concret.
 
-Usages courants :
-• Journalisation de la création d'objets
-• Interception de la création d'objets
-• Comptage d'instances
-• Enregistrement automatique`,
-  2688: `La composition (has-a) doit être privilégiée sur l'héritage (is-a) quand vous devez combiner des comportements de sources non liées.
+Ordre des opérations :
+• Résolution à l'exécution.
 
-Concepts clés :
-• L'héritage modélise "is-a" (Dog is an Animal)
-• La composition modélise "has-a" (Car has an Engine)
-• Les hiérarchies d'héritage profondes deviennent rigides et fragiles
-• La composition permet une combinaison flexible de comportements
+Cas d'utilisation courants :
+• Code partagé + points d'extension.
 
-Comment ça fonctionne :
-• Au lieu d'hériter de plusieurs classes non liées
-• Créer des objets composants séparés
-• Déléguer le comportement à ces composants
-• Les composants peuvent être échangés à l'exécution
+Cas limites :
+• Appeler méthode abstraite depuis __init__ de la base : risque si sous-classe pas prête.
 
-Exemple :
-class Engine:
-    def start(self): return "Engine running"
+Considérations de performance :
+• N/A.
 
-class GPS:
-    def locate(self): return "Location found"
+Exemples :
+• Shape.describe retourne f"Area: {self.area()}".
 
-class Car:
-    def __init__(self):
-        self.engine = Engine()
-        self.gps = GPS()
-    def start(self):
-        return self.engine.start()
+Remarques :
+• Réponse : Oui (1re option).`,
+  2670: `Shape(ABC) avec describe concret, Circle(Shape): pass — print(Circle().describe())
 
-Usages courants :
-• Combiner des comportements non liés
-• Éviter les hiérarchies d'héritage profondes
-• Composants flexibles et interchangeables`,
-  2689: `Les mixins sont de petites classes qui fournissent des méthodes réutilisables spécifiques. Ils sont conçus pour être utilisés avec l'héritage multiple pour ajouter des fonctionnalités.
+Débutant :
+• Chaîne I'm a shape.
+
+Intermédiaire :
+• Aucune méthode abstraite : Shape et Circle instanciables.
+
+Expert :
+• Hériter d'ABC sans @abstractmethod ne rend pas la classe magiquement abstraite.
 
 Concepts clés :
-• Les mixins ne sont pas censés être instanciés seuls
-• Ils fournissent des méthodes additionnelles à d'autres classes
-• Garder les hiérarchies de classes plates
-• Permettre la réutilisation de code entre classes non liées
+• ABC est un outil, l'abstraction vient des méthodes non implémentées.
 
-Comment ça fonctionne :
-• Définir un mixin avec des méthodes spécifiques
-• Utiliser l'héritage multiple pour ajouter le mixin aux classes
-• Les classes gagnent les méthodes du mixin
-• Plusieurs mixins peuvent être combinés
+Distinctions clés :
+• Pas TypeError.
 
-Exemple :
-class JsonMixin:
-    def to_json(self):
-        import json
-        return json.dumps(self.__dict__)
+Fonctionnement :
+• MRO Circle → Shape → object ; describe trouvé sur Shape.
 
-class LogMixin:
-    def log(self, msg):
-        print(f"[{self.__class__.__name__}] {msg}")
+Exécution étape par étape :
+• Circle() OK ; .describe() retourne la str littérale.
 
-class User(JsonMixin, LogMixin):
-    def __init__(self, name):
-        self.name = name
+Ordre des opérations :
+• Pas de résolution abstraite bloquante.
 
-u = User("Alice")
-u.to_json()   # '{"name": "Alice"}'
-u.log("hi")   # [User] hi
+Cas d'utilisation courants :
+• Marqueur de type + comportement par défaut.
 
-Usages courants :
-• Ajouter sérialisation (JsonMixin, XmlMixin)
-• Ajouter capacités de journalisation
-• Ajouter méthodes de comparaison
-• Vues basées sur les classes Django`,
-  2690: `Le problème du diamant survient quand une classe hérite de deux classes partageant un ancêtre commun. Python le résout via la linéarisation C3.
+Cas limites :
+• Si plus tard on ajoute @abstractmethod sans implémenter : Circle devient abstraite.
 
-Concepts clés :
-• Diamant : D hérite de B et C, qui héritent tous deux de A
-• Sans résolution, les méthodes de A pourraient être appelées deux fois
-• La linéarisation C3 produit un MRO cohérent
-• Chaque classe apparaît exactement une fois dans le MRO
-• super() suit le MRO, pas seulement le parent direct
+Considérations de performance :
+• N/A.
 
-Comment ça fonctionne :
-• Python calcule le MRO à la création de classe avec la linéarisation C3
-• Le MRO respecte : enfants avant parents, ordre gauche-droite
-• Chaque classe apparaît une fois
-• Les appels super() suivent l'ordre MRO
+Exemples :
+• Shape() seul fonctionne aussi ici.
 
-Exemple :
-class A:
-    def method(self): return "A"
-class B(A):
-    def method(self): return "B"
-class C(A):
-    def method(self): return "C"
-class D(B, C): pass
+Remarques :
+• Réponse : I'm a shape (1re option).`,
+  2671: `Propriétés abstraites en Python ?
 
-D.__mro__  # (D, B, C, A, object)
-D().method()  # "B" — première dans le MRO après D
+Débutant :
+• Oui en combinant @property et @abstractmethod (ordre : property au-dessus, abstractmethod sur le getter en pratique courante).
 
-Usages courants :
-• Comprendre la résolution des méthodes
-• Concevoir des hiérarchies d'héritage multiple
-• Utiliser super() correctement dans les hiérarchies complexes`,
-  2691: `La hiérarchie des exceptions de Python a BaseException à la racine, avec Exception comme base pour la plupart des exceptions capturables par l'utilisateur.
+Intermédiaire :
+• La sous-classe doit fournir une property (ou équivalent) conforme.
+
+Expert :
+• Vérifier la doc officielle pour l'ordre exact des décorateurs selon version.
 
 Concepts clés :
-• BaseException est la racine de toutes les exceptions
-• Exception hérite de BaseException
-• La plupart des exceptions courantes héritent de Exception
-• SystemExit, KeyboardInterrupt héritent directement de BaseException
+• Étendre le contrat au-delà des simples def.
 
-Comment ça fonctionne :
-• BaseException → Exception → ValueError, TypeError, KeyError, etc.
-• BaseException → SystemExit (pas sous Exception)
-• BaseException → KeyboardInterrupt (pas sous Exception)
-• except Exception attrape la plupart des erreurs mais pas SystemExit/KeyboardInterrupt
+Distinctions clés :
+• Pas réservé aux métaclasses ni Python 2 only.
 
-Exemple :
-issubclass(ValueError, Exception)      # True
-issubclass(TypeError, Exception)       # True
-issubclass(KeyError, Exception)        # True
-issubclass(SystemExit, Exception)      # False
-issubclass(KeyboardInterrupt, Exception)  # False
+Fonctionnement :
+• La property résultante porte le marqueur d'abstraction.
 
-Usages courants :
-• Comprendre la capture d'exceptions
-• Concevoir des hiérarchies d'exceptions
-• Savoir ce que except Exception attrape`,
-  2692: `Créer une exception personnalisée est aussi simple qu'hériter de Exception. Aucune méthode additionnelle n'est requise.
+Exécution étape par étape :
+• Accès .area sur sous-classe non implémentée → erreur à l'usage ou instanciation bloquée selon cas.
 
-Concepts clés :
-• class CustomError(Exception): pass est valide
-• Hérite de __init__ depuis Exception
-• Peut être levée avec un message : raise CustomError("oops")
-• Peut être capturée avec except CustomError
+Ordre des opérations :
+• Création classe sous-classe calcule abstract set.
 
-Comment ça fonctionne :
-• CustomError hérite de tout depuis Exception
-• raise CustomError("oops") crée et lève l'exception
-• Le message "oops" est stocké dans args
-• str(e) renvoie "oops"
+Cas d'utilisation courants :
+• Interface « attribut calculé obligatoire ».
 
-Exemple :
-class CustomError(Exception): pass
+Cas limites :
+• Oublier @property dans la sous-classe : ne satisfait pas le contrat.
 
-try:
-    raise CustomError("oops")
-except CustomError as e:
-    print(e)  # oops
+Considérations de performance :
+• Identique à property normale.
 
-Usages courants :
-• Erreurs spécifiques à l'application
-• Réponses d'erreur API
-• Exceptions spécifiques au domaine`,
-  2693: `Les exceptions personnalisées peuvent avoir des attributs additionnels en surchargeant __init__ et en appelant super().__init__().
+Exemples :
+• Circle avec @property def area.
+
+Remarques :
+• Réponse : Oui, combiner @property et @abstractmethod (1re option).`,
+  2672: `D(C) sans implémenter f abstrait — D()
+
+Débutant :
+• TypeError : D reste abstraite.
+
+Intermédiaire :
+• L'ensemble __abstractmethods__ hérité contient encore 'f'.
+
+Expert :
+• Même avec pass, l'abstraction remonte.
 
 Concepts clés :
-• Surcharger __init__ pour ajouter des attributs personnalisés
-• Appeler super().__init__(msg) pour préserver le comportement Exception
-• self.code = code ajoute un attribut personnalisé
-• e.code renvoie 404
+• Transmission de l'obligation sur toute la chaîne jusqu'à implémentation.
 
-Comment ça fonctionne :
-• CustomError("fail", 404) appelle __init__
-• super().__init__("fail") stocke le message
-• self.code = 404 stocke le code d'erreur
-• e.code accède à l'attribut code → 404
+Distinctions clés :
+• Pas instance créée silencieusement.
 
-Exemple :
-class CustomError(Exception):
-    def __init__(self, msg, code):
-        super().__init__(msg)
-        self.code = code
+Fonctionnement :
+• Même mécanisme que Shape() sans area.
 
-e = CustomError("fail", 404)
-e.code       # 404
-str(e)       # "fail"
-e.args       # ("fail",)
+Exécution étape par étape :
+• D.__abstractmethods__ non vide → échec au call.
 
-Usages courants :
-• Réponses d'erreur HTTP avec codes de statut
-• Erreurs base de données avec codes d'erreur
-• Objets exception riches pour la gestion d'erreurs`,
-  2694: `Créer une hiérarchie d'exceptions permet de capturer les erreurs à différents niveaux de spécificité.
+Ordre des opérations :
+• Check avant __init__.
 
-Concepts clés :
-• AppError est la base de toutes les erreurs d'application
-• DBError et AuthError sont des sous-types spécifiques
-• except AppError attrape DBError et AuthError
-• except DBError attrape seulement les erreurs base de données
+Cas d'utilisation courants :
+• Détecter couches intermédiaires incomplètes.
 
-Comment ça fonctionne :
-• class DBError(AppError) fait de DBError une sous-classe de AppError
-• issubclass(DBError, AppError) renvoie True
-• issubclass(AuthError, AppError) renvoie aussi True
-• Cela permet une gestion hiérarchique des exceptions
+Cas limites :
+• Enregistrer une implémentation via attribut protocolaire avancé : hors sujet débutant.
 
-Exemple :
-class AppError(Exception): pass
-class DBError(AppError): pass
-class AuthError(AppError): pass
+Considérations de performance :
+• N/A.
 
-issubclass(DBError, AppError)   # True
-issubclass(AuthError, AppError) # True
-issubclass(DBError, Exception)  # True
+Exemples :
+• E(C) avec def f: return 1 → OK.
 
-try:
-    raise DBError("connection failed")
-except AppError as e:
-    print("App error:", e)  # Attrape DBError !
+Remarques :
+• Réponse : TypeError (1re option).`,
+  2673: `D implémente f → print(D().f())
 
-Usages courants :
-• Hiérarchies d'erreurs d'application
-• Gestion d'erreurs en couches
-• Conception d'exceptions de bibliothèque`,
-  2695: `Une clause except attrape l'exception spécifiée ET toutes ses sous-classes. Puisque DBError hérite de AppError, except AppError l'attrape.
+Débutant :
+• Affiche 1.
+
+Intermédiaire :
+• D est concrète ; f retourne 1.
+
+Expert :
+• Chaîne d'appel normale.
 
 Concepts clés :
-• except AppError attrape AppError et toutes les sous-classes
-• DBError est une sous-classe de AppError
-• raise DBError() est attrapé par except AppError
-• C'est fondamental pour les hiérarchies d'exceptions
+• Levée de l'abstraction.
 
-Comment ça fonctionne :
-• raise DBError() lève une exception DBError
-• Python vérifie : DBError est-il une instance de AppError ? Oui (sous-classe)
-• except AppError correspond → result = "caught"
-• result vaut "caught"
+Distinctions clés :
+• Pas TypeError.
 
-Exemple :
-class AppError(Exception): pass
-class DBError(AppError): pass
-class AuthError(AppError): pass
+Fonctionnement :
+• D() puis bound method f.
 
-try:
-    raise DBError()
-except AppError:
-    print("caught")  # attrape DBError
+Exécution étape par étape :
+• print reçoit int 1.
 
-try:
-    raise AuthError()
-except AppError:
-    print("caught")  # attrape AuthError aussi
+Ordre des opérations :
+• Évaluation intérieur puis print.
 
-Usages courants :
-• Handlers d'exception larges pour les erreurs d'application
-• Gestion d'erreur de repli
-• Capture hiérarchique d'exceptions`,
-  2696: `Vous pouvez attraper plusieurs types d'exceptions en passant un tuple à except. Si l'exception levée correspond à un type du tuple, elle est attrapée.
+Cas d'utilisation courants :
+• Fin de pipeline d'interface.
 
-Concepts clés :
-• except (TypeError, ValueError) attrape l'un ou l'autre
-• raise ValueError() correspond à ValueError dans le tuple
-• L'exception est attrapée et result est défini
-• La syntaxe tuple est la façon standard d'attraper plusieurs types
+Cas limites :
+• N/A.
 
-Comment ça fonctionne :
-• raise ValueError() lève une ValueError
-• Python vérifie : ValueError est-il dans (TypeError, ValueError) ?
-• Oui → le bloc except s'exécute
-• result = "caught"
+Considérations de performance :
+• N/A.
 
-Exemple :
-try:
-    raise ValueError()
-except (TypeError, ValueError):
-    print("caught")  # caught
+Exemples :
+• Valeur différente si return changé.
 
-try:
-    raise KeyError()
-except (TypeError, ValueError):
-    pass  # PAS attrapé — KeyError n'est pas dans le tuple
+Remarques :
+• Réponse : 1 (1re option).`,
+  2674: `isinstance([], list) et issubclass(list, object)
 
-Usages courants :
-• Gérer plusieurs types d'erreur liés uniformément
-• Simplifier le code de gestion d'erreurs
-• Regrouper des handlers d'exception similaires`,
-  2697: `issubclass vérifie si le premier argument est une sous-classe du second. ValueError est une sous-classe de Exception.
+Débutant :
+• True et True.
+
+Intermédiaire :
+• Toute classe hérite d'object en Python 3.
+
+Expert :
+• isinstance accepte aussi tuple de types en versions récentes (hors scope exact de la question).
 
 Concepts clés :
-• ValueError → Exception → BaseException → object
-• issubclass(ValueError, Exception) est True
-• Cela signifie que except Exception attrape ValueError
-• La plupart des exceptions courantes sont des sous-classes de Exception
+• Tests runtime sur l'arbre de types.
 
-Comment ça fonctionne :
-• Python vérifie le MRO de ValueError
-• ValueError.__mro__ inclut Exception
-• issubclass renvoie True
+Distinctions clés :
+• Pas False dans ce couple.
 
-Exemple :
-issubclass(ValueError, Exception)       # True
-issubclass(TypeError, Exception)        # True
-issubclass(Exception, BaseException)    # True
-issubclass(ValueError, BaseException)   # True
+Fonctionnement :
+• isinstance : relation instance-classe ; issubclass : relation sous-type.
 
-Usages courants :
-• Vérifier les hiérarchies d'exceptions
-• Gestion programmatique des exceptions
-• Comprendre ce que les clauses except attrapent`,
-  2698: `KeyboardInterrupt est une sous-classe directe de BaseException, pas de Exception. Cela signifie que except Exception ne l'attrape PAS.
+Exécution étape par étape :
+• Deux bool indépendants, tous deux vrais.
 
-Concepts clés :
-• KeyboardInterrupt → BaseException (saute Exception)
-• issubclass(KeyboardInterrupt, Exception) est False
-• except Exception n'attrapera PAS Ctrl+C
-• C'est intentionnel — les utilisateurs doivent pouvoir interrompre les programmes
+Ordre des opérations :
+• Appels gauche puis droit dans l'énoncé.
 
-Comment ça fonctionne :
-• KeyboardInterrupt.__mro__ = (KeyboardInterrupt, BaseException, object)
-• Exception n'est PAS dans le MRO
-• issubclass renvoie False
-• except Exception n'attrape pas les interruptions clavier
+Cas d'utilisation courants :
+• Validation polymorphe.
 
-Exemple :
-issubclass(KeyboardInterrupt, Exception)     # False
-issubclass(KeyboardInterrupt, BaseException) # True
+Cas limites :
+• issubclass sur instance au lieu de classe : TypeError.
 
-try:
-    while True: pass
-except Exception:
-    pass  # Ctrl+C ne sera PAS attrapé ici !
+Considérations de performance :
+• CPython optimise types courants.
 
-Usages courants :
-• Comprendre la conception de la hiérarchie d'exceptions
-• Écrire des handlers d'exception corrects
-• S'assurer que les programmes peuvent être interrompus`,
-  2699: `SystemExit est une sous-classe directe de BaseException, pas de Exception. Cela garantit que sys.exit() et exit() fonctionnent même dans des blocs except Exception.
+Exemples :
+• isinstance(True, int) True aussi.
+
+Remarques :
+• Réponse : True et True (1re option).`,
+  2675: `Que signifie ABC en Python ?
+
+Débutant :
+• Abstract Base Class (classe de base abstraite).
+
+Intermédiaire :
+• Module abc, helper ABC et décorateur abstractmethod.
+
+Expert :
+• collections.abc fournit des ABC pour les protocoles itérables, mapping, etc.
 
 Concepts clés :
-• SystemExit → BaseException (saute Exception)
-• issubclass(SystemExit, Exception) est False
-• except Exception n'attrapera PAS SystemExit
-• sys.exit() lève SystemExit
+• Vocabulaire standard pour interfaces.
 
-Comment ça fonctionne :
-• SystemExit.__mro__ = (SystemExit, BaseException, object)
-• Exception n'est PAS dans le MRO
-• issubclass renvoie False
-• Les programmes peuvent quitter même avec des handlers d'exception larges
+Distinctions clés :
+• Pas « Advanced Base Code » ni binaire.
 
-Exemple :
-issubclass(SystemExit, Exception)     # False
-issubclass(SystemExit, BaseException) # True
+Fonctionnement :
+• ABCMeta derrière.
 
-import sys
-try:
-    sys.exit(0)
-except Exception:
-    pass  # SystemExit n'est PAS attrapé ici !
-# Le programme quitte normalement
+Exécution étape par étape :
+• N/A.
 
-Usages courants :
-• Comprendre pourquoi sys.exit() fonctionne dans try/except
-• Conception correcte des handlers d'exception
-• Éviter d'attraper accidentellement les événements système`,
-  2700: `KeyboardInterrupt et SystemExit héritent directement de BaseException au lieu de Exception pour que les handlers except Exception génériques ne les avalent pas accidentellement.
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Typage duck + contrats.
+
+Cas limites :
+• ABC enregistrée virtuellement : autre mécanisme.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• class My(ABC): ...
+
+Remarques :
+• Réponse : Abstract Base Class (1re option).`,
+  2676: `isinstance([1, 2, 3], Iterable)
+
+Débutant :
+• True : une liste a __iter__.
+
+Intermédiaire :
+• collections.abc.Iterable teste le protocole itérable (via __subclasshook__).
+
+Expert :
+• Enregistrement explicite possible pour types tiers.
 
 Concepts clés :
-• except Exception est un pattern "catch-all" courant
-• Si KeyboardInterrupt était sous Exception, Ctrl+C serait attrapé
-• Si SystemExit était sous Exception, sys.exit() serait attrapé
-• Ce design garantit que les programmes restent interruptibles et sortables
+• Duck typing officiel pour les itérables.
 
-Comment ça fonctionne :
-• BaseException est la vraie racine de toutes les exceptions
-• Exception est pour les erreurs "normales" que les programmes gèrent
-• KeyboardInterrupt et SystemExit sont des "événements système", pas des erreurs
-• Ils contournent Exception pour éviter d'être accidentellement attrapés
+Distinctions clés :
+• Pas Error ni None.
 
-Exemple :
-try:
-    while True:
-        pass
-except Exception:
-    print("Error!")  # Ctrl+C n'est PAS attrapé
-    # L'utilisateur peut encore interrompre le programme
+Fonctionnement :
+• isinstance avec ABC peut être structurel.
 
-# Si vous devez vraiment tout attraper :
-try:
-    pass
-except BaseException:
-    pass  # Attrape TOUT (généralement mauvaise idée)
+Exécution étape par étape :
+• Vérification que list satisfait Iterable.
 
-Usages courants :
-• Comprendre la philosophie de conception des exceptions Python
-• Écrire des handlers d'exception robustes
-• Savoir quand utiliser except Exception vs except BaseException
-• Garantir que les programmes peuvent toujours être arrêtés`,
+Ordre des opérations :
+• Appel isinstance après import.
+
+Cas d'utilisation courants :
+• assert iterable avant boucle for.
+
+Cas limites :
+• Objet avec __getitem__ seul : historique complexe ; list standard OK.
+
+Considérations de performance :
+• isinstance sur built-in rapide.
+
+Exemples :
+• isinstance(42, Iterable) → False.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2677: `isinstance(iter([1, 2, 3]), Iterator)
+
+Débutant :
+• True : l'itérateur liste a __next__ et __iter__.
+
+Intermédiaire :
+• Iterator ⊆ Iterable mais la réciproque est fausse pour la liste brute.
+
+Expert :
+• Générateurs sont aussi Iterator.
+
+Concepts clés :
+• État de consommation dans l'itérateur.
+
+Distinctions clés :
+• Pas False : iter([...]) est bien un iterator.
+
+Fonctionnement :
+• __subclasshook__ vérifie les méthodes attendues.
+
+Exécution étape par étape :
+• iter crée list_iterator ; isinstance confirme.
+
+Ordre des opérations :
+• iter d'abord, puis isinstance.
+
+Cas d'utilisation courants :
+• Vérifier qu'on peut next() sans re-parcourir tout le conteneur.
+
+Cas limites :
+• Itérateur épuisé : reste Iterator mais next lève StopIteration.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance([1,2,3], Iterator) False.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2678: `isinstance(print, Callable)
+
+Débutant :
+• True : les fonctions built-in sont callables.
+
+Intermédiaire :
+• Équivalent conceptuel à callable(print).
+
+Expert :
+• Callable vérifie __call__ sur l'objet.
+
+Concepts clés :
+• Uniformiser fonctions, méthodes, types callables.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• ABC Callable + hooks.
+
+Exécution étape par étape :
+• print a __call__ côté implémentation builtin.
+
+Ordre des opérations :
+• isinstance évalue le second argument Callable.
+
+Cas d'utilisation courants :
+• Callbacks, APIs haut niveau.
+
+Cas limites :
+• 42 non Callable.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance(lambda:0, Callable) True.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2679: `isinstance({}, Mapping)
+
+Débutant :
+• True : dict implémente le mapping en lecture.
+
+Intermédiaire :
+• MutableMapping est plus large (mutation) ; dict est mutable mais isinstance Mapping reste vrai.
+
+Expert :
+• MappingProxyType aussi Mapping.
+
+Concepts clés :
+• Interface clés-valeurs typée.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Enregistrement dict comme virtual subclass.
+
+Exécution étape par étape :
+• {} est dict ; isinstance avec ABC.
+
+Ordre des opérations :
+• Création dict puis test.
+
+Cas d'utilisation courants :
+• Accepter read-only mapping dans une API.
+
+Cas limites :
+• defaultdict reste mapping mutable.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• str n'est pas Mapping.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2680: `ABC.register() : à quoi ça sert ?
+
+Débutant :
+• Enregistrer une classe comme sous-classe virtuelle sans héritage réel.
+
+Intermédiaire :
+• isinstance / issubclass reflètent l'enregistrement ; aucune méthode n'est héritée automatiquement.
+
+Expert :
+• Contrat déclaratif pour code tiers.
+
+Concepts clés :
+• Sous-typage virtuel.
+
+Distinctions clés :
+• Pas enregistrement de module PyPI ni singleton automatique.
+
+Fonctionnement :
+• Table interne sur l'ABC.
+
+Exécution étape par étape :
+• MyABC.register(ThirdParty) puis isinstance(ThirdParty(), MyABC) True.
+
+Ordre des opérations :
+• register à l'import ou setup.
+
+Cas d'utilisation courants :
+• collections.abc et dict builtin.
+
+Cas limites :
+• Ne valide pas que ThirdParty respecte vraiment le protocole : responsabilité développeur.
+
+Considérations de performance :
+• Lookup isinstance légèrement enrichi.
+
+Exemples :
+• intégrer une classe externe dans votre hiérarchie de types.
+
+Remarques :
+• Réponse : considérer une classe comme sous-classe sans hériter (1re option).`,
+  2681: `Qu'est-ce qu'une métaclasse ?
+
+Débutant :
+• Une classe dont les instances sont d'autres classes.
+
+Intermédiaire :
+• type est la métaclasse par défaut.
+
+Expert :
+• __new__/__init__ de la métaclasse s'exécutent à la définition de la classe fille.
+
+Concepts clés :
+• « Classe d'une classe ».
+
+Distinctions clés :
+• Pas classe non instanciable par nature ni simple décorateur (quoiqu'on puisse combiner).
+
+Fonctionnement :
+• type(name, bases, ns) ou sous-classe de type.
+
+Exécution étape par étape :
+• class C: pass déclenche appel métaclasse.
+
+Ordre des opérations :
+• Corps de classe exécuté puis construction de l'objet classe.
+
+Cas d'utilisation courants :
+• ORM, DSL, validation de schéma à l'import.
+
+Cas limites :
+• Complexité : préférer __init_subclass__ ou décorateurs si possible.
+
+Considérations de performance :
+• Coût une fois à l'import.
+
+Exemples :
+• isinstance(MyClass, type) True usuellement.
+
+Remarques :
+• Réponse : classe dont les instances sont des classes (1re option).`,
+  2682: `type est la métaclasse par défaut pour :
+
+Débutant :
+• Toutes les classes (built-in et utilisateur), sauf si metaclass= autre chose.
+
+Intermédiaire :
+• type(type) est type : bootstrap.
+
+Expert :
+• Même object est instance de type.
+
+Concepts clés :
+• Racine unifiée du modèle objet.
+
+Distinctions clés :
+• Pas seulement builtins ni seulement user-defined.
+
+Fonctionnement :
+• Appel type lors du statement class.
+
+Exécution étape par étape :
+• Si aucune métaclasse explicite : type construit la classe.
+
+Ordre des opérations :
+• Calcul métaclasse = plus dérivée des métaclasses des bases.
+
+Cas d'utilisation courants :
+• Comprendre introspection isinstance(cls, type).
+
+Cas limites :
+• Conflit de métaclasses entre bases : erreur à la définition.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• type(int) is type.
+
+Remarques :
+• Réponse : toutes les classes (1re option).`,
+  2683: `type("MyClass", (object,), {})
+
+Débutant :
+• Crée dynamiquement une nouvelle classe nommée MyClass.
+
+Intermédiaire :
+• Équivalent à class MyClass: pass (sans attributs).
+
+Expert :
+• Le dict peut contenir méthodes et attributs de classe.
+
+Concepts clés :
+• Fabrique de classes à l'exécution.
+
+Distinctions clés :
+• Pas une simple chaîne ni TypeError ici.
+
+Fonctionnement :
+• Signature type(name, bases, namespace).
+
+Exécution étape par étape :
+• Retourne l'objet classe.
+
+Ordre des opérations :
+• Évaluation des trois arguments puis appel.
+
+Cas d'utilisation courants :
+• ORM, sérialisation de schémas, codegen.
+
+Cas limites :
+• Clés du namespace doivent être identifiants valides pour méthodes.
+
+Considérations de performance :
+• Rarement hot path.
+
+Exemples :
+• Ajouter "x": 42 dans le dict.
+
+Remarques :
+• Réponse : nouvelle classe créée dynamiquement (1re option).`,
+  2684: `class Meta(type): pass / class C(metaclass=Meta): pass — type(C)
+
+Débutant :
+• Affiche la classe Meta (repr <class '__main__.Meta'> selon contexte).
+
+Intermédiaire :
+• C est instance de Meta ; Meta sous-classe de type donc isinstance(C, type) reste vrai.
+
+Expert :
+• __new__ de Meta reçoit mcs, name, bases, namespace.
+
+Concepts clés :
+• Remplacement de la fabrique par défaut.
+
+Distinctions clés :
+• Pas type générique ni C lui-même.
+
+Fonctionnement :
+• metaclass= dans la ligne de class.
+
+Exécution étape par étape :
+• Définition de C appelle Meta.__new__.
+
+Ordre des opérations :
+• Résolution métaclasse avant corps C.
+
+Cas d'utilisation courants :
+• Registres automatiques de sous-classes.
+
+Cas limites :
+• Hériter C sans redire metaclass : par défaut Meta peut se propager selon règles.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance(C, Meta) True.
+
+Remarques :
+• Réponse : <class 'Meta'> (1re option).`,
+  2685: `Quand Meta.__new__ s'exécute-t-il ?
+
+Débutant :
+• Au moment où la classe C est définie (exécution du bloc class), pas à C().
+
+Intermédiaire :
+• C() utilise le __call__ de type/Meta pour instances, autre étape.
+
+Expert :
+• Permet print/log/validation avant que la classe existe.
+
+Concepts clés :
+• Construction de classe vs construction d'instance.
+
+Distinctions clés :
+• Pas à l'appel du constructeur d'instance par défaut.
+
+Fonctionnement :
+• Pipeline définition : métaclasse.__new__ puis __init__ de métaclasse.
+
+Exécution étape par étape :
+• import du module ou exécution du class body déclenche __new__.
+
+Ordre des opérations :
+• Avant toute instanciation utilisateur.
+
+Cas d'utilisation courants :
+• Enregistrement, transformation du namespace.
+
+Cas limites :
+• __new__ doit retourner un objet type valide.
+
+Considérations de performance :
+• Une fois par classe.
+
+Exemples :
+• print dans __new__ apparaît une seule fois à l'import.
+
+Remarques :
+• Réponse : quand la classe C est définie (1re option).`,
+  2686: `Alternative simple aux métaclasses pour beaucoup de cas
+
+Débutant :
+• __init_subclass__ sur la classe parente.
+
+Intermédiaire :
+• Appelé pour chaque sous-classe définie ; reçoit cls et kwargs du class statement.
+
+Expert :
+• PEP 487 ; moins de code que Meta(type).
+
+Concepts clés :
+• Hook standard post-Python 3.6.
+
+Distinctions clés :
+• Pas __init__ d'instance ni __new__ d'instance comme substitut direct.
+
+Fonctionnement :
+• Méthode spéciale héritée et invoquée par le mécanisme de construction de classe.
+
+Exécution étape par étape :
+• class Child(Parent): déclenche Parent.__init_subclass__(Child, ...).
+
+Ordre des opérations :
+• Après préparation de la sous-classe.
+
+Cas d'utilisation courants :
+• Registres de plugins, validation de sous-classes.
+
+Cas limites :
+• Besoins très avancés (transformation namespace avant création) : métaclasse encore.
+
+Considérations de performance :
+• Simple et lisible.
+
+Exemples :
+• liste registry.append(cls).
+
+Remarques :
+• Réponse : __init_subclass__ (1re option).`,
+  2687: `f.__annotations__ pour def f(x: int) -> str
+
+Débutant :
+• Dictionnaire avec clés x et return, valeurs les objets int et str (pas des chaînes "int").
+
+Intermédiaire :
+• Stockage metadata ; pas d'effet sur l'exécution par défaut.
+
+Expert :
+• Les forward refs peuvent être des chaînes avec from __future__ annotations.
+
+Concepts clés :
+• introspection des annotations de fonction.
+
+Distinctions clés :
+• Pas {} vide ni chaînes seules pour ce snippet simple.
+
+Fonctionnement :
+• Remplissage au moment de la définition de f.
+
+Exécution étape par étape :
+• Lecture attribut __annotations__ sur la fonction.
+
+Ordre des opérations :
+• Après compilation du def.
+
+Cas d'utilisation courants :
+• FastAPI, pydantic, mypy.
+
+Cas limites :
+• Annotation absente → clé absente.
+
+Considérations de performance :
+• Dict petit.
+
+Exemples :
+• f.__annotations__['return'] is str.
+
+Remarques :
+• Réponse : {x: int, return: str} au sens objets type (1re option du QCM).`,
+  2688: `class C: x: int y: str — C.__annotations__
+
+Débutant :
+• Dict x→int, y→str ; pas de valeurs d'attribut C.x créées par seules les annotations.
+
+Intermédiaire :
+• hasattr(C,'x') peut être False sans valeur par défaut.
+
+Expert :
+• dataclasses lit ce dict pour générer __init__.
+
+Concepts clés :
+• Annotations de classe ≠ assignation.
+
+Distinctions clés :
+• Pas {x:0, y:""}.
+
+Fonctionnement :
+• __prepare__ + exécution corps classe stocke annotations.
+
+Exécution étape par étape :
+• Après class, consulter C.__annotations__.
+
+Ordre des opérations :
+• Annotations collectées avant instanciation.
+
+Cas d'utilisation courants :
+• Modèles typés, slots+annotations patterns.
+
+Cas limites :
+• x: int = 5 crée aussi attribut de classe 5.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• typing.get_type_hints(C) pour résolution forward.
+
+Remarques :
+• Réponse : {x: int, y: str} (1re option).`,
+  2689: `Les annotations sont-elles appliquées à l'exécution par Python ?
+
+Débutant :
+• Non : simple métadonnée ; pas de TypeError automatique sur mauvais type.
+
+Intermédiaire :
+• mypy/pyright font l'analyse statique ; bibliothèques peuvent ajouter runtime.
+
+Expert :
+• Philosophie du typage graduel.
+
+Concepts clés :
+• Pas d'effet obligatoire sur bytecode CPython standard.
+
+Distinctions clés :
+• Pas « oui TypeError systématique ».
+
+Fonctionnement :
+• Stockage __annotations__ ; appels inchangés.
+
+Exécution étape par étape :
+• add("a","b") peut concaténer malgré hints int.
+
+Ordre des opérations :
+• Vérification externe si outil lancé.
+
+Cas d'utilisation courants :
+• Doc vivante + IDE.
+
+Cas limites :
+• __debug__ et assert peuvent combiner types mais ce n'est pas le hint seul.
+
+Considérations de performance :
+• Zéro coût check runtime natif.
+
+Exemples :
+• def f(x:int): ... ; f("hi") OK.
+
+Remarques :
+• Réponse : non, métadonnées seulement (1re option).`,
+  2690: `Optional[int] équivaut à
+
+Débutant :
+• int | None (ou Union[int, None] en ancien style).
+
+Intermédiaire :
+• Signal habituel pour paramètre optionnel ou résultat « trouvé ou pas ».
+
+Expert :
+• PEP 604 simplifie l'écriture moderne.
+
+Concepts clés :
+• None explicité dans l'union.
+
+Distinctions clés :
+• Pas int seul ni None seul comme équivalence.
+
+Fonctionnement :
+• Alias typing vers Union.
+
+Exécution étape par étape :
+• N/A runtime strict.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• find_user -> Optional[str].
+
+Cas limites :
+• Confondre Optional avec valeur par défaut None : deux concepts liés.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• def f(a: int | None) -> None: ...
+
+Remarques :
+• Réponse : int | None (1re option).`,
+  2691: `List[int] en annotation
+
+Débutant :
+• Une liste dont les éléments sont attendus comme int par le vérificateur statique.
+
+Intermédiaire :
+• À l'exécution List[int] est un alias générique, pas une contrainte.
+
+Expert :
+• Depuis 3.9 préférer list[int] natif.
+
+Concepts clés :
+• Paramètre de type sur conteneur.
+
+Distinctions clés :
+• Pas un seul int ni tuple.
+
+Fonctionnement :
+• GenericAlias via typing ou builtin.
+
+Exécution étape par étape :
+• sum_all([1,2,3]) typé List[int] → OK outil.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• API retournant listes homogènes.
+
+Cas limites :
+• list[Any] perd la précision.
+
+Considérations de performance :
+• N/A runtime.
+
+Exemples :
+• def f(xs: list[int]) -> int: return sum(xs).
+
+Remarques :
+• Réponse : liste d'entiers (1re option).`,
+  2692: `Depuis Python 3.9, remplacer typing.List[int]
+
+Débutant :
+• list[int] avec le builtin subscripté.
+
+Intermédiaire :
+• PEP 585 : génériques intégrés.
+
+Expert :
+• Idem dict[str,int], tuple[int,...], set[str].
+
+Concepts clés :
+• Moins d'imports depuis typing.
+
+Distinctions clés :
+• Pas List(int) ni [int] seul.
+
+Fonctionnement :
+• __class_getitem__ sur list.
+
+Exécution étape par étape :
+• list[int] crée GenericAlias.
+
+Ordre des opérations :
+• Annotation évaluée à la définition selon futures.
+
+Cas d'utilisation courants :
+• Code moderne lisible.
+
+Cas limites :
+• Python <3.9 : besoin typing.List.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• items: list[str] = [].
+
+Remarques :
+• Réponse : list[int] (1re option).`,
+  2693: `Dict[str, int]
+
+Débutant :
+• Dictionnaire à clés str et valeurs int (pour le typage).
+
+Intermédiaire :
+• Ordre des paramètres : clé puis valeur.
+
+Expert :
+• dict[str, int] en 3.9+.
+
+Concepts clés :
+• Structure tabulaire typée.
+
+Distinctions clés :
+• Pas clés int / valeurs str inversées.
+
+Fonctionnement :
+• Deux paramètres au générique.
+
+Exécution étape par étape :
+• Vérificateur flag d[key]=valeur incohérente.
+
+Ordre des opérations :
+• N/A runtime.
+
+Cas d'utilisation courants :
+• comptage de mots str→int.
+
+Cas limites :
+• dict hétérogène réel vs hint strict.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• JSON-like typé.
+
+Remarques :
+• Réponse : clés str, valeurs int (1re option).`,
+  2694: `Tuple[int, str]
+
+Débutant :
+• Tuple de longueur exactement 2 : premier int, second str.
+
+Intermédiaire :
+• Diffère de list homogène : positions typées distinctement.
+
+Expert :
+• Tuple[int, ...] pour longueur variable homogène.
+
+Concepts clés :
+• Produit de types ordonnés.
+
+Distinctions clés :
+• Pas « n'importe quelle longueur » ni list.
+
+Fonctionnement :
+• Arity fixe dans le hint.
+
+Exécution étape par étape :
+• (1, "a") match ; (1, 2) rejet statique.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Retours multiples nommés via unpacking.
+
+Cas limites :
+• tuple vide Tuple[()].
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• def f() -> tuple[str, int]: return "a", 1.
+
+Remarques :
+• Réponse : tuple exactement (int, str) (1re option).`,
+  2695: `Union[int, str]
+
+Débutant :
+• Valeur pouvant être soit int soit str.
+
+Intermédiaire :
+• Le vérificateur exige branches pour les deux cas souvent.
+
+Expert :
+• int | str depuis 3.10.
+
+Concepts clés :
+• Somme disjointe logique des types.
+
+Distinctions clés :
+• Pas tuple des deux ni conversion implicite.
+
+Fonctionnement :
+• Union[..., ...] objet spécial typing.
+
+Exécution étape par étape :
+• isinstance runtime possible mais hint seul ne force pas.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• parse(str|int).
+
+Cas limites :
+• Union longue : alias nommé lisible.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• JSON scalar unions.
+
+Remarques :
+• Réponse : soit int soit str (1re option).`,
+  2696: `Depuis 3.10, écrire Union[int, str]
+
+Débutant :
+• int | str.
+
+Intermédiaire :
+• PEP 604 ; marche aussi dans isinstance.
+
+Expert :
+• X | None remplace Optional[X].
+
+Concepts clés :
+• Opérateur | sur types.
+
+Distinctions clés :
+• Pas & ni + ni virgule.
+
+Fonctionnement :
+• types.UnionType.
+
+Exécution étape par étape :
+• Évaluation à l'annotation.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Signatures compactes.
+
+Cas limites :
+• Versions anciennes : garder Union.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance(x, int | str).
+
+Remarques :
+• Réponse : int | str (1re option).`,
+  2697: `Any dans typing
+
+Débutant :
+• N'importe quel type est acceptable pour le vérificateur (opt-out).
+
+Intermédiaire :
+• Propagation : tout attribut d'un Any est Any souvent.
+
+Expert :
+• Contraster avec object qui reste plus sûr statiquement.
+
+Concepts clés :
+• Échappatoire au système de types.
+
+Distinctions clés :
+• Pas « aucun type » ni seulement builtins.
+
+Fonctionnement :
+• Marqueur spécial dans typing.
+
+Exécution étape par étape :
+• N/A runtime.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• JSON brut, migration progressive.
+
+Cas limites :
+• Masque les vraies erreurs.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• def f(x: Any) -> Any: return x.
+
+Remarques :
+• Réponse : tout type accepté (1re option).`,
+  2698: `Protocol dans typing
+
+Débutant :
+• Sous-typage structurel : « canard » vérifié statiquement sans héritage forcé.
+
+Intermédiaire :
+• @runtime_checkable pour isinstance parfois.
+
+Expert :
+• PEP 544 ; diffère d'ABC nominatif.
+
+Concepts clés :
+• Interface implicite.
+
+Distinctions clés :
+• Pas gestionnaire réseau Protocol HTTP.
+
+Fonctionnement :
+• Outil pour type checkers principalement.
+
+Exécution étape par étape :
+• render(shape: Drawable) accepte Circle si draw existe.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Décorréler bibliothèques.
+
+Cas limites :
+• Attributs privés ou noms différents : pas de match.
+
+Considérations de performance :
+• N/A runtime sauf checks explicites.
+
+Exemples :
+• Iterable-like custom.
+
+Remarques :
+• Réponse : sous-typage structurel (duck typing typé) (1re option).`,
+  2699: `class C: def __class_getitem__(cls, item): return f"C[{item}]" — print(C[int])
+
+Débutant :
+• La f-string interpole item ; str(int) donne la représentation <class 'int'>.
+
+Intermédiaire :
+• Donc affichage C[<class 'int'>] selon 1re option du quiz.
+
+Expert :
+• En vrai code, on retourne plutôt un GenericAlias, pas une str.
+
+Concepts clés :
+• Hook d'indicage sur la classe.
+
+Distinctions clés :
+• Pas erreur ni C[int] littéral brut si __str__ de la str renvoie le contenu.
+
+Fonctionnement :
+• C[int] appelle __class_getitem__.
+
+Exécution étape par étape :
+• int passé comme objet ; formatage.
+
+Ordre des opérations :
+• print après appel.
+
+Cas d'utilisation courants :
+• Génériques user-defined.
+
+Cas limites :
+• Signature @classmethod implicite pour __class_getitem__ en versions récentes : détails CPython.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• list[int] builtin alias.
+
+Remarques :
+• Réponse : C[<class 'int'>] (1re option).`,
+  2700: `Que permet __class_getitem__ sur une classe ?
+
+Débutant :
+• La syntaxe d'indicage MyClass[...] comme pour list[int].
+
+Intermédiaire :
+• Base des génériques builtins PEP 585.
+
+Expert :
+• Complète parfois les besoins sans métaclasse lourde (PEP 560).
+
+Concepts clés :
+• Paramétrage par crochets.
+
+Distinctions clés :
+• Pas activer comparaisons magiques ni itération seule.
+
+Fonctionnement :
+• Descriptor protocol spécial sur type.
+
+Exécution étape par étape :
+• Évaluation Class[params] → appel.
+
+Ordre des opérations :
+• Après résolution de Class.
+
+Cas d'utilisation courants :
+• MesStack[int], Tensor[float], etc.
+
+Cas limites :
+• Conflit avec ancien __getitem__ uniquement sur instances.
+
+Considérations de performance :
+• Création d'alias mise en cache en pratique builtins.
+
+Exemples :
+• dict[str, int].
+
+Remarques :
+• Réponse : syntaxe MyClass[int] par crochets (1re option).`,
   2701: `try/except est le mécanisme de gestion des exceptions de Python qui permet au code de gérer élégamment les erreurs et conditions inattendues. Le bloc try contient le code qui pourrait lever une exception, et le bloc except capture et gère ces exceptions. Si une exception survient dans le bloc try, l'exécution saute immédiatement au bloc except, ignorant tout code restant dans le bloc try. Cela empêche le programme de planter et permet une gestion d'erreur appropriée.
 
 Concepts clés :
