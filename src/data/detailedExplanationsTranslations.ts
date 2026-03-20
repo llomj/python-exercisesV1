@@ -126997,6 +126997,2112 @@ Exemples :
 
 Remarques :
 • Réponse : éviter que except Exception les bloque — 1re option.`,
+  3001: `Qu'est-ce que try/except ?
+
+Débutant :
+• Bloc try : code qui peut échouer.
+• Bloc except : que faire si une exception survient.
+
+Intermédiaire :
+• L'exécution quitte try au premier raise et cherche un except compatible.
+
+Expert :
+• Plusieurs except ordonnés ; else (succès) ; finally (toujours) ; héritage des types.
+
+Concepts clés :
+• Mécanisme natif de gestion d'erreurs sans quitter brutalement le programme.
+
+Distinctions clés :
+• try/except vs if sur codes d'erreur ; vs laisser remonter jusqu'au traceback utilisateur.
+
+Fonctionnement :
+• Python associe l'exception levée au premier gestionnaire dont le type correspond (ou une classe mère).
+
+Exécution étape par étape :
+1. Entrée dans try.
+2. Si raise : abandon du reste du try, recherche d'un except.
+3. Si except pris : exécution du corps du except.
+4. Poursuite après tout le compose try/except/else/finally.
+
+Ordre des opérations :
+• Le matching des except suit l'ordre d'écriture ; le premier qui convient gagne.
+
+Cas d'utilisation courants :
+• Fichiers, réseau, parsing, conversions : erreurs attendues à traiter localement.
+
+Cas limites :
+• except trop large qui masque des bugs ; oublier de relancer après un log partiel.
+
+Considérations de performance :
+• Coût surtout lié au travail du try ; éviter try/except pour le flux normal (préférer if).
+
+Exemples :
+• try: 10 / int(s) except (ValueError, ZeroDivisionError): ...
+
+Remarques :
+• Réponse : gestion des exceptions — 1re option.`,
+  3002: `Que signifie try: 1/0 ; except: pass ?
+
+Débutant :
+• except sans type attrape toute exception.
+
+Intermédiaire :
+• Même KeyboardInterrupt ou SystemExit peuvent être avalés selon le contexte.
+
+Expert :
+• PEP 8 déconseille le except nu : on perd la visibilité sur les erreurs réelles.
+
+Concepts clés :
+• Filtre d'exception maximal mais dangereux pour le débogage.
+
+Distinctions clés :
+• except: vs except Exception: vs except ZeroDivisionError:.
+
+Fonctionnement :
+• Toute BaseException compatible avec le mécanisme de matching tombe dans ce bloc.
+
+Exécution étape par étape :
+1. ZeroDivisionError dans try.
+2. except nu correspond.
+3. pass ne fait rien : silence total.
+
+Ordre des opérations :
+• Comme pour tout except : évaluation après abandon du try.
+
+Cas d'utilisation courants :
+• Scripts jetables ; rarement acceptable en production.
+
+Cas limites :
+• Ctrl+C peut être ignoré involontairement.
+
+Considérations de performance :
+• Négligeable ; le problème est la maintenabilité.
+
+Exemples :
+• Préférer except Exception: avec commentaire # noqa ou types explicites.
+
+Remarques :
+• Réponse : attrape toutes les exceptions — 1re option.`,
+  3003: `Que signifie try: 1/0 ; except ZeroDivisionError: pass ?
+
+Débutant :
+• Seul ZeroDivisionError est intercepté ici.
+
+Intermédiaire :
+• ValueError ou TypeError continueraient à remonter.
+
+Expert :
+• Bon style : cibler les erreurs prévues plutôt qu'un filet global.
+
+Concepts clés :
+• Filtrage par type d'exception.
+
+Distinctions clés :
+• Un except typé vs tuple de types vs Exception.
+
+Fonctionnement :
+• Python compare la classe de l'instance levée à celle demandée (sous-classes incluses).
+
+Exécution étape par étape :
+1. Division par zéro → ZeroDivisionError.
+2. except ZeroDivisionError exécuté.
+3. Autres erreurs non listées : propagation.
+
+Ordre des opérations :
+• Évaluation du try jusqu'au raise puis branchement.
+
+Cas d'utilisation courants :
+• Garde-fous arithmétiques, conversions numériques.
+
+Cas limites :
+• Plusieurs causes d'échec : prévoir plusieurs except ou un tuple.
+
+Considérations de performance :
+• Identique à tout try/except ciblé.
+
+Exemples :
+• except ZeroDivisionError: return float('inf').
+
+Remarques :
+• Réponse : attrape seulement ZeroDivisionError — 1re option.`,
+  3004: `Que vaut try: 1/0 ; except ZeroDivisionError as e: type(e) ?
+
+Débutant :
+• e est l'objet exception ; type(e) donne sa classe.
+
+Intermédiaire :
+• Ici : classe ZeroDivisionError, pas la chaîne du message.
+
+Expert :
+• as e lie l'instance ; e.__class__ équivalent à type(e) pour les instances classiques.
+
+Concepts clés :
+• Inspection dynamique du type réel levé.
+
+Distinctions clés :
+• type(e) vs type(type(e)) ; str(e) pour le message humain.
+
+Fonctionnement :
+• L'instance est créée au moment du raise ; as e référence cette instance dans le bloc.
+
+Exécution étape par étape :
+1. Création de ZeroDivisionError.
+2. Liaison e → instance.
+3. type(e) → objet classe ZeroDivisionError.
+
+Ordre des opérations :
+• type() est un appel après assignation de e.
+
+Cas d'utilisation courants :
+• Logs structurés, routage d'erreurs par classe.
+
+Cas limites :
+• e hors scope après le bloc except.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• print(type(e).__name__) pour journaliser un nom court.
+
+Remarques :
+• Réponse : classe ZeroDivisionError — 1re option.`,
+  3005: `Que signifie try: 1/0 ; except (ZeroDivisionError, ValueError): pass ?
+
+Débutant :
+• Un tuple dans except : plusieurs types acceptés par le même bloc.
+
+Intermédiaire :
+• ZeroDivisionError ici correspond ; ValueError serait traité pareil s'il survenait.
+
+Expert :
+• Alternative à deux except consécutifs quand la réaction est identique.
+
+Concepts clés :
+• Union de types dans un seul gestionnaire.
+
+Distinctions clés :
+• Tuple dans un except vs plusieurs clauses except séparées.
+
+Fonctionnement :
+• Le moteur teste l'appartenance de la classe de l'exception à l'ensemble donné.
+
+Exécution étape par étape :
+1. Exception levée.
+2. Comparaison avec chaque type du tuple.
+3. Premier match conceptuel : ce bloc (un seul bloc).
+
+Ordre des opérations :
+• Un seul bloc ; pas d'ordre entre types du tuple comme entre clauses séparées.
+
+Cas d'utilisation courants :
+• Entrée utilisateur : ValueError et erreur de division selon le même message utilisateur.
+
+Cas limites :
+• Si les réponses doivent différer, séparer les except.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• except (OSError, IOError): ... sous Python 3 (IOError alias d'OSError).
+
+Remarques :
+• Réponse : attrape plusieurs types d'exceptions — 1re option.`,
+  3006: `Que signifie try: 1/0 ; except ZeroDivisionError: pass ; except ValueError: pass ?
+
+Débutant :
+• Deux clauses except après un même try.
+
+Intermédiaire :
+• Python essaie dans l'ordre : ici la première suffit pour 1/0.
+
+Expert :
+• Mettre les types les plus spécifiques avant les plus généraux (ex. ValueError avant Exception).
+
+Concepts clés :
+• Chaînage de gestionnaires mutuellement exclusifs pour un même essai.
+
+Distinctions clés :
+• Plusieurs except vs un tuple : granularité des messages ou logiques différentes.
+
+Fonctionnement :
+• Au plus un except exécuté par lèveée ; ordre source = ordre de test.
+
+Exécution étape par étape :
+1. ZeroDivisionError.
+2. Premier except correspond → exécuté.
+3. Second except ignoré pour cette lèveée.
+
+Ordre des opérations :
+• Scan linéaire des except après interruption du try.
+
+Cas d'utilisation courants :
+• Messages d'erreur distincts par cause.
+
+Cas limites :
+• except Exception en premier masque les suivants.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• except ZeroDivisionError: ... elif logique impossible ici — utiliser deux except.
+
+Remarques :
+• Réponse : plusieurs clauses except — 1re option.`,
+  3007: `Que vaut try: pass ; except: pass ; else: x = 1 ; x ?
+
+Débutant :
+• else du try s'exécute seulement si aucune exception dans try.
+
+Intermédiaire :
+• Ici try vide ne lève rien → else tourne → x = 1.
+
+Expert :
+• else s'exécute après try réussi et avant finally ; utile pour séparer « succès » de « erreur ».
+
+Concepts clés :
+• Chemin de succès explicite après try.
+
+Distinctions clés :
+• else du try vs else du for/while.
+
+Fonctionnement :
+• Si try termine normalement, branchement else ; sinon saut aux except.
+
+Exécution étape par étape :
+1. try: pass OK.
+2. except ignoré.
+3. else: assignation x = 1.
+4. x lu → 1.
+
+Ordre des opérations :
+• else après try complet, avant tout finally éventuel.
+
+Cas d'utilisation courants :
+• Commit transaction seulement si étapes préparatoires OK.
+
+Cas limites :
+• Si le try se termine par return ou break, le else du try n'est pas exécuté (il ne couvre que la fin normale sans exception).
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• try: data = fetch() except: ... else: cache.save(data).
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  3008: `Que vaut try: 1/0 ; except: pass ; else: x = 1 ; x ?
+
+Débutant :
+• Exception dans try → else ignoré.
+
+Intermédiaire :
+• x n'est jamais défini ; lecture de x → NameError.
+
+Expert :
+• Le except: pass masque l'erreur mais ne crée pas x.
+
+Concepts clés :
+• Dépendance du chemin d'exécution sur la présence d'exception.
+
+Distinctions clés :
+• Contraste direct avec la question où try: pass mène à else.
+
+Fonctionnement :
+• Branche except prise ; else non exécuté ; portée de x reste vide.
+
+Exécution étape par étape :
+1. ZeroDivisionError.
+2. except: pass.
+3. else sauté.
+4. x inexistant → NameError.
+
+Ordre des opérations :
+• Évaluation de x en fin de suite : échec de résolution de nom.
+
+Cas d'utilisation courants :
+• Piège classique en quiz : initialiser x avant try ou dans finally.
+
+Cas limites :
+• En REPL partiel, un x ancien pourrait exister — pas le cas d'une suite propre.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Utiliser finally: pour garantir une assignation par défaut.
+
+Remarques :
+• Réponse : NameError — 1re option.`,
+  3009: `Que vaut try: pass ; except: pass ; finally: x = 1 ; x ?
+
+Débutant :
+• finally s'exécute toujours après try/except.
+
+Intermédiaire :
+• Même sans exception, finally assigne x.
+
+Expert :
+• finally avant propagation si exception non gérée ; ici tout est géré ou absent.
+
+Concepts clés :
+• Garantie de nettoyage.
+
+Distinctions clés :
+• finally vs else : finally toujours, else seulement sans exception.
+
+Fonctionnement :
+• Python exécute le bloc finally en sortant de la structure try.
+
+Exécution étape par étape :
+1. try OK.
+2. except non utilisé.
+3. finally: x = 1.
+4. x → 1.
+
+Ordre des opérations :
+• finally après try et except éventuels, avant la ligne suivante hors structure.
+
+Cas d'utilisation courants :
+• fermeture de fichier, release de verrou.
+
+Cas limites :
+• Si finally lève à son tour, elle remplace l'exception précédente (chaining).
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• try: return 3 finally: log() — le finally tourne avant le return effectif.
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  3010: `Que vaut try: 1/0 ; except: pass ; finally: x = 1 ; x ?
+
+Débutant :
+• Exception attrapée, puis finally quand même.
+
+Intermédiaire :
+• x = 1 s'exécute après le except.
+
+Expert :
+• L'ordre est : try échoue → except → finally → suite.
+
+Concepts clés :
+• finally indépendant du fait qu'une exception ait eu lieu.
+
+Distinctions clés :
+• Sans finally, x ne serait pas défini ici non plus si except ne l'assignait pas — ici finally le fait.
+
+Fonctionnement :
+• Le moteur planifie toujours l'entrée dans finally lors de l'entrée dans try.
+
+Exécution étape par étape :
+1. Division par zéro.
+2. except: pass.
+3. finally: x = 1.
+4. x vaut 1.
+
+Ordre des opérations :
+• finally après gestion de l'exception.
+
+Cas d'utilisation courants :
+• Rollback + libération : deux phases dans except et finally.
+
+Cas limites :
+• return dans except : finally s'exécute quand même avant de vraiment retourner.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Mesurer durée : finally: timer.stop().
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  3011: `Que fait raise ValueError('error') ?
+
+Débutant :
+• Lève une ValueError avec message 'error'.
+
+Intermédiaire :
+• Interrompt le flux normal jusqu'à un except ValueError ou parent.
+
+Expert :
+• raise sans argument dans except relance l'exception active ; ici c'est une levée explicite.
+
+Concepts clés :
+• Signal d'erreur intentionnel pour l'appelant.
+
+Distinctions clés :
+• raise TypeError vs return {'error': True}.
+
+Fonctionnement :
+• Construction de l'instance ValueError('error') puis unwinding de la pile.
+
+Exécution étape par étape :
+1. Évaluation des arguments du constructeur.
+2. Instanciation.
+3. Propagation jusqu'au gestionnaire.
+
+Ordre des opérations :
+• raise est une instruction, pas une expression qui retourne.
+
+Cas d'utilisation courants :
+• Validation : prix négatif, format incorrect.
+
+Cas limites :
+• Dans __init__, raise empêche la construction complète.
+
+Considérations de performance :
+• Coût de traceback si non capturé ; éviter dans boucle serrée pour le contrôle de flux.
+
+Exemples :
+• if n < 0: raise ValueError('n doit être positif').
+
+Remarques :
+• Réponse : lève ValueError — 1re option.`,
+  3012: `Que fait raise ValueError ?
+
+Débutant :
+• Lève ValueError() sans argument de message personnalisé.
+
+Intermédiaire :
+• str() sur l'exception peut être vide ou générique selon le type.
+
+Expert :
+• Équivalent à raise ValueError() ; utile pour signaler « erreur de valeur » minimale.
+
+Concepts clés :
+• Forme courte de levée.
+
+Distinctions clés :
+• Avec ou sans parenthèses ; message absent vs message explicite.
+
+Fonctionnement :
+• Instanciation sans args du type builtin.
+
+Exécution étape par étape :
+1. ValueError() créée.
+2. Propagation.
+
+Ordre des opérations :
+• Comme tout raise.
+
+Cas d'utilisation courants :
+• Placeholder dans du code à affiner.
+
+Cas limites :
+• Moins informatif pour les logs.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• raise RuntimeError depuis une branche « impossible ».
+
+Remarques :
+• Réponse : lève ValueError sans message détaillé — 1re option.`,
+  3013: `Que fait try: raise ValueError ; except ValueError as e: raise ?
+
+Débutant :
+• raise seul relance l'exception capturée.
+
+Intermédiaire :
+• La traceback peut être préservée (contexte Python 3).
+
+Expert :
+• Permet de logger puis relancer sans changer le type.
+
+Concepts clés :
+• Relance transparente pour ne pas avaler l'erreur.
+
+Distinctions clés :
+• raise vs raise e (perte possible de traceback avec raise e ancien style).
+
+Fonctionnement :
+• Mot-clé raise sans expression dans except : réutilise l'exception courante.
+
+Exécution étape par étape :
+1. ValueError levée.
+2. Capturée.
+3. raise nu → propagation au-delà.
+
+Ordre des opérations :
+• Après travail dans except (log, métrique).
+
+Cas d'utilisation courants :
+• Couche bas niveau qui journalise ; couche haute qui décide.
+
+Cas limites :
+• Hors bloc except, raise seul est SyntaxError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• except OSError: logger.exception('disk'); raise.
+
+Remarques :
+• Réponse : relance l'exception — 1re option.`,
+  3014: `Que fait class MyError(Exception): pass ; raise MyError() ?
+
+Débutant :
+• Définit une exception personnalisée et la lève.
+
+Intermédiaire :
+• MyError est une sous-classe d'Exception ; peut être attrapée par except MyError ou except Exception.
+
+Expert :
+• On peut enrichir avec __init__ pour champs métier (code, champ, etc.).
+
+Concepts clés :
+• Typage d'erreurs du domaine.
+
+Distinctions clés :
+• Exception custom vs codes entiers ou dict d'erreur.
+
+Fonctionnement :
+• La classe hérite du mécanisme de BaseException/Exception.
+
+Exécution étape par étape :
+1. Corps de classe exécuté à l'import/définition.
+2. raise instancie MyError.
+
+Ordre des opérations :
+• Comme toute levée utilisateur.
+
+Cas d'utilisation courants :
+• APIs : PaymentDeclined, InvalidSKU.
+
+Cas limites :
+• Hériter de Exception plutôt que BaseException sauf besoin rare.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• class ConfigError(Exception): ...
+
+Remarques :
+• Réponse : lève une exception personnalisée — 1re option.`,
+  3015: `Que vaut class MyError(Exception): pass ; isinstance(MyError(), Exception) ?
+
+Débutant :
+• True : toute sous-classe d'Exception est une Exception au sens isinstance.
+
+Intermédiaire :
+• isinstance teste la hiérarchie, pas seulement le type exact.
+
+Expert :
+• Liskov : un MyError peut passer où une Exception est attendue (avec prudence).
+
+Concepts clés :
+• Polymorphisme sur les erreurs.
+
+Distinctions clés :
+• isinstance vs type(x) is Exception.
+
+Fonctionnement :
+• Parcours du MRO de la classe de l'objet.
+
+Exécution étape par étape :
+1. MyError() créée.
+2. isinstance → True.
+
+Ordre des opérations :
+• Appel builtin après création d'instance.
+
+Cas d'utilisation courants :
+• Tests unitaires sur hiérarchie d'exceptions.
+
+Cas limites :
+• isinstance(x, tuple) pour plusieurs types possibles.
+
+Considérations de performance :
+• Très faible.
+
+Exemples :
+• assert isinstance(e, MyError).
+
+Remarques :
+• Réponse : True — 1re option.`,
+  3016: `Que vaut try: raise ValueError('msg') ; except ValueError as e: str(e) ?
+
+Débutant :
+• str(e) donne souvent le message passé au constructeur.
+
+Intermédiaire :
+• Ici 'msg' en sortie utilisateur lisible.
+
+Expert :
+• __str__ peut être surchargé dans une sous-classe custom.
+
+Concepts clés :
+• Conversion utilisateur de l'erreur.
+
+Distinctions clés :
+• str(e) vs repr(e) vs e.args.
+
+Fonctionnement :
+• Appel de BaseException.__str__ ou override.
+
+Exécution étape par étape :
+1. e liée à ValueError('msg').
+2. str(e) → 'msg'.
+
+Ordre des opérations :
+• str() après capture.
+
+Cas d'utilisation courants :
+• Messages API 400 avec texte explicatif.
+
+Cas limites :
+• Exceptions sans args : chaîne vide possible.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• f'Échec : {e}'.
+
+Remarques :
+• Réponse : chaîne msg — 1re option.`,
+  3017: `Que vaut try: raise ValueError('msg') ; except ValueError as e: repr(e) ?
+
+Débutant :
+• repr(e) est une représentation « débogage » avec type et arguments.
+
+Intermédiaire :
+• Souvent sous forme ValueError('msg') en texte.
+
+Expert :
+• objectif : parfois recréable par eval (pas garanti).
+
+Concepts clés :
+• Fidélité pour logs techniques.
+
+Distinctions clés :
+• repr vs str pour affichage utilisateur final.
+
+Fonctionnement :
+• Appel __repr__ de l'exception.
+
+Exécution étape par étape :
+1. Capture de e.
+2. repr(e) construit la chaîne détaillée.
+
+Ordre des opérations :
+• Comme tout appel de fonction unaire.
+
+Cas d'utilisation courants :
+• logging.exception avec détail maximal.
+
+Cas limites :
+• Caractères non ASCII : échappement selon version.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• assert "ValueError" in repr(e).
+
+Remarques :
+• Réponse : représentation type ValueError('msg') — 1re option.`,
+  3018: `Que vaut try: 1/0 ; except Exception as e: type(e).__name__ ?
+
+Débutant :
+• __name__ du type donne le nom court de la classe : 'ZeroDivisionError'.
+
+Intermédiaire :
+• Pas 'Exception' sauf si l'instance est vraiment de ce type.
+
+Expert :
+• Utile pour dispatch générique sans importer tous les types.
+
+Concepts clés :
+• Introspection légère du nom de classe.
+
+Distinctions clés :
+• __name__ sur la classe vs sur le module.
+
+Fonctionnement :
+• type(e) retourne la classe ; attribut __name__ string.
+
+Exécution étape par étape :
+1. Capture as e (ZeroDivisionError).
+2. type(e) → classe.
+3. __name__ → 'ZeroDivisionError'.
+
+Ordre des opérations :
+• Attribut lu après type().
+
+Cas d'utilisation courants :
+• Métriques : compter occurrences par nom d'erreur.
+
+Cas limites :
+• Classes dynamiques : __name__ peut être surprenant.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• if type(e).__name__ == 'KeyboardInterrupt': ...
+
+Remarques :
+• Réponse : 'ZeroDivisionError' — 1re option.`,
+  3019: `Que signifie try: raise ValueError ; except Exception: pass ?
+
+Débutant :
+• Exception attrape ValueError car héritage.
+
+Intermédiaire :
+• Toute sous-classe de Exception sauf celles hors arbre... ici ValueError ⊆ Exception.
+
+Expert :
+• Même principe pour toute la descendance d'Exception ; hors de ce sous-arbre (ex. KeyboardInterrupt), il faut un except plus large ou laisser remonter.
+
+Concepts clés :
+• Filet large pour erreurs « normales ».
+
+Distinctions clés :
+• except Exception vs except BaseException.
+
+Fonctionnement :
+• Matching par sous-type.
+
+Exécution étape par étape :
+1. ValueError levée.
+2. except Exception correspond.
+3. pass.
+
+Ordre des opérations :
+• Standard.
+
+Cas d'utilisation courants :
+• Boucle serveur : log et continuer.
+
+Cas limites :
+• Trop large : masque trop de bugs ; préférer types fins en bibliothèque.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• except Exception as e: sentry.capture(e).
+
+Remarques :
+• Réponse : attrape ValueError (sous-classe) — 1re option.`,
+  3020: `Que signifie try: raise ValueError ; except (ValueError, TypeError): pass ?
+
+Débutant :
+• ValueError est dans le tuple → bloc exécuté.
+
+Intermédiaire :
+• TypeError serait géré pareil ; KeyError non.
+
+Expert :
+• Ordre des types dans le tuple n'importe pas pour le matching.
+
+Concepts clés :
+• Handler partagé pour familles d'erreurs proches.
+
+Distinctions clés :
+• vs deux except avec corps différents.
+
+Fonctionnement :
+• Test d'appartenance de la classe levée aux types listés.
+
+Exécution étape par étape :
+1. ValueError.
+2. Match tuple.
+3. pass.
+
+Ordre des opérations :
+• Standard.
+
+Cas d'utilisation courants :
+• Parsing : ValueError et TypeError pour entrée invalide.
+
+Cas limites :
+• Éviter tuple géant illisible.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• except (json.JSONDecodeError, ValueError): ...
+
+Remarques :
+• Réponse : attrape ValueError — 1re option.`,
+  3021: `Que signifie with open('file') as f ?
+
+Débutant :
+• Ouvre un fichier et lie f au gestionnaire de contexte.
+
+Intermédiaire :
+• À la sortie du bloc, fermeture automatique (souvent via __exit__).
+
+Expert :
+• Équivalent conceptuel à try/finally avec close ; même en cas d'exception.
+
+Concepts clés :
+• Protocole context manager (__enter__ / __exit__).
+
+Distinctions clés :
+• with vs open manuel ouvert oublié.
+
+Fonctionnement :
+• __enter__ retourne l'objet fichier ; __exit__ ferme.
+
+Exécution étape par étape :
+1. open(...) construit le CM.
+2. __enter__ → f.
+3. Corps du with.
+4. __exit__ au départ.
+
+Ordre des opérations :
+• __exit__ même si return dans le corps.
+
+Cas d'utilisation courants :
+• Lecture/écriture fichiers, locks threading.
+
+Cas limites :
+• open peut lever avant d'entrer dans with ; pas de f définie.
+
+Considérations de performance :
+• I/O domine.
+
+Exemples :
+• with open(path, encoding='utf-8') as f: data = f.read().
+
+Remarques :
+• Réponse : gestionnaire de contexte — 1re option.`,
+  3022: `Classe MyContext avec __enter__ / __exit__ et with MyContext() as ctx: pass ?
+
+Débutant :
+• Python appelle __enter__ à l'entrée et __exit__ à la sortie.
+
+Intermédiaire :
+• Ici __exit__ vide : pas de nettoyage spécial mais protocole respecté.
+
+Expert :
+• __exit__ reçoit (exc_type, exc, tb) si exception ; retour True pour supprimer la propagation.
+
+Concepts clés :
+• Implémentation manuelle du protocole.
+
+Distinctions clés :
+• Classe CM vs @contextmanager.
+
+Fonctionnement :
+• Descripteur d'exécution géré par WITH_SETUP opcodes.
+
+Exécution étape par étape :
+1. Instanciation MyContext().
+2. __enter__ → self assigné à ctx.
+3. pass.
+4. __exit__.
+
+Ordre des opérations :
+• __exit__ après corps, avant ligne suivante.
+
+Cas d'utilisation courants :
+• Connexions BD, transactions.
+
+Cas limites :
+• Oublier return self dans __enter__ si on veut l'instance.
+
+Considérations de performance :
+• Négligeable hors ressource.
+
+Exemples :
+• Mesurer temps : __enter__ start ; __exit__ stop.
+
+Remarques :
+• Réponse : utilise un gestionnaire de contexte — 1re option.`,
+  3023: `__enter__ retourne 1 ; with MyContext() as x: x ?
+
+Débutant :
+• La valeur après as est le retour de __enter__, ici 1.
+
+Intermédiaire :
+• x n'est pas obligatoirement self du gestionnaire.
+
+Expert :
+• Pattern factory : __enter__ peut retourner un wrapper ou un handle.
+
+Concepts clés :
+• Séparation entre objet CM et ressource exposée.
+
+Distinctions clés :
+• return self vs return autre chose.
+
+Fonctionnement :
+• Assignation du résultat de __enter__ au nom après as.
+
+Exécution étape par étape :
+1. __enter__ → 1.
+2. x = 1 dans le bloc.
+3. x ? → 1.
+
+Ordre des opérations :
+• Lecture de x dans le bloc.
+
+Cas d'utilisation courants :
+• contextlib.redirect_stdout.
+
+Cas limites :
+• Si __enter__ lève, on n'entre pas dans le bloc.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• return acquire_lock().
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  3024: `__exit__ retourne True après 1/0 dans le with ?
+
+Débutant :
+• True dans __exit__ : l'exception du bloc peut être « étouffée ».
+
+Intermédiaire :
+• Ici ZeroDivisionError ne remonte pas au code appelant.
+
+Expert :
+• À utiliser avec parcimonie : cache les vrais bugs.
+
+Concepts clés :
+• Signal booléen de suppression d'exception.
+
+Distinctions clés :
+• return False ou None : propagation normale.
+
+Fonctionnement :
+• L'interpréteur consulte la valeur de retour de __exit__.
+
+Exécution étape par étape :
+1. 1/0 dans with.
+2. __exit__ appelé avec infos d'exception.
+3. return True → pas de propagation.
+
+Ordre des opérations :
+• __exit__ avant de poursuivre après with.
+
+Cas d'utilisation courants :
+• Zones « sandbox » de tests.
+
+Cas limites :
+• BaseException : comportement subtil selon version ; rester sur cas documentés.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• contextlib.suppress utilise une logique comparable.
+
+Remarques :
+• Réponse : supprime l'exception (ne la propage pas) — 1re option.`,
+  3025: `with MyContext() as ctx: ctx quand __enter__ retourne self ?
+
+Débutant :
+• ctx est l'instance MyContext.
+
+Intermédiaire :
+• On peut appeler méthodes d'état sur ctx pendant le bloc.
+
+Expert :
+• Utile pour API fluent : ctx.begin(); ... implicite dans méthodes.
+
+Concepts clés :
+• Identité du gestionnaire accessible au corps.
+
+Distinctions clés :
+• ctx vs ressource externe retournée autrement.
+
+Fonctionnement :
+• __enter__ a retourné self → liaison ctx → self.
+
+Exécution étape par étape :
+1. obj = MyContext().
+2. ctx = obj.__enter__() → self.
+3. ctx désigne la même instance MyContext dans le bloc.
+
+Ordre des opérations :
+• Évaluation de ctx dans le bloc.
+
+Cas d'utilisation courants :
+• Transaction avec .commit() / rollback implicite dans __exit__.
+
+Cas limites :
+• Réassigner la variable ctx dans le bloc ne change pas l'objet dont __exit__ sera appelé (le gestionnaire d'origine).
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• with Database() as db: db.query(...).
+
+Remarques :
+• Réponse : instance MyContext — 1re option.`,
+  3026: `@contextmanager, def my_context(): yield 1 ; with my_context() as x: x ?
+
+Débutant :
+• Le décorateur transforme un générateur en gestionnaire de contexte.
+
+Intermédiaire :
+• yield fournit la valeur liée après as ; code avant/après = setup/teardown.
+
+Expert :
+• yield doit être unique par entrée ; exceptions propagées via le générateur selon les règles de contextlib.
+
+Concepts clés :
+• CM sans classe, via générateur.
+
+Distinctions clés :
+• @contextmanager vs classe __enter__/__exit__.
+
+Fonctionnement :
+• contextlib enveloppe le générateur pour implémenter le protocole.
+
+Exécution étape par étape :
+1. Entrée dans with démarre le générateur jusqu'au yield.
+2. La valeur yieldée (1) est assignée à x.
+3. Corps du with ; sortie déclenche la fin du générateur (finally implicite).
+
+Ordre des opérations :
+• yield suspend ; reprise au départ du with.
+
+Cas d'utilisation courants :
+• Verrous, changement temporaire de répertoire, instrumentation.
+
+Cas limites :
+• Oublier yield → RuntimeError au runtime du CM.
+
+Considérations de performance :
+• Léger surcoût par rapport à CM C pur ; négligeable en pratique.
+
+Exemples :
+• @contextmanager
+  def temp_cd(d):
+      old = os.getcwd()
+      os.chdir(d)
+      try:
+          yield
+      finally:
+          os.chdir(old)
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  3027: `with open('file', 'w') as f: f.write('text') ; f.closed ?
+
+Débutant :
+• Après le with, le fichier est fermé : closed vaut True.
+
+Intermédiaire :
+• Même si write a réussi sans lever.
+
+Expert :
+• Si __exit__ de open propage une erreur de fermeture, comportement selon la pile d'exceptions.
+
+Concepts clés :
+• État du descripteur de fichier après CM.
+
+Distinctions clés :
+• closed vs readable() encore vrai sur autre handle.
+
+Fonctionnement :
+• __exit__ appelle close() sur l'objet fichier.
+
+Exécution étape par étape :
+1. open en mode écriture.
+2. write.
+3. sortie du with → fermeture.
+4. f.closed → True.
+
+Ordre des opérations :
+• Lecture de l'attribut après __exit__.
+
+Cas d'utilisation courants :
+• Garantir flush/close pour logs et exports.
+
+Cas limites :
+• Réutiliser f après with : fichier fermé, I/O impossible.
+
+Considérations de performance :
+• close synchronise le buffer ; important sur disque lent.
+
+Exemples :
+• Vérifier f.closed dans des tests d'intégration.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  3028: `with open('file', 'w') as f1, open('file2', 'w') as f2: pass ?
+
+Débutant :
+• Syntaxe Python pour plusieurs gestionnaires sur une ligne with.
+
+Intermédiaire :
+• Équivalent à des with imbriqués : f1 puis f2, sortie inverse.
+
+Expert :
+• PEP 343 : __enter__ de gauche à droite, __exit__ de droite à gauche.
+
+Concepts clés :
+• Composition de ressources symétriques.
+
+Distinctions clés :
+• Une ligne vs blocs imbriqués (lisibilité).
+
+Fonctionnement :
+• Chaînage des entrées/sorties de contexte.
+
+Exécution étape par étape :
+1. Entrée f1.
+2. Entrée f2.
+3. pass.
+4. __exit__ f2.
+5. __exit__ f1.
+
+Ordre des opérations :
+• Ordre inverse à la fermeture pour respecter les dépendances usuelles.
+
+Cas d'utilisation courants :
+• Copie entre deux fichiers, merge de flux.
+
+Cas limites :
+• Si l'open du second échoue, le premier est quand même sorti proprement.
+
+Considérations de performance :
+• Deux descripteurs ; surveiller ulimit sur serveurs.
+
+Exemples :
+• with open(src) as i, open(dst,'w') as o: o.write(i.read()).
+
+Remarques :
+• Réponse : plusieurs gestionnaires de contexte — 1re option.`,
+  3029: `from contextlib import suppress ; with suppress(ValueError): raise ValueError() ?
+
+Débutant :
+• suppress étouffe les types d'exceptions listés dans le bloc.
+
+Intermédiaire :
+• Ici ValueError ne remonte pas.
+
+Expert :
+• Implémenté comme CM dont __exit__ retourne True si le type correspond.
+
+Concepts clés :
+• Forme lisible pour « ignorer cette erreur attendue ».
+
+Distinctions clés :
+• suppress vs try/except: pass explicite.
+
+Fonctionnement :
+• Enregistre les classes à filtrer ; compare à l'exception active.
+
+Exécution étape par étape :
+1. Entrée dans suppress.
+2. raise ValueError.
+3. __exit__ filtre → pas de propagation.
+
+Ordre des opérations :
+• Après le bloc, exécution continue normalement.
+
+Cas d'utilisation courants :
+• getattr avec défaut, parsing optionnel.
+
+Cas limites :
+• Ne pas masquer des ValueError inattendues dans le même bloc large.
+
+Considérations de performance :
+• Identique à un petit try/except.
+
+Exemples :
+• with suppress(FileNotFoundError): os.remove(tmp).
+
+Remarques :
+• Réponse : supprime ValueError (ne la propage pas) — 1re option.`,
+  3030: `ctx = MyContext() ; with ctx: pass ; après __exit__ qui pose self.closed = True ?
+
+Débutant :
+• __exit__ a tourné ; l'attribut closed sur l'instance vaut True.
+
+Intermédiaire :
+• ctx reste l'instance ; seul l'état change.
+
+Expert :
+• Pattern « marquer la ressource comme fermée » pour tests ou garde-fous.
+
+Concepts clés :
+• Effet de bord d'instance après CM.
+
+Distinctions clés :
+• État interne vs variable locale du with.
+
+Fonctionnement :
+• __exit__ muté self avant retour.
+
+Exécution étape par étape :
+1. ctx créé.
+2. with utilise ctx comme manager.
+3. __exit__ assigne closed.
+4. ctx.closed lu → True.
+
+Ordre des opérations :
+• Lecture après sortie complète du with.
+
+Cas d'utilisation courants :
+• Pools de connexions, indicateurs is_active.
+
+Cas limites :
+• Si __exit__ lève, closed peut ne pas être positionné selon où l'assignation est.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• assert conn.closed après with.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  3031: `Que fait import module ?
+
+Débutant :
+• Charge le module et le rend accessible via le nom module.
+
+Intermédiaire :
+• Premier import exécute le corps du fichier ; suivants utilisent sys.modules.
+
+Expert :
+• Cherche sur sys.path ; packages via __path__.
+
+Concepts clés :
+• Unité de compilation/reuse du code Python.
+
+Distinctions clés :
+• import module vs from module import x.
+
+Fonctionnement :
+• Crée ou récupère le module dans sys.modules ; lie le nom local.
+
+Exécution étape par étape :
+1. Résolution du chemin.
+2. Chargement bytecode éventuel.
+3. Exécution top-level.
+4. Liaison du nom.
+
+Ordre des opérations :
+• Imports au chargement, pas à la demande paresseuse sauf importlib.
+
+Cas d'utilisation courants :
+• Réutiliser math, os, collections.
+
+Cas limites :
+• Import circulaire : demi-module initialisé.
+
+Considérations de performance :
+• Coût amorti par cache ; import dans boucle à éviter.
+
+Exemples :
+• import json ; json.loads(...).
+
+Remarques :
+• Réponse : importe un module — 1re option.`,
+  3032: `Que fait from module import name ?
+
+Débutant :
+• Importe un symbole précis dans l'espace de noms courant.
+
+Intermédiaire :
+• Le module entier peut être chargé même si un seul nom est exposé localement.
+
+Expert :
+• name peut être réassigné localement sans toucher le module source.
+
+Concepts clés :
+• Import sélectif pour lisibilité.
+
+Distinctions clés :
+• Préfixe module. vs nom nu.
+
+Fonctionnement :
+• getattr(module, 'name') puis bind local.
+
+Exécution étape par étape :
+1. Charger module si besoin.
+2. Résoudre name.
+3. Lier dans le namespace courant.
+
+Ordre des opérations :
+• Échec si name absent → ImportError.
+
+Cas d'utilisation courants :
+• from pathlib import Path.
+
+Cas limites :
+• Masquer un builtin du même nom.
+
+Considérations de performance :
+• Équivalent à import module + alias local.
+
+Exemples :
+• from math import sqrt.
+
+Remarques :
+• Réponse : importe le nom depuis le module — 1re option.`,
+  3033: `Que fait from module import name as alias ?
+
+Débutant :
+• Le symbole est disponible sous alias dans le scope courant.
+
+Intermédiaire :
+• Évite collision avec une variable name existante.
+
+Expert :
+• alias est une simple liaison ; pas de copie profonde de l'objet.
+
+Concepts clés :
+• Renommage à l'import.
+
+Distinctions clés :
+• import module as m vs from ... import ... as.
+
+Fonctionnement :
+• Même résolution que from-import puis bind sur alias.
+
+Exécution étape par étape :
+1. Charger module.
+2. Résoudre name.
+3. Stocker sous alias.
+
+Ordre des opérations :
+• name d'origine pas forcément visible dans le scope.
+
+Cas d'utilisation courants :
+• from datetime import datetime as DT.
+
+Cas limites :
+• Trop d'alias obscurcit la lecture.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• import numpy as np (forme parallèle sur module entier).
+
+Remarques :
+• Réponse : import avec alias — 1re option.`,
+  3034: `Que fait import module as alias ?
+
+Débutant :
+• Le module entier est accessible via alias.
+
+Intermédiaire :
+• alias.sqrt au lieu de module.sqrt.
+
+Expert :
+• Courant dans l'écosystème scientifique (np, pd).
+
+Concepts clés :
+• Raccourci pour préfixes longs.
+
+Distinctions clés :
+• Alias de module vs alias de membre.
+
+Fonctionnement :
+• sys.modules['module'] lié localement sous alias.
+
+Exécution étape par étape :
+1. Charger module.
+2. Bind alias → objet module.
+
+Ordre des opérations :
+• Le nom module brut peut être absent du scope local.
+
+Cas d'utilisation courants :
+• import matplotlib.pyplot as plt.
+
+Cas limites :
+• Deux alias vers le même module : deux noms, un objet.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• import queue as Q.
+
+Remarques :
+• Réponse : importe le module sous un alias — 1re option.`,
+  3035: `Que fait from module import * ?
+
+Débutant :
+• Importe en masse les noms publics du module dans le scope local.
+
+Intermédiaire :
+• Si __all__ existe, seulement les noms listés ; sinon heuristique sans _ leading.
+
+Expert :
+• Interdit dans __init__.py de package par bonnes pratiques PEP 8.
+
+Concepts clés :
+• Pollution de namespace.
+
+Distinctions clés :
+• Étoile vs imports explicites.
+
+Fonctionnement :
+• Itération sur les noms retenus ; setattr sur le namespace.
+
+Exécution étape par étape :
+1. Charger module.
+2. Déterminer l'ensemble public.
+3. Copier les liaisons.
+
+Ordre des opérations :
+• Peut écraser des noms existants sans avertissement.
+
+Cas d'utilisation courants :
+• Shell interactif rapide seulement.
+
+Cas limites :
+• Conflits de noms silencieux.
+
+Considérations de performance :
+• Un peu plus lourd que un seul import ciblé.
+
+Exemples :
+• Éviter en production ; préférer noms explicites.
+
+Remarques :
+• Réponse : importe tous les noms publics — 1re option.`,
+  3036: `Que teste __name__ == '__main__' ?
+
+Débutant :
+• Vrai si le fichier est exécuté comme script, pas seulement importé.
+
+Intermédiaire :
+• Lors d'un import, __name__ vaut le nom du module.
+
+Expert :
+• Permet dual mode bibliothèque + CLI.
+
+Concepts clés :
+• Point d'entrée conditionnel.
+
+Distinctions clés :
+• __name__ vs __file__ vs __package__.
+
+Fonctionnement :
+• L'interpréteur positionne __name__ au chargement.
+
+Exécution étape par étape :
+1. Lancement python fichier.py → __main__.
+2. import monpaquet → monpaquet.
+
+Ordre des opérations :
+• Test souvent en fin de module.
+
+Cas d'utilisation courants :
+• if __name__ == '__main__': main().
+
+Cas limites :
+• -m package.module : __name__ peut être __main__ pour le point d'entrée du module lancé.
+
+Considérations de performance :
+• Test constant ; coût nul.
+
+Exemples :
+• Lancer des tests locaux sans effet à l'import.
+
+Remarques :
+• Réponse : vérifie exécution directe du script — 1re option.`,
+  3037: `Que fait if __name__ == '__main__': pass ?
+
+Débutant :
+• Le bloc ne s'exécute que dans le scénario script principal.
+
+Intermédiaire :
+• pass ici : motif structurel pour accrocher plus tard main().
+
+Expert :
+• Idiome standard documenté dans la doc officielle.
+
+Concepts clés :
+• Garde d'entrée pour code non réimportable.
+
+Distinctions clés :
+• vs code top-level toujours exécuté.
+
+Fonctionnement :
+• Branchement sur la valeur de __name__.
+
+Exécution étape par étape :
+1. Évaluer __name__.
+2. Comparer à '__main__'.
+3. Exécuter pass si vrai.
+
+Ordre des opérations :
+• Comme tout if.
+
+Cas d'utilisation courants :
+• CLI, démos, benchmarks.
+
+Cas limites :
+• Tests qui importent le module : bloc non joué.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Placer argparse ou click ici.
+
+Remarques :
+• Réponse : n'exécute le bloc que si le fichier est lancé en script — 1re option.`,
+  3038: `Que vaut import sys ; sys.path ?
+
+Débutant :
+• Liste des répertoires (et zip) où Python cherche les modules.
+
+Intermédiaire :
+• On peut y append un chemin perso avant import dynamique.
+
+Expert :
+• sys.path[0] script directory ou '' selon mode -c / REPL.
+
+Concepts clés :
+• Résolution d'import configurable.
+
+Distinctions clés :
+• sys.path vs PYTHONPATH vs .pth.
+
+Fonctionnement :
+• Parcours séquentiel jusqu'au premier module trouvé.
+
+Exécution étape par étape :
+1. import sys charge le module sys.
+2. sys.path retourne la liste mutable.
+
+Ordre des opérations :
+• Lecture de l'attribut path du module.
+
+Cas d'utilisation courants :
+• Déboguer ModuleNotFoundError.
+
+Cas limites :
+• Modifier en cours d'exécution : effets sur imports suivants seulement.
+
+Considérations de performance :
+• Trop de chemins ralentit la résolution.
+
+Exemples :
+• sys.path.insert(0, root) en test.
+
+Remarques :
+• Réponse : liste des chemins de recherche de modules — 1re option.`,
+  3039: `Que définit __all__ = ['name1', 'name2'] ?
+
+Débutant :
+• Liste les symboles exportés pour from module import *.
+
+Intermédiaire :
+• Sert aussi de documentation de l'API publique.
+
+Expert :
+• N'empêche pas from module import _privé si on connaît le nom.
+
+Concepts clés :
+• Contrat d'exposition explicite.
+
+Distinctions clés :
+• __all__ absent vs présent.
+
+Fonctionnement :
+• Le import * consulte __all__ s'il est défini non vide.
+
+Exécution étape par étape :
+1. À l'import *, lecture de __all__.
+2. Import des noms énumérés.
+
+Ordre des opérations :
+• Erreur si __all__ contient un nom inexistant.
+
+Cas d'utilisation courants :
+• Packages : __all__ dans __init__.py.
+
+Cas limites :
+• __all__ avec string au lieu de liste : erreur.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• __all__ = ['foo'] pour cacher helpers internes.
+
+Remarques :
+• Réponse : définit l'API publique (import *) — 1re option.`,
+  3040: `Que contient __file__ ?
+
+Débutant :
+• Chemin du fichier source du module courant (souvent absolu ou relatif).
+
+Intermédiaire :
+• Utile pour charger des ressources à côté du module.
+
+Expert :
+• Peut être absent pour modules built-in ou certains loaders.
+
+Concepts clés :
+• Ancrage filesystem du code.
+
+Distinctions clés :
+• __file__ vs __spec__.origin.
+
+Fonctionnement :
+• Renseigné par l'importlib lors du chargement.
+
+Exécution étape par étape :
+1. Chargement du module depuis un chemin.
+2. Attribution de __file__.
+
+Ordre des opérations :
+• Lecture courante dans des helpers de données.
+
+Cas d'utilisation courants :
+• open(os.path.join(os.path.dirname(__file__), 'data.json')).
+
+Cas limites :
+• .pyc seul : chemin peut pointer vers le .py d'origine selon build.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Packager des templates avec le code.
+
+Remarques :
+• Réponse : chemin du fichier du module — 1re option.`,
+  3041: `def gen(): yield 1 ; type(gen()) ?
+
+Débutant :
+• gen() retourne un générateur, pas le résultat immédiat de yield.
+
+Intermédiaire :
+• type → <class 'generator'>.
+
+Expert :
+• gen sans parenthèses reste objet function.
+
+Concepts clés :
+• Transformation yield → generator function.
+
+Distinctions clés :
+• Fonction génératrice vs générateur instancié.
+
+Fonctionnement :
+• CALL retourne iterator generator avec frame suspendue.
+
+Exécution étape par étape :
+1. gen référence la fonction génératrice.
+2. gen() construit le générateur.
+3. type(...) → generator.
+
+Ordre des opérations :
+• Pas d'exécution du corps jusqu'à next.
+
+Cas d'utilisation courants :
+• Flux paresseux, pipelines.
+
+Cas limites :
+• yield dans try/finally : garanties à la fermeture.
+
+Considérations de performance :
+• Mémoire souvent meilleure qu'une liste matérialisée.
+
+Exemples :
+• def count(): yield from range(10**6).
+
+Remarques :
+• Réponse : type generator — 1re option.`,
+  3042: `def gen(): yield 1 ; next(gen()) ?
+
+Débutant :
+• next démarre ou reprend le générateur et renvoie la première valeur yieldée.
+
+Intermédiaire :
+• Ici 1.
+
+Expert :
+• next(g) équivalent à g.__next__() en Python 3.
+
+Concepts clés :
+• Consommation explicite d'itérateur.
+
+Distinctions clés :
+• next(gen()) vs next(g) réutilisant g.
+
+Fonctionnement :
+• Lève StopIteration quand épuisé.
+
+Exécution étape par étape :
+1. Nouveau gen().
+2. next pousse jusqu'au premier yield.
+3. Retour 1.
+
+Ordre des opérations :
+• Chaque gen() neuf recommence à zéro.
+
+Cas d'utilisation courants :
+• Parser token par token.
+
+Cas limites :
+• next sur générateur déjà fermé.
+
+Considérations de performance :
+• Très léger.
+
+Exemples :
+• Premier élément sans boucle for.
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  3043: `def gen(): yield 1 ; yield 2 ; list(gen()) ?
+
+Débutant :
+• list consomme tout le générateur en liste Python.
+
+Intermédiaire :
+• Ordre des yield conservé → [1, 2].
+
+Expert :
+• Matérialise : mémoire O(n) sur la longueur des yields.
+
+Concepts clés :
+• Itération terminale.
+
+Distinctions clés :
+• list(gen()) vs [x for x in gen()] idem valeur souvent.
+
+Fonctionnement :
+• Boucle interne StopIteration jusqu'à fin.
+
+Exécution étape par étape :
+1. g = gen() implicite dans list().
+2. Collecte 1 puis 2.
+3. Retour [1, 2].
+
+Ordre des opérations :
+• Épuisement complet avant retour de list.
+
+Cas d'utilisation courants :
+• Débogage rapide d'un flux lazy.
+
+Cas limites :
+• Générateur infini → boucle sans fin.
+
+Considérations de performance :
+• Coût mémoire si très grand.
+
+Exemples :
+• list(zip(...)) pour voir le résultat.
+
+Remarques :
+• Réponse : [1, 2] — 1re option.`,
+  3044: `def gen(): yield 1 ; return ; g = gen() ; next(g) ; next(g) ?
+
+Débutant :
+• Deuxième next : plus de yield → StopIteration.
+
+Intermédiaire :
+• return implicite ou explicite termine le générateur.
+
+Expert :
+• En Python 3, valeur de return accessible via StopIteration.value si non nulle.
+
+Concepts clés :
+• Signal standard de fin d'itérateur.
+
+Distinctions clés :
+• StopIteration vs erreur métier.
+
+Fonctionnement :
+• Lever StopIteration depuis le générateur C interne.
+
+Exécution étape par étape :
+1. Premier next → 1.
+2. Deuxième next → fin → StopIteration.
+
+Ordre des opérations :
+• for capture StopIteration en interne ; next l'expose.
+
+Cas d'utilisation courants :
+• Savoir quand un flux est fini.
+
+Cas limites :
+• StopIteration dans du code user generator PEP 479 (dans générateur, transformé).
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• while True: ... next(it, sentinel).
+
+Remarques :
+• Réponse : StopIteration — 1re option.`,
+  3045: `def gen(): yield 1 ; return 'done' ; g = gen() ; next(g) ; g.send(None) ?
+
+Débutant :
+• Après le dernier yield, envoyer reprend le générateur qui termine par return.
+
+Intermédiaire :
+• StopIteration est levée ; son attribut .value vaut 'done'.
+
+Expert :
+• send(None) équivalent à next après amorçage.
+
+Concepts clés :
+• Valeur de retour du générateur via StopIteration.
+
+Distinctions clés :
+• return dans générateur vs return fonction classique.
+
+Fonctionnement :
+• Le runtime attache la valeur au StopIteration.
+
+Exécution étape par étape :
+1. next → 1.
+2. send(None) poursuit → exécution return 'done'.
+3. StopIteration avec value 'done'.
+
+Ordre des opérations :
+• Premier démarrage souvent next avant send pour coroutine pure.
+
+Cas d'utilisation courants :
+• yield from combinant sous-générateurs avec résultat.
+
+Cas limites :
+• Oublier try/except StopIteration pour récupérer .value.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• return depuis générateur pour signaler résultat final à un orchestrateur.
+
+Remarques :
+• Réponse : StopIteration avec valeur 'done' — 1re option.`,
+  3046: `def gen(): x = yield 1 ; yield x ; g = gen() ; next(g) ; g.send(2) ?
+
+Débutant :
+• send injecte une valeur dans l'expression yield côté générateur.
+
+Intermédiaire :
+• x devient 2 ; second yield renvoie 2.
+
+Expert :
+• Première avance doit être next ou send(None) pour amorcer.
+
+Concepts clés :
+• Coroutine minimaliste (avant async).
+
+Distinctions clés :
+• send vs next seul.
+
+Fonctionnement :
+• Reprend après yield ; place la valeur envoyée comme résultat de yield.
+
+Exécution étape par étape :
+1. next → fournit 1 au consommateur.
+2. send(2) → x = 2.
+3. yield x → 2 retourné au consommateur.
+
+Ordre des opérations :
+• Valeur de send devient résultat de l'expression yield suspendue.
+
+Cas d'utilisation courants :
+• Pipelines bidirectionnels, parsers interactifs.
+
+Cas limites :
+• send avant amorçage → TypeError.
+
+Considérations de performance :
+• Négligeable hors logique lourde dans le gen.
+
+Exemples :
+• Pattern consumer producteur manuel.
+
+Remarques :
+• Réponse : 2 — 1re option.`,
+  3047: `(x**2 for x in [1, 2, 3]) ?
+
+Débutant :
+• Expression génératrice : objet générateur paresseux.
+
+Intermédiaire :
+• Parenthèses au lieu de crochets vs compréhension liste.
+
+Expert :
+• Un seul itérateur : consommation unique si épuisé.
+
+Concepts clés :
+• Lazy map sur iterable.
+
+Distinctions clés :
+• Gen exp vs liste en compréhension.
+
+Fonctionnement :
+• Crée un générateur sans exécuter encore les carrés.
+
+Exécution étape par étape :
+1. Construction de l'objet générateur.
+2. Pas encore de calculs des carrés.
+
+Ordre des opérations :
+• Calcul à la demande lors de next.
+
+Cas d'utilisation courants :
+• Enrobage memory-friendly autour d'itérables longs.
+
+Cas limites :
+• Oublier qu'il faut list() pour répéter la séquence.
+
+Considérations de performance :
+• O(1) mémoire côté générateur ; coût au parcours.
+
+Exemples :
+• sum(x**2 for x in data) sans liste intermédiaire.
+
+Remarques :
+• Réponse : expression génératrice (générateur) — 1re option.`,
+  3048: `list(x**2 for x in [1, 2, 3]) ?
+
+Débutant :
+• list force la consommation complète : [1, 4, 9].
+
+Intermédiaire :
+• Équivalent fonctionnel à [x**2 for x in ...] ici.
+
+Expert :
+• Peut être plus clair quand le corps est déjà un générateur nommé réutilisable.
+
+Concepts clés :
+• Matérialisation d'un flux.
+
+Distinctions clés :
+• list(gen) vs itération manuelle.
+
+Fonctionnement :
+• Itération jusqu'à StopIteration puis construction liste.
+
+Exécution étape par étape :
+1. Création du gen exp.
+2. Append 1, 4, 9.
+3. Retour liste.
+
+Ordre des opérations :
+• Ordre d'origine de l'itérable d'entrée préservé.
+
+Cas d'utilisation courants :
+• Tests, API qui exigent une liste réelle.
+
+Cas limites :
+• Itérable infini → fuite mémoire ou blocage.
+
+Considérations de performance :
+• Coût mémoire O(n).
+
+Exemples :
+• list(zip(a,b)) matérialise paires.
+
+Remarques :
+• Réponse : [1, 4, 9] — 1re option.`,
+  3049: `def gen(): yield from [1, 2, 3] ; list(gen()) ?
+
+Débutant :
+• yield from délègue chaque élément de l'itérable.
+
+Intermédiaire :
+• Résultat listé [1, 2, 3].
+
+Expert :
+• Gère aussi les sous-générateurs et Send propagation (PEP 380).
+
+Concepts clés :
+• Aplatissement d'itération.
+
+Distinctions clés :
+• yield from vs boucle for yield.
+
+Fonctionnement :
+• Délégation au protocole iterator de la cible.
+
+Exécution étape par étape :
+1. gen() parcourt la liste interne via yield from.
+2. list collecte 1,2,3.
+
+Ordre des opérations :
+• Ordre de l'itérable cible respecté.
+
+Cas d'utilisation courants :
+• Composition de parsers récursifs.
+
+Cas limites :
+• yield from sur non-iterable → TypeError.
+
+Considérations de performance :
+• Souvent aussi rapide qu'une boucle manuelle.
+
+Exemples :
+• yield from child_generator().
+
+Remarques :
+• Réponse : [1, 2, 3] — 1re option.`,
+  3050: `class MyIter avec __iter__ qui retourne self et __next__ qui retourne 1 ; type(MyIter()) ?
+
+Débutant :
+• Ce n'est pas un générateur : c'est une instance de la classe MyIter.
+
+Intermédiaire :
+• type(...) affiche la classe du fichier courant, souvent __main__.MyIter en script.
+
+Expert :
+• Respecte le protocole itérateur mais reste une instance utilisateur normale.
+
+Concepts clés :
+• Itérateur par classe vs objet generator.
+
+Distinctions clés :
+• type(MyIter()) vs type(gen()) pour une fonction avec yield.
+
+Fonctionnement :
+• Constructeur de classe puis type() sur l'objet.
+
+Exécution étape par étape :
+1. MyIter() allocation.
+2. type renvoie la classe MyIter.
+
+Ordre des opérations :
+• Pas d'appel __next__ dans type() seul.
+
+Cas d'utilisation courants :
+• Itérateurs avec état complexe non exprimable simplement en yield.
+
+Cas limites :
+• __next__ sans fin : itération infinie dangereuse.
+
+Considérations de performance :
+• Appels Python par step vs générateur C.
+
+Exemples :
+• Parcourir un arbre avec pile interne.
+
+Remarques :
+• Réponse : classe MyIter (instance de type utilisateur, affichage du type <class '__main__.MyIter'> en script) — 1re option.`,
   402: `"  hello  ".lstrip() renvoie "hello  " : lstrip retire les blancs de gauche seulement.
 
 Débutant :
