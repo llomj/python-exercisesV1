@@ -135247,6 +135247,2016 @@ Exemples :
 
 Remarques :
 • Réponse : WARNING — 1re option.`,
+  3201: `print(logging.DEBUG) — valeur numérique ?
+
+Débutant :
+• DEBUG vaut 10 : le niveau standard le plus bas.
+
+Intermédiaire :
+• Comparaison numérique : seuls les messages avec niveau >= seuil passent.
+
+Expert :
+• NOTSET existe en dessous mais hors des cinq niveaux « usuels » documentés.
+
+Concepts clés :
+• Échelle de gravité discrète.
+
+Distinctions clés :
+• DEBUG vs INFO (20).
+
+Fonctionnement :
+• Constante entière du module logging.
+
+Exécution étape par étape :
+1. Accès à l’attribut DEBUG du module.
+2. Affichage 10.
+
+Ordre des opérations :
+• Lecture simple.
+
+Cas d'utilisation courants :
+• basicConfig(level=DEBUG) pour tout voir.
+
+Cas limites :
+• Niveaux personnalisés entre 10 et 20 possibles.
+
+Considérations de performance :
+• Filtrage précoce si niveau logger > DEBUG.
+
+Exemples :
+• logging.getLevelName(10).
+
+Remarques :
+• Réponse : 10 — 1re option.`,
+  3202: `print(logging.INFO) — valeur ?
+
+Débutant :
+• INFO = 20.
+
+Intermédiaire :
+• Par défaut root WARNING=30, donc INFO masqué sans config.
+
+Expert :
+• Chaîne hiérarchique 10,20,30,40,50.
+
+Concepts clés :
+• Messages de flux normal.
+
+Distinctions clés :
+• INFO vs WARNING.
+
+Fonctionnement :
+• Même mécanisme que les autres constantes.
+
+Exécution étape par étape :
+• Retourne 20.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Journaux d’activité applicative.
+
+Cas limites :
+• Handlers avec niveau propre peuvent encore bloquer.
+
+Considérations de performance :
+• Coût formatage si handler accepte.
+
+Exemples :
+• logging.info après basicConfig(level=INFO).
+
+Remarques :
+• Réponse : 20 — 1re option.`,
+  3203: `print(logging.WARNING) — valeur ?
+
+Débutant :
+• WARNING = 30, niveau par défaut du root logger.
+
+Intermédiaire :
+• Au-dessus : ERROR 40, CRITICAL 50.
+
+Expert :
+• warn() alias de warning().
+
+Concepts clés :
+• Seuil par défaut « bruit modéré ».
+
+Distinctions clés :
+• WARNING vs ERROR (gravité).
+
+Fonctionnement :
+• Entier 30.
+
+Exécution étape par étape :
+• Immédiat.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Dépréciations, quotas.
+
+Cas limites :
+• Bibliothèques tierces peuvent reconfigurer.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• logging.warning visible sans basicConfig.
+
+Remarques :
+• Réponse : 30 — 1re option.`,
+  3204: `print(logging.ERROR) — valeur ?
+
+Débutant :
+• ERROR = 40.
+
+Intermédiaire :
+• Toujours visible avec défaut WARNING 30.
+
+Expert :
+• logging.exception() émet au niveau ERROR avec traceback.
+
+Concepts clés :
+• Échec d’une opération.
+
+Distinctions clés :
+• ERROR vs CRITICAL (50).
+
+Fonctionnement :
+• Constante 40.
+
+Exécution étape par étape :
+• Lecture attribut.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Erreurs métier récupérables.
+
+Cas limites :
+• Multiples handlers : duplication des lignes.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• logger.error dans except après rollback.
+
+Remarques :
+• Réponse : 40 — 1re option.`,
+  3205: `print(logging.CRITICAL) — valeur ?
+
+Débutant :
+• CRITICAL = 50, plus haut des cinq standards.
+
+Intermédiaire :
+• Indique souvent arrêt ou état irrécupérable.
+
+Expert :
+• Handlers peuvent avoir filtres additionnels.
+
+Concepts clés :
+• Fin d’échelle standard.
+
+Distinctions clés :
+• CRITICAL vs ERROR.
+
+Fonctionnement :
+• Entier 50.
+
+Exécution étape par étape :
+• Immédiat.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Perte connexion critique, corruption détectée.
+
+Cas limites :
+• « CRITICAL » n’arrête pas le processus seul.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• alertes pager.
+
+Remarques :
+• Réponse : 50 — 1re option.`,
+  3206: `logging.basicConfig(level=logging.DEBUG) — effet ?
+
+Débutant :
+• Configure le logger racine pour accepter DEBUG et au-dessus (tous les standards).
+
+Intermédiaire :
+• Ajoute souvent StreamHandler console si aucun handler racine.
+
+Expert :
+• Appels suivants sans effet si handlers déjà présents.
+
+Concepts clés :
+• Point d’entrée rapide dev.
+
+Distinctions clés :
+• basicConfig vs dictConfig / fileConfig.
+
+Fonctionnement :
+• setLevel sur root + handler par défaut.
+
+Exécution étape par étape :
+1. Vérifie handlers existants.
+2. Applique niveau et handler si vide.
+
+Ordre des opérations :
+• Avant premiers log.
+
+Cas d'utilisation courants :
+• Scripts courts, REPL.
+
+Cas limites :
+• Multiprocessus : chaque processus sa config.
+
+Considérations de performance :
+• DEBUG verbeux en prod à éviter.
+
+Exemples :
+• filename= pour fichier.
+
+Remarques :
+• Réponse : affiche DEBUG et tous les niveaux supérieurs — 1re option.`,
+  3207: `Rôle d’un Handler dans logging ?
+
+Débutant :
+• Envoie les enregistrements de log vers une destination (console, fichier, socket, etc.).
+
+Intermédiaire :
+• Le Formatter formate la chaîne ; le Handler émet.
+
+Expert :
+• Niveau par handler indépendant du logger.
+
+Concepts clés :
+• Séparation émission / format / filtre.
+
+Distinctions clés :
+• Handler vs Logger vs Filter.
+
+Fonctionnement :
+• emit() après formatage.
+
+Exécution étape par étape :
+1. Logger crée LogRecord.
+2. Handlers éligibles formatent et écrivent.
+
+Ordre des opérations :
+• Tous les handlers du logger reçoivent l’événement (sauf si filtré).
+
+Cas d'utilisation courants :
+• Console + fichier simultanés.
+
+Cas limites :
+• Handler fermé → erreur à l’écriture.
+
+Considérations de performance :
+• I/O fichier coûteux ; buffering OS.
+
+Exemples :
+• RotatingFileHandler.
+
+Remarques :
+• Réponse : envoie les enregistrements vers une destination — 1re option.`,
+  3208: `Rôle d’un Formatter ?
+
+Débutant :
+• Définit la mise en page du message final (timestamp, niveau, nom logger, message).
+
+Intermédiaire :
+• S’attache au Handler, pas directement au Logger.
+
+Expert :
+• %(message)s vs %(msg)s (ancien style).
+
+Concepts clés :
+• Chaîne avec placeholders LogRecord.
+
+Distinctions clés :
+• Formatter vs Handler.
+
+Fonctionnement :
+• format(record) produit str.
+
+Exécution étape par étape :
+1. Handler reçoit record.
+2. Formatter interpole les champs.
+
+Ordre des opérations :
+• Après filtrage niveau.
+
+Cas d'utilisation courants :
+• JSON ligne, syslog, audit.
+
+Cas limites :
+• Champ absent → KeyError sur format custom.
+
+Considérations de performance :
+• Formatage seulement si record accepté.
+
+Exemples :
+• ISO-8601 avec datefmt.
+
+Remarques :
+• Réponse : précise la disposition / format des lignes de log — 1re option.`,
+  3209: `Pourquoi logging.getLogger(__name__) ?
+
+Débutant :
+• Crée un logger nommé comme le module, utile pour hiérarchie paquet.sousmodule.
+
+Intermédiaire :
+• Propagation vers ancêtres (paquet parent).
+
+Expert :
+• getLogger est une fabrique singleton par nom.
+
+Concepts clés :
+• Traçabilité de la source.
+
+Distinctions clés :
+• __name__ vs chaîne fixe "app".
+
+Fonctionnement :
+• Points dans l’arbre des loggers.
+
+Exécution étape par étape :
+1. Résout le nom qualifié.
+2. Retourne logger enfant.
+
+Ordre des opérations :
+• Configuration parent affecte enfants si propagate True.
+
+Cas d'utilisation courants :
+• Bibliothèques réutilisables.
+
+Cas limites :
+• __main__ comme nom racine court.
+
+Considérations de performance :
+• getLogger peu coûteux (cache).
+
+Exemples :
+• logger = logging.getLogger(__name__).
+
+Remarques :
+• Réponse : logger hiérarchique par module — 1re option.`,
+  3210: `Plusieurs handlers sur un même logger ?
+
+Débutant :
+• Oui : par ex. console + fichier.
+
+Intermédiaire :
+• Chaque handler peut avoir niveau et formatter différents.
+
+Expert :
+• clearHandlers() rarement nécessaire pour éviter doublons en reruns tests.
+
+Concepts clés :
+• Multiplexage de sortie.
+
+Distinctions clés :
+• Un logger, N destinations.
+
+Fonctionnement :
+• Boucle sur handlers pour chaque record.
+
+Exécution étape par étape :
+1. Record accepté par logger.
+2. Chaque handler filtre puis émet.
+
+Ordre des opérations :
+• Ordre d’ajout sauf tri explicite.
+
+Cas d'utilisation courants :
+• DEBUG fichier, WARNING+ console.
+
+Cas limites :
+• Double basicConfig + addHandler → logs dupliqués.
+
+Considérations de performance :
+• N handlers = N écritures.
+
+Exemples :
+• SMTPHandler pour CRITICAL seul.
+
+Remarques :
+• Réponse : Oui — 1re option.`,
+  3211: `logging.exception("msg") vs logging.error() ?
+
+Débutant :
+• exception ajoute la pile d’appels de l’erreur courante (niveau ERROR).
+
+Intermédiaire :
+• À utiliser dans un bloc except actif (exc_info implicite).
+
+Expert :
+• Équivalent pratique à error(..., exc_info=True).
+
+Concepts clés :
+• Diagnostic complet.
+
+Distinctions clés :
+• error sans traceback vs exception.
+
+Fonctionnement :
+• Capture sys.exc_info() au moment de l’appel.
+
+Exécution étape par étape :
+1. Formate message ERROR.
+2. Append traceback.
+
+Ordre des opérations :
+• Hors except actif : pas de traceback utile.
+
+Cas d'utilisation courants :
+• Journaliser erreurs catchées.
+
+Cas limites :
+• Trop verbeux si boucle serrée.
+
+Considérations de performance :
+• Formatage traceback coûteux.
+
+Exemples :
+• except Exception: logging.exception("fail").
+
+Remarques :
+• Réponse : inclut la traceback — 1re option.`,
+  3212: `Différence clé print() vs logging ?
+
+Débutant :
+• Logging offre niveaux, handlers, formatage, configuration externe ; print écrit sur stdout sans pipeline.
+
+Intermédiaire :
+• Les libs devraient logger et laisser l’app configurer.
+
+Expert :
+• LoggerAdapter / structlog pour champs structurés.
+
+Concepts clés :
+• Routage et filtrage.
+
+Distinctions clés :
+• stdout unique vs multi-sinks.
+
+Fonctionnement :
+• LogRecord vs str directe.
+
+Exécution étape par étape :
+• Pipeline complet logging.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Prod : logging ; debug rapide : print temporaire.
+
+Cas limites :
+• Encodage console vs fichier UTF-8.
+
+Considérations de performance :
+• Lazy formatting avec % ou extra possible.
+
+Exemples :
+• if __debug__: print vs logger.debug.
+
+Remarques :
+• Réponse : niveaux, handlers, formatage, config sans changer le code — 1re option.`,
+  3213: `logging.FileHandler("app.log") crée quoi ?
+
+Débutant :
+• Un handler qui écrit les enregistrements dans le fichier indiqué (append par défaut).
+
+Intermédiaire :
+• Il faut addHandler sur un logger pour l’activer.
+
+Expert :
+• mode='w' pour écraser à chaque lancement.
+
+Concepts clés :
+• Persistance disque.
+
+Distinctions clés :
+• FileHandler vs StreamHandler.
+
+Fonctionnement :
+• Ouvre fichier et écrit lignes formatées.
+
+Exécution étape par étape :
+1. Open fichier.
+2. À chaque emit, write + flush selon config.
+
+Ordre des opérations :
+• Après formatage.
+
+Cas d'utilisation courants :
+• Audit, post-mortem.
+
+Cas limites :
+• Permissions, disque plein.
+
+Considérations de performance :
+• flush trop fréquent ralentit.
+
+Exemples :
+• TimedRotatingFileHandler.
+
+Remarques :
+• Réponse : handler vers fichier — 1re option.`,
+  3214: `self.assertEqual(1+1, 2) vérifie quoi ?
+
+Débutant :
+• Égalité de valeurs avec ==, pas l’identité.
+
+Intermédiaire :
+• Message d’échec montre attendu vs obtenu.
+
+Expert :
+• Types numériques mixtes parfois égaux (1.0 == 1).
+
+Concepts clés :
+• Assertion unittest la plus courante.
+
+Distinctions clés :
+• assertEqual vs assertIs.
+
+Fonctionnement :
+• Appelle == puis lève AssertionError si faux.
+
+Exécution étape par étape :
+1. Évalue les deux expressions.
+2. Compare.
+
+Ordre des opérations :
+• Évaluation args avant appel.
+
+Cas d'utilisation courants :
+• Retours de fonctions, structures.
+
+Cas limites :
+• listes mutées après coup : tester copies.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• assertEqual(len(a), 3).
+
+Remarques :
+• Réponse : deux valeurs égales (==) — 1re option.`,
+  3215: `self.assertTrue(expr) ?
+
+Débutant :
+• Vérifie que bool(expr) est vrai (toute valeur truthy passe).
+
+Intermédiaire :
+• Moins informatif qu’assertEqual si échec.
+
+Expert :
+• Peut être remplacé par assertIs(expr, True) si littéral True requis.
+
+Concepts clés :
+• Vérité Python, pas seulement True.
+
+Distinctions clés :
+• assertTrue vs assertIs(True).
+
+Fonctionnement :
+• if not expr: fail.
+
+Exécution étape par étape :
+• Conversion bool implicite.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Prédicats booléens.
+
+Cas limites :
+• assertTrue(1) passe — piège si on voulait ==1.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• assertTrue(result.ok).
+
+Remarques :
+• Réponse : expr évaluée vraie (truthy) — 1re option.`,
+  3216: `self.assertFalse(expr) ?
+
+Débutant :
+• Vérifie que bool(expr) est faux (0, None, "", [], False, etc.).
+
+Intermédiaire :
+• Symétrique de assertTrue.
+
+Expert :
+• assertFalse(0) et assertFalse(None) passent.
+
+Concepts clés :
+• Tests négatifs.
+
+Distinctions clés :
+• assertFalse vs assertIsNone.
+
+Fonctionnement :
+• if expr: fail.
+
+Exécution étape par étape :
+• bool implicite.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Fonction doit échouer silencieusement avec valeur falsy.
+
+Cas limites :
+• Confondre None et False.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• assertFalse(errors).
+
+Remarques :
+• Réponse : expr fausse (falsy) — 1re option.`,
+  3217: `self.assertIs(a, b) ?
+
+Débutant :
+• Vérifie l’identité : a is b (même objet en mémoire).
+
+Intermédiaire :
+• Deux listes [1,2,3] égales mais distinctes échouent.
+
+Expert :
+• None est singleton : assertIs(x, None) ou assertIsNone.
+
+Concepts clés :
+• id(a)==id(b).
+
+Distinctions clés :
+• assertIs vs assertEqual.
+
+Fonctionnement :
+• Opérateur is.
+
+Exécution étape par étape :
+• Comparaison pointeurs.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Cache singleton, même instance retournée.
+
+Cas limites :
+• petits ints internés — rester prudent avec is sur entiers.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• assertIs(settings.DEFAULT, obj).
+
+Remarques :
+• Réponse : même objet (identité) — 1re option.`,
+  3218: `self.assertIsNone(x) ?
+
+Débutant :
+• Vérifie x is None (identité au singleton None).
+
+Intermédiaire :
+• Rejette 0, False, [] qui ne sont pas None.
+
+Expert :
+• Préféré à assertEqual(x, None).
+
+Concepts clés :
+• Test explicite absence valeur.
+
+Distinctions clés :
+• None vs falsy.
+
+Fonctionnement :
+• is None.
+
+Exécution étape par étape :
+• Immédiat.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• API optionnelle.
+
+Cas limites :
+• Mock None-like rare.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• assertIsNone(cache.get_miss()).
+
+Remarques :
+• Réponse : x est None — 1re option.`,
+  3219: `self.assertIn(a, b) ?
+
+Débutant :
+• Vérifie a in b (appartenance).
+
+Intermédiaire :
+• Sur dict, teste les clés, pas les valeurs.
+
+Expert :
+• sous-chaîne pour str.
+
+Concepts clés :
+• Opérateur in.
+
+Distinctions clés :
+• assertIn vs assertEqual sur conteneur entier.
+
+Fonctionnement :
+• délègue à __contains__.
+
+Exécution étape par étape :
+• Membership O(n) ou O(1) selon type.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Clé présente, sous-texte.
+
+Cas limites :
+• defaultdict : clé manquante crée entrée — pas avec assertIn direct sur defaultdict sans précaution.
+
+Considérations de performance :
+• grands sets préférables aux listes.
+
+Exemples :
+• assertIn("id", payload).
+
+Remarques :
+• Réponse : a est dans b (in) — 1re option.`,
+  3220: `self.assertRaises(ValueError) sert à ?
+
+Débutant :
+• Vérifier qu’une ValueError est bien levée (callable ou bloc with).
+
+Intermédiaire :
+• Échoue si aucune exception ou mauvais type.
+
+Expert :
+• assertRaisesRegex pour message.
+
+Concepts clés :
+• Tests d’erreurs attendues.
+
+Distinctions clés :
+• assertRaises vs pytest.raises.
+
+Fonctionnement :
+• Exécute et capture type attendu.
+
+Exécution étape par étape :
+1. Entre contexte ou appelle fonction.
+2. Si type match → succès.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Validation entrées.
+
+Cas limites :
+• Exception sous-classe : match si même type demandé (pas sous-type sauf configuration).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• with self.assertRaises(TypeError): next(iter([])).
+
+Remarques :
+• Réponse : qu’une ValueError est levée — 1re option.`,
+  3221: `with self.assertRaises(ValueError): int("abc") — le test passe ?
+
+Débutant :
+• Oui : int("abc") lève ValueError comme attendu.
+
+Intermédiaire :
+• Si int réussissait, assertRaises échouerait (pas d’exception).
+
+Expert :
+• Vérifier aussi le message avec assertRaisesRegex.
+
+Concepts clés :
+• Contrat d’erreur stable.
+
+Distinctions clés :
+• ValueError vs TypeError.
+
+Fonctionnement :
+• Context manager swallows l’exception attendue.
+
+Exécution étape par étape :
+1. int("abc") lève.
+2. Types correspondent.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Parser strict.
+
+Cas limites :
+• Localisation du message peut varier.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• JSONDecodeError tests.
+
+Remarques :
+• Réponse : Oui — 1re option.`,
+  3222: `self.assertAlmostEqual(0.1 + 0.2, 0.3) passe ?
+
+Débutant :
+• Oui : tolérance décimale par défaut (places) gère l’imprécision IEEE 754.
+
+Intermédiaire :
+• assertEqual échouerait sur == strict.
+
+Expert :
+• Paramètres delta ou places selon besoin.
+
+Concepts clés :
+• Tests flottants robustes.
+
+Distinctions clés :
+• AlmostEqual vs math.isclose.
+
+Fonctionnement :
+• Arrondi puis comparaison.
+
+Exécution étape par étape :
+• Diff absolue contrôlée.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Scientifique, finance arrondie.
+
+Cas limites :
+• Très grands flottants : utiliser delta relatif.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• cos(pi/2) proche de 0.
+
+Remarques :
+• Réponse : Oui — 1re option.`,
+  3223: `setUp(self) dans TestCase ?
+
+Débutant :
+• Exécuté avant chaque méthode de test pour préparer l’état.
+
+Intermédiaire :
+• Fraîcheur des fixtures entre tests.
+
+Expert :
+• Complément tearDown après chaque test.
+
+Concepts clés :
+• Cycle setUp → test → tearDown.
+
+Distinctions clés :
+• setUp vs setUpClass.
+
+Fonctionnement :
+• unittest runner appelle automatiquement.
+
+Exécution étape par étape :
+• N fois pour N tests.
+
+Ordre des opérations :
+• setUp avant chaque test_*.
+
+Cas d'utilisation courants :
+• Objets temporaires, fichiers.
+
+Cas limites :
+• setUp qui échoue : test marqué error.
+
+Considérations de performance :
+• Coût répété : factoriser setUpClass si lourd.
+
+Exemples :
+• self.client = Client().
+
+Remarques :
+• Réponse : avant chaque test — 1re option.`,
+  3224: `tearDown(self) ?
+
+Débutant :
+• Après chaque test, même en cas d’échec du test, pour nettoyer.
+
+Intermédiaire :
+• Fermeture fichiers, suppression tmp.
+
+Expert :
+• addCleanup comme alternative moderne parfois plus claire.
+
+Concepts clés :
+• Libération ressources.
+
+Distinctions clés :
+• tearDown vs tearDownClass.
+
+Fonctionnement :
+• Runner garantit l’appel.
+
+Exécution étape par étape :
+• Après test, avant test suivant.
+
+Ordre des opérations :
+• tearDown même si exception dans test (sauf crash dur).
+
+Cas d'utilisation courants :
+• Bases de données rollback.
+
+Cas limites :
+• tearDown qui lève masque parfois l’erreur du test — à surveiller.
+
+Considérations de performance :
+• I/O cleanup.
+
+Exemples :
+• os.unlink(self.path).
+
+Remarques :
+• Réponse : après chaque test — 1re option.`,
+  3225: `setUpClass(cls) ?
+
+Débutant :
+• Méthode de classe exécutée une seule fois avant tous les tests de la classe.
+
+Intermédiaire :
+• @classmethod requis ; reçoit cls.
+
+Expert :
+• tearDownClass pour teardown global.
+
+Concepts clés :
+• Ressources chères partagées.
+
+Distinctions clés :
+• setUpClass vs setUp.
+
+Fonctionnement :
+• unittest appelle avant le premier test.
+
+Exécution étape par étape :
+1. setUpClass une fois.
+2. Tests multiples réutilisent l’état (attention isolation).
+
+Ordre des opérations :
+• Avant première test method.
+
+Cas d'utilisation courants :
+• Connexion DB lourde, serveur de test.
+
+Cas limites :
+• État partagé peut coupler les tests si mal géré.
+
+Considérations de performance :
+• Gain si setup coûteux.
+
+Exemples :
+• cls.engine = create_engine(...).
+
+Remarques :
+• Réponse : une fois avant tous les tests de la classe — 1re option.`,
+  3226: `@unittest.skip("raison") sur un test ?
+
+Débutant :
+• Le test est ignoré : non exécuté, compté comme « skipped » avec la raison.
+
+Intermédiaire :
+• skipIf / skipUnless pour condition dynamique.
+
+Expert :
+• Ne masque pas les échecs : il saute délibérément.
+
+Concepts clés :
+• Décoration au moment de la découverte.
+
+Distinctions clés :
+• skip vs expectedFailure vs xfail pytest.
+
+Fonctionnement :
+• Le runner remplace le test par un stub skip.
+
+Exécution étape par étape :
+• Pas d’entrée dans le corps du test.
+
+Ordre des opérations :
+• Avant exécution logique du test.
+
+Cas d'utilisation courants :
+• Fonctionnalité non prête, OS spécifique.
+
+Cas limites :
+• Trop de skips masquent la couverture réelle.
+
+Considérations de performance :
+• Gain temps CI.
+
+Exemples :
+• skipIf(sys.platform=="win32", ...).
+
+Remarques :
+• Réponse : saute le test décoré — 1re option.`,
+  3227: `@unittest.expectedFailure ?
+
+Débutant :
+• Échec attendu du test → rapport « expected failure » (pas un fail rouge classique).
+
+Intermédiaire :
+• Si le test passe → « unexpected success » (souvent signalé).
+
+Expert :
+• Le test s’exécute toujours (contrairement à skip).
+
+Concepts clés :
+• Documentation de bug connu.
+
+Distinctions clés :
+• expectedFailure vs xfail strict.
+
+Fonctionnement :
+• Encapsule résultat AssertionError comme attendu.
+
+Exécution étape par étape :
+• Run test ; inverse la sémantique succès/échec pour le compteur.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• TDD sur bug non corrigé.
+
+Cas limites :
+• Oublier d’enlever le décorateur après fix.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Régression connue sur edge case.
+
+Remarques :
+• Réponse : marque un test censé échouer — 1re option.`,
+  3228: `assert 1 == 1 lève une erreur ?
+
+Débutant :
+• Non : la condition est vraie, assert ne fait rien.
+
+Intermédiaire :
+• Avec python -O, assert peut être retiré du bytecode.
+
+Expert :
+• assert condition, msg : msg évalué seulement si échec.
+
+Concepts clés :
+• Garde-fou développement.
+
+Distinctions clés :
+• assert vs if raise.
+
+Fonctionnement :
+• if not expr: raise AssertionError.
+
+Exécution étape par étape :
+• 1==1 True → pas de raise.
+
+Ordre des opérations :
+• Évalue d’abord l’expression.
+
+Cas d'utilisation courants :
+• Invariants internes.
+
+Cas limites :
+• Ne pas valider entrées utilisateur avec assert.
+
+Considérations de performance :
+• -O supprime le coût.
+
+Exemples :
+• assert len(data) > 0.
+
+Remarques :
+• Réponse : Non — 1re option.`,
+  3229: `assert 1 == 2 — quelle erreur ?
+
+Débutant :
+• AssertionError.
+
+Intermédiaire :
+• Pas ValueError ni TypeError.
+
+Expert :
+• Sous-classe de BaseException via Exception.
+
+Concepts clés :
+• Signal d’échec assert.
+
+Distinctions clés :
+• AssertionError vs autres exceptions.
+
+Fonctionnement :
+• Condition fausse → raise AssertionError().
+
+Exécution étape par étape :
+• Évalue False → lève.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Tests rapides, invariants.
+
+Cas limites :
+• Message par défaut peu parlant sans virgule.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• assert x >= 0, "négatif".
+
+Remarques :
+• Réponse : AssertionError — 1re option.`,
+  3230: `assert 1 == 2, "numbers not equal" — où apparaît le message ?
+
+Débutant :
+• Dans l’AssertionError comme argument du message.
+
+Intermédiaire :
+• La partie après la virgule n’est évaluée que si l’assert échoue.
+
+Expert :
+• f-string possible pour contexte dynamique.
+
+Concepts clés :
+• Deuxième forme assert.
+
+Distinctions clés :
+• msg assert vs message unittest.
+
+Fonctionnement :
+• raise AssertionError("numbers not equal").
+
+Exécution étape par étape :
+• Échec → instancie erreur avec str.
+
+Ordre des opérations :
+• Court-circuit : pas d’évaluation msg si succès.
+
+Cas d'utilisation courants :
+• Debug lisible.
+
+Cas limites :
+• Effet de bord dans msg si échec rare.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• assert n % 2 == 0, f"{n} impair".
+
+Remarques :
+• Réponse : dans l’AssertionError — 1re option.`,
+  3231: `Peut-on désactiver assert à l’exécution ?
+
+Débutant :
+• Oui : python -O (optimisation) supprime les assert du bytecode.
+
+Intermédiaire :
+• __debug__ devient False.
+
+Expert :
+• -OO peut aussi retirer docstrings selon build.
+
+Concepts clés :
+• assert n’est pas une validation sécurité prod.
+
+Distinctions clés :
+• -O vs variable env PYTHONOPTIMIZE.
+
+Fonctionnement :
+• Compilateur omet les branches assert si optimize.
+
+Exécution étape par étape :
+• Même code source, bytecode différent.
+
+Ordre des opérations :
+• Choix au lancement interpréteur.
+
+Cas d'utilisation courants :
+• Micro-perf ; masquer checks dev en prod (mauvaise idée pour invariants critiques — préférer if).
+
+Cas limites :
+• Tests dépendant d’assert en -O : faux verts.
+
+Considérations de performance :
+• Saut de branches.
+
+Exemples :
+• python -O script.py.
+
+Remarques :
+• Réponse : Oui, avec python -O — 1re option.`,
+  3232: `__debug__ vaut True quand ?
+
+Débutant :
+• En exécution normale ; False si lancement avec l’option -O (mode optimisé).
+
+Intermédiaire :
+• Constante figée : pas d’affectation runtime.
+
+Expert :
+• Équivalent conceptuel du garde-fou des assert.
+
+Concepts clés :
+• Drapeau compilation / interpréteur.
+
+Distinctions clés :
+• __debug__ vs variable DEBUG maison.
+
+Fonctionnement :
+• Fixé au démarrage.
+
+Exécution étape par étape :
+• Lecture seule.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• if __debug__: log verbeux.
+
+Cas limites :
+• Confondre avec logging.DEBUG.
+
+Considérations de performance :
+• Code sous if __debug__ peut être éliminé statiquement.
+
+Exemples :
+• if __debug__: assert cheap_check().
+
+Remarques :
+• Réponse : mode normal (True) ; False avec -O — 1re option.`,
+  3233: `doctest en Python ?
+
+Débutant :
+• Cadre qui extrait et exécute des exemples style REPL dans les docstrings pour vérifier la sortie.
+
+Intermédiaire :
+• testmod, testfile, DocTestSuite.
+
+Expert :
+• Option flags pour ellipsis, NORMALIZE_WHITESPACE.
+
+Concepts clés :
+• Doc vivante.
+
+Distinctions clés :
+• doctest vs unittest/pytest.
+
+Fonctionnement :
+• Parse >>> puis compare sortie texte.
+
+Exécution étape par étape :
+1. Scanner docstring.
+2. Exécuter blocs.
+3. Comparer.
+
+Ordre des opérations :
+• Ordre des exemples dans la doc.
+
+Cas d'utilisation courants :
+• Petites fonctions pures.
+
+Cas limites :
+• Ordre dict avant 3.7, flottants, bruit fragile.
+
+Considérations de performance :
+• Plus lent que tests unitaires purs.
+
+Exemples :
+• if __name__ == "__main__": doctest.testmod().
+
+Remarques :
+• Réponse : tests extraits des docstrings (sessions interactives) — 1re option.`,
+  3234: `try: x=1/0 except ZeroDivisionError: x=0 ; print(x) ?
+
+Débutant :
+• 1/0 lève, except assigne 0, affiche 0.
+
+Intermédiaire :
+• x du try jamais défini si erreur avant assignation.
+
+Expert :
+• else pourrait s’exécuter si pas d’erreur.
+
+Concepts clés :
+• Récupération contrôlée.
+
+Distinctions clés :
+• except spécifique vs except Exception.
+
+Fonctionnement :
+• Dispatch sur type d’exception.
+
+Exécution étape par étape :
+1. Division lève.
+2. Handler met x=0.
+3. print.
+
+Ordre des opérations :
+• Flux linéaire après except.
+
+Cas d'utilisation courants :
+• Valeur par défaut sur erreur.
+
+Cas limites :
+• Masquer bugs si except trop large.
+
+Considérations de performance :
+• Coût exception si chemin chaud.
+
+Exemples :
+• parse avec fallback.
+
+Remarques :
+• Réponse : 0 — 1re option.`,
+  3235: `int("abc") dans try ; except ValueError as e: x=str(e) ; type(x) ?
+
+Débutant :
+• str : le message d’erreur est une chaîne.
+
+Intermédiaire :
+• e reste ValueError, x est copie textuelle.
+
+Expert :
+• args tuple sur l’exception pour détails structurés.
+
+Concepts clés :
+• Conversion exception → log string.
+
+Distinctions clés :
+• type(e) vs type(str(e)).
+
+Fonctionnement :
+• __str__ de l’exception.
+
+Exécution étape par étape :
+• str(e) appelle la représentation utilisateur.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Réponses API erreur.
+
+Cas limites :
+• Encodage unicode dans message.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• logger.error(str(e)).
+
+Remarques :
+• Réponse : classe str — 1re option.`,
+  3236: `try: x=1 except: pass else: x=3 ; print(x) ?
+
+Débutant :
+• try réussit sans exception → else s’exécute → x vaut 3.
+
+Intermédiaire :
+• except ne s’exécute pas.
+
+Expert :
+• else après except : seulement si pas d’exception dans try.
+
+Concepts clés :
+• Branche succès try.
+
+Distinctions clés :
+• else try vs else for/while.
+
+Fonctionnement :
+• Contrôle flux standard Python.
+
+Exécution étape par étape :
+1. x=1 ok.
+2. else x=3.
+3. print 3.
+
+Ordre des opérations :
+• try puis else si succès.
+
+Cas d'utilisation courants :
+• Code « happy path » séparé du catch.
+
+Cas limites :
+• else pas de return dans try si on veut éviter double exécution — attention design.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• commit après try sans erreur.
+
+Remarques :
+• Réponse : 3 — 1re option.`,
+  3237: `Quand le finally s’exécute-t-il ?
+
+Débutant :
+• Toujours : succès, exception catchée ou non, même autour d’un return dans try/except (finally avant propagation du return).
+
+Intermédiaire :
+• Utile pour fermer ressources.
+
+Expert :
+• Si finally lève, elle masque l’exception précédente en cours.
+
+Concepts clés :
+• Garantie de nettoyage.
+
+Distinctions clés :
+• finally vs atexit.
+
+Fonctionnement :
+• Opcode SETUP_FINALLY en CPython.
+
+Exécution étape par étape :
+• Bloc toujours planifié.
+
+Ordre des opérations :
+• Après try/except/else, avant sortie fonction.
+
+Cas d'utilisation courants :
+• with préféré mais finally pour bas niveau.
+
+Cas limites :
+• kill -9 : pas de finally.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• lock.release() en finally.
+
+Remarques :
+• Réponse : toujours (avec ou sans exception) — 1re option.`,
+  3238: `except, else et finally peuvent-ils coexister ?
+
+Débutant :
+• Oui : syntaxe complète try / except / else / finally autorisée.
+
+Intermédiaire :
+• else exige au moins un except (pas try/else seul).
+
+Expert :
+• Ordre d’exécution documenté dans la référence langage.
+
+Concepts clés :
+• Structure complète de gestion d’erreurs.
+
+Distinctions clés :
+• else try vs elif.
+
+Fonctionnement :
+• Grammaire Python.
+
+Exécution étape par étape :
+• finally dernier bloc garanti.
+
+Ordre des opérations :
+• try → except si besoin → else si pas d’exc → finally.
+
+Cas d'utilisation courants :
+• transactions : try work, except rollback, else commit, finally close.
+
+Cas limites :
+• Complexité lecture — parfois scinder fonctions.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• try open parse except else log success finally close.
+
+Remarques :
+• Réponse : Oui, les trois peuvent coexister — 1re option.`,
+  3239: `raise ValueError("msg") from TypeError("cause") — nom du mécanisme ?
+
+Débutant :
+• Chaînage d’exceptions (exception chaining).
+
+Intermédiaire :
+• __cause__ et __context__ dans traceback.
+
+Expert :
+• raise from None pour couper la chaîne contextuelle.
+
+Concepts clés :
+• Préserver la cause racine.
+
+Distinctions clés :
+• chaining vs wrapping simple sans from.
+
+Fonctionnement :
+• Attache l’exception cause à la nouvelle.
+
+Exécution étape par étape :
+1. Construit nouvelle erreur.
+2. Lie l’ancienne comme cause directe.
+
+Ordre des opérations :
+• Affichage « The above exception was the direct cause ».
+
+Cas d'utilisation courants :
+• Couches API.
+
+Cas limites :
+• Fuites d’infos sensibles dans chaîne.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• raise HTTPError from e.
+
+Remarques :
+• Réponse : exception chaining / chaînage — 1re option.`,
+  3240: `e.__traceback__ après except ValueError as e ?
+
+Débutant :
+• Objet traceback décrivant la pile au point de la levée.
+
+Intermédiaire :
+• Pas une chaîne : utiliser traceback.format_tb.
+
+Expert :
+• tb_next pour chaîner frames.
+
+Concepts clés :
+• Introspection post-mortem.
+
+Distinctions clés :
+• traceback vs str(e).
+
+Fonctionnement :
+• Attribut assigné à la construction de l’exception active.
+
+Exécution étape par étape :
+• Référence pile liée.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• loggers custom.
+
+Cas limites :
+• None si exception créée sans levée réelle (rare).
+
+Considérations de performance :
+• Objets légers mais chaînes longues si formatées.
+
+Exemples :
+• traceback.print_exception(type(e), e, e.__traceback__).
+
+Remarques :
+• Réponse : objet traceback — 1re option.`,
+  3241: `traceback.format_exc() dans un except — s contient ?
+
+Débutant :
+• Une chaîne avec le traceback formaté comme l’affichage stderr classique.
+
+Intermédiaire :
+• S’appuie sur l’exception courante active.
+
+Expert :
+• Hors except actif : texte vide ou sentinel selon version (éviter).
+
+Concepts clés :
+• Sérialisation erreur pour logs distants.
+
+Distinctions clés :
+• format_exc vs print_exc.
+
+Fonctionnement :
+• join des lignes format_tb + exception.
+
+Exécution étape par étape :
+• Lit exc_info.
+
+Ordre des opérations :
+• Appeler avant de sortir du handler si exc_info effacée.
+
+Cas d'utilisation courants :
+• Sentry-like, fichiers log.
+
+Cas limites :
+• Threading : exc_info par thread.
+
+Considérations de performance :
+• Chaîne potentiellement grande.
+
+Exemples :
+• logger.error(traceback.format_exc()).
+
+Remarques :
+• Réponse : chaîne traceback formatée — 1re option.`,
+  3242: `sys.exc_info() dans except ?
+
+Débutant :
+• Tuple (type, valeur, traceback) de l’exception en cours de traitement.
+
+Intermédiaire :
+• (None,None,None) hors contexte d’exception active.
+
+Expert :
+• Utilisé en interne par traceback module.
+
+Concepts clés :
+• API bas niveau.
+
+Distinctions clés :
+• exc_info vs last_type ancien style.
+
+Fonctionnement :
+• Pointeur thread-local sur tête d’exception.
+
+Exécution étape par étape :
+• Capture instantanée.
+
+Ordre des opérations :
+• Valide seulement pendant handling.
+
+Cas d'utilisation courants :
+• frameworks middleware.
+
+Cas limites :
+• Réutiliser après sortie du except : valeurs peuvent être cleared.
+
+Considérations de performance :
+• Très léger.
+
+Exemples :
+• typ, val, tb = sys.exc_info().
+
+Remarques :
+• Réponse : tuple (type, valeur, traceback) — 1re option.`,
+  3243: `AppError("fail", 404) ; e.code ?
+
+Débutant :
+• 404 : attribut personnalisé stocké sur l’instance.
+
+Intermédiaire :
+• super().__init__(msg) pour le message standard.
+
+Expert :
+• Peut surcharger __str__ pour combiner code+msg.
+
+Concepts clés :
+• Exceptions riches.
+
+Distinctions clés :
+• Données vs args seuls.
+
+Fonctionnement :
+• __init__ assigne self.code.
+
+Exécution étape par étape :
+• Construction instance Exception sous-classe.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• HTTP 404/500, codes métier.
+
+Cas limites :
+• Sérialisation cross processus.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• raise AppError("nf", 404).
+
+Remarques :
+• Réponse : 404 — 1re option.`,
+  3244: `except: sans type explicite (« bare except ») — qu’est-ce qui est attrapé ?
+
+Débutant :
+• Tout BaseException : y compris SystemExit, KeyboardInterrupt, GeneratorExit — d’où le déconseillé.
+
+Intermédiaire :
+• Peut empêcher Ctrl+C ou sys.exit de fonctionner.
+
+Expert :
+• Équivalent sauf syntaxe à except BaseException:.
+
+Concepts clés :
+• Piège à éviter.
+
+Distinctions clés :
+• bare vs except Exception.
+
+Fonctionnement :
+• Filtre le plus large.
+
+Exécution étape par étape :
+• Match avant propagation.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Quasi jamais en prod ; top-level log ultime seulement.
+
+Cas limites :
+• Tests qui masquent sorties.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• sauf boucle REPL custom.
+
+Remarques :
+• Réponse : toutes les exceptions y compris SystemExit et KeyboardInterrupt — 1re option.`,
+  3245: `except Exception: vs bare except ?
+
+Débutant :
+• Exception attrape toutes les sous-classes d’Exception mais pas SystemExit, KeyboardInterrupt, GeneratorExit (héritant direct de BaseException).
+
+Intermédiaire :
+• Laisse le programme réagir à Ctrl+C et sys.exit.
+
+Expert :
+• Hiérarchie PEP 3151.
+
+Concepts clés :
+• Bon « catch-all » applicatif.
+
+Distinctions clés :
+• trois exceptions système hors filet.
+
+Fonctionnement :
+• isinstance check.
+
+Exécution étape par étape :
+• Si type hors arbre Exception → propagate.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• routeurs web, workers.
+
+Cas limites :
+• KeyboardInterrupt dans thread secondaire.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• except Exception as e: logger.exception(e).
+
+Remarques :
+• Réponse : toutes sauf SystemExit, KeyboardInterrupt, GeneratorExit — 1re option.`,
+  3246: `EAFP signifie ?
+
+Débutant :
+• Easier to Ask Forgiveness than Permission : essayer puis except si échec.
+
+Intermédiaire :
+• Style idiomatique Python vs garde LBYL.
+
+Expert :
+• Souvent plus rapide si succès fréquent (pas de test préalable).
+
+Concepts clés :
+• try/except comme flux normal.
+
+Distinctions clés :
+• EAFP vs LBYL.
+
+Fonctionnement :
+• Levée contrôlée.
+
+Exécution étape par étape :
+• Action puis handler.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• dict[key] vs get, fichiers.
+
+Cas limites :
+• Exceptions coûteuses en chemin ultra chaud rare.
+
+Considérations de performance :
+• dépend cas.
+
+Exemples :
+• try: v=d[k] except KeyError.
+
+Remarques :
+• Réponse : Easier to Ask Forgiveness than Permission — 1re option.`,
+  3247: `LBYL signifie ?
+
+Débutant :
+• Look Before You Leap : vérifier les préconditions avant l’action.
+
+Intermédiaire :
+• Courant en C/Java ; Python tolère mais EAFP souvent préféré.
+
+Expert :
+• Problème TOCTOU si check puis acte non atomique.
+
+Concepts clés :
+• if avant open.
+
+Distinctions clés :
+• LBYL vs EAFP.
+
+Fonctionnement :
+• Branches conditionnelles.
+
+Exécution étape par étape :
+• Test puis action.
+
+Ordre des opérations :
+• Deux étapes séparées.
+
+Cas d'utilisation courants :
+• validations UI simples.
+
+Cas limites :
+• fichier supprimé entre exists et open.
+
+Considérations de performance :
+• double lookup.
+
+Exemples :
+• if k in d: ...
+
+Remarques :
+• Réponse : Look Before You Leap — 1re option.`,
+  3248: `PEP 8 : indentation recommandée ?
+
+Débutant :
+• 4 espaces par niveau ; pas de tabulations mélangées.
+
+Intermédiaire :
+• Python 3 refuse mélange tabs/spaces dans un fichier.
+
+Expert :
+• Lignes de continuation alignées sur délimiteur ou hanging indent.
+
+Concepts clés :
+• Lisibilité universelle.
+
+Distinctions clés :
+• 4 vs 2 espaces d’autres langages.
+
+Fonctionnement :
+• Convention outil black/ruff alignés.
+
+Exécution étape par étape :
+• N/A.
+
+Cas d'utilisation courants :
+• tout fichier .py.
+
+Cas limites :
+• Éditeurs mal configurés.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• def f():\n    pass.
+
+Remarques :
+• Réponse : 4 espaces — 1re option.`,
+  3249: `PEP 8 : longueur de ligne recommandée pour le code ?
+
+Débutant :
+• 79 caractères pour le code ; 72 pour commentaires/docstrings (souplesse d’équipe jusqu’à ~99 parfois).
+
+Intermédiaire :
+• Parenthèses pour couper sans antislash.
+
+Expert :
+• Outils comme black peuvent choisir 88 par défaut — la question cible la PEP classique.
+
+Concepts clés :
+• diffs côte à côte, terminal 80 cols.
+
+Distinctions clés :
+• code vs commentaire.
+
+Fonctionnement :
+• Guide style, pas syntaxe.
+
+Exécution étape par étape :
+• N/A.
+
+Cas d'utilisation courants :
+• revue de code.
+
+Cas limites :
+• URLs longues : noqa ou break.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• parenthèses multi-lignes.
+
+Remarques :
+• Réponse : 79 — 1re option.`,
+  3250: `PEP 8 : nommage des fonctions ?
+
+Débutant :
+• snake_case : minuscules et underscores entre mots.
+
+Intermédiaire :
+• camelCase pour noms non pythoniques interop ; PascalCase pour classes.
+
+Expert :
+• _leading underscore pour « interne ».
+
+Concepts clés :
+• Cohérence écosystème.
+
+Distinctions clés :
+• snake_case vs camelCase.
+
+Fonctionnement :
+• Convention seulement.
+
+Exécution étape par étape :
+• N/A.
+
+Cas d'utilisation courants :
+• def load_user_data():.
+
+Cas limites :
+• noms très courts i,j ok en local.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• calculate_total_price.
+
+Remarques :
+• Réponse : snake_case — 1re option.`,
   402: `"  hello  ".lstrip() renvoie "hello  " : lstrip retire les blancs de gauche seulement.
 
 Débutant :
