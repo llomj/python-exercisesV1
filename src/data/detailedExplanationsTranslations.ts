@@ -105017,1693 +105017,2006 @@ Exemples :
 
 Remarques :
 • Réponse : 'static' (1re option).`,
-  2451: `Double underscore prefix (__) triggers name mangling, making attributes "private" by changing their name. If class MyClass: def __init__(self): self.__x = 1; obj = MyClass(); obj.__x, then obj.__x lève an AttributeError car Python automatically renomme __x en _MyClass__x (en ajoutant le préfixe du nom de classe). C'est name mangling - Python changes the attribute name to include the class name, making it plus difficile d'accès from outside the class. The attribute still exists, but with a different name (_MyClass__x), so accès direct via __x échoue.
-
-Concepts clés (name mangling) :
-• obj.__x lève AttributeError
-• Python renomme __x en _MyClass__x
-• Le name mangling ajoute le préfixe du nom de classe
-• Accès direct via __x échoue
-• Lève AttributeError
-
-Comment ça fonctionne :
-• self.__x = 1 définit l'attribut
-• Python renomme __x en _MyClass__x en interne
-• obj.__x tente d'accéder à __x
-• Python cherche __x (non trouvé, c'est _MyClass__x now)
-• Lève AttributeError: 'MyClass' object n'a pas attribute '__x'
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self.__x = 1  # Name mangled to _MyClass__x
-obj = MyClass()
-obj.__x                # AttributeError (name mangled)
-obj._MyClass__x       # 1 (mangled name works)
-
-Utilisations courantes :
-• Private attributes: self.__attr (name mangled, plus difficile d'accès)
-• Encapsulation: empêcher accès direct aux attributs internes
-• Name mangling
-• Programmation orientée objet
-
-Exemple : If class MyClass: def __init__(self): self.__x = 1; obj = MyClass(); obj.__x, then obj.__x lève an AttributeError car double underscore prefix triggers name mangling, renaming __x en _MyClass__x.
-`,
-  2452: `Name mangling renomme attributes with double underscore prefix by adding the class name. If class MyClass: def __init__(self): self.__x = 1; obj = MyClass(); obj._MyClass__x, then obj._MyClass__x renvoie 1 car Python renomme __x en _MyClass__x (class name + attribute name). While name mangling makes attributes plus difficile d'accès, they're pas vraiment privés - you can still access them via le nom manglé. C'est Python's way of providing "privacy" - it's a convention, sécurité non imposée.
-
-Concepts clés (nom manglé) :
-• obj._MyClass__x renvoie 1
-• __x est renommé en _MyClass__x
-• Mangled name: _ClassName__attribute
-• On peut encore accéder via le nom manglé
-• Résultat : 1
-
-Comment ça fonctionne :
-• self.__x = 1 définit l'attribut
-• Python renomme __x en _MyClass__x
-• obj._MyClass__x accède au nom manglé
-• L'attribut existe en _MyClass__x
-• Résultat : 1
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self.__x = 1  # Renamed to _MyClass__x
-obj = MyClass()
-obj._MyClass__x       # 1 (access via mangled name)
-obj.__x               # AttributeError (original name ne fonctionne pas)
-
-Utilisations courantes :
-• Understanding mangling: __attr becomes _ClassName__attr
-• Accessing mangled attributes: obj._ClassName__attr
-• Name mangling
-• Encapsulation
-
-Exemple : If class MyClass: def __init__(self): self.__x = 1; obj = MyClass(); obj._MyClass__x, then obj._MyClass__x renvoie 1 car name mangling renomme __x en _MyClass__x, and you can still access it via le nom manglé.
-`,
-  2453: `Attributs de classe with double underscore prefix n'est pas mangle car name mangling ne s'applique qu'aux attributs d'instance (ceux définis avec self). If class MyClass: __x = 1; MyClass.__x, then MyClass.__x renvoie 1 car __x is a attribut de classe (défini au niveau de la classe, not with self), so Python n'applique pas name mangling to it. Name mangling ne s'applique qu'aux attributs d'instance (self.__x), not class attributes (__x au niveau de la classe).
-
-Concepts clés (attribut de classe) :
-• MyClass.__x renvoie 1
-• __x is attribut de classe (not self.__x)
-• Name mangling ne s'applique qu'aux attributs d'instance
-• Attributs de classe with __ ne subissent pas le mangling
-• Résultat : 1
-
-Comment ça fonctionne :
-• class MyClass: __x = 1 définit l'attribut de classe
-• __x is au niveau de la classe (not self.__x)
-• Name mangling only for attributs d'instance
-• MyClass.__x accède à l'attribut de classe directement
-• Résultat : 1
-
-Exemple :
-class MyClass:
-    __x = 1  # Class attribute (ne mangle pas)
-MyClass.__x            # 1 (access directly, no mangling)
-# vs
-class MyClass:
-    def __init__(self):
-        self.__x = 1  # Instance attribute (mangles to _MyClass__x)
-
-Utilisations courantes :
-• Attributs de classe: __attr au niveau de la classe (ne subit pas le mangling)
-• Understanding mangling: only attributs d'instance get mangled
-• Name mangling
-• Class vs attributs d'instance
-
-Exemple : If class MyClass: __x = 1; MyClass.__x, then MyClass.__x renvoie 1 car class attributes with __ prefix n'est pas mangle - name mangling ne s'applique qu'aux attributs d'instance (self.__x).
-`,
-  2454: `Single underscore prefix (_) is a naming convention indicating "protected" or "internal use" attributes, but Python doesn't enforce it. If class MyClass: def __init__(self): self._x = 1; obj = MyClass(); obj._x, then obj._x renvoie 1 car single underscore is just a convention - it ne déclenche pas name mangling or empêcher access. It's a signal to other developers that this attribute is intended for internal use, but Python allows access anyway. C'est different from double underscore (__), qui déclenche name mangling.
-
-Concepts clés (underscore simple) :
-• obj._x renvoie 1
-• Single underscore is convention seule
-• Non imposé by Python
-• Signals "internal use" but accessible
-• Résultat : 1
-
-Comment ça fonctionne :
-• self._x = 1 définit l'attribut with single underscore
-• Python ne subit pas le mangling or restrict access
-• obj._x accesses attribute directly
-• Convention indicates internal use
-• Résultat : 1
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self._x = 1  # Protected (convention)
-obj = MyClass()
-obj._x                # 1 (accessible, but convention says "internal")
-
-Utilisations courantes :
-• Protected attributes: self._attr (convention, non imposé)
-• Internal use: signal that attribute is for internal use
-• Naming conventions
-• Encapsulation
-
-Exemple : If class MyClass: def __init__(self): self._x = 1; obj = MyClass(); obj._x, then obj._x renvoie 1 car single underscore is a convention indicating "protected" attributes, but Python doesn't enforce it - the attribute is still accessible.
-`,
-  2455: `Name mangling prevents classes enfant from accessing parent's private attributes. If class Parent: def __init__(self): self.__x = 1; class Child(Parent): def method(self): return self.__x; Child().method(), then Child().method() lève an AttributeError car Parent's __x is mangled to _Parent__x, but Child's method tente d'accéder à __x, which would be mangled to _Child__x (different name). Name mangling includes the class name, so each class has its own mangled namespace, preventing classes enfant from accidentally accessing parent's private attributes.
-
-Concepts clés (name mangling empêche l'enfant) :
-• Child().method() lève AttributeError
-• Parent.__x is mangled to _Parent__x
-• Child tente d'accéder à __x (would be _Child__x)
-• Different mangled names
-• Lève AttributeError
-
-Comment ça fonctionne :
-• Parent.__init__ sets self.__x = 1 (mangled to _Parent__x)
-• Child().method() tente d'accéder à self.__x
-• In Child context, __x would mangle to _Child__x
-• _Child__x n'existe pas (attribute is _Parent__x)
-• Lève AttributeError
-
-Exemple :
-class Parent:
-    def __init__(self):
-        self.__x = 1  # Mangled to _Parent__x
-class Child(Parent):
-    def method(self):
-        return self.__x  # Would mangle to _Child__x (n'existe pas)
-Child().method()        # AttributeError (can't access parent's __x)
-
-Utilisations courantes :
-• Private attributes: name mangling prevents child access
-• Encapsulation: each class has its own mangled namespace
-• Name mangling
-• Inheritance
-
-Exemple : If class Parent: def __init__(self): self.__x = 1; class Child(Parent): def method(self): return self.__x; Child().method(), then Child().method() lève an AttributeError car name mangling prevents classes enfant from accessing parent's private attributes - Parent.__x becomes _Parent__x, but Child tente d'accéder à __x which would be _Child__x.
-`,
-  2456: `Vous pouvez accéder a parent's mangled attribute by via le nom manglé with the classe parente name prefix. If class Parent: def __init__(self): self.__x = 1; class Child(Parent): def method(self): return self._Parent__x; Child().method(), then Child().method() renvoie 1 car self._Parent__x accesses the mangled name directly. Parent's __x is mangled to _Parent__x, and by using the full mangled name, you can access it from the classe enfant. Cela montre that name mangling is not true privacy - it's just a naming convention that makes access harder.
-
-Concepts clés (accès nom manglé) :
-• Child().method() renvoie 1
-• self._Parent__x accède au nom manglé
-• Parent.__x is mangled to _Parent__x
-• Using mangled name works
-• Résultat : 1
-
-Comment ça fonctionne :
-• Parent.__init__ sets self.__x = 1 (mangled to _Parent__x)
-• Child().method() accesses self._Parent__x
-• Uses full mangled name with class prefix
-• L'attribut existe en _Parent__x
-• Résultat : 1
-
-Exemple :
-class Parent:
-    def __init__(self):
-        self.__x = 1  # Mangled to _Parent__x
-class Child(Parent):
-    def method(self):
-        return self._Parent__x  # Access via mangled name
-Child().method()        # 1 (can access parent's mangled attribute)
-
-Utilisations courantes :
-• Accessing mangled attributes: obj._ClassName__attr
-• Understanding mangling: can access if you know the mangled name
-• Name mangling
-• Inheritance
-
-Exemple : If class Parent: def __init__(self): self.__x = 1; class Child(Parent): def method(self): return self._Parent__x; Child().method(), then Child().method() renvoie 1 car you can access the mangled name with the class name prefix - Parent.__x becomes _Parent__x, and accessing it directly works.
-`,
-  2457: `Double underscore on both sides (__x__) ne déclenche pas name mangling car Python reserves this pattern for special methods (magic methods). If class MyClass: def __init__(self): self.__x__ = 1; obj = MyClass(); obj.__x__, then obj.__x__ renvoie 1 car attributes with double underscores on both sides (like __str__, __len__, __init__) are reserved for Python's special methods and n'est pas mangle. Cela permet you to define custom special methods without interference from name mangling.
-
-Concepts clés (double underscore des deux côtés) :
-• obj.__x__ renvoie 1
-• __x__ has double underscore on both sides
-• Reserved pattern for special methods
-• Doesn't trigger name mangling
-• Résultat : 1
-
-Comment ça fonctionne :
-• self.__x__ = 1 définit l'attribut
-• Python sees __x__ (double underscore both sides)
-• Recognizes as special method pattern
-• Doesn't apply name mangling
-• obj.__x__ accesses attribute directly
-• Résultat : 1
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self.__x__ = 1  # Doesn't mangle (special method pattern)
-obj = MyClass()
-obj.__x__              # 1 (no mangling, accessible)
-# vs
-self.__x = 1            # Mangles to _MyClass__x
-
-Utilisations courantes :
-• Special methods: __str__, __len__, etc. (ne subissent pas le mangling)
-• Understanding mangling: only __attr (not __attr__) mangles
-• Name mangling
-• Special methods
-
-Exemple : If class MyClass: def __init__(self): self.__x__ = 1; obj = MyClass(); obj.__x__, then obj.__x__ renvoie 1 car double underscore on both sides ne déclenche pas name mangling - this pattern is reserved for special methods.
-`,
-  2458: `Méthodes getter provide controlled access to protected (single underscore) attributes. If class MyClass: def __init__(self): self._x = 1; def get_x(self): return self._x; obj = MyClass(); obj.get_x(), then obj.get_x() renvoie 1 car get_x() is a méthode getter that fournit un accès contrôlé to the attribut protégé _x. While _x could be accessed directly (obj._x), using a méthode getter fournit un controlled interface, allowing the class to add validation, transformation, or logging in the future without changing the external API.
-
-Concepts clés (getter attribut protégé) :
-• obj.get_x() renvoie 1
-• get_x() fournit un accès contrôlé
-• Accesses attribut protégé _x
-• Retourne value through method
-• Résultat : 1
-
-Comment ça fonctionne :
-• obj.get_x() calls méthode getter
-• get_x() executes: return self._x
-• Accesses attribut protégé _x = 1
-• Retourne value through method
-• Résultat : 1
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self._x = 1  # Protected attribute
-    def get_x(self):
-        return self._x  # Getter method
-obj = MyClass()
-obj.get_x()            # 1 (controlled access)
-obj._x                 # 1 (direct access also works, but getter preferred)
-
-Utilisations courantes :
-• Controlled access: getter methods provide interface to protected attributes
-• Encapsulation: hide implementation details behind methods
-• Méthodes getter
-• Programmation orientée objet
-
-Exemple : If class MyClass: def __init__(self): self._x = 1; def get_x(self): return self._x; obj = MyClass(); obj.get_x(), then obj.get_x() renvoie 1 car getter methods provide controlled access to protected attributes, allowing the class to manage how attributes are accessed.
-`,
-  2459: `Méthodes getter can access mangled (double underscore) attributes depuis la classe. If class MyClass: def __init__(self): self.__x = 1; def get_x(self): return self.__x; obj = MyClass(); obj.get_x(), then obj.get_x() renvoie 1 car when you access __x depuis la classe (in a method), Python utilise automatiquement the mangled name (_MyClass__x). Inside the class, you can use __x and Python knows to look for _MyClass__x. Cela permet getter methods to access private (mangled) attributes while keeping them hidden from external access.
-
-Concepts clés (getter accède au manglé) :
-• obj.get_x() renvoie 1
-• get_x() accesses __x depuis la classe
-• Python utilise automatiquement mangled name _MyClass__x
-• Works depuis la classe
-• Résultat : 1
-
-Comment ça fonctionne :
-• obj.get_x() calls méthode getter
-• get_x() executes: return self.__x
-• Inside class, __x refers en _MyClass__x (mangled)
-• Python résout automatiquement to mangled name
-• Résultat : 1
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self.__x = 1  # Mangled to _MyClass__x
-    def get_x(self):
-        return self.__x  # Inside class, __x works (auto-mangled)
-obj = MyClass()
-obj.get_x()            # 1 (works from within class)
-obj.__x                # AttributeError (ne fonctionne pas from outside)
-
-Utilisations courantes :
-• Private attributes: getter methods can access mangled attributes
-• Encapsulation: hide attributes, provide controlled access
-• Méthodes getter
-• Name mangling
-
-Exemple : If class MyClass: def __init__(self): self.__x = 1; def get_x(self): return self.__x; obj = MyClass(); obj.get_x(), then obj.get_x() renvoie 1 car getter methods can access mangled names depuis la classe - Python résout automatiquement __x en _MyClass__x inside the class.
-`,
-  2460: `Méthodes setter can modify mangled (double underscore) attributes depuis la classe. If class MyClass: def __init__(self): self.__x = 1; def set_x(self, val): self.__x = val; obj = MyClass(); obj.set_x(2); obj.get_x() if hasattr(obj, 'get_x') else obj._MyClass__x, then it renvoie 2 car set_x() is a méthode setter that modifies the mangled attribute __x. Inside the class, __x automatically refers en _MyClass__x, so set_x() can modify it. If get_x() exists, it renvoie the updated value (2); otherwise, accessing _MyClass__x directly also renvoie 2.
-
-Concepts clés (setter modifie l'attribut manglé) :
-• obj.set_x(2) modifies __x
-• Inside class, __x refers en _MyClass__x
-• set_x() modifies mangled attribute
-• obj.get_x() or obj._MyClass__x renvoie 2
-• Résultat : 2
-
-Comment ça fonctionne :
-• obj.set_x(2) calls méthode setter
-• set_x() executes: self.__x = val
-• Inside class, __x refers en _MyClass__x
-• Sets _MyClass__x = 2
-• obj.get_x() or obj._MyClass__x renvoie 2
-• Résultat : 2
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self.__x = 1  # Mangled to _MyClass__x
-    def set_x(self, val):
-        self.__x = val  # Modifies mangled attribute
-    def get_x(self):
-        return self.__x
-obj = MyClass()
-obj.set_x(2)            # Modifies __x
-obj.get_x()            # 2 (updated value)
-
-Utilisations courantes :
-• Private attributes: setter methods can modify mangled attributes
-• Encapsulation: controlled modification of private attributes
-• Méthodes setter
-• Name mangling
-
-Exemple : If class MyClass: def __init__(self): self.__x = 1; def set_x(self, val): self.__x = val; obj = MyClass(); obj.set_x(2); obj.get_x() if hasattr(obj, 'get_x') else obj._MyClass__x, then it renvoie 2 car setter methods can modify mangled attributes depuis la classe.
-`,
-  2461: `Le @property decorator provides controlled read access to attributes. If classe MyClass: def __init__(self): self._x = 1; @property; def x(self): renvoyer self._x; obj = MyClass(); obj.x, then obj.x renvoie 1 car @property converts the méthode x() into a property, allowing you to access it like an attribute (obj.x instead of obj.x()). The property getter renvoie the valeur of the attribut protégé _x, providing controlled access while keeping _x protected. C'est a cleaner interface than using getter méthodes like get_x().
-
-Concepts clés (@property) :
-• obj.x renvoie 1
-• @property makes méthode accessible as attribute
-• Property getter renvoie self._x
-• Clean interface: obj.x (not obj.get_x())
-• Résultat : 1
-
-Comment ça fonctionne :
-• obj.x accesses property
-• Python appelle property getter: @property def x(self)
-• Getter executes: renvoyer self._x
-• Retourne attribut protégé valeur
-• Résultat : 1
-
-Exemple :
-classe MyClass:
-    def __init__(self):
-        self._x = 1  # Protected attribute
-    @property
-    def x(self):
-        renvoyer self._x  # Property getter
-obj = MyClass()
-obj.x                        # 1 (property access, clean interface)
-
-Utilisations courantes :
-• Controlled access: @property def attr(self): renvoyer self._attr
-• Clean interface: obj.attr instead of obj.get_attr()
-• Properties
-• Encapsulation
-
-Exemple : If classe MyClass: def __init__(self): self._x = 1; @property; def x(self): renvoyer self._x; obj = MyClass(); obj.x, then obj.x renvoie 1 car @property provides controlled read access, making the méthode accessible as an attribute.
-`,
-  2462: `Property setters can validate or transform values before storing them. If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; @x.setter; def x(self, val): self._x = val * 2; obj = MyClass(); obj.x = 5; obj.x, then obj.x renvoie 10 car the setter multiplies the value by 2 before storing it (self._x = val * 2 = 5 * 2 = 10). Quand vous assign obj.x = 5, the setter est appelé, transforme la valeur (5 * 2 = 10), and stores 10. Cela permet properties to enforce business rules, validate input, or transform data before storage.
-
-Concepts clés (setter transforme) :
-• obj.x = 5 calls setter
-• Setter executes: self._x = val * 2 = 5 * 2 = 10
-• Stores transformed value: 10
-• obj.x calls getter: return self._x
-• Résultat : 10
-
-Comment ça fonctionne :
-• obj.x = 5 calls setter: @x.setter def x(self, val)
-• Setter transforms: self._x = val * 2
-• Evaluates: 5 * 2 = 10
-• Stores: self._x = 10
-• obj.x renvoie: 10
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self._x = 1
-    @property
-    def x(self):
-        return self._x
-    @x.setter
-    def x(self, val):
-        self._x = val * 2  # Transforms value
-obj = MyClass()
-obj.x = 5                    # Stores 10 (5 * 2)
-obj.x                        # 10 (transformed value)
-
-Utilisations courantes :
-• Transformation de valeur: @x.setter def x(self, val): self._x = transform(val)
-• Validation: @x.setter def x(self, val): if valid: self._x = val
-• Properties
-• Encapsulation
-
-Exemple : If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; @x.setter; def x(self, val): self._x = val * 2; obj = MyClass(); obj.x = 5; obj.x, then obj.x renvoie 10 car the property setter transforme la valeur before storing it (5 * 2 = 10).
-`,
-  2463: `Properties can access mangled (double underscore) attributes. If class MyClass: def __init__(self): self.__x = 1; @property; def x(self): return self.__x; obj = MyClass(); obj.x, then obj.x renvoie 1 car the property getter can access the mangled attribute __x depuis la classe. Inside the class, __x automatically refers en _MyClass__x (the mangled name), so the property can retrieve it. Cela permet properties to provide controlled access to private (mangled) attributes while keeping them hidden from direct external access.
-
-Concepts clés (propriété accède manglé) :
-• obj.x renvoie 1
-• Property getter accesses __x
-• Inside class, __x refers en _MyClass__x
-• Property can access mangled name
-• Résultat : 1
-
-Comment ça fonctionne :
-• obj.x accesses property
-• Property getter executes: return self.__x
-• Inside class, __x refers en _MyClass__x (mangled)
-• Python résout automatiquement to mangled name
-• Résultat : 1
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self.__x = 1  # Mangled to _MyClass__x
-    @property
-    def x(self):
-        return self.__x  # Property can access mangled name
-obj = MyClass()
-obj.x                        # 1 (property accesses mangled attribute)
-obj.__x                      # AttributeError (direct access fails)
-
-Utilisations courantes :
-• Private attributes: @property def attr(self): return self.__attr
-• Controlled access: properties provide interface to mangled attributes
-• Properties
-• Name mangling
-
-Exemple : If class MyClass: def __init__(self): self.__x = 1; @property; def x(self): return self.__x; obj = MyClass(); obj.x, then obj.x renvoie 1 car properties can access mangled attributes - inside the class, __x automatically refers to the mangled name.
-`,
-  2464: `A property setter that ne stocke pas the value ne change pas the property. If class MyClass: @property; def x(self): return 1; @x.setter; def x(self, val): pass; obj = MyClass(); obj.x = 5; obj.x, then obj.x renvoie 1 car the setter has pass (ne fait rien), so it ne stocke pas the value. L'assignation obj.x = 5 appelle le setter, but le setter ignore the value. Le getter renvoie 1, so the property value remains inchangés. Ce pattern peut être utilisé to create lecture seule properties that accept assignments but ignore them.
-
-Concepts clés (setter ne stocke pas) :
-• obj.x = 5 calls setter
-• Setter executes: pass (ne fait rien)
-• Value 5 is ignored (not stored)
-• obj.x calls getter: return 1
-• Résultat : 1 (inchangés)
-
-Comment ça fonctionne :
-• obj.x = 5 calls setter: @x.setter def x(self, val)
-• Setter executes: pass (ne fait rien)
-• Value 5 is not stored
-• obj.x calls getter: @property def x(self)
-• Getter renvoie: 1 (inchangés)
-• Résultat : 1
-
-Exemple :
-class MyClass:
-    @property
-    def x(self):
-        return 1
-    @x.setter
-    def x(self, val):
-        pass  # Doesn't store value
-obj = MyClass()
-obj.x = 5                    # Calls setter (ignores value)
-obj.x                        # 1 (getter inchangés)
-
-Utilisations courantes :
-• Lecture seule simulation: setter that ignores values
-• Validation-only setters: setter that validates but ne stocke pas
-• Properties
-• Encapsulation
-
-Exemple : If class MyClass: @property; def x(self): return 1; @x.setter; def x(self, val): pass; obj = MyClass(); obj.x = 5; obj.x, then obj.x renvoie 1 car a setter that ne stocke pas the value ne change pas the property, so the getter still renvoie 1.
-`,
-  2465: `Le property() fonction can be created avec getter and setter fonctions as arguments. If classe MyClass: def __init__(self): self._x = 1; def get_x(self): renvoyer self._x; def set_x(self, val): self._x = val; x = property(get_x, set_x); obj = MyClass(); obj.x = 5; obj.x, then obj.x renvoie 5 car property(get_x, set_x) crée un property where get_x is the getter and set_x is the setter. C'est an alternative syntax to using @property and @x.setter decorators. Quand vous assign obj.x = 5, it calls set_x(5), qui définit self._x = 5. Quand vous access obj.x, it calls get_x(), which renvoie self._x = 5.
-
-property() avec getter and setter:
-• obj.x = 5 calls set_x(5)
-• set_x sets self._x = 5
-• obj.x calls get_x()
-• get_x renvoie self._x = 5
-• Résultat : 5
-
-Comment ça fonctionne :
-• property(get_x, set_x) creates property
-• get_x is getter fonction
-• set_x is setter fonction
-• obj.x = 5 calls set_x(5)
-• set_x sets self._x = 5
-• obj.x calls get_x()
-• Résultat : 5
-
-Exemple :
-classe MyClass:
-    def __init__(self):
-        self._x = 1
-    def get_x(self):
-        renvoyer self._x
-    def set_x(self, val):
-        self._x = val
-    x = property(get_x, set_x)  # Alternative to @property
-obj = MyClass()
-obj.x = 5                    # Calls set_x(5)
-obj.x                        # 5 (calls get_x())
-
-Utilisations courantes :
-• Property creation: x = property(getter, setter) (alternative syntax)
-• Functional style: property() fonction instead of decorators
-• Properties
-• Encapsulation
-
-Exemple : If classe MyClass: def __init__(self): self._x = 1; def get_x(self): renvoyer self._x; def set_x(self, val): self._x = val; x = property(get_x, set_x); obj = MyClass(); obj.x = 5; obj.x, then obj.x renvoie 5 car property() can be created avec getter and setter fonctions, and the setter stocke le valeur.
-`,
-  2466: `Le @x.deleter decorator defines a property deleter that provides controlled deletion. If classe MyClass: def __init__(self): self._x = 1; @property; def x(self): renvoyer self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); del obj.x; hasattr(obj, '_x'), then hasattr(obj, '_x') renvoie False car @x.deleter defines what happens when you delete the property, and del obj.x appelle le deleter, qui supprime self._x. This provides controlled deletion of attributes, allowing you to add cleanup logic or validation avant deletion.
-
-Concepts clés (@x.deleter) :
-• del obj.x calls deleter
-• @x.deleter defines deletion behavior
-• Deleter executes: del self._x
-• Attribute _x is deleted
-• hasattr(obj, '_x') renvoie False
-
-Comment ça fonctionne :
-• obj._x = 1 définit l'attribut
-• del obj.x calls deleter: @x.deleter def x(self)
-• Deleter executes: del self._x
-• Attribute _x is deleted
-• hasattr(obj, '_x') checks if l'attribut existe
-• Résultat : False
-
-Exemple :
-classe MyClass:
-    def __init__(self):
-        self._x = 1
-    @property
-    def x(self):
-        renvoyer self._x
-    @x.deleter
-    def x(self):
-        del self._x  # Controlled deletion
-obj = MyClass()
-del obj.x                    # Calls deleter
-hasattr(obj, '_x')          # False (deleted)
-
-Utilisations courantes :
-• Controlled deletion: @x.deleter def x(self): cleanup logic
-• Property deletion: del obj.property (uses deleter)
-• Properties
-• Encapsulation
-
-Exemple : If classe MyClass: def __init__(self): self._x = 1; @property; def x(self): renvoyer self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); del obj.x; hasattr(obj, '_x'), then hasattr(obj, '_x') renvoie False car @x.deleter provides controlled deletion, and del obj.x appelle le deleter, qui supprime self._x.
-`,
-  2467: `A property sans setter is lecture seule - you ne peut pas assigner to it. If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; obj = MyClass(); obj.x = 2, then obj.x = 2 lève an AttributeError car the property only a un getter (defined by @property), but pas de setter. To make a property writable, you need to define a setter using @x.setter. Without a setter, the property is lecture seule, and any attempt to assign to it lève an AttributeError.
-
-Concepts clés (propriété sans setter) :
-• obj.x = 2 lève AttributeError
-• Property only has getter (pas de setter)
-• Impossible d'assigner to lecture seule property
-• Lève AttributeError: can't définir l'attribut
-• Error: AttributeError
-
-Comment ça fonctionne :
-• obj.x = 2 attempts to assign to property
-• Property has pas de setter defined
-• Python cannot set lecture seule property
-• Lève AttributeError: can't définir l'attribut
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self._x = 1
-    @property
-    def x(self):
-        return self._x  # Only getter, no setter
-obj = MyClass()
-obj.x                        # 1 (read works)
-obj.x = 2                    # AttributeError (no setter, read-only)
-
-Utilisations courantes :
-• Lecture seule properties: @property def value(self): return self._value
-• Computed properties: @property def area(self): return self.width * self.height
-• Properties
-• Encapsulation
-
-Exemple : If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; obj = MyClass(); obj.x = 2, then obj.x = 2 lève an AttributeError car a property sans setter is lecture seule and cannot be assigned to.
-`,
-  2468: `Property getters can validate or transform values when they're accessed. If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x if self._x > 0 else 0; obj = MyClass(); obj._x = -1; obj.x, then obj.x renvoie 0 car the property getter checks if self._x > 0, and if not, it renvoie 0 instead of the actual value. Even though obj._x = -1 (set directly), when you access obj.x, the getter transforme la valeur, returning 0 for negative values. Cela permet properties to enforce constraints or transform data on access.
-
-Concepts clés (getter transforme) :
-• obj._x = -1 définit l'attribut directly
-• obj.x calls property getter
-• Getter checks: self._x > 0? (False, -1 is not > 0)
-• Retourne transformed value: 0
-• Résultat : 0
-
-Comment ça fonctionne :
-• obj._x = -1 définit l'attribut directly (bypasses property)
-• obj.x accesses property
-• Getter executes: return self._x if self._x > 0 else 0
-• Evaluates: -1 > 0? (False)
-• Résultat : 0 (transformed value)
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self._x = 1
-    @property
-    def x(self):
-        return self._x if self._x > 0 else 0  # Transforms on access
-obj = MyClass()
-obj._x = -1                    # Set directly (bypasses property)
-obj.x                        # 0 (getter transforms negative to 0)
-
-Utilisations courantes :
-• Transformation de valeur: @property def x(self): return transform(self._x)
-• Validation on access: getter can validate/transform values
-• Properties
-• Encapsulation
-
-Exemple : If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x if self._x > 0 else 0; obj = MyClass(); obj._x = -1; obj.x, then obj.x renvoie 0 car the property getter can validate/transform values on access, returning 0 for negative values.
-`,
-  2469: `Property setters can validate input and raise errors if la validation échoue. If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; @x.setter; def x(self, val): if val < 0: raise ValueError; self._x = val; obj = MyClass(); obj.x = -1, then obj.x = -1 lève a ValueError car the setter validates that val >= 0, and since -1 < 0, it lève ValueError before storing the value. Cela permet properties to enforce business rules and empêcher invalid data from being stored.
-
-Concepts clés (setter valide) :
-• obj.x = -1 calls setter
-• Setter checks: val < 0? (True, -1 < 0)
-• Lève ValueError (la validation échoue)
-• Value is not stored
-• Lève ValueError
-
-Comment ça fonctionne :
-• obj.x = -1 calls setter: @x.setter def x(self, val)
-• Setter validates: if val < 0: raise ValueError
-• -1 < 0 is True
-• Lève ValueError
-• Value is not stored
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self._x = 1
-    @property
-    def x(self):
-        return self._x
-    @x.setter
-    def x(self, val):
-        if val < 0:
-            raise ValueError("Value must be non-negative")
-        self._x = val
-obj = MyClass()
-obj.x = -1                    # ValueError (validation fails)
-
-Utilisations courantes :
-• Validation d'entrée: @x.setter def x(self, val): if not valid: raise Error
-• Règles métier: properties can enforce constraints
-• Properties
-• Encapsulation
-
-Exemple : If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; @x.setter; def x(self, val): if val < 0: raise ValueError; self._x = val; obj = MyClass(); obj.x = -1, then obj.x = -1 lève a ValueError car the property setter valide l'entrée and lève an error if la validation échoue.
-`,
-  2470: `You cannot combine @classmethod and @property decorators car properties are designed for instances, not classes. If class MyClass: _x = 1; @classmethod; @property; def x(cls): return cls._x, then it lève a TypeError car @property expects an instance method (with self), but @classmethod fournit un class method (with cls). These les décorateurs sont incompatibles - properties fonctionner avec instances, while class methods fonctionner avec classes. To access class attributes, you would use a regular class method without @property, or use a class-level property descriptor (which is more complex).
-
-Concepts clés (décorateurs) :
-• Lève TypeError
-• @property expects instance method (self)
-• @classmethod provides class method (cls)
-• Les décorateurs sont incompatibles
-• Lève TypeError
-
-Comment ça fonctionne :
-• @classmethod @property def x(cls): tries to combine decorators
-• @property expects method with self (instance)
-• @classmethod provides method with cls (class)
-• Decorators conflict
-• Lève TypeError
-
-Exemple :
-class MyClass:
-    _x = 1
-    @classmethod
-    @property  # TypeError (can't combine)
-    def x(cls):
-        return cls._x
-# Instead, use:
-class MyClass:
-    _x = 1
-    @classmethod
-    def x(cls):
-        return cls._x  # Class method (no @property)
-
-Utilisations courantes :
-• Understanding limitations: @property and @classmethod can't be combined
-• Attributs de classe: use @classmethod without @property
-• Properties
-• Class methods
-
-Exemple : If class MyClass: _x = 1; @classmethod; @property; def x(cls): return cls._x, then it lève a TypeError car you can't combine @classmethod and @property - properties are for instances, class methods are for classes.
-`,
-  2471: `Abstract classes with abstract methods ne peut pas être instanciée. If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; MyClass(), then MyClass() lève a TypeError car abstract classes are designed to be base classes that define an interface, but cannot be used directly. The @abstractmethod decorator marks a method as abstract, meaning it must be implemented by subclasses. Python prevents instantiation of classes with abstract methods to enforce that the interface is properly implemented before use.
-
-Concepts clés (classe abstraite) :
-• MyClass() lève TypeError
-• MyClass has méthode abstraite (method)
-• Abstract classes ne peut pas être instanciée
-• Doit implémenter abstract methods first
-• Lève TypeError
-
-Comment ça fonctionne :
-• MyClass() tries to create instance
-• Python checks for abstract methods
-• Finds @abstractmethod def method(self)
-• Class has abstract methods
-• Lève TypeError: Can't instantiate abstract class MyClass with méthode abstraite method
-
-Exemple :
-from abc import ABC, abstractmethod
-class MyClass(ABC):
-    @abstractmethod
-    def method(self):
-        pass
-MyClass()                    # TypeError (can't instantiate abstract class)
-
-Utilisations courantes :
-• Abstract base classes: define interface that subclasses doit implémenter
-• Interface enforcement: empêcher instantiation until interface is complete
-• Abstract base classes
-• Programmation orientée objet
-
-Exemple : If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; MyClass(), then MyClass() lève a TypeError car abstract classes with abstract methods ne peut pas être instanciée - they must be subclassed and the abstract methods must be implemented first.
-`,
-  2472: `A classe enfant doit implémenter all abstract methods from the parent, or it also becomes abstract and ne peut pas être instanciée. If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): pass; Child(), then Child() lève a TypeError car Child inherits the méthode abstraite from Parent but n'implémente pas it. Abstract methods are inherited, so Child also has an méthode abstraite and ne peut pas être instanciée until it implements all abstract methods.
-
-Concepts clés (enfant doit implémenter) :
-• Child() lève TypeError
-• Child inherits méthode abstraite from Parent
-• Child n'implémente pas method()
-• Child is also abstract
-• Lève TypeError
-
-Comment ça fonctionne :
-• Child() tries to create instance
-• Python checks for abstract methods
-• Finds inherited @abstractmethod def method(self) from Parent
-• Child n'implémente pas method()
-• Child is abstract
-• Lève TypeError: Can't instantiate abstract class Child with méthode abstraite method
-
-Exemple :
-from abc import ABC, abstractmethod
-class Parent(ABC):
-    @abstractmethod
-    def method(self):
-        pass
-class Child(Parent): pass  # Doesn't implement method
-Child()                    # TypeError (still abstract)
-
-Utilisations courantes :
-• Abstract inheritance: child doit implémenter parent's abstract methods
-• Interface enforcement: abstract methods must be implemented
-• Abstract base classes
-• Inheritance
-
-Exemple : If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): pass; Child(), then Child() lève a TypeError car the child doit implémenter the méthode abstraite or it also becomes abstract and ne peut pas être instanciée.
-`,
-  2473: `A classe enfant that implements all abstract methods can be instantiated. If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): def method(self): return 1; Child().method(), then Child().method() renvoie 1 car Child implements the méthode abstraite method(), so it's no longer abstract and can be instantiated. Quand vous call Child().method(), it uses Child's implementation, which renvoie 1.
-
-Concepts clés (enfant implémente) :
-• Child().method() renvoie 1
-• Child implements méthode abstraite from Parent
-• Child is no longer abstract
-• Can be instantiated
-• Résultat : 1
-
-Comment ça fonctionne :
-• Child() creates instance (no longer abstract)
-• Child implements method() (renvoie 1)
-• Child().method() calls Child.method()
-• Method executes: return 1
-• Résultat : 1
-
-Exemple :
-from abc import ABC, abstractmethod
-class Parent(ABC):
-    @abstractmethod
-    def method(self):
-        pass
-class Child(Parent):
-    def method(self):
-        return 1  # Implements abstract method
-Child().method()          # 1 (can instantiate, method implemented)
-
-Utilisations courantes :
-• Abstract implementation: child implements parent's abstract methods
-• Interface completion: implementing abstract methods makes class concrete
-• Abstract base classes
-• Inheritance
-
-Exemple : If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): def method(self): return 1; Child().method(), then Child().method() renvoie 1 car a child implementing the méthode abstraite can be instantiated and the method works correctly.
-`,
-  2474: `A classe enfant that keeps a method abstract (by marking it with @abstractmethod again) still ne peut pas être instanciée. If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): @abstractmethod; def method(self): pass; Child(), then Child() lève a TypeError car even though Child defines method(), it marks it as abstract again with @abstractmethod. This means Child is still abstract and ne peut pas être instanciée. La method must be implemented (have actual code, not just pass) and not be marked as abstract for the class to be concrete.
-
-Concepts clés (enfant garde abstrait) :
-• Child() lève TypeError
-• Child marks method() as @abstractmethod
-• Method is still abstract (not implemented)
-• Child is still abstract
-• Lève TypeError
-
-Comment ça fonctionne :
-• Child() tries to create instance
-• Python checks for abstract methods
-• Finds @abstractmethod def method(self) in Child
-• Method is still abstract (marked with @abstractmethod)
-• Child is abstract
-• Lève TypeError: Can't instantiate abstract class Child with méthode abstraite method
-
-Exemple :
-from abc import ABC, abstractmethod
-class Parent(ABC):
-    @abstractmethod
-    def method(self):
-        pass
-class Child(Parent):
-    @abstractmethod
-    def method(self):
-        pass  # Still abstract
-Child()                    # TypeError (still abstract)
-
-Utilisations courantes :
-• Abstract inheritance: child can keep method abstract
-• Multi-level abstraction: abstract methods peut être passé down
-• Abstract base classes
-• Inheritance
-
-Exemple : If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): @abstractmethod; def method(self): pass; Child(), then Child() lève a TypeError car a child keeping the method abstract still ne peut pas être instanciée - the method must be implemented (not just marked abstract) for the class to be concrete.
-`,
-  2475: `Le __abstractmethods__ attribute contains a frozenset of méthode abstraite names. If from abc import ABC, abstractmethod; classe MyClass(ABC): @abstractmethod; def méthode(self): pass; MyClass.__abstractmethods__, then MyClass.__abstractmethods__ renvoie frozenset({'méthode'}) car __abstractmethods__ stocke le names of all abstract méthodes in the classe. C'est used en interne by Python to determine if a classe is abstract and can be instantiated. When all méthodes in __abstractmethods__ are implemented, the classe becomes concrete.
-
-Concepts clés (__abstractmethods__) :
-• MyClass.__abstractmethods__ renvoie frozenset({'méthode'})
-• Contains names of abstract méthodes
-• Used to check if classe is abstract
-• Empty when all méthodes implemented
-• Résultat : frozenset({'méthode'})
-
-Comment ça fonctionne :
-• @abstractmethod def méthode(self) marks méthode as abstract
-• Python adds 'méthode' to __abstractmethods__
-• __abstractmethods__ is frozenset of méthode abstraite names
-• Contains: {'méthode'}
-• Résultat : frozenset({'méthode'})
-
-Exemple :
-from abc import ABC, abstractmethod
-classe MyClass(ABC):
-    @abstractmethod
-    def méthode(self):
-        pass
-MyClass.__abstractmethods__  # frozenset({'méthode'}) (abstract méthodes)
-
-Utilisations courantes :
-• Méthode abstraite inspection: Class.__abstractmethods__ (see abstract méthodes)
-• Introspection: check which méthodes are abstract
-• Abstract base classes
-• Type system
-
-Exemple : If from abc import ABC, abstractmethod; classe MyClass(ABC): @abstractmethod; def méthode(self): pass; MyClass.__abstractmethods__, then MyClass.__abstractmethods__ renvoie frozenset({'méthode'}) car __abstractmethods__ contains a set of méthode abstraite names.
-`,
-  2476: `A classe enfant that implements all abstract methods has an empty __abstractmethods__ set. If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): def method(self): return 1; Child.__abstractmethods__, then Child.__abstractmethods__ renvoie frozenset() car Child implements the méthode abstraite method(), so it's no longer abstract. When a class implements all abstract methods, Python removes them from __abstractmethods__, making it empty. Cela indique the class is concrete and can be instantiated.
-
-Concepts clés (enfant sans méthodes abstraites) :
-• Child.__abstractmethods__ renvoie frozenset()
-• Child implements méthode abstraite from Parent
-• All abstract methods are implemented
-• __abstractmethods__ is empty
-• Résultat : frozenset()
-
-Comment ça fonctionne :
-• Child implements method() (renvoie 1)
-• Python checks abstract methods
-• All abstract methods are implemented
-• Removes 'method' from __abstractmethods__
-• __abstractmethods__ becomes empty
-• Résultat : frozenset()
-
-Exemple :
-from abc import ABC, abstractmethod
-class Parent(ABC):
-    @abstractmethod
-    def method(self):
-        pass
-class Child(Parent):
-    def method(self):
-        return 1  # Implements abstract method
-Child.__abstractmethods__  # frozenset() (no abstract methods)
-
-Utilisations courantes :
-• Méthode abstraite inspection: Child.__abstractmethods__ (check if concrete)
-• Introspection: empty set means class is concrete
-• Abstract base classes
-• Type system
-
-Exemple : If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): def method(self): return 1; Child.__abstractmethods__, then Child.__abstractmethods__ renvoie frozenset() car a child implementing the méthode abstraite n'a pas abstract methods - all are implemented.
-`,
-  2477: `Abstract class methods empêcher instantiation of the class. If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; @classmethod; def method(cls): pass; MyClass(), then MyClass() lève a TypeError car @abstractmethod can be appliqué à class methods, and having an abstract class method makes the class abstract. The class ne peut pas être instanciée until the abstract class method is implemented by a subclass. Abstract methods can be instance methods, class methods, or static methods - all empêcher instantiation.
-
-Concepts clés (@classmethod abstrait) :
-• MyClass() lève TypeError
-• @abstractmethod @classmethod marks class method as abstract
-• Class has abstract class method
-• Ne peut pas être instanciée
-• Lève TypeError
-
-Comment ça fonctionne :
-• MyClass() tries to create instance
-• Python checks for abstract methods
-• Finds @abstractmethod @classmethod def method(cls)
-• Class has abstract class method
-• Lève TypeError: Can't instantiate abstract class MyClass with méthode abstraite method
-
-Exemple :
-from abc import ABC, abstractmethod
-class MyClass(ABC):
-    @abstractmethod
-    @classmethod
-    def method(cls):
-        pass  # Abstract class method
-MyClass()                    # TypeError (abstract class method)
-
-Utilisations courantes :
-• Abstract class methods: @abstractmethod @classmethod (abstract class method)
-• Interface enforcement: abstract methods can be class methods
-• Abstract base classes
-• Class methods
-
-Exemple : If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; @classmethod; def method(cls): pass; MyClass(), then MyClass() lève a TypeError car an abstract class method prevents instantiation - the class is abstract until the class method is implemented.
-`,
-  2478: `Abstract static methods empêcher instantiation of the class. If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; @staticmethod; def method(): pass; MyClass(), then MyClass() lève a TypeError car @abstractmethod can be appliqué à static methods, and having an abstract static method makes the class abstract. The class ne peut pas être instanciée until the abstract static method is implemented by a subclass. Abstract methods can be instance methods, class methods, or static methods - all empêcher instantiation.
-
-Concepts clés (@staticmethod abstrait) :
-• MyClass() lève TypeError
-• @abstractmethod @staticmethod marks static method as abstract
-• Class has abstract static method
-• Ne peut pas être instanciée
-• Lève TypeError
-
-Comment ça fonctionne :
-• MyClass() tries to create instance
-• Python checks for abstract methods
-• Finds @abstractmethod @staticmethod def method()
-• Class has abstract static method
-• Lève TypeError: Can't instantiate abstract class MyClass with méthode abstraite method
-
-Exemple :
-from abc import ABC, abstractmethod
-class MyClass(ABC):
-    @abstractmethod
-    @staticmethod
-    def method():
-        pass  # Abstract static method
-MyClass()                    # TypeError (abstract static method)
-
-Utilisations courantes :
-• Abstract static methods: @abstractmethod @staticmethod (abstract static method)
-• Interface enforcement: abstract methods can be static methods
-• Abstract base classes
-• Static methods
-
-Exemple : If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; @staticmethod; def method(): pass; MyClass(), then MyClass() lève a TypeError car an abstract static method prevents instantiation - the class is abstract until the static method is implemented.
-`,
-  2479: `A classe enfant is still a subclass of the parent, even if it's abstract (hasn't implemented abstract methods). If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) renvoie True car Child hérite de Parent, making it a subclass regardless of whether it implements abstract methods. Being abstract ne change pas the inheritance relationship - Child is still a subclass of Parent, it just can't be instantiated until it implements the abstract methods.
-
-Concepts clés (enfant reste sous-classe) :
-• issubclass(Child, Parent) renvoie True
-• Child hérite de Parent
-• Abstract status n'affecte pas inheritance
-• Child is subclass even if abstract
-• Résultat : True
-
-Comment ça fonctionne :
-• class Child(Parent): creates child inheriting from Parent
-• issubclass(Child, Parent) checks inheritance
-• Child is indeed a subclass of Parent
-• Abstract status n'affecte pas this
-• Résultat : True
-
-Exemple :
-from abc import ABC, abstractmethod
-class Parent(ABC):
-    @abstractmethod
-    def method(self):
-        pass
-class Child(Parent): pass  # Abstract (n'implémente pas method)
-issubclass(Child, Parent)  # True (still subclass, even if abstract)
-
-Utilisations courantes :
-• Inheritance check: issubclass(Child, Parent) (works even if abstract)
-• Understanding abstraction: abstract status n'affecte pas inheritance
-• Abstract base classes
-• Inheritance
-
-Exemple : If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) renvoie True car a child is still a subclass even if it's abstract - abstract status n'affecte pas the inheritance relationship.
-`,
-  2480: `You cannot create an instance of an abstract class to test isinstance(). If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; isinstance(MyClass(), MyClass), then it lève a TypeError car MyClass() tries to instantiate an abstract class, which is not allowed. You cannot create an instance of an abstract class, so you cannot test isinstance() with an abstract class instance. To test isinstance(), you would need to create an instance of a concrete subclass that implements all abstract methods.
-
-Concepts clés (instanciation impossible) :
-• isinstance(MyClass(), MyClass) lève TypeError
-• MyClass() tries to instantiate abstract class
-• Abstract classes ne peut pas être instanciée
-• Cannot create instance for isinstance()
-• Lève TypeError
-
-Comment ça fonctionne :
-• isinstance(MyClass(), MyClass) tries to create instance
-• MyClass() attempts to instantiate abstract class
-• Python checks for abstract methods
-• Finds @abstractmethod def method(self)
-• Lève TypeError: Can't instantiate abstract class MyClass with méthode abstraite method
-
-Exemple :
-from abc import ABC, abstractmethod
-class MyClass(ABC):
-    @abstractmethod
-    def method(self):
-        pass
-isinstance(MyClass(), MyClass)  # TypeError (can't instantiate abstract class)
-# Instead, create concrete subclass:
-class Concrete(MyClass):
-    def method(self):
-        return 1
-isinstance(Concrete(), MyClass)  # True (fonctionne avec concrete subclass)
-
-Utilisations courantes :
-• Understanding limitations: can't instantiate abstract classes
-• isinstance() testing: need concrete subclass for isinstance()
-• Abstract base classes
-• Type system
-
-Exemple : If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; isinstance(MyClass(), MyClass), then it lève a TypeError car you can't create an instance of an abstract class to test isinstance() - abstract classes ne peut pas être instanciée.
-`,
-  2481: `Le isinstance() fonction renvoie True if an instance is of a classe or any of its parent classes. If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) renvoie True car isinstance() vérifie toute la chaîne d'héritage. Since Child hérite de Parent, an instance of Child is also considered an instance of Parent. C'est different from type() ==, which only checks the exact type.
-
-isinstance() avec inheritance:
-• isinstance(Child(), Parent) renvoie True
-• isinstance() checks chaîne d'héritage
-• Child() is instance of Child
-• Child hérite de Parent
-• Child() is also instance of Parent
-• Résultat : True
-
-Comment ça fonctionne :
-• Child() creates instance of Child
-• isinstance(instance, Parent) checks if instance is of Parent
-• Child hérite de Parent
-• Instance of Child is also instance of Parent
-• Résultat : True
-
-Exemple :
-classe Parent: pass
-classe Child(Parent): pass
-isinstance(Child(), Parent)   # True (Child inherits from Parent)
-isinstance(Child(), Child)    # True (Child() is instance of Child)
-
-Utilisations courantes :
-• Type checking: if isinstance(obj, Parent): ... (fonctionne avec inheritance)
-• Polymorphism: isinstance(obj, BaseClass) (checks base classes)
-• isinstance() fonction
-• Type system
-
-Exemple : If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) renvoie True car isinstance() renvoie True for parent classes - it vérifie toute la chaîne d'héritage.
-`,
-  2482: `Le isinstance() fonction renvoie True if an instance is of its own classe. If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Child), then isinstance(Child(), Child) renvoie True car Child() creates an instance of Child, and isinstance() checks if the instance is of the specified classe. An instance is always an instance of its own classe, so this always renvoie True.
-
-isinstance() avec own classe:
-• isinstance(Child(), Child) renvoie True
-• Child() creates instance of Child
-• isinstance() checks if instance is of Child
-• Instance is of its own classe
-• Résultat : True
-
-Comment ça fonctionne :
-• Child() creates instance of Child
-• isinstance(instance, Child) checks if instance is of Child
-• Instance is indeed of Classe enfant
-• Résultat : True
-
-Exemple :
-classe Parent: pass
-classe Child(Parent): pass
-isinstance(Child(), Child)    # True (instance is of its own classe)
-isinstance(Child(), Parent)    # True (also of parent classe)
-
-Utilisations courantes :
-• Type checking: if isinstance(obj, Class): ... (check own classe)
-• Instance validation: isinstance(instance, Class) (always True for own classe)
-• isinstance() fonction
-• Type system
-
-Exemple : If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Child), then isinstance(Child(), Child) renvoie True car isinstance() renvoie True for the instance's own classe - an instance is always an instance of its own classe.
-`,
-  2483: `Le isinstance() fonction can check if an instance is of any type in a tuple. If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), (Parent, str)), then isinstance(Child(), (Parent, str)) renvoie True car isinstance() checks if the instance is of any type in the tuple. Since Child() is an instance of Parent (through inheritance), it matches Parent in the tuple, so it renvoie True. C'est useful for checking if an objet is one of several types.
-
-isinstance() avec tuple:
-• isinstance(Child(), (Parent, str)) renvoie True
-• isinstance() checks if instance is of any type in tuple
-• Child() is instance of Parent (inheritance)
-• Matches Parent in tuple
-• Résultat : True
-
-Comment ça fonctionne :
-• isinstance(Child(), (Parent, str)) checks multiple types
-• Checks if Child() is instance of Parent (True, through inheritance)
-• Or instance of str (False)
-• Retourne True if matches any type in tuple
-• Résultat : True
-
-Exemple :
-classe Parent: pass
-classe Child(Parent): pass
-isinstance(Child(), (Parent, str))  # True (matches Parent)
-isinstance(Child(), (str, int))     # False (matches neither)
-
-Utilisations courantes :
-• Multiple type checking: isinstance(obj, (Type1, Type2, Type3))
-• Type validation: check if objet is one of several types
-• isinstance() fonction
-• Type system
-
-Exemple : If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), (Parent, str)), then isinstance(Child(), (Parent, str)) renvoie True car isinstance() can check multiple types using a tuple, and Child() is an instance of Parent.
-`,
-  2484: `Le isinstance() fonction ne fonctionne pas à l'inverse - a instance du parent is not an instance of a classe enfant. If classe Parent: pass; classe Child(Parent): pass; isinstance(Parent(), Child), then isinstance(Parent(), Child) renvoie False car Parent() creates an instance of Parent, not Child. Inheritance only works one way - a child is an instance of the parent, but a parent is not an instance of the child. isinstance() checks if the instance is of the specified classe or any of its ancestors, not descendants.
-
-isinstance() ne fonctionne pas backwards:
-• isinstance(Parent(), Child) renvoie False
-• Parent() creates instance of Parent
-• Parent is not a subclass of Child
-• Parent instance is not instance of Child
-• Résultat : False
-
-Comment ça fonctionne :
-• Parent() creates instance of Parent
-• isinstance(instance, Child) checks if instance is of Child
-• Parent is not a subclass of Child (inheritance is one-way)
-• Parent instance is not instance of Child
-• Résultat : False
-
-Exemple :
-classe Parent: pass
-classe Child(Parent): pass
-isinstance(Parent(), Child)    # False (parent not instance of child)
-isinstance(Child(), Parent)    # True (child is instance of parent)
-
-Utilisations courantes :
-• Understanding inheritance: isinstance() only works forward (child -> parent)
-• Type checking: parent instances are not instances of classes enfant
-• isinstance() fonction
-• Inheritance
-
-Exemple : If classe Parent: pass; classe Child(Parent): pass; isinstance(Parent(), Child), then isinstance(Parent(), Child) renvoie False car isinstance() ne fonctionne pas à l'inverse - a instance du parent is not an instance of a classe enfant.
-`,
-  2485: `Le issubclass() fonction checks if the first classe est une sous-classe de the second classe. If classe Parent: pass; classe Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) renvoie True car Child hérite de Parent, making Child a subclass of Parent. issubclass() checks the inheritance relationship entre classes, returning True if the first classe hérite de (or is le même que) the second classe.
-
-issubclass() fonction:
-• issubclass(Child, Parent) renvoie True
-• issubclass() checks if Child is subclass of Parent
-• Child hérite de Parent
-• Child is subclass of Parent
-• Résultat : True
-
-Comment ça fonctionne :
-• classe Child(Parent): creates child inheriting from Parent
-• issubclass(Child, Parent) checks inheritance
-• Child is indeed a subclass of Parent
-• Résultat : True
-
-Exemple :
-classe Parent: pass
-classe Child(Parent): pass
-issubclass(Child, Parent)     # True (Child is subclass of Parent)
-
-Utilisations courantes :
-• Inheritance check: issubclass(Child, Parent) (check if subclass)
-• Type checking: if issubclass(cls, Parent): ...
-• issubclass() fonction
-• Inheritance
-
-Exemple : If classe Parent: pass; classe Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) renvoie True car issubclass() checks if the first classe est une sous-classe de the second classe, and Child hérite de Parent.
-`,
-  2486: `Le issubclass() fonction ne fonctionne pas à l'inverse - a parent is not a subclass of a child. If classe Parent: pass; classe Child(Parent): pass; issubclass(Parent, Child), then issubclass(Parent, Child) renvoie False car Parent n'hérite pas from Child - inheritance only works one way. Child est une sous-classe de Parent, but Parent is not a subclass of Child. issubclass() checks if the first classe hérite de the second classe, not the other way around.
-
-issubclass() ne fonctionne pas backwards:
-• issubclass(Parent, Child) renvoie False
-• Parent n'hérite pas from Child
-• Inheritance is one-way (Child -> Parent)
-• Parent is not subclass of Child
-• Résultat : False
-
-Comment ça fonctionne :
-• issubclass(Parent, Child) checks if Parent is subclass of Child
-• Parent n'hérite pas from Child
-• Inheritance only works one way
-• Parent is not a subclass of Child
-• Résultat : False
-
-Exemple :
-classe Parent: pass
-classe Child(Parent): pass
-issubclass(Parent, Child)     # False (parent not subclass of child)
-issubclass(Child, Parent)     # True (child is subclass of parent)
-
-Utilisations courantes :
-• Understanding inheritance: issubclass() only works forward (child -> parent)
-• Type checking: parent classes are not subclasses of classes enfant
-• issubclass() fonction
-• Inheritance
-
-Exemple : If classe Parent: pass; classe Child(Parent): pass; issubclass(Parent, Child), then issubclass(Parent, Child) renvoie False car issubclass() ne fonctionne pas à l'inverse - a parent is not a subclass of a child.
-`,
-  2487: `Le issubclass() fonction can check if a classe est une sous-classe de any classe in a tuple. If classe Parent: pass; classe Child(Parent): pass; issubclass(Child, (Parent, str)), then issubclass(Child, (Parent, str)) renvoie True car issubclass() checks if Child est une sous-classe de any classe in the tuple. Since Child hérite de Parent, it matches Parent in the tuple, so it renvoie True. C'est useful for checking if a classe hérite de one of several base classes.
-
-issubclass() avec tuple:
-• issubclass(Child, (Parent, str)) renvoie True
-• issubclass() checks if Child is subclass of any classe in tuple
-• Child hérite de Parent
-• Matches Parent in tuple
-• Résultat : True
-
-Comment ça fonctionne :
-• issubclass(Child, (Parent, str)) checks multiple base classes
-• Checks if Child is subclass of Parent (True)
-• Or subclass of str (False)
-• Retourne True if matches any classe in tuple
-• Résultat : True
-
-Exemple :
-classe Parent: pass
-classe Child(Parent): pass
-issubclass(Child, (Parent, str))  # True (Child is subclass of Parent)
-issubclass(Child, (str, int))      # False (Child is not subclass of str or int)
-
-Utilisations courantes :
-• Multiple base classe checking: issubclass(Class, (Base1, Base2, Base3))
-• Type validation: check if classe hérite de one of several bases
-• issubclass() fonction
-• Inheritance
-
-Exemple : If classe Parent: pass; classe Child(Parent): pass; issubclass(Child, (Parent, str)), then issubclass(Child, (Parent, str)) renvoie True car issubclass() can check multiple base classes using a tuple, and Child est une sous-classe de Parent.
-`,
-  2488: `Le issubclass() fonction vérifie toute la chaîne d'héritage, not just direct parents. Si classe A: pass; classe B(A): pass; classe C(B): pass; issubclass(C, A), then issubclass(C, A) renvoie True car issubclass() checks if C est une sous-classe de A through the entire chaîne d'héritage. Even though C directly hérite de B (not A), C is still a subclass of A car B hérite de A, creating a chain: C -> B -> A. issubclass() follows this entire chain.
-
-issubclass() checks entire chain:
-• issubclass(C, A) renvoie True
-• issubclass() vérifie toute la chaîne d'héritage
-• C hérite de B, B hérite de A
-• C is subclass of A (through B)
-• Résultat : True
-
-Comment ça fonctionne :
-• issubclass(C, A) checks if C is subclass of A
-• C directly hérite de B
-• B hérite de A
-• Chaîne d'héritage: C -> B -> A
-• C is subclass of A (through chaîne d'héritage)
-• Résultat : True
-
-Exemple :
-classe A: pass
-classe B(A): pass
-classe C(B): pass
-issubclass(C, A)              # True (C is subclass of A through B)
-issubclass(C, B)              # True (C directly inherits from B)
-
-Utilisations courantes :
-• Chaîne d'héritage: issubclass() checks entire chain, not just direct parent
-• Type checking: check if classe hérite de ancestor
-• issubclass() fonction
-• Inheritance
-
-Exemple : Si classe A: pass; classe B(A): pass; classe C(B): pass; issubclass(C, A), then issubclass(C, A) renvoie True car issubclass() vérifie toute la chaîne d'héritage, and C est une sous-classe de A through B.
-`,
-  2489: `Le isinstance() fonction vérifie toute la chaîne d'héritage, not just the direct classe. Si classe A: pass; classe B(A): pass; classe C(B): pass; isinstance(C(), A), then isinstance(C(), A) renvoie True car isinstance() checks if the instance is of A through the entire chaîne d'héritage. Even though C() is an instance of C (not directly A), it's also an instance of A car C hérite de B, which hérite de A, creating a chain: C -> B -> A. isinstance() follows this entire chain.
-
-isinstance() checks entire chain:
-• isinstance(C(), A) renvoie True
-• isinstance() vérifie toute la chaîne d'héritage
-• C() is instance of C
-• C hérite de B, B hérite de A
-• C() is instance of A (through chaîne d'héritage)
-• Résultat : True
-
-Comment ça fonctionne :
-• isinstance(C(), A) checks if C() is instance of A
-• C() is instance of C
-• C hérite de B, B hérite de A
-• Chaîne d'héritage: C -> B -> A
-• C() is instance of A (through chaîne d'héritage)
-• Résultat : True
-
-Exemple :
-classe A: pass
-classe B(A): pass
-classe C(B): pass
-isinstance(C(), A)             # True (C() is instance of A through B)
-isinstance(C(), B)             # True (C() is instance of B)
-isinstance(C(), C)             # True (C() is instance of C)
-
-Utilisations courantes :
-• Chaîne d'héritage: isinstance() checks entire chain, not just direct classe
-• Type checking: check if instance is of ancestor classe
-• isinstance() fonction
-• Inheritance
-
-Exemple : Si classe A: pass; classe B(A): pass; classe C(B): pass; isinstance(C(), A), then isinstance(C(), A) renvoie True car isinstance() vérifie toute la chaîne d'héritage, and C() is an instance of A through B.
-`,
-  2490: `Dans héritage multiple, une classe enfant est une sous-classe de tous its parent classes. Si classe A: pass; classe B: pass; classe C(A, B): pass; issubclass(C, A) and issubclass(C, B), then issubclass(C, A) and issubclass(C, B) renvoie True car C hérite de both A and B, making C a subclass of both. In héritage multiple, the child hérite de all parents, so it's a subclass of all of them. Both issubclass(C, A) and issubclass(C, B) renvoyer True, so the and expression renvoie True.
-
-Concepts clés (héritage multiple) :
-• issubclass(C, A) and issubclass(C, B) renvoie True
-• C hérite de both A and B
-• C is subclass of A (True)
-• C is subclass of B (True)
-• Both True, so and renvoie True
-• Résultat : True
-
-Comment ça fonctionne :
-• classe C(A, B): creates child avec multiple parents
-• issubclass(C, A) checks if C is subclass of A (True)
-• issubclass(C, B) checks if C is subclass of B (True)
-• Both renvoyer True
-• and expression: True and True = True
-• Résultat : True
-
-Exemple :
-classe A: pass
-classe B: pass
-classe C(A, B): pass  # Multiple inheritance
-issubclass(C, A)              # True (C is subclass of A)
-issubclass(C, B)              # True (C is subclass of B)
-issubclass(C, A) and issubclass(C, B)  # True (both True)
-
-Utilisations courantes :
-• Concepts clés (héritage multiple) : child is subclass of all parents
-• Type checking: check if classe hérite de multiple bases
-• issubclass() fonction
-• Héritage multiple
-
-Exemple : Si classe A: pass; classe B: pass; classe C(A, B): pass; issubclass(C, A) and issubclass(C, B), then it renvoie True car in héritage multiple, the child est une sous-classe de all parents - C hérite de both A and B, so it's a subclass of both.
-`,
-  2491: `Le super().__init__() call initialise le parent attributes in the classe enfant. If classe MyClass: def __init__(self): self.x = 1; classe Child(MyClass): def __init__(self): super().__init__(); self.y = 2; obj = Child(); [obj.x, obj.y], then [obj.x, obj.y] renvoie [1, 2] car super().__init__() appelle le __init__ du parent, qui définit self.x = 1. Then the child's __init__ sets self.y = 2. Cela assure both parent and child attributes are initialized correctly. Without super().__init__(), only self.y would be set, and obj.x would raise an AttributeError.
-
-super().__init__() initializes parent:
-• [obj.x, obj.y] renvoie [1, 2]
-• super().__init__() calls parent __init__
-• Parent __init__ sets self.x = 1
-• Child __init__ sets self.y = 2
-• Both attributes initialized
-• Résultat : [1, 2]
-
-Comment ça fonctionne :
-• Child() creates instance and calls __init__
-• Child.__init__ executes: super().__init__()
-• super().__init__() calls MyClass.__init__()
-• MyClass.__init__ sets self.x = 1
-• Child.__init__ sets self.y = 2
-• obj.x = 1, obj.y = 2
-• Résultat : [1, 2]
-
-Exemple :
-classe MyClass:
-    def __init__(self):
-        self.x = 1
-classe Child(MyClass):
-    def __init__(self):
-        super().__init__()  # Initializes parent
-        self.y = 2
-obj = Child()
-[obj.x, obj.y]              # [1, 2] (both initialized)
-
-Utilisations courantes :
-• Parent initialization: def __init__(self): super().__init__(); self.child_attr = valeur
-• Constructor chaining: ensure parent attributes are initialized
-• super() fonction
-• Object initialization
-
-Exemple : If classe MyClass: def __init__(self): self.x = 1; classe Child(MyClass): def __init__(self): super().__init__(); self.y = 2; obj = Child(); [obj.x, obj.y], then [obj.x, obj.y] renvoie [1, 2] car super().__init__() initialise le parent attributes, ensuring both parent and child attributes are set.
-`,
-  2492: `Le super().__init__() call can transmettre les arguments to the parent's __init__ méthode. If classe MyClass: def __init__(self, x): self.x = x; classe Child(MyClass): def __init__(self, x, y): super().__init__(x); self.y = y; Child(1, 2).x, then Child(1, 2).x renvoie 1 car Child.__init__ receives arguments (1, 2), calls super().__init__(1) qui passe x = 1 to MyClass.__init__, setting self.x = 1. Then Child.__init__ sets self.y = 2. Cela permet the child to initialize parent attributes avec specific valeurs passé à the child's constructor.
-
-super().__init__() avec arguments:
-• Child(1, 2).x renvoie 1
-• Child(1, 2) calls Child.__init__(1, 2)
-• Child.__init__ calls super().__init__(1) (passes x)
-• MyClass.__init__ sets self.x = 1
-• Child.__init__ sets self.y = 2
-• Résultat : 1
-
-Comment ça fonctionne :
-• Child(1, 2) calls Child.__init__(1, 2)
-• Child.__init__ executes: super().__init__(1)
-• super().__init__(1) calls MyClass.__init__(1)
-• MyClass.__init__ sets self.x = 1
-• Child.__init__ sets self.y = 2
-• Child(1, 2).x renvoie 1
-
-Exemple :
-classe MyClass:
-    def __init__(self, x):
-        self.x = x
-classe Child(MyClass):
-    def __init__(self, x, y):
-        super().__init__(x)  # Passes x to parent
-        self.y = y
-Child(1, 2).x                # 1 (parent __init__ sets avec x=1)
-
-Utilisations courantes :
-• Parent initialization: def __init__(self, x, y): super().__init__(x); self.y = y
-• Constructor chaining: transmettre les arguments to parent __init__
-• super() fonction
-• Object initialization
-
-Exemple : If classe MyClass: def __init__(self, x): self.x = x; classe Child(MyClass): def __init__(self, x, y): super().__init__(x); self.y = y; Child(1, 2).x, then Child(1, 2).x renvoie 1 car super().__init__() transmet les arguments to the parent, so x = 1 est passé to MyClass.__init__, setting self.x = 1.
-`,
-  2493: `A grandchild class hérite de its immediate parent, not from the grandparent when there's an override. If class MyClass: x = 1; class Child(MyClass): x = 2; class GrandChild(Child): pass; GrandChild.x, then GrandChild.x renvoie 2 car GrandChild hérite de Child (its immediate parent), and Child has x = 2. The chaîne d'héritage is GrandChild -> Child -> MyClass, and when searching for x, Python finds it in Child first (x = 2), so it uses that value, not MyClass's x = 1.
-
-Concepts clés (petit-enfant hérite) :
-• GrandChild.x renvoie 2
-• GrandChild hérite de Child (immediate parent)
-• Child has x = 2 (overrides MyClass.x = 1)
-• GrandChild uses Child.x = 2
-• Résultat : 2
-
-Comment ça fonctionne :
-• class GrandChild(Child): creates grandchild inheriting from Child
-• GrandChild.x cherche attribute x
-• Python searches: GrandChild (not found) -> Child (finds x = 2)
-• Uses Child.x = 2 (n'atteint pas MyClass.x = 1)
-• Résultat : 2
-
-Exemple :
-class MyClass: x = 1
-class Child(MyClass): x = 2  # Overrides parent
-class GrandChild(Child): pass
-GrandChild.x                 # 2 (inherits from immediate parent Child)
-
-Utilisations courantes :
-• Chaîne d'héritage: grandchild hérite de immediate parent
-• Attribute resolution: child's override takes precedence
-• Inheritance
-• Attribute shadowing
-
-Exemple : If class MyClass: x = 1; class Child(MyClass): x = 2; class GrandChild(Child): pass; GrandChild.x, then GrandChild.x renvoie 2 car the grandchild hérite de its immediate parent (Child), and Child has x = 2.
-`,
-  2494: `A classe enfant can extend a parent method using super() to call the parent's method and then add additional behavior. If class MyClass: def method(self): return 1; class Child(MyClass): def method(self): return super().method() + 1; Child().method(), then Child().method() renvoie 2 car super().method() calls the parent's method (renvoie 1), and then the child adds 1 to it (1 + 1 = 2). Cela permet the child to extend the parent's behavior rather than completely replace it - a common pattern for adding functionality while preserving parent behavior.
-
-Concepts clés (enfant étend méthode) :
-• Child().method() renvoie 2
-• Child's method calls super().method()
-• Parent method renvoie 1
-• Child adds 1: 1 + 1 = 2
-• Résultat : 2
-
-Comment ça fonctionne :
-• Child().method() calls method on Child instance
-• Child.method() executes: return super().method() + 1
-• super().method() calls MyClass.method(), renvoie 1
-• Child adds 1: 1 + 1 = 2
-• Résultat : 2
-
-Exemple :
-class MyClass:
-    def method(self):
-        return 1
-class Child(MyClass):
-    def method(self):
-        return super().method() + 1  # Extends parent
-Child().method()              # 2 (parent's 1 + 1)
-
-Utilisations courantes :
-• Method extension: def method(self): return super().method() + extension
-• Behavior extension: child extends parent behavior
-• super() function
-• Method overriding
-
-Exemple : If class MyClass: def method(self): return 1; class Child(MyClass): def method(self): return super().method() + 1; Child().method(), then Child().method() renvoie 2 car the child can extend the parent method using super(), calling the parent and then adding child-specific behavior.
-`,
-  2495: `Child classes can override special methods (magic methods) from the parent. If class MyClass: def __str__(self): return 'MyClass'; class Child(MyClass): def __str__(self): return 'Child'; str(Child()), then str(Child()) renvoie 'Child' car Child defines its own __str__() method, which overrides the parent's __str__(). Quand vous call str() on a Child instance, Python uses Child.__str__(), not MyClass.__str__(). Special methods can be overridden just like regular methods, allowing classes enfant to customize behavior for built-in functions and operators.
-
-Concepts clés (enfant surcharge méthode spéciale) :
-• str(Child()) renvoie 'Child'
-• Child defines __str__() (overrides parent)
-• str() calls Child.__str__()
-• Child.__str__() renvoie 'Child'
-• Résultat : 'Child'
-
-Comment ça fonctionne :
-• str(Child()) calls str() on Child instance
-• str() cherche __str__() method
-• Python finds __str__() in Child (overrides parent)
-• Calls Child.__str__() (renvoie 'Child')
-• Résultat : 'Child'
-
-Exemple :
-class MyClass:
-    def __str__(self):
-        return 'MyClass'
-class Child(MyClass):
-    def __str__(self):
-        return 'Child'  # Overrides parent __str__
-str(Child())              # 'Child' (uses child's __str__)
-
-Utilisations courantes :
-• Special method override: child can override __str__, __len__, __add__, etc.
-• Customization: child provides different behavior for built-ins
-• Special methods
-• Method overriding
-
-Exemple : If class MyClass: def __str__(self): return 'MyClass'; class Child(MyClass): def __str__(self): return 'Child'; str(Child()), then str(Child()) renvoie 'Child' car the child can override special methods, and Child.__str__() takes precedence over MyClass.__str__().
-`,
-  2496: `Name mangling prevents classes enfant from accessing parent's private attributes. If class MyClass: def __init__(self): self.__x = 1; class Child(MyClass): def method(self): return self.__x; Child().method(), then Child().method() lève an AttributeError car MyClass's __x is mangled en _MyClass__x, but Child's method tente d'accéder à __x, which would be mangled to _Child__x (different name). Name mangling includes the class name, so each class has its own mangled namespace, preventing classes enfant from accidentally accessing parent's private attributes.
-
-Concepts clés (name mangling empêche l'enfant) :
-• Child().method() lève AttributeError
-• MyClass.__x is mangled en _MyClass__x
-• Child tente d'accéder à __x (would be _Child__x)
-• Different mangled names
-• Lève AttributeError
-
-Comment ça fonctionne :
-• MyClass.__init__ sets self.__x = 1 (mangled en _MyClass__x)
-• Child().method() tente d'accéder à self.__x
-• In Child context, __x would mangle to _Child__x
-• _Child__x n'existe pas (attribute is _MyClass__x)
-• Lève AttributeError
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self.__x = 1  # Mangled to _MyClass__x
-class Child(MyClass):
-    def method(self):
-        return self.__x  # Would mangle to _Child__x (n'existe pas)
-Child().method()        # AttributeError (can't access parent's __x)
-
-Utilisations courantes :
-• Private attributes: name mangling prevents child access
-• Encapsulation: each class has its own mangled namespace
-• Name mangling
-• Inheritance
-
-Exemple : If class MyClass: def __init__(self): self.__x = 1; class Child(MyClass): def method(self): return self.__x; Child().method(), then Child().method() lève an AttributeError car name mangling prevents classes enfant from accessing parent's private attributes - MyClass.__x becomes _MyClass__x, but Child tente d'accéder à __x which would be _Child__x.
-`,
-  2497: `Single underscore prefix (_) indicates "protected" attributes that are accessible to classes enfant. If class MyClass: def __init__(self): self._x = 1; class Child(MyClass): def method(self): return self._x; Child().method(), then Child().method() renvoie 1 car single underscore is just a naming convention (non imposé by Python), so classes enfant can access protected attributes. Unlike double underscore (__) qui déclenche name mangling, single underscore ne change pas the attribute name, so it's accessible to classes enfant through inheritance.
-
-Single underscore accessible to child:
-• Child().method() renvoie 1
-• self._x is attribut protégé (single underscore)
-• Single underscore ne subit pas le mangling
-• Child can access parent's _x
-• Résultat : 1
-
-Comment ça fonctionne :
-• MyClass.__init__ sets self._x = 1
-• Child().method() accesses self._x
-• Single underscore ne déclenche pas name mangling
-• Attribute name remains _x
-• Child can access it through inheritance
-• Résultat : 1
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self._x = 1  # Protected (convention)
-class Child(MyClass):
-    def method(self):
-        return self._x  # Can access parent's protected attribute
-Child().method()        # 1 (accessible to child)
-
-Utilisations courantes :
-• Protected attributes: self._attr (accessible to classes enfant)
-• Inheritance: child can access parent's protected attributes
-• Naming conventions
-• Encapsulation
-
-Exemple : If class MyClass: def __init__(self): self._x = 1; class Child(MyClass): def method(self): return self._x; Child().method(), then Child().method() renvoie 1 car single underscore (protected) is accessible to classes enfant - it's a convention, non imposé privacy.
-`,
-  2498: `Les méthodes de classe reçoivent la classe they're called on, not the class they're defined in. If class MyClass: @classmethod; def method(cls): return cls; class Child(MyClass): pass; Child.method(), then Child.method() renvoie <class '__main__.Child'> car when you call a class method on a classe enfant, the cls parameter reçoit le classe enfant (Child), not the classe parente (MyClass). Cela permet class methods to work polymorphically - they receive the actual class they're called on, enabling class-specific behavior.
-
-Class method receives classe enfant:
-• Child.method() renvoie <class '__main__.Child'>
-• @classmethod def method(cls) receives cls parameter
-• When called on Child, cls = Child
-• Retourne the class it's called on
-• Résultat : <class '__main__.Child'>
-
-Comment ça fonctionne :
-• Child.method() calls class method on Classe enfant
-• Python appelle method with cls = Child (not MyClass)
-• method(cls) executes: return cls
-• Retourne Classe enfant
-• Résultat : <class '__main__.Child'>
-
-Exemple :
-class MyClass:
-    @classmethod
-    def method(cls):
-        return cls  # Retourne the class it's called on
-class Child(MyClass): pass
-Child.method()              # <class '__main__.Child'> (receives Child, not MyClass)
-MyClass.method()            # <class '__main__.MyClass'> (receives MyClass)
-
-Utilisations courantes :
-• Polymorphic class methods: @classmethod def method(cls): return cls (receives actual class)
-• Class-specific behavior: class methods fonctionner avec the class they're called on
-• Class methods
-• Inheritance
-
-Exemple : If class MyClass: @classmethod; def method(cls): return cls; class Child(MyClass): pass; Child.method(), then Child.method() renvoie <class '__main__.Child'> car class methods receive the classe enfant quand appelé on the child - cls receives Child, not MyClass.
-`,
-  2499: `Static methods are inherited inchangés by classes enfant. If class MyClass: @staticmethod; def method(): return 1; class Child(MyClass): pass; Child.method(), then Child.method() renvoie 1 car static methods ne reçoit pas self ni cls, so they behave le même regardless of which class they're called on. When Child hérite de MyClass, it inherits the static method, and calling Child.method() uses le même implementation as MyClass.method(), returning 1. Static methods are not polymorphic - they ne change pas based on the class they're called on.
-
-Static method inherited inchangés:
-• Child.method() renvoie 1
-• Static method ne reçoit pas self ni cls
-• Same behavior regardless of class
-• Inherited inchangés from parent
-• Résultat : 1
-
-Comment ça fonctionne :
-• Child.method() calls static method on Classe enfant
-• Static method ne reçoit pas class information
-• Uses same implementation as MyClass.method()
-• Résultat : 1
-
-Exemple :
-class MyClass:
-    @staticmethod
-    def method():
-        return 1
-class Child(MyClass): pass
-Child.method()              # 1 (inherited inchangés)
-MyClass.method()            # 1 (same behavior)
-
-Utilisations courantes :
-• Static method inheritance: static methods are inherited inchangés
-• Non-polymorphic methods: static methods ne change pas based on class
-• Static methods
-• Inheritance
-
-Exemple : If class MyClass: @staticmethod; def method(): return 1; class Child(MyClass): pass; Child.method(), then Child.method() renvoie 1 car static methods are inherited inchangés - they ne reçoit pas class information, so they behave le même regardless of which class they're called on.
-`,
-  2500: `Properties are inherited by classes enfant. If class MyClass: @property; def x(self): return 1; class Child(MyClass): pass; Child().x, then Child().x renvoie 1 car properties are class attributes (descriptors), and they're inherited just like other class attributes. When Child hérite de MyClass, it inherits the property x, and when you access Child().x, Python uses the inherited property, which renvoie 1. Properties work le même way in classes enfant as they do in parent classes.
-
-Concepts clés (propriété héritée) :
-• Child().x renvoie 1
-• Property is attribut de classe (descriptor)
-• Inherited by Child from MyClass
-• Works le même in classe enfant
-• Résultat : 1
-
-Comment ça fonctionne :
-• Child() creates instance of Child
-• Child().x accesses property
-• Property is inherited from MyClass
-• Python uses inherited property getter
-• Property getter renvoie 1
-• Résultat : 1
-
-Exemple :
-class MyClass:
-    @property
-    def x(self):
-        return 1
-class Child(MyClass): pass
-Child().x                        # 1 (inherits property from MyClass)
-
-Utilisations courantes :
-• Property inheritance: properties are inherited by classes enfant
-• Code reuse: child can use parent's properties
-• Properties
-• Inheritance
-
-Exemple : If class MyClass: @property; def x(self): return 1; class Child(MyClass): pass; Child().x, then Child().x renvoie 1 car properties are inherited by classes enfant, so Child inherits the property from MyClass.
-`,
+  2451: `__str__ et str(obj)
 
+Débutant :
+• str(obj) appelle la méthode spéciale __str__ pour produire une chaîne lisible.
+
+Intermédiaire :
+• print(obj) utilise aussi __str__ en priorité.
+
+Expert :
+• Si __str__ absente, repli possible sur __repr__ pour affichage.
+
+Concepts clés :
+• Méthodes spéciales (dunder), protocole de formatage utilisateur.
+
+Distinctions clés :
+• Pas le nom de classe brut seul comme résultat ici.
+
+Fonctionnement :
+• Appel C vers la méthode Python __str__ sur le type de l’instance.
+
+Exécution étape par étape :
+• Création instance puis str qui dispatche.
+
+Ordre des opérations :
+• Évaluation de str(obj) après obj.
+
+Cas d'utilisation courants :
+• Messages utilisateur, logs.
+
+Cas limites :
+• __str__ doit retourner str ; sinon TypeError.
+
+Considérations de performance :
+• Coût négligeable sauf __str__ lourd.
+
+Exemples :
+• Voir banque : return 'str'.
+
+Remarques :
+• Réponse : la chaîne 'str' (1re option).`,
+  2452: `__repr__ et repr(obj)
+
+Débutant :
+• repr vise une représentation officielle, souvent non ambiguë, pour debug.
+
+Intermédiaire :
+• Si __str__ manque, affichage peut retomber sur __repr__.
+
+Expert :
+• Idéalement eval(repr(obj)) recrée l’objet — objectif PEP, pas toujours tenu.
+
+Concepts clés :
+• Contrat repr vs str.
+
+Distinctions clés :
+• Pas la même branche que str quand les deux existent.
+
+Fonctionnement :
+• Builtin repr appelle __repr__.
+
+Exécution étape par étape :
+• Instance puis appel __repr__.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• REPL, tracebacks.
+
+Cas limites :
+• __repr__ doit renvoyer str.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque return 'repr'.
+
+Remarques :
+• Réponse : 'repr' (1re option).`,
+  2453: `print(obj) avec __str__ et __repr__ définis
+
+Débutant :
+• print préfère __str__ pour la sortie utilisateur.
+
+Intermédiaire :
+• repr(obj) utiliserait encore __repr__.
+
+Expert :
+• Flux interne : PyObject_Str etc. côté CPython.
+
+Concepts clés :
+• Priorité d’affichage.
+
+Distinctions clés :
+• Pas la valeur de __repr__ pour print ici.
+
+Fonctionnement :
+• Résolution __str__ d’abord.
+
+Exécution étape par étape :
+• print appelle la couche str-like sur l’objet.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• CLI, notebooks.
+
+Cas limites :
+• __str__ qui lève : exception propage.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque : affiche str (texte sans guillemets à l’écran).
+
+Remarques :
+• Réponse : str (1re option du QCM, effet print).`,
+  2454: `__len__ et len(obj)
+
+Débutant :
+• len délègue à __len__ qui renvoie un int ≥ 0.
+
+Intermédiaire :
+• Utile pour collections personnalisées.
+
+Expert :
+• __len__ peut influencer le test de vérité bool (via __bool__ ou longueur 0).
+
+Concepts clés :
+• Protocole séquence/conteneur.
+
+Distinctions clés :
+• Pas None ni erreur sur cet exemple.
+
+Fonctionnement :
+• Builtin len → slot __len__.
+
+Exécution étape par étape :
+• return 5 exécuté.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Files, piles custom.
+
+Cas limites :
+• __len__ négatif : ValueError.
+
+Considérations de performance :
+• O(1) si implémenté ainsi.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 5 (1re option).`,
+  2455: `__eq__ et ==
+
+Débutant :
+• a == b appelle a.__eq__(b) ; ici toujours True.
+
+Intermédiaire :
+• Sans __eq__, comparaison par défaut sur types : souvent identité pour instances custom.
+
+Expert :
+• __eq__ devrait être cohérent avec __hash__ si hashable.
+
+Concepts clés :
+• Surcharge d’opérateur.
+
+Distinctions clés :
+• Pas False ici.
+
+Fonctionnement :
+• Méthode spéciale binaire.
+
+Exécution étape par étape :
+• obj1.__eq__(obj2).
+
+Ordre des opérations :
+• Gauche pilote sauf NotImplemented.
+
+Cas d'utilisation courants :
+• Égalité par valeur.
+
+Cas limites :
+• NotImplemented pour laisser l’autre côté réagir.
+
+Considérations de performance :
+• Dépend du corps.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2456: `__lt__ et <
+
+Débutant :
+• obj1 < obj2 appelle obj1.__lt__(obj2).
+
+Intermédiaire :
+• Tri sorted utilise rich comparisons.
+
+Expert :
+• functools.total_ordering peut combler les autres opérateurs.
+
+Concepts clés :
+• Ordre partiel / total selon implémentation.
+
+Distinctions clés :
+• Pas False sur ce snippet.
+
+Fonctionnement :
+• Slot __lt__.
+
+Exécution étape par étape :
+• return True exécuté.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Clés de tri personnalisées.
+
+Cas limites :
+• Comparaison à types incompatibles : souvent NotImplemented ou False selon version.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2457: `__add__ et +
+
+Débutant :
+• a + b peut appeler a.__add__(b).
+
+Intermédiaire :
+• Peut retourner NotImplemented pour laisser b.__radd__ tenter.
+
+Expert :
+• Types numériques mixtes : protocole réfléchi.
+
+Concepts clés :
+• Addition sémantique custom.
+
+Distinctions clés :
+• Pas Error ici.
+
+Fonctionnement :
+• __add__ renvoie 10 dans la banque.
+
+Exécution étape par étape :
+• Appel avec other = second instance.
+
+Ordre des opérations :
+• Évaluation des deux opérandes puis __add__.
+
+Cas d'utilisation courants :
+• Vecteurs, matrices légères.
+
+Cas limites :
+• __add__ absent : TypeError.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 10 (1re option).`,
+  2458: `__getitem__ et crochets
+
+Débutant :
+• obj[k] appelle __getitem__(self, k).
+
+Intermédiaire :
+• k peut être slice ou autre clé selon design.
+
+Expert :
+• Enchaîne avec __setitem__ / __delitem__ pour mapping mutable.
+
+Concepts clés :
+• Protocole d’indexation.
+
+Distinctions clés :
+• Pas 5 seul comme résultat.
+
+Fonctionnement :
+• key * 2 avec key=5 → 10.
+
+Exécution étape par étape :
+• Un seul appel __getitem__.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Wrappers liste/dict.
+
+Cas limites :
+• KeyError si vous le levez vous-même.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 10 (1re option).`,
+  2459: `__setitem__ et affectation []
+
+Débutant :
+• obj[k] = v appelle __setitem__(self, k, v).
+
+Intermédiaire :
+• Ici self.data devient un dict avec la paire clé-valeur.
+
+Expert :
+• Peut valider ou copier plutôt que stocker brut.
+
+Concepts clés :
+• Mutation via opérateur.
+
+Distinctions clés :
+• Pas dict vide.
+
+Fonctionnement :
+• Après assignation, obj.data reflète {5:10}.
+
+Exécution étape par étape :
+• __setitem__ puis lecture .data.
+
+Ordre des opérations :
+• Affectation avant accès attribut data.
+
+Cas d'utilisation courants :
+• Tableaux associatifs custom.
+
+Cas limites :
+• Oublier initialiser self.data avant : erreur.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : {5: 10} (1re option).`,
+  2460: `__call__ et instance()
+
+Débutant :
+• Si __call__ existe, l’instance est callable : obj() comme une fonction.
+
+Intermédiaire :
+• type.__call__ pour classes ; instance.__call__ est distinct.
+
+Expert :
+• Utile pour functors, stratégies.
+
+Concepts clés :
+• Callable protocol.
+
+Distinctions clés :
+• Pas le nom de classe en chaîne.
+
+Fonctionnement :
+• Parenthèses après instance déclenchent __call__.
+
+Exécution étape par étape :
+• MyClass() puis __call__ sur l’instance.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Stateful callbacks.
+
+Cas limites :
+• Récursion si __call__ rappelle obj() sans garde.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque return 'called'.
+
+Remarques :
+• Réponse : 'called' (1re option).`,
+  2461: `@property lecture obj.x
+
+Débutant :
+• Le décorateur property transforme la méthode en descripteur : accès attribut sans ().
+
+Intermédiaire :
+• En interne : fonction + descripteur property.
+
+Expert :
+• Peut combiner avec __slots__ avec précaution.
+
+Concepts clés :
+• Getter calculé.
+
+Distinctions clés :
+• Pas besoin d’appeler x().
+
+Fonctionnement :
+• __get__ du property invoque la fonction getter.
+
+Exécution étape par étape :
+• return 1.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Champs dérivés, encapsulation douce.
+
+Cas limites :
+• Property sans doc : OK.
+
+Considérations de performance :
+• Un appel Python par lecture.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2462: `Property sans setter : obj.x = 2
+
+Débutant :
+• Sans setter, le descripteur property refuse l’écriture : AttributeError.
+
+Intermédiaire :
+• Message typique « can’t set attribute » ou équivalent.
+
+Expert :
+• fset=None sur l’objet property.
+
+Concepts clés :
+• Attribut calculé lecture seule.
+
+Distinctions clés :
+• Pas 2 stocké.
+
+Fonctionnement :
+• Tentative setattr via property → échec.
+
+Exécution étape par étape :
+• Assignation lève avant lecture suivante.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• API immuables exposées comme attributs.
+
+Cas limites :
+• Sous-classe redéfinissant __setattr__ : autre comportement possible.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : AttributeError (1re option).`,
+  2463: `@property + @x.setter
+
+Débutant :
+• Le setter enregistré sur le même nom alimente souvent un backing _x.
+
+Intermédiaire :
+• Lecture passe par getter, écriture par setter.
+
+Expert :
+• Ordre de définition : property puis setter sur le même symbole.
+
+Concepts clés :
+• fget / fset du descripteur.
+
+Distinctions clés :
+• Pas lecture seule ici.
+
+Fonctionnement :
+• obj.x = 5 appelle fset puis obj.x lit fget.
+
+Exécution étape par étape :
+• Stockage puis retrieval 5.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Validation à l’écriture.
+
+Cas limites :
+• Getter avant init de _x : attention AttributeError si mal ordonné.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 5 (1re option).`,
+  2464: `Setter qui transforme la valeur
+
+Débutant :
+• Le setter peut multiplier ou normaliser avant stockage.
+
+Intermédiaire :
+• Ici value * 2 donne 10 après assignation 5.
+
+Expert :
+• Éviter effets de bord cachés trop surprenants en API publique.
+
+Concepts clés :
+• Invariant interne vs valeur affichée.
+
+Distinctions clés :
+• Pas 5 après lecture.
+
+Fonctionnement :
+• self._x = 10 puis getter retourne 10.
+
+Exécution étape par étape :
+• Assignation puis lecture.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Unités, échelles.
+
+Cas limites :
+• Setter qui lève : assignation échoue.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 10 (1re option).`,
+  2465: `@x.deleter et del obj.x
+
+Débutant :
+• del sur un property peut router vers une méthode deleter qui nettoie le stockage.
+
+Intermédiaire :
+• Ici del self._x enlève l’attribut privé.
+
+Expert :
+• Peut aussi logger ou invalider un cache.
+
+Concepts clés :
+• fdel du descripteur.
+
+Distinctions clés :
+• hasattr('_x') devient False après deleter.
+
+Fonctionnement :
+• del déclenche fdel puis hasattr teste présence.
+
+Exécution étape par étape :
+• _x=1, del via property, plus de _x.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Ressources liées à un champ logique.
+
+Cas limites :
+• Double del : erreur si _x déjà absent.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2466: `Property sur _x initialisé dans __init__
+
+Débutant :
+• __init__ pose self._x ; le getter property expose x proprement.
+
+Intermédiaire :
+• Convention underscore : « interne » mais pas privé Java.
+
+Expert :
+• __slots__ + property : patterns avancés.
+
+Concepts clés :
+• Encapsulation légère.
+
+Distinctions clés :
+• Pas 0.
+
+Fonctionnement :
+• Getter lit _x existant.
+
+Exécution étape par étape :
+• __init__ puis accès x.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Modèle avec invariants.
+
+Cas limites :
+• Oublier __init__ : AttributeError au premier get.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2467: `MyClass.x sans instance — property
+
+Débutant :
+• Sur la classe, on obtient le descripteur property lui-même, pas le résultat du getter.
+
+Intermédiaire :
+• Il faut une instance pour déclencher __get__ avec self.
+
+Expert :
+• Utile pour introspection ou héritage de property.
+
+Concepts clés :
+• Descripteur non encore lié.
+
+Distinctions clés :
+• Pas la valeur 1 ni erreur.
+
+Fonctionnement :
+• Accès attribut sur type : pas d’instance passée au getter utilisateur.
+
+Exécution étape par étape :
+• Lookup renvoie objet property.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Tests, métaclasses rares.
+
+Cas limites :
+• property en lecture sur classe sans get spécial : retourne le descripteur.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : objet property (1re option).`,
+  2468: `property() avec lambda getter
+
+Débutant :
+• property(fget) accepte une fonction ; lambda self: 1 fonctionne.
+
+Intermédiaire :
+• Équivalent conceptuel à @property sur méthode.
+
+Expert :
+• Peut passer fset, fdel en arguments positionnels nommés.
+
+Concepts clés :
+• Construction impérative du descripteur.
+
+Distinctions clés :
+• Pas Error.
+
+Fonctionnement :
+• Au get, lambda appelée avec l’instance.
+
+Exécution étape par étape :
+• obj.x → lambda → 1.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Petits getters inline.
+
+Cas limites :
+• lambda sans self si mal formé : TypeError.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2469: `Property avec défaut si _x absent
+
+Débutant :
+• Le getter peut tester hasattr et retourner 0 sinon.
+
+Intermédiaire :
+• Évite AttributeError sur _x manquant.
+
+Expert :
+• Alternative : initialiser _x dans __init__ systématiquement.
+
+Concepts clés :
+• Valeur par défaut calculée.
+
+Distinctions clés :
+• Pas 1 sans assignation préalable.
+
+Fonctionnement :
+• hasattr faux → branche else 0.
+
+Exécution étape par étape :
+• Nouvelle instance sans _x.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Champs optionnels lazy.
+
+Cas limites :
+• _x existe mais vaut None : hasattr True.
+
+Considérations de performance :
+• hasattr a un coût léger.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 0 (1re option).`,
+  2470: `Setter vide (pass) puis lecture
+
+Débutant :
+• Assignation appelle le setter mais ne change pas l’état ; le getter garde sa valeur.
+
+Intermédiaire :
+• Utile pour illustrer que setter sans effet ne met pas à jour un backing field.
+
+Expert :
+• Peut servir à valider puis ignorer (anti-pattern si trompeur).
+
+Concepts clés :
+• Séparation getter/setter.
+
+Distinctions clés :
+• Pas 5 après lecture malgré assignation 5.
+
+Fonctionnement :
+• fset no-op ; fget retourne toujours 1.
+
+Exécution étape par étape :
+• x=5 puis get.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Démonstration pédagogique.
+
+Cas limites :
+• Si setter levait : assignation échouerait.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2471: `getattr(obj, 'x')
+
+Débutant :
+• getattr(obj, nom) équivalent à accès dynamique obj.nom.
+
+Intermédiaire :
+• Utile quand nom est une variable.
+
+Expert :
+• Troisième argument default évite AttributeError.
+
+Concepts clés :
+• introspection dynamique.
+
+Distinctions clés :
+• Pas 0 ici car x existe.
+
+Fonctionnement :
+• Résolution MRO / descripteurs comme accès normal.
+
+Exécution étape par étape :
+• obj.x = 1 puis getattr.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Plugins, sérialisation.
+
+Cas limites :
+• Attribut manquant sans default : erreur.
+
+Considérations de performance :
+• Comparable à accès direct.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2472: `getattr avec défaut
+
+Débutant :
+• Si l’attribut manque, getattr renvoie le default sans lever.
+
+Intermédiaire :
+• Évite try/except AttributeError.
+
+Expert :
+• getattr peut quand même appeler descripteur qui lève.
+
+Concepts clés :
+• Accès défensif.
+
+Distinctions clés :
+• Pas Error sur simple absence ici.
+
+Fonctionnement :
+• Pas de 'x' sur instance → 0.
+
+Exécution étape par étape :
+• getattr trois arguments.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Config optionnelle.
+
+Cas limites :
+• default lui-même coûteux si évalué ? Non : passé déjà.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 0 (1re option).`,
+  2473: `setattr(obj, 'x', 1)
+
+Débutant :
+• Crée ou remplace l’attribut nommé par chaîne.
+
+Intermédiaire :
+• Équivalent à obj.x = 1 pour un nom statique.
+
+Expert :
+• Honore __setattr__ sur la classe si surchargé.
+
+Concepts clés :
+• Assignation dynamique.
+
+Distinctions clés :
+• Pas None.
+
+Fonctionnement :
+• Après setattr, lecture directe donne 1.
+
+Exécution étape par étape :
+• setattr puis accès.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• ORM, copie d’objets.
+
+Cas limites :
+• Nom invalide ou lecture seule property : peut échouer.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2474: `delattr puis hasattr
+
+Débutant :
+• delattr supprime l’attribut comme del obj.x.
+
+Intermédiaire :
+• hasattr retourne False si plus de binding.
+
+Expert :
+• __delattr__ surclasse le comportement.
+
+Concepts clés :
+• Cycle de vie d’attribut.
+
+Distinctions clés :
+• Pas True après suppression.
+
+Fonctionnement :
+• delattr enlève entrée du __dict__ instance.
+
+Exécution étape par étape :
+• x=1, delattr, test.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Nettoyage dynamique.
+
+Cas limites :
+• Supprimer attribut inexistant : AttributeError.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2475: `dir(obj)
+
+Débutant :
+• dir liste les noms accessibles (approximation introspection).
+
+Intermédiaire :
+• Inclut attributs hérités, méthodes spéciales.
+
+Expert :
+• Peut être surchargé via __dir__.
+
+Concepts clés :
+• Découverte de surface d’API.
+
+Distinctions clés :
+• Pas une erreur ni tuple vide garanti.
+
+Fonctionnement :
+• Agrégation de clés pertinentes pour l’objet.
+
+Exécution étape par étape :
+• Nouvelle liste retournée.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• aide interactive, debug.
+
+Cas limites :
+• Ordre et contenu exacts peuvent varier légèrement.
+
+Considérations de performance :
+• Peut être coûteux sur gros objets.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : liste de noms d’attributs (1re option).`,
+  2476: `'x' in dir(obj) avec attribut de classe
+
+Débutant :
+• dir sur une instance inclut souvent les noms fournis par la classe et les bases.
+
+Intermédiaire :
+• x=1 en corps de classe apparaît dans l’espace vu depuis l’instance.
+
+Expert :
+• __dir__ personnalisé peut filtrer.
+
+Concepts clés :
+• Visibilité attribut de classe via instance.
+
+Distinctions clés :
+• Pas False ici.
+
+Fonctionnement :
+• Construction de la liste puis test d’appartenance.
+
+Exécution étape par étape :
+• Création obj puis membership.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Vérifier présence avant getattr.
+
+Cas limites :
+• noms dynamiques non listés si __dir__ restreint.
+
+Considérations de performance :
+• dir complet peut être lourd.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2477: `'method' in dir(obj)
+
+Débutant :
+• Les méthodes définies sur la classe sont visibles sur l’instance via dir.
+
+Intermédiaire :
+• method est une entrée du dictionnaire de classe (fonction descriptée).
+
+Expert :
+• Bound method n’apparaît pas comme nom distinct : c’est toujours method.
+
+Concepts clés :
+• Méthodes comme attributs de classe.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• dir agrège attributs instance + classe.
+
+Exécution étape par étape :
+• Création puis test.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Inspection rapide.
+
+Cas limites :
+• Méthodes C : noms spécifiques.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2478: `vars(obj) instance vide
+
+Débutant :
+• vars(obj) est équivalent à obj.__dict__ pour instances dict-backed.
+
+Intermédiaire :
+• Instance neuve sans attributs : {}.
+
+Expert :
+• Avec __slots__ sans __dict__ : vars peut échouer (questions voisines).
+
+Concepts clés :
+• Stockage par défaut des attributs d’instance.
+
+Distinctions clés :
+• Pas erreur ici.
+
+Fonctionnement :
+• Retour du mapping __dict__.
+
+Exécution étape par étape :
+• MyClass() sans champs.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Copie shallow, debug.
+
+Cas limites :
+• Classes avec slots purs.
+
+Considérations de performance :
+• Référence au même dict mutable.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : {} (1re option).`,
+  2479: `vars(obj) après __init__
+
+Débutant :
+• Chaque self.attr = … ajoute une entrée dans __dict__.
+
+Intermédiaire :
+• vars montre l’état instance seulement, pas les attributs de classe non assignés à self.
+
+Expert :
+• property ne crée pas de clé __dict__ pour le nom stocké ailleurs.
+
+Concepts clés :
+• __dict__ instance.
+
+Distinctions clés :
+• Pas dict vide.
+
+Fonctionnement :
+• Clé 'x' valeur 5.
+
+Exécution étape par étape :
+• __init__ puis vars.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Sérialisation maison.
+
+Cas limites :
+• __slots__ : autre mécanisme.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : {'x': 5} (1re option).`,
+  2480: `vars(MyClass)
+
+Débutant :
+• Sur une classe, vars renvoie le namespace de définition (mappingproxy ou dict selon vue).
+
+Intermédiaire :
+• Contient x, méthodes, et métadonnées internes.
+
+Expert :
+• Lecture seule via mappingproxy en Python 3 pour beaucoup de classes.
+
+Concepts clés :
+• Namespace de classe.
+
+Distinctions clés :
+• Pas {} ni erreur.
+
+Fonctionnement :
+• Accès __dict__ de l’objet type.
+
+Exécution étape par étape :
+• Après définition class body exécuté.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Métaprogrammation légère.
+
+Cas limites :
+• Types built-in : pas toujours de __dict__ exposé pareil.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : dictionnaire avec attributs et méthodes de classe (1re option).`,
+  2481: `obj1 is obj2 deux instances
+
+Débutant :
+• is compare l’identité : deux constructions → deux objets → False.
+
+Intermédiaire :
+• Différent de == sans __eq__ custom (souvent identité aussi).
+
+Expert :
+• Petits ints sont internés ; pas les instances custom.
+
+Concepts clés :
+• Identité mémoire / id.
+
+Distinctions clés :
+• Pas True.
+
+Fonctionnement :
+• Deux allocations distinctes.
+
+Exécution étape par étape :
+• Deux appels constructeur.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Singleton explicite autrement.
+
+Cas limites :
+• Flyweight partagé : design pattern.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2482: `obj2 = obj1 puis is
+
+Débutant :
+• Alias : même référence → is True.
+
+Intermédiaire :
+• Copie superficielle d’objet custom nécessite copy.copy si désirée.
+
+Expert :
+• Références fortes vs weakref.
+
+Concepts clés :
+• Modèle références Python.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Même id pour les deux noms.
+
+Exécution étape par étape :
+• Assignation référence.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Passer handle interne.
+
+Cas limites :
+• Réassigner l’un sans l’autre casse le partage.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2483: `== sans __eq__
+
+Débutant :
+• Par défaut pour instances user-defined sans __eq__, == se comporte comme is en CPython 3.
+
+Intermédiaire :
+• Donc deux instances distinctes → False.
+
+Expert :
+• Toujours implémenter __eq__ pour égalité métier.
+
+Concepts clés :
+• Héritage de object.__eq__.
+
+Distinctions clés :
+• Pas True ici.
+
+Fonctionnement :
+• Comparaison identité sous-jacente.
+
+Exécution étape par étape :
+• Deux objets distincts.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Piège débutant sur == vs is.
+
+Cas limites :
+• NaN : float a des règles spéciales.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2484: `== avec __eq__ toujours True
+
+Débutant :
+• __eq__ court-circuite la logique par défaut.
+
+Intermédiaire :
+• Peut retourner NotImplemented pour déléguer.
+
+Expert :
+• Éviter toujours True en prod sauf cas très spéciaux.
+
+Concepts clés :
+• Polymorphisme de comparaison.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• obj1.__eq__(obj2) → True.
+
+Exécution étape par étape :
+• Un appel.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Valeur métier.
+
+Cas limites :
+• Comparaison avec type incompatible.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2485: `!= avec __eq__ True sans __ne__
+
+Débutant :
+• Si __ne__ absent, Python synthétise souvent != comme not (==).
+
+Intermédiaire :
+• Donc not True → False.
+
+Expert :
+• __ne__ explicite peut casser cette équivalence.
+
+Concepts clés :
+• Cohérence opérateurs.
+
+Distinctions clés :
+• Pas True.
+
+Fonctionnement :
+• == True puis négation logique.
+
+Exécution étape par étape :
+• Deux instances mais __eq__ ignore la différence.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Tests unitaires sur opérateurs.
+
+Cas limites :
+• NotImplemented dans __eq__ complique la chaîne.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2486: `__hash__ return 1
+
+Débutant :
+• hash(obj) utilise __hash__ si défini et cohérent.
+
+Intermédiaire :
+• Valeur constante ici : toutes instances même hash (collisions fréquentes).
+
+Expert :
+• En pratique dériver du tuple de champs immuables.
+
+Concepts clés :
+• Contrat hashable.
+
+Distinctions clés :
+• Pas 0 imposé.
+
+Fonctionnement :
+• Builtin hash appelle __hash__.
+
+Exécution étape par étape :
+• return 1.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Clés dict custom (avec eq cohérent).
+
+Cas limites :
+• __hash__ None : non hashable.
+
+Considérations de performance :
+• Collisions dégradent dict/set.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2487: `__eq__ sans __hash__
+
+Débutant :
+• Définir __eq__ sans __hash__ explicite met souvent __hash__ à None → objet non hashable.
+
+Intermédiaire :
+• Empêche clés dict si égalité mutable.
+
+Expert :
+• Réimplémenter __hash__ compatible avec __eq__ si besoin de hash.
+
+Concepts clés :
+• Invariant dict/set.
+
+Distinctions clés :
+• Pas une valeur hash retournée.
+
+Fonctionnement :
+• hash() lève TypeError: unhashable type.
+
+Exécution étape par étape :
+• hash sur instance.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Dataclasses frozen=False etc.
+
+Cas limites :
+• Python peut hériter __hash__ de parent : vérifier MRO.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : TypeError (non hashable) (1re option).`,
+  2488: `dict avec instance comme clé
+
+Débutant :
+• Clé dict doit être hashable ; il faut __hash__ + __eq__ cohérents.
+
+Intermédiaire :
+• Ici égalité toujours True et hash constant : dict accepte une clé instance.
+
+Expert :
+• Toutes instances « équivalentes » pour == peuvent entrer en collision de clés.
+
+Concepts clés :
+• Table de hachage.
+
+Distinctions clés :
+• Pas erreur ici.
+
+Fonctionnement :
+• Construction littéral avec clé objet.
+
+Exécution étape par étape :
+• MyClass() puis insertion.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Patterns avancés (souvent déconseillés si hash trivial).
+
+Cas limites :
+• Mutabilité casse invariant si état utilisé dans hash.
+
+Considérations de performance :
+• Collisions.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : dict avec instance:1 (1re option).`,
+  2489: `id(MyClass())
+
+Débutant :
+• id retourne un entier identifiant l’objet pendant sa vie.
+
+Intermédiaire :
+• En CPython souvent adresse mémoire ; pas garanti par la spec.
+
+Expert :
+• is compare ids.
+
+Concepts clés :
+• Identité runtime.
+
+Distinctions clés :
+• Pas None ni 0 garanti comme valeur fixe entre runs.
+
+Fonctionnement :
+• Nouvelle instance → nouvel id.
+
+Exécution étape par étape :
+• Constructeur puis id.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Debug bas niveau.
+
+Cas limites :
+• Objets libérés : ids recyclables.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : entier id unique (1re option).`,
+  2490: `id(obj1) == id(obj2) faux
+
+Débutant :
+• Deux objets distincts → ids distincts → comparaison False.
+
+Intermédiaire :
+• Équivalent logique à not (obj1 is obj2) pour impl CPython usuel.
+
+Expert :
+• Petits ints -5..256 internés : pas applicable aux instances.
+
+Concepts clés :
+• Identité.
+
+Distinctions clés :
+• Pas True.
+
+Fonctionnement :
+• Deux allocations.
+
+Exécution étape par étape :
+• id deux fois puis ==.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Vérifier duplication.
+
+Cas limites :
+• Même id si bug de C extension : rare.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2491: `__slots__ et attribut interdit
+
+Débutant :
+• __slots__ liste les seuls noms d’attributs autorisés sur l’instance (sans __dict__ classique).
+
+Intermédiaire :
+• z hors liste → AttributeError à l’assignation.
+
+Expert :
+• __dict__ peut être ajouté dans slots pour hybride.
+
+Concepts clés :
+• Optimisation mémoire + contrat fixe.
+
+Distinctions clés :
+• Pas « fonctionne » silencieusement.
+
+Fonctionnement :
+• Tentative setattr sur nom non slot.
+
+Exécution étape par étape :
+• x ok, z échoue.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Structures nombreuses en mémoire.
+
+Cas limites :
+• Sous-classe slots vides hérite : règles combinées.
+
+Considérations de performance :
+• Moins de RAM par objet.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : AttributeError (1re option).`,
+  2492: `vars avec __slots__ simple
+
+Débutant :
+• Sans __dict__ dans l’instance, vars(obj) échoue car pas de mapping générique.
+
+Intermédiaire :
+• Message lié à absence de __dict__.
+
+Expert :
+• Utiliser getattr / descriptors ou ajouter __dict__ au tuple slots.
+
+Concepts clés :
+• Layout instance compact.
+
+Distinctions clés :
+• Pas {}.
+
+Fonctionnement :
+• vars → __dict__ manquant.
+
+Exécution étape par étape :
+• Assignation slot x puis vars.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Perf-critical records.
+
+Cas limites :
+• slots + dict explicite : vars redevient possible.
+
+Considérations de performance :
+• Gain mémoire.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : AttributeError (pas de __dict__) (1re option).`,
+  2493: `obj.__dict__ après __init__
+
+Débutant :
+• __dict__ stocke les attributs d’instance usuels.
+
+Intermédiaire :
+• self.x = 1 crée entrée 'x'.
+
+Expert :
+• Voir slots pour exception.
+
+Concepts clés :
+• Backing store dynamique.
+
+Distinctions clés :
+• Pas {}.
+
+Fonctionnement :
+• Mapping mutable lié à l’instance.
+
+Exécution étape par étape :
+• __init__ remplit dict.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Monkey patch, introspection.
+
+Cas limites :
+• Classes avec __slots__ seuls.
+
+Considérations de performance :
+• Coût mémoire par objet.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : {'x': 1} (1re option).`,
+  2494: `MyClass.__dict__
+
+Débutant :
+• Namespace de classe contient attributs définis dans le corps et fonctions.
+
+Intermédiaire :
+• Souvent mappingproxy en lecture.
+
+Expert :
+• Peut inclure __doc__, __module__, descripteurs.
+
+Concepts clés :
+• Objet type a aussi un __dict__ (ou équivalent).
+
+Distinctions clés :
+• Pas {} vide.
+
+Fonctionnement :
+• Après exécution du bloc class.
+
+Exécution étape par étape :
+• Lecture __dict__ sur type.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Decorators inspectant la classe.
+
+Cas limites :
+• Types built-in sans __dict__ Python.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : dict avec attributs et méthodes de classe (1re option).`,
+  2495: `'method' in MyClass.__dict__
+
+Débutant :
+• def method dans classe enregistre la fonction sous ce nom dans le dict de classe.
+
+Intermédiaire :
+• Deviendra fonctiontion ou méthode descriptée selon accès.
+
+Expert :
+• @staticmethod / classmethod wrappent différemment.
+
+Concepts clés :
+• Méthodes comme attributs.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Clé 'method' présente.
+
+Exécution étape par étape :
+• Après définition classe.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Monkey patch de méthode par remplacement dict (rare).
+
+Cas limites :
+• Méthodes héritées seulement : pas dans dict direct.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2496: `type(obj) instance
+
+Débutant :
+• type sur instance renvoie sa classe concrète.
+
+Intermédiaire :
+• isinstance plus souple avec héritage.
+
+Expert :
+• type(obj) n’est pas toujours type si métaclasse custom.
+
+Concepts clés :
+• Objet classe.
+
+Distinctions clés :
+• Pas type (métaclasse) ici.
+
+Fonctionnement :
+• Pointeur vers classe dans l’instance.
+
+Exécution étape par étape :
+• Création puis type.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Dispatch par type.
+
+Cas limites :
+• Proxy : type peut surprendre.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : classe __main__.MyClass (1re option).`,
+  2497: `type(MyClass)
+
+Débutant :
+• Les classes sont instances de type (méta-classe par défaut).
+
+Intermédiaire :
+• D’où isinstance(MyClass, type) True.
+
+Expert :
+• Métaclasses custom : autre méta que type.
+
+Concepts clés :
+• Objet de premier ordre.
+
+Distinctions clés :
+• Pas la classe utilisateur elle-même.
+
+Fonctionnement :
+• type.__call__ a construit MyClass.
+
+Exécution étape par étape :
+• Lookup type du nom de classe.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Métaprogrammation.
+
+Cas limites :
+• class hook avec metaclass=.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : type (1re option).`,
+  2498: `issubclass(MyClass, object)
+
+Débutant :
+• Toute classe new-style dérive implicitement d’object si pas de bases.
+
+Intermédiaire :
+• object racine du modèle.
+
+Expert :
+• En Python 3, classes sont new-style par défaut.
+
+Concepts clés :
+• Arbre d’héritage.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Vérification de la relation de sous-type.
+
+Exécution étape par étape :
+• issubclass sur type et object.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Tests génériques.
+
+Cas limites :
+• Premier arg doit être classe, pas instance.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2499: `isinstance(MyClass, type)
+
+Débutant :
+• MyClass est un objet dont le type est type.
+
+Intermédiaire :
+• Différencier instance de MyClass vs MyClass elle-même.
+
+Expert :
+• isinstance respecte les virtual subclasses (ABC).
+
+Concepts clés :
+• Types comme valeurs.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Vérification type(MyClass) is type.
+
+Exécution étape par étape :
+• isinstance deuxième arg type.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• APIs génériques sur classes.
+
+Cas limites :
+• Métaclasses : isinstance peut rester True pour type si instance directe.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2500: `MyClass.mro()
+
+Débutant :
+• Renvoie la liste linéarisée C3 des classes pour résoudre attributs/méthodes.
+
+Intermédiaire :
+• Cas simple : [MyClass, object].
+
+Expert :
+• Essentiel en héritage multiple.
+
+Concepts clés :
+• MRO.
+
+Distinctions clés :
+• Pas liste vide ni erreur.
+
+Fonctionnement :
+• Méthode sur type qui calcule l’ordre.
+
+Exécution étape par étape :
+• Classe sans bases explicites → object seul parent.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Comprendre super().
+
+Cas limites :
+• Graphe de bases invalide : erreur à la définition de classe.
+
+Considérations de performance :
+• Calculé à la création de classe.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : liste d’ordre de résolution (MRO) (1re option).`,
   2501: `Toute classe Python hérite implicitement de object. L'attribut __mro__ affiche le tuple des classes que Python parcourt pour résoudre les attributs ou méthodes.
 
 Concepts clés :
