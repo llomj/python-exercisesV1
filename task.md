@@ -317,9 +317,10 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
 - **Done:** **Level 10 FR 3001–3050** — `level10.ts` `level10Patterns` Q1–50 (try/except, raise, context managers, imports/`__main__`/`sys.path`/`__all__`/`__file__`, générateurs et genexprs). **Insertion** entre **3000** et **402** (les clés 3001+ n’existaient pas avant). Fragments: `scripts/fr-l10-frags/fr-l10-3001-3025.mjs`, `fr-l10-3026-3050.mjs`. Patch: `scripts/patch-fr-l10-3001-3050.mjs`. Build OK (`vite build` + `inject-precache.js`).
 - **Done:** **Level 10 FR 3051–3100** — `level10Patterns` Q51–100 (décorateurs, design patterns GOF, métaclasses/`__slots__`/descripteurs instance, PEP8/typing/dataclass/Enum, `sys`/`os`/`json`/`pickle`/`collections`, `@lru_cache`). Fragments: `scripts/fr-l10-frags/fr-l10-3051-3075.mjs`, `fr-l10-3076-3100.mjs`. Patch: `scripts/patch-fr-l10-3051-3100.mjs` (ancre fin **3050** → **402**). Build OK (`vite build` + `inject-precache.js`).
 - **Done:** **Level 10 FR 3101–3150** — `level10IntermediateA` Q1–49 (3101–3149 : fichiers, `datetime`, `re`) + **`level10IntermediateB` Q50** (3150 : `itertools.chain`). Fragments: `scripts/fr-l10-frags/fr-l10-3101-3125.mjs`, `fr-l10-3126-3150.mjs`. Patch: `scripts/patch-fr-l10-3101-3150.mjs` (ancre fin **3100** → **402**). Build OK (`vite build` + `inject-precache.js`).
+- **Done:** **Level 10 FR 3151–3200** — `level10IntermediateB` Q51–98 (3151–3198 : itertools, `json`, `pathlib`/`os.path`, `string`, `textwrap`, `Template`) + **`level10ExpertA` Q1–2** (3199–3200 : niveaux `logging`, niveau par défaut). Fragments: `scripts/fr-l10-frags/fr-l10-3151-3175.mjs`, `fr-l10-3176-3200.mjs`. Patch: `scripts/patch-fr-l10-3151-3200.mjs` (ancre fin **3150** → **402**). Build OK (`vite build` + `inject-precache.js`).
 
 ### Immediate next batches
-1. **Level 10 FR 3151–3200** — suite `level10IntermediateB` (à partir de Q51 `chain.from_iterable`, etc.), puis **3201–3300** (`expert_a` / `expert_b`).
+1. **Level 10 FR 3201–3250** — suite `level10ExpertA` (Q3+), puis **3251–3300** (`expert_b`).
 2. Optional: audit `301-600` for any regression or glossary drift.
 
 ### Remaining range
@@ -350,4 +351,4 @@ For each batch:
 
 ## Next Action (when resuming)
 
-Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2: **601–900 done**. Levels 3–5: **901–1800 done**. **Level 6 FR : 1801–2100 done**. **Level 7 FR : 2101–2400 done**. **Level 8 FR : 2401–2700 done**. **Level 9 FR : 2701–3000 done**. **Level 10 FR : 3001–3150 done** ; **prochain lot : 3151–3200** (`level10IntermediateB` suite).
+Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2: **601–900 done**. Levels 3–5: **901–1800 done**. **Level 6 FR : 1801–2100 done**. **Level 7 FR : 2101–2400 done**. **Level 8 FR : 2401–2700 done**. **Level 9 FR : 2701–3000 done**. **Level 10 FR : 3001–3200 done** ; **prochain lot : 3201–3250** (`level10ExpertA` suite).

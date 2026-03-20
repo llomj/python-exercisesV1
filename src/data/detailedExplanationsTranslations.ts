@@ -133243,6 +133243,2010 @@ Exemples :
 
 Remarques :
 • Réponse : [1, 2, 3, 4, 5] — 1re option.`,
+  3151: `chain.from_iterable([[1,2],[3,4]]) — list(...) ?
+
+Débutant :
+• Un seul argument : un itérable d’itérables ; produit 1,2,3,4 dans l’ordre.
+
+Intermédiaire :
+• Équivaut souvent à chain(*nested) mais sans déballer la liste en arguments.
+
+Expert :
+• Toujours un seul niveau d’aplatissement.
+
+Concepts clés :
+• API from_iterable vs chain(a,b,c).
+
+Distinctions clés :
+• Un argument itérable de groupes vs plusieurs arguments.
+
+Fonctionnement :
+• Itère chaque sous-itérable à la suite.
+
+Exécution étape par étape :
+1. Parcourt [1,2].
+2. Puis [3,4].
+3. list matérialise.
+
+Ordre des opérations :
+• Ordre des sous-listes conservé.
+
+Cas d'utilisation courants :
+• Graphes d’adjacence, lots dynamiques.
+
+Cas limites :
+• Élément non itérable → TypeError.
+
+Considérations de performance :
+• Paresseux jusqu’à consommation.
+
+Exemples :
+• chain.from_iterable(rows) pour CSV en mémoire.
+
+Remarques :
+• Réponse : [1, 2, 3, 4] — 1re option.`,
+  3152: `product("AB", "12") — list(product(...)) ?
+
+Débutant :
+• Produit cartésien : chaque lettre avec chaque chiffre, quatre couples.
+
+Intermédiaire :
+• Ordre : fixer le dernier itérable le plus vite (ici 1 puis 2 pour A, puis pour B).
+
+Expert :
+• repeat=n pour puissance n-ième du même itérable.
+
+Concepts clés :
+• Tuples de longueur = nombre d’entrées.
+
+Distinctions clés :
+• product vs nested loops vs comprehension.
+
+Fonctionnement :
+• Générateur de tuples lazy.
+
+Exécution étape par étape :
+1. (A,1), (A,2), (B,1), (B,2).
+
+Ordre des opérations :
+• Droit varie le plus vite par défaut.
+
+Cas d'utilisation courants :
+• Grilles de tests, combinaisons de paramètres.
+
+Cas limites :
+• Itérable vide → aucun tuple.
+
+Considérations de performance :
+• Explosion combinatoire possible.
+
+Exemples :
+• product(range(2), repeat=3) pour cubes binaires.
+
+Remarques :
+• Réponse : [("A","1"),("A","2"),("B","1"),("B","2")] — 1re option.`,
+  3153: `len(list(permutations("ABC"))) ?
+
+Débutant :
+• 3 éléments distincts → 3! = 6 permutations.
+
+Intermédiaire :
+• permutations(iterable, r) change le dénombrement.
+
+Expert :
+• Doublons dans l’entrée réduisent les sorties uniques.
+
+Concepts clés :
+• Factorielle pour n distincts.
+
+Distinctions clés :
+• permutations vs combinations.
+
+Fonctionnement :
+• Énumération lazy puis list + len.
+
+Exécution étape par étape :
+1. Génère 6 tuples.
+2. len → 6.
+
+Ordre des opérations :
+• list épuise l’itérateur avant len.
+
+Cas d'utilisation courants :
+• Force brute ordre de tâches.
+
+Cas limites :
+• n grand → mémoire si list().
+
+Considérations de performance :
+• n! croît très vite.
+
+Exemples :
+• len(permutations("ABCD")) = 24.
+
+Remarques :
+• Réponse : 6 — 1re option.`,
+  3154: `list(combinations("ABC", 2)) ?
+
+Débutant :
+• Sous-ensembles de taille 2, ordre lexicographic interne sans (B,A) si (A,B).
+
+Intermédiaire :
+• C(3,2)=3 paires.
+
+Expert :
+• L’ordre suit l’ordre de l’itérable source.
+
+Concepts clés :
+• Sans remise, sans ordre de combinaison inverse.
+
+Distinctions clés :
+• combinations vs permutations vs product.
+
+Fonctionnement :
+• Algorithme combinatoire standard.
+
+Exécution étape par étape :
+1. (A,B), (A,C), (B,C).
+
+Ordre des opérations :
+• Indices croissants dans la source.
+
+Cas d'utilisation courants :
+• Choix de paires, équipes.
+
+Cas limites :
+• r > n → vide.
+
+Considérations de performance :
+• C(n,r) peut être énorme.
+
+Exemples :
+• Tirages loterie symboliques.
+
+Remarques :
+• Réponse : [("A","B"),("A","C"),("B","C")] — 1re option.`,
+  3155: `combinations_with_replacement("AB", 2) ?
+
+Débutant :
+• Répétitions autorisées : (A,A), (A,B), (B,B) — pas (B,A) séparé.
+
+Intermédiaire :
+• « Multisets » ordonnés par convention.
+
+Expert :
+• Formule étoiles et barres C(n+r-1,r).
+
+Concepts clés :
+• Avec remise, sans ordre inverse.
+
+Distinctions clés :
+• vs combinations stricte.
+
+Fonctionnement :
+• Génération indices non décroissants.
+
+Exécution étape par étape :
+1. Trois tuples listés.
+
+Ordre des opérations :
+• Stable selon implémentation CPython.
+
+Cas d'utilisation courants :
+• Deux dés indiscernables, inventaires.
+
+Cas limites :
+• r=0 → un tuple vide.
+
+Considérations de performance :
+• Moins que permutations mais peut exploser.
+
+Exemples :
+• gobelets avec remise.
+
+Remarques :
+• Réponse : [("A","A"),("A","B"),("B","B")] — 1re option.`,
+  3156: `list(repeat("x", 3)) ?
+
+Débutant :
+• Trois fois la même chaîne "x" dans une liste.
+
+Intermédiaire :
+• Sans count, itérateur infini.
+
+Expert :
+• Répète la même référence d’objet (ici str immuable donc OK).
+
+Concepts clés :
+• Itérateur fini si times donné.
+
+Distinctions clés :
+• repeat vs [x]*n (eager).
+
+Fonctionnement :
+• Compteur interne d’occurrences.
+
+Exécution étape par étape :
+1. next trois fois puis StopIteration.
+
+Ordre des opérations :
+• list consomme tout.
+
+Cas d'utilisation courants :
+• zip avec autre flux de même longueur.
+
+Cas limites :
+• repeat(mutable, n) partage la même instance.
+
+Considérations de performance :
+• Léger.
+
+Exemples :
+• map avec constante.
+
+Remarques :
+• Réponse : ["x", "x", "x"] — 1re option.`,
+  3157: `c = count(10, 2) ; [next(c) for _ in range(4)] ?
+
+Débutant :
+• Compteur arithmétique : 10,12,14,16.
+
+Intermédiaire :
+• Pas de fin : à couper avec islice ou zip.
+
+Expert :
+• Fonctionne aussi avec float et pas fractionné.
+
+Concepts clés :
+• Infini explicite.
+
+Distinctions clés :
+• count vs range.
+
+Fonctionnement :
+• Addition répétée du step.
+
+Exécution étape par étape :
+1. start 10, +2 quatre fois.
+
+Ordre des opérations :
+• next évalue la compréhension.
+
+Cas d'utilisation courants :
+• Indices, horloges logicielles.
+
+Cas limites :
+• float accumule erreur d’arrondi.
+
+Considérations de performance :
+• O(1) par next.
+
+Exemples :
+• zip(count(), items) pour numéroter.
+
+Remarques :
+• Réponse : [10, 12, 14, 16] — 1re option.`,
+  3158: `cycle("AB") ; cinq next ?
+
+Débutant :
+• Répète A,B,A,B,A.
+
+Intermédiaire :
+• Copie interne du cycle sauvegardée.
+
+Expert :
+• Itérable vide → ValueError immédiat.
+
+Concepts clés :
+• Round-robin infini.
+
+Distinctions clés :
+• cycle vs itertools.repeat sur séquence entière.
+
+Fonctionnement :
+• Buffer puis pointeur circulaire.
+
+Exécution étape par étape :
+1. A,B,A,B,A.
+
+Ordre des opérations :
+• Consommation séquentielle.
+
+Cas d'utilisation courants :
+• Alternance couleurs, workers.
+
+Cas limites :
+• Mémoire si itérable initial énorme copié.
+
+Considérations de performance :
+• Copie O(n) une fois.
+
+Exemples :
+• islice(cycle(palette), n).
+
+Remarques :
+• Réponse : ["A", "B", "A", "B", "A"] — 1re option.`,
+  3159: `islice(range(100), 0, 10, 3) ?
+
+Débutant :
+• Comme tranche 0:10:3 sur la séquence : 0,3,6,9.
+
+Intermédiaire :
+• Marche sur itérateurs non indexables.
+
+Expert :
+• islice n’accepte pas indices négatifs sauf cas limité.
+
+Concepts clés :
+• Slicing sans __getitem__.
+
+Distinctions clés :
+• islice vs itertools recipes tee.
+
+Fonctionnement :
+• Avance en consommant le sous-jacent.
+
+Exécution étape par étape :
+1. Indices 0,3,6,9 dans range.
+
+Ordre des opérations :
+• Paresseux jusqu’à list.
+
+Cas d'utilisation courants :
+• Échantillonner un flux.
+
+Cas limites :
+• start énorme : coût pour avancer.
+
+Considérations de performance :
+• skip O(k).
+
+Exemples :
+• Premiers N d’un générateur infini.
+
+Remarques :
+• Réponse : [0, 3, 6, 9] — 1re option.`,
+  3160: `accumulate([1,2,3,4], lambda a,b: a*b) ?
+
+Débutant :
+• Produit courant : 1, 1*2, *3, *4 → 1,2,6,24.
+
+Intermédiaire :
+• Premier élément toujours émis tel quel.
+
+Expert :
+• accumulate initial optionnel en versions récentes.
+
+Concepts clés :
+• Scan / préfixe avec opération custom.
+
+Distinctions clés :
+• vs functools.reduce qui ne donne que la finale.
+
+Fonctionnement :
+• Réduction cumulative exposée.
+
+Exécution étape par étape :
+1. 1 ; 1*2=2 ; 2*3=6 ; 6*4=24.
+
+Ordre des opérations :
+• Gauche à droite.
+
+Cas d'utilisation courants :
+• Courbes de running max, finances cumulées.
+
+Cas limites :
+• Liste vide → itérateur vide.
+
+Considérations de performance :
+• Linéaire.
+
+Exemples :
+• operator.mul pour lisibilité.
+
+Remarques :
+• Réponse : [1, 2, 6, 24] — 1re option.`,
+  3161: `takewhile(lambda x: x < 5, [1, 3, 5, 2, 4]) ?
+
+Débutant :
+• S’arrête au premier échec : 5 ne passe pas, ignore 2 et 4.
+
+Intermédiaire :
+• Ne « reprend » jamais après un False.
+
+Expert :
+• Filtre ≠ takewhile (filter testerait tous).
+
+Concepts clés :
+• Préfixe validé.
+
+Distinctions clés :
+• takewhile vs dropwhile.
+
+Fonctionnement :
+• Coupe le flux à la première fausse valeur.
+
+Exécution étape par étape :
+1. 1 ok, 3 ok, 5 stop → [1,3].
+
+Ordre des opérations :
+• Évaluation paresseuse.
+
+Cas d'utilisation courants :
+• Données triées jusqu’à seuil.
+
+Cas limites :
+• Prédicat coûteux sur gros préfixes.
+
+Considérations de performance :
+• S’arrête tôt : bien pour triés.
+
+Exemples :
+• Lire lignes tant que commentaire #.
+
+Remarques :
+• Réponse : [1, 3] — 1re option.`,
+  3162: `dropwhile(lambda x: x < 5, [1, 3, 5, 2, 4]) ?
+
+Débutant :
+• Saute 1 et 3 ; dès 5 le prédicat est faux, émet 5 puis tout le reste même si <5.
+
+Intermédiaire :
+• 2 et 4 réapparaissent car plus de filtre après la coupure.
+
+Expert :
+• Complément logique de takewhile sur le préfixe seulement.
+
+Concepts clés :
+• Suppression de préfixe seulement.
+
+Distinctions clés :
+• dropwhile vs filter.
+
+Fonctionnement :
+• Flag « dropping » puis passe-through.
+
+Exécution étape par étape :
+1. Drop 1,3 ; yield 5,2,4.
+
+Ordre des opérations :
+• Un seul passage.
+
+Cas d'utilisation courants :
+• En-têtes de fichier puis corps.
+
+Cas limites :
+• Si tout satisfait le prédicat → vide.
+
+Considérations de performance :
+• Linéaire.
+
+Exemples :
+• Parser après ligne vide.
+
+Remarques :
+• Réponse : [5, 2, 4] — 1re option.`,
+  3163: `compress("ABCDE", [1, 0, 1, 0, 1]) ?
+
+Débutant :
+• Garde A,C,E où sélecteur truthy.
+
+Intermédiaire :
+• S’arrête au plus court des deux itérables.
+
+Expert :
+• Tout truthy/falsy Python, pas seulement 0/1.
+
+Concepts clés :
+• Masque booléen parallèle.
+
+Distinctions clés :
+• compress vs filter avec index.
+
+Fonctionnement :
+• zip interne + test.
+
+Exécution étape par étape :
+1. A oui, B non, C oui, D non, E oui.
+
+Ordre des opérations :
+• Paire par paire.
+
+Cas d'utilisation courants :
+• Feature flags alignés sur colonnes.
+
+Cas limites :
+• Longueurs différentes : troncature.
+
+Considérations de performance :
+• Efficace une passe.
+
+Exemples :
+• Bits de validité.
+
+Remarques :
+• Réponse : ["A", "C", "E"] — 1re option.`,
+  3164: `zip_longest([1,2], [3,4,5], fillvalue=0) ?
+
+Débutant :
+• Trois paires ; le manquant à gauche du 5 est remplacé par 0 → (0,5).
+
+Intermédiaire :
+• zip s’arrêterait à deux paires.
+
+Expert :
+• Plus de deux itérables : remplit tous les trous.
+
+Concepts clés :
+• Alignement longueur max.
+
+Distinctions clés :
+• zip_longest vs zip strict (3.10+).
+
+Fonctionnement :
+• Consomme colonne par colonne.
+
+Exécution étape par étape :
+1. (1,3),(2,4),(0,5).
+
+Ordre des opérations :
+• Longueur = max des longueurs.
+
+Cas d'utilisation courants :
+• Séries temporelles décalées.
+
+Cas limites :
+• fillvalue partagé (même objet) si mutable.
+
+Considérations de performance :
+• Linéaire.
+
+Exemples :
+• Padding tableaux.
+
+Remarques :
+• Réponse : [(1,3), (2,4), (0,5)] — 1re option.`,
+  3165: `starmap(pow, [(2,3), (3,2)]) ?
+
+Débutant :
+• pow(2,3)=8, pow(3,2)=9.
+
+Intermédiaire :
+• Équivaut à (pow(*t) for t in ...).
+
+Expert :
+• Fonction built-in ou user.
+
+Concepts clés :
+• Déballage d’arguments par ligne.
+
+Distinctions clés :
+• starmap vs map avec lambda.
+
+Fonctionnement :
+• Appelle func(*args_tuple).
+
+Exécution étape par étape :
+1. 2**3 puis 3**2.
+
+Ordre des opérations :
+• Ordre des tuples préservé.
+
+Cas d'utilisation courants :
+• Grille de coordonnées, opérations vectorisées paresseuses.
+
+Cas limites :
+• Tuple de mauvaise arité → TypeError.
+
+Considérations de performance :
+• Évite lambda intermédiaire.
+
+Exemples :
+• starmap(max, pairs).
+
+Remarques :
+• Réponse : [8, 9] — 1re option.`,
+  3166: `json.dumps({"a": 1}, indent=2) — rôle de indent ?
+
+Débutant :
+• Pretty-print : retours à la ligne et indentation de n espaces par niveau.
+
+Intermédiaire :
+• indent=None compact par défaut.
+
+Expert :
+• indent=0 nouvelles lignes sans indent réelle selon version / séparateurs.
+
+Concepts clés :
+• Lisibilité humaine vs taille.
+
+Distinctions clés :
+• dumps vs pprint sur dict Python (pas JSON).
+
+Fonctionnement :
+• Sérialise avec formatage.
+
+Exécution étape par étape :
+1. Parcourt l’objet ; insère whitespace structuré.
+
+Ordre des opérations :
+• Après construction logique JSON.
+
+Cas d'utilisation courants :
+• Fichiers config, debug.
+
+Cas limites :
+• Très profond → gros fichiers.
+
+Considérations de performance :
+• Plus coûteux que compact.
+
+Exemples :
+• API debug en dev seulement.
+
+Remarques :
+• Réponse : mise en forme avec indentation (pretty-print) — 1re option.`,
+  3167: `json.dumps({"b": 2, "a": 1}, sort_keys=True) ?
+
+Débutant :
+• Clés triées alphabétiquement : "a" avant "b" dans la chaîne résultante.
+
+Intermédiaire :
+• Chaîne JSON avec espaces par défaut après , et :.
+
+Expert :
+• Ordre des listes inchangé.
+
+Concepts clés :
+• JSON canonique pour diff/hash.
+
+Distinctions clés :
+• sort_keys vs OrderedDict côté Python.
+
+Fonctionnement :
+• Trie les clés avant émission.
+
+Exécution étape par étape :
+1. Émet {"a": 1, "b": 2} comme texte.
+
+Ordre des opérations :
+• Tri puis sérialisation.
+
+Cas d'utilisation courants :
+• Tests, signatures.
+
+Cas limites :
+• Clés non str interdites en JSON standard.
+
+Considérations de performance :
+• Coût du tri O(k log k).
+
+Exemples :
+• Comparer deux réponses API.
+
+Remarques :
+• Réponse : '{"a": 1, "b": 2}' — 1re option.`,
+  3168: `json.dumps([1, 2, 3]) ?
+
+Débutant :
+• Renvoie une str JSON tableau avec espaces après virgules par défaut : '[1, 2, 3]'.
+
+Intermédiaire :
+• Ce n’est pas une liste Python après dumps.
+
+Expert :
+• séparateurs modifiables.
+
+Concepts clés :
+• Type str en sortie.
+
+Distinctions clés :
+• dumps vs str([1,2,3]) qui utilise repr Python.
+
+Fonctionnement :
+• Encode nombres JSON.
+
+Exécution étape par étape :
+1. Ouvre [, éléments, ].
+
+Ordre des opérations :
+• Éléments dans l’ordre.
+
+Cas d'utilisation courants :
+• Corps HTTP JSON.
+
+Cas limites :
+• Non sérialisable → TypeError.
+
+Considérations de performance :
+• Linéaire en taille sortie.
+
+Exemples :
+• Response.write(dumps(obj)).
+
+Remarques :
+• Réponse : "[1, 2, 3]" (chaîne) — 1re option.`,
+  3169: `json.dumps(None) ?
+
+Débutant :
+• Chaîne contenant null JSON en minuscules.
+
+Intermédiaire :
+• Pas "None" Python.
+
+Expert :
+• Symétrique loads('null') → None.
+
+Concepts clés :
+• Carte des scalaires JSON.
+
+Distinctions clés :
+• null vs None en affichage.
+
+Fonctionnement :
+• Encoder spécial pour None.
+
+Exécution étape par étape :
+1. Produit le littéral null.
+
+Ordre des opérations :
+• Scalaire immédiat.
+
+Cas d'utilisation courants :
+• Champs optionnels API.
+
+Cas limites :
+• NaN non standard JSON strict.
+
+Considérations de performance :
+• Trivial.
+
+Exemples :
+• {"x": null} en texte.
+
+Remarques :
+• Réponse : "null" — 1re option.`,
+  3170: `json.dumps(True) ?
+
+Débutant :
+• true minuscule JSON dans une chaîne.
+
+Intermédiaire :
+• False → "false".
+
+Expert :
+• Dans un objet, pas de quotes autour du booléen JSON.
+
+Concepts clés :
+• Booléens JSON ≠ repr Python.
+
+Distinctions clés :
+• "true" vs "True".
+
+Fonctionnement :
+• Table de conversion bool.
+
+Exécution étape par étape :
+1. Émet true.
+
+Ordre des opérations :
+• Immédiat.
+
+Cas d'utilisation courants :
+• Flags JSON.
+
+Cas limites :
+•Subclass bool rare.
+
+Considérations de performance :
+• Trivial.
+
+Exemples :
+• dumps({"ok": True}) contient true sans guillemets.
+
+Remarques :
+• Réponse : "true" — 1re option.`,
+  3171: `json.loads("null") ?
+
+Débutant :
+• Objet Python None.
+
+Intermédiaire :
+• Inverse de dumps(None).
+
+Expert :
+• whitespace autour souvent toléré.
+
+Concepts clés :
+• Parse JSON → Python.
+
+Distinctions clés :
+• None vs chaîne "null".
+
+Fonctionnement :
+• Lexer + parser JSON.
+
+Exécution étape par étape :
+1. Reconnaît le littéral null.
+
+Ordre des opérations :
+• Un seul valeur top-level.
+
+Cas d'utilisation courants :
+• Valeur absente typée.
+
+Cas limites :
+• JSON invalide → JSONDecodeError.
+
+Considérations de performance :
+• Très rapide.
+
+Exemples :
+• Champ nullable décodé.
+
+Remarques :
+• Réponse : None — 1re option.`,
+  3172: `json.loads("true") ?
+
+Débutant :
+• Booléen Python True.
+
+Intermédiaire :
+• "True" majuscule invalide en JSON strict.
+
+Expert :
+• parse_int/float hooks pour types custom.
+
+Concepts clés :
+• Fidélité à la grammaire JSON.
+
+Distinctions clés :
+• True python vs true json texte.
+
+Fonctionnement :
+• Mot-clé true reconnu.
+
+Exécution étape par étape :
+1. Retourne True.
+
+Ordre des opérations :
+• Scalaire.
+
+Cas d'utilisation courants :
+• Config, flags.
+
+Cas limites :
+• Trailing comma interdit.
+
+Considérations de performance :
+• Trivial.
+
+Exemples :
+• loads("false") → False.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  3173: `json.loads("[1, 2, 3]") ?
+
+Débutant :
+• Liste Python d’entiers [1,2,3].
+
+Intermédiaire :
+• Espaces dans JSON autorisés.
+
+Expert :
+• Nombres → int ou float selon point décimal.
+
+Concepts clés :
+• Tableau JSON → list.
+
+Distinctions clés :
+• résultat list vs str d’entrée.
+
+Fonctionnement :
+• Parse récursif.
+
+Exécution étape par étape :
+1. Crée list de trois int.
+
+Ordre des opérations :
+• Ordre des éléments conservé.
+
+Cas d'utilisation courants :
+• Colonnes JSON.
+
+Cas limites :
+• Grands entiers : reste int exact en Python 3.
+
+Considérations de performance :
+• Linéaire.
+
+Exemples :
+• loads sur body HTTP.
+
+Remarques :
+• Réponse : [1, 2, 3] — 1re option.`,
+  3174: `json.dumps({1, 2, 3}) ?
+
+Débutant :
+• TypeError : set non JSON natif.
+
+Intermédiaire :
+• Contournement : list(sorted(s)) ou encoder custom.
+
+Expert :
+• tuple sérialisé en tableau JSON.
+
+Concepts clés :
+• Types admis par défaut limités.
+
+Distinctions clés :
+• set vs list vs dict.
+
+Fonctionnement :
+• default handler absent → erreur.
+
+Exécution étape par étape :
+1. Tentative sérialisation ; échec sur set.
+
+Ordre des opérations :
+• Avant écriture string.
+
+Cas d'utilisation courants :
+• Apprendre à convertir avant dump.
+
+Cas limites :
+• frozenset idem.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• JSONEncoder.default.
+
+Remarques :
+• Réponse : TypeError — ensembles non sérialisables — 1re option.`,
+  3175: `json.dumps({"a": 1}, separators=(",", ":")) ?
+
+Débutant :
+• JSON compact sans espaces après , et : → '{"a":1}'.
+
+Intermédiaire :
+• Réduit bande passante.
+
+Expert :
+• Séparateurs custom pour CSV-like interdit — reste JSON.
+
+Concepts clés :
+• (item_separator, key_separator).
+
+Distinctions clés :
+• vs indent qui ajoute du vertical.
+
+Fonctionnement :
+• Contrôle du formateur.
+
+Exécution étape par étape :
+1. Pas d’espace après : ni ,.
+
+Ordre des opérations :
+• S’applique à toute la structure.
+
+Cas d'utilisation courants :
+• Production API minimaliste.
+
+Cas limites :
+• Lisibilité humaine faible.
+
+Considérations de performance :
+• Moins d’octets à transférer.
+
+Exemples :
+• Stockage ligne unique.
+
+Remarques :
+• Réponse : '{"a":1}' — 1re option.`,
+  3176: `Path("a/b/c").name ?
+
+Débutant :
+• Dernière composante du chemin logique : "c".
+
+Intermédiaire :
+• Pas de vérification d’existence sur disque.
+
+Expert :
+• Sous Windows, normalise les séparateurs dans l’objet Path.
+
+Concepts clés :
+• Final path component.
+
+Distinctions clés :
+• name vs stem vs suffix.
+
+Fonctionnement :
+• Parse pure du chemin.
+
+Exécution étape par étape :
+1. Découpe sur séparateurs.
+2. Prend la fin.
+
+Ordre des opérations :
+• Propriété calculée à la volée.
+
+Cas d'utilisation courants :
+• Journalisation fichier seul.
+
+Cas limites :
+• Racine seule → name vide ''.
+
+Considérations de performance :
+• O(n) longueur chemin.
+
+Exemples :
+• Path("x.tar.gz").name → "x.tar.gz".
+
+Remarques :
+• Réponse : "c" — 1re option.`,
+  3177: `Path("a/b/c.txt").suffix ?
+
+Débutant :
+• Extension finale avec point : ".txt".
+
+Intermédiaire :
+• .tar.gz → seulement ".gz" pour suffix.
+
+Expert :
+• suffixes liste toutes.
+
+Concepts clés :
+• Dernier point du nom final.
+
+Distinctions clés :
+• suffix vs splitext.
+
+Fonctionnement :
+• Règles pathlib pour fichiers cachés.
+
+Exécution étape par étape :
+1. Nom c.txt → .txt.
+
+Ordre des opérations :
+• Lecture metadata logique.
+
+Cas d'utilisation courants :
+• Filtrer par type MIME approximatif.
+
+Cas limites :
+• Pas de point → "".
+
+Considérations de performance :
+• Léger.
+
+Exemples :
+• .suffix sur dossier "foo.bar" si fichier nommé ainsi.
+
+Remarques :
+• Réponse : ".txt" — 1re option.`,
+  3178: `Path("a/b/c.txt").stem ?
+
+Débutant :
+• Nom sans suffixe final : "c".
+
+Intermédiaire :
+• file.tar.gz → stem "file.tar".
+
+Expert :
+• stem + suffix ≈ name.
+
+Concepts clés :
+• Base pour renommage.
+
+Distinctions clés :
+• stem vs name.
+
+Fonctionnement :
+• Retire dernier suffix via règles pathlib.
+
+Exécution étape par étape :
+1. c.txt → c.
+
+Ordre des opérations :
+• Immuable : nouveau concept logique.
+
+Cas d'utilisation courants :
+• Out.pdf depuis rapport.docx base.
+
+Cas limites :
+• Multiples points : un seul suffixe retiré.
+
+Considérations de performance :
+• Léger.
+
+Exemples :
+• batch rename.
+
+Remarques :
+• Réponse : "c" — 1re option.`,
+  3179: `Path("a/b") / "c.txt" ?
+
+Débutant :
+• Nouveau Path joint : a/b/c.txt.
+
+Intermédiaire :
+• Surcharge de / pour lisibilité.
+
+Expert :
+• Si droite absolue, remplace (POSIX).
+
+Concepts clés :
+• Composition portable.
+
+Distinctions clés :
+• vs os.path.join chaînes.
+
+Fonctionnement :
+• joinpath interne.
+
+Exécution étape par étape :
+1. Combine segments.
+
+Ordre des opérations :
+• Chaînage gauche-droite.
+
+Cas d'utilisation courants :
+• Bases config + fichier.
+
+Cas limites :
+• Mélange types Path/str.
+
+Considérations de performance :
+• Alloue nouveau Path.
+
+Exemples :
+• base / "data" / name.
+
+Remarques :
+• Réponse : Path("a/b/c.txt") — 1re option.`,
+  3180: `Path("a/b/c").parent ?
+
+Débutant :
+• Chemin parent logique : Path("a/b").
+
+Intermédiaire :
+• .parents pour ancêtres multiples.
+
+Expert :
+• . parent de . est encore . selon OS.
+
+Concepts clés :
+• Navigation hiérarchique.
+
+Distinctions clés :
+• parent vs dirname str.
+
+Fonctionnement :
+• Retire dernière composante.
+
+Exécution étape par étape :
+1. a/b/c → a/b.
+
+Ordre des opérations :
+• Retourne Path.
+
+Cas d'utilisation courants :
+• Créer sibling file.
+
+Cas limites :
+• Racines diverses.
+
+Considérations de performance :
+• Léger.
+
+Exemples :
+• out_dir = path.parent / "build".
+
+Remarques :
+• Réponse : Path("a/b") — 1re option.`,
+  3181: `Path("a/b/c").parts ?
+
+Débutant :
+• Tuple des segments : ("a","b","c") en relatif POSIX-like.
+
+Intermédiaire :
+• Chemin absolu commence par '/' ou drive.
+
+Expert :
+• Normalisation peut fusionner . et ..
+
+Concepts clés :
+• Décomposition structurelle.
+
+Distinctions clés :
+• parts vs split('/') manuel.
+
+Fonctionnement :
+• Dépend du flavour Windows/POSIX.
+
+Exécution étape par étape :
+1. Découpe normalisée.
+
+Ordre des opérations :
+• Tuple immuable.
+
+Cas d'utilisation courants :
+• Vérifier premier dossier.
+
+Cas limites :
+• UNC Windows : forme spéciale.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• if parts[0] == "home": ...
+
+Remarques :
+• Réponse : ("a", "b", "c") — 1re option.`,
+  3182: `Path("file.tar.gz").suffixes ?
+
+Débutant :
+• Liste [".tar", ".gz"] : toutes les extensions successives.
+
+Intermédiaire :
+• .suffix ne donne que ".gz".
+
+Expert :
+• Utile archives doubles.
+
+Concepts clés :
+• Multi-extensions.
+
+Distinctions clés :
+• suffixes vs stem.
+
+Fonctionnement :
+• Scan des segments après points du nom.
+
+Exécution étape par étape :
+1. file . tar . gz.
+
+Ordre des opérations :
+• Ordre gauche-droite des suffixes.
+
+Cas d'utilisation courants :
+• Détecter .tar.gz réel.
+
+Cas limites :
+• Nom bizarre ".hidden" : règles spéciales.
+
+Considérations de performance :
+• Léger.
+
+Exemples :
+• filtrer archives.
+
+Remarques :
+• Réponse : [".tar", ".gz"] — 1re option.`,
+  3183: `os.path.join("a", "b", "c") sur Unix ?
+
+Débutant :
+• "a/b/c" avec séparateur plateforme.
+
+Intermédiaire :
+• Composante absolue réinitialise le préfixe.
+
+Expert :
+• Évite concaténation naïve + sep.
+
+Concepts clés :
+• Portable string path.
+
+Distinctions clés :
+• join vs Path /.
+
+Fonctionnement :
+• Règles spécifiques OS dans os.path.
+
+Exécution étape par étape :
+1. Combine avec / sur macOS/Linux.
+
+Ordre des opérations :
+• Gauche à droite avec reset si abs.
+
+Cas d'utilisation courants :
+• Code legacy os.*.
+
+Cas limites :
+• mélange slashes déjà présents.
+
+Considérations de performance :
+• Très rapide.
+
+Exemples :
+• join(home, ".config", app).
+
+Remarques :
+• Réponse : "a/b/c" — 1re option.`,
+  3184: `os.path.splitext("file.txt") ?
+
+Débutant :
+• ("file", ".txt") tuple racine + ext avec point.
+
+Intermédiaire :
+• Dernier point seulement : archive.tar.gz → ("archive.tar", ".gz").
+
+Expert :
+• Pas de Path object.
+
+Concepts clés :
+• Découpage nom/ext.
+
+Distinctions clés :
+• splitext vs pathlib suffix.
+
+Fonctionnement :
+• Parse chaîne pure.
+
+Exécution étape par étape :
+1. Trouve dernier . dans le basename.
+
+Ordre des opérations :
+• Basename implicite sur la partie finale.
+
+Cas d'utilisation courants :
+• Changer extension string.
+
+Cas limites :
+• Pas d’extension → ("whole", "").
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• root, ext = splitext(p).
+
+Remarques :
+• Réponse : ("file", ".txt") — 1re option.`,
+  3185: `os.path.basename("/a/b/c.txt") ?
+
+Débutant :
+• "c.txt" : après dernier séparateur.
+
+Intermédiaire :
+• Trailing slash peut donner "".
+
+Expert :
+• Miroir de Path.name en str.
+
+Concepts clés :
+• Extraction finale.
+
+Distinctions clés :
+• basename vs dirname.
+
+Fonctionnement :
+• Scan fin de chaîne.
+
+Exécution étape par étape :
+1. Split logique sur sep.
+
+Ordre des opérations :
+• Pure string.
+
+Cas d'utilisation courants :
+• Logs courts.
+
+Cas limites :
+• Windows vs POSIX sep.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• basename(url path partie).
+
+Remarques :
+• Réponse : "c.txt" — 1re option.`,
+  3186: `os.path.dirname("/a/b/c.txt") ?
+
+Débutant :
+• "/a/b" : tout sauf le nom de fichier.
+
+Intermédiaire :
+• dirname + basename reconstituent souvent le chemin (+ sep).
+
+Expert :
+• Cas racines et trailing slash.
+
+Concepts clés :
+• Partie répertoire.
+
+Distinctions clés :
+• dirname vs parent Path.
+
+Fonctionnement :
+• Coupure au dernier sep.
+
+Exécution étape par étape :
+1. Retire c.txt.
+
+Ordre des opérations :
+• str pure.
+
+Cas d'utilisation courants :
+• mkdir parent.
+
+Cas limites :
+• Relatif "file" → "".
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• copier dans même dossier.
+
+Remarques :
+• Réponse : "/a/b" — 1re option.`,
+  3187: `os.sep sur Unix/macOS ?
+
+Débutant :
+• Chaîne un seul caractère slash "/".
+
+Intermédiaire :
+• Windows utilise backslash (échappé en Python "\").
+
+Expert :
+• os.altsep, os.pathsep pour PATH env.
+
+Concepts clés :
+• Constante plateforme.
+
+Distinctions clés :
+• sep vs slash littéral codé en dur.
+
+Fonctionnement :
+• Fixé à l’import os.
+
+Exécution étape par étape :
+• Lecture attribut module.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Debug cross-plateforme.
+
+Cas limites :
+• Préférer join pour portable.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• "a" + os.sep + "b" (moins bien que join).
+
+Remarques :
+• Réponse : "/" — 1re option.`,
+  3188: `Path("a.txt").with_suffix(".md") ?
+
+Débutant :
+• Remplace l’extension : Path("a.md").
+
+Intermédiaire :
+• Nouveau Path immuable.
+
+Expert :
+• .tar.gz : remplace seulement dernier suffixe logique pathlib.
+
+Concepts clés :
+• Mutation nom logique.
+
+Distinctions clés :
+• with_suffix vs renommer disque.
+
+Fonctionnement :
+• Calcule nouveau chemin sans I/O.
+
+Exécution étape par étape :
+1. Retire .txt ajoute .md.
+
+Ordre des opérations :
+• Chaîne pure jusqu’à rename().
+
+Cas d'utilisation courants :
+• Pipeline export markdown.
+
+Cas limites :
+• Suffixe doit inclure le point.
+
+Considérations de performance :
+• Léger.
+
+Exemples :
+• png → jpg conversion path.
+
+Remarques :
+• Réponse : Path("a.md") — 1re option.`,
+  3189: `string.ascii_lowercase ?
+
+Débutant :
+• Les 26 lettres minuscules ASCII concaténées.
+
+Intermédiaire :
+• Constante module string.
+
+Expert :
+• Pas de lettres accentuées Unicode.
+
+Concepts clés :
+• Alphabet anglais machine.
+
+Distinctions clés :
+• vs str.islower() test.
+
+Fonctionnement :
+• Pré-construit au chargement module.
+
+Exécution étape par étape :
+• Accès O(1).
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Validation charset, César pédagogique.
+
+Cas limites :
+• i18n : insuffisant seul.
+
+Considérations de performance :
+• Réutiliser la constante.
+
+Exemples :
+• c in string.ascii_lowercase.
+
+Remarques :
+• Réponse : "abcdefghijklmnopqrstuvwxyz" — 1re option.`,
+  3190: `string.ascii_uppercase ?
+
+Débutant :
+• 26 majuscules A–Z.
+
+Intermédiaire :
+• Symétrique de ascii_lowercase.
+
+Expert :
+• ascii_letters = lower + upper.
+
+Concepts clés :
+• Jeu de caractères fixe.
+
+Distinctions clés :
+• Majuscule ASCII vs Unicode title.
+
+Fonctionnement :
+• Constante.
+
+Exécution étape par étape :
+• Immédiat.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Normalisation simple.
+
+Cas limites :
+• Pas ß ni accents.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• ROT13 jeux.
+
+Remarques :
+• Réponse : "ABCDEFGHIJKLMNOPQRSTUVWXYZ" — 1re option.`,
+  3191: `string.digits ?
+
+Débutant :
+• "0123456789" les dix chiffres.
+
+Intermédiaire :
+• hexdigits étend avec a-f A-F.
+
+Expert :
+• Pas les chiffres Unicode pleins.
+
+Concepts clés :
+• Base décimale ASCII.
+
+Distinctions clés :
+• digits vs isdecimal() unicode.
+
+Fonctionnement :
+• Constante.
+
+Exécution étape par étape :
+• len 10.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Sanitize input numérique simple.
+
+Cas limites :
+• Signe moins non inclus.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• all(c in digits for c in s).
+
+Remarques :
+• Réponse : "0123456789" — 1re option.`,
+  3192: `string.punctuation contient-il '!' et '@' ?
+
+Débutant :
+• Oui : la constante regroupe la ponctuation ASCII imprimable hors lettres/chiffres.
+
+Intermédiaire :
+• L’espace est dans whitespace, pas punctuation.
+
+Expert :
+• Ensemble fixe documenté (environ 32 caractères).
+
+Concepts clés :
+• Classification caractères.
+
+Distinctions clés :
+• punctuation vs printable.
+
+Fonctionnement :
+• Chaîne pré-définie.
+
+Exécution étape par étape :
+• Test membership.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Strip ponctuation NLP basique.
+
+Cas limites :
+• Locale non prise en compte.
+
+Considérations de performance :
+• petit set logique.
+
+Exemples :
+• mot de passe doit inclure ponctuation.
+
+Remarques :
+• Réponse : oui, ponctuation ASCII complète incluant ! et @ — 1re option.`,
+  3193: `len(string.ascii_letters) ?
+
+Débutant :
+• 26 minuscules + 26 majuscules = 52.
+
+Intermédiaire :
+• ascii_letters concatène lower et upper.
+
+Expert :
+• Pas chiffres ni underscore (voir string module autres).
+
+Concepts clés :
+• Taille alphabet dual case ASCII.
+
+Distinctions clés :
+• 52 vs 62 alnum si +digits.
+
+Fonctionnement :
+• len sur str constante.
+
+Exécution étape par étape :
+1. 26+26.
+
+Ordre des opérations :
+• O(1) connu.
+
+Cas d'utilisation courants :
+• Boucles rotation 52.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• random.choice(ascii_letters).
+
+Remarques :
+• Réponse : 52 — 1re option.`,
+  3194: `string.hexdigits ?
+
+Débutant :
+• 0-9 plus a-f et A-F pour hexadécimal.
+
+Intermédiaire :
+• 22 caractères distincts.
+
+Expert :
+• Valider couleur #RRGGBB.
+
+Concepts clés :
+• Base 16 symboles.
+
+Distinctions clés :
+• hexdigits vs digits.
+
+Fonctionnement :
+• Constante.
+
+Exécution étape par étape :
+• Immédiat.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Parser MAC, hash.
+
+Cas limites :
+• Préfixe 0x non inclus dans la chaîne testée.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• int(s, 16) après validation.
+
+Remarques :
+• Réponse : "0123456789abcdefABCDEF" — 1re option.`,
+  3195: `Que contient string.whitespace ?
+
+Débutant :
+• Espace, tabulation, nouvelle ligne, retour chariot, tab vertical, saut de page — les blancs ASCII usuels.
+
+Intermédiaire :
+• Pas tous les séparateurs Unicode.
+
+Expert :
+• split par défaut sur whitespace élargi str.split().
+
+Concepts clés :
+• Catégorie blanc.
+
+Distinctions clés :
+• whitespace vs punctuation.
+
+Fonctionnement :
+• Constante six caractères typiques.
+
+Exécution étape par étape :
+• Documentée dans help(string).
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Tokenisation custom.
+
+Cas limites :
+• NBSP unicode pas dedans.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• caractère in string.whitespace.
+
+Remarques :
+• Réponse : espace, tab, newline, etc. — 1re option.`,
+  3196: `textwrap.wrap("hello world foo bar", width=10) ?
+
+Débutant :
+• Découpe en lignes d’au plus ~10 caractères en respectant les mots quand possible.
+
+Intermédiaire :
+• Retourne liste de lignes sans newlines finaux.
+
+Expert :
+• Paramètres break_long_words, etc.
+
+Concepts clés :
+• Formatage présentation texte.
+
+Distinctions clés :
+• wrap vs fill (join avec \n).
+
+Fonctionnement :
+• Algorithme de césure mots.
+
+Exécution étape par étape :
+1. hello (5), world foo dépasse → break ; etc.
+
+Ordre des opérations :
+• Un passage.
+
+Cas d'utilisation courants :
+• CLI 80 colonnes.
+
+Cas limites :
+• Mot plus long que width.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• print("\n".join(wrap(...))).
+
+Remarques :
+• Réponse : enveloppe le texte en lignes ≤ largeur (wrap) — 1re option.`,
+  3197: `textwrap.dedent("  hello\n  world") ?
+
+Débutant :
+• Retire l’indentation commune minimale des lignes : "hello\nworld".
+
+Intermédiaire :
+• Lignes vides ignorées pour le calcul du préfixe.
+
+Expert :
+• Préserve indentation relative interne au bloc.
+
+Concepts clés :
+• Nettoyage de docstrings indentées.
+
+Distinctions clés :
+• dedent vs strip() global.
+
+Fonctionnement :
+• Mesure marge gauche partagée.
+
+Exécution étape par étape :
+1. Deux espaces communs enlevés.
+
+Ordre des opérations :
+• Analyse toutes lignes.
+
+Cas d'utilisation courants :
+• SQL, YAML dans triple quotes.
+
+Cas limites :
+• Tabs vs spaces mixtes.
+
+Considérations de performance :
+• Linéaire.
+
+Exemples :
+• dedent('''\n    code\n''').
+
+Remarques :
+• Réponse : "hello\nworld" — 1re option.`,
+  3198: `Template("Hello $name").substitute(name="World") ?
+
+Débutant :
+• Remplace $name par World → "Hello World".
+
+Intermédiaire :
+• safe_substitute laisse les variables manquantes.
+
+Expert :
+• Double dollar pour dollar littéral ; forme avec accolades pour borner le nom de variable.
+
+Concepts clés :
+• Substitution contrôlée.
+
+Distinctions clés :
+• Template vs f-string puissance.
+
+Fonctionnement :
+• Parse $ patterns.
+
+Exécution étape par étape :
+1. Map name → World.
+
+Ordre des opérations :
+• substitute lève KeyError si clé absente.
+
+Cas d'utilisation courants :
+• Modèles utilisateur moins dangereux que eval.
+
+Cas limites :
+• Identifiants invalides.
+
+Considérations de performance :
+• Regex interne modeste.
+
+Exemples :
+• courrier merge.
+
+Remarques :
+• Réponse : "Hello World" — 1re option.`,
+  3199: `Combien de niveaux standard dans logging ?
+
+Débutant :
+• Cinq : DEBUG, INFO, WARNING, ERROR, CRITICAL.
+
+Intermédiaire :
+• NOTSET existe aussi mais compté séparément dans la doc niveaux « standard » usuels = 5.
+
+Expert :
+• Valeurs numériques 10..50 par pas de 10.
+
+Concepts clés :
+• Filtrage par gravité.
+
+Distinctions clés :
+• niveau logger vs handler.
+
+Fonctionnement :
+• Comparaisons numériques internes.
+
+Exécution étape par étape :
+• getLogger sans config : root WARNING.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Ops prod vs dev verbosité.
+
+Cas limites :
+• Niveaux custom > 50.
+
+Considérations de performance :
+• Coût faible si niveau filtré tôt.
+
+Exemples :
+• basicConfig(level=DEBUG).
+
+Remarques :
+• Réponse : 5 — 1re option.`,
+  3200: `Niveau logging par défaut (sans configuration) ?
+
+Débutant :
+• WARNING : seuls WARNING, ERROR, CRITICAL s’affichent sur le handler par défaut root.
+
+Intermédiaire :
+• Explique pourquoi info() semble « ne rien faire ».
+
+Expert :
+• Chaque logger/handler a son propre level effectif.
+
+Concepts clés :
+• Seuil minimal.
+
+Distinctions clés :
+• root logger vs named loggers.
+
+Fonctionnement :
+• lastLogRecord compare levelno.
+
+Exécution étape par étape :
+1. Appel info → en dessous du seuil → filtré.
+
+Ordre des opérations :
+• Vérification avant formatage coûteux parfois évitable.
+
+Cas d'utilisation courants :
+• Bruit réduit en prod.
+
+Cas limites :
+• bibliothèques qui reconfigurent logging.
+
+Considérations de performance :
+• DEBUG off évite strings lourdes si lazy.
+
+Exemples :
+• logging.basicConfig(level=logging.INFO).
+
+Remarques :
+• Réponse : WARNING — 1re option.`,
   402: `"  hello  ".lstrip() renvoie "hello  " : lstrip retire les blancs de gauche seulement.
 
 Débutant :
