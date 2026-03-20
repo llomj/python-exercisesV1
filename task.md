@@ -296,10 +296,12 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
 - **Done:** **2001–2050** — `level6_expert_a.ts` Q1–50 (Counter, defaultdict, OrderedDict). Fragments: `fr-l6-2001-2025.mjs` + `fr-l6-2026-2050.mjs`, agrégateur `fr-l6-2001-2050.mjs`. Patch: `patch-fr-l6-2001-2050.mjs`. Build OK.
 - **Done:** **2051–2100** — `level6_expert_b.ts` Q51–100 (hashabilité, __missing__, MappingProxyType, copies, vues, etc.). Fragments: `fr-l6-2051-2075.mjs` + `fr-l6-2076-2100.mjs`, agrégateur `fr-l6-2051-2100.mjs`. Patch: `patch-fr-l6-2051-2100.mjs`. Build OK.
 - **Level 6 FR 1801–2100 complete.**
-- **Next:** **Level 7 FR 2101–2150** — aligner sur `questionsBank` niveau 7. Patch : START `` 2101: `Le mot-clé class`` → END `` 2151: `La méthode __str__`` (texte actuel encore mixte EN/FR ; à remplacer selon la banque).
+- **Done:** **Level 7 FR 2101–2150** — `level7.ts` Q1–50 (`def`, `return`, defaults, `*args`/`**kwargs`, lambdas, return types). Fragments: `scripts/fr-l7-frags/fr-l7-2101-2125.mjs`, `fr-l7-2126-2150.mjs`, agrégateur `fr-l7-2101-2150.mjs`. Patch: `scripts/patch-fr-l7-2101-2150.mjs` (START `` 2101: `Le mot-clé class`` → END `` 2151: `La méthode __str__``). Build OK (`vite build` + `inject-precache.js`).
+- **Done:** **Level 7 FR 2151–2200** — `level7.ts` Q51–100 (portée, `global`, fermetures, récursion, `map`/`filter`/`reduce`, introspection, règles d’appel, `/` et `*`). Fragments: `fr-l7-2151-2175.mjs`, `fr-l7-2176-2200.mjs`, agrégateur `fr-l7-2151-2200.mjs`. Patch: `patch-fr-l7-2151-2200.mjs` (START `` 2151: `La méthode __str__`` → END `` 2201: `La méthode __eq__``). Build OK.
+- **Next:** **Level 7 FR 2201–2250** — suite `level7.ts` / banque niveau 7. Patch indicatif : START `` 2201: `La méthode __eq__`` → END `` 2251: `__getattr__`` (valider la ligne exacte dans `detailedExplanationsTranslations.ts` avant patch).
 
 ### Immediate next batches
-1. Level 6 FR (suite **1851–2100**): fragments + patches per `QUESTIONS_BANK`.
+1. **Level 7 FR 2151–2200** (puis 2201–2250, etc.) selon `questionsBank` niveau 7.
 2. Optional: audit `301-600` for any regression or glossary drift.
 
 ### Remaining range
@@ -330,4 +332,4 @@ For each batch:
 
 ## Next Action (when resuming)
 
-Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2: **601–900 done**. Levels 3–5: **901–1800 done**. **Level 6 FR : 1801–2100 done** ; reprendre **Level 7 : 2101+**.
+Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2: **601–900 done**. Levels 3–5: **901–1800 done**. **Level 6 FR : 1801–2100 done**. **Level 7 FR : 2101–2200 done** ; reprendre **2201+**.

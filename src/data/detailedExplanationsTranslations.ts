@@ -91005,3132 +91005,4011 @@ Exemples :
 
 Remarques :
 • Réponse : True.`,
-  2101: `Le mot-clé class définit une nouvelle classe. Si class MyClass: pass, alors this définit une classe nommée MyClass. L'instruction class crée un objet classe, qui sert de modèle pour créer des instances (objets). L'instruction pass est un placeholder qui ne fait rien — elle est utilisée quand le corps d'une classe est vide. Les classes sont fondamentales à la programmation orientée objet en Python, permettant de définir des types personnalisés avec attributs et méthodes.
-
-Définition de classe :
-• class MyClass: pass définit une classe nommée MyClass
-• class keyword creates class object
-• MyClass is the class name
-• pass is placeholder (empty body)
-• La classe est un modèle pour créer des instances
-
-Comment ça fonctionne :
-• class MyClass: pass executes class statement
-• Python creates class object named MyClass
-• Class object stored in namespace
-• Peut servir à créer des instances: obj = MyClass()
-• Retourne : class definition (no return value, creates class)
-
-Exemple :
-class MyClass: pass          # Defines empty class
-class Person: pass            # Defines another class
-class Animal: pass           # Defines another class
-
-Usages courants :
-• Définition de classe : class MyClass: pass (empty class)
-• Blueprint: class defines structure for objects
-• Programmation orientée objet
-• Types personnalisés
-
-Exemple : class MyClass: pass définit une classe nommée MyClass car the class keyword crée un class object, which serves as a blueprint for creating instances (objects) of that class.
-`,
-  2102: `Les attributs définis dans le corps de la classe (en dehors des méthodes) sont des attributs de classe. Si class MyClass: x = 1, alors this defines a class MyClass with a class attribute x = 1. Class attributes are shared by all instances of the class - they appartiennent à la classe elle-même, pas aux instances individuelles. All instances can access class attributes, and modifying a class attribute affects all instances (unless an instance has its own attribute that shadows it).
-
-Attribut de classe :
-• class MyClass: x = 1 defines class with class attribute x = 1
-• x = 1 is class attribute (defined in class body)
-• Shared by all instances of MyClass
-• Accessible via class: MyClass.x
-• Accessible via instance: obj.x (if not shadowed)
-
-Comment ça fonctionne :
-• class MyClass: x = 1 executes class statement
-• x = 1 creates class attribute
-• Attribute stored in class __dict__
-• All instances share this attribute
-• Retourne : class definition (no return value, creates class)
-
-Exemple :
-class MyClass: x = 1         # Class attribute x = 1
-MyClass.x                    # 1 (accessed via class)
-obj = MyClass()
-obj.x                        # 1 (accessed via instance)
-
-Usages courants :
-• Class attributes: class MyClass: shared_value = 1
-• Shared data: class Counter: count = 0 (shared counter)
-• Class-level constants
-• Shared state
-
-Exemple : class MyClass: x = 1 defines a class with a class attribute x = 1 car attributes defined in the class body are class attributes, shared by all instances of the class.
-`,
-  2103: `L'instruction class n'utilise pas l'opérateur d'affectation. If MyClass = class MyClass: pass, alors this lève une SyntaxError car the class statement has its own syntax - you n'utilise pas = to assign the class name. La syntaxe correcte est class MyClass: pass, which automatically crée un variable MyClass in the current namespace. The class keyword itself handles the assignment - you n'a pas besoin (and can't use) an explicit assignment operator.
-
-Class statement syntax:
-• MyClass = class MyClass: pass raises SyntaxError
-• l'instruction class n'utilise pas assignment operator
-• Correct syntax: class MyClass: pass
-• Class name automatically assigned to variable
-• SyntaxErreur : invalid syntax
-
-Comment ça fonctionne :
-• MyClass = class MyClass: pass attempts to use assignment
-• l'instruction class ne supporte pas assignment operator
-• Python parser expects: class ClassName: body
-• Encountered = before class keyword
-• Raises SyntaxErreur : invalid syntax
-
-Exemple :
-class MyClass: pass          # Correct (no =)
-MyClass = class MyClass: pass  # SyntaxError (invalid syntax)
-# Correct: class MyClass: pass
-
-Usages courants :
-• Understanding syntax: l'instruction class n'utilise pas =
-• Définition de classe : class MyClass: pass (correct syntax)
-• Syntax errors
-• Class statement rules
-
-Exemple : MyClass = class MyClass: pass lève une SyntaxError car the l'instruction class n'utilise pas the assignment operator - the class keyword automatically creates the variable with the class name.
-`,
-  2104: `Appeler une classe (avec des parenthèses) crée une instance (objet) de cette classe. Si class MyClass: pass, alors obj = MyClass() crée une instance of MyClass and assigns it to obj. The parentheses () call the class, qui déclenche instance creation. Classes are callable - quand on appelle them, they create and return a new instance. C'est how objects are created en Python - by calling the class constructor.
-
-Création d'instance :
-• obj = MyClass() creates instance of MyClass
-• MyClass() calls class (creates instance)
-• Instance is object of type MyClass
-• Assigned to variable obj
-• Retourne : new instance object
-
-Comment ça fonctionne :
-• MyClass() calls class MyClass
-• Class is callable (peut être appelé)
-• Calling class creates new instance
-• Instance object created and returned
-• Assigned to obj
-• Retourne : instance object
-
-Exemple :
-class MyClass: pass
-obj = MyClass()              # Creates instance
-obj2 = MyClass()             # Creates another instance
-obj is obj2                  # False (different instances)
-
-Usages courants :
-• Creating objects: obj = MyClass() (instance creation)
-• Object instantiation: instance = ClassName()
-• Instance creation
-• Programmation orientée objet
-
-Exemple : Si class MyClass: pass, alors obj = MyClass() crée une instance of MyClass car calling a class (using parentheses) crée et retourne une nouvelle instance (object) of that class.
-`,
-  2105: `La fonction type() retourne la classe (type) d'un objet. Si class MyClass: pass, alors type(MyClass()) retourne <class '__main__.MyClass'> car MyClass() crée une instance of MyClass, and type() retourne le class that the instance belongs to. The output <class '__main__.MyClass'> shows that the instance is of type MyClass, where '__main__' is the module name (the current script).
-
-type() sur une instance :
-• type(MyClass()) retourne <class '__main__.MyClass'>
-• MyClass() creates instance
-• type() returns class of instance
-• Retourne class object: <class '__main__.MyClass'>
-• Shows instance belongs to MyClass class
-
-Comment ça fonctionne :
-• MyClass() creates instance of MyClass
-• type(instance) checks type of instance
-• Instance belongs to MyClass class
-• Retourne class object: <class '__main__.MyClass'>
-• '__main__' is module name (current script)
-
-Exemple :
-class MyClass: pass
-type(MyClass())              # <class '__main__.MyClass'>
-obj = MyClass()
-type(obj)                    # <class '__main__.MyClass'>
-
-Usages courants :
-• Type checking: if type(obj) == MyClass: ...
-• Type inspection: print(type(instance))
-• Object type
-• Type identification
-
-Exemple : Si class MyClass: pass, alors type(MyClass()) retourne <class '__main__.MyClass'> car type() retourne le class that an instance belongs to, and MyClass() crée une instance of MyClass.
-`,
-  2106: `La fonction isinstance() vérifie si un objet est une instance d'une classe (ou d'une de ses sous-classes). Si class MyClass: pass, alors isinstance(MyClass(), MyClass) returns True car MyClass() crée une instance of MyClass, and isinstance() checks if that instance is an instance of MyClass (which it is). isinstance() is la façon recommandée de vérifier les types en Python, as it also returns True for subclasses.
-
-Vérification isinstance() :
-• isinstance(MyClass(), MyClass) returns True
-• MyClass() creates instance of MyClass
-• isinstance() checks if instance is of type MyClass
-• Instance is of type MyClass
-• Retourne : True
-
-Comment ça fonctionne :
-• MyClass() creates instance of MyClass
-• isinstance(instance, MyClass) checks type
-• Instance is indeed of type MyClass
-• Retourne : True
-
-Exemple :
-class MyClass: pass
-obj = MyClass()
-isinstance(obj, MyClass)     # True (obj is instance of MyClass)
-isinstance(obj, object)     # True (all classes inherit from object)
-
-Usages courants :
-• Type checking: if isinstance(obj, MyClass): ...
-• Instance validation: isinstance(instance, Class)
-• Type checking
-• Object validation
-
-Exemple : Si class MyClass: pass, alors isinstance(MyClass(), MyClass) returns True car isinstance() checks if an object is an instance of a class, and MyClass() crée une instance of MyClass.
-`,
-  2107: `Les classes ont un attribut __name__ qui contient le nom de la classe sous forme de chaîne. Si class MyClass: pass, alors MyClass.__name__ returns 'MyClass' car __name__ is a special attribute that stocke le class's name. This attribute is automatically set when the class is defined. It's useful for introspection, debugging, or creating dynamic code that needs to know class names.
-
-Attribut __name__ :
-• MyClass.__name__ returns 'MyClass'
-• __name__ contains class name as string
-• Automatically set when class defined
-• Retourne class name: 'MyClass'
-• Useful for introspection
-
-Comment ça fonctionne :
-• class MyClass: pass creates class definition
-• Python automatically sets MyClass.__name__ = 'MyClass'
-• __name__ attribute stores class name
-• MyClass.__name__ accesses attribute
-• Retourne : 'MyClass'
-
-Exemple :
-class MyClass: pass
-MyClass.__name__             # 'MyClass' (class name)
-class Person: pass
-Person.__name__              # 'Person' (class name)
-
-Usages courants :
-• Introspection: print(MyClass.__name__) (debugging)
-• Dynamic code: code that uses class names
-• Class attributes
-• Class metadata
-
-Exemple : Si class MyClass: pass, alors MyClass.__name__ returns 'MyClass' car __name__ is a special attribute that stocke le class's name as a string, automatically set when the class is defined.
-`,
-  2108: `Les classes ont un attribut __bases__ qui contient un tuple des classes de base (classes parentes). Si class MyClass: pass, alors MyClass.__bases__ returns (<class 'object'>,) car all classes en Python inherit from object by default. Even if you don't explicitly specify a parent class, Python fait automatiquement de object la classe de base. __bases__ shows the inheritance hierarchy - which classes this class inherits from.
-
-Attribut __bases__ :
-• MyClass.__bases__ returns (<class 'object'>,)
-• __bases__ contains tuple of base classes
-• All classes inherit from object by default
-• Retourne tuple: (<class 'object'>,)
-• Shows inheritance hierarchy
-
-Comment ça fonctionne :
-• class MyClass: pass creates class definition
-• Pas de classe parente explicite
-• Python fait automatiquement de object la classe de base
-• MyClass.__bases__ contains tuple of base classes
-• Retourne : (<class 'object'>,)
-
-Exemple :
-class MyClass: pass
-MyClass.__bases__            # (<class 'object'>,) (default inheritance)
-class Child(Parent): pass
-Child.__bases__              # (<class '__main__.Parent'>,) (explicit inheritance)
-
-Usages courants :
-• Inheritance inspection: print(MyClass.__bases__)
-• Inheritance hierarchy: check parent classes
-• Class attributes
-• Inheritance information
-
-Exemple : Si class MyClass: pass, alors MyClass.__bases__ returns (<class 'object'>,) car all classes en Python inherit from object by default, and __bases__ contains a tuple of the base classes.
-`,
-  2109: `Les classes ont un attribut __module__ qui contient le nom du module où la classe est définie. Si class MyClass: pass, alors MyClass.__module__ returns '__main__' (if defined in the main script) or the module name (if defined in an imported module). The __module__ attribute helps identify where a class was defined, which is useful for introspection and debugging.
-
-Attribut __module__ :
-• MyClass.__module__ returns '__main__' or module name
-• __module__ contains module name where class defined
-• '__main__' if defined in main script
-• Module name if defined in imported module
-• Useful for introspection
-
-Comment ça fonctionne :
-• class MyClass: pass creates class definition
-• Python automatically sets MyClass.__module__ = '__main__' (or module name)
-• __module__ attribute stores module name
-• MyClass.__module__ accesses attribute
-• Retourne : '__main__' (or module name)
-
-Exemple :
-class MyClass: pass
-MyClass.__module__           # '__main__' (if in main script)
-# If in module.py: MyClass.__module__ would be 'module'
-
-Usages courants :
-• Introspection: print(MyClass.__module__) (debugging)
-• Module identification: check where class defined
-• Class attributes
-• Class metadata
-
-Exemple : Si class MyClass: pass, alors MyClass.__module__ returns '__main__' (if defined in the main script) or the module name (if defined in an imported module) car __module__ contient le nom du module where the class is defined.
-`,
-  2110: `Les classes sont des objets appelables — on peut les appeler comme des fonctions. Si class MyClass: pass, alors callable(MyClass) returns True car classes are callable - you can call them with parentheses to create instances (e.g., MyClass()). The callable() function checks if an object peut être appelé, and classes are callable car they peut être appelé to create instances. C'est how object creation works en Python - classes are callable constructors.
-
-Les classes sont appelables :
-• callable(MyClass) returns True
-• Classes are callable objects
-• Can be called: MyClass() (creates instance)
-• callable() checks if object peut être appelé
-• Retourne : True
-
-Comment ça fonctionne :
-• class MyClass: pass creates class object
-• MyClass is a class (callable)
-• callable(MyClass) checks if MyClass is callable
-• Classes are callable (peut être appelé to create instances)
-• Retourne : True
-
-Exemple :
-class MyClass: pass
-callable(MyClass)            # True (classes are callable)
-MyClass()                    # Creates instance (calling class)
-callable(5)                 # False (integers not callable)
-
-Usages courants :
-• Checking callable: if callable(obj): obj()
-• Type checking: is_callable = callable(Class)
-• Callable check
-• Object inspection
-
-Exemple : Si class MyClass: pass, alors callable(MyClass) returns True car classes are callable objects - they peut être appelé with parentheses to create instances (objects).
-`,
-  2111: `La méthode __init__ est le constructeur — elle est appelée automatiquement à la création d'une instance. If def __init__(self, x): self.x = x, alors this defines a constructor that takes a parameter x and sets it as an instance attribute. The __init__ method is special - it's called automatically quand vous créez an instance (e.g., MyClass(5)), and it's utilisé pour initialize instance attributes. The self parameter refers to the instance being created.
-
-Constructeur __init__ :
-• def __init__(self, x): self.x = x defines constructor
-• __init__ is special method (constructor)
-• Automatically appelé quand instance created
-• self refers to instance being created
-• Sets instance attributes: self.x = x
-
-Comment ça fonctionne :
-• __init__ is special method name
-• Called automatically: MyClass(5) calls __init__(self, 5)
-• self parameter is instance being created
-• x parameter is argument passed: MyClass(5)
-• Sets instance attribute: self.x = x
-• Retourne : None (constructors don't return values)
-
-Exemple :
-class MyClass:
-    def __init__(self, x):
-        self.x = x
-obj = MyClass(5)              # Calls __init__(self, 5)
-obj.x                         # 5 (instance attribute set)
-
-Usages courants :
-• Constructor: def __init__(self, param): self.attr = param
-• Initialization: def __init__(self): self.data = []
-• Instance setup
-• Object initialization
-
-Exemple : def __init__(self, x): self.x = x defines a constructor car __init__ is the special method that's automatically appelé quand an instance est créé, utilisé pour initialize instance attributes.
-`,
-  2112: `La méthode __init__ définit les attributs d'instance à la création d'une instance. Si class MyClass: def __init__(self, x): self.x = x; obj = MyClass(5); obj.x, alors obj.x retourne 5 car MyClass(5) calls __init__(self, 5), qui définit self.x = 5, creating an instance attribute x with value 5. The instance attribute can alors be accessed via obj.x.
-
-__init__ définit les attributs :
-• class MyClass: def __init__(self, x): self.x = x; obj = MyClass(5); obj.x retourne 5
-• MyClass(5) calls __init__(self, 5)
-• __init__ sets self.x = 5 (instance attribute)
-• obj.x accesses instance attribute
-• Retourne : 5
-
-Comment ça fonctionne :
-• MyClass(5) creates instance and calls __init__(self, 5)
-• __init__ executes: self.x = 5
-• Instance attribute x = 5 created on instance
-• obj.x accesses instance attribute
-• Retourne : 5
-
-Exemple :
-class MyClass:
-    def __init__(self, x):
-        self.x = x
-obj = MyClass(5)              # Calls __init__(self, 5), sets obj.x = 5
-obj.x                         # 5 (instance attribute)
-
-Usages courants :
-• Setting attributes: def __init__(self, x): self.x = x
-• Initialization: def __init__(self): self.data = []
-• Instance setup
-• Object initialization
-
-Exemple : Si class MyClass: def __init__(self, x): self.x = x; obj = MyClass(5); obj.x, alors obj.x retourne 5 car __init__ sets instance attributes when the instance est créé, so self.x = 5 crée une instance attribute x with value 5.
-`,
-  2113: `Le __init__ méthode can have no parameters except self. Si classe MyClass: def __init__(self): pass; obj = MyClass(), alors obj = MyClass() crée une instance car __init__ can be defined avec only self (no other parameters). Quand vous call MyClass() avec no arguments, it calls __init__(self) avec no additional arguments. The pass instruction ne fait rien - it's just a placeholder for an empty méthode body.
-
-__init__ sans paramètres :
-• classe MyClass: def __init__(self): pass; obj = MyClass() creates instance
-• __init__ has only self parameter (no other parameters)
-• MyClass() calls __init__(self) avec no arguments
-• Instance created successfully
-• Retourne : instance objet
-
-Comment ça fonctionne :
-• MyClass() creates instance and calls __init__(self)
-• __init__ executes: pass (ne fait rien)
-• Instance created successfully
-• Assigned to obj
-• Retourne : instance objet
-
-Exemple :
-classe MyClass:
-    def __init__(self):
-        pass
-obj = MyClass()               # Calls __init__(self), creates instance
-obj                           # <__main__.MyClass objet>
-
-Usages courants :
-• Empty constructor: def __init__(self): pass
-• No initialization: def __init__(self): (empty body)
-• Default initialization
-• Simple constructors
-
-Exemple : Si classe MyClass: def __init__(self): pass; obj = MyClass(), alors obj = MyClass() crée une instance car __init__ can have no parameters except self, so MyClass() calls __init__(self) and creates the instance.
-`,
-  2114: `Le __init__ méthode can have multiple parameters. Si classe MyClass: def __init__(self, x, y): self.x = x; self.y = y; obj = MyClass(1, 2), alors obj = MyClass(1, 2) crée une instance avec x=1, y=2 car __init__ can take multiple parameters. Quand vous call MyClass(1, 2), it calls __init__(self, 1, 2), qui définit self.x = 1 and self.y = 2, creating two instance attributes.
-
-__init__ avec plusieurs paramètres :
-• classe MyClass: def __init__(self, x, y): self.x = x; self.y = y; obj = MyClass(1, 2) creates instance avec x=1, y=2
-• __init__ has parameters: self, x, y
-• MyClass(1, 2) calls __init__(self, 1, 2)
-• Sets self.x = 1, self.y = 2
-• Retourne : instance objet
-
-Comment ça fonctionne :
-• MyClass(1, 2) creates instance and calls __init__(self, 1, 2)
-• __init__ executes: self.x = 1, self.y = 2
-• Instance attributes x = 1, y = 2 created
-• Instance created successfully
-• Retourne : instance objet
-
-Exemple :
-classe MyClass:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-obj = MyClass(1, 2)           # Calls __init__(self, 1, 2), sets obj.x = 1, obj.y = 2
-obj.x                         # 1
-obj.y                         # 2
-
-Usages courants :
-• Multiple parameters: def __init__(self, x, y): self.x = x; self.y = y
-• Initialization: def __init__(self, name, age): self.name = name; self.age = age
-• Instance setup
-• Object initialization
-
-Exemple : Si classe MyClass: def __init__(self, x, y): self.x = x; self.y = y; obj = MyClass(1, 2), alors obj = MyClass(1, 2) crée une instance avec x=1, y=2 car __init__ can have multiple parameters, and MyClass(1, 2) calls __init__(self, 1, 2), qui définit both instance attributes.
-`,
-  2115: `Le __init__ méthode can have default parameters. Si classe MyClass: def __init__(self, x=1): self.x = x; obj = MyClass(), alors obj = MyClass() crée une instance avec x=1 car __init__ a un default parameter x=1. Quand vous call MyClass() avec no arguments, it uses the default valeur x=1, so __init__(self, 1) est appelé, qui définit self.x = 1. Default parameters allow you to create instances sans providing all arguments.
-
-__init__ avec paramètre par défaut :
-• classe MyClass: def __init__(self, x=1): self.x = x; obj = MyClass() creates instance avec x=1
-• __init__ has default parameter: x=1
-• MyClass() calls __init__(self, 1) (uses default)
-• Sets self.x = 1
-• Retourne : instance objet
-
-Comment ça fonctionne :
-• MyClass() creates instance and calls __init__(self, 1) (default x=1)
-• __init__ executes: self.x = 1
-• Instance attribute x = 1 created
-• Instance created successfully
-• Retourne : instance objet
-
-Exemple :
-classe MyClass:
-    def __init__(self, x=1):
-        self.x = x
-obj = MyClass()               # Calls __init__(self, 1), sets obj.x = 1
-obj.x                         # 1 (default valeur used)
-
-Usages courants :
-• Default parameters: def __init__(self, x=1): self.x = x
-• Optional initialization: def __init__(self, name='Unknown'): self.name = name
-• Instance setup
-• Flexible constructors
-
-Exemple : Si classe MyClass: def __init__(self, x=1): self.x = x; obj = MyClass(), alors obj = MyClass() crée une instance avec x=1 car __init__ a un default parameter x=1, so MyClass() uses the default valeur.
-`,
-  2116: `Passing an argument to __init__ overrides the default parameter value. Si class MyClass: def __init__(self, x=1): self.x = x; obj = MyClass(5), alors obj = MyClass(5) crée une instance with x=5 car passing 5 as an argument overrides the default value x=1. Quand vous call MyClass(5), it calls __init__(self, 5), which uses the provided argument 5 instead of the default value 1.
-
-Argument overrides default:
-• class MyClass: def __init__(self, x=1): self.x = x; obj = MyClass(5) creates instance with x=5
-• __init__ has default parameter: x=1
-• MyClass(5) calls __init__(self, 5) (overrides default)
-• Sets self.x = 5 (not 1)
-• Retourne : instance object
-
-Comment ça fonctionne :
-• MyClass(5) creates instance and calls __init__(self, 5)
-• Argument 5 overrides default x=1
-• __init__ executes: self.x = 5
-• Instance attribute x = 5 created
-• Retourne : instance object
-
-Exemple :
-class MyClass:
-    def __init__(self, x=1):
-        self.x = x
-obj = MyClass(5)             # Calls __init__(self, 5), sets obj.x = 5
-obj.x                         # 5 (argument overrides default)
-
-Usages courants :
-• Overriding defaults: MyClass(5) (overrides default x=1)
-• Flexible initialization: def __init__(self, name='Unknown'): self.name = name
-• Instance setup
-• Optional parameters
-
-Exemple : Si class MyClass: def __init__(self, x=1): self.x = x; obj = MyClass(5), alors obj = MyClass(5) crée une instance with x=5 car passing 5 as an argument overrides the default parameter value x=1.
-`,
-  2117: `Les attributs d'instance peuvent être définis après la création d'une instance. Si class MyClass: pass; obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 5 car you can assign attributes to an instance after it's created. Python allows you to add new attributes to instances dynamically - you n'a pas besoin to define them in the class or __init__ method. C'est called dynamic attribute assignment.
-
-Définition d'attributs après création :
-• class MyClass: pass; obj = MyClass(); obj.x = 5; obj.x retourne 5
-• obj = MyClass() creates instance
-• obj.x = 5 assigns attribute to instance
-• obj.x accesses attribute
-• Retourne : 5
-
-Comment ça fonctionne :
-• MyClass() creates instance
-• obj.x = 5 assigns attribute x = 5 to instance
-• Attribute stored in instance __dict__
-• obj.x accesses attribute
-• Retourne : 5
-
-Exemple :
-class MyClass: pass
-obj = MyClass()               # Creates instance
-obj.x = 5                    # Sets attribute after creation
-obj.x                        # 5 (attribute accessible)
-
-Usages courants :
-• Dynamic attributes: obj.attr = value (set after creation)
-• Flexible objects: obj.data = [] (add attributes as needed)
-• Instance attributes
-• Dynamic assignment
-
-Exemple : Si class MyClass: pass; obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 5 car instance attributes can be set after an instance est créé, and obj.x = 5 assigne le attribute to the instance.
-`,
-  2118: `Chaque appel à une classe crée une instance (objet) distincte. Si class MyClass: pass; obj1 = MyClass(); obj2 = MyClass(); obj1 is obj2, alors obj1 is obj2 retourne False car obj1 and obj2 are different instances - chaque appel to MyClass() crée un new, separate object. The is operator checks object identity (whether two variables refer to le même object), and since obj1 and obj2 are different instances, they are not le même object.
-
-Instances différentes :
-• obj1 is obj2 retourne False
-• obj1 = MyClass() creates first instance
-• obj2 = MyClass() creates second instance (different object)
-• Each instance is separate object
-• is checks identity (same object)
-• Retourne : False
-
-Comment ça fonctionne :
-• MyClass() creates first instance (obj1)
-• MyClass() creates second instance (obj2)
-• obj1 and obj2 are different objects
-• obj1 is obj2 checks if same object
-• Different objects, so returns: False
-
-Exemple :
-class MyClass: pass
-obj1 = MyClass()             # Creates first instance
-obj2 = MyClass()             # Creates second instance (different)
-obj1 is obj2                 # False (different instances)
-
-Usages courants :
-• Instance identity: obj1 is obj2 (check if same object)
-• Object comparison: if obj1 is obj2: (identity check)
-• Instance creation
-• Object identity
-
-Exemple : Si class MyClass: pass; obj1 = MyClass(); obj2 = MyClass(); obj1 is obj2, alors obj1 is obj2 retourne False car chaque appel to MyClass() crée un separate instance, so obj1 and obj2 are different objects.
-`,
-  2119: `La fonction hasattr() vérifie si un objet possède un attribut spécifique. Si class MyClass: pass; obj = MyClass(); hasattr(obj, 'x'), alors hasattr(obj, 'x') retourne False car obj doesn't have an attribute 'x' - it was created from an empty class with no attributes defined. hasattr() retourne True si l'objet possède l'attribut (whether it's defined in the class, set in __init__, or added dynamically), and False otherwise.
-
-Vérification hasattr() :
-• hasattr(obj, 'x') retourne False
-• obj = MyClass() creates instance
-• obj n'a pas attribute 'x'
-• hasattr() checks if attribute exists
-• Retourne : False
-
-Comment ça fonctionne :
-• MyClass() creates instance
-• obj n'a pas attributes (empty class)
-• hasattr(obj, 'x') checks if 'x' exists
-• Attribute n'existe pas
-• Retourne : False
-
-Exemple :
-class MyClass: pass
-obj = MyClass()
-hasattr(obj, 'x')            # False (no attribute 'x')
-obj.x = 5
-hasattr(obj, 'x')            # True (attribute 'x' exists)
-
-Usages courants :
-• Attribute checking: if hasattr(obj, 'attr'): use obj.attr
-• Safe access: hasattr(obj, 'method') and obj.method()
-• Attribute existence
-• Object inspection
-
-Exemple : Si class MyClass: pass; obj = MyClass(); hasattr(obj, 'x'), alors hasattr(obj, 'x') retourne False car obj doesn't have an attribute 'x', and hasattr() checks if an object a un specific attribute.
-`,
-  2120: `La fonction hasattr() retourne True si un objet possède un attribut spécifique. Si class MyClass: def __init__(self, x): self.x = x; obj = MyClass(5); hasattr(obj, 'x'), alors hasattr(obj, 'x') retourne True car obj has an attribute 'x' that was set in __init__. When MyClass(5) est appelé, __init__(self, 5) sets self.x = 5, creating the instance attribute 'x', so hasattr() returns True.
-
-hasattr() retourne True :
-• hasattr(obj, 'x') retourne True
-• obj = MyClass(5) creates instance with x=5
-• __init__ sets self.x = 5 (attribute exists)
-• hasattr() checks if attribute exists
-• Retourne : True
-
-Comment ça fonctionne :
-• MyClass(5) creates instance and calls __init__(self, 5)
-• __init__ sets self.x = 5 (creates attribute)
-• obj has attribute 'x'
-• hasattr(obj, 'x') checks if 'x' exists
-• Attribute exists, so returns: True
-
-Exemple :
-class MyClass:
-    def __init__(self, x):
-        self.x = x
-obj = MyClass(5)             # Sets obj.x = 5
-hasattr(obj, 'x')            # True (attribute 'x' exists)
-
-Usages courants :
-• Attribute checking: if hasattr(obj, 'attr'): use obj.attr
-• Safe access: hasattr(obj, 'method') and obj.method()
-• Attribute existence
-• Object inspection
-
-Exemple : Si class MyClass: def __init__(self, x): self.x = x; obj = MyClass(5); hasattr(obj, 'x'), alors hasattr(obj, 'x') retourne True car obj has an attribute 'x' that was set in __init__, so hasattr() returns True when the attribute exists.
-`,
-  2121: `self est une référence à l'instance (objet) sur laquelle une méthode est appelée. In a method definition like def method(self):, self is the first parameter that refers to the instance. Quand vous call obj.method(), Python passe automatiquement obj as the self argument. self allows methods to access and modify instance attributes and call other instance methods. It's a convention (not a keyword) - you could use any name, mais self est utilisé universellement.
-
-Paramètre self :
-• self refers to the instance
-• First parameter in instance methods
-• Automatically passed when method called
-• Allows access to instance attributes: self.x
-• Convention (not keyword)
-
-Comment ça fonctionne :
-• def method(self): defines instance method
-• self is first parameter (refers to instance)
-• obj.method() calls method, passes obj as self
-• Method can access instance via self
-• self.x accesses instance attribute x
-
-Exemple :
-class MyClass:
-    def method(self):
-        return self  # self is the instance
-obj = MyClass()
-obj.method() is obj  # True (self refers to obj)
-
-Usages courants :
-• Instance access: def method(self): return self.x
-• Instance modification: def method(self): self.x = 5
-• Instance methods
-• Programmation orientée objet
-
-Exemple : self in a method is a reference to the instance car quand on appelle obj.method(), Python passe automatiquement obj as the self argument, allowing the method to access and modify the instance.
-`,
-  2122: `Les méthodes d'instance sont appelées sur les instances (objets). Si class MyClass: def method(self): return 1; obj = MyClass(); obj.method(), alors obj.method() retourne 1 car obj.method() calls the instance method method() on the instance obj. Quand vous call a method on an instance, Python passe automatiquement the instance as the self argument. La method executes and returns its value (1 in this case).
-
-Appel de méthode d'instance :
-• obj.method() retourne 1
-• obj is instance of MyClass
-• method() is instance method
-• obj.method() calls method on instance
-• Retourne : 1
-
-Comment ça fonctionne :
-• obj = MyClass() creates instance
-• obj.method() calls method on instance
-• Python passes obj as self argument
-• Method executes: return 1
-• Retourne : 1
-
-Exemple :
-class MyClass:
-    def method(self):
-        return 1
-obj = MyClass()
-obj.method()                 # 1 (calls method on instance)
-
-Usages courants :
-• Method calls: obj.method() (call on instance)
-• Instance methods: def method(self): return value
-• Programmation orientée objet
-• Method invocation
-
-Exemple : Si class MyClass: def method(self): return 1; obj = MyClass(); obj.method(), alors obj.method() retourne 1 car instance methods are called on instances, and obj.method() calls the method on the instance obj.
-`,
-  2123: `Les méthodes d'instance peuvent être appelées via la classe en passant explicitement l'instance comme premier argument. Si class MyClass: def method(self): return 1; MyClass.method(MyClass()), alors MyClass.method(MyClass()) returns 1 car you can call an instance method through the class by passing the instance comme premier argument. MyClass.method is the unbound method (function), and MyClass() crée une instance to pass as self. C'est equivalent to obj = MyClass(); obj.method().
-
-Appel via la classe :
-• MyClass.method(MyClass()) returns 1
-• MyClass.method is unbound method (function)
-• MyClass() creates instance
-• MyClass.method(instance) calls method with instance as self
-• Retourne : 1
-
-Comment ça fonctionne :
-• MyClass.method accesses method via class (unbound)
-• MyClass() creates instance
-• MyClass.method(instance) calls method with instance as self
-• Method executes: return 1
-• Retourne : 1
-
-Exemple :
-class MyClass:
-    def method(self):
-        return 1
-MyClass.method(MyClass())    # 1 (calls via class with instance)
-obj = MyClass()
-obj.method()                 # 1 (same result, more common)
-
-Usages courants :
-• Unbound method call: Class.method(instance)
-• Method access: Class.method (gets unbound method)
-• Instance methods
-• Method invocation
-
-Exemple : Si class MyClass: def method(self): return 1; MyClass.method(MyClass()), alors MyClass.method(MyClass()) returns 1 car instance methods peut être appelé via the class by explicitly passing the instance comme premier argument.
-`,
-  2124: `Instance methods can take parameters in addition to self. Si class MyClass: def method(self, x): return x * 2; obj = MyClass(); obj.method(5), alors obj.method(5) returns 10 car the method takes a parameter x, and quand on appelle obj.method(5), the argument 5 est passé to x. La method alors returns x * 2 = 5 * 2 = 10. Instance methods can have any number of parameters - self is always first, followed by any other parameters.
-
-Méthode d'instance avec paramètre :
-• obj.method(5) returns 10
-• method(self, x) takes parameter x
-• obj.method(5) passes 5 to x
-• Method executes: return x * 2 = 5 * 2
-• Retourne : 10
-
-Comment ça fonctionne :
-• obj.method(5) calls method on instance
-• Python passes obj as self, 5 as x
-• Method executes: return x * 2
-• Evaluates: 5 * 2 = 10
-• Retourne : 10
-
-Exemple :
-class MyClass:
-    def method(self, x):
-        return x * 2
-obj = MyClass()
-obj.method(5)                # 10 (5 * 2)
-
-Usages courants :
-• Method parameters: def method(self, x): return x * 2
-• Multiple parameters: def method(self, x, y): return x + y
-• Instance methods
-• Method arguments
-
-Exemple : Si class MyClass: def method(self, x): return x * 2; obj = MyClass(); obj.method(5), alors obj.method(5) returns 10 car instance methods can take parameters, and obj.method(5) passes 5 to x, so la méthode retourne 5 * 2 = 10.
-`,
-  2125: `Methods can access instance attributes via self. Si class MyClass: def __init__(self, x): self.x = x; def get_x(self): return self.x; obj = MyClass(5); obj.get_x(), alors obj.get_x() returns 5 car the method get_x() accesses the instance attribute self.x. When MyClass(5) est appelé, __init__ sets self.x = 5, and when obj.get_x() est appelé, il retourne self.x, which is 5. Methods use self to access instance attributes.
-
-La méthode accède à l'attribut d'instance :
-• obj.get_x() returns 5
-• __init__ sets self.x = 5
-• get_x() accesses self.x
-• Retourne instance attribute value
-• Retourne : 5
-
-Comment ça fonctionne :
-• MyClass(5) calls __init__(self, 5)
-• __init__ sets self.x = 5
-• obj.get_x() calls method on instance
-• Method accesses self.x (instance attribute)
-• Retourne : 5
-
-Exemple :
-class MyClass:
-    def __init__(self, x):
-        self.x = x
-    def get_x(self):
-        return self.x
-obj = MyClass(5)             # Sets obj.x = 5
-obj.get_x()                  # 5 (accesses self.x)
-
-Usages courants :
-• Accessing attributes: def get_x(self): return self.x
-• Getter methods: def get_value(self): return self.value
-• Instance methods
-• Attribute access
-
-Exemple : Si class MyClass: def __init__(self, x): self.x = x; def get_x(self): return self.x; obj = MyClass(5); obj.get_x(), alors obj.get_x() returns 5 car methods can access instance attributes via self, and get_x() returns self.x, which is 5.
-`,
-  2126: `self dans une méthode fait référence à l'instance sur laquelle la méthode est appelé. Si class MyClass: def method(self): return self; obj = MyClass(); obj.method() is obj, alors obj.method() is obj returns True car self in the method refers to the instance obj. Quand vous call obj.method(), Python passes obj as self, so return self returns obj, and obj.method() is obj checks if the returned value is le même object as obj, which it is.
-
-self réfère à l'instance :
-• obj.method() is obj returns True
-• obj.method() calls method on instance
-• Python passes obj as self
-• return self returns obj
-• obj.method() is obj checks identity
-• Retourne : True
-
-Comment ça fonctionne :
-• obj.method() calls method on instance
-• Python passes obj as self argument
-• Method executes: return self (returns obj)
-• obj.method() is obj checks if same object
-• Same object, so returns: True
-
-Exemple :
-class MyClass:
-    def method(self):
-        return self
-obj = MyClass()
-obj.method() is obj          # True (self is obj)
-
-Usages courants :
-• Self reference: def method(self): return self
-• Instance identity: self is the instance
-• Instance methods
-• Object identity
-
-Exemple : Si class MyClass: def method(self): return self; obj = MyClass(); obj.method() is obj, alors obj.method() is obj returns True car self dans une méthode fait référence à l'instance sur laquelle la méthode est appelé, so self is obj.
-`,
-  2127: `Methods can take another instance as a parameter. Si class MyClass: def method(self, other): return self.x + other.x; obj1 = MyClass(); obj1.x = 1; obj2 = MyClass(); obj2.x = 2; obj1.method(obj2), alors obj1.method(obj2) returns 3 car the method takes another instance (other) as a parameter. When obj1.method(obj2) est appelé, self refers to obj1 and other refers to obj2, so il retourne self.x + other.x = 1 + 2 = 3. Cela permet methods to interact with other instances of le même class.
-
-Méthode avec une autre instance :
-• obj1.method(obj2) returns 3
-• method(self, other) takes another instance
-• obj1.method(obj2) passes obj2 as other
-• self refers to obj1, other refers to obj2
-• Retourne self.x + other.x = 1 + 2 = 3
-
-Comment ça fonctionne :
-• obj1.method(obj2) calls method on obj1
-• Python passes obj1 as self, obj2 as other
-• Method accesses self.x = 1, other.x = 2
-• Method executes: return self.x + other.x
-• Evaluates: 1 + 2 = 3
-• Retourne : 3
-
-Exemple :
-class MyClass:
-    def method(self, other):
-        return self.x + other.x
-obj1 = MyClass(); obj1.x = 1
-obj2 = MyClass(); obj2.x = 2
-obj1.method(obj2)            # 3 (1 + 2)
-
-Usages courants :
-• Instance interaction: def method(self, other): return self.x + other.x
-• Comparison: def compare(self, other): return self.value > other.value
-• Instance methods
-• Object interaction
-
-Exemple : Si class MyClass: def method(self, other): return self.x + other.x; obj1 = MyClass(); obj1.x = 1; obj2 = MyClass(); obj2.x = 2; obj1.method(obj2), alors obj1.method(obj2) returns 3 car methods can take another instance as a parameter, and self.x + other.x = 1 + 2 = 3.
-`,
-  2128: `Accéder à une méthode via la classe retourne une fonction non liée. Si class MyClass: def method(self): return 'instance'; obj = MyClass(); MyClass.method, alors MyClass.method returns <function MyClass.method> car accessing a method through the class (not an instance) retourne le unbound method (function). An unbound method is a function that hasn't been bound to a specific instance - you need to pass the instance comme premier argument when calling it. C'est different from accessing a method through an instance, qui retourne un bound method.
-
-Méthode non liée :
-• MyClass.method returns <function MyClass.method>
-• Accessing via class returns unbound function
-• Unbound method not tied to instance
-• Must pass instance as first argument
-• Retourne : function object
-
-Comment ça fonctionne :
-• MyClass.method accesses method via class
-• Method not bound to instance
-• Retourne function object (unbound)
-• Can be called: MyClass.method(instance)
-• Retourne : <function MyClass.method>
-
-Exemple :
-class MyClass:
-    def method(self):
-        return 'instance'
-MyClass.method               # <function MyClass.method> (unbound)
-obj = MyClass()
-MyClass.method(obj)          # 'instance' (pass instance as argument)
-
-Usages courants :
-• Méthode non liée : Class.method (function object)
-• Method access: Class.method (gets function)
-• Instance methods
-• Method objects
-
-Exemple : Si class MyClass: def method(self): return 'instance'; obj = MyClass(); MyClass.method, alors MyClass.method returns <function MyClass.method> car accessing a method via the class retourne un unbound function (not bound to a specific instance).
-`,
-  2129: `Accéder à une méthode via une instance retourne une méthode liée. Si class MyClass: def method(self): return 'instance'; obj = MyClass(); obj.method, alors obj.method returns <bound method MyClass.method> car accessing a method through an instance retourne un bound method - a method that's bound to that specific instance. Quand vous call a bound method, Python passe automatiquement the instance as self. C'est different from accessing a method through the class, qui retourne un unbound function.
-
-Méthode liée :
-• obj.method returns <bound method MyClass.method>
-• Accessing via instance returns bound method
-• Bound method tied to instance
-• Automatically passes instance as self
-• Retourne : bound method object
-
-Comment ça fonctionne :
-• obj.method accesses method via instance
-• Method bound to instance obj
-• Retourne bound method object
-• Can be called: obj.method() (no need to pass self)
-• Retourne : <bound method MyClass.method>
-
-Exemple :
-class MyClass:
-    def method(self):
-        return 'instance'
-obj = MyClass()
-obj.method                  # <bound method MyClass.method> (bound)
-obj.method()                 # 'instance' (calls bound method)
-
-Usages courants :
-• Méthode liée : obj.method (bound to instance)
-• Method access: obj.method (gets bound method)
-• Instance methods
-• Method objects
-
-Exemple : Si class MyClass: def method(self): return 'instance'; obj = MyClass(); obj.method, alors obj.method returns <bound method MyClass.method> car accessing a method via an instance retourne un bound method (bound to that specific instance).
-`,
-  2130: `Instance methods can have default parameters. Si class MyClass: def method(self, x=1): return x; obj = MyClass(); obj.method(), alors obj.method() retourne 1 car the method a un default parameter x=1. Quand vous call obj.method() with no arguments, it uses the default value x=1, so la méthode retourne 1. Default parameters allow you to call methods without providing all arguments.
-
-Méthode d'instance avec défaut :
-• obj.method() retourne 1
-• method(self, x=1) has default parameter
-• obj.method() uses default x=1
-• Method returns x = 1
-• Retourne : 1
-
-Comment ça fonctionne :
-• obj.method() calls method on instance
-• Python passes obj as self
-• No argument provided for x, uses default x=1
-• Method executes: return x
-• Retourne : 1
-
-Exemple :
-class MyClass:
-    def method(self, x=1):
-        return x
-obj = MyClass()
-obj.method()                # 1 (uses default x=1)
-obj.method(5)                # 5 (overrides default)
-
-Usages courants :
-• Default parameters: def method(self, x=1): return x
-• Optional arguments: def method(self, name='Unknown'): return name
-• Instance methods
-• Method arguments
-
-Exemple : Si class MyClass: def method(self, x=1): return x; obj = MyClass(); obj.method(), alors obj.method() retourne 1 car instance methods can have default parameters, and obj.method() uses the default value x=1.
-`,
-  2131: `Les attributs de classe peuvent être accédés directement via la classe. Si class MyClass: x = 1; MyClass.x, alors MyClass.x retourne 1 car x = 1 is a class attribute (defined in the class body), and you can access it through the class name. Class attributes appartiennent à la classe elle-même, pas aux instances individuelles, so they can be accessed via the class name without creating an instance.
-
-Attribut de classe via la classe :
-• MyClass.x retourne 1
-• x = 1 is class attribute (defined in class body)
-• Class attributes belong to class
-• Accessible via class name: MyClass.x
-• Retourne : 1
-
-Comment ça fonctionne :
-• class MyClass: x = 1 creates class with class attribute
-• x = 1 stored in class __dict__
-• MyClass.x accesses class attribute
-• Retourne class attribute value
-• Retourne : 1
-
-Exemple :
-class MyClass: x = 1
-MyClass.x                    # 1 (accessed via class)
-obj = MyClass()
-obj.x                        # 1 (also accessible via instance)
-
-Usages courants :
-• Class attributes: class MyClass: shared_value = 1
-• Constants: class Config: MAX_SIZE = 100
-• Class-level data
-• Shared attributes
-
-Exemple : Si class MyClass: x = 1; MyClass.x, alors MyClass.x retourne 1 car class attributes can be accessed directly via the class name, and x = 1 is a class attribute.
-`,
-  2132: `Les instances peuvent accéder aux attributs de classe. Si class MyClass: x = 1; obj = MyClass(); obj.x, alors obj.x retourne 1 car instances can access class attributes. Quand vous access an attribute on an instance, Python first looks for an instance attribute. If it doesn't find one, it looks for a class attribute. Since obj doesn't have an instance attribute x, it accesses the class attribute x = 1.
-
-L'instance accède à l'attribut de classe :
-• obj.x retourne 1
-• obj n'a pas instance attribute x
-• Python looks for class attribute x
-• Finds class attribute x = 1
-• Retourne : 1
-
-Comment ça fonctionne :
-• obj = MyClass() creates instance
-• obj n'a pas instance attribute x
-• obj.x looks for attribute x
-• Python searches: instance __dict__ (not found) → class __dict__ (found x = 1)
-• Retourne class attribute value: 1
-
-Exemple :
-class MyClass: x = 1
-obj = MyClass()
-obj.x                        # 1 (accesses class attribute)
-MyClass.x                    # 1 (same value, accessed via class)
-
-Usages courants :
-• Accessing class attributes: obj.class_attr (via instance)
-• Shared data: all instances share class attributes
-• Class-level constants
-• Shared state
-
-Exemple : Si class MyClass: x = 1; obj = MyClass(); obj.x, alors obj.x retourne 1 car instances can access class attributes, and when obj doesn't have an instance attribute x, it accesses the class attribute x = 1.
-`,
-  2133: `Définir un attribut d'instance ne modifie pas l'attribut de classe. Si class MyClass: x = 1; obj = MyClass(); obj.x = 2; MyClass.x, alors MyClass.x retourne 1 car obj.x = 2 crée une instance attribute x = 2 on obj, which shadows (hides) the class attribute, but it doesn't modify the class attribute itself. The class attribute MyClass.x remains 1. Instance attributes and class attributes are separate - modifying one n'affecte pas the other.
-
-L'attribut d'instance ne modifie pas l'attribut de classe :
-• MyClass.x retourne 1
-• obj.x = 2 creates instance attribute (ne change pas class attribute)
-• Class attribute MyClass.x remains 1
-• Instance attribute shadows class attribute
-• Retourne : 1
-
-Comment ça fonctionne :
-• obj.x = 2 assigns instance attribute x = 2 to obj
-• Instance attribute stored in obj.__dict__
-• Class attribute MyClass.x remains in class __dict__
-• Instance attribute shadows class attribute for obj
-• MyClass.x still returns class attribute: 1
-
-Exemple :
-class MyClass: x = 1
-obj = MyClass()
-obj.x = 2                    # Creates instance attribute
-MyClass.x                    # 1 (class attribute inchangés)
-obj.x                        # 2 (instance attribute)
-
-Usages courants :
-• Instance attributes: obj.attr = value (n'affecte pas class)
-• Shadowing: instance attribute hides class attribute
-• Separate storage
-• Attribute independence
-
-Exemple : Si class MyClass: x = 1; obj = MyClass(); obj.x = 2; MyClass.x, alors MyClass.x retourne 1 car setting an instance attribute ne change pas the class attribute - they are separate, and the class attribute remains 1.
-`,
-  2134: `Les attributs d'instance masquent (cachent) les attributs de classe. Si class MyClass: x = 1; obj = MyClass(); obj.x = 2; obj.x, alors obj.x retourne 2 car obj.x = 2 crée une instance attribute x = 2 on obj, which shadows the class attribute x = 1. Quand vous access obj.x, Python first looks for an instance attribute, finds x = 2, and returns it without checking the class attribute. The instance attribute takes precedence over the class attribute.
-
-L'attribut d'instance masque la classe :
-• obj.x retourne 2
-• obj.x = 2 creates instance attribute x = 2
-• Instance attribute shadows class attribute x = 1
-• obj.x retourne instance attribute (not class attribute)
-• Retourne : 2
-
-Comment ça fonctionne :
-• obj.x = 2 assigns instance attribute x = 2 to obj
-• Instance attribute stored in obj.__dict__
-• obj.x looks for attribute x
-• Python searches: instance __dict__ (finds x = 2) → returns 2
-• Class attribute x = 1 is shadowed (not accessed)
-
-Exemple :
-class MyClass: x = 1
-obj = MyClass()
-obj.x = 2                    # Creates instance attribute (shadows class)
-obj.x                        # 2 (instance attribute, not class attribute)
-MyClass.x                    # 1 (class attribute inchangés)
-
-Usages courants :
-• Shadowing: instance attribute hides class attribute
-• Instance-specific values: obj.attr = value (overrides class)
-• Attribute precedence
-• Instance attributes
-
-Exemple : Si class MyClass: x = 1; obj = MyClass(); obj.x = 2; obj.x, alors obj.x retourne 2 car instance attributes shadow class attributes, and obj.x = 2 crée une instance attribute that takes precedence over the class attribute.
-`,
-  2135: `Instance attributes are independent for each instance. Si class MyClass: x = 1; obj1 = MyClass(); obj2 = MyClass(); obj1.x = 2; obj2.x, alors obj2.x returns 1 car instance attributes sont stockés separately for each instance. Setting obj1.x = 2 only affects obj1 - it crée une instance attribute on obj1 that shadows the class attribute. obj2 still accesses the class attribute x = 1 car it doesn't have its own instance attribute x.
-
-Attributs d'instance indépendants :
-• obj2.x returns 1
-• obj1.x = 2 only affects obj1
-• obj2 n'a pas instance attribute x
-• obj2.x accesses class attribute x = 1
-• Retourne : 1
-
-Comment ça fonctionne :
-• obj1.x = 2 creates instance attribute on obj1 only
-• obj2 n'a pas instance attribute x
-• obj2.x looks for attribute x
-• Python searches: obj2.__dict__ (not found) → class __dict__ (finds x = 1)
-• Retourne class attribute: 1
-
-Exemple :
-class MyClass: x = 1
-obj1 = MyClass(); obj2 = MyClass()
-obj1.x = 2                   # Only affects obj1
-obj1.x                       # 2 (instance attribute)
-obj2.x                       # 1 (class attribute)
-
-Usages courants :
-• Independent instances: each instance has own attributes
-• Instance-specific data: obj1.attr = value1, obj2.attr = value2
-• Instance attributes
-• Object independence
-
-Exemple : Si class MyClass: x = 1; obj1 = MyClass(); obj2 = MyClass(); obj1.x = 2; obj2.x, alors obj2.x returns 1 car instance attributes are independent per instance, and obj1.x = 2 only affects obj1, so obj2 still accesses the class attribute x = 1.
-`,
-  2136: `Mutable class attributes (like lists) are shared by all instances. Si class MyClass: x = []; obj1 = MyClass(); obj2 = MyClass(); obj1.x.append(1); obj2.x, alors obj2.x returns [1] car x = [] is a mutable class attribute (a list), and all instances share le même list object. When obj1.x.append(1) modifies the list, it modifies the shared list, so obj2.x also sees the change. C'est a common pitfall - mutable class attributes should typically be initialized in __init__ instead.
-
-Attributs de classe mutables partagés :
-• obj2.x returns [1]
-• x = [] is mutable class attribute (list)
-• All instances share same list object
-• obj1.x.append(1) modifies shared list
-• obj2.x sees same modified list
-• Retourne : [1]
-
-Comment ça fonctionne :
-• x = [] creates class attribute (list object)
-• obj1 and obj2 both reference same list object
-• obj1.x.append(1) modifies shared list
-• obj2.x accesses same list object
-• Retourne : [1] (modified list)
-
-Exemple :
-class MyClass: x = []  # Mutable class attribute (shared!)
-obj1 = MyClass(); obj2 = MyClass()
-obj1.x.append(1)        # Modifies shared list
-obj2.x                  # [1] (same list, modified)
-
-Usages courants :
-• Understanding pitfalls: mutable class attributes shared
-• Best practice: initialize mutable attributes in __init__
-• Shared state
-• Mutable attributes
-
-Exemple : Si class MyClass: x = []; obj1 = MyClass(); obj2 = MyClass(); obj1.x.append(1); obj2.x, alors obj2.x returns [1] car mutable class attributes are shared by all instances, so modifying the list through one instance affects all instances.
-`,
-  2137: `Changing a class attribute affects all instances (if they n'a pas their own instance attribute shadowing it). Si class MyClass: x = 1; MyClass.x = 2; obj = MyClass(); obj.x, alors obj.x retourne 2 car MyClass.x = 2 changes the class attribute, and since obj doesn't have an instance attribute x (it was just created), it accesses the class attribute, which vaut maintenant 2. All instances that don't shadow the class attribute will see the new value.
-
-Changer l'attribut de classe affecte les instances :
-• obj.x retourne 2
-• MyClass.x = 2 changes class attribute
-• obj n'a pas instance attribute x (just created)
-• obj.x accesses class attribute (now 2)
-• Retourne : 2
-
-Comment ça fonctionne :
-• MyClass.x = 2 modifies class attribute
-• obj = MyClass() creates new instance
-• obj n'a pas instance attribute x
-• obj.x looks for attribute x
-• Python searches: obj.__dict__ (not found) → class __dict__ (finds x = 2)
-• Retourne class attribute: 2
-
-Exemple :
-class MyClass: x = 1
-MyClass.x = 2                # Changes class attribute
-obj = MyClass()
-obj.x                        # 2 (accesses class attribute)
-
-Usages courants :
-• Changing class attributes: MyClass.attr = new_value
-• Shared updates: change affects all instances (if not shadowed)
-• Class-level modifications
-• Attribute updates
-
-Exemple : Si class MyClass: x = 1; MyClass.x = 2; obj = MyClass(); obj.x, alors obj.x retourne 2 car changing a class attribute affects all instances that don't shadow it, and obj accesses the class attribute, which vaut maintenant 2.
-`,
-  2138: `Deleting an instance attribute reveals (unhides) the class attribute. Si class MyClass: x = 1; obj = MyClass(); obj.x = 2; del obj.x; obj.x, alors obj.x retourne 1 car del obj.x deletes the instance attribute x = 2, which was shadowing the class attribute. After deletion, obj no longer has an instance attribute x, so quand on accède obj.x, Python looks for the class attribute and finds x = 1.
-
-Supprimer l'attribut d'instance révèle la classe :
-• obj.x retourne 1
-• del obj.x deletes instance attribute x = 2
-• obj no longer has instance attribute x
-• obj.x looks for attribute x
-• Python finds class attribute x = 1
-• Retourne : 1
-
-Comment ça fonctionne :
-• obj.x = 2 creates instance attribute (shadows class)
-• del obj.x deletes instance attribute
-• obj.__dict__ no longer has 'x'
-• obj.x looks for attribute x
-• Python searches: obj.__dict__ (not found) → class __dict__ (finds x = 1)
-• Retourne class attribute: 1
-
-Exemple :
-class MyClass: x = 1
-obj = MyClass()
-obj.x = 2                    # Creates instance attribute (shadows)
-del obj.x                    # Deletes instance attribute
-obj.x                        # 1 (now accesses class attribute)
-
-Usages courants :
-• Revealing class attributes: del obj.attr (removes shadowing)
-• Attribute deletion: del obj.attr (removes instance attribute)
-• Attribute management
-• Shadowing control
-
-Exemple : Si class MyClass: x = 1; obj = MyClass(); obj.x = 2; del obj.x; obj.x, alors obj.x retourne 1 car deleting an instance attribute reveals the class attribute, and after del obj.x, obj accesses the class attribute x = 1.
-`,
-  2139: `Changing a class attribute affects instances that don't shadow it. Si class MyClass: x = 1; obj = MyClass(); MyClass.x = 2; obj.x, alors obj.x retourne 2 car MyClass.x = 2 changes the class attribute, and since obj doesn't have an instance attribute x (it was just created), it accesses the class attribute, which vaut maintenant 2. If obj had an instance attribute x that shadowed the class attribute, changing the class attribute wouldn't affect obj.x.
-
-Changing class affects instance:
-• obj.x retourne 2
-• MyClass.x = 2 changes class attribute
-• obj n'a pas instance attribute x (not shadowed)
-• obj.x accesses class attribute (now 2)
-• Retourne : 2
-
-Comment ça fonctionne :
-• obj = MyClass() creates instance (no instance attribute x)
-• MyClass.x = 2 modifies class attribute
-• obj.x looks for attribute x
-• Python searches: obj.__dict__ (not found) → class __dict__ (finds x = 2)
-• Retourne class attribute: 2
-
-Exemple :
-class MyClass: x = 1
-obj = MyClass()              # No instance attribute x
-MyClass.x = 2                # Changes class attribute
-obj.x                        # 2 (accesses class attribute)
-
-Usages courants :
-• Class attribute updates: MyClass.attr = new_value
-• Shared changes: affects instances (if not shadowed)
-• Class-level modifications
-• Attribute updates
-
-Exemple : Si class MyClass: x = 1; obj = MyClass(); MyClass.x = 2; obj.x, alors obj.x retourne 2 car changing a class attribute affects instances that don't shadow it, and obj accesses the class attribute, which vaut maintenant 2.
-`,
-  2140: `Instance attributes that shadow class attributes are independent - changing the class attribute n'affecte pas them. Si class MyClass: x = 1; obj = MyClass(); obj.x = 2; MyClass.x = 3; obj.x, alors obj.x retourne 2 car obj.x = 2 crée une instance attribute that shadows the class attribute. Quand vous change MyClass.x = 3, it only affects the class attribute, not the instance attribute. Since obj has its own instance attribute x = 2, it continues to return 2, not the class attribute value 3.
-
-Attribut d'instance indépendant :
-• obj.x retourne 2
-• obj.x = 2 creates instance attribute (shadows class)
-• MyClass.x = 3 changes class attribute (n'affecte pas instance)
-• obj.x retourne instance attribute (not class attribute)
-• Retourne : 2
-
-Comment ça fonctionne :
-• obj.x = 2 creates instance attribute x = 2
-• Instance attribute shadows class attribute
-• MyClass.x = 3 modifies class attribute (now 3)
-• obj.x looks for attribute x
-• Python searches: obj.__dict__ (finds x = 2) → returns 2
-• Class attribute x = 3 is shadowed (not accessed)
-
-Exemple :
-class MyClass: x = 1
-obj = MyClass()
-obj.x = 2                    # Creates instance attribute (shadows)
-MyClass.x = 3                # Changes class attribute
-obj.x                        # 2 (instance attribute, not class attribute)
-MyClass.x                    # 3 (class attribute)
-
-Usages courants :
-• Shadowing: instance attribute hides class attribute
-• Independent values: instance attribute independent of class
-• Attribute precedence
-• Instance attributes
-
-Exemple : Si class MyClass: x = 1; obj = MyClass(); obj.x = 2; MyClass.x = 3; obj.x, alors obj.x retourne 2 car instance attributes that shadow class attributes are independent, and changing the class attribute n'affecte pas the instance attribute.
-`,
-  2141: `Le décorateur @classmethod crée une méthode de classe qui reçoit la classe comme premier argument. Si class MyClass: @classmethod; def method(cls): return cls; MyClass.method(), alors MyClass.method() retourne <class '__main__.MyClass'> car @classmethod makes method() a class method, and cls refers to the class MyClass. Quand vous call MyClass.method(), Python passe automatiquement MyClass as the cls argument, so return cls retourne le class object.
-
-Décorateur @classmethod :
-• MyClass.method() retourne <class '__main__.MyClass'>
-• @classmethod decorator creates class method
-• cls parameter refers to class (automatically passed)
-• MyClass.method() passes MyClass as cls
-• Retourne : class object
-
-Comment ça fonctionne :
-• @classmethod decorator modifies method
-• method(cls) receives class as first argument
-• MyClass.method() calls class method
-• Python passes MyClass as cls argument
-• Method executes: return cls
-• Retourne : <class '__main__.MyClass'>
-
-Exemple :
-class MyClass:
-    @classmethod
-    def method(cls):
-        return cls
-MyClass.method()             # <class '__main__.MyClass'> (cls is MyClass)
-
-Usages courants :
-• Class methods: @classmethod def method(cls): return cls
-• Factory methods: @classmethod def create(cls): return cls()
-• Class-level operations
-• Alternative constructors
-
-Exemple : Si class MyClass: @classmethod; def method(cls): return cls; MyClass.method(), alors MyClass.method() retourne <class '__main__.MyClass'> car @classmethod crée un class method that reçoit le class comme premier argument (cls), and return cls retourne le class object.
-`,
-  2142: `Class methods peut être appelé on instances, but they still receive the class comme premier argument, not the instance. Si class MyClass: @classmethod; def method(cls): return cls; obj = MyClass(); obj.method(), alors obj.method() retourne <class '__main__.MyClass'> car even though you call the method on an instance (obj), @classmethod ensures that cls reçoit le class MyClass, not the instance obj. C'est different from instance methods, which receive the instance as self.
-
-Méthode de classe sur l'instance :
-• obj.method() retourne <class '__main__.MyClass'>
-• obj.method() calls class method on instance
-• @classmethod ensures cls receives class (not instance)
-• cls is MyClass (not obj)
-• Retourne : class object
-
-Comment ça fonctionne :
-• obj.method() calls class method on instance
-• @classmethod decorator ensures class passé comme cls
-• Python passes MyClass as cls (not obj)
-• Method executes: return cls
-• Retourne : <class '__main__.MyClass'>
-
-Exemple :
-class MyClass:
-    @classmethod
-    def method(cls):
-        return cls
-obj = MyClass()
-obj.method()                 # <class '__main__.MyClass'> (cls is class, not instance)
-MyClass.method()             # <class '__main__.MyClass'> (same result)
-
-Usages courants :
-• Class methods: peut être appelé on instance or class
-• Consistent behavior: obj.method() and Class.method() same
-• Class-level operations
-• Alternative constructors
-
-Exemple : Si class MyClass: @classmethod; def method(cls): return cls; obj = MyClass(); obj.method(), alors obj.method() retourne <class '__main__.MyClass'> car class methods called on instances still receive the class comme premier argument, not the instance.
-`,
-  2143: `Le décorateur @staticmethod crée une méthode statique qui ne requiert ni self ni cls. Si class MyClass: @staticmethod; def method(): return 1; MyClass.method(), alors MyClass.method() retourne 1 car @staticmethod makes method() a static method that ne reçoit pas self ni cls - it's just a regular function that happens to be defined inside a class. Static methods are called like regular functions, but they're accessed through the class.
-
-Décorateur @staticmethod :
-• MyClass.method() retourne 1
-• @staticmethod decorator creates static method
-• method() ne reçoit pas self ni cls
-• Called like regular function
-• Retourne : 1
-
-Comment ça fonctionne :
-• @staticmethod decorator modifies method
-• method() n'a pas self or cls parameter
-• MyClass.method() calls static method
-• No automatic arguments passed
-• Method executes: return 1
-• Retourne : 1
-
-Exemple :
-class MyClass:
-    @staticmethod
-    def method():
-        return 1
-MyClass.method()             # 1 (no self or cls needed)
-
-Usages courants :
-• Static methods: @staticmethod def method(): return value
-• Utility functions: @staticmethod def helper(): ...
-• No instance/class needed
-• Regular functions in class namespace
-
-Exemple : Si class MyClass: @staticmethod; def method(): return 1; MyClass.method(), alors MyClass.method() retourne 1 car @staticmethod crée un static method that doesn't require self or cls - it's just a regular function accessed through the class.
-`,
-  2144: `Les méthodes statiques peuvent être appelées sur les instances et sur les classes. Si class MyClass: @staticmethod; def method(): return 1; obj = MyClass(); obj.method(), alors obj.method() retourne 1 car les méthodes statiques peuvent être appelées sur les instances comme sur les classes. Lorsqu'on appelle une méthode statique sur une instance, cela fonctionne comme sur la classe — ni l'instance ni la classe n'est passée en argument. Les méthodes statiques sont essentiellement des fonctions ordinaires accessibles via le namespace de la classe.
-
-Méthode statique sur l'instance :
-• obj.method() retourne 1
-• obj.method() appelle la méthode statique sur l'instance
-• La méthode statique ne reçoit ni instance ni classe
-• Même résultat que MyClass.method()
-• Retourne : 1
-
-Comment ça fonctionne :
-• obj.method() appelle la méthode statique sur l'instance
-• @staticmethod garantit qu'aucun argument automatique n'est passé
-• Ni self ni cls passé
-• La méthode s'exécute : return 1
-• Retourne : 1 (identique à MyClass.method())
-
-Exemple :
-class MyClass:
-    @staticmethod
-    def method():
-        return 1
-obj = MyClass()
-obj.method()                 # 1 (fonctionne sur l'instance)
-MyClass.method()             # 1 (fonctionne sur la classe, même résultat)
-
-Usages courants :
-• Méthodes statiques : appelables sur instance ou classe
-• Fonctions utilitaires : @staticmethod def helper(): ...
-• Pas besoin d'instance ni de classe
-• Fonctions ordinaires dans le namespace de la classe
-
-Exemple : Si class MyClass: @staticmethod; def method(): return 1; obj = MyClass(); obj.method(), alors obj.method() retourne 1 car les méthodes statiques peuvent être appelées sur les instances ou les classes, avec le même comportement dans les deux cas.
-`,
-  2145: `Le key difference is that @classmethod reçoit le classe comme premier argument (cls), while @staticmethod receives nothing. @classmethod def méthode(cls): receives cls (the classe) automatically, allowing it to access classe attributes and create instances. @staticmethod def méthode(): receives no automatic arguments - it's just a regular fonction. Utilisez @classmethod quand vous avez besoin d'accéder à la classe, et @staticmethod quand vous n'avez besoin ni de la classe ni de l'instance.
-
-Difference:
-• @classmethod gets cls (classe as first argument)
-• @staticmethod gets nothing (no automatic arguments)
-• classmethod can access classe: cls.attr
-• staticmethod is just a regular fonction
-• Use classmethod for classe operations, staticmethod for utilities
-
-Comment ça fonctionne :
-• @classmethod: def méthode(cls): (cls is classe, automatically passed)
-• @staticmethod: def méthode(): (no automatic arguments)
-• classmethod(cls): can use cls to access classe attributes
-• staticmethod(): just a regular fonction in classe namespace
-
-Exemple :
-classe MyClass:
-    x = 1
-    @classmethod
-    def get_x(cls):
-        renvoyer cls.x  # Can access classe via cls
-    @staticmethod
-    def add(a, b):
-        renvoyer a + b  # No cls or self needed
-
-Usages courants :
-• @classmethod: factory méthodes, classe-level operations
-• @staticmethod: utility fonctions, no classe/instance needed
-• Method types
-• Decorators
-
-Exemple : The difference is that @classmethod reçoit le classe comme premier argument (cls), allowing access to classe attributes, while @staticmethod receives nothing and is just a regular fonction in the classe namespace.
-`,
-  2146: `Class methods can access class attributes via the cls parameter. Si class MyClass: x = 1; @classmethod; def get_x(cls): return cls.x; MyClass.get_x(), alors MyClass.get_x() returns 1 car the class method get_x() receives cls (the class MyClass) comme premier argument, and cls.x accesses the class attribute x = 1. C'est the main advantage of @classmethod - it allows methods to access and fonctionner avec class-level data.
-
-La méthode de classe accède à l'attribut de classe :
-• MyClass.get_x() returns 1
-• @classmethod makes get_x() a class method
-• cls parameter receives MyClass (the class)
-• cls.x accesses class attribute x = 1
-• Retourne : 1
-
-Comment ça fonctionne :
-• MyClass.get_x() calls class method
-• Python passes MyClass as cls argument
-• Method executes: return cls.x
-• cls.x accesses class attribute x = 1
-• Retourne : 1
-
-Exemple :
-class MyClass:
-    x = 1
-    @classmethod
-    def get_x(cls):
-        return cls.x  # Accesses class attribute via cls
-MyClass.get_x()       # 1 (cls.x accesses class attribute)
-
-Usages courants :
-• Accessing class attributes: @classmethod def get_attr(cls): return cls.attr
-• Class-level operations: @classmethod def class_operation(cls): ...
-• Class methods
-• Class attribute access
-
-Exemple : Si class MyClass: x = 1; @classmethod; def get_x(cls): return cls.x; MyClass.get_x(), alors MyClass.get_x() returns 1 car class methods can access class attributes via cls, and cls.x accesses the class attribute x = 1.
-`,
-  2147: `Class methods peut être utilisé as factory methods to create instances. Si class MyClass: @classmethod; def create(cls): return cls(); obj = MyClass.create(), alors MyClass.create() crée une instance car the class method create() receives cls (the class MyClass) comme premier argument, and cls() calls the class constructor, creating a new instance. C'est a common pattern for alternative constructors or factory methods that create instances in different ways.
-
-Méthode de classe comme fabrique :
-• MyClass.create() creates instance
-• @classmethod makes create() a class method
-• cls parameter receives MyClass (the class)
-• cls() calls class constructor (creates instance)
-• Retourne : instance object
-
-Comment ça fonctionne :
-• MyClass.create() calls class method
-• Python passes MyClass as cls argument
-• Method executes: return cls()
-• cls() calls MyClass() (creates instance)
-• Retourne : new instance object
-
-Exemple :
-class MyClass:
-    @classmethod
-    def create(cls):
-        return cls()  # Creates instance using cls
-obj = MyClass.create()  # Creates instance (factory method)
-
-Usages courants :
-• Factory methods: @classmethod def create(cls): return cls()
-• Alternative constructors: @classmethod def from_string(cls, s): ...
-• Class methods
-• Instance creation
-
-Exemple : Si class MyClass: @classmethod; def create(cls): return cls(); obj = MyClass.create(), alors MyClass.create() crée une instance car class methods peut être utilisé as factory methods, and cls() calls the class constructor to create a new instance.
-`,
-  2148: `Static methods can take regular parameters just like regular functions. Si class MyClass: @staticmethod; def add(x, y): return x + y; MyClass.add(1, 2), alors MyClass.add(1, 2) returns 3 car static methods are essentially regular functions - they can take any parameters you define. The @staticmethod decorator doesn't restrict what parameters the method can have - it just prevents self or cls from being automatically passed.
-
-Méthode statique avec paramètres :
-• MyClass.add(1, 2) returns 3
-• @staticmethod makes add() a static method
-• add(x, y) takes regular parameters
-• MyClass.add(1, 2) passes 1 and 2 to x and y
-• Retourne : 1 + 2 = 3
-
-Comment ça fonctionne :
-• MyClass.add(1, 2) calls static method
-• No self or cls automatically passed
-• Arguments 1 and 2 passé à x and y
-• Method executes: return x + y
-• Evaluates: 1 + 2 = 3
-• Retourne : 3
-
-Exemple :
-class MyClass:
-    @staticmethod
-    def add(x, y):
-        return x + y
-MyClass.add(1, 2)            # 3 (regular parameters work)
-
-Usages courants :
-• Static methods: @staticmethod def helper(x, y): return x + y
-• Utility functions: @staticmethod def calculate(a, b): ...
-• Regular parameters
-• No self/cls needed
-
-Exemple : Si class MyClass: @staticmethod; def add(x, y): return x + y; MyClass.add(1, 2), alors MyClass.add(1, 2) returns 3 car static methods can take regular parameters, and they work just like regular functions.
-`,
-  2149: `A class can have both instance methods and class methods. Si class MyClass: def method(self): return 1; @classmethod; def class_method(cls): return 2; MyClass.class_method(), alors MyClass.class_method() returns 2 car a class can define multiple types of methods. Instance methods (like method(self)) receive the instance as self, while class methods (like class_method(cls)) receive the class as cls. They coexist in le même class and peut être appelé independently.
-
-Les deux types de méthodes :
-• MyClass.class_method() returns 2
-• Class has instance method: method(self)
-• Class has class method: class_method(cls)
-• Both methods coexist in same class
-• Retourne : 2
-
-Comment ça fonctionne :
-• class MyClass defines both method types
-• method(self) is instance method (receives instance)
-• class_method(cls) is class method (receives class)
-• MyClass.class_method() calls class method
-• Retourne : 2
-
-Exemple :
-class MyClass:
-    def method(self):
-        return 1  # Instance method
-    @classmethod
-    def class_method(cls):
-        return 2  # Class method
-obj = MyClass()
-obj.method()                 # 1 (instance method)
-MyClass.class_method()       # 2 (class method)
-
-Usages courants :
-• Multiple method types: instance methods and class methods
-• Flexible design: different methods for different purposes
-• Method types
-• Class design
-
-Exemple : Si class MyClass: def method(self): return 1; @classmethod; def class_method(cls): return 2; MyClass.class_method(), alors MyClass.class_method() returns 2 car a class can have both instance methods and class methods, and they coexist in le même class.
-`,
-  2150: `Static methods work le même whether called on an instance or the class. Si class MyClass: @staticmethod; def method(): return 'static'; obj = MyClass(); obj.method(), alors obj.method() retourne 'static' car static methods ne reçoit pas self ni cls, so calling them on an instance works exactly le même que calling them on the class. The instance is ignored - the static method is just a regular function accessed through the class namespace.
-
-Méthode statique sur l'instance :
-• obj.method() retourne 'static'
-• obj.method() calls static method on instance
-• Static method doesn't use instance
-• Fonctionne comme MyClass.method()
-• Retourne : 'static'
-
-Comment ça fonctionne :
-• obj.method() calls static method on instance
-• @staticmethod ensures no self or cls passed
-• Instance obj is ignored
-• Method executes: return 'static'
-• Retourne : 'static' (same as MyClass.method())
-
-Exemple :
-class MyClass:
-    @staticmethod
-    def method():
-        return 'static'
-obj = MyClass()
-obj.method()                 # 'static' (works on instance)
-MyClass.method()             # 'static' (works on class, same result)
-
-Usages courants :
-• Static methods: work on instance or class
-• Utility functions: @staticmethod def helper(): ...
-• No instance/class needed
-• Consistent behavior
-
-Exemple : Si class MyClass: @staticmethod; def method(): return 'static'; obj = MyClass(); obj.method(), alors obj.method() retourne 'static' car static methods called on instances work le même que quand appelé on the class - the instance is ignored.
-`,
-  2151: `La méthode __str__ définit la représentation en chaîne d'un objet pour str() et print(). Si class MyClass: def __str__(self): return 'str'; obj = MyClass(); str(obj), alors str(obj) returns 'str' car __str__ is a special method that's appelé quand you use str() or print() on an object. It should return a human-readable string representation of the object.
-
-__str__ method:
-• str(obj) returns 'str'
-• __str__ defines string representation
-• Called by str() and print()
-• Should return human-readable string
-• Retourne : 'str'
-
-Comment ça fonctionne :
-• obj = MyClass() creates instance
-• str(obj) calls __str__ method
-• __str__ executes: return 'str'
-• Retourne string representation
-• Retourne : 'str'
-
-Exemple :
-class MyClass:
-    def __str__(self):
-        return 'str'
-obj = MyClass()
-str(obj)                     # 'str' (uses __str__)
-print(obj)                   # str (uses __str__)
-
-Usages courants :
-• String representation: def __str__(self): return 'readable string'
-• User-friendly output: print(obj) uses __str__
-• Special methods
-• Object representation
-
-Exemple : Si class MyClass: def __str__(self): return 'str'; obj = MyClass(); str(obj), alors str(obj) returns 'str' car __str__ defines the string representation for str() and print().
-`,
-  2152: `La méthode __repr__ définit la représentation en chaîne « officielle » d'un objet pour repr(). Si class MyClass: def __repr__(self): return 'repr'; obj = MyClass(); repr(obj), alors repr(obj) returns 'repr' car __repr__ is a special method that's appelé quand you use repr() on an object. It should return an unambiguous string representation that ideally could be utilisé pour recreate the object. If __str__ is not defined, __repr__ est utilisé as a fallback.
-
-__repr__ method:
-• repr(obj) returns 'repr'
-• __repr__ defines official string representation
-• Called by repr()
-• Should return unambiguous string
-• Used as fallback if __str__ not defined
-• Retourne : 'repr'
-
-Comment ça fonctionne :
-• obj = MyClass() creates instance
-• repr(obj) calls __repr__ method
-• __repr__ executes: return 'repr'
-• Retourne official string representation
-• Retourne : 'repr'
-
-Exemple :
-class MyClass:
-    def __repr__(self):
-        return 'repr'
-obj = MyClass()
-repr(obj)                    # 'repr' (uses __repr__)
-
-Usages courants :
-• Official representation: def __repr__(self): return 'unambiguous string'
-• Debugging: repr(obj) shows official representation
-• Special methods
-• Object representation
-
-Exemple : Si class MyClass: def __repr__(self): return 'repr'; obj = MyClass(); repr(obj), alors repr(obj) returns 'repr' car __repr__ defines the official string representation for repr().
-`,
-  2153: `print() uses __str__ if available, falling back to __repr__ if __str__ is not defined. Si class MyClass: def __str__(self): return 'str'; def __repr__(self): return 'repr'; obj = MyClass(); print(obj), alors print(obj) outputs str car print() prefers __str__ over __repr__. When both are defined, __str__ est utilisé for user-friendly output, while __repr__ est utilisé for the official representation (e.g., in the REPL or for debugging).
-
-print() uses __str__:
-• print(obj) outputs str
-• print() prefers __str__ over __repr__
-• __str__ is for user-friendly output
-• __repr__ is for official representation
-• Retourne : str (printed)
-
-Comment ça fonctionne :
-• obj = MyClass() creates instance
-• print(obj) calls __str__ method (preferred)
-• __str__ executes: return 'str'
-• print() outputs the string
-• Affichage : str
-
-Exemple :
-class MyClass:
-    def __str__(self):
-        return 'str'
-    def __repr__(self):
-        return 'repr'
-obj = MyClass()
-print(obj)                   # str (uses __str__)
-repr(obj)                    # 'repr' (uses __repr__)
-
-Usages courants :
-• User-friendly output: print(obj) uses __str__
-• Official representation: repr(obj) uses __repr__
-• Special methods
-• Object representation
-
-Exemple : Si class MyClass: def __str__(self): return 'str'; def __repr__(self): return 'repr'; obj = MyClass(); print(obj), alors print(obj) outputs str car print() uses __str__ if available, preferring it over __repr__.
-`,
-  2154: `La méthode __len__ définit le comportement pour len(). Si class MyClass: def __len__(self): return 5; obj = MyClass(); len(obj), alors len(obj) returns 5 car __len__ is a special method that's appelé quand you use len() on an object. It should return a non-negative integer representing the "length" of the object. C'est commonly utilisé pour container-like objects (lists, strings, custom collections).
-
-__len__ method:
-• len(obj) returns 5
-• __len__ defines length behavior
-• Called by len()
-• Should return non-negative integer
-• Retourne : 5
-
-Comment ça fonctionne :
-• obj = MyClass() creates instance
-• len(obj) calls __len__ method
-• __len__ executes: return 5
-• Retourne length value
-• Retourne : 5
-
-Exemple :
-class MyClass:
-    def __len__(self):
-        return 5
-obj = MyClass()
-len(obj)                     # 5 (uses __len__)
-
-Usages courants :
-• Length definition: def __len__(self): return length
-• Container-like objects: len(obj) for custom collections
-• Special methods
-• Object length
-
-Exemple : Si class MyClass: def __len__(self): return 5; obj = MyClass(); len(obj), alors len(obj) returns 5 car __len__ defines the behavior for len().
-`,
-  2155: `La méthode __eq__ définit le comportement pour l'opérateur ==. Si class MyClass: def __eq__(self, other): return True; obj1 = MyClass(); obj2 = MyClass(); obj1 == obj2, alors obj1 == obj2 returns True car __eq__ is a special method that's appelé quand you use == to compare objects. By default (without __eq__), == compares object identity (same as is), but __eq__ allows you to define custom equality logic.
-
-__eq__ method:
-• obj1 == obj2 returns True
-• __eq__ defines == behavior
-• Called by == operator
-• Can define custom equality logic
-• Retourne : True
-
-Comment ça fonctionne :
-• obj1 == obj2 uses == operator
-• Python appelle obj1.__eq__(obj2)
-• __eq__ executes: return True
-• Retourne comparison result
-• Retourne : True
-
-Exemple :
-class MyClass:
-    def __eq__(self, other):
-        return True  # Always equal
-obj1 = MyClass(); obj2 = MyClass()
-obj1 == obj2                # True (uses __eq__)
-
-Usages courants :
-• Custom equality: def __eq__(self, other): return self.value == other.value
-• Value comparison: == compares values, not identity
-• Special methods
-• Operator overloading
-
-Exemple : Si class MyClass: def __eq__(self, other): return True; obj1 = MyClass(); obj2 = MyClass(); obj1 == obj2, alors obj1 == obj2 returns True car __eq__ defines the behavior for the == operator.
-`,
-  2156: `La méthode __lt__ définit le comportement pour l'opérateur < (inférieur à). Si class MyClass: def __lt__(self, other): return True; obj1 = MyClass(); obj2 = MyClass(); obj1 < obj2, alors obj1 < obj2 returns True car __lt__ is a special method that's appelé quand you use < to compare objects. C'est utilisé pour ordering and sorting. Python can automatically provide other comparison operators (>, <=, >=) if you define __lt__ and __eq__, or you can define them explicitly.
-
-__lt__ method:
-• obj1 < obj2 returns True
-• __lt__ defines < behavior
-• Called by < operator
-• Used for ordering/sorting
-• Retourne : True
-
-Comment ça fonctionne :
-• obj1 < obj2 uses < operator
-• Python appelle obj1.__lt__(obj2)
-• __lt__ executes: return True
-• Retourne comparison result
-• Retourne : True
-
-Exemple :
-class MyClass:
-    def __lt__(self, other):
-        return True  # Always less than
-obj1 = MyClass(); obj2 = MyClass()
-obj1 < obj2                 # True (uses __lt__)
-
-Usages courants :
-• Custom ordering: def __lt__(self, other): return self.value < other.value
-• Sorting: objects can be sorted using <
-• Special methods
-• Operator overloading
-
-Exemple : Si class MyClass: def __lt__(self, other): return True; obj1 = MyClass(); obj2 = MyClass(); obj1 < obj2, alors obj1 < obj2 returns True car __lt__ defines the behavior for the < operator.
-`,
-  2157: `La méthode __add__ définit le comportement pour l'opérateur +. Si class MyClass: def __add__(self, other): return 10; obj1 = MyClass(); obj2 = MyClass(); obj1 + obj2, alors obj1 + obj2 returns 10 car __add__ is a special method that's appelé quand you use + to add objects. Cela permet you to define custom addition behavior for your objects, making them fonctionner avec the + operator.
-
-__add__ method:
-• obj1 + obj2 returns 10
-• __add__ defines + behavior
-• Called by + operator
-• Can define custom addition
-• Retourne : 10
-
-Comment ça fonctionne :
-• obj1 + obj2 uses + operator
-• Python appelle obj1.__add__(obj2)
-• __add__ executes: return 10
-• Retourne addition result
-• Retourne : 10
-
-Exemple :
-class MyClass:
-    def __add__(self, other):
-        return 10  # Custom addition
-obj1 = MyClass(); obj2 = MyClass()
-obj1 + obj2                # 10 (uses __add__)
-
-Usages courants :
-• Custom addition: def __add__(self, other): return self.value + other.value
-• Operator overloading: objects fonctionner avec + operator
-• Special methods
-• Arithmetic operations
-
-Exemple : Si class MyClass: def __add__(self, other): return 10; obj1 = MyClass(); obj2 = MyClass(); obj1 + obj2, alors obj1 + obj2 returns 10 car __add__ defines the behavior for the + operator.
-`,
-  2158: `La méthode __getitem__ définit le comportement pour l'indexation []. Si class MyClass: def __getitem__(self, key): return key * 2; obj = MyClass(); obj[5], alors obj[5] returns 10 car __getitem__ is a special method that's appelé quand you use [] to access elements. Cela permet you to make your objects work like sequences or mappings (like lists or dictionaries). The key parameter can be an index, a slice, or any other value depending on your use case.
-
-__getitem__ method:
-• obj[5] returns 10
-• __getitem__ defines [] indexing behavior
-• Called by [] operator
-• key parameter is the index/key
-• Retourne : key * 2 = 5 * 2 = 10
-
-Comment ça fonctionne :
-• obj[5] uses [] indexing
-• Python appelle obj.__getitem__(5)
-• __getitem__ executes: return key * 2
-• Evaluates: 5 * 2 = 10
-• Retourne : 10
-
-Exemple :
-class MyClass:
-    def __getitem__(self, key):
-        return key * 2
-obj = MyClass()
-obj[5]                      # 10 (uses __getitem__)
-
-Usages courants :
-• Indexing: def __getitem__(self, key): return self.data[key]
-• Sequence-like objects: make objects work like lists
-• Special methods
-• Operator overloading
-
-Exemple : Si class MyClass: def __getitem__(self, key): return key * 2; obj = MyClass(); obj[5], alors obj[5] returns 10 car __getitem__ defines the behavior for [] indexing, and key * 2 = 5 * 2 = 10.
-`,
-  2159: `La méthode __setitem__ définit le comportement pour l'affectation []. Si class MyClass: def __setitem__(self, key, value): self.data = {key: value}; obj = MyClass(); obj[5] = 10; obj.data, alors obj.data returns {5: 10} car __setitem__ is a special method that's appelé quand you use [] to assign values. Cela permet you to make your objects work like mutable sequences or mappings. The key parameter is the index/key, and value is the value being assigned.
-
-__setitem__ method:
-• obj[5] = 10 calls __setitem__
-• __setitem__ defines [] assignment behavior
-• Called by [] = assignment
-• key = 5, value = 10
-• Sets self.data = {5: 10}
-• Retourne : {5: 10}
-
-Comment ça fonctionne :
-• obj[5] = 10 uses [] assignment
-• Python appelle obj.__setitem__(5, 10)
-• __setitem__ executes: self.data = {key: value}
-• Sets self.data = {5: 10}
-• obj.data returns {5: 10}
-
-Exemple :
-class MyClass:
-    def __setitem__(self, key, value):
-        self.data = {key: value}
-obj = MyClass()
-obj[5] = 10                 # Calls __setitem__(5, 10)
-obj.data                    # {5: 10}
-
-Usages courants :
-• Assignment: def __setitem__(self, key, value): self.data[key] = value
-• Mutable objects: make objects work like dictionaries
-• Special methods
-• Operator overloading
-
-Exemple : Si class MyClass: def __setitem__(self, key, value): self.data = {key: value}; obj = MyClass(); obj[5] = 10; obj.data, alors obj.data returns {5: 10} car __setitem__ defines the behavior for [] assignment, and it sets self.data = {5: 10}.
-`,
-  2160: `La méthode __call__ rend une instance appelable (comme une fonction). Si class MyClass: def __call__(self): return 'called'; obj = MyClass(); obj(), alors obj() returns 'called' car __call__ is a special method that's appelé quand you use () to call an instance. Cela permet you to make objects that behave like functions - you can call them with parentheses. C'est useful for callable objects, function-like classes, or implementing the callable pattern.
-
-__call__ method:
-• obj() returns 'called'
-• __call__ makes instance callable
-• Called by () operator
-• Instance peut être appelé like function
-• Retourne : 'called'
-
-Comment ça fonctionne :
-• obj() calls instance like function
-• Python appelle obj.__call__()
-• __call__ executes: return 'called'
-• Retourne call result
-• Retourne : 'called'
-
-Exemple :
-class MyClass:
-    def __call__(self):
-        return 'called'
-obj = MyClass()
-obj()                        # 'called' (instance is callable)
-
-Usages courants :
-• Callable objects: def __call__(self, *args): return result
-• Function-like classes: make classes work like functions
-• Special methods
-• Operator overloading
-
-Exemple : Si class MyClass: def __call__(self): return 'called'; obj = MyClass(); obj(), alors obj() returns 'called' car __call__ makes an instance callable, allowing you to call it like a function.
-`,
-  2161: `Le décorateur @property rend une méthode accessible comme un attribut. Si class MyClass: @property; def x(self): return 1; obj = MyClass(); obj.x, alors obj.x retourne 1 car @property converts the method x() into a property, allowing you to access it like an attribute (without parentheses). This fournit un clean interface for computed properties or attributes with getters/setters.
-
-@property decorator:
-• obj.x retourne 1
-• @property makes method accessible as attribute
-• No parentheses needed: obj.x (not obj.x())
-• Method est appelé automatically
-• Retourne : 1
-
-Comment ça fonctionne :
-• @property decorator modifies method
-• Method becomes property (accessible as attribute)
-• obj.x accesses property (calls method automatically)
-• Method executes: return 1
-• Retourne : 1
-
-Exemple :
-class MyClass:
-    @property
-    def x(self):
-        return 1
-obj = MyClass()
-obj.x                        # 1 (accessed as attribute, not method)
-
-Usages courants :
-• Computed properties: @property def area(self): return self.width * self.height
-• Clean interface: obj.attr instead of obj.get_attr()
-• Properties
-• Attribute-like access
-
-Exemple : Si class MyClass: @property; def x(self): return 1; obj = MyClass(); obj.x, alors obj.x retourne 1 car @property makes the method accessible as an attribute, so you can access it without parentheses.
-`,
-  2162: `A property without a setter is read-only - you cannot assign to it. Si class MyClass: @property; def x(self): return 1; obj = MyClass(); obj.x = 2, alors obj.x = 2 raises an AttributeError car the property only a un getter (defined by @property), but no setter. To make a property writable, you need to define a setter using @x.setter. Without a setter, the property is read-only.
-
-Property without setter:
-• obj.x = 2 raises AttributeError
-• Property only has getter (no setter)
-• Cannot assign to read-only property
-• Raises AttributeErreur : can't set attribute
-• Erreur : AttributeError
-
-Comment ça fonctionne :
-• obj.x = 2 attempts to assign to property
-• Property n'a pas setter defined
-• Python cannot set read-only property
-• Raises AttributeErreur : can't set attribute
-
-Exemple :
-class MyClass:
-    @property
-    def x(self):
-        return 1
-obj = MyClass()
-obj.x                        # 1 (read works)
-obj.x = 2                    # AttributeError (no setter, read-only)
-
-Usages courants :
-• Read-only properties: @property def value(self): return self._value
-• Computed properties: @property def area(self): return self.width * self.height
-• Properties
-• Attribute protection
-
-Exemple : Si class MyClass: @property; def x(self): return 1; obj = MyClass(); obj.x = 2, alors obj.x = 2 raises an AttributeError car a property without a setter is read-only and cannot be assigned to.
-`,
-  2163: `A property with both a getter (@property) and a setter (@x.setter) allows both reading and writing. Si class MyClass: @property; def x(self): return self._x; @x.setter; def x(self, value): self._x = value; obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 5 car the property a un setter that stocke le value in self._x, and the getter retrieves it. This provides controlled access to attributes with validation or transformation if needed.
-
-Property with setter:
-• obj.x = 5 assigns value (uses setter)
-• obj.x retourne 5 (uses getter)
-• @property defines getter
-• @x.setter defines setter
-• Retourne : 5
-
-Comment ça fonctionne :
-• obj.x = 5 calls setter: @x.setter def x(self, value)
-• Setter executes: self._x = value (stores 5)
-• obj.x calls getter: @property def x(self)
-• Getter executes: return self._x (returns 5)
-• Retourne : 5
-
-Exemple :
-class MyClass:
-    @property
-    def x(self):
-        return self._x
-    @x.setter
-    def x(self, value):
-        self._x = value
-obj = MyClass()
-obj.x = 5                    # Uses setter
-obj.x                        # 5 (uses getter)
-
-Usages courants :
-• Read-write properties: @property with @setter
-• Controlled access: validation in setter
-• Properties
-• Attribute access control
-
-Exemple : Si class MyClass: @property; def x(self): return self._x; @x.setter; def x(self, value): self._x = value; obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 5 car the property has both a getter and setter, allowing read and write access.
-`,
-  2164: `A property setter can transform the value before storing it. Si class MyClass: @property; def x(self): return self._x; @x.setter; def x(self, value): self._x = value * 2; obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 10 car the setter multiplies the value by 2 before storing it (self._x = value * 2 = 5 * 2 = 10). Cela permet you to validate, transform, or process values before they're stored.
-
-Setter transforms value:
-• obj.x = 5 calls setter with value = 5
-• Setter executes: self._x = value * 2 = 5 * 2 = 10
-• obj.x calls getter: return self._x
-• Retourne stored value: 10
-• Retourne : 10
-
-Comment ça fonctionne :
-• obj.x = 5 calls setter: @x.setter def x(self, value)
-• Setter transforms: self._x = value * 2
-• Evaluates: 5 * 2 = 10
-• Stores: self._x = 10
-• obj.x returns: 10
-
-Exemple :
-class MyClass:
-    @property
-    def x(self):
-        return self._x
-    @x.setter
-    def x(self, value):
-        self._x = value * 2  # Transforms value
-obj = MyClass()
-obj.x = 5                    # Stores 10 (5 * 2)
-obj.x                        # 10 (transformed value)
-
-Usages courants :
-• Value transformation: @x.setter def x(self, value): self._x = transform(value)
-• Validation: @x.setter def x(self, value): if valid: self._x = value
-• Properties
-• Attribute control
-
-Exemple : Si class MyClass: @property; def x(self): return self._x; @x.setter; def x(self, value): self._x = value * 2; obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 10 car the setter transforms the value before storing it (5 * 2 = 10).
-`,
-  2165: `Le @x.deleter decorator defines the behavior for the del instruction. Si classe MyClass: @property; def x(self): renvoyer self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); obj._x = 1; del obj.x; hasattr(obj, '_x'), alors hasattr(obj, '_x') retourne False car @x.deleter defines what happens when you delete the property, and del obj.x appelle le deleter, qui supprime self._x. This provides controlled deletion of attributes.
-
-@deleter decorator:
-• del obj.x calls deleter
-• @x.deleter defines deletion behavior
-• Deleter executes: del self._x
-• Attribute _x is deleted
-• hasattr(obj, '_x') retourne False
-
-Comment ça fonctionne :
-• obj._x = 1 sets attribute
-• del obj.x calls deleter: @x.deleter def x(self)
-• Deleter executes: del self._x
-• Attribute _x is deleted
-• hasattr(obj, '_x') checks if attribute exists
-• Retourne : False
-
-Exemple :
-classe MyClass:
-    @property
-    def x(self):
-        renvoyer self._x
-    @x.deleter
-    def x(self):
-        del self._x
-obj = MyClass()
-obj._x = 1
-del obj.x                    # Calls deleter
-hasattr(obj, '_x')          # False (deleted)
-
-Usages courants :
-• Controlled deletion: @x.deleter def x(self): cleanup logic
-• Property deletion: del obj.property (uses deleter)
-• Properties
-• Attribute management
-
-Exemple : Si classe MyClass: @property; def x(self): renvoyer self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); obj._x = 1; del obj.x; hasattr(obj, '_x'), alors hasattr(obj, '_x') retourne False car @x.deleter defines the behavior for del, and del obj.x appelle le deleter, qui supprime self._x.
-`,
-  2166: `Properties can access "private" attributes (convention: single underscore prefix). Si class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; obj = MyClass(); obj.x, alors obj.x retourne 1 car the property getter accesses the private attribute self._x. The single underscore prefix (_x) is a convention indicating that the attribute is intended for internal use, but it's not enforced by Python - it's just a naming convention.
-
-Property accesses private attribute:
-• obj.x retourne 1
-• Property getter accesses self._x
-• _x is private attribute (convention)
-• Single underscore indicates internal use
-• Retourne : 1
-
-Comment ça fonctionne :
-• __init__ sets self._x = 1
-• obj.x calls property getter
-• Getter executes: return self._x
-• Accesses private attribute _x = 1
-• Retourne : 1
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self._x = 1  # Private attribute (convention)
-    @property
-    def x(self):
-        return self._x  # Accesses private attribute
-obj = MyClass()
-obj.x                        # 1 (property accesses _x)
-
-Usages courants :
-• Encapsulation: @property def value(self): return self._value
-• Private attributes: _attr (convention, not enforced)
-• Properties
-• Attribute access control
-
-Exemple : Si class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; obj = MyClass(); obj.x, alors obj.x retourne 1 car properties can access private attributes (convention: _ prefix), and the getter returns self._x.
-`,
-  2167: `Accessing a property via the class retourne le property object itself, not the property value. Si class MyClass: @property; def x(self): return 1; obj = MyClass(); MyClass.x, alors MyClass.x retourne <property object> car accessing a property through the class (not an instance) retourne le property descriptor object, not le résultat of calling the getter. To get the value, you need to access it through an instance: obj.x.
-
-Property via class:
-• MyClass.x retourne <property object>
-• Accessing via class returns property object
-• Property object is descriptor
-• Not the property value
-• Retourne : <property object>
-
-Comment ça fonctionne :
-• MyClass.x accesses property via class
-• Property is descriptor object
-• Retourne property object (not value)
-• obj.x would return value (1)
-• Retourne : <property object>
-
-Exemple :
-class MyClass:
-    @property
-    def x(self):
-        return 1
-MyClass.x                    # <property object> (property descriptor)
-obj = MyClass()
-obj.x                        # 1 (property value)
-
-Usages courants :
-• Property descriptor: MyClass.attr (property object)
-• Descriptors: properties are descriptor objects
-• Properties
-• Object introspection
-
-Exemple : Si class MyClass: @property; def x(self): return 1; obj = MyClass(); MyClass.x, alors MyClass.x retourne <property object> car accessing a property via the class retourne le property descriptor object, not the property value.
-`,
-  2168: `Le property() fonction can be created avec a lambda fonction. Si classe MyClass: x = property(lambda self: 1); obj = MyClass(); obj.x, alors obj.x retourne 1 car property() can take a fonction (or lambda) as the getter argument. C'est an alternative way to create properties sans using the @property decorator. The lambda fonction receives self as its argument and retourne le property valeur.
-
-property() avec lambda:
-• obj.x retourne 1
-• property(lambda self: 1) creates property
-• Lambda is getter fonction
-• Receives self, retourne 1
-• Retourne : 1
-
-Comment ça fonctionne :
-• property(lambda self: 1) creates property
-• Lambda is getter: lambda self: 1
-• obj.x accesses property
-• Calls lambda avec self = obj
-• Lambda retourne: 1
-• Retourne : 1
-
-Exemple :
-classe MyClass:
-    x = property(lambda self: 1)  # Property avec lambda
-obj = MyClass()
-obj.x                        # 1 (lambda retourne 1)
-
-Usages courants :
-• Simple properties: x = property(lambda self: valeur)
-• Alternative syntax: property() instead of @property
-• Properties
-• Property creation
-
-Exemple : Si classe MyClass: x = property(lambda self: 1); obj = MyClass(); obj.x, alors obj.x retourne 1 car property() can be created avec a lambda fonction, and the lambda serves as the getter.
-`,
-  2169: `A property can ont un default value if the underlying attribute n'existe pas. Si class MyClass: @property; def x(self): return self._x if hasattr(self, '_x') else 0; obj = MyClass(); obj.x, alors obj.x retourne 0 car the property getter checks if self._x exists using hasattr(). If it n'existe pas, il retourne the default value 0. Cela permet properties to work even when the underlying attribute hasn't been set yet.
-
-Property with default:
-• obj.x retourne 0
-• Property checks if _x exists
-• hasattr(self, '_x') returns False
-• Retourne default value: 0
-• Retourne : 0
-
-Comment ça fonctionne :
-• obj.x calls property getter
-• Getter checks: hasattr(self, '_x')
-• _x n'existe pas (not set)
-• Retourne default: 0
-• Retourne : 0
-
-Exemple :
-class MyClass:
-    @property
-    def x(self):
-        return self._x if hasattr(self, '_x') else 0
-obj = MyClass()
-obj.x                        # 0 (default, _x n'existe pas)
-obj._x = 5
-obj.x                        # 5 (_x exists)
-
-Usages courants :
-• Default values: @property def x(self): return self._x if hasattr(self, '_x') else default
-• Computed defaults: properties with fallback values
-• Properties
-• Attribute defaults
-
-Exemple : Si class MyClass: @property; def x(self): return self._x if hasattr(self, '_x') else 0; obj = MyClass(); obj.x, alors obj.x retourne 0 car the property can ont un default value if the attribute n'existe pas, and hasattr() checks for existence.
-`,
-  2170: `A setter that ne stocke pas the value ne change pas the property. Si class MyClass: @property; def x(self): return 1; @x.setter; def x(self, value): pass; obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 1 car the setter has pass (ne fait rien), so it ne stocke pas the value. Le getter returns 1, and the assignment obj.x = 5 n'a pas effect car the setter doesn't actually store anything. The value 5 est passé to the setter but ignored.
-
-Setter ne stocke pas:
-• obj.x = 5 calls setter
-• Setter executes: pass (ne fait rien)
-• Value 5 is ignored (not stored)
-• obj.x calls getter: return 1
-• Retourne : 1 (inchangés)
-
-Comment ça fonctionne :
-• obj.x = 5 calls setter: @x.setter def x(self, value)
-• Setter executes: pass (ne fait rien)
-• Value 5 is not stored
-• obj.x calls getter: @property def x(self)
-• Getter returns: 1 (inchangés)
-• Retourne : 1
-
-Exemple :
-class MyClass:
-    @property
-    def x(self):
-        return 1
-    @x.setter
-    def x(self, value):
-        pass  # Doesn't store value
-obj = MyClass()
-obj.x = 5                    # Calls setter (ignores value)
-obj.x                        # 1 (getter inchangés)
-
-Usages courants :
-• Read-only simulation: setter that ignores values
-• Validation-only setters: setter that validates but ne stocke pas
-• Properties
-• Attribute control
-
-Exemple : Si class MyClass: @property; def x(self): return 1; @x.setter; def x(self, value): pass; obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 1 car a setter that ne stocke pas the value ne change pas the property, so the getter still returns 1.
-`,
-  2171: `La fonction getattr() obtient la valeur d'un attribut depuis un objet. Si class MyClass: pass; obj = MyClass(); obj.x = 1; getattr(obj, 'x'), alors getattr(obj, 'x') returns 1 car getattr() retrieves the value of the attribute 'x' from obj. It's equivalent to obj.x, but allows you to get attributes dynamically using a string name. C'est useful when the attribute name is stored in a variable.
-
-getattr() function:
-• getattr(obj, 'x') returns 1
-• getattr() gets attribute value
-• Equivalent to obj.x
-• Attribute name is string: 'x'
-• Retourne : 1
-
-Comment ça fonctionne :
-• obj.x = 1 sets attribute x = 1
-• getattr(obj, 'x') gets attribute 'x'
-• Searches for attribute 'x' on obj
-• Finds x = 1
-• Retourne : 1
-
-Exemple :
-class MyClass: pass
-obj = MyClass()
-obj.x = 1
-getattr(obj, 'x')            # 1 (gets attribute 'x')
-obj.x                        # 1 (equivalent)
-
-Usages courants :
-• Dynamic access: getattr(obj, attr_name) (attr_name is variable)
-• Attribute retrieval: getattr(obj, 'method')()
-• Object introspection
-• Dynamic attribute access
-
-Exemple : Si class MyClass: pass; obj = MyClass(); obj.x = 1; getattr(obj, 'x'), alors getattr(obj, 'x') returns 1 car getattr() gets the attribute value from an object, equivalent to obj.x.
-`,
-  2172: `Le getattr() fonction can take a default valeur that's returned if the attribute n'existe pas. Si classe MyClass: pass; obj = MyClass(); getattr(obj, 'x', 0), alors getattr(obj, 'x', 0) retourne 0 car obj doesn't have an attribute 'x', so getattr() retourne le default valeur 0 instead of raising an AttributeError. C'est useful for safely accessing attributes that might not exist.
-
-getattr() avec default:
-• getattr(obj, 'x', 0) retourne 0
-• obj doesn't have attribute 'x'
-• getattr() retourne default valeur: 0
-• No AttributeError raised
-• Retourne : 0
-
-Comment ça fonctionne :
-• getattr(obj, 'x', 0) gets attribute 'x'
-• obj doesn't have attribute 'x'
-• Attribute not found
-• Retourne default valeur: 0
-• Retourne : 0
-
-Exemple :
-classe MyClass: pass
-obj = MyClass()
-getattr(obj, 'x', 0)         # 0 (default, 'x' n'existe pas)
-getattr(obj, 'x')            # AttributeError (no default)
-obj.x = 1
-getattr(obj, 'x', 0)         # 1 (attribute exists)
-
-Usages courants :
-• Safe access: getattr(obj, 'attr', default) (no error if missing)
-• Default valeurs: getattr(obj, 'valeur', 0)
-• Object introspection
-• Dynamic attribute access
-
-Exemple : Si classe MyClass: pass; obj = MyClass(); getattr(obj, 'x', 0), alors getattr(obj, 'x', 0) retourne 0 car getattr() avec a default retourne le default valeur if the attribute is missing, preventing AttributeError.
-`,
-  2173: `La fonction setattr() définit la valeur d'un attribut sur un objet. Si class MyClass: pass; obj = MyClass(); setattr(obj, 'x', 1); obj.x, alors obj.x retourne 1 car setattr() sets the attribute 'x' to 1 on obj. It's equivalent to obj.x = 1, but allows you to set attributes dynamically using a string name. C'est useful when the attribute name is stored in a variable.
-
-setattr() function:
-• setattr(obj, 'x', 1) sets attribute
-• obj.x retourne 1
-• Equivalent to obj.x = 1
-• Attribute name is string: 'x'
-• Retourne : 1
-
-Comment ça fonctionne :
-• setattr(obj, 'x', 1) sets attribute 'x' = 1
-• Creates attribute on obj
-• obj.x accesses attribute
-• Retourne : 1
-
-Exemple :
-class MyClass: pass
-obj = MyClass()
-setattr(obj, 'x', 1)         # Sets obj.x = 1
-obj.x                        # 1 (attribute set)
-
-Usages courants :
-• Dynamic assignment: setattr(obj, attr_name, value) (attr_name is variable)
-• Attribute setting: setattr(obj, 'value', 5)
-• Object introspection
-• Dynamic attribute assignment
-
-Exemple : Si class MyClass: pass; obj = MyClass(); setattr(obj, 'x', 1); obj.x, alors obj.x retourne 1 car setattr() sets the attribute value on an object, equivalent to obj.x = 1.
-`,
-  2174: `La fonction delattr() supprime un attribut d'un objet. Si class MyClass: pass; obj = MyClass(); obj.x = 1; delattr(obj, 'x'); hasattr(obj, 'x'), alors hasattr(obj, 'x') retourne False car delattr() deletes the attribute 'x' from obj. It's equivalent to del obj.x, but allows you to delete attributes dynamically using a string name. After deletion, the attribute no longer exists.
-
-delattr() function:
-• delattr(obj, 'x') deletes attribute
-• hasattr(obj, 'x') retourne False
-• Equivalent to del obj.x
-• Attribute name is string: 'x'
-• Retourne : False
-
-Comment ça fonctionne :
-• obj.x = 1 sets attribute x = 1
-• delattr(obj, 'x') deletes attribute 'x'
-• Attribute removed from obj
-• hasattr(obj, 'x') checks if 'x' exists
-• Retourne : False
-
-Exemple :
-class MyClass: pass
-obj = MyClass()
-obj.x = 1
-delattr(obj, 'x')            # Deletes obj.x
-hasattr(obj, 'x')            # False (attribute deleted)
-
-Usages courants :
-• Dynamic deletion: delattr(obj, attr_name) (attr_name is variable)
-• Attribute removal: delattr(obj, 'value')
-• Object introspection
-• Dynamic attribute deletion
-
-Exemple : Si class MyClass: pass; obj = MyClass(); obj.x = 1; delattr(obj, 'x'); hasattr(obj, 'x'), alors hasattr(obj, 'x') retourne False car delattr() deletes the attribute from an object, equivalent to del obj.x.
-`,
-  2175: `La fonction dir() retourne une liste de noms d'attributs pour un objet. Si class MyClass: pass; obj = MyClass(); dir(obj), alors dir(obj) retourne un list of attribute names car dir() lists all attributes (methods, properties, instance attributes, class attributes) that are accessible on the object. This includes attributes from the object's class and its base classes. It's useful for introspection and discovering what attributes an object has.
-
-dir() function:
-• dir(obj) returns list of attribute names
-• Lists all accessible attributes
-• Includes methods, properties, attributes
-• Includes class and base class attributes
-• Retourne : list
-
-Comment ça fonctionne :
-• dir(obj) lists attributes on obj
-• Searches instance attributes
-• Searches class attributes
-• Searches base class attributes
-• Retourne list of attribute names
-
-Exemple :
-class MyClass: pass
-obj = MyClass()
-dir(obj)                     # ['__class__', '__dict__', ...] (list of attributes)
-
-Usages courants :
-• Introspection: dir(obj) (see all attributes)
-• Discovery: find available methods/attributes
-• Object inspection
-• Attribute listing
-
-Exemple : Si class MyClass: pass; obj = MyClass(); dir(obj), alors dir(obj) retourne un list of attribute names car dir() lists all accessible attributes on an object, including methods, properties, and attributes from the class and base classes.
-`,
-  2176: `Le dir() fonction includes classe attributes in its liste. Si classe MyClass: x = 1; obj = MyClass(); 'x' in dir(obj), alors 'x' in dir(obj) retourne True car dir() includes classe attributes (like x = 1) in addition to instance attributes. Quand vous access dir(obj), it shows attributes from both the instance and the classe, so classe attributes are visible.
-
-dir() includes classe attributes:
-• 'x' in dir(obj) retourne True
-• dir(obj) includes classe attributes
-• x = 1 is classe attribute
-• Visible in dir() output
-• Retourne : True
-
-Comment ça fonctionne :
-• dir(obj) listes attributes
-• Includes instance attributes
-• Includes classe attributes (x = 1)
-• 'x' is in the liste
-• Retourne : True
-
-Exemple :
-classe MyClass: x = 1
-obj = MyClass()
-'x' in dir(obj)              # True (classe attribute included)
-dir(obj)                     # [..., 'x', ...] (includes classe attribute)
-
-Usages courants :
-• Attribute checking: 'attr' in dir(obj) (check if attribute exists)
-• Introspection: dir(obj) shows classe and instance attributes
-• Object inspection
-• Attribute discovery
-
-Exemple : Si classe MyClass: x = 1; obj = MyClass(); 'x' in dir(obj), alors 'x' in dir(obj) retourne True car dir() includes classe attributes in its liste, so the classe attribute x = 1 is visible.
-`,
-  2177: `Le dir() fonction includes méthodes in its liste. Si classe MyClass: def méthode(self): pass; obj = MyClass(); 'méthode' in dir(obj), alors 'méthode' in dir(obj) retourne True car dir() includes méthodes (like méthode()) in addition to attributes. Methods are attributes of the classe, so they appear in dir() quand appelé on an instance.
-
-dir() includes méthodes:
-• 'méthode' in dir(obj) retourne True
-• dir(obj) includes méthodes
-• méthode() is classe méthode
-• Visible in dir() output
-• Retourne : True
-
-Comment ça fonctionne :
-• dir(obj) listes attributes
-• Includes instance attributes
-• Includes classe méthodes (méthode())
-• 'méthode' is in the liste
-• Retourne : True
-
-Exemple :
-classe MyClass:
-    def méthode(self): pass
-obj = MyClass()
-'méthode' in dir(obj)         # True (méthode included)
-dir(obj)                     # [..., 'méthode', ...] (includes méthode)
-
-Usages courants :
-• Method checking: 'méthode' in dir(obj) (check if méthode exists)
-• Introspection: dir(obj) shows méthodes and attributes
-• Object inspection
-• Method discovery
-
-Exemple : Si classe MyClass: def méthode(self): pass; obj = MyClass(); 'méthode' in dir(obj), alors 'méthode' in dir(obj) retourne True car dir() includes méthodes in its liste, so the méthode() is visible.
-`,
-  2178: `La fonction vars() retourne l'attribut __dict__, qui contient les attributs d'instance. Si class MyClass: pass; obj = MyClass(); vars(obj), alors vars(obj) returns {} car vars() returns obj.__dict__, which is a dictionary contenant les instance's attributes. For a newly created instance with no attributes, __dict__ is empty, so vars() retourne un empty dictionary.
-
-vars() function:
-• vars(obj) returns {}
-• vars() returns __dict__
-• __dict__ contains instance attributes
-• Empty instance has empty __dict__
-• Retourne : {}
-
-Comment ça fonctionne :
-• vars(obj) returns obj.__dict__
-• __dict__ is dictionary of instance attributes
-• obj n'a pas instance attributes
-• __dict__ is empty: {}
-• Retourne : {}
-
-Exemple :
-class MyClass: pass
-obj = MyClass()
-vars(obj)                    # {} (empty, no instance attributes)
-obj.x = 1
-vars(obj)                    # {'x': 1} (instance attributes)
-
-Usages courants :
-• Instance attributes: vars(obj) (get __dict__)
-• Attribute dictionary: vars(obj) shows instance attributes
-• Object inspection
-• Attribute access
-
-Exemple : Si class MyClass: pass; obj = MyClass(); vars(obj), alors vars(obj) returns {} car vars() returns __dict__, qui contient instance attributes, and an empty instance has an empty dictionary.
-`,
-  2179: `Le vars() fonction retourne un dictionnaire of instance attributes. Si classe MyClass: def __init__(self, x): self.x = x; obj = MyClass(5); vars(obj), alors vars(obj) retourne {'x': 5} car vars() retourne obj.__dict__, which is a dictionnaire containing all instance attributes. When __init__ sets self.x = 5, it crée une instance attribute x = 5, which is stored in __dict__.
-
-vars() retourne instance attributes:
-• vars(obj) retourne {'x': 5}
-• vars() retourne __dict__
-• __dict__ contains instance attributes
-• self.x = 5 creates instance attribute
-• Retourne : {'x': 5}
-
-Comment ça fonctionne :
-• MyClass(5) calls __init__(self, 5)
-• __init__ sets self.x = 5 (instance attribute)
-• Instance attribute stored in obj.__dict__
-• vars(obj) retourne obj.__dict__
-• Retourne : {'x': 5}
-
-Exemple :
-classe MyClass:
-    def __init__(self, x):
-        self.x = x
-obj = MyClass(5)
-vars(obj)                    # {'x': 5} (instance attributes)
-
-Usages courants :
-• Instance attributes: vars(obj) (get __dict__)
-• Attribute dictionnaire: vars(obj) shows all instance attributes
-• Object inspection
-• Attribute access
-
-Exemple : Si classe MyClass: def __init__(self, x): self.x = x; obj = MyClass(5); vars(obj), alors vars(obj) retourne {'x': 5} car vars() retourne __dict__, qui contient instance attributes, and self.x = 5 crée une instance attribute.
-`,
-  2180: `Le vars() fonction peut être appelé on a classe, returning the classe's __dict__. Si classe MyClass: x = 1; vars(MyClass), alors vars(MyClass) retourne un dictionnaire avec classe attributes car vars() retourne MyClass.__dict__, qui contient classe attributes, méthodes, and other classe-level data. This includes x = 1 and other classe-level definitions.
-
-vars() on classe:
-• vars(MyClass) retourne dict avec classe attributes
-• vars() retourne classe __dict__
-• __dict__ contains classe attributes and méthodes
-• Includes x = 1
-• Retourne : dict
-
-Comment ça fonctionne :
-• vars(MyClass) retourne MyClass.__dict__
-• __dict__ is dictionnaire of classe attributes
-• Contains classe attributes (x = 1)
-• Contains méthodes and other classe data
-• Retourne : dict
-
-Exemple :
-classe MyClass: x = 1
-vars(MyClass)                # {...'x': 1, ...} (classe __dict__)
-
-Usages courants :
-• Class attributes: vars(Class) (get classe __dict__)
-• Class dictionnaire: vars(Class) shows classe attributes and méthodes
-• Object inspection
-• Class introspection
-
-Exemple : Si classe MyClass: x = 1; vars(MyClass), alors vars(MyClass) retourne un dictionnaire avec classe attributes car vars() on a classe retourne le classe's __dict__, qui contient classe attributes, méthodes, and other classe-level data.
-`,
-  2181: `L'opérateur is vérifie l'identité des objets (si deux variables référencent le même objet). Si class MyClass: pass; obj1 = MyClass(); obj2 = MyClass(); obj1 is obj2, alors obj1 is obj2 retourne False car obj1 and obj2 are different instances - chaque appel to MyClass() crée un new, separate object. The is operator checks if two variables point to le même object in memory, not if they have le même value.
-
-Instances différentes :
-• obj1 is obj2 retourne False
-• obj1 and obj2 are different instances
-• Each MyClass() creates new object
-• is checks identity (same object)
-• Retourne : False
-
-Comment ça fonctionne :
-• MyClass() creates first instance (obj1)
-• MyClass() creates second instance (obj2)
-• obj1 and obj2 are different objects
-• obj1 is obj2 checks if same object
-• Different objects, so returns: False
-
-Exemple :
-class MyClass: pass
-obj1 = MyClass()             # Creates first instance
-obj2 = MyClass()             # Creates second instance (different)
-obj1 is obj2                 # False (different instances)
-
-Usages courants :
-• Identity check: obj1 is obj2 (check if same object)
-• Object comparison: if obj1 is obj2: (identity)
-• Object identity
-• Reference comparison
-
-Exemple : Si class MyClass: pass; obj1 = MyClass(); obj2 = MyClass(); obj1 is obj2, alors obj1 is obj2 retourne False car different instances are not identical - chaque appel to MyClass() crée un separate object.
-`,
-  2182: `Quand two variables refer to le même objet, is retourne True. Si classe MyClass: pass; obj1 = MyClass(); obj2 = obj1; obj1 is obj2, alors obj1 is obj2 retourne True car obj2 = obj1 assigns le même objet reference to obj2, so both variables point to le même objet. The is operator checks objet identity, and since obj1 and obj2 refer to le même objet, they are identical.
-
-Same objet reference:
-• obj1 is obj2 retourne True
-• obj2 = obj1 assigns same reference
-• Both variables point to same objet
-• is checks identity (same objet)
-• Retourne : True
-
-Comment ça fonctionne :
-• MyClass() creates instance (obj1)
-• obj2 = obj1 assigns same reference
-• obj1 and obj2 point to same objet
-• obj1 is obj2 checks if same objet
-• Same objet, so retourne: True
-
-Exemple :
-classe MyClass: pass
-obj1 = MyClass()             # Creates instance
-obj2 = obj1                  # Assigns same reference
-obj1 is obj2                 # True (same objet)
-
-Usages courants :
-• Reference check: obj1 is obj2 (check if same objet)
-• Object identity: if obj1 is obj2: (same reference)
-• Object identity
-• Reference comparison
-
-Exemple : Si classe MyClass: pass; obj1 = MyClass(); obj2 = obj1; obj1 is obj2, alors obj1 is obj2 retourne True car le même objet reference is identical - both variables point to le même objet.
-`,
-  2183: `By default, the == operator compares object identity (same as is) if __eq__ is not defined. Si class MyClass: pass; obj1 = MyClass(); obj2 = MyClass(); obj1 == obj2, alors obj1 == obj2 returns False car without a custom __eq__ method, == defaults to comparing object identity, which is le même que is. Since obj1 and obj2 are different instances, they are not equal. To define custom equality, you need to implement __eq__.
-
-Default == behavior:
-• obj1 == obj2 returns False
-• No __eq__ defined
-• == defaults to identity comparison (same as is)
-• Different instances are not equal
-• Retourne : False
-
-Comment ça fonctionne :
-• obj1 == obj2 uses == operator
-• No __eq__ method defined
-• Python uses default identity comparison
-• Compares obj1 is obj2 (identity)
-• Different objects, so returns: False
-
-Exemple :
-class MyClass: pass
-obj1 = MyClass(); obj2 = MyClass()
-obj1 == obj2                 # False (default: identity comparison)
-obj1 is obj2                 # False (same result)
-
-Usages courants :
-• Default comparison: == compares identity if no __eq__
-• Custom equality: define __eq__ for value comparison
-• Object comparison
-• Equality operators
-
-Exemple : Si class MyClass: pass; obj1 = MyClass(); obj2 = MyClass(); obj1 == obj2, alors obj1 == obj2 returns False car the default == compares identity (same as is) when __eq__ is not defined, and different instances are not identical.
-`,
-  2184: `La méthode __eq__ remplace le comportement par défaut de ==. Si class MyClass: def __eq__(self, other): return True; obj1 = MyClass(); obj2 = MyClass(); obj1 == obj2, alors obj1 == obj2 returns True car __eq__ is defined to always return True, overriding the default identity comparison. Quand vous define __eq__, Python uses it for == comparisons instead of the default identity check.
-
-__eq__ overrides ==:
-• obj1 == obj2 returns True
-• __eq__ defines == behavior
-• __eq__ always returns True
-• Overrides default identity comparison
-• Retourne : True
-
-Comment ça fonctionne :
-• obj1 == obj2 uses == operator
-• Python appelle obj1.__eq__(obj2)
-• __eq__ executes: return True
-• Retourne comparison result
-• Retourne : True
-
-Exemple :
-class MyClass:
-    def __eq__(self, other):
-        return True  # Always equal
-obj1 = MyClass(); obj2 = MyClass()
-obj1 == obj2                # True (uses __eq__)
-
-Usages courants :
-• Custom equality: def __eq__(self, other): return self.value == other.value
-• Value comparison: == compares values, not identity
-• Special methods
-• Operator overloading
-
-Exemple : Si class MyClass: def __eq__(self, other): return True; obj1 = MyClass(); obj2 = MyClass(); obj1 == obj2, alors obj1 == obj2 returns True car __eq__ overrides the default == behavior, and it's defined to return True.
-`,
-  2185: `Si __ne__ n'est pas défini, Python le fournit automatiquement comme négation de __eq__. Si class MyClass: def __eq__(self, other): return True; obj1 = MyClass(); obj2 = MyClass(); obj1 != obj2, alors obj1 != obj2 returns False car __ne__ is not defined, so Python uses not (obj1 == obj2), which is not True = False. Cela assure that != is the logical opposite of ==.
-
-__ne__ defaults to not __eq__:
-• obj1 != obj2 returns False
-• __ne__ not defined
-• Python uses not (obj1 == obj2)
-• obj1 == obj2 returns True (from __eq__)
-• not True = False
-• Retourne : False
-
-Comment ça fonctionne :
-• obj1 != obj2 uses != operator
-• __ne__ not defined
-• Python uses not (obj1 == obj2)
-• obj1 == obj2 returns True (from __eq__)
-• not True = False
-• Retourne : False
-
-Exemple :
-class MyClass:
-    def __eq__(self, other):
-        return True
-obj1 = MyClass(); obj2 = MyClass()
-obj1 != obj2                # False (not (obj1 == obj2) = not True)
-
-Usages courants :
-• Automatic __ne__: Python provides not __eq__ if __ne__ not defined
-• Logical consistency: != is opposite of ==
-• Special methods
-• Operator overloading
-
-Exemple : Si class MyClass: def __eq__(self, other): return True; obj1 = MyClass(); obj2 = MyClass(); obj1 != obj2, alors obj1 != obj2 returns False car __ne__ defaults to not __eq__ if not defined, so not True = False.
-`,
-  2186: `La méthode __hash__ définit la valeur de hachage d'un objet. Si class MyClass: def __hash__(self): return 1; hash(MyClass()), alors hash(MyClass()) returns 1 car __hash__ is a special method that's appelé quand you use hash() on an object. The hash value est utilisé for dictionary keys and set membership. Objects with __hash__ defined peut être utilisé as dictionary keys or added to sets.
-
-__hash__ method:
-• hash(MyClass()) returns 1
-• __hash__ defines hash value
-• Called by hash() function
-• Retourne hash value: 1
-• Retourne : 1
-
-Comment ça fonctionne :
-• hash(MyClass()) calls hash() function
-• Python appelle instance.__hash__()
-• __hash__ executes: return 1
-• Retourne hash value
-• Retourne : 1
-
-Exemple :
-class MyClass:
-    def __hash__(self):
-        return 1
-hash(MyClass())              # 1 (uses __hash__)
-
-Usages courants :
-• Hashable objects: def __hash__(self): return hash(self.value)
-• Dictionary keys: objects with __hash__ can be dict keys
-• Special methods
-• Object hashing
-
-Exemple : Si class MyClass: def __hash__(self): return 1; hash(MyClass()), alors hash(MyClass()) returns 1 car __hash__ defines the hash value for an object, used by hash().
-`,
-  2187: `Defining __eq__ without __hash__ makes an object unhashable. Si class MyClass: def __eq__(self, other): return True; hash(MyClass()), alors hash(MyClass()) raises a TypeError car when you define __eq__ without __hash__, Python sets __hash__ to None, making the object unhashable. Cela empêche objects from being used as dictionary keys or added to sets. To make an object hashable, you must define both __eq__ and __hash__, or define neither.
-
-__eq__ without __hash__:
-• hash(MyClass()) raises TypeError
-• __eq__ defined, __hash__ not defined
-• Python sets __hash__ = None
-• Object becomes unhashable
-• Raises TypeError
-
-Comment ça fonctionne :
-• hash(MyClass()) calls hash() function
-• __eq__ is defined, __hash__ is not
-• Python sets __hash__ = None (unhashable)
-• hash() cannot hash unhashable object
-• Raises TypeErreur : unhashable type
-
-Exemple :
-class MyClass:
-    def __eq__(self, other):
-        return True
-hash(MyClass())              # TypeError (unhashable)
-
-Usages courants :
-• Understanding hashability: __eq__ without __hash__ makes unhashable
-• Hashable objects: define both __eq__ and __hash__
-• Special methods
-• Object hashing
-
-Exemple : Si class MyClass: def __eq__(self, other): return True; hash(MyClass()), alors hash(MyClass()) raises a TypeError car defining __eq__ without __hash__ makes the object unhashable (Python sets __hash__ = None).
-`,
-  2188: `Objects with __hash__ defined peut être utilisé as dictionary keys. Si class MyClass: def __eq__(self, other): return True; def __hash__(self): return 1; {MyClass(): 1}, alors {MyClass(): 1} crée un dictionary with a MyClass instance as a key car the object has both __eq__ and __hash__ defined, making it hashable. Hashable objects peut être utilisé as dictionary keys and added to sets.
-
-Object with __hash__ as dict key:
-• {MyClass(): 1} creates dictionary
-• MyClass instance is hashable (has __hash__)
-• Can be used as dictionary key
-• Creates dict: {MyClass instance: 1}
-• Retourne : dict
-
-Comment ça fonctionne :
-• MyClass() creates instance
-• Instance has __eq__ and __hash__ (hashable)
-• {MyClass(): 1} uses instance as key
-• Dictionary created successfully
-• Retourne : {MyClass instance: 1}
-
-Exemple :
-class MyClass:
-    def __eq__(self, other):
-        return True
-    def __hash__(self):
-        return 1
-{MyClass(): 1}               # {MyClass instance: 1} (hashable, can be key)
-
-Usages courants :
-• Dictionary keys: {obj: value} (obj must be hashable)
-• Sets: {obj} (obj must be hashable)
-• Hashable objects
-• Object hashing
-
-Exemple : Si class MyClass: def __eq__(self, other): return True; def __hash__(self): return 1; {MyClass(): 1}, alors {MyClass(): 1} crée un dictionary car objects with __hash__ defined peut être utilisé as dictionary keys.
-`,
-  2189: `La fonction id() retourne un identifiant entier unique pour un objet. Si class MyClass: pass; id(MyClass()), alors id(MyClass()) retourne un unique integer id car id() retourne le memory address (or a unique identifier) of the object. Each object a un unique id, and the id remains constant for the object's lifetime. The id est utilisé internally by Python for object identity checks (is operator uses id()).
-
-id() function:
-• id(MyClass()) returns unique integer id
-• id() returns object identifier
-• Unique for each object
-• Represents memory address/identifier
-• Retourne : integer
-
-Comment ça fonctionne :
-• MyClass() creates instance
-• id(instance) gets object identifier
-• Retourne unique integer
-• Used for identity checks
-• Retourne : unique integer id
-
-Exemple :
-class MyClass: pass
-id(MyClass())                # 140234567890 (unique integer id)
-obj = MyClass()
-id(obj)                      # 140234567891 (different id)
-
-Usages courants :
-• Object identity: id(obj1) == id(obj2) (same as obj1 is obj2)
-• Unique identifier: id(obj) (object's unique id)
-• Object identity
-• Memory address
-
-Exemple : Si class MyClass: pass; id(MyClass()), alors id(MyClass()) retourne un unique integer id car id() retourne un unique identifier for an object, representing its memory address or identifier.
-`,
-  2190: `Different objects have different ids. Si class MyClass: pass; obj1 = MyClass(); obj2 = MyClass(); id(obj1) == id(obj2), alors id(obj1) == id(obj2) returns False car obj1 and obj2 are different instances, so they have different ids. Each object a un unique id that distinguishes it from all other objects. The id() function retourne un unique identifier for each object, and different objects always have different ids.
-
-Different objects, different ids:
-• id(obj1) == id(obj2) returns False
-• obj1 and obj2 are different instances
-• Each object has unique id
-• Different objects have different ids
-• Retourne : False
-
-Comment ça fonctionne :
-• MyClass() creates first instance (obj1)
-• MyClass() creates second instance (obj2)
-• id(obj1) gets obj1's unique id
-• id(obj2) gets obj2's unique id
-• Different objects, different ids
-• Retourne : False
-
-Exemple :
-class MyClass: pass
-obj1 = MyClass()             # id(obj1) = 140234567890
-obj2 = MyClass()             # id(obj2) = 140234567891 (different)
-id(obj1) == id(obj2)         # False (different ids)
-
-Usages courants :
-• Identity check: id(obj1) == id(obj2) (same as obj1 is obj2)
-• Unique identifiers: different objects have different ids
-• Object identity
-• Memory addresses
-
-Exemple : Si class MyClass: pass; obj1 = MyClass(); obj2 = MyClass(); id(obj1) == id(obj2), alors id(obj1) == id(obj2) returns False car different objects have different ids - each object a un unique identifier.
-`,
-  2191: `L'attribut __slots__ restreint les attributs pouvant être définis sur les instances. Si class MyClass: __slots__ = ['x', 'y']; obj = MyClass(); obj.x = 1; obj.z = 2, alors obj.z = 2 raises an AttributeError car __slots__ only allows 'x' and 'y' as instance attributes. Toute tentative de définir an attribute absent de __slots__ raises an AttributeError. Cela économise la mémoire en évitant la création of __dict__ for instances.
-
-__slots__ restriction:
-• obj.z = 2 raises AttributeError
-• __slots__ = ['x', 'y'] restricts allowed attributes
-• Only 'x' and 'y' allowed
-• 'z' absent de __slots__
-• Raises AttributeError
-
-Comment ça fonctionne :
-• obj.x = 1 works (x in __slots__)
-• obj.z = 2 attempts to set 'z'
-• 'z' absent de __slots__ = ['x', 'y']
-• Attribute not allowed
-• Raises AttributeErreur : 'MyClass' object n'a pas attribute 'z'
-
-Exemple :
-class MyClass:
-    __slots__ = ['x', 'y']
-obj = MyClass()
-obj.x = 1                    # Works (x in __slots__)
-obj.z = 2                    # AttributeError (z absent de __slots__)
-
-Usages courants :
-• Memory optimization: __slots__ = ['attr1', 'attr2'] (saves memory)
-• Attribute restriction: prevent dynamic attributes
-• Class optimization
-• Memory efficiency
-
-Exemple : Si class MyClass: __slots__ = ['x', 'y']; obj = MyClass(); obj.x = 1; obj.z = 2, alors obj.z = 2 raises an AttributeError car __slots__ restricts allowed attributes to only those listed, and 'z' is absent de __slots__.
-`,
-  2192: `Using __slots__ removes the __dict__ attribute from instances, saving memory. Si class MyClass: __slots__ = ['x']; obj = MyClass(); obj.x = 1; vars(obj), alors vars(obj) raises an AttributeError car __slots__ prevents the creation of __dict__ for instances. vars() returns __dict__, but instances with __slots__ n'a pas __dict__, so it raises an error. C'est the memory-saving benefit of __slots__ - instances n'a pas besoin a dictionary to store attributes.
-
-__slots__ removes __dict__:
-• vars(obj) raises AttributeError
-• __slots__ prevents __dict__ creation
-• Instances n'a pas __dict__
-• vars() requires __dict__
-• Raises AttributeError
-
-Comment ça fonctionne :
-• obj.x = 1 sets attribute (stored in slots, not __dict__)
-• vars(obj) tries to access __dict__
-• Instance n'a pas __dict__ (__slots__ prevents it)
-• vars() cannot access non-existent __dict__
-• Raises AttributeErreur : 'MyClass' object n'a pas attribute '__dict__'
-
-Exemple :
-class MyClass:
-    __slots__ = ['x']
-obj = MyClass()
-obj.x = 1
-vars(obj)                    # AttributeError (no __dict__)
-
-Usages courants :
-• Memory optimization: __slots__ removes __dict__ (saves memory)
-• Fixed attributes: __slots__ = ['attr1', 'attr2'] (no dynamic attributes)
-• Class optimization
-• Memory efficiency
-
-Exemple : Si class MyClass: __slots__ = ['x']; obj = MyClass(); obj.x = 1; vars(obj), alors vars(obj) raises an AttributeError car __slots__ removes __dict__ from instances, and vars() requires __dict__.
-`,
-  2193: `L'attribut __dict__ contient un dictionnaire des attributs d'instance. Si class MyClass: def __init__(self): self.x = 1; obj = MyClass(); obj.__dict__, alors obj.__dict__ returns {'x': 1} car __dict__ is a dictionary that stores all instance attributes. When __init__ sets self.x = 1, it crée une instance attribute that's stored in obj.__dict__. C'est how Python stores instance attributes internally.
-
-__dict__ contains instance attributes:
-• obj.__dict__ returns {'x': 1}
-• __dict__ is dictionary of instance attributes
-• self.x = 1 creates instance attribute
-• Stored in obj.__dict__
-• Retourne : {'x': 1}
-
-Comment ça fonctionne :
-• MyClass() calls __init__(self)
-• __init__ sets self.x = 1 (instance attribute)
-• Instance attribute stored in obj.__dict__
-• obj.__dict__ contains {'x': 1}
-• Retourne : {'x': 1}
-
-Exemple :
-class MyClass:
-    def __init__(self):
-        self.x = 1
-obj = MyClass()
-obj.__dict__                 # {'x': 1} (instance attributes)
-
-Usages courants :
-• Instance attributes: obj.__dict__ (get all instance attributes)
-• Attribute dictionary: obj.__dict__ shows instance data
-• Object inspection
-• Attribute access
-
-Exemple : Si class MyClass: def __init__(self): self.x = 1; obj = MyClass(); obj.__dict__, alors obj.__dict__ returns {'x': 1} car __dict__ contains instance attributes, and self.x = 1 crée une instance attribute stored in __dict__.
-`,
-  2194: `Le __dict__ attribute on a classe contains classe attributes and méthodes. Si classe MyClass: x = 1; MyClass.__dict__, alors MyClass.__dict__ retourne un dictionnaire avec classe attributes and méthodes car __dict__ on a classe stores all classe-level data, including classe attributes (like x = 1), méthodes, and other classe metadata. C'est the namespace dictionnaire for the classe.
-
-Class __dict__:
-• MyClass.__dict__ retourne dict avec classe attributes
-• __dict__ contains classe-level data
-• Includes classe attributes (x = 1)
-• Includes méthodes and metadata
-• Retourne : dict
-
-Comment ça fonctionne :
-• classe MyClass: x = 1 creates classe
-• Class attributes stored in MyClass.__dict__
-• __dict__ contains 'x': 1 and other classe data
-• Retourne dictionnaire of classe attributes
-• Retourne : dict
-
-Exemple :
-classe MyClass: x = 1
-MyClass.__dict__             # {...'x': 1, ...} (classe attributes and méthodes)
-
-Usages courants :
-• Class attributes: MyClass.__dict__ (get all classe attributes)
-• Class dictionnaire: MyClass.__dict__ shows classe data
-• Object inspection
-• Class introspection
-
-Exemple : Si classe MyClass: x = 1; MyClass.__dict__, alors MyClass.__dict__ retourne un dictionnaire avec classe attributes car __dict__ on a classe contains classe attributes, méthodes, and other classe-level data.
-`,
-  2195: `Methods sont stockés in the class __dict__. Si class MyClass: def method(self): pass; 'method' in MyClass.__dict__, alors 'method' in MyClass.__dict__ returns True car methods are class attributes, so they're stored in the class's __dict__. Quand vous define a method in a class, it becomes an attribute of the class, stored in MyClass.__dict__.
-
-Methods in class __dict__:
-• 'method' in MyClass.__dict__ returns True
-• Methods are class attributes
-• Stored in class __dict__
-• 'method' is in the dictionary
-• Retourne : True
-
-Comment ça fonctionne :
-• def method(self): pass defines method
-• Method becomes class attribute
-• Stored in MyClass.__dict__
-• 'method' in MyClass.__dict__ checks if key exists
-• Retourne : True
-
-Exemple :
-class MyClass:
-    def method(self): pass
-'method' in MyClass.__dict__  # True (method in class __dict__)
-
-Usages courants :
-• Method checking: 'method' in MyClass.__dict__ (check if method exists)
-• Class introspection: MyClass.__dict__ shows methods
-• Object inspection
-• Method discovery
-
-Exemple : Si class MyClass: def method(self): pass; 'method' in MyClass.__dict__, alors 'method' in MyClass.__dict__ returns True car methods sont stockés in the class __dict__ as class attributes.
-`,
-  2196: `La fonction type() retourne la classe d'une instance. Si class MyClass: pass; obj = MyClass(); type(obj), alors type(obj) returns <class '__main__.MyClass'> car type() retourne le class that an instance belongs to. For an instance of MyClass, type() retourne le MyClass class object. C'est useful for type checking and introspection.
-
-type() sur une instance :
-• type(obj) returns <class '__main__.MyClass'>
-• type() returns class of instance
-• obj is instance of MyClass
-• Retourne class object
-• Retourne : <class '__main__.MyClass'>
-
-Comment ça fonctionne :
-• obj = MyClass() creates instance
-• type(obj) gets class of instance
-• Instance belongs to MyClass class
-• Retourne class object
-• Retourne : <class '__main__.MyClass'>
-
-Exemple :
-class MyClass: pass
-obj = MyClass()
-type(obj)                    # <class '__main__.MyClass'> (class of instance)
-
-Usages courants :
-• Type checking: if type(obj) == MyClass: ...
-• Type inspection: print(type(instance))
-• Object type
-• Type identification
-
-Exemple : Si class MyClass: pass; obj = MyClass(); type(obj), alors type(obj) returns <class '__main__.MyClass'> car type() retourne le class that an instance belongs to.
-`,
-  2197: `Les classes sont des instances de type (la métaclasse). Si class MyClass: pass; type(MyClass), alors type(MyClass) returns <class 'type'> car classes themselves are objects, and they are instances of the type class (the metaclass). In Python, everything is an object - classes are objects too, and they are instances of type. C'est the foundation of Python's metaclass system.
-
-Classes are instances of type:
-• type(MyClass) returns <class 'type'>
-• Classes are objects
-• Classes are instances of type (metaclass)
-• type is the class of classes
-• Retourne : <class 'type'>
-
-Comment ça fonctionne :
-• class MyClass: pass creates class object
-• MyClass is an object (instance of type)
-• type(MyClass) gets class of MyClass
-• MyClass is instance of type
-• Retourne : <class 'type'>
-
-Exemple :
-class MyClass: pass
-type(MyClass)                # <class 'type'> (classes are instances of type)
-
-Usages courants :
-• Metaclass understanding: classes are instances of type
-• Type system: type is the class of classes
-• Metaclasses
-• Type system
-
-Exemple : Si class MyClass: pass; type(MyClass), alors type(MyClass) returns <class 'type'> car classes are instances of type (the metaclass) - classes themselves are objects.
-`,
-  2198: `Toutes les classes en Python héritent de object par défaut. Si class MyClass: pass; issubclass(MyClass, object), alors issubclass(MyClass, object) returns True car even if you don't explicitly specify a parent class, Python fait automatiquement de object la classe de base. C'est pourquoi all classes have access to methods like __str__, __repr__, etc. - they inherit from object.
-
-All classes inherit from object:
-• issubclass(MyClass, object) returns True
-• MyClass inherits from object (default)
-• Even without explicit parent
-• object is base class
-• Retourne : True
-
-Comment ça fonctionne :
-• class MyClass: pass creates class
-• Pas de classe parente explicite
-• Python fait automatiquement de object la classe de base
-• issubclass(MyClass, object) checks inheritance
-• Retourne : True
-
-Exemple :
-class MyClass: pass
-issubclass(MyClass, object)  # True (all classes inherit from object)
-
-Usages courants :
-• Inheritance check: issubclass(Class, object) (always True)
-• Base class: object is base of all classes
-• Programmation orientée objet
-• Inheritance hierarchy
-
-Exemple : Si class MyClass: pass; issubclass(MyClass, object), alors issubclass(MyClass, object) returns True car all classes inherit from object by default, even if not explicitly specified.
-`,
-  2199: `Classes are instances of type. Si class MyClass: pass; isinstance(MyClass, type), alors isinstance(MyClass, type) returns True car classes are objects, and they are instances of the type class. In Python, classes are created by the type metaclass, so every class is an instance of type. C'est the foundation of Python's metaclass system - classes are objects created by type.
-
-Classes are instances of type:
-• isinstance(MyClass, type) returns True
-• Classes are objects
-• Classes are instances of type
-• type is the class of classes
-• Retourne : True
-
-Comment ça fonctionne :
-• class MyClass: pass creates class object
-• MyClass is an object (instance of type)
-• isinstance(MyClass, type) checks if MyClass is instance of type
-• MyClass is instance of type
-• Retourne : True
-
-Exemple :
-class MyClass: pass
-isinstance(MyClass, type)    # True (classes are instances of type)
-
-Usages courants :
-• Metaclass understanding: classes are instances of type
-• Type checking: isinstance(Class, type) (always True for classes)
-• Metaclasses
-• Type system
-
-Exemple : Si class MyClass: pass; isinstance(MyClass, type), alors isinstance(MyClass, type) returns True car classes are instances of type - classes are objects created by the type metaclass.
-`,
-  2200: `Le mro() méthode retourne le Method Resolution Order (MRO) - the inheritance chain showing how Python searches for attributes and méthodes. Si classe MyClass: pass; MyClass.mro(), alors MyClass.mro() retourne un liste showing the méthode resolution order car mro() retourne le linearization of the inheritance hierarchy. For a simple classe avec no explicit parents, it shows [MyClass, objet] - the classe itself and its base classe (objet).
-
-mro() méthode:
-• MyClass.mro() retourne Method Resolution Order liste
-• mro() retourne inheritance chain
-• Shows order Python searches for attributes
-• [MyClass, objet] for simple classe
-• Retourne : liste
-
-Comment ça fonctionne :
-• MyClass.mro() calls mro() méthode
-• mro() computes méthode resolution order
-• Shows inheritance chain: [MyClass, objet]
-• Python searches in this order for attributes
-• Retourne : [MyClass, objet]
-
-Exemple :
-classe MyClass: pass
-MyClass.mro()                # [<classe '__main__.MyClass'>, <classe 'objet'>]
-
-Usages courants :
-• Inheritance chain: MyClass.mro() (see inheritance order)
-• Method resolution: understand how Python finds attributes
-• Programmation orientée objet
-• Inheritance hierarchy
-
-Exemple : Si classe MyClass: pass; MyClass.mro(), alors MyClass.mro() retourne un Method Resolution Order liste car mro() retourne le inheritance chain showing how Python searches for attributes and méthodes, typically [MyClass, objet] for a simple classe.
-`,
+  2101: `def func(x): return x * 2
+
+Débutant :
+• def crée une fonction nommée func ; elle n’est pas exécutée tant qu’on ne l’appelle pas.
+
+Intermédiaire :
+• Le corps return x * 2 s’évalue à chaque appel avec la valeur passée pour x.
+
+Expert :
+• L’objet fonction est créé à la définition ; les valeurs par défaut des paramètres sont évaluées à la définition (sujet voisin pour listes).
+
+Concepts clés :
+• def, paramètre, return, objet fonction.
+
+Distinctions clés :
+• Définir n’est pas appeler ; func(5) serait l’appel.
+
+Fonctionnement :
+• Liaison du nom func au code et aux métadonnées de la fonction.
+
+Exécution étape par étape :
+1. À l’import ou exécution du bloc : construction de l’objet fonction.
+
+Ordre des opérations :
+• Lecture de la signature puis compilation du corps.
+
+Cas d'utilisation courants :
+• Factoriser un calcul réutilisable.
+
+Cas limites :
+• Oublier return → None implicite.
+
+Considérations de performance :
+• Appels très fréquents : profiler si besoin.
+
+Exemples :
+• func(3) donnerait 6.
+
+Remarques :
+• Réponse : définit une fonction (première option du quiz).`,
+  2102: `def func(): pass
+
+Débutant :
+• pass remplit le corps vide de façon syntaxiquement valide ; func() renverra None.
+
+Intermédiaire :
+• Utile pour squelettes, classes ou branches temporaires.
+
+Expert :
+• ... (ellipsis) peut parfois remplacer pass selon style, mais pass est le classique.
+
+Concepts clés :
+• pass, fonction vide, None implicite.
+
+Distinctions clés :
+• Ce n’est pas un appel de fonction.
+
+Fonctionnement :
+• Corps minimal exécuté en un pas.
+
+Exécution étape par étape :
+1. Définition puis appel éventuel → None.
+
+Ordre des opérations :
+• def puis exécution du corps à l’appel.
+
+Cas d'utilisation courants :
+• Stubs, TDD, surcharge future.
+
+Cas limites :
+• pass seul dans un module ne définit rien sans def.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• def todo(): pass
+
+Remarques :
+• Réponse : définit une fonction vide (option du quiz).`,
+  2103: `def func(): return
+
+Débutant :
+• return seul équivaut à return None : la fonction renvoie explicitement None.
+
+Intermédiaire :
+• Clarifie l’intention « rien à retourner » par rapport à l’absence de return.
+
+Expert :
+• Même effet final que fin de fonction sans return (dans les cas normaux).
+
+Concepts clés :
+• return nu, None.
+
+Distinctions clés :
+• Différent de return 0 ou return [].
+
+Fonctionnement :
+• Sortie immédiate de l’appel avec valeur None.
+
+Exécution étape par étape :
+1. func() → None.
+
+Ordre des opérations :
+• Évaluation du return sans expression.
+
+Cas d'utilisation courants :
+• Sortie anticipée dans un garde-fou.
+
+Cas limites :
+• Code après return non atteint.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• if not ok: return
+
+Remarques :
+• Réponse : définit une fonction qui renvoie None (formulation du QCM).`,
+  2104: `def func(): return 1, 2
+
+Débutant :
+• La virgule construit un tuple : le return renvoie (1, 2), un seul objet.
+
+Intermédiaire :
+• Déballage possible : a, b = func().
+
+Expert :
+• return 1, 2 est équivalent à return (1, 2).
+
+Concepts clés :
+• Tuple implicite, valeurs multiples.
+
+Distinctions clés :
+• Ce n’est pas trois instructions return séparées.
+
+Fonctionnement :
+• Une expression tuple évaluée puis renvoyée.
+
+Exécution étape par étape :
+1. func() vaut (1, 2).
+
+Ordre des opérations :
+• Création du tuple puis return.
+
+Cas d'utilisation courants :
+• Statut + message, coordonnées.
+
+Cas limites :
+• Une seule valeur avec virgule finale : (1,) nuance.
+
+Considérations de performance :
+• Tuple léger.
+
+Exemples :
+• return ok, data
+
+Remarques :
+• Réponse : définit une fonction qui renvoie un tuple (1, 2).`,
+  2105: `Fonction sans return
+
+Débutant :
+• À la fin du corps, Python renvoie implicitement None.
+
+Intermédiaire :
+• Les fonctions « pour effet de bord » (print, logs) utilisent souvent ce comportement.
+
+Expert :
+• return explicite peut court-circuiter avant la fin.
+
+Concepts clés :
+• Valeur de retour par défaut None.
+
+Distinctions clés :
+• Ne pas confondre avec return 0.
+
+Fonctionnement :
+• Fin normale → chargement de None comme résultat d’appel.
+
+Exécution étape par étape :
+1. Appel terminé → None.
+
+Ordre des opérations :
+• Exécution séquentielle du corps.
+
+Cas d'utilisation courants :
+• Procédures, callbacks qui ignorent la valeur.
+
+Cas limites :
+• Si une branche return une valeur et l’autre non, types de retour mixtes.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• def log(msg): print(msg)
+
+Remarques :
+• Réponse : renvoie None (première option).`,
+  2106: `def func(x, y): return x + y
+
+Débutant :
+• Deux paramètres positionnels nommés x et y ; la fonction renvoie leur somme.
+
+Intermédiaire :
+• Appel func(1, 2) lie x à 1 et y à 2 par position.
+
+Expert :
+• + délègue à __add__ des objets passés.
+
+Concepts clés :
+• Paramètres multiples, return expression.
+
+Distinctions clés :
+• Pas encore de valeurs par défaut ici.
+
+Fonctionnement :
+• Liaison des arguments puis évaluation de x + y.
+
+Exécution étape par étape :
+1. Définition seule ne calcule rien jusqu’à l’appel.
+
+Ordre des opérations :
+• def compile le corps ; + au moment de l’appel.
+
+Cas d'utilisation courants :
+• Petites utilitaires arithmétiques ou concaténation selon types.
+
+Cas limites :
+• Types non supportés par + → TypeError à l’appel.
+
+Considérations de performance :
+• Négligeable pour int.
+
+Exemples :
+• func("a","b") → "ab"
+
+Remarques :
+• Réponse : définit une fonction à deux paramètres (option du quiz).`,
+  2107: `func(1, 2) avec return x + y
+
+Débutant :
+• Arguments positionnels : x=1, y=2 → 1 + 2 = 3.
+
+Intermédiaire :
+• L’ordre des arguments compte sans noms.
+
+Expert :
+• Mélange positionnel / nommé viendra après (autres questions).
+
+Concepts clés :
+• Appel, liaison positionnelle.
+
+Distinctions clés :
+• func(2,1) donnerait 3 aussi mais x et y inversés.
+
+Fonctionnement :
+• Frame d’appel, assignation locale x,y.
+
+Exécution étape par étape :
+1. Résultat 3.
+
+Ordre des opérations :
+• Évaluation des arguments gauche-droite puis entrée en fonction.
+
+Cas d'utilisation courants :
+• API simples à deux entrées.
+
+Cas limites :
+• Trop peu ou trop d’arguments → TypeError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• add(10, 20)
+
+Remarques :
+• Réponse : 3.`,
+  2108: `func(x=1, y=2)
+
+Débutant :
+• Arguments nommés : x vaut 1, y vaut 2 ; somme 3.
+
+Intermédiaire :
+• L’ordre des kwargs peut changer : func(y=2, x=1) identique.
+
+Expert :
+• Après le premier argument positionnel nommé, il faut continuer en kwargs si on mélange (règles de grammaire).
+
+Concepts clés :
+• Keyword arguments.
+
+Distinctions clés :
+• Pas la même chose que un dict passé en position.
+
+Fonctionnement :
+• Correspondance nom → paramètre.
+
+Exécution étape par étape :
+1. 3.
+
+Ordre des opérations :
+• Liaison par nom indépendante de l’ordre d’écriture.
+
+Cas d'utilisation courants :
+• Lisibilité, paramètres optionnels nombreux.
+
+Cas limites :
+• Nom inconnu → TypeError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• help(verbose=True)
+
+Remarques :
+• Réponse : 3.`,
+  2109: `func(1, y=2)
+
+Débutant :
+• 1 en position pour x, y nommé à 2 → encore 3.
+
+Intermédiaire :
+• Tous les positionnels doivent précéder les kwargs dans l’appel.
+
+Expert :
+• Erreur si on écrit func(y=2, 1).
+
+Concepts clés :
+• Mélange positionnel + mot-clé.
+
+Distinctions clés :
+• y=2 ne « saute » pas x.
+
+Fonctionnement :
+• Premier slot x, second paramètre rempli par nom.
+
+Exécution étape par étape :
+1. 3.
+
+Ordre des opérations :
+• Arguments positionnels d’abord, puis keyword.
+
+Cas d'utilisation courants :
+• Premier argument obligatoire évident, second explicite.
+
+Cas limites :
+• Dupliquer x en position et en nom → TypeError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• open(path, mode="r")
+
+Remarques :
+• Réponse : 3.`,
+  2110: `func() avec x=1 par défaut
+
+Débutant :
+• Sans argument, x prend la valeur par défaut 1.
+
+Intermédiaire :
+• La valeur par défaut est stockée dans __defaults__ de la fonction.
+
+Expert :
+• Objets mutables en défaut partagés entre appels (piège classique, autre question).
+
+Concepts clés :
+• Paramètre par défaut, appel sans args.
+
+Distinctions clés :
+• func(5) écrase le défaut.
+
+Fonctionnement :
+• Remplissage des paramètres manquants avec défauts.
+
+Exécution étape par étape :
+1. Retour 1.
+
+Ordre des opérations :
+• Création de la fonction une fois ; défauts évalués à la définition.
+
+Cas d'utilisation courants :
+• Options, timeouts, flags.
+
+Cas limites :
+• None comme défaut pour dire « non fourni ».
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• def f(debug=False)
+
+Remarques :
+• Réponse : 1.`,
+  2111: `def func(x=1): return x
+
+Débutant :
+• La signature annonce un paramètre optionnel x avec défaut 1.
+
+Intermédiaire :
+• Définition valide ; comportement d’appel déjà vu sur func() et func(2).
+
+Expert :
+• inspect.signature pour introspection.
+
+Concepts clés :
+• Syntaxe des défauts dans la définition.
+
+Distinctions clés :
+• Ce n’est pas une valeur globale x hors fonction.
+
+Fonctionnement :
+• Tuple des défauts attaché à l’objet fonction.
+
+Exécution étape par étape :
+• Prépare les appels futurs.
+
+Ordre des opérations :
+• Paramètre avec = dans l’en-tête.
+
+Cas d'utilisation courants :
+• API évolutives rétrocompatibles.
+
+Cas limites :
+• Ordre requis avant défauts (param non défaut d’abord).
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• round(x, ndigits=0)
+
+Remarques :
+• Réponse : définit une fonction avec paramètre par défaut (option du quiz).`,
+  2112: `func(2) écrase le défaut
+
+Débutant :
+• x vaut 2, pas 1.
+
+Intermédiaire :
+• L’argument explicite a priorité sur __defaults__.
+
+Expert :
+• Keyword peut aussi écraser : func(x=9).
+
+Concepts clés :
+• Surcharge du défaut.
+
+Distinctions clés :
+• Ne modifie pas le défaut stocké pour les autres appels.
+
+Fonctionnement :
+• Liaison locale x=2 pour cet appel.
+
+Exécution étape par étape :
+1. Retour 2.
+
+Ordre des opérations :
+• Binding des arguments puis corps.
+
+Cas d'utilisation courants :
+• Valeurs utilisateur qui remplacent les réglages par défaut.
+
+Cas limites :
+• Types inattendus si pas de validation.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• max(iterable, default=0) conceptuel.
+
+Remarques :
+• Réponse : 2.`,
+  2113: `def func(x, y=2): return x + y
+
+Débutant :
+• x obligatoire, y optionnel à 2.
+
+Intermédiaire :
+• Syntaxe Python : paramètres sans défaut avant ceux avec défaut.
+
+Expert :
+• Évite l’ambiguïté à l’appel.
+
+Concepts clés :
+• Paramètre requis + défaut.
+
+Distinctions clés :
+• Pas deux défauts ici mais y seul.
+
+Fonctionnement :
+• func(1) possible ; func() non sans x.
+
+Exécution étape par étape :
+• Définition valide.
+
+Ordre des opérations :
+• Analyse statique de la signature.
+
+Cas d'utilisation courants :
+• Donnée principale + option.
+
+Cas limites :
+• Oublier x → TypeError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• open(file, mode="r")
+
+Remarques :
+• Réponse : définit fonction avec requis et défaut (option du quiz).`,
+  2114: `func(1) avec y=2 par défaut
+
+Débutant :
+• x reçoit 1, y reste 2 → somme 3.
+
+Intermédiaire :
+• Un seul argument positionnel suffit.
+
+Expert :
+• func(1, 5) donnerait 6.
+
+Concepts clés :
+• Défaut pour second paramètre seulement.
+
+Distinctions clés :
+• Ne pas croire que y « disparaît ».
+
+Fonctionnement :
+• Remplissage : x=1, y défaut.
+
+Exécution étape par étape :
+1. 3.
+
+Ordre des opérations :
+• Appel puis return.
+
+Cas d'utilisation courants :
+• Fonctions de ligne de commande avec options.
+
+Cas limites :
+• Keyword-only parameters (/) et (*) hors énoncé.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• range(stop) vs range(start, stop)
+
+Remarques :
+• Réponse : 3.`,
+  2115: `def func(x=1, y): ...
+
+Débutant :
+• SyntaxError : un paramètre sans défaut ne peut pas suivre un paramètre avec défaut.
+
+Intermédiaire :
+• Message du parseur : non-default argument follows default argument.
+
+Expert :
+• Réécrire def func(y, x=1).
+
+Concepts clés :
+• Grammaire de la signature.
+
+Distinctions clés :
+• Erreur à la compilation du fichier, pas à l’exécution d’une ligne isolée REPL même catégorie.
+
+Fonctionnement :
+• Échec du parseur.
+
+Exécution étape par étape :
+1. SyntaxError.
+
+Ordre des opérations :
+• Avant exécution du corps.
+
+Cas d'utilisation courants :
+• Éviter ambiguïté sur appels partiels.
+
+Cas limites :
+• Python 3 ne permet pas de contourner sans * / restructure.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• def f(a, b=1, c) interdit.
+
+Remarques :
+• Réponse : SyntaxError (première option).`,
+  2116: `def func(x=[]): append et return
+
+Débutant :
+• La liste par défaut est créée une seule fois à la définition ; tous les appels partagent la même liste → piège classique.
+
+Intermédiaire :
+• Chaque append persiste pour les appels suivants si on ne passe pas d’argument.
+
+Expert :
+• Raison : objets mutables évalués une fois au moment de def.
+
+Concepts clés :
+• Argument par défaut mutable partagé.
+
+Distinctions clés :
+• Différent de une nouvelle liste à chaque appel.
+
+Fonctionnement :
+• Même objet liste réutilisé comme valeur par défaut de x.
+
+Exécution étape par étape :
+• Premier appel [1], second [1,1], etc.
+
+Ordre des opérations :
+• Création du défaut au define-time.
+
+Cas d'utilisation courants :
+• Anti-pattern à reconnaître en relecture.
+
+Cas limites :
+• Passer explicitement une nouvelle [] à chaque appel évite le partage.
+
+Considérations de performance :
+• Partage accidentel = état global caché.
+
+Exemples :
+• Utiliser None puis if x is None: x = []
+
+Remarques :
+• Réponse : définit une fonction à défaut mutable problématique (option du quiz).`,
+  2117: `def func(x=None): x = x or []; append
+
+Débutant :
+• None est immuable comme défaut ; à chaque appel sans liste, x or [] crée une nouvelle liste locale.
+
+Intermédiaire :
+• Attention : x or [] traite aussi [] comme falsy et remplace ; souvent on préfère if x is None.
+
+Expert :
+• Idiomatique pour débutants : if x is None: x = [].
+
+Concepts clés :
+• Défaut sûr, nouvelle liste par appel.
+
+Distinctions clés :
+• Contraste direct avec 2116.
+
+Fonctionnement :
+• Réaffectation de x vers une nouvelle liste quand besoin.
+
+Exécution étape par étape :
+• Chaque func() isolé avec sa propre liste si None.
+
+Ordre des opérations :
+• Évaluation des défauts puis corps.
+
+Cas d'utilisation courants :
+• Agrégation optionnelle par appel.
+
+Cas limites :
+• Passer 0 ou False pourrait surprendre avec or.
+
+Considérations de performance :
+• Coût d’allocation liste par appel.
+
+Exemples :
+• Pattern is None explicite.
+
+Remarques :
+• Réponse : motif sûr pour défaut mutable (option du quiz).`,
+  2118: `Deux appels func() avec x=[] par défaut
+
+Débutant :
+• Premier appel retourne [1] ; second part de la même liste déjà modifiée → [1, 1].
+
+Intermédiaire :
+• Démonstration concrète du partage.
+
+Expert :
+• id(x) identique entre appels si défaut utilisé.
+
+Concepts clés :
+• État persistant entre appels.
+
+Distinctions clés :
+• Si vous passiez [] explicitement à chaque fois, listes différentes.
+
+Fonctionnement :
+• append sur l’unique liste défaut.
+
+Exécution étape par étape :
+1. [1] puis [1, 1].
+
+Ordre des opérations :
+• Deux appels successifs.
+
+Cas d'utilisation courants :
+• Tests unitaires sur piège des défauts.
+
+Cas limites :
+• Réinitialiser en passant une copie ou None.
+
+Considérations de performance :
+• Croissance de la liste partagée.
+
+Exemples :
+• Voir 2117 pour correction.
+
+Remarques :
+• Réponse : [1] puis [1, 1] (option du quiz).`,
+  2119: `def func(x=1, y=2, z=3): return x, y, z
+
+Débutant :
+• Trois défauts ; tous peuvent être omis ou surchargés par position.
+
+Intermédiaire :
+• func() → (1,2,3).
+
+Expert :
+• Les défauts sont un tuple dans __defaults__ (les n derniers paramètres avec défaut).
+
+Concepts clés :
+• Multiples valeurs par défaut.
+
+Distinctions clés :
+• Un seul tuple retourné, pas trois return.
+
+Fonctionnement :
+• Liaison progressive des arguments.
+
+Exécution étape par étape :
+• Souplesse d’appel 0 à 3 arguments positionnels.
+
+Ordre des opérations :
+• Gauche à droite pour positionnels.
+
+Cas d'utilisation courants :
+• Configurations à plusieurs réglages.
+
+Cas limites :
+• Combiner avec *args demande ordre strict.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• func(10) → (10,2,3)
+
+Remarques :
+• Réponse : définit une fonction avec plusieurs défauts (option du quiz).`,
+  2120: `func(10) avec trois défauts
+
+Débutant :
+• 10 va sur x ; y et z gardent 2 et 3.
+
+Intermédiaire :
+• Tuple retourné (10, 2, 3).
+
+Expert :
+• func(10, 20) surchargerait y aussi.
+
+Concepts clés :
+• Remplissage positionnel partiel.
+
+Distinctions clés :
+• Pas besoin de kwargs ici.
+
+Fonctionnement :
+• Premier slot consommé, autres défauts.
+
+Exécution étape par étape :
+1. (10, 2, 3).
+
+Ordre des opérations :
+• Binding puis return tuple.
+
+Cas d'utilisation courants :
+• Surcharge du premier paramètre le plus important.
+
+Cas limites :
+• Trop d’arguments positionnels → erreur.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque level7.
+
+Remarques :
+• Réponse : (10, 2, 3).`,
+  2121: `def func(*args): return args
+
+Débutant :
+• *args regroupe les arguments positionnels supplémentaires dans un tuple (nom conventionnel args).
+
+Intermédiaire :
+• Peut être vide ().
+
+Expert :
+• Peut combiner avec paramètres nommés avant *args selon règles.
+
+Concepts clés :
+• Packing positionnel, tuple.
+
+Distinctions clés :
+• Ce n’est pas une liste modifiable par l’appelant via args seul.
+
+Fonctionnement :
+• Construction du tuple à chaque appel.
+
+Exécution étape par étape :
+• Définition décrit variadique.
+
+Ordre des opérations :
+• À l’appel : collecte des positionnels.
+
+Cas d'utilisation courants :
+• Wrappers, print format, min/max sur nombre variable.
+
+Cas limites :
+• **kwargs autre syntaxe.
+
+Considérations de performance :
+• Tuple alloué par appel.
+
+Exemples :
+• def trace(*a): print(a)
+
+Remarques :
+• Réponse : définit une fonction à arguments positionnels variables (option du quiz).`,
+  2122: `func(1, 2, 3) et *args
+
+Débutant :
+• args devient le tuple (1, 2, 3).
+
+Intermédiaire :
+• Type tuple, pas liste.
+
+Expert :
+• Un seul *args par fonction ; nom interne libre mais args idiomatique.
+
+Concepts clés :
+• Collecte multi-valeurs.
+
+Distinctions clés :
+• func() donne ().
+
+Fonctionnement :
+• Empaquetage des trois valeurs.
+
+Exécution étape par étape :
+1. Retour (1, 2, 3).
+
+Ordre des opérations :
+• Évaluation des arguments puis packing.
+
+Cas d'utilisation courants :
+• forward *args vers une autre fonction.
+
+Cas limites :
+• Keyword seuls ne vont pas dans args.
+
+Considérations de performance :
+• O(n) arguments.
+
+Exemples :
+• max(*values) unpacking inverse à l’appel.
+
+Remarques :
+• Réponse : (1, 2, 3).`,
+  2123: `func() sans args avec *args
+
+Débutant :
+• Aucun positionnel → tuple vide ().
+
+Intermédiaire :
+• Utile pour tester len(args)==0.
+
+Expert :
+• () est falsy mais valide.
+
+Concepts clés :
+• *args vide.
+
+Distinctions clés :
+• Pas None.
+
+Fonctionnement :
+• Tuple vide créé.
+
+Exécution étape par étape :
+1. ().
+
+Ordre des opérations :
+• Appel sans arguments positionnels.
+
+Cas d'utilisation courants :
+• APIs variadiques optionnelles.
+
+Cas limites :
+• Confondre avec None retour explicite.
+
+Considérations de performance :
+• Tuple vide singleton en CPython.
+
+Exemples :
+• def f(*a): return len(a)
+
+Remarques :
+• Réponse : () (tuple vide).`,
+  2124: `def func(x, *args): return x, args
+
+Débutant :
+• Premier argument fixe x, le reste en tuple args.
+
+Intermédiaire :
+• Pattern « tête + reste ».
+
+Expert :
+• Après *args on ne peut plus avoir paramètres positionnels ordinaires ; keyword-only avec * possible.
+
+Concepts clés :
+• Paramètre fixe + variadique.
+
+Distinctions clés :
+• x n’est pas dans args.
+
+Fonctionnement :
+• Consommation du premier argument hors *args.
+
+Exécution étape par étape :
+• Définition valide.
+
+Ordre des opérations :
+• Signature : requis puis étoile.
+
+Cas d'utilisation courants :
+• Commandes CLI cmd, subargs.
+
+Cas limites :
+• func() sans x → TypeError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• divmod-like custom.
+
+Remarques :
+• Réponse : définit fonction avec x puis *args (option du quiz).`,
+  2125: `func(1, 2, 3) avec x et *args
+
+Débutant :
+• x=1, args=(2, 3).
+
+Intermédiaire :
+• Retour (1, (2, 3)) tuple imbriqué.
+
+Expert :
+• Un élément seul en reste : (1, (2,)).
+
+Concepts clés :
+• Répartition premier / reste.
+
+Distinctions clés :
+• Pas (1, 2, 3) comme trois valeurs séparées du return sans virgule supplémentaire.
+
+Fonctionnement :
+• Liaison 1 puis packing 2,3.
+
+Exécution étape par étape :
+1. (1, (2, 3)).
+
+Ordre des opérations :
+• Positionnels gauche-droite.
+
+Cas d'utilisation courants :
+• Wrappers type decorator.
+
+Cas limites :
+• Keyword pour x possible : func(x=1, 2) invalide syntaxe d’appel.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir texte anglais de la banque.
+
+Remarques :
+• Réponse : (1, (2, 3)).`,
+  2126: `def func(**kwargs): return kwargs
+
+Débutant :
+• **kwargs capture les arguments nommés supplémentaires dans un dictionnaire.
+
+Intermédiaire :
+• Les clés sont des str des noms de paramètres passés.
+
+Expert :
+• Un seul **kwargs par fonction ; combinaison avec *args possible dans un ordre précis.
+
+Concepts clés :
+• Keyword packing, dict.
+
+Distinctions clés :
+• Ce n’est pas *args.
+
+Fonctionnement :
+• Construction du dict à l’appel.
+
+Exécution étape par étape :
+• Définition décrit capture kwargs.
+
+Ordre des opérations :
+• Après positionnels et *args selon signature.
+
+Cas d'utilisation courants :
+• Passer options dynamiques, décorateurs.
+
+Cas limites :
+• Clés dupliquées impossibles en appel Python.
+
+Considérations de performance :
+• Dict alloué par appel.
+
+Exemples :
+• def cfg(**k): return k
+
+Remarques :
+• Réponse : définit une fonction à kwargs variables (option du quiz).`,
+  2127: `func(a=1, b=2)
+
+Débutant :
+• kwargs devient {"a": 1, "b": 2} (ordre d’insertion conservé en 3.7+).
+
+Intermédiaire :
+• Les valeurs sont celles passées à l’appel.
+
+Expert :
+• Peut être passé à une autre fonction avec ** unpacking.
+
+Concepts clés :
+• Dict littéral runtime.
+
+Distinctions clés :
+• Pas un tuple.
+
+Fonctionnement :
+• Liaison nom→valeur puis dict.
+
+Exécution étape par étape :
+1. Dict avec deux entrées.
+
+Ordre des opérations :
+• Évaluation des expressions 1 et 2 avant stockage.
+
+Cas d'utilisation courants :
+• Configuration nommée.
+
+Cas limites :
+• Noms invalides en Python interdits même en kwargs.
+
+Considérations de performance :
+• Négligeable pour petit dict.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : {"a": 1, "b": 2} (formulation du QCM).`,
+  2128: `func() sans kwargs
+
+Débutant :
+• Aucun nommé → dict vide {}.
+
+Intermédiaire :
+• {} est un dict mutable neuf à chaque appel (nouvel objet).
+
+Expert :
+• Attention à ne pas réutiliser le même dict par défaut (autre piège) ; ici pas de défaut.
+
+Concepts clés :
+• **kwargs vide.
+
+Distinctions clés :
+• Pas None.
+
+Fonctionnement :
+• Création dict vide.
+
+Exécution étape par étape :
+1. {}.
+
+Ordre des opérations :
+• Appel sans keyword extras.
+
+Cas d'utilisation courants :
+• Optionnels tous absents.
+
+Cas limites :
+• Comparer à frozenset() ou tuple() autres types.
+
+Considérations de performance :
+• Dict vide optimisé en CPython.
+
+Exemples :
+• len(kwargs)==0
+
+Remarques :
+• Réponse : {} (dict vide).`,
+  2129: `def func(x, *args, **kwargs): return x, args, kwargs
+
+Débutant :
+• Combine un fixe, le reste positionnel en tuple, et le reste nommé en dict.
+
+Intermédiaire :
+• Ordre signature : paramètres normaux, *args, puis **kwargs éventuellement après keyword-only si / * utilisés (hors énoncé simple).
+
+Expert :
+• Pattern wrapper générique.
+
+Concepts clés :
+• Signature complète variadique.
+
+Distinctions clés :
+• Trois sortes d’arguments distinctes.
+
+Fonctionnement :
+• Répartition à l’appel.
+
+Exécution étape par étape :
+• Définition valide.
+
+Ordre des opérations :
+• Remplissage x, puis args, puis kwargs.
+
+Cas d'utilisation courants :
+• décorateur def deco(f): def w(*a,**k): ...
+
+Cas limites :
+• Duplication nom entre x et kwargs interdite.
+
+Considérations de performance :
+• Coût tuple+dict.
+
+Exemples :
+• Voir question suivante.
+
+Remarques :
+• Réponse : définit fonction x + *args + **kwargs (option du quiz).`,
+  2130: `func(1, 2, 3, a=4)
+
+Débutant :
+• x=1, args=(2,3), kwargs={"a":4}.
+
+Intermédiaire :
+• Les kwargs ne contiennent que a, pas x.
+
+Expert :
+• b=5 en plus irait dans kwargs aussi.
+
+Concepts clés :
+• Répartition complète.
+
+Distinctions clés :
+• Tuple et dict séparés.
+
+Fonctionnement :
+• Premier slot x, puis packing, puis dict pour a.
+
+Exécution étape par étape :
+1. (1, (2, 3), {"a": 4}).
+
+Ordre des opérations :
+• Positionnels d’abord puis kwargs.
+
+Cas d'utilisation courants :
+• Forwarding complet.
+
+Cas limites :
+• Nom dupliqué TypeError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque level7.
+
+Remarques :
+• Réponse : (1, (2, 3), {"a": 4}).`,
+  2131: `lambda x: x * 2
+
+Débutant :
+• Fonction anonyme en une expression ; pas d’instruction return explicite.
+
+Intermédiaire :
+• Corps limité à une expression ; pas de docstring multi-lignes idiomatique.
+
+Expert :
+• Closure sur variables englobantes possible.
+
+Concepts clés :
+• lambda, expression.
+
+Distinctions clés :
+• Ce n’est pas def avec nom obligatoire.
+
+Fonctionnement :
+• Création d’objet fonction inline.
+
+Exécution étape par étape :
+• Évaluation produit une fonction.
+
+Ordre des opérations :
+• lambda lors de l’exécution de la ligne qui la contient.
+
+Cas d'utilisation courants :
+• key=, map/filter/sorted courts.
+
+Cas limites :
+• Pas de statements (if sauf expression conditionnelle).
+
+Considérations de performance :
+• Même coût d’appel qu’une def petite.
+
+Exemples :
+• sorted(items, key=lambda t: t[1])
+
+Remarques :
+• Réponse : crée une fonction anonyme (option du quiz).`,
+  2132: `(lambda x: x * 2)(5)
+
+Débutant :
+• Appel immédiat de la lambda avec 5 → 10.
+
+Intermédiaire :
+• Parenthèses autour de lambda nécessaires pour appeler.
+
+Expert :
+• IIFE style rare en Python mais valide.
+
+Concepts clés :
+• Appel direct.
+
+Distinctions clés :
+• Sans parenthèses externes, syntaxe ambiguë.
+
+Fonctionnement :
+• Création fonction puis __call__(5).
+
+Exécution étape par étape :
+1. 10.
+
+Ordre des opérations :
+• Évaluation lambda puis argument 5.
+
+Cas d'utilisation courants :
+• Micro-calculs dans expressions.
+
+Cas limites :
+• Lisibilité : souvent extraire en def nommée.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 10.`,
+  2133: `lambda: 42
+
+Débutant :
+• Lambda sans paramètres ; corps 42.
+
+Intermédiaire :
+• Syntaxe : lambda: expr (pas de parenthèses vides de paramètres).
+
+Expert :
+• Équivalent à def f(): return 42 mais anonyme.
+
+Concepts clés :
+• Zéro paramètre.
+
+Distinctions clés :
+• lambda () invalide.
+
+Fonctionnement :
+• Objet callable sans arguments requis.
+
+Exécution étape par étape :
+• Création de la fonction.
+
+Ordre des opérations :
+• Pas d’arguments à lier.
+
+Cas d'utilisation courants :
+• Factories, valeurs paresseuses.
+
+Cas limites :
+• Ne pas oublier les deux-points.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• default=lambda: []
+
+Remarques :
+• Réponse : crée une fonction sans paramètres (option du quiz).`,
+  2134: `(lambda: 42)()
+
+Débutant :
+• Appel de la lambda sans args → 42.
+
+Intermédiaire :
+• Même idée que 2132 sans paramètre.
+
+Expert :
+• Peut capturer des nonlocals si corps plus riche.
+
+Concepts clés :
+• Appel zéro-arg.
+
+Distinctions clés :
+• lambda: 42() serait parse faux ; parenthèses autour de lambda.
+
+Fonctionnement :
+• __call__ sans args.
+
+Exécution étape par étape :
+1. 42.
+
+Ordre des opérations :
+• Création puis appel.
+
+Cas d'utilisation courants :
+• Démonstrations pédagogiques.
+
+Cas limites :
+• Style peu idiomatique pour production.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 42.`,
+  2135: `lambda x, y: x + y
+
+Débutant :
+• Deux paramètres positionnels dans la lambda.
+
+Intermédiaire :
+• Peut être passée là où on attend (a,b) -> valeur.
+
+Expert :
+• + polymorphique selon types ; en Python 3 une lambda peut aussi avoir des valeurs par défaut (hors énoncé simple).
+
+Concepts clés :
+• Lambda multi-paramètres.
+
+Distinctions clés :
+• Corps limité à une seule expression (pas de bloc d’instructions).
+
+Fonctionnement :
+• Signature miniature.
+
+Exécution étape par étape :
+• Objet fonction créé à l’évaluation de l’expression lambda.
+
+Ordre des opérations :
+• Pas de défauts dans l’énoncé de cette question.
+
+Cas d'utilisation courants :
+• reduce, operator.add parfois préféré.
+
+Cas limites :
+• Corps une seule expression.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir 2136.
+
+Remarques :
+• Réponse : crée une fonction deux paramètres (option du quiz).`,
+  2136: `(lambda x, y: x + y)(3, 4)
+
+Débutant :
+• 3+4=7.
+
+Intermédiaire :
+• Arguments positionnels à l’appel.
+
+Expert :
+• Évaluation de 3 et 4 avant l’appel.
+
+Concepts clés :
+• Appel multi-args.
+
+Distinctions clés :
+• (3)(4) serait autre chose.
+
+Fonctionnement :
+• Liaison x=3,y=4.
+
+Exécution étape par étape :
+1. 7.
+
+Ordre des opérations :
+• Args puis +.
+
+Cas d'utilisation courants :
+• Démonstrations.
+
+Cas limites :
+• Types non addables.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 7.`,
+  2137: `f = lambda x: x ** 2; f(5)
+
+Débutant :
+• Assignation donne un nom f à la lambda ; f(5) → 25.
+
+Intermédiaire :
+• Point-virgule sépare deux statements sur une ligne REPL/style compact.
+
+Expert :
+• f.__name__ souvent lambda en CPython.
+
+Concepts clés :
+• Nommer une lambda après coup.
+
+Distinctions clés :
+• Préférer def f(x): return x**2 pour debug.
+
+Fonctionnement :
+• Binding f puis appel.
+
+Exécution étape par étape :
+1. 25.
+
+Ordre des opérations :
+• Affectation puis appel.
+
+Cas d'utilisation courants :
+• Callbacks stockés.
+
+Cas limites :
+• Stack traces moins lisibles.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 25.`,
+  2138: `lambda x: x if x > 0 else 0
+
+Débutant :
+• Expression conditionnelle (ternaire) dans le corps de la lambda.
+
+Intermédiaire :
+• Pas de if statement, seulement expression.
+
+Expert :
+• Équivalent à max(x,0) pour nombres mais généralise.
+
+Concepts clés :
+• Conditional expression, clamp partiel.
+
+Distinctions clés :
+• if/else bas niveau statement interdit dans lambda.
+
+Fonctionnement :
+• Évalue condition puis branche.
+
+Exécution étape par étape :
+• Création fonction clamp positive.
+
+Ordre des opérations :
+• x > 0 d’abord.
+
+Cas d'utilisation courants :
+• ReLU-like, bornes simples.
+
+Cas limites :
+• Types non comparables.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir 2139.
+
+Remarques :
+• Réponse : crée une fonction avec expression conditionnelle (option du quiz).`,
+  2139: `(lambda x: x if x > 0 else 0)(-5)
+
+Débutant :
+• -5 > 0 faux → branche else → 0.
+
+Intermédiaire :
+• Court-circuit : seule la branche choisie est évaluée.
+
+Expert :
+• Attention aux effets de bord dans les branches.
+
+Concepts clés :
+• Test sur négatif.
+
+Distinctions clés :
+• Pas abs(-5).
+
+Fonctionnement :
+• Appel avec -5.
+
+Exécution étape par étape :
+1. 0.
+
+Ordre des opérations :
+• Argument puis ternaire.
+
+Cas d'utilisation courants :
+• Sanitize entrées.
+
+Cas limites :
+• NaN comparisons spéciales.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 0.`,
+  2140: `def vs lambda
+
+Débutant :
+• def permet bloc multi-instructions, docstring, annotations riches ; lambda = expression unique anonyme.
+
+Intermédiaire :
+• def crée un nom de fonction lisible ; lambda souvent inline.
+
+Expert :
+• pickle, introspection, decorators : def plus simple.
+
+Concepts clés :
+• Deux syntaxes de fonctions.
+
+Distinctions clés :
+• Pas de statements dans lambda.
+
+Fonctionnement :
+• Même type de base « function ».
+
+Exécution étape par étape :
+• Choix de style selon complexité.
+
+Ordre des opérations :
+• N/A conceptuel.
+
+Cas d'utilisation courants :
+• lambda pour glue courte ; def pour logique.
+
+Cas limites :
+• Sur-complexifier lambda nuit à la lecture.
+
+Considérations de performance :
+• Comparable pour corps simple.
+
+Exemples :
+• def add(a,b): return a+b vs lambda a,b: a+b
+
+Remarques :
+• Réponse : différence principale = corps statement vs expression (option du quiz).`,
+  2141: `def func(): return 1
+
+Débutant :
+• Fonction nommée qui renvoie littéral 1.
+
+Intermédiaire :
+• Chaque appel recalcule (ici constant).
+
+Expert :
+• Peut être décorée, attachée à une classe, etc.
+
+Concepts clés :
+• return constante.
+
+Distinctions clés :
+• Pas de paramètres.
+
+Fonctionnement :
+• Corps minimal.
+
+Exécution étape par étape :
+• Définition seule.
+
+Ordre des opérations :
+• def puis appels futurs.
+
+Cas d'utilisation courants :
+• Placeholder retournant code statut.
+
+Cas limites :
+• return sans expression → None.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• def ok(): return 1
+
+Remarques :
+• Réponse : définit une fonction qui renvoie 1 (option du quiz).`,
+  2142: `func() après def return 1
+
+Débutant :
+• Appel → 1.
+
+Intermédiaire :
+• Type int.
+
+Expert :
+• truthy en booléen.
+
+Concepts clés :
+• Valeur de retour observée.
+
+Distinctions clés :
+• Pas print(1).
+
+Fonctionnement :
+• Frame, return 1.
+
+Exécution étape par étape :
+1. 1.
+
+Ordre des opérations :
+• Appel puis return.
+
+Cas d'utilisation courants :
+• Tests unitaires sur return.
+
+Cas limites :
+• Récursion infinie si mal écrit ailleurs.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : 1.`,
+  2143: `def func(): return 1, 2, 3
+
+Débutant :
+• Trois éléments avec virgules → tuple (1, 2, 3).
+
+Intermédiaire :
+• Un seul objet retourné.
+
+Expert :
+• Peut déballer en trois variables.
+
+Concepts clés :
+• Tuple triple.
+
+Distinctions clés :
+• Pas liste.
+
+Fonctionnement :
+• Création tuple puis return.
+
+Exécution étape par étape :
+• Définition.
+
+Ordre des opérations :
+• return une expression.
+
+Cas d'utilisation courants :
+• Statut, min, max, médiane rapide.
+
+Cas limites :
+• Un élément tuple besoin virgule finale.
+
+Considérations de performance :
+• Petit tuple immuable.
+
+Exemples :
+• return a,b,c
+
+Remarques :
+• Réponse : définit une fonction qui renvoie un tuple de trois entiers (option du quiz).`,
+  2144: `func() avec return 1,2,3
+
+Débutant :
+• Résultat (1, 2, 3).
+
+Intermédiaire :
+• len 3.
+
+Expert :
+• Indexation [0] etc.
+
+Concepts clés :
+• Observation du tuple.
+
+Distinctions clés :
+• Pas trois valeurs séparées sans déballage.
+
+Fonctionnement :
+• Un retour.
+
+Exécution étape par étape :
+1. (1, 2, 3).
+
+Ordre des opérations :
+• Appel.
+
+Cas d'utilisation courants :
+• API multi-sorties.
+
+Cas limites :
+• Immuabilité du tuple.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : (1, 2, 3).`,
+  2145: `a, b = func() avec return 1, 2
+
+Débutant :
+• Attention au texte exact du QCM : ici déballage de deux valeurs depuis un tuple de deux éléments si func retourne 1,2.
+
+Intermédiaire :
+• Iterable unpacking : a=1, b=2.
+
+Expert :
+• Erreur si longueur ne correspond pas.
+
+Concepts clés :
+• Unpacking, tuple de retour.
+
+Distinctions clés :
+• Pas la même question que triple 1,2,3 sauf si énoncé identique — suivre la banque : pour 2145 c’est return 1, 2 dans level7.
+
+Fonctionnement :
+• func() produit (1,2) puis assignation.
+
+Exécution étape par étape :
+1. a et b liés.
+
+Ordre des opérations :
+• Appel puis unpacking.
+
+Cas d'utilisation courants :
+• divmod → q,r = divmod(10,3)
+
+Cas limites :
+• Trop de valeurs ValueError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque level7 pour l’énoncé exact.
+
+Remarques :
+• Réponse : a=1 et b=2 (option du quiz).`,
+  2146: `def func(): return
+
+Débutant :
+• return nu → None.
+
+Intermédiaire :
+• Même famille que 2103.
+
+Expert :
+• Tests assert func() is None.
+
+Concepts clés :
+• Absence de valeur utile.
+
+Distinctions clés :
+• Pas 0.
+
+Fonctionnement :
+• Sortie immédiate.
+
+Exécution étape par étape :
+• Définition.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Guard clauses.
+
+Cas limites :
+• Code mort après return.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : définit une fonction dont l’appel donne None (option du quiz).`,
+  2147: `func() après return nu
+
+Débutant :
+• None.
+
+Intermédiaire :
+• Affichage REPL montre rien de visible sauf repr None.
+
+Expert :
+• bool(None) faux.
+
+Concepts clés :
+• Résultat d’appel.
+
+Distinctions clés :
+• Pas exception.
+
+Fonctionnement :
+• Return None.
+
+Exécution étape par étape :
+1. None.
+
+Ordre des opérations :
+• Appel.
+
+Cas d'utilisation courants :
+• Side-effect only functions parfois return None explicite.
+
+Cas limites :
+• is vs == avec None.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : None.`,
+  2148: `def func(): pass
+
+Débutant :
+• Corps vide exécutable → fin normale → None implicite.
+
+Intermédiaire :
+• Comme 2102 revisité dans contexte return.
+
+Expert :
+• Utile pour ABC ou stubs.
+
+Concepts clés :
+• pass + None implicite.
+
+Distinctions clés :
+• Pas return 0.
+
+Fonctionnement :
+• Aucune instruction retournant valeur.
+
+Exécution étape par étape :
+• Définition.
+
+Ordre des opérations :
+• def.
+
+Cas d'utilisation courants :
+• Interface à implémenter plus tard.
+
+Cas limites :
+• pass dans classe différent niveau.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : définit une fonction qui renvoie None implicitement (option du quiz).`,
+  2149: `func() après def pass
+
+Débutant :
+• None.
+
+Intermédiaire :
+• Même effet que return sans valeur à la fin.
+
+Expert :
+• type(None) is NoneType.
+
+Concepts clés :
+• Résultat observable None.
+
+Distinctions clés :
+• Pas undefined (Python n’a pas).
+
+Fonctionnement :
+• Fin de fonction.
+
+Exécution étape par étape :
+1. None.
+
+Ordre des opérations :
+• Appel.
+
+Cas d'utilisation courants :
+• Vérifier callable sans valeur.
+
+Cas limites :
+• Confondre avec fonction qui print seulement.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : None.`,
+  2150: `def func(): return [1, 2, 3]
+
+Débutant :
+• return renvoie une liste littérale trois éléments.
+
+Intermédiaire :
+• Nouvelle liste à chaque appel (pas de défaut ici).
+
+Expert :
+• Même liste si optimisations constant folding rares ; en pratique nouvelle à chaque appel pour literal dans corps.
+
+Concepts clés :
+• Retour collection mutable.
+
+Distinctions clés :
+• Pas tuple.
+
+Fonctionnement :
+• Création liste puis return.
+
+Exécution étape par étape :
+• Définition.
+
+Ordre des opérations :
+• À chaque appel : construction liste.
+
+Cas d'utilisation courants :
+• Retourner plusieurs résultats ordonnés mutables.
+
+Cas limites :
+• Appelant peut muter la liste reçue.
+
+Considérations de performance :
+• Allocation liste.
+
+Exemples :
+• return [i for i in range(3)]
+
+Remarques :
+• Réponse : définit une fonction qui renvoie la liste [1, 2, 3] (option du quiz).`,
+  2151: `x = 1 ; def func(): return x ; func()
+
+Débutant :
+• x est défini au niveau module (global) ; func lit x car il n’y a pas de x local.
+
+Intermédiaire :
+• La recherche de nom remonte des locales vers les englobantes puis le global.
+
+Expert :
+• Sans global ni nonlocal, seule la lecture du global est implicite.
+
+Concepts clés :
+• Portée, variable globale, lecture.
+
+Distinctions clés :
+• Différent d’une affectation locale qui masquerait le nom.
+
+Fonctionnement :
+• func() résout x vers la table globale du module.
+
+Exécution étape par étape :
+1. x vaut 1 au global.
+2. func() retourne la valeur liée au nom x → 1.
+
+Ordre des opérations :
+• L’affectation x = 1 s’exécute avant la définition puis l’appel.
+
+Cas d'utilisation courants :
+• Constantes de configuration lues par plusieurs fonctions.
+
+Cas limites :
+• Si plus tard on assigne x dans func sans global, le comportement change.
+
+Considérations de performance :
+• Lookup de nom négligeable.
+
+Exemples :
+• Réassigner x = 10 au global change le résultat des appels suivants.
+
+Remarques :
+• Réponse : 1 (première option du quiz).`,
+  2152: `x = 1 ; def func(): x = 2 ; return x ; func()
+
+Débutant :
+• x = 2 dans le corps crée une variable locale x qui masque le global.
+
+Intermédiaire :
+• return x utilise la liaison locale fraîche, pas le 1 du module.
+
+Expert :
+• Toute assignation à x dans la fonction rend x local pour tout le bloc (règle du compilateur).
+
+Concepts clés :
+• Masquage (shadowing), variable locale.
+
+Distinctions clés :
+• Le global x reste 1 tant qu’on ne le modifie pas avec global.
+
+Fonctionnement :
+• Liaison locale x → 2 pendant l’appel.
+
+Exécution étape par étape :
+1. Entrée dans func : exécution de x = 2 puis return 2.
+
+Ordre des opérations :
+• Assignation locale avant return.
+
+Cas d'utilisation courants :
+• Paramètres ou compteurs internes sans toucher au global.
+
+Cas limites :
+• Lire x avant assignation locale si une assignation existe plus bas → erreur (voir autre question).
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Après func(), x global vaut encore 1.
+
+Remarques :
+• Réponse : 2.`,
+  2153: `x = 1 ; def func(): x = 2 ; func() ; puis x au global
+
+Débutant :
+• L’affectation dans func ne modifie pas le x du module.
+
+Intermédiaire :
+• La locale disparaît à la sortie de l’appel ; seul le global subsiste.
+
+Expert :
+• Pour modifier le global depuis func il faudrait global x.
+
+Concepts clés :
+• Indépendance local / global.
+
+Distinctions clés :
+• Pas d’effet sur le binding global après func().
+
+Fonctionnement :
+• x global inchangé par l’assignation locale.
+
+Exécution étape par étape :
+1. func() crée x=2 localement puis quitte.
+2. Évaluation de x au niveau module → 1.
+
+Ordre des opérations :
+• Appel puis lecture du nom au scope courant (module).
+
+Cas d'utilisation courants :
+• Éviter les effets de bord sur des variables partagées.
+
+Cas limites :
+• Objets mutables globaux modifiés en place restent un cas différent (pas ici).
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Comparer avec la variante global x.
+
+Remarques :
+• Réponse : 1.`,
+  2154: `x = 1 ; def func(): global x ; x = 2 ; func() ; x
+
+Débutant :
+• global x annonce que les assignations à x visent le nom du module.
+
+Intermédiaire :
+• Après func(), le global vaut 2.
+
+Expert :
+• global doit apparaître avant l’usage assignant ; une seule déclaration suffit pour tout le bloc.
+
+Concepts clés :
+• Mot-clé global, mutation du binding global.
+
+Distinctions clés :
+• Sans global, x = 2 créerait une locale.
+
+Fonctionnement :
+• func modifie la cellule globale x.
+
+Exécution étape par étape :
+1. func() exécute x = 2 sur le global → x vaut 2 partout dans le module.
+
+Ordre des opérations :
+• Déclaration global puis assignation.
+
+Cas d'utilisation courants :
+• Compteurs ou caches de module (souvent à éviter au profit d’objets explicites).
+
+Cas limites :
+• Tests parallèles et globals : état partagé fragile.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Préférer souvent une classe ou un attribut de module nommé.
+
+Remarques :
+• Réponse : 2.`,
+  2155: `def outer(): x = 1 ; def inner(): return x ; return inner() ; outer()
+
+Débutant :
+• inner voit x défini dans outer : portée englobante (non globale).
+
+Intermédiaire :
+• Pas besoin de nonlocal ici car inner ne fait qu’une lecture de x.
+
+Expert :
+• C’est une fermeture sur la variable de cellule de outer.
+
+Concepts clés :
+• Fonction imbriquée, fermeture, ENCLOSING.
+
+Distinctions clés :
+• Différent du simple accès au global du module.
+
+Fonctionnement :
+• inner résout x dans la portée de outer.
+
+Exécution étape par étape :
+1. outer() définit x=1 et inner.
+2. return inner() exécute inner → retourne 1.
+
+Ordre des opérations :
+• Création de inner puis appel immédiat.
+
+Cas d'utilisation courants :
+• Factoriser de la logique tout en gardant un état capturé.
+
+Cas limites :
+• Si inner assigne à x sans nonlocal, x devient local à inner.
+
+Considérations de performance :
+• Petite surcharge de fermeture acceptable.
+
+Exemples :
+• Fabriques de callbacks.
+
+Remarques :
+• Réponse : 1.`,
+  2156: `def outer(x): def inner(): return x ; return inner ; f = outer(5) ; f()
+
+Débutant :
+• outer(5) renvoie inner qui « se souvient » de x = 5.
+
+Intermédiaire :
+• Chaque appel outer(...) produit une nouvelle fonction avec sa propre cellule x.
+
+Expert :
+• Les valeurs par défaut ou attributs de fonction sont d’autres façons de figer des paramètres.
+
+Concepts clés :
+• Fermeture sur paramètre, fonction comme valeur de retour.
+
+Distinctions clés :
+• f et g = outer(10) ont des x capturés différents.
+
+Fonctionnement :
+• inner.__closure__ retient la cellule liée à x.
+
+Exécution étape par étape :
+1. outer(5) crée inner capturant 5.
+2. f() retourne 5.
+
+Ordre des opérations :
+• Liaison de f puis appel.
+
+Cas d'utilisation courants :
+• Multiplicateurs partiels, décorateurs, API configurables.
+
+Cas limites :
+• Boucles qui créent des fermetures dans une même variable d’index : piège classique (hors énoncé).
+
+Considérations de performance :
+• Négligeable pour petits nombres d’appels.
+
+Exemples :
+• make_multiplier du même niveau.
+
+Remarques :
+• Réponse : 5.`,
+  2157: `def func(): x = 1 ; return x ; func() puis x au module
+
+Débutant :
+• x n’existe pas au niveau module : NameError.
+
+Intermédiaire :
+• La locale x meurt en fin d’appel ; le nom x n’est pas défini globalement.
+
+Expert :
+• Même si func retourne 1, cela ne crée pas de variable module x.
+
+Concepts clés :
+• Durée de vie des locales, NameError.
+
+Distinctions clés :
+• Différent de x global lu sans assignation locale.
+
+Fonctionnement :
+• Évaluation du nom x hors fonction sans binding.
+
+Exécution étape par étape :
+1. func() termine ; ensuite accès à x au module → erreur.
+
+Ordre des opérations :
+• Appel puis tentative de lookup global/module.
+
+Cas d'utilisation courants :
+• Retourner une valeur et l’assigner si on veut la conserver : r = func().
+
+Cas limites :
+• REPL peut afficher le résultat du dernier func() mais pas créer x.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Utiliser return et assignment explicite.
+
+Remarques :
+• Réponse : NameError (première option).`,
+  2158: `x = 1 ; def func(y): return x + y ; func(2)
+
+Débutant :
+• x vient du global, y vaut 2 en paramètre → 1 + 2 = 3.
+
+Intermédiaire :
+• Les paramètres sont des locales initialisées par les arguments.
+
+Expert :
+• Si un global x change entre définition et appel, la somme utilise la valeur courante au moment de l’appel.
+
+Concepts clés :
+• Mélange paramètre + global en lecture.
+
+Distinctions clés :
+• Pas de shadowing ici car pas d’assignation à x dans func.
+
+Fonctionnement :
+• Lookup x global, y local.
+
+Exécution étape par étape :
+1. y=2, x lu comme 1 au global, addition 1 + 2.
+
+Ordre des opérations :
+• Liaison des arguments puis évaluation du return.
+
+Cas d'utilisation courants :
+• Base fixe + incrément utilisateur.
+
+Cas limites :
+• Types non addables → TypeError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• func(5) donnerait 6 avec x=1.
+
+Remarques :
+• Réponse : 3.`,
+  2159: `def func(): x = x + 1 ; return x ; func()
+
+Débutant :
+• x = x + 1 rend x local, mais la partie droite lit x avant assignation → UnboundLocalError.
+
+Intermédiaire :
+• Python a décidé que x est local à cause de l’assignation dans tout le bloc.
+
+Expert :
+• Corriger avec global x ou passer x en argument ou initialiser avant usage.
+
+Concepts clés :
+• Règle de localisation, variable locale non liée.
+
+Distinctions clés :
+• Pas une NameError sur global ici : c’est bien une locale « vide ».
+
+Fonctionnement :
+• LOAD_FAST échoue car pas encore STORE_FAST effectif pour la lecture.
+
+Exécution étape par étape :
+1. Entrée dans func, tentative d’évaluer x + 1 → erreur.
+
+Ordre des opérations :
+• Compilation marque x comme local.
+
+Cas d'utilisation courants :
+• Compteur : utiliser global ou nonlocal ou une variable externe immutable différemment.
+
+Cas limites :
+• Lire puis assigner sans ambiguïté : utiliser un autre nom temporaire.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• def func(global_x): return global_x + 1
+
+Remarques :
+• Réponse : UnboundLocalError (première option).`,
+  2160: `def func(): return len([1, 2, 3]) ; func()
+
+Débutant :
+• len compte trois éléments dans la liste littérale.
+
+Intermédiaire :
+• Les builtins sont disponibles dans la fonction comme partout.
+
+Expert :
+• On peut shadow len en définissant un nom local len (mauvaise idée).
+
+Concepts clés :
+• Appel de builtin dans une fonction.
+
+Distinctions clés :
+• Ce n’est pas la longueur de la chaîne "123".
+
+Fonctionnement :
+• Création de la liste puis len sur l’objet liste.
+
+Exécution étape par étape :
+1. Évalue len([1,2,3]) → 3, return.
+
+Ordre des opérations :
+• Liste puis len.
+
+Cas d'utilisation courants :
+• Encapsuler des mesures sur des structures créées localement.
+
+Cas limites :
+• listes imbriquées : len ne compte que le premier niveau.
+
+Considérations de performance :
+• O(1) pour len sur list en CPython.
+
+Exemples :
+• return len(() ) → 0.
+
+Remarques :
+• Réponse : 3.`,
+  2161: `def fact(n): return 1 if n <= 1 else n * fact(n-1) ; fact(5)
+
+Débutant :
+• Récursion : 5 × 4 × 3 × 2 × 1 = 120 ; cas de base n <= 1 → 1.
+
+Intermédiaire :
+• Chaque appel attend le résultat de fact(n-1) avant de multiplier.
+
+Expert :
+• Profondeur limitée par sys.getrecursionlimit().
+
+Concepts clés :
+• Récursion, cas de base, factorielle.
+
+Distinctions clés :
+• Différent d’une boucle for accumulant le produit.
+
+Fonctionnement :
+• Pile d’appels jusqu’au base case puis déroulement.
+
+Exécution étape par étape :
+• fact(5)=5*fact(4)=…=120.
+
+Ordre des opérations :
+• Évaluation paresseuse des branches du ternaire.
+
+Cas d'utilisation courants :
+• Arbres, parsers, divide and conquer.
+
+Cas limites :
+• n négatif ou non entier : ici comportement récursif infini ou incorrect sans garde.
+
+Considérations de performance :
+• Récursion profonde coûteuse ; math.prod ou boucle pour gros n.
+
+Exemples :
+• fact(0) et fact(1) valent 1 avec cette définition.
+
+Remarques :
+• Réponse : 120.`,
+  2162: `def fib(n): return n if n < 2 else fib(n-1) + fib(n-2) ; fib(5)
+
+Débutant :
+• Avec ce code, fib(5) vaut 5 (suite 0,1,1,2,3,5 au rang 5 si on compte depuis 0).
+
+Intermédiaire :
+• Beaucoup de sous-appels redondants : complexité exponentielle naïve.
+
+Expert :
+• Ne pas confondre avec F(5)=5 en indice « humain » vs autre convention.
+
+Concepts clés :
+• Fibonacci récursif, double appel.
+
+Distinctions clés :
+• fib(6) donnerait 8 avec la même définition.
+
+Fonctionnement :
+• Expansion en arbre binaire d’appels.
+
+Exécution étape par étape :
+• fib(5)=fib(4)+fib(3) … jusqu’aux bases n<2.
+
+Ordre des opérations :
+• Addition après retours des sous-appels.
+
+Cas d'utilisation courants :
+• Exemple pédagogique ; en prod : itératif ou memo.
+
+Cas limites :
+• fib(-1) boucle infinie ou récursion incorrecte sans garde.
+
+Considérations de performance :
+• Très mauvais pour grands n sans cache.
+
+Exemples :
+• fib(0)→0, fib(1)→1.
+
+Remarques :
+• Réponse : 5 (alignée sur la banque).`,
+  2163: `def count(n): return 0 if n <= 0 else 1 + count(n-1) ; count(5)
+
+Débutant :
+• Compte combien de fois on enlève 1 avant d’atteindre 0 : 5.
+
+Intermédiaire :
+• Équivalent à sommer 1 cinq fois avec base 0.
+
+Expert :
+• Modèle de preuve par récurrence sur n.
+
+Concepts clés :
+• Récursion arithmétique, cas de base n <= 0.
+
+Distinctions clés :
+• Pas la factorielle : pas de multiplication en chaîne.
+
+Fonctionnement :
+• 1 + count(4) + … jusqu’à count(0)=0.
+
+Exécution étape par étape :
+• Déroulement linéaire de profondeur n.
+
+Ordre des opérations :
+• Test n <= 0 puis branche.
+
+Cas d'utilisation courants :
+• Illustrer la récursion terminale conceptuelle (Python n’optimise pas en TCO).
+
+Cas limites :
+• n négatif grand : retourne 0 immédiatement ici.
+
+Considérations de performance :
+• Linéaire en profondeur de pile.
+
+Exemples :
+• count(0) → 0.
+
+Remarques :
+• Réponse : 5.`,
+  2164: `def sum_list(lst): return 0 if not lst else lst[0] + sum_list(lst[1:]) ; sum_list([1,2,3])
+
+Débutant :
+• Base liste vide → 0 ; sinon tête + somme de la queue → 6.
+
+Intermédiaire :
+• lst[1:] copie des sous-listes : coût mémoire/temps important.
+
+Expert :
+• En pratique utiliser sum(lst) ou un index itératif.
+
+Concepts clés :
+• Récursion sur structure, slicing.
+
+Distinctions clés :
+• Différent de len : ici addition des valeurs.
+
+Fonctionnement :
+• 1 + sum([2,3]) = 1 + 2 + 3 + 0.
+
+Exécution étape par étape :
+• Jusqu’à liste vide.
+
+Ordre des opérations :
+• not lst teste la vérité de la liste.
+
+Cas d'utilisation courants :
+• Traitement récursif d’arbres ou listes chaînées conceptuelles.
+
+Cas limites :
+• Liste très longue : dépassement de récursion.
+
+Considérations de performance :
+• O(n²) temps avec slicing naïf.
+
+Exemples :
+• sum_list([]) → 0.
+
+Remarques :
+• Réponse : 6.`,
+  2165: `def power(x, n): return 1 if n == 0 else x * power(x, n-1) ; power(2, 3)
+
+Débutant :
+• Exposant entier positif : 2³ = 8 ; base n==0 → 1.
+
+Intermédiaire :
+• Version récursive simple de l’exponentiation.
+
+Expert :
+• Pour grands n, versions logarithmiques ou pow built-in.
+
+Concepts clés :
+• Récursion multiplicative, cas de base exposant 0.
+
+Distinctions clés :
+• 2^3 ≠ 2*3.
+
+Fonctionnement :
+• 2 * power(2,2) * …
+
+Exécution étape par étape :
+• Jusqu’à n==0.
+
+Ordre des opérations :
+• Décrement n à chaque niveau.
+
+Cas d'utilisation courants :
+• Math récursive pédagogique.
+
+Cas limites :
+• n négatif non géré ici.
+
+Considérations de performance :
+• Linéaire en n pour cette forme.
+
+Exemples :
+• power(x,0) → 1 pour tout x (sauf 0**0 débat hors scope).
+
+Remarques :
+• Réponse : 8.`,
+  2166: `Fonction récursive sans cas de base
+
+Débutant :
+• Les appels ne s’arrêtent pas : la pile grossit jusqu’à la limite → RecursionError.
+
+Intermédiaire :
+• Python impose une profondeur maximale pour éviter un débordement de pile natif.
+
+Expert :
+• Augmenter la limite est possible mais dangereux (setrecursionlimit).
+
+Concepts clés :
+• Récursion infinie, limite de récursion.
+
+Distinctions clés :
+• Ce n’est pas une boucle while True qui serait interrompue autrement.
+
+Fonctionnement :
+• Chaque cadre consomme de la pile jusqu’à l’exception.
+
+Exécution étape par étape :
+• Répétition jusqu’à l’erreur.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Débogage : toujours vérifier base + progression vers la base.
+
+Cas limites :
+• Récursion mutuelle sans base identique.
+
+Considérations de performance :
+• Échec rapide comparé à une vraie infini CPU.
+
+Exemples :
+• def f(): return f()
+
+Remarques :
+• Réponse : RecursionError (formulation du QCM).`,
+  2167: `def func(): return func() ; func()
+
+Débutant :
+• Chaque appel en déclenche un autre sans condition d’arrêt → RecursionError.
+
+Intermédiaire :
+• Même idée que la question « pas de cas de base » mais avec le nom explicite func.
+
+Expert :
+• Tail recursion non optimisée en Python.
+
+Concepts clés :
+• Auto-appel direct.
+
+Distinctions clés :
+• return func() vs func() seul statement : ici return force la récursion pour la valeur.
+
+Fonctionnement :
+• Pile infinie théorique, limitée par l’interpréteur.
+
+Exécution étape par étape :
+• Explosion de profondeur.
+
+Ordre des opérations :
+• Appel récursif avant de pouvoir retourner une valeur.
+
+Cas d'utilisation courants :
+• Anti-pattern démonstratif.
+
+Cas limites :
+• Trampoline ou boucle pour remplacer.
+
+Considérations de performance :
+• Échec par limite.
+
+Exemples :
+• Ajouter if n<=0: return 0 pour une vraie récursion utile.
+
+Remarques :
+• Réponse : RecursionError (première option).`,
+  2168: `def reverse(s): return '' if not s else reverse(s[1:]) + s[0] ; reverse('abc')
+
+Débutant :
+• On inverse la queue puis on accole la tête : '' puis 'c','cb','cba'.
+
+Intermédiaire :
+• s[1:] crée des sous-chaînes ; coût quadratique possible.
+
+Expert :
+• s[::-1] ou boucle pour production.
+
+Concepts clés :
+• Récursion sur chaîne, concaténation.
+
+Distinctions clés :
+• Ordre reverse(s[1:]) + s[0] vs s[0] + reverse(s[1:]) donnerait l’identité.
+
+Fonctionnement :
+• Base chaîne vide.
+
+Exécution étape par étape :
+• Déplier jusqu’à '' puis reconstruire.
+
+Ordre des opérations :
+• not s sur str vide est True.
+
+Cas d'utilisation courants :
+• Exercices algorithmiques.
+
+Cas limites :
+• Très longues chaînes : profondeur + coûts de copie.
+
+Considérations de performance :
+• Préférer slicing inverse itératif en pratique.
+
+Exemples :
+• reverse('') → ''.
+
+Remarques :
+• Réponse : la chaîne cba (option du quiz avec guillemets).`,
+  2169: `def gcd(a, b): return a if b == 0 else gcd(b, a % b) ; gcd(48, 18)
+
+Débutant :
+• Algorithme d’Euclide : PGCD(48,18)=6.
+
+Intermédiaire :
+• Chaque pas remplace (a,b) par (b, a mod b) jusqu’à b=0.
+
+Expert :
+• Complexité logarithmique en la taille des entiers.
+
+Concepts clés :
+• Récursion mathématique, modulo.
+
+Distinctions clés :
+• Pas le minimum des deux nombres.
+
+Fonctionnement :
+• gcd(48,18)→gcd(18,12)→gcd(12,6)→gcd(6,0)→6.
+
+Exécution étape par étape :
+• Voir déroulement banque.
+
+Ordre des opérations :
+• a % b évalué avant l’appel récursif.
+
+Cas d'utilisation courants :
+• Fractions irréductibles, crypto pédagogique.
+
+Cas limites :
+• b négatif : Python gère modulo avec signe ; version ici suppose usage positif banque.
+
+Considérations de performance :
+• Très efficace.
+
+Exemples :
+• gcd(17,13)→1.
+
+Remarques :
+• Réponse : 6.`,
+  2170: `def length(lst): return 0 if not lst else 1 + length(lst[1:]) ; length([1,2,3])
+
+Débutant :
+• Compte récursivement : 1 + 1 + 1 + 0 = 3.
+
+Intermédiaire :
+• Même piège de coût que sum_list avec lst[1:].
+
+Expert :
+• len built-in en O(1) pour list.
+
+Concepts clés :
+• Longueur récursive, liste vide comme base.
+
+Distinctions clés :
+• Pas la somme des éléments.
+
+Fonctionnement :
+• Réduction jusqu’à [].
+
+Exécution étape par étape :
+• Trois niveaux puis base.
+
+Ordre des opérations :
+• Vérité de liste vide = False.
+
+Cas d'utilisation courants :
+• Pédagogie sur les inductifs.
+
+Cas limites :
+• Profondeur pour très longues listes.
+
+Considérations de performance :
+• Éviter en production pour grandes listes.
+
+Exemples :
+• length([]) → 0.
+
+Remarques :
+• Réponse : 3.`,
+  2171: `def apply(func, x): return func(x) ; apply(lambda x: x*2, 5)
+
+Débutant :
+• apply reçoit une fonction et un argument ; la lambda double → 10.
+
+Intermédiaire :
+• func est un paramètre comme un int, mais callable.
+
+Expert :
+• Typage : Callable[[int], int] en annotations modernes.
+
+Concepts clés :
+• Fonction d’ordre supérieur.
+
+Distinctions clés :
+• Ce n’est pas map sur une liste.
+
+Fonctionnement :
+• Appelle l’objet fonction passé en premier argument.
+
+Exécution étape par étape :
+1. func = lambda..., x=5 → 5*2.
+
+Ordre des opérations :
+• Évaluation des arguments avant apply.
+
+Cas d'utilisation courants :
+• Hooks, stratégies injectées.
+
+Cas limites :
+• func non callable → TypeError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• apply(len, "abc") → 3.
+
+Remarques :
+• Réponse : 10.`,
+  2172: `def make_multiplier(n): return lambda x: x * n ; f = make_multiplier(3) ; f(4)
+
+Débutant :
+• La lambda capture n=3 ; f(4) = 12.
+
+Intermédiaire :
+• Fabrique de fonctions spécialisées.
+
+Expert :
+• functools.partial est une alternative explicite.
+
+Concepts clés :
+• Closure sur n, fabrique.
+
+Distinctions clés :
+• make_multiplier(3) ne multiplie pas encore : elle retourne une fonction.
+
+Fonctionnement :
+• Cellule n liée à 3 dans la lambda retournée.
+
+Exécution étape par étape :
+1. f = lambda avec n=3.
+2. f(4) → 12.
+
+Ordre des opérations :
+• Création de f puis appel.
+
+Cas d'utilisation courants :
+• Multiplicateurs, unités, échelles.
+
+Cas limites :
+• Muter n après coup si n était mutable (ici int immuable).
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• make_multiplier(0)(99) → 0.
+
+Remarques :
+• Réponse : 12.`,
+  2173: `def compose(f, g): return lambda x: f(g(x)) ; compose(lambda x: x+1, lambda x: x*2)(3)
+
+Débutant :
+• g(3)=6 puis f(6)=7 : composition f ∘ g.
+
+Intermédiaire :
+• L’ordre des arguments compose(f,g) fixe qui est appliqué en premier (g puis f).
+
+Expert :
+• functools.reduce pour composer une liste de fonctions.
+
+Concepts clés :
+• Composition, enchaînement.
+
+Distinctions clés :
+• compose(g,f) inverserait l’effet.
+
+Fonctionnement :
+• Un seul appel externe avec x=3.
+
+Exécution étape par étape :
+• g puis f.
+
+Ordre des opérations :
+• Évaluation des lambdas passées en arguments d’abord.
+
+Cas d'utilisation courants :
+• Pipeline fonctionnel.
+
+Cas limites :
+• Types incompatibles entre sortie de g et entrée de f.
+
+Considérations de performance :
+• Couche d’appels supplémentaires.
+
+Exemples :
+• Inverser l’ordre donne 8 sur 3 (banque anglaise le note).
+
+Remarques :
+• Réponse : 7.`,
+  2174: `map(lambda x: x*2, [1, 2, 3])
+
+Débutant :
+• map renvoie un itérateur paresseux (objet map), pas une liste matérialisée.
+
+Intermédiaire :
+• list(...) force le parcours complet.
+
+Expert :
+• En Python 3, map/filter sont des itérateurs ; en Python 2 map listait.
+
+Concepts clés :
+• Évaluation paresseuse, itérateur.
+
+Distinctions clés :
+• Ce n’est pas [2,4,6] tant qu’on ne convertit pas.
+
+Fonctionnement :
+• Objet qui appellera la lambda sur chaque élément à la demande.
+
+Exécution étape par étape :
+• Création immédiate de l’objet map sans parcourir la liste entière pour stocker.
+
+Ordre des opérations :
+• Arguments évalués, puis construction map.
+
+Cas d'utilisation courants :
+• Chaîner des transformations sans copie intermédiaire.
+
+Cas limites :
+• Itérateur épuisable une fois consommé.
+
+Considérations de performance :
+• Évite allocations si court-circuit ou zip.
+
+Exemples :
+• next(iter(map(...))) pour le premier seulement.
+
+Remarques :
+• Réponse : objet map (première option du quiz).`,
+  2175: `list(map(lambda x: x*2, [1, 2, 3]))
+
+Débutant :
+• list parcourt l’itérateur map et collecte 2, 4, 6.
+
+Intermédiaire :
+• Nouvelle liste, la source [1,2,3] inchangée.
+
+Expert :
+• Compréhension [x*2 for x in ...] équivalente idiomatique.
+
+Concepts clés :
+• Matérialisation d’itérateur.
+
+Distinctions clés :
+• Différent de map seul.
+
+Fonctionnement :
+• Consommation complète de l’itérateur.
+
+Exécution étape par étape :
+• Itération jusqu’à StopIteration puis liste construite.
+
+Ordre des opérations :
+• map créé puis list() l’entoure.
+
+Cas d'utilisation courants :
+• Résultats réutilisables en liste.
+
+Cas limites :
+• Itérable infini → boucle mémoire si list().
+
+Considérations de performance :
+• Coût O(n) temps et espace.
+
+Exemples :
+• Liste vide → [].
+
+Remarques :
+• Réponse : [2, 4, 6].`,
+  2176: `filter(lambda x: x > 2, [1, 2, 3, 4])
+
+Débutant :
+• filter renvoie un objet filter (itérateur), pas directement [3, 4].
+
+Intermédiaire :
+• La fonction prédicat doit renvoyer une valeur de vérité par élément.
+
+Expert :
+• Équivalent conceptuel à (x for x in it if pred(x)) mais avec callable.
+
+Concepts clés :
+• Filtrage paresseux, itérateur.
+
+Distinctions clés :
+• Ce n’est pas une liste ; pas d’évaluation complète immédiate.
+
+Fonctionnement :
+• Objet qui teste chaque élément à la demande.
+
+Exécution étape par étape :
+• Création de l’objet sans parcourir toute la liste pour stockage.
+
+Ordre des opérations :
+• Construction filter après évaluation des arguments.
+
+Cas d'utilisation courants :
+• Chaîner map/filter sans listes intermédiaires.
+
+Cas limites :
+• Prédicat None (usage ancien) hors style moderne.
+
+Considérations de performance :
+• Paresse utile sur gros flux.
+
+Exemples :
+• list(filter(...)) matérialise.
+
+Remarques :
+• Réponse : objet filter (première option du quiz).`,
+  2177: `list(filter(lambda x: x > 2, [1, 2, 3, 4]))
+
+Débutant :
+• Seuls 3 et 4 satisfont x > 2 → liste [3, 4].
+
+Intermédiaire :
+• list force la consommation de l’itérateur filter.
+
+Expert :
+• Stabilité d’ordre : même ordre que l’itérable source.
+
+Concepts clés :
+• Matérialisation, prédicat.
+
+Distinctions clés :
+• Différent de filter seul.
+
+Fonctionnement :
+• Parcours 1..4, garde 3 et 4.
+
+Exécution étape par étape :
+• Construction progressive de la liste résultat.
+
+Ordre des opérations :
+• filter puis list.
+
+Cas d'utilisation courants :
+• Nettoyer des données avant agrégation.
+
+Cas limites :
+• Prédicat qui lève une exception sur un élément.
+
+Considérations de performance :
+• O(n) temps, O(k) espace pour k survivants.
+
+Exemples :
+• Liste vide en entrée → [].
+
+Remarques :
+• Réponse : [3, 4].`,
+  2178: `from functools import reduce ; reduce(lambda x, y: x + y, [1, 2, 3, 4])
+
+Débutant :
+• Réduction : ((1+2)+3)+4 = 10.
+
+Intermédiaire :
+• reduce prend une fonction binaire et un itérable ; ici pas d’initialisateur explicite : départ sur les deux premiers éléments.
+
+Expert :
+• En Python 3 reduce est dans functools, pas builtin.
+
+Concepts clés :
+• Accumulation, réduction.
+
+Distinctions clés :
+• Différent de sum() seul mais même effet pour l’addition sur non vide.
+
+Fonctionnement :
+• Paire courante + suivant jusqu’à épuisement.
+
+Exécution étape par étape :
+• 1+2=3, 3+3=6, 6+4=10.
+
+Ordre des opérations :
+• Import functools puis appel reduce.
+
+Cas d'utilisation courants :
+• Produit, min/max custom, fusion de structures.
+
+Cas limites :
+• Itérable vide sans init → TypeError.
+
+Considérations de performance :
+• C implementation efficace.
+
+Exemples :
+• reduce avec init 0 permet liste vide.
+
+Remarques :
+• Réponse : 10.`,
+  2179: `sorted([3, 1, 2], key=lambda x: -x)
+
+Débutant :
+• La clé compare les opposés : ordre décroissant sur les originaux → [3, 2, 1].
+
+Intermédiaire :
+• sorted renvoie une nouvelle liste ; l’originale reste [3,1,2].
+
+Expert :
+• reverse=True serait plus lisible pour numériques simples.
+
+Concepts clés :
+• Tri par clé, fonction key.
+
+Distinctions clés :
+• Les éléments restent des int ; seul l’ordre change.
+
+Fonctionnement :
+• Calcule -3,-1,-2 puis trie ces clés en ordre croissant.
+
+Exécution étape par étape :
+• Tri stable possible avec égalités de clés.
+
+Ordre des opérations :
+• key appelée une fois par élément (en CPython avec optimisations).
+
+Cas d'utilisation courants :
+• Trier des tuples par second membre, chaînes par longueur.
+
+Cas limites :
+• Clés non comparables entre elles → TypeError.
+
+Considérations de performance :
+• O(n log n) typique.
+
+Exemples :
+• sorted([3,1,2]) sans key → [1,2,3].
+
+Remarques :
+• Réponse : [3, 2, 1].`,
+  2180: `max([1, 2, 3], key=lambda x: -x)
+
+Débutant :
+• Clés -1, -2, -3 : le max des clés est -1, associé à l’élément 1 → max retourne 1.
+
+Intermédiaire :
+• max retourne un élément original, pas la clé.
+
+Expert :
+• min avec la même key donnerait 3 (banque anglaise le rappelle).
+
+Concepts clés :
+• Sélection par clé, préservation de l’élément.
+
+Distinctions clés :
+• Pas le maximum numérique brut 3.
+
+Fonctionnement :
+• Parcours avec meilleure clé vue.
+
+Exécution étape par étape :
+• Compare via -x.
+
+Ordre des opérations :
+• Évaluation des clés pour chaque candidat.
+
+Cas d'utilisation courants :
+• Trouver le mot le plus long, le tuple avec plus grand second champ.
+
+Cas limites :
+• Itérable vide sans default → ValueError.
+
+Considérations de performance :
+• O(n) un seul passage.
+
+Exemples :
+• max(['a','bb'], key=len) → 'bb'.
+
+Remarques :
+• Réponse : 1.`,
+  2181: `def func(): pass ; func.__name__
+
+Débutant :
+• Attribut spécial contenant le nom symbolique de la fonction sous forme de chaîne.
+
+Intermédiaire :
+• Utile pour logs, décorateurs, enregistrement de routes.
+
+Expert :
+• Les lambdas ont souvent __name__ égal à lambda en CPython.
+
+Concepts clés :
+• Introspection, métadonnée __name__.
+
+Distinctions clés :
+• Ce n’est pas le qualname complet pour fonctions imbriquées (voir __qualname__).
+
+Fonctionnement :
+• Rempli à la compilation de la définition.
+
+Exécution étape par étape :
+• Accès attribut après création de func.
+
+Ordre des opérations :
+• def puis lecture .__name__.
+
+Cas d'utilisation courants :
+• Messages d’erreur formatés avec le nom de fonction.
+
+Cas limites :
+• Fonctions renommées par assignation : le nom interne peut différer de la variable.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• def g(): pass ; g.__name__ est g.
+
+Remarques :
+• Réponse : la chaîne func (option du quiz avec quotes).`,
+  2182: `def func(): chaîne de documentation puis pass ; func.__doc__
+
+Débutant :
+• La première expression littérale de chaîne en tête de corps devient la docstring stockée dans __doc__.
+
+Intermédiaire :
+• help(func) s’appuie sur __doc__.
+
+Expert :
+• __doc__ peut être réassignée mais rare.
+
+Concepts clés :
+• Docstring, attribut __doc__.
+
+Distinctions clés :
+• Une chaîne après une autre instruction n’est plus docstring.
+
+Fonctionnement :
+• Compilateur extrait la première string constante.
+
+Exécution étape par étape :
+• Après def, __doc__ pointe vers le texte (ici doc court).
+
+Ordre des opérations :
+• def compile le corps et fixe __doc__.
+
+Cas d'utilisation courants :
+• Sphinx, pydoc, IDE.
+
+Cas limites :
+• Docstring vide """ """ : __doc__ vide mais pas None.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Sans docstring → None (question suivante).
+
+Remarques :
+• Réponse : la chaîne doc (alignée sur la banque).`,
+  2183: `def func(): pass ; func.__doc__
+
+Débutant :
+• Sans docstring, Python laisse __doc__ à None.
+
+Intermédiaire :
+• Ce n’est pas une chaîne vide par défaut.
+
+Expert :
+• help affiche alors un squelette générique.
+
+Concepts clés :
+• Absence de documentation.
+
+Distinctions clés :
+• Différent de __doc__ == "".
+
+Fonctionnement :
+• Valeur par défaut de l’attribut.
+
+Exécution étape par étape :
+• Lecture d’attribut existant avec valeur None.
+
+Ordre des opérations :
+• def sans string initiale.
+
+Cas d'utilisation courants :
+• Tests if func.__doc__ pour savoir si documenté.
+
+Cas limites :
+• Assignation manuelle possible.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Ajouter une docstring change __doc__.
+
+Remarques :
+• Réponse : None (première option).`,
+  2184: `def func(x, y=2): pass ; func.__defaults__
+
+Débutant :
+• Tuple des valeurs par défaut dans l’ordre des paramètres qui en ont un : ici seulement y → (2,).
+
+Intermédiaire :
+• x sans défaut n’apparaît pas dans __defaults__.
+
+Expert :
+• __kwdefaults__ pour kwargs-only avec défauts.
+
+Concepts clés :
+• Tuple des défauts, introspection.
+
+Distinctions clés :
+• None si aucun paramètre avec défaut.
+
+Fonctionnement :
+• Alignement avec les derniers paramètres de la signature.
+
+Exécution étape par étape :
+• Après def, lecture de l’attribut.
+
+Ordre des opérations :
+• Compilation de la signature.
+
+Cas d'utilisation courants :
+• Wrappers qui recopient ou valident des signatures.
+
+Cas limites :
+• Objets mutables partagés visibles via __defaults__ (piège).
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• def f(a,b=1,c=2): pass → (1,2).
+
+Remarques :
+• Réponse : (2,) (tuple singleton).`,
+  2185: `def func(*args, **kwargs): pass ; func.__code__
+
+Débutant :
+• __code__ est l’objet code interne (bytecode, noms, flags).
+
+Intermédiaire :
+• co_varnames, co_argcount, etc. pour introspection bas niveau.
+
+Expert :
+• Ne pas modifier __code__ sauf cas très avancés.
+
+Concepts clés :
+• Code object, bytecode.
+
+Distinctions clés :
+• Ce n’est pas la représentation source.
+
+Fonctionnement :
+• Créé lors de la compilation du corps.
+
+Exécution étape par étape :
+• Accès immédiat après def.
+
+Ordre des opérations :
+• def compile.
+
+Cas d'utilisation courants :
+• Débogage, frameworks, inspect.
+
+Cas limites :
+• Détails dépendent de la version Python.
+
+Considérations de performance :
+• Lecture d’attribut rapide.
+
+Exemples :
+• func.__code__.co_name vaut func.
+
+Remarques :
+• Réponse : objet code (option du quiz « Code object »).`,
+  2186: `def func(): pass ; callable(func)
+
+Débutant :
+• Les fonctions utilisateur sont callable → True.
+
+Intermédiaire :
+• callable teste l’existence de __call__ pour instances.
+
+Expert :
+• isinstance(func, types.FunctionType) plus strict.
+
+Concepts clés :
+• callable built-in.
+
+Distinctions clés :
+• Différent de « est-ce une fonction » (classes aussi callable).
+
+Fonctionnement :
+• Vérifie le drapeau ou la présence de __call__.
+
+Exécution étape par étape :
+• Objet fonction créé par def.
+
+Ordre des opérations :
+• callable après def.
+
+Cas d'utilisation courants :
+• APIs génériques avant d’appeler.
+
+Cas limites :
+• Certains mocks peuvent mentir.
+
+Considérations de performance :
+• Très léger.
+
+Exemples :
+• callable(print) True.
+
+Remarques :
+• Réponse : True.`,
+  2187: `callable(5)
+
+Débutant :
+• Un int n’a pas __call__ → False.
+
+Intermédiaire :
+• 5() serait une TypeError si tenté.
+
+Expert :
+• Méthodes et fonctions builtins True.
+
+Concepts clés :
+• Non appelabilité.
+
+Distinctions clés :
+• Différent de bool(5) truthy.
+
+Fonctionnement :
+• Test interne sur le type.
+
+Exécution étape par étape :
+• Résultat immédiat False.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Garde avant callback.
+
+Cas limites :
+• Objets avec __call__ mal conçus.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• callable(str) True (classe).
+
+Remarques :
+• Réponse : False (première option).`,
+  2188: `def func(): return 1 ; type(func)
+
+Débutant :
+• Les fonctions définies par def sont instances du type function.
+
+Intermédiaire :
+• type retourne la classe, ici affichée comme class function.
+
+Expert :
+• Méthodes liées ont un type différent (method).
+
+Concepts clés :
+• type(), introspection de type.
+
+Distinctions clés :
+• Pas class type sauf si on parlait de la méta-classe.
+
+Fonctionnement :
+• Objet fonction créé par def.
+
+Exécution étape par étape :
+• type(func) après def.
+
+Ordre des opérations :
+• Évaluation de func puis type.
+
+Cas d'utilisation courants :
+• Vérifications légères dans du code dynamique.
+
+Cas limites :
+• Fonctions C builtins ont d’autres types.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• type(lambda:0) même famille.
+
+Remarques :
+• Réponse : class function (formulation du QCM).`,
+  2189: `def func(): pass ; hasattr(func, '__name__')
+
+Débutant :
+• hasattr renvoie True si l’attribut existe ; les fonctions ont __name__.
+
+Intermédiaire :
+• hasattr suit la résolution d’attribut usuelle ; cas exotiques avec descripteurs hors énoncé.
+
+Expert :
+• getattr(func, '__name__', None) est plus explicite parfois.
+
+Concepts clés :
+• hasattr, attribut garanti sur function.
+
+Distinctions clés :
+• Différent de tester si __name__ non vide.
+
+Fonctionnement :
+• Lookup dans le MRO de l’objet fonction.
+
+Exécution étape par étape :
+• True immédiat.
+
+Ordre des opérations :
+• def puis hasattr.
+
+Cas d'utilisation courants :
+• Code défensif sur objets hétérogènes.
+
+Cas limites :
+• Descripteurs avec effets de bord.
+
+Considérations de performance :
+• Léger.
+
+Exemples :
+• hasattr(5,'__name__') False.
+
+Remarques :
+• Réponse : True.`,
+  2190: `def func(): pass ; func.attr = valeur ; func.attr
+
+Débutant :
+• Les fonctions sont objets : on peut attacher des attributs arbitraires.
+
+Intermédiaire :
+• Distinct des variables locales ou globals.
+
+Expert :
+• Utilisé par décorateurs (ex. .register).
+
+Concepts clés :
+• Attributs utilisateur sur fonction.
+
+Distinctions clés :
+• Pas besoin de slots spéciaux pour function standard.
+
+Fonctionnement :
+• Dictionnaire d’attributs de l’objet fonction.
+
+Exécution étape par étape :
+• Assignation puis lecture .attr.
+
+Ordre des opérations :
+• Création fonction puis setattr implicite.
+
+Cas d'utilisation courants :
+• Métadonnées, compteurs d’appels maison.
+
+Cas limites :
+• Écraser des noms spéciaux : éviter.
+
+Considérations de performance :
+• Coût d’attribut négligeable.
+
+Exemples :
+• func.count = 0 puis incrémenter.
+
+Remarques :
+• Réponse : la chaîne value (option du quiz).`,
+  2191: `def func(x): return x ; func.__annotations__
+
+Débutant :
+• Sans annotations de type, le dict __annotations__ est vide {}.
+
+Intermédiaire :
+• Les annotations n’affectent pas l’exécution par défaut.
+
+Expert :
+• from __future__ import annotations diffère le stockage (strings).
+
+Concepts clés :
+• PEP 484 stockage, dict.
+
+Distinctions clés :
+• Vide ne signifie pas « erreur ».
+
+Fonctionnement :
+• dict créé à la définition.
+
+Exécution étape par étape :
+• Accès renvoie {}.
+
+Ordre des opérations :
+• def sans : types.
+
+Cas d'utilisation courants :
+• Outils statiques lisent __annotations__.
+
+Cas limites :
+• forward references complexes.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir question suivante avec hints.
+
+Remarques :
+• Réponse : {} (dict vide).`,
+  2192: `def func(x: int) -> int: return x ; func.__annotations__
+
+Débutant :
+• Les hints paramètre et retour sont enregistrés : clé x pour int, clé return pour int.
+
+Intermédiaire :
+• Les valeurs sont les objets type (classes).
+
+Expert :
+• mypy/pyright utilisent ces entrées.
+
+Concepts clés :
+• Annotations, clé spéciale return.
+
+Distinctions clés :
+• Ne force pas la conversion de types à l’exécution.
+
+Fonctionnement :
+• Dict peuplé à la compilation de la signature.
+
+Exécution étape par étape :
+• Lecture renvoie le mapping attendu par la banque.
+
+Ordre des opérations :
+• Signature puis corps.
+
+Cas d'utilisation courants :
+• Documentation machine-lisible.
+
+Cas limites :
+• Annotation non hashable rare mais possible.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Plusieurs paramètres annotés ajoutent des clés.
+
+Remarques :
+• Réponse : dictionnaire avec x et return pointant vers int (première option du quiz).`,
+  2193: `def func(x, y): return x + y ; func(1, 2, 3)
+
+Débutant :
+• Trop d’arguments positionnels pour deux paramètres → TypeError.
+
+Intermédiaire :
+• Message indique le nombre attendu vs reçu.
+
+Expert :
+• *args absorberait le troisième.
+
+Concepts clés :
+• Arité fixe, TypeError.
+
+Distinctions clés :
+• Pas SyntaxError : l’appel est syntaxiquement valide.
+
+Fonctionnement :
+• Échec lors de l’appel, pas à la définition.
+
+Exécution étape par étape :
+• Tentative de liaison des arguments.
+
+Ordre des opérations :
+• Évaluation 1,2,3 puis appel.
+
+Cas d'utilisation courants :
+• Détecter les erreurs d’API rapidement.
+
+Cas limites :
+• Méthodes avec self comptent dans l’arité.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• func(1,2) OK.
+
+Remarques :
+• Réponse : TypeError (première option).`,
+  2194: `def func(x, y): return x + y ; func(1)
+
+Débutant :
+• Il manque y → TypeError.
+
+Intermédiaire :
+• Les paramètres sans défaut sont obligatoires.
+
+Expert :
+• inspect.signature pour introspecter l’arité.
+
+Concepts clés :
+• Argument manquant.
+
+Distinctions clés :
+• Différent de valeur par défaut omise.
+
+Fonctionnement :
+• Liaison incomplète avant exécution du corps.
+
+Exécution étape par étape :
+• Erreur avant return.
+
+Ordre des opérations :
+• Un seul argument évalué.
+
+Cas d'utilisation courants :
+• Validation à l’appel.
+
+Cas limites :
+• Keyword-only requis oublié : message similaire.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Ajouter y=0 par défaut évite l’erreur.
+
+Remarques :
+• Réponse : TypeError (première option).`,
+  2195: `def func(x, y, z): return x + y + z ; func(1, z=3, y=2)
+
+Débutant :
+• x reçoit 1 en position ; y et z par nom dans un ordre quelconque → 1+2+3=6.
+
+Intermédiaire :
+• Après le premier positionnel, les kwargs peuvent permuter.
+
+Expert :
+• Dupliquer un nom position + kw interdit.
+
+Concepts clés :
+• Liaison par nom, flexibilité d’appel.
+
+Distinctions clés :
+• Ne pas mettre un positionnel après kwargs (autre question).
+
+Fonctionnement :
+• Remplissage : x=1,y=2,z=3.
+
+Exécution étape par étape :
+• Somme 6.
+
+Ordre des opérations :
+• Arguments évalués gauche-droite avant appel.
+
+Cas d'utilisation courants :
+• APIs avec plusieurs flags nommés.
+
+Cas limites :
+• Oublier un paramètre requis.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• func(1,y=2,z=3) identique.
+
+Remarques :
+• Réponse : 6.`,
+  2196: `def func(x, y, z): return x + y + z ; func(1, 2, z=3)
+
+Débutant :
+• Deux positionnels puis un kw pour z → 6.
+
+Intermédiaire :
+• Pattern très courant : obligatoires en tête, derniers explicites.
+
+Expert :
+• Mélange valide tant que l’ordre positionnel-kw est respecté.
+
+Concepts clés :
+• Positionnel puis mot-clé.
+
+Distinctions clés :
+• z=3 ne peut pas précéder un positionnel supplémentaire.
+
+Fonctionnement :
+• x=1,y=2,z=3.
+
+Exécution étape par étape :
+• return 6.
+
+Ordre des opérations :
+• Liaison standard.
+
+Cas d'utilisation courants :
+• open(path, mode="r") style.
+
+Cas limites :
+• kwargs inconnus sans **kwargs.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Tout positionnel aussi 6.
+
+Remarques :
+• Réponse : 6.`,
+  2197: `def func(x, y, z): return x + y + z ; func(1, z=3, 2)
+
+Débutant :
+• Un positionnel après un mot-clé est une erreur de syntaxe à la compilation de l’appel.
+
+Intermédiaire :
+• Message : positional argument follows keyword argument.
+
+Expert :
+• Réécrire func(1, 2, z=3).
+
+Concepts clés :
+• Grammaire des appels Python.
+
+Distinctions clés :
+• TypeError vs SyntaxError : ici syntaxe invalide.
+
+Fonctionnement :
+• Le parseur rejette l’appel.
+
+Exécution étape par étape :
+• Fichier ou ligne ne compile pas.
+
+Ordre des opérations :
+• Analyse syntaxique avant exécution.
+
+Cas d'utilisation courants :
+• Éviter ambiguïtés sur le paramètre cible.
+
+Cas limites :
+• REPL idem.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Toujours regrouper kwargs à la fin.
+
+Remarques :
+• Réponse : SyntaxError (première option du quiz).`,
+  2198: `def func(*args, x): return args, x ; func(1, 2, x=3)
+
+Débutant :
+• *args mange 1 et 2 ; x est forcément nommé après l’étoile → ((1,2), 3).
+
+Intermédiaire :
+• Impossible de lier x par position seule.
+
+Expert :
+• PEP 570 keyword-only après var-positional.
+
+Concepts clés :
+• Paramètre uniquement nommé après *args.
+
+Distinctions clés :
+• Différent de def func(x,*args).
+
+Fonctionnement :
+• Tuple args et x séparé.
+
+Exécution étape par étape :
+• Retour paire tuple et int.
+
+Ordre des opérations :
+• Liaison args puis kw x.
+
+Cas d'utilisation courants :
+• Forcer clarté sur options critiques.
+
+Cas limites :
+• func(1,2,3) tenterait de lier x positionnellement → erreur.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• func(x=3) → ((), 3).
+
+Remarques :
+• Réponse : ((1, 2), 3) (première option).`,
+  2199: `def func(x, *, y): return x + y ; func(1, y=2)
+
+Débutant :
+• Le * nu impose y en mot-clé ; 1 + 2 = 3.
+
+Intermédiaire :
+• func(1,2) serait TypeError (2 positionnel irait vers y interdit).
+
+Expert :
+• Peut combiner avec / pour position-only avant.
+
+Concepts clés :
+• Keyword-only sans *args.
+
+Distinctions clés :
+• Séparateur * seul vs *args nommé.
+
+Fonctionnement :
+• x positionnel, y kw obligatoire.
+
+Exécution étape par étape :
+• return 3.
+
+Ordre des opérations :
+• Signature analysée à la définition.
+
+Cas d'utilisation courants :
+• booléens ou options avec noms explicites.
+
+Cas limites :
+• Oublier y → TypeError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• func(x=1,y=2) valide.
+
+Remarques :
+• Réponse : 3.`,
+  2200: `def func(x, /, y, *, z): return x + y + z ; func(1, 2, z=3)
+
+Débutant :
+• x seulement positionnel avant / ; y peut être positionnel ici ; z uniquement kw → 1+2+3=6.
+
+Intermédiaire :
+• func(x=1, ...) interdit car x est position-only.
+
+Expert :
+• Syntaxe Python 3.8+.
+
+Concepts clés :
+• Position-only, keyword-only, section milieu « normale ».
+
+Distinctions clés :
+• Trois zones : avant /, entre / et *, après *.
+
+Fonctionnement :
+• Liaison 1→x, 2→y, z=3.
+
+Exécution étape par étape :
+• Somme 6.
+
+Ordre des opérations :
+• Appel valide montré par la banque.
+
+Cas d'utilisation courants :
+• C APIs wrappées, signatures stables.
+
+Cas limites :
+• Mélange incorrect → TypeError ou SyntaxError selon cas.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• func(1, y=2, z=3) aussi 6.
+
+Remarques :
+• Réponse : 6.`,
   2201: `La méthode __eq__ définit le comportement d'égalité personnalisé pour les instances de V. Quand Python évalue V(1) == V(1), il appelle V.__eq__(V(1), V(1)), qui compare self.x == o.x, soit 1 == 1, et retourne True.
 
 Concepts clés :
