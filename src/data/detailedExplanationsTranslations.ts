@@ -95010,1193 +95010,2008 @@ Exemples :
 
 Remarques :
 • Réponse : 6.`,
-  2201: `La méthode __eq__ définit le comportement d'égalité personnalisé pour les instances de V. Quand Python évalue V(1) == V(1), il appelle V.__eq__(V(1), V(1)), qui compare self.x == o.x, soit 1 == 1, et retourne True.
+  2201: `def outer(): x=10 ; def inner(): return x ; return inner ; puis outer()()
+
+Débutant :
+• outer définit x = 10, définit inner, retourne inner sans l’appeler ; outer() récupère inner, puis le second () appelle inner.
+
+Intermédiaire :
+• inner lit x dans la portée englobante : fermeture sur la cellule de outer.
+
+Expert :
+• Après outer(), la pile de outer est partie mais l’objet fonction inner garde les cellules capturées.
 
 Concepts clés :
-• __eq__ surcharge l'opérateur ==
-• Sans __eq__, == vérifie l'identité (is), pas l'égalité des valeurs
-• Deux V(1) distincts sont des objets différents mais égaux par valeur ici
-• __eq__ reçoit l'autre opérande comme second argument
+• Fermeture, fonction retournée, ENCLOSING.
 
-Comment ça fonctionne :
-• V(1) crée une instance avec x = 1
-• V(1) == V(1) appelle __eq__ sur l'opérande de gauche
-• self.x == o.x évalue 1 == 1
-• Résultat : True
+Distinctions clés :
+• outer() seul retourne une fonction, pas 10.
 
-Exemple :
-• V(1) == V(1)  # True (same x value)
-• V(1) == V(2)  # False (different x value)
-• V(1) is V(1)  # False (different objects)
+Fonctionnement :
+• Résolution LEGB : pas de x local dans inner → englobant.
 
-Usages courants :
-• Égalité basée sur la valeur pour objets personnalisés
-• Nécessaire pour utiliser des objets dans des ensembles ou comme clés de dict (avec __hash__)
-• Classes de données et comparaisons de modèles`,
-  2202: `La méthode __ne__ définit le comportement de l'opérateur !=. Quand V(1) != V(2) est évalué, Python appelle V.__ne__(V(1), V(2)), qui vérifie self.x != o.x, soit 1 != 2, et retourne True.
+Exécution étape par étape :
+1. f = outer() lie inner avec x=10.
+2. f() retourne 10.
 
-Concepts clés :
-• __ne__ surcharge l'opérateur !=
-• En Python 3, si vous définissez __eq__ mais pas __ne__, Python génère __ne__ comme négation de __eq__
-• Définir __ne__ explicitement donne un contrôle total sur l'inégalité
-• __ne__ reçoit l'opérande de droite comme second argument
+Ordre des opérations :
+• Création de inner puis appel différé.
 
-Comment ça fonctionne :
-• V(1) a x = 1, V(2) a x = 2
-• V(1) != V(2) appelle __ne__ sur l'opérande de gauche
-• self.x != o.x évalue 1 != 2
-• Résultat : True
+Cas d'utilisation courants :
+• Fabriques, état encapsulé sans classe.
 
-Exemple :
-• V(1) != V(2)  # True
-• V(3) != V(3)  # False
+Cas limites :
+• Si outer modifiait x après retour sans nonlocal/global, cas rares selon usage.
 
-Usages courants :
-• Logique d'inégalité personnalisée
-• Souvent associé à __eq__ pour la cohérence
-• Filtrage et vérifications conditionnelles`,
-  2203: `La méthode __lt__ définit le comportement de l'opérateur < (inférieur à). Quand V(1) < V(2) est évalué, Python appelle V.__lt__(V(1), V(2)), qui vérifie self.x < o.x, soit 1 < 2, et retourne True.
+Considérations de performance :
+• Très léger.
+
+Exemples :
+• Même schéma que make_adder.
+
+Remarques :
+• Réponse : 10.`,
+  2202: `make_adder(n) ; add5 = make_adder(5) ; add5(3)
+
+Débutant :
+• make_adder(5) renvoie une fonction qui ajoute 5 ; 3 + 5 = 8.
+
+Intermédiaire :
+• La lambda capture n depuis make_adder (fermeture).
+
+Expert :
+• Chaque make_adder(k) produit une nouvelle fermeture avec sa propre cellule n.
 
 Concepts clés :
-• __lt__ surcharge l'opérateur <
-• Utilisé par sorted() et sort() pour comparer des objets
-• Fait partie des méthodes de comparaison riches (__lt__, __le__, __gt__, __ge__, __eq__, __ne__)
-• functools.total_ordering peut générer le reste si __eq__ et une méthode d'ordre sont définies
+• Fabrique de fonctions, capture de paramètre.
 
-Comment ça fonctionne :
-• V(1) a x = 1, V(2) a x = 2
-• V(1) < V(2) appelle __lt__ sur l'opérande de gauche
-• self.x < o.x évalue 1 < 2
-• Résultat : True
+Distinctions clés :
+• add5 n’est pas la valeur 5, c’est un callable.
 
-Exemple :
-• V(1) < V(2)   # True
-• V(5) < V(3)   # False
-• sorted([V(3), V(1), V(2)], key=lambda v: v.x)  # fonctionne avec key
+Fonctionnement :
+• Objet fonction avec __closure__ pointant vers n=5.
 
-Usages courants :
-• Activer le tri d'objets personnalisés
-• Comparaisons ordonnées dans les structures de données
-• Files de priorité et recherche binaire`,
-  2204: `La méthode __le__ définit le comportement de l'opérateur <= (inférieur ou égal). Quand V(2) <= V(2) est évalué, Python appelle V.__le__(V(2), V(2)), qui vérifie self.x <= o.x, soit 2 <= 2, et retourne True.
+Exécution étape par étape :
+1. add5(3) évalue 3 + n avec n=5.
 
-Concepts clés :
-• __le__ surcharge l'opérateur <=
-• Cas limite : des valeurs égales retournent True pour <=
-• Fait partie des six méthodes de comparaison riches
-• Peut être généré avec functools.total_ordering
+Ordre des opérations :
+• make_adder d’abord, puis add5(3).
 
-Comment ça fonctionne :
-• Les deux instances V(2) ont x = 2
-• V(2) <= V(2) appelle __le__ sur l'opérande de gauche
-• self.x <= o.x évalue 2 <= 2
-• Résultat : True
+Cas d'utilisation courants :
+• Partiels, curseurs, multiplicateurs.
 
-Exemple :
-• V(1) <= V(2)  # True
-• V(2) <= V(2)  # True
-• V(3) <= V(2)  # False
+Cas limites :
+• n mutable partagé si liste : piège différent.
 
-Usages courants :
-• Vérifications de plage et conditions aux limites
-• Validation de données triées
-• Chaînes de comparaison comme V(1) <= V(2) <= V(3)`,
-  2205: `Définir __gt__ sur une classe permet de comparer les instances avec l'opérateur >. Quand vous écrivez a > b, Python appelle a.__gt__(b). C'est l'une des six méthodes de comparaison riches.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• make_adder(0)(42) → 42.
+
+Remarques :
+• Réponse : 8.`,
+  2203: `counter avec liste c = [0] ; inc qui fait c[0] += 1 ; deux appels f() ; f()
+
+Débutant :
+• On ne réassigne pas c, on mute c[0] : même liste partagée entre appels → 1 puis 2.
+
+Intermédiaire :
+• Astuce d’époque pré-nonlocal : contourner l’interdiction de rebinder un int englobant.
+
+Expert :
+• inc voit c comme free variable ; la liste est un conteneur mutable stable.
 
 Concepts clés :
-• __gt__ surcharge l'opérateur >
-• Appelé lors de l'utilisation de > entre instances de la classe
-• Doit retourner True ou False (ou NotImplemented)
-• Fait partie du protocole de comparaison riche avec __lt__, __le__, __ge__, __eq__, __ne__
+• Mutation vs rebinding, fermeture sur liste.
 
-Comment ça fonctionne :
-• class V: def __gt__(self, o): return self.x > o.x
-• V(3) > V(1) calls V.__gt__(V(3), V(1))
-• self.x > o.x evaluates 3 > 1 = True
-• If left operand's __gt__ returns NotImplemented, Python tries right operand's __lt__
+Distinctions clés :
+• Si c = [0] était réassigné dans inc, il faudrait nonlocal c.
 
-Exemple :
-• V(5) > V(3)  # True
-• V(1) > V(2)  # False
-• max(V(1), V(5), V(3))  # works if __gt__ is defined
+Fonctionnement :
+• c[0] += 1 lit-écrit l’élément sans changer la liaison du nom c.
 
-Usages courants :
-• Enabling > comparisons for custom objects
-• Working with max(), heapq, sorting
-• Building ordered collections`,
-  2206: `Le __add__ méthode defines the behavior of the + operator. When V(1,2) + V(3,4) is evaluated, Python appelle V.__add__(V(1,2), V(3,4)), qui crée un new V avec x = 1+3 = 4 and y = 2+4 = 6.
+Exécution étape par étape :
+1. Premier f() : 0→1, retourne 1.
+2. Second f() : 1→2, retourne 2.
 
-Concepts clés :
-• __add__ surcharge l'opérateur + for custom classes
-• Should renvoyer a new instance rather than modifying self (immutability pattern)
-• La méthode reçoit le right operand as the second argument
-• Vector addition is a classic use case for __add__
+Ordre des opérations :
+• Deux appels successifs sur la même fermeture.
 
-Comment ça fonctionne :
-• V(1,2) has x=1, y=2; V(3,4) has x=3, y=4
-• V(1,2) + V(3,4) calls __add__
-• Retourne V(1+3, 2+4) = V(4, 6)
-• v.x = 4, v.y = 6, so (v.x, v.y) = (4, 6)
+Cas d'utilisation courants :
+• Compteurs légers, style Python 2 / pédagogie.
 
-Exemple :
-• V(0,0) + V(1,1)  # V(1,1)
-• V(-1,2) + V(1,-2)  # V(0,0)
+Cas limites :
+• Concurrence : pas atomique sans verrou.
 
-Usages courants :
-• Vector and matrix arithmetic
-• Complex number types
-• Currency or measurement addition`,
-  2207: `Le __mul__ méthode defines the behavior of the * operator. When V(3) * 4 is evaluated, Python appelle V.__mul__(V(3), 4), qui crée un new V avec x = 3 * 4 = 12.
+Considérations de performance :
+• O(1) par incrément.
+
+Exemples :
+• Même idée avec dict ou attribut d’objet.
+
+Remarques :
+• Réponse : 2 (valeur du second appel affiché dans l’énoncé).`,
+  2204: `outer x=1 ; inner avec nonlocal x ; x += 1 ; premier f()
+
+Débutant :
+• nonlocal permet à inner de modifier le x de outer : 1 devient 2, return 2.
+
+Intermédiaire :
+• Sans nonlocal, x += 1 ferait de x une locale non initialisée → UnboundLocalError.
+
+Expert :
+• nonlocal ne remonte pas au module : pour ça global.
 
 Concepts clés :
-• __mul__ surcharge l'opérateur *
-• The right operand can be any type (here an int)
-• Retourne a new V instance avec the computed valeur
-• For 4 * V(3) to work, you would need __rmul__
+• nonlocal, rebinding englobant.
 
-Comment ça fonctionne :
-• V(3) has x = 3
-• V(3) * 4 calls __mul__ avec n = 4
-• Retourne V(3 * 4) = V(12)
-• v.x = 12
+Distinctions clés :
+• Lecture seule de x n’exige pas nonlocal.
 
-Exemple :
-• V(5) * 2   # V(10), v.x = 10
-• V(0) * 100 # V(0), v.x = 0
+Fonctionnement :
+• STORE_DEREF sur la cellule partagée.
 
-Usages courants :
-• Scalar multiplication for vectors
-• Scaling custom numeric types
-• Unit conversion objets`,
-  2208: `Le __sub__ méthode defines the behavior of the - (subtraction) operator. When V(10) - V(3) is evaluated, Python appelle V.__sub__(V(10), V(3)), qui crée un new V avec x = 10 - 3 = 7.
+Exécution étape par étape :
+1. f() exécute x += 1 sur la cellule x=1 → 2, retourne 2.
 
-Concepts clés :
-• __sub__ surcharge l'opérateur binaire -
-• Retourne a new instance avec the computed difference
-• Different from __neg__ which handles unary negation (-obj)
-• Order matters: V(10) - V(3) is not le même que V(3) - V(10)
+Ordre des opérations :
+• Entrée inner, traitement, return.
 
-Comment ça fonctionne :
-• V(10) has x = 10, V(3) has x = 3
-• V(10) - V(3) calls __sub__
-• Retourne V(10 - 3) = V(7)
-• v.x = 7
+Cas d'utilisation courants :
+• Accumulateurs, compteurs avec syntaxe claire.
 
-Exemple :
-• V(5) - V(2)   # V(3), v.x = 3
-• V(1) - V(1)   # V(0), v.x = 0
+Cas limites :
+• Si aucun x englobant → SyntaxError à la compilation.
 
-Usages courants :
-• Vector subtraction
-• Date/time difference calculations
-• Custom numeric type arithmetic`,
-  2209: `Le __neg__ méthode defines the behavior of the unary - (negation) operator. When -V(5) is evaluated, Python appelle V.__neg__(V(5)), qui crée un new V avec x = -5.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Deuxième appel donnerait 3, etc.
+
+Remarques :
+• Réponse : 2.`,
+  2205: `Même outer / inner nonlocal ; f() appelée trois fois — valeur du troisième appel
+
+Débutant :
+• Chaque appel ajoute 1 : après trois incréments depuis 1, x vaut 4 au moment du troisième return.
+
+Intermédiaire :
+• Séquence des retours : 2, 3, 4 pour les appels 1 à 3.
+
+Expert :
+• L’état persiste dans la fermeture tant que f vit.
 
 Concepts clés :
-• __neg__ surcharge l'opérateur unaire - (negation, not subtraction)
-• Unary operators take only one operand: -obj
-• Other unary méthodes: __pos__ (+obj), __abs__ (abs(obj)), __invert__ (~obj)
-• Should renvoyer a new instance, not modify self
+• Persistance d’état, compteur.
 
-Comment ça fonctionne :
-• V(5) has x = 5
-• -V(5) calls __neg__
-• Retourne V(-5)
-• v.x = -5
+Distinctions clés :
+• La question demande le retour du 3e appel, pas la valeur après deux appels.
 
-Exemple :
-• -V(5)    # V(-5), v.x = -5
-• -V(-3)   # V(3), v.x = 3
-• -V(0)    # V(0), v.x = 0
+Fonctionnement :
+• x part à 1, +1 trois fois → 4 au 3e return.
 
-Usages courants :
-• Negating vectors or coordinates
-• Implementing mathematical objets (complex numbers, matrices)
-• Sign inversion for custom numeric types`,
-  2210: `Le __abs__ méthode defines the behavior of the built-in abs() fonction for instances. When abs(V(-7)) est appelé, Python appelle V.__abs__(V(-7)), qui retourne abs(-7) = 7.
+Exécution étape par étape :
+1→2, 2→3, 3→4.
 
-Concepts clés :
-• __abs__ surcharge la fonction intégrée abs() fonction
-• Can renvoyer any type (here retourne un int, not a V instance)
-• For vectors, __abs__ often retourne le magnitude (length)
-• abs() is a built-in that delegates to __abs__
+Ordre des opérations :
+• Trois appels séquentiels sur le même callable.
 
-Comment ça fonctionne :
-• V(-7) has x = -7
-• abs(V(-7)) calls __abs__
-• Retourne abs(-7) = 7
-• Résultat : 7 (an integer, not a V instance)
+Cas d'utilisation courants :
+• Générateurs d’ID simples (préférer itertools en prod).
 
-Exemple :
-• abs(V(-7))   # 7
-• abs(V(3))    # 3
-• abs(V(0))    # 0
+Cas limites :
+• Réinitialisation impossible sans nouvelle outer().
 
-Usages courants :
-• Computing magnitudes of vectors
-• Absolute valeur for custom numeric types
-• Distance calculations`,
-  2211: `Le __floordiv__ méthode defines the behavior of the // (floor division) operator. When V(7) // V(2) is evaluated, Python appelle V.__floordiv__(V(7), V(2)), qui crée un new V avec x = 7 // 2 = 3.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Quatrième appel retournerait 5.
+
+Remarques :
+• Réponse : 4.`,
+  2206: `À quoi sert le mot-clé nonlocal ?
+
+Débutant :
+• Il permet à une fonction interne de lier (y compris réassigner) une variable définie dans une portée englobante qui n’est pas le module.
+
+Intermédiaire :
+• Ce n’est pas global : la cible est la fonction parente la plus proche qui définit le nom.
+
+Expert :
+• Le compilateur marque le nom comme FREE/CELL pour LOAD/STORE_DEREF.
 
 Concepts clés :
-• __floordiv__ surcharge l'opérateur //
-• Floor division truncates toward negative infinity
-• Different from __truediv__ which overrides /
-• 7 // 2 = 3 (not 3.5)
+• Portée englobante, rebinding.
 
-Comment ça fonctionne :
-• V(7) has x = 7, V(2) has x = 2
-• V(7) // V(2) calls __floordiv__
-• Retourne V(7 // 2) = V(3)
-• v.x = 3
+Distinctions clés :
+• global = module ; nonlocal = exclut le global.
 
-Exemple :
-• V(7) // V(2)   # V(3), v.x = 3
-• V(10) // V(3)  # V(3), v.x = 3
-• V(-7) // V(2)  # V(-4), v.x = -4 (rounds toward -inf)
+Fonctionnement :
+• Recherche du binding englobant à la définition.
 
-Usages courants :
-• Integer division for custom types
-• Pagination calculations
-• Grid/tile coordinate math`,
-  2212: `Le __mod__ méthode defines the behavior of the % (modulo) operator. When V(7) % V(3) is evaluated, Python appelle V.__mod__(V(7), V(3)), qui crée un new V avec x = 7 % 3 = 1.
+Exécution étape par étape :
+• S’applique au corps entier de inner une fois déclaré.
 
-Concepts clés :
-• __mod__ surcharge l'opérateur %
-• Retourne the remainder of division
-• 7 = 3 * 2 + 1, so 7 % 3 = 1
-• Can also be utilisé pour string formatting if desired (like str.__mod__)
+Ordre des opérations :
+• nonlocal en tête de bloc recommandé pour lisibilité.
 
-Comment ça fonctionne :
-• V(7) has x = 7, V(3) has x = 3
-• V(7) % V(3) calls __mod__
-• Retourne V(7 % 3) = V(1)
-• v.x = 1
+Cas d'utilisation courants :
+• État partagé minimal entre nested defs.
 
-Exemple :
-• V(7) % V(3)   # V(1), v.x = 1
-• V(10) % V(5)  # V(0), v.x = 0
-• V(8) % V(3)   # V(2), v.x = 2
+Cas limites :
+• Pas utilisable au niveau module ni si aucun parent ne définit le nom.
 
-Usages courants :
-• Cyclic operations (clock arithmetic)
-• Checking divisibility
-• Custom modular arithmetic types`,
-  2213: `Le __pow__ méthode defines the behavior of the ** (exponentiation) operator. When V(2) ** 3 is evaluated, Python appelle V.__pow__(V(2), 3), qui crée un new V avec x = 2 ** 3 = 8.
+Considérations de performance :
+• Identique aux lectures locales rapides.
+
+Exemples :
+• Comparer avec la liste mutable trick.
+
+Remarques :
+• Réponse : permet de modifier une variable de la portée englobante (1re option).`,
+  2207: `Peut-on utiliser global dans une fonction imbriquée ?
+
+Débutant :
+• Oui : global cible toujours le nom au niveau module, en sautant les englobantes.
+
+Intermédiaire :
+• Utile pour un compteur module-level ; à manier avec prudence.
+
+Expert :
+• global et nonlocal ne peuvent pas s’appliquer au même nom dans une même fonction.
 
 Concepts clés :
-• __pow__ surcharge l'opérateur ** and the built-in pow() fonction
-• pow(a, b) calls a.__pow__(b)
-• pow(a, b, mod) calls a.__pow__(b, mod) for three-argument power avec modulo
-• The right operand can be any type
+• global, imbrication, module.
 
-Comment ça fonctionne :
-• V(2) has x = 2
-• V(2) ** 3 calls __pow__ avec n = 3
-• Retourne V(2 ** 3) = V(8)
-• v.x = 8
+Distinctions clés :
+• outer peut avoir son propre x ; global x ignore ce x local à outer.
 
-Exemple :
-• V(2) ** 3   # V(8), v.x = 8
-• V(3) ** 2   # V(9), v.x = 9
-• V(5) ** 0   # V(1), v.x = 1
+Fonctionnement :
+• STORE_GLOBAL / LOAD_GLOBAL pour ce nom dans inner.
 
-Usages courants :
-• Mathematical computations avec custom types
-• Scientific calculations
-• Custom exponentiation behavior`,
-  2214: `Le __radd__ méthode is the reflected (or right-side) version of __add__. Il est appelé quand the left operand ne supporte pas the + operation avec the right operand. For example, 5 + V(3) first tries int.__add__(5, V(3)), qui retourne NotImplemented car int doesn't know how to add a V. Python then falls back to V.__radd__(V(3), 5).
+Exécution étape par étape :
+• Dépend du programme complet ; la banque dit que oui c’est permis.
 
-Concepts clés :
-• __radd__ est appelé when the left operand's __add__ fails (retourne NotImplemented)
-• The "r" prefix stands for "reflected" or "right"
-• Every arithmetic dunder a un reflected version: __rsub__, __rmul__, __rtruediv__, etc.
-• self in __radd__ is the RIGHT operand of the expression
+Ordre des opérations :
+• Déclaration global avant assignation dans inner.
 
-Comment ça fonctionne :
-• 5 + V(3) tries int.__add__(5, V(3)) first
-• int doesn't know about V, retourne NotImplemented
-• Python then tries V.__radd__(V(3), 5)
-• If __radd__ is defined, it handles the operation
+Cas d'utilisation courants :
+• Configuration rare, scripts courts.
 
-Exemple :
-• classe V:
-•     def __radd__(self, o): renvoyer V(o + self.x)
-• v = 5 + V(3)  # calls V.__radd__(V(3), 5) → V(8)
+Cas limites :
+• Tests et modularité : préférer injection de dépendance.
 
-Usages courants :
-• Allowing built-in types on the left side of operators
-• Making custom types work naturally in mixed expressions
-• NumPy arrays use this extensively`,
-  2215: `Quand Python evaluates 5 + V(3), it first tries int.__add__(5, V(3)). Since int doesn't know how to add a V instance, il retourne NotImplemented. Python then falls back to V.__radd__(V(3), 5), where self is V(3) and o is 5. La méthode retourne V(5 + 3) = V(8).
+Considérations de performance :
+• Lookup global légèrement plus coûteux que local.
+
+Exemples :
+• Voir déroulement anglais banque avec x module vs outer.
+
+Remarques :
+• Réponse : Oui, accès à la variable de module (1re option).`,
+  2208: `outer x=10 ; inner x=20 ; return x dans inner ; inner() ; return x dans outer
+
+Débutant :
+• inner crée son propre x local 20 ; outer garde x=10 ; le return final de outer est 10.
+
+Intermédiaire :
+• La valeur retournée par inner() est ignorée (pas utilisée dans outer).
+
+Expert :
+• Shadowing : deux liaisons x distinctes coexistent.
 
 Concepts clés :
-• 5 + V(3) first tries int.__add__(5, V(3)) → NotImplemented
-• Python then tries V.__radd__(V(3), 5)
-• In __radd__, self is the right operand (V(3)), o is the left operand (5)
-• Cela permet custom objets to work on the right side of + avec built-in types
+• Masquage, locales indépendantes.
 
-Comment ça fonctionne :
-• 5 + V(3) → int.__add__(5, V(3)) fails
-• Falls back to V.__radd__(V(3), 5)
-• o = 5, self.x = 3
-• Retourne V(5 + 3) = V(8)
-• v.x = 8
+Distinctions clés :
+• Pas de nonlocal donc aucune écriture dans le x d’outer.
 
-Exemple :
-• 5 + V(3)   # V(8), v.x = 8
-• 10 + V(0)  # V(10), v.x = 10
-• 0 + V(7)   # V(7), v.x = 7
+Fonctionnement :
+• inner termine, outer continue avec son x intact.
 
-Usages courants :
-• Enabling expressions like scalar + vector
-• Mixed-type arithmetic
-• Interoperability avec built-in numeric types`,
-  2216: `Le __repr__ méthode defines the "official" string representation of an objet. When repr(c) est appelé, Python appelle c.__repr__(), qui retourne le string "C()".
+Exécution étape par étape :
+• inner return 20 jeté ; outer return 10.
 
-Concepts clés :
-• __repr__ est la représentation chaîne pour les développeurs
-• Should ideally renvoyer a string that could recreate the objet
-• Called by repr(), the interactive interpreter, and as fallback for str()
-• Convention: repr(obj) should look like a valid Python expression
+Ordre des opérations :
+• Appel inner puis évaluation return x d’outer.
 
-Comment ça fonctionne :
-• C() creates an instance
-• repr(c) calls c.__repr__()
-• Retourne the string "C()"
-• print outputs: C()
+Cas d'utilisation courants :
+• Illustrer LEGB et pièges de nommage.
 
-Exemple :
-• repr(C())  # 'C()'
-• C()        # In REPL, shows C()
+Cas limites :
+• Oublier de capturer le return de inner.
 
-Usages courants :
-• Debugging and logging
-• Interactive interpreter display
-• Unambiguous objet representation`,
-  2217: `Le __str__ méthode defines the "informal" or user-facing string representation. When str(C()) est appelé, Python appelle C().__str__(), qui retourne "I am C". If __str__ were not defined, str() would fall back to __repr__.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Avec nonlocal, outer verrait 20.
+
+Remarques :
+• Réponse : 10.`,
+  2209: `outer x=10 ; inner nonlocal x ; x=20 ; inner() ; return x
+
+Débutant :
+• inner réassigne le x d’outer à 20 ; outer retourne alors 20.
+
+Intermédiaire :
+• inner() ne retourne pas de valeur utile ici sauf effet sur x.
+
+Expert :
+• Une seule cellule x partagée entre outer et inner.
 
 Concepts clés :
-• __str__ est pour l'affichage convivial, __repr__ is for developer debugging
-• str() and print() use __str__ first
-• If __str__ is not defined, Python falls back to __repr__
-• Both should renvoyer a string
+• nonlocal + assignation.
 
-Comment ça fonctionne :
-• C() creates an instance
-• str(C()) calls __str__() → "I am C"
-• If __str__ were missing, str() would call __repr__() → "C()"
-• print uses str() internally
+Distinctions clés :
+• Contraste direct avec la question précédente sans nonlocal.
 
-Exemple :
-• str(C())    # 'I am C'
-• repr(C())   # 'C()'
-• print(C())  # I am C (uses __str__)
+Fonctionnement :
+• Après inner(), la cellule x vaut 20.
 
-Usages courants :
-• User-facing output avec print()
-• String formatting: f"{obj}" uses __str__
-• Readable display vs debug representation`,
-  2218: `Quand print(obj) est appelé, Python internally calls str(obj), which first looks for __str__. If __str__ is not defined, it falls back to __repr__. There is no __print__ méthode en Python.
+Exécution étape par étape :
+• inner() exécuté pour effet ; return x lit 20.
 
-Concepts clés :
-• print() converts its arguments to strings using str()
-• str() tries __str__ first
-• If __str__ is not defined, str() falls back to __repr__
-• __repr__ should always be defined as a fallback
-• __format__ est utilisé by format() and f-strings, not by print directly
+Ordre des opérations :
+• Appel inner avant return d’outer.
 
-Comment ça fonctionne :
-• print(obj) calls str(obj) internally
-• str(obj) checks for __str__
-• If found, calls obj.__str__()
-• If not found, calls obj.__repr__()
-• The resulting string is printed to stdout
+Cas d'utilisation courants :
+• Réglages mutables partagés entre helpers nested.
 
-Exemple :
-• classe A: def __repr__(self): renvoyer "A repr"
-• print(A())  # A repr (falls back to __repr__)
-• classe B:
-•     def __repr__(self): renvoyer "B repr"
-•     def __str__(self): renvoyer "B str"
-• print(B())  # B str (__str__ takes priority)
+Cas limites :
+• Visibilité limitée : état caché dans la fermeture d’outer.
 
-Usages courants :
-• Understanding str vs repr priority
-• Deciding which méthode to implement
-• Debugging print output issues`,
-  2219: `Le __format__ méthode est appelé when an objet appears in an f-string or format() call avec a format specification. In f"{C():xyz}", the part après le colon ("xyz") est passé as the spec argument to __format__.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Réinitialiser en rappelant outer().
+
+Remarques :
+• Réponse : 20.`,
+  2210: `funcs = [lambda i=i: i for i in range(3)] ; [f() for f in funcs]
+
+Débutant :
+• i=i dans la lambda lie la valeur courante par défaut : 0, 1, 2.
+
+Intermédiaire :
+• Chaque lambda a sa propre valeur par défaut figée.
+
+Expert :
+• Sans valeur par défaut, toutes partageraient le même nom i (question suivante).
 
 Concepts clés :
-• __format__ handles format() and f-string formatting
-• The format spec (après :) est passé as the spec argument
-• f"{obj:spec}" calls obj.__format__(spec)
-• format(obj, spec) also calls obj.__format__(spec)
+• Paramètre par défaut évalué à la définition de la lambda.
 
-Comment ça fonctionne :
-• f"{C():xyz}" crée un C instance and calls __format__ avec spec="xyz"
-• __format__ retourne f"formatted:xyz" → "formatted:xyz"
-• The f-string evaluates to "formatted:xyz"
-• print outputs: formatted:xyz
+Distinctions clés :
+• La i de gauche est le paramètre, celle de droite est l’expression au moment de la création.
 
-Exemple :
-• f"{C():abc}"      # "formatted:abc"
-• f"{C():}"         # "formatted:" (empty spec)
-• format(C(), "xyz") # "formatted:xyz"
+Fonctionnement :
+• Trois fonctions, trois défauts distincts.
 
-Usages courants :
-• Custom formatting for dates, numbers, currencies
-• Alignment and padding control
-• Domain-specific display formats`,
-  2220: `Le __bool__ méthode defines the truth valeur of an objet. When bool(C()) est appelé, Python appelle C().__bool__(), qui retourne False. This means instances of C are always falsy.
+Exécution étape par étape :
+• Liste de trois lambdas puis trois appels ().
 
-Concepts clés :
-• __bool__ définit la véracité des objets personnalisés
-• Called by bool(), if instructions, while loops, and logical operators
-• Must renvoyer True or False
-• If __bool__ is not defined, Python falls back to __len__ (0 = falsy, nonzero = truthy)
-• If neither is defined, the objet is always truthy
+Ordre des opérations :
+• Compréhension : i parcourt 0,1,2 ; lambda créée à chaque itération.
 
-Comment ça fonctionne :
-• C() creates an instance
-• bool(C()) calls __bool__() → False
-• Résultat : False
+Cas d'utilisation courants :
+• Capturer une boucle correctement pour callbacks.
 
-Exemple :
-• bool(C())        # False
-• if C(): "yes"    # skipped (falsy)
-• not C()          # True
+Cas limites :
+• Objets mutables en défaut : même piège que pour def.
 
-Usages courants :
-• Empty container checks
-• Validity/enabled state
-• Null-like sentinel objets`,
-  2221: `Quand an objet est utilisé in a boolean context (like an if instruction), Python appelle __bool__ to determine its truth valeur. Since C.__bool__ retourne False, C() is falsy, so the else branch runs and r is set to "no".
+Considérations de performance :
+• Négligeable pour 3 éléments.
+
+Exemples :
+• itertools ou functools.partial alternatifs.
+
+Remarques :
+• Réponse : [0, 1, 2].`,
+  2211: `funcs = [lambda: i for i in range(3)] ; [f() for f in funcs]
+
+Débutant :
+• Les trois lambdas référencent le même nom i de la fonction englobante (compréhension) ; après la boucle i vaut 2 → trois fois 2.
+
+Intermédiaire :
+• Liaison tardive : i n’est pas copié à la création.
+
+Expert :
+• Corrigé par lambda i=i: i ou default= dans partial.
 
 Concepts clés :
-• if instructions call __bool__ to evaluate truthiness
-• C().__bool__() retourne False, so the if condition is False
-• The else branch executes, setting r = "no"
-• Any boolean context (if, while, and, or, not) uses __bool__
+• Late binding, variable de boucle partagée.
 
-Comment ça fonctionne :
-• C() creates an instance
-• if C(): checks __bool__() → False
-• Else branch runs: r = "no"
-• print(r) → "no"
+Distinctions clés :
+• Différence clé avec 2210.
 
-Exemple :
-• classe Truthy: def __bool__(self): renvoyer True
-• if Truthy(): "yes"  # executes
-• classe Falsy: def __bool__(self): renvoyer False
-• if Falsy(): "yes"   # skipped
+Fonctionnement :
+• À l’appel, i est résolu dans la portée englobante actuelle.
 
-Usages courants :
-• Controlling flow based on objet state
-• Empty/non-empty checks
-• Validity checks in conditionals`,
-  2222: `Quand __bool__ is not defined but __len__ is, Python uses __len__ to determine truthiness. An objet avec __len__() returning 0 is considered falsy, just like empty built-in containers ([], {}, "").
+Exécution étape par étape :
+• Après compréhension i=2 ; chaque f() → 2.
 
-Concepts clés :
-• Without __bool__, Python falls back to __len__ for truth testing
-• __len__() == 0 → falsy (like empty liste, empty string)
-• __len__() > 0 → truthy (like non-empty liste)
-• C'est pourquoi bool([]) is False and bool([1]) is True
+Ordre des opérations :
+• Création des trois lambdas puis exécution dans l’ordre.
 
-Comment ça fonctionne :
-• C() creates an instance
-• bool(C()) checks for __bool__ → not found
-• Falls back to __len__() → retourne 0
-• 0 means falsy → bool(C()) = False
+Cas d'utilisation courants :
+• Piège classique en entretien / bugs de GUI.
 
-Exemple :
-• classe Empty: def __len__(self): renvoyer 0
-• bool(Empty())  # False
-• classe NonEmpty: def __len__(self): renvoyer 5
-• bool(NonEmpty())  # True
+Cas limites :
+• Python 3 compréhensions : scope local de la compréhension pour i.
 
-Usages courants :
-• Custom container types automatically get truthiness from length
-• Empty containers are falsy by convention
-• Matches Python's built-in behavior for listes, dicts, strings`,
-  2223: `Quand __bool__ is not defined, Python falls back to __len__ for truth testing. Since __len__() retourne 5, which is nonzero, the objet is considered truthy.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Même piège avec def dans boucle.
+
+Remarques :
+• Réponse : [2, 2, 2].`,
+  2212: `make_power(n) ; power(x) return x**n ; square = make_power(2) ; square(5)
+
+Débutant :
+• square élève à la puissance capturée 2 : 5**2 = 25.
+
+Intermédiaire :
+• def imbriqué au lieu de lambda, même idée de fermeture.
+
+Expert :
+• make_power(3) donnerait une fonction cube indépendante.
 
 Concepts clés :
-• Without __bool__, Python uses __len__ for truthiness
-• __len__() returning a nonzero valeur means truthy
-• This mirrors built-in behavior: bool([1,2,3]) is True car len is 3
-• __len__ must renvoyer a non-negative integer
+• Fermeture sur exposant, fabrique.
 
-Comment ça fonctionne :
-• C() creates an instance
-• bool(C()) checks for __bool__ → not found
-• Falls back to __len__() → retourne 5
-• 5 is nonzero → truthy → True
+Distinctions clés :
+• square n’expose pas n mais l’utilise dans x**n.
 
-Exemple :
-• classe C: def __len__(self): renvoyer 5
-• bool(C())  # True (nonzero length)
-• classe D: def __len__(self): renvoyer 0
-• bool(D())  # False (zero length)
+Fonctionnement :
+• n=2 cellule partagée avec power.
 
-Usages courants :
-• Non-empty custom containers are truthy
-• Consistent avec Python's truth protocol
-• len() and bool() work together naturally`,
-  2224: `Le __contains__ méthode defines the behavior of the 'in' operator. When 2 in C() is evaluated, Python appelle C().__contains__(2), which checks if 2 is in [1, 2, 3]. Since 2 is in the liste, il retourne True.
+Exécution étape par étape :
+• square(5) → pow(5,2).
 
-Concepts clés :
-• __contains__ overrides the 'in' membership test operator
-• Called by the 'in' and 'not in' operators
-• Should renvoyer True or False
-• If __contains__ is not defined, Python falls back to iterating through the objet
+Ordre des opérations :
+• make_power puis assignation square puis appel.
 
-Comment ça fonctionne :
-• C() creates an instance
-• 2 in C() calls C().__contains__(2)
-• Checks: 2 in [1, 2, 3] → True
-• Résultat : True
+Cas d'utilisation courants :
+• Familles de fonctions paramétrées.
 
-Exemple :
-• 2 in C()  # True
-• 5 in C()  # False
-• 1 in C()  # True
+Cas limites :
+• Exposants négatifs ou non entiers selon x.
 
-Usages courants :
-• Custom membership testing
-• Implementing set-like or range-like objets
-• Optimized containment checks (e.g., interval objets)`,
-  2225: `Le __contains__ méthode checks membership. When 5 in C() is evaluated, Python appelle C().__contains__(5), which checks if 5 is in [1, 2, 3]. Since 5 is not in the liste, il retourne False.
+Considérations de performance :
+• pow peut être optimisé.
+
+Exemples :
+• math.pow vs ** pour floats.
+
+Remarques :
+• Réponse : 25.`,
+  2213: `outer(1)(2)(3) avec trois niveaux inner retournant inner puis inner ; return x+y+z
+
+Débutant :
+• outer(1) renvoie middle qui attend y ; middle(2) renvoie inner qui attend z ; inner(3) → 1+2+3 = 6.
+
+Intermédiaire :
+• Curryfication manuelle à trois niveaux.
+
+Expert :
+• Chaque niveau est une nouvelle fermeture combinant paramètres capturés.
 
 Concepts clés :
-• __contains__ est appelé for both 'in' and 'not in'
-• 5 not in [1, 2, 3] → __contains__ retourne False
-• 'not in' is simply the negation of 'in'
-• The returned valeur is coerced to bool
+• Fonctions d’ordre supérieur imbriquées, somme finale.
 
-Comment ça fonctionne :
-• C() creates an instance
-• 5 in C() calls C().__contains__(5)
-• Checks: 5 in [1, 2, 3] → False
-• Résultat : False
+Distinctions clés :
+• Pas 1*2*3.
 
-Exemple :
-• 5 in C()      # False
-• 5 not in C()  # True
-• 3 in C()      # True
+Fonctionnement :
+• x capturé puis y puis z.
 
-Usages courants :
-• Defining what elements belong to a custom collection
-• Optimized search (e.g., binary search tree containment)
-• Range membership (e.g., checking if a point is in a region)`,
-  2226: `This implements the full iterator protocol. R is both an iterable (has __iter__) and an iterator (has __next__). Each call to __next__ increments self.i and returns it. When self.i reaches self.n, it raises StopIteration to signal exhaustion.
+Exécution étape par étape :
+• Chaîne d’appels successifs.
 
-Concepts clés :
-• Un itérateur doit implémenter __iter__ et __next__
-• __iter__ returns self (the iterator object)
-• __next__ retourne le next value or raises StopIteration
-• list() repeatedly calls __next__ until StopIteration
+Ordre des opérations :
+• Évaluation de gauche à droite des ()()().
 
-Comment ça fonctionne :
-• R(3) creates iterator with n=3, i=0
-• First __next__: i becomes 1, returns 1
-• Second __next__: i becomes 2, returns 2
-• Third __next__: i becomes 3, returns 3
-• Fourth __next__: i (3) >= n (3), raises StopIteration
-• list() collects [1, 2, 3]
+Cas d'utilisation courants :
+• Style fonctionnel pédagogique, décorateurs.
 
-Exemple :
-• list(R(3))  # [1, 2, 3]
-• list(R(0))  # [] (immediately stops)
-• list(R(1))  # [1]
+Cas limites :
+• Lisibilité : préférer une seule fonction à trois args souvent.
 
-Usages courants :
-• Custom sequences and ranges
-• Lazy data processing
-• Infinite iterators (without the stop condition)`,
-  2227: `Le iterator protocol en Python requires two méthodes: __iter__ and __next__. An objet that implements both is an iterator.
+Considérations de performance :
+• Coût de création de fonctions intermédiaires.
+
+Exemples :
+• functools.partial partiel équivalent conceptuel.
+
+Remarques :
+• Réponse : 6.`,
+  2214: `multiplier(factor) ; multiply(x) return x*factor ; double = multiplier(2) ; double(10)
+
+Débutant :
+• factor capturé vaut 2 → 10*2 = 20.
+
+Intermédiaire :
+• Nom multiply interne puis retour de la fonction interne.
+
+Expert :
+• Pattern identique à make_adder avec multiplication.
 
 Concepts clés :
-• __iter__() must renvoyer the iterator objet itself (renvoyer self)
-• __next__() must renvoyer the next valeur or raise StopIteration when exhausted
-• C'est formalized in collections.abc.Iterator
-• An iterable only needs __iter__ (qui retourne un iterator), but an iterator needs both
+• Fabrique, fermeture.
 
-Comment ça fonctionne :
-• for x in obj: first calls iter(obj) qui calls obj.__iter__()
-• Then repeatedly calls next(iterator) qui calls iterator.__next__()
-• When __next__ raises StopIteration, the loop ends
-• This protocol est utilisé by for loops, liste(), tuple(), sum(), etc.
+Distinctions clés :
+• double(10) n’est pas multiplier(2)(10) écrit en une ligne mais équivalent.
 
-Exemple :
-• classe MyIter:
-•     def __iter__(self): renvoyer self
-•     def __next__(self): raise StopIteration
-• iter(MyIter())  # retourne le MyIter instance
-• next(MyIter())  # raises StopIteration
+Fonctionnement :
+• Cellule factor=2.
 
-Usages courants :
-• All Python iterators follow this protocol
-• Files, generators, range objets are all iterators
-• Custom data streams and lazy sequences`,
-  2228: `For an iterator object, __iter__ doit retourner self. C'est requis pour que iterators puisse être utilisé directement dans for loops and other iteration contexts. The distinction is important: an iterable's __iter__ retourne un iterator (possibly a new one), but an iterator's __iter__ returns self.
+Exécution étape par étape :
+• Un appel final.
 
-Concepts clés :
-• Iterator's __iter__ returns self (the iterator itself)
-• Iterable's __iter__ retourne un (possibly new) iterator
-• Cela permet iterators to be used wherever iterables are expected
-• A list is iterable: list.__iter__() retourne un new list_iterator each time
+Ordre des opérations :
+• Création de double puis appel.
 
-Comment ça fonctionne :
-• for x in iterator: calls iter(iterator) → iterator.__iter__() → self
-• Then calls next(self) repeatedly
-• If __iter__ didn't return self, the iterator couldn't be utilisé dans for loops
-• C'est a consistency requirement of the protocol
+Cas d'utilisation courants :
+• Unités, échelles, taxes.
 
-Exemple :
-• class MyIter:
-•     def __iter__(self): return self  # must return self
-•     def __next__(self): ...
-• it = MyIter()
-• iter(it) is it  # True
+Cas limites :
+• Overflow numérique hors scope.
 
-Usages courants :
-• Every iterator follows this pattern
-• Ensures iterators work in for loops
-• Required by the iterator protocol`,
-  2229: `Quand un itérateur n'a plus d'éléments à produire, __next__ doit lever StopIteration. C'est le signal standard qui indique à Python to stop iterating. For loops, list(), and other consumers of iterators catch StopIteration automatically.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• multiplier(0)(x) toujours 0.
+
+Remarques :
+• Réponse : 20.`,
+  2215: `greet(name) ; greeting() return f-string Hello name ; greet("Alice")()
+
+Débutant :
+• greet retourne une fonction sans argument qui capture name="Alice" ; l’appel produit la chaîne de salutation.
+
+Intermédiaire :
+• f-string évaluée au moment de l’appel de greeting, pas à la création.
+
+Expert :
+• Si name était mutable et changé avant l’appel, la valeur vue dépendrait du moment (ici str immuable).
 
 Concepts clés :
-• StopIteration is the standard signal for iterator exhaustion
-• for loops catch StopIteration silently and end the loop
-• Returning None would make None a valid yielded value, not a stop signal
-• StopIteration is an exception but is part of normal iterator flow
+• Fermeture sur chaîne, f-string.
 
-Comment ça fonctionne :
-• Each call to __next__ retourne le next value
-• When there are no more values, raise StopIteration
-• for x in iter: catches StopIteration and breaks the loop
-• list(iter) catches StopIteration and returns collected items
+Distinctions clés :
+• greet("Alice")() deux appels successifs.
 
-Exemple :
-• class Counter:
-•     def __init__(self, n): self.n = n; self.i = 0
-•     def __next__(self):
-•         if self.i >= self.n: raise StopIteration
-•         self.i += 1; return self.i
+Fonctionnement :
+• name lu depuis la cellule de greet.
 
-Usages courants :
-• Every finite iterator raises StopIteration
-• Generators do this automatically at the end
-• Essential for proper iteration protocol compliance`,
-  2230: `This class delegates iteration to a list's iterator. When list(C()) est appelé, Python appelle C().__iter__(), qui returns iter([1, 2, 3]) — a list_iterator. list() then consumes this iterator to produce [1, 2, 3].
+Exécution étape par étape :
+• Création greeting puis () force l’exécution.
 
-Concepts clés :
-• __iter__ can delegate to any existing iterator
-• iter([1, 2, 3]) retourne un list_iterator object
-• C is an iterable (has __iter__) but not itself an iterator (no __next__)
-• Each call to __iter__ crée un fresh iterator, allowing multiple passes
+Ordre des opérations :
+• Appel greet puis appel fonction retournée.
 
-Comment ça fonctionne :
-• C() creates an instance
-• list(C()) calls iter(C()) → C().__iter__() → iter([1, 2, 3])
-• list() consumes the list_iterator → [1, 2, 3]
-• Résultat : [1, 2, 3]
+Cas d'utilisation courants :
+• Messages partiellement appliqués, UI.
 
-Exemple :
-• list(C())    # [1, 2, 3]
-• for x in C(): print(x)  # 1, 2, 3
-• tuple(C())   # (1, 2, 3)
+Cas limites :
+• Caractères spéciaux dans name : f-string les affiche tels quels.
 
-Usages courants :
-• Wrapping existing iterables with custom behavior
-• Lazy proxies over collections
-• Composing iterables from multiple sources`,
-  2231: `Quand a classe has __getitem__ but not __iter__, Python uses the old-style iteration protocol: it calls __getitem__(0), __getitem__(1), __getitem__(2), etc. until an IndexError is raised.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Réutiliser la fonction greeting plusieurs fois : même name.
+
+Remarques :
+• Réponse : chaîne Hello, Alice ! (option du quiz).`,
+  2216: `Qu’est-ce qu’une fermeture (closure) en Python ?
+
+Débutant :
+• Une fonction qui garde l’accès aux variables de la portée lexicale où elle a été définie, même après la fin de cet environnement.
+
+Intermédiaire :
+• Objet fonction + cellules capturées (FREE vars).
+
+Expert :
+• Implémenté via __closure__ tuple de cellules.
 
 Concepts clés :
-• Old-style iteration: Python appelle __getitem__ avec incrementing indices
-• IndexError signals the end of iteration (like StopIteration for __next__)
-• __getitem__(0) → 0*10=0, __getitem__(1) → 1*10=10, __getitem__(2) → 2*10=20
-• __getitem__(3) raises IndexError, stopping iteration
+• Portée lexicale, capture, durée de vie.
 
-Comment ça fonctionne :
-• liste(C()) tries iter(C()) → no __iter__, falls back to __getitem__
-• Calls __getitem__(0) → 0, __getitem__(1) → 10, __getitem__(2) → 20
-• __getitem__(3) raises IndexError → iteration stops
-• liste() collects [0, 10, 20]
+Distinctions clés :
+• Pas « verrouiller » la fonction contre modification ; pas exécution auto.
 
-Exemple :
-• liste(C())  # [0, 10, 20]
-• C()[0]     # 0
-• C()[2]     # 20
+Fonctionnement :
+• LEGB avec cellules pour ENCLOSING.
 
-Usages courants :
-• Legacy sequence types
-• Simple indexed access sans full iterator protocol
-• Backward compatibility avec older Python code`,
-  2232: `Quand __iter__ contains a yield instruction, it becomes a generator fonction. Each call to __iter__ retourne un fresh generator iterator. The generator yields i**2 for i in range(4): 0, 1, 4, 9.
+Exécution étape par étape :
+• À chaque appel, résolution via cellules.
 
-Concepts clés :
-• Using yield in __iter__ makes it a generator fonction
-• A generator fonction retourne un generator iterator quand appelé
-• The generator handles __next__ and StopIteration automatically
-• C'est the most Pythonic way to implement __iter__
+Ordre des opérations :
+• Création à la définition de inner dans outer.
 
-Comment ça fonctionne :
-• Squares(4) creates instance avec n = 4
-• liste(Squares(4)) calls __iter__() → retourne generator
-• Generator yields: 0**2=0, 1**2=1, 2**2=4, 3**2=9
-• Generator exhausts → StopIteration → liste collects [0, 1, 4, 9]
+Cas d'utilisation courants :
+• Décorateurs, fabriques, callbacks.
 
-Exemple :
-• liste(Squares(4))  # [0, 1, 4, 9]
-• liste(Squares(0))  # []
-• liste(Squares(1))  # [0]
+Cas limites :
+• Cycles de références si closures se pointent mutuellement.
 
-Usages courants :
-• Clean, readable iteration implementation
-• Memory-efficient lazy iteration
-• Most recommended way to define __iter__ for simple cases`,
-  2233: `Using yield in __iter__ crée un generator-based iterator. Each yield statement produces one value. After the last yield, the generator returns (raises StopIteration implicitly), and list() collects all yielded values.
+Considérations de performance :
+• Petite mémoire par cellule.
+
+Exemples :
+• Voir 2201.
+
+Remarques :
+• Réponse : fonction qui se souvient des variables englobantes (1re option).`,
+  2217: `outer ; funcs=[] ; compréhension append lambda: i ; [f() for f in outer()]
+
+Débutant :
+• Même piège que 2211 : toutes les lambdas partagent i final 2 → [2,2,2].
+
+Intermédiaire :
+• La liste est construite dans outer mais le binding tardif reste sur i.
+
+Expert :
+• Si range était vide, liste vide de lambdas sans appel.
 
 Concepts clés :
-• Multiple yield statements produce values in sequence
-• La function suspends after each yield and resumes on next()
-• After the last yield, the function exits → StopIteration
-• No explicit StopIteration needed with generators
+• Late binding + side effect append.
 
-Comment ça fonctionne :
-• list(C()) calls __iter__() → returns generator
-• next() → yields 1 (suspends)
-• next() → yields 2 (suspends)
-• next() → yields 3 (suspends)
-• next() → function ends → StopIteration
-• list collects [1, 2, 3]
+Distinctions clés :
+• Comparer avec variante lambda i=i.
 
-Exemple :
-• list(C())        # [1, 2, 3]
-• for x in C(): x  # 1, 2, 3
-• sum(C())         # 6
+Fonctionnement :
+• Chaque lambda corps « load i » au call time.
 
-Usages courants :
-• Fixed sequences with meaningful names
-• Multi-step iteration with complex logic between yields
-• State machine implementations`,
-  2234: `Le __reversed__ méthode defines what happens when reversed() est appelé on an instance. Here, il retourne iter([3, 2, 1]), which is a list_iterator qui produit 3, 2, 1.
+Exécution étape par étape :
+• Après compréhension i=2 ; trois appels.
 
-Concepts clés :
-• __reversed__ overrides the built-in reversed() fonction
-• Must renvoyer an iterator
-• Without __reversed__, reversed() requires __len__ and __getitem__
-• Allows custom reverse iteration logic
+Ordre des opérations :
+• Construction funcs puis liste en compréhension externe.
 
-Comment ça fonctionne :
-• reversed(C()) calls C().__reversed__()
-• Retourne iter([3, 2, 1])
-• liste() consumes the iterator → [3, 2, 1]
-• Résultat : [3, 2, 1]
+Cas d'utilisation courants :
+• Anti-pattern démontré ; tests de compréhension.
 
-Exemple :
-• liste(reversed(C()))  # [3, 2, 1]
-• for x in reversed(C()): print(x)  # 3, 2, 1
+Cas limites :
+• Ordre d’évaluation des append vs i.
 
-Usages courants :
-• Efficient reverse iteration sans creating reversed copy
-• Custom sequences avec optimized reverse traversal
-• Linked listes or trees avec reverse iteration support`,
-  2235: `Yes, any object that defines __iter__ peut être utilisé in a for loop. The for loop calls iter(obj), qui calls obj.__iter__() to get an iterator, then repeatedly calls next() on it.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Remplacer par boucle for explicite avec factory.
+
+Remarques :
+• Réponse : [2, 2, 2].`,
+  2218: `Variante avec lambda i=i dans la compréhension append dans outer
+
+Débutant :
+• Valeur par défaut fige 0,1,2 pour chaque lambda → [0,1,2].
+
+Intermédiaire :
+• Corrige le late binding de 2217.
+
+Expert :
+• Idiom équivalent : functools.partial(lambda i: ..., i).
 
 Concepts clés :
-• An object with __iter__ is an iterable
-• for x in obj: calls iter(obj) → obj.__iter__()
-• The returned iterator must have __next__
-• Objects with only __getitem__ also work (old-style protocol)
+• Binding par défaut à la création.
 
-Comment ça fonctionne :
-• for x in obj: est équivalent à:
-•   it = iter(obj)  # calls obj.__iter__()
-•   while True:
-•       try: x = next(it)  # calls it.__next__()
-•       except StopIteration: break
+Distinctions clés :
+• Seule la présence de i=i change le résultat.
 
-Exemple :
-• class C: def __iter__(self): return iter([1, 2])
-• for x in C(): print(x)  # 1, 2
+Fonctionnement :
+• Trois lambdas, trois defaults.
 
-Usages courants :
-• Making any custom object iterable
-• Integration with all Python iteration tools
-• for loops, list comprehensions, unpacking, etc.`,
-  2236: `Calling iter() on a list retourne un list_iterator object. C'est a specialized iterator that traverses the list elements one by one. The list_iterator has __iter__ (returns self) and __next__ (returns next element).
+Exécution étape par étape :
+• Appels successifs sans état partagé incorrect.
 
-Concepts clés :
-• iter(list) calls list.__iter__() qui retourne un list_iterator
-• The list_iterator is a separate object from the list
-• Multiple calls to iter() on le même list return independent iterators
-• The iterator keeps track of its position in the list
+Ordre des opérations :
+• Compréhension interne puis map des appels.
 
-Comment ça fonctionne :
-• iter([1, 2, 3]) → list_iterator object
-• next(it) → 1, next(it) → 2, next(it) → 3, next(it) → StopIteration
-• type(iter([1, 2, 3])) → <class 'list_iterator'>
+Cas d'utilisation courants :
+• Registres de handlers indexés.
 
-Exemple :
-• it = iter([1, 2, 3])
-• next(it)  # 1
-• next(it)  # 2
-• type(it)  # <class 'list_iterator'>
+Cas limites :
+• Même attention si default est mutable.
 
-Usages courants :
-• Manual iteration with next()
-• Understanding how for loops work under the hood
-• Creating multiple independent iterators over le même data`,
-  2237: `iter([1, 2, 3]) crée un list_iterator positioned at the start. next() advances it one step and retourne le first element, which is 1.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir 2210.
+
+Remarques :
+• Réponse : [0, 1, 2].`,
+  2219: `accumulator(start) ; total=start ; add(n) nonlocal total ; total += n ; return total ; a(5) puis a(3)
+
+Débutant :
+• Premier appel : 0+5=5 retourné ; second : 5+3=8.
+
+Intermédiaire :
+• total survit entre appels grâce à nonlocal et fermeture.
+
+Expert :
+• Même pattern que compteur nonlocal simple avec valeur accumulée retournée.
 
 Concepts clés :
-• iter() creates an iterator from an iterable
-• next() calls __next__() on the iterator to get the next value
-• The first call to next() retourne le first element
-• Each subsequent call retourne le next element
+• Accumulateur mutable, nonlocal.
 
-Comment ça fonctionne :
-• iter([1, 2, 3]) → list_iterator at position 0
-• next(iterator) → calls __next__() → returns 1
-• The iterator object created here is temporary (not saved)
-• Résultat : 1
+Distinctions clés :
+• Ce n’est pas une nouvelle liste à chaque appel.
 
-Exemple :
-• next(iter([1, 2, 3]))   # 1
-• next(iter("abc"))        # 'a'
-• next(iter(range(10)))    # 0
+Fonctionnement :
+• Une seule cellule total dans la fermeture de add.
 
-Usages courants :
-• Getting the first element of any iterable
-• Peeking at the start of a stream
-• next(iter(s), default) for safe first-element access`,
-  2238: `Le __getitem__ méthode defines indexing behavior (obj[key]). When C()[1] is evaluated, Python appelle C().__getitem__(1), qui retourne [10, 20, 30][1] = 20.
+Exécution étape par étape :
+• État 0→5→8.
 
-Concepts clés :
-• __getitem__ overrides the [] (subscript) operator
-• C()[1] calls __getitem__(self, 1)
-• The index est passé as the key argument
-• Can support integer indices, slices, or any hashable key
+Ordre des opérations :
+• Deux appels sur le même a.
 
-Comment ça fonctionne :
-• C() creates an instance
-• C()[1] calls __getitem__(1)
-• Retourne [10, 20, 30][1] = 20
-• Résultat : 20
+Cas d'utilisation courants :
+• Sommes glissantes, budgets.
 
-Exemple :
-• C()[0]  # 10
-• C()[1]  # 20
-• C()[2]  # 30
+Cas limites :
+• Réentrance : un seul fil logique ici.
 
-Usages courants :
-• Custom sequence and mapping types
-• Database record access
-• Lazy data loading avec indexing`,
-  2239: `Le __len__ méthode defines the behavior of the built-in len() fonction. When len(C()) est appelé, Python appelle C().__len__(), qui retourne 3.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• start=10 variant suivant.
+
+Remarques :
+• Réponse : 8 (résultat du second appel dans l’énoncé).`,
+  2220: `a = accumulator(10) ; a(5)
+
+Débutant :
+• total initial 10 + 5 = 15.
+
+Intermédiaire :
+• Même fermeture add que la définition générale avec start=10.
+
+Expert :
+• Un nouvel accumulator(10) aurait son propre total isolé.
 
 Concepts clés :
-• __len__ overrides the len() built-in
-• Must renvoyer a non-negative integer
-• Also affects bool() when __bool__ is not defined
-• Used by many built-in fonctions and data structures
+• État initial capturé.
 
-Comment ça fonctionne :
-• C() creates an instance
-• len(C()) calls __len__() → retourne 3
-• Résultat : 3
+Distinctions clés :
+• Pas repartir de zéro.
 
-Exemple :
-• len(C())  # 3
-• bool(C())  # True (car __len__ retourne 3, nonzero = truthy)
+Fonctionnement :
+• Premier appel seulement dans l’énoncé.
 
-Usages courants :
-• Custom container types (listes, queues, trees)
-• Reporting size of data structures
-• Integration avec len(), bool(), and iteration`,
-  2240: `Un itérable est tout objet with __iter__ qui retourne un itérateur. Un itérateur est un objet with both __iter__ (returns self) and __next__ (returns next value or raises StopIteration). All iterators are iterables, but not all iterables are iterators.
+Exécution étape par étape :
+• 10 + 5 → 15.
 
-Concepts clés :
-• Iterable: has __iter__() qui retourne un itérateur
-• Iterator: has __iter__() (returns self) AND __next__()
-• A list is iterable but not an iterator (list has __iter__ but no __next__)
-• iter([1,2,3]) retourne un list_iterator, which IS an iterator
+Ordre des opérations :
+• Création de a puis a(5).
 
-Comment ça fonctionne :
-• list has __iter__ → iterable (returns list_iterator)
-• list_iterator has __iter__ and __next__ → iterator
-• for x in [1,2,3]: first gets iterator via iter(), then calls next()
-• Generators are iterators (have both methods)
+Cas d'utilisation courants :
+• Cumul avec offset.
 
-Exemple :
-• [1,2,3] → iterable (has __iter__, no __next__)
-• iter([1,2,3]) → iterator (has both __iter__ and __next__)
-• range(5) → iterable (not an iterator until iter() est appelé)
-• (x for x in range(5)) → generator = iterator
+Cas limites :
+• Types non addables avec int.
 
-Usages courants :
-• Understanding Python's iteration model
-• Knowing when to implement __iter__ vs both methods
-• Debugging iteration-related errors`,
-  2241: `Le context manager protocol requires two méthodes: __enter__ and __exit__. These are appelé by the 'avec' instruction to set up and tear down a resource.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Chaînage a(1);a(1);a(1) sur 10 → 13.
+
+Remarques :
+• Réponse : 15.`,
+  2221: `apply(f, x) return f(x) ; apply(abs, -5)
+
+Débutant :
+• abs(-5) = 5.
+
+Intermédiaire :
+• apply est un higher-order minimal.
+
+Expert :
+• Généralise à tout callable respectant la signature.
 
 Concepts clés :
-• __enter__ est appelé à l'entrée du bloc 'avec'
-• __exit__ est appelé à la sortie du bloc 'avec' (even if an exception occurred)
-• avec obj as x: calls __enter__ and binds its renvoyer valeur to x
-• __exit__ receives exception info (or None if no exception)
+• Passage de fonction, builtin abs.
 
-Comment ça fonctionne :
-• avec CM() as resource:
-•     # __enter__ appelé, renvoyer valeur bound to 'resource'
-•     # code block runs
-• # __exit__ appelé automatically (even on exception)
+Distinctions clés :
+• Pas apply de liste (itertools).
 
-Exemple :
-• avec open("file.txt") as f:  # file.__enter__() retourne file
-•     data = f.read()          # use the file
-• # file.__exit__() closes the file automatically
+Fonctionnement :
+• Un seul argument après f.
 
-Usages courants :
-• File handling (open/close)
-• Database connections (connect/disconnect)
-• Lock acquisition and release
-• Temporary state changes`,
-  2242: `Quand the 'avec' instruction executes, it calls CM().__enter__(), qui retourne le string "resource". This renvoyer valeur est liée à la variable r via the 'as' clause. Inside the avec block, r is "resource".
+Exécution étape par étape :
+• Évaluation -5 puis abs.
 
-Concepts clés :
-• 'avec CM() as r:' calls __enter__ and binds renvoyer valeur to r
-• __enter__ can renvoyer anything: self, a different objet, or a simple valeur
-• __exit__ est appelé when the block ends, even if an exception occurs
-• *a in __exit__ captures (exc_type, exc_val, exc_tb)
+Ordre des opérations :
+• Arguments évalués avant apply.
 
-Comment ça fonctionne :
-• CM() creates context manager instance
-• __enter__() retourne "resource"
-• r = "resource" (bound by 'as')
-• print(r) outputs: resource
-• __exit__() appelé avec no exception info
+Cas d'utilisation courants :
+• Stratégies, plugins.
 
-Exemple :
-• avec CM() as r: r   # "resource"
-• avec CM() as r: type(r)  # <classe 'str'>
+Cas limites :
+• f qui attend plus d’un argument → TypeError.
 
-Usages courants :
-• Returning file handles, connections, locks
-• Returning computed resources
-• Returning self for méthode chaining`,
-  2243: `La valeur de retour de __enter__ est liée à la variable spécifiée après 'as' dans l'instruction 'with'. C'est often 'self' but can be any object.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• apply(len, "abc") → 3.
+
+Remarques :
+• Réponse : 5.`,
+  2222: `apply(f, x) ; apply(str, 42)
+
+Débutant :
+• str(42) produit la chaîne des chiffres 4 et 2.
+
+Intermédiaire :
+• Type du résultat str, pas int.
+
+Expert :
+• str est bien un type/callable comme les autres.
 
 Concepts clés :
-• with X() as y: the return value of __enter__ becomes y
-• Common to return self so the user can call methods on the manager
-• open() retourne le file object from __enter__
-• Can return a different object (e.g., a connection, a lock, a cursor)
+• Conversion string.
 
-Comment ça fonctionne :
-• with CM() as r: calls CM().__enter__()
-• Whatever __enter__ returns becomes the value of r
-• If no 'as' clause, the return value is discarded
-• __enter__ can return self, another object, or None
+Distinctions clés :
+• Pas la valeur entière 42.
 
-Exemple :
-• class CM: def __enter__(self): return self  # common pattern
-• class CM: def __enter__(self): return "data"  # return different object
-• with CM() as x: type(x)  # depends on __enter__ return
+Fonctionnement :
+• Appel str.__new__ ou équivalent via str().
 
-Usages courants :
-• Returning resource handles
-• Returning self for direct access to manager methods
-• Returning wrapped or transformed resources`,
-  2244: `Le __exit__ méthode receives three arguments describing any exception that occurred in the avec block: the exception type, the exception valeur, and the traceback. If no exception occurred, all three are None.
+Exécution étape par étape :
+• apply renvoie l’objet str.
 
-Concepts clés :
-• __exit__(self, exc_type, exc_val, exc_tb)
-• If no exception: all three are None
-• If exception occurred: exc_type is the exception classe, exc_val is the instance, exc_tb is the traceback
-• __exit__ can suppress the exception by returning True
+Ordre des opérations :
+• Évaluation 42 puis str.
 
-Comment ça fonctionne :
-• Normal exit: __exit__(self, None, None, None)
-• Exception exit: __exit__(self, TypeError, TypeError("msg"), <traceback>)
-• If __exit__ retourne True, the exception is suppressed
-• If __exit__ retourne False/None, the exception propagates
+Cas d'utilisation courants :
+• Normalisation avant concaténation.
 
-Exemple :
-• classe CM:
-•     def __exit__(self, exc_type, exc_val, exc_tb):
-•         if exc_type is not None:
-•             print(f"Error: {exc_val}")
-•         renvoyer False  # don't suppress
+Cas limites :
+• Objets sans __str__ explicite utilisent défaut.
 
-Usages courants :
-• Logging exceptions
-• Cleaning up regardless of success/failure
-• Conditionally suppressing exceptions`,
-  2245: `Si __exit__ retourne un truthy valeur (typically True), any exception that occurred dans the avec block is suppressed — it does not propagate. If __exit__ retourne un falsy valeur (False, None, etc.), the exception propagates normally.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• str(42.0) autre type.
+
+Remarques :
+• Réponse : chaîne "42" (option du quiz).`,
+  2223: `apply_twice(f, x) return f(f(x)) ; f = lambda x: x+1 ; x=5
+
+Débutant :
+• f(5)=6 puis f(6)=7.
+
+Intermédiaire :
+• Composition itérée deux fois, pas f(f) au sens produit.
+
+Expert :
+• n fois s’écritait avec reduce ou boucle.
 
 Concepts clés :
-• renvoyer True in __exit__ → exception is silenced
-• renvoyer False or None → exception propagates
-• C'est powerful but should be used carefully
-• contextlib.suppress is a built-in context manager that does this
+• Itération fonctionnelle.
 
-Comment ça fonctionne :
-• Exception occurs in avec block
-• Python appelle __exit__(self, exc_type, exc_val, exc_tb)
-• If __exit__ retourne True: exception is suppressed, execution continues après avec
-• If __exit__ retourne False/None: exception propagates normally
+Distinctions clés :
+• Pas 5+1+1 en une seule addition partielle sans appel intermédiaire : mais résultat 7 identique ici.
 
-Exemple :
-• classe Suppress:
-•     def __enter__(self): renvoyer self
-•     def __exit__(self, *a): renvoyer True
-• avec Suppress():
-•     raise ValueError("oops")
-• print("continues!")  # this runs — exception suppressed
+Fonctionnement :
+• Évaluation intérieure d’abord.
 
-Usages courants :
-• Silencing expected exceptions
-• Implementing retry logic
-• contextlib.suppress(ValueError) does le même thing`,
-  2246: `Yes, contextlib.contextmanager is a decorator that turns a generator function into a context manager. Instead of writing a class with __enter__ and __exit__, you write a function with yield.
+Exécution étape par étape :
+• f(x) puis f sur le résultat.
 
-Concepts clés :
-• The code before yield runs on __enter__
-• The yielded value is bound to 'as' variable
-• The code after yield runs on __exit__
-• Much more concise than a full class
+Ordre des opérations :
+• apply_twice corps.
 
-Comment ça fonctionne :
-• from contextlib import contextmanager
-• @contextmanager
-• def my_cm():
-•     print("entering")  # __enter__ equivalent
-•     yield "resource"    # value for 'as'
-•     print("exiting")   # __exit__ equivalent
-• with my_cm() as r: print(r)  # entering, resource, exiting
+Cas d'utilisation courants :
+• Raffinements répétés (pédagogie).
 
-Exemple :
-• @contextmanager
-• def timer():
-•     start = time.time()
-•     yield
-•     print(f"Elapsed: {time.time() - start}")
+Cas limites :
+• Si f n’est pas définie sur son propre résultat.
 
-Usages courants :
-• Quick context managers without boilerplate
-• Temporary state changes
-• Resource management with less code`,
-  2247: `La fonction intégrée open() retourne un objet fichier (like TextIOWrapper or BufferedReader) qui implémente le protocole de contexte manager protocol. It has __enter__ (returns self) and __exit__ (closes the file).
+Considérations de performance :
+• Deux appels.
+
+Exemples :
+• Avec double : apply_twice(double,3)=12.
+
+Remarques :
+• Réponse : 7.`,
+  2224: `compose(f,g) return lambda x: f(g(x)) ; inc ; double ; compose(inc,double)(3)
+
+Débutant :
+• g(3)=double(3)=6 ; f(6)=inc(6)=7.
+
+Intermédiaire :
+• Ordre : d’abord double, puis inc (f après g).
+
+Expert :
+• Note : compose(inc,double) vs compose(double,inc) inverse (question 2225).
 
 Concepts clés :
-• open() retourne un objet fichier that is also a context manager
-• __enter__ retourne le file object itself
-• __exit__ closes the file automatically
-• Cela assure the file is always properly closed, even if an exception occurs
+• Composition f ∘ g en code.
 
-Comment ça fonctionne :
-• with open("file.txt") as f:
-•     __enter__() retourne le file object → bound to f
-•     # use f to read/write
-• __exit__() closes the file automatically
+Distinctions clés :
+• Pas commutative.
 
-Exemple :
-• with open("data.txt") as f:
-•     content = f.read()
-• # f is automatically closed here
-• f.closed  # True
+Fonctionnement :
+• Un seul lambda créé par compose.
 
-Usages courants :
-• Reading and writing files safely
-• Ensuring files are closed even on errors
-• The most common context manager en Python`,
-  2248: `Si an exception occurs dans a 'avec' block, Python appelle __exit__ avec the exception type, valeur, and traceback. Cela assure cleanup code runs even when errors occur. The exception then propagates unless __exit__ retourne True.
+Exécution étape par étape :
+• g puis f sur la même valeur 3.
 
-Concepts clés :
-• __exit__ is ALWAYS appelé, whether the block succeeds or raises an exception
-• On exception: __exit__(self, exc_type, exc_val, exc_tb) avec actual exception info
-• On success: __exit__(self, None, None, None)
-• This guarantee is the main purpose of context managers
+Ordre des opérations :
+• compose retourne fonction puis (3).
 
-Comment ça fonctionne :
-• avec CM() as r:
-•     raise ValueError("error")
-• # __exit__ est appelé avec (ValueError, ValueError("error"), <traceback>)
-• # If __exit__ retourne True, exception is suppressed
-• # If __exit__ retourne False/None, exception propagates après __exit__ runs
+Cas d'utilisation courants :
+• Pipelines courts.
 
-Exemple :
-• classe Logger:
-•     def __enter__(self): renvoyer self
-•     def __exit__(self, exc_type, exc_val, exc_tb):
-•         if exc_type: print(f"Exception: {exc_val}")
-•         renvoyer False  # propagate the exception
+Cas limites :
+• Types incompatibles entre sortie de g et entrée de f.
 
-Usages courants :
-• Guaranteed resource cleanup (close files, release locks)
-• Exception logging and monitoring
-• Transaction rollback on failure`,
-  2249: `Python supports both nested 'with' statements and multiple context managers in a single 'with' line. Multiple context managers in one line were supported since Python 2.7/3.1, and parenthesized multi-line syntax was added en Python 3.10.
+Considérations de performance :
+• Deux appels utilisateur.
+
+Exemples :
+• Voir banque pour l’autre ordre.
+
+Remarques :
+• Réponse : 7.`,
+  2225: `compose(double, inc)(3)
+
+Débutant :
+• Ici f=double, g=inc : g(3)=4, f(4)=8.
+
+Intermédiaire :
+• inc puis double, contrairement à 2224.
+
+Expert :
+• Lire l’ordre des arguments de compose dans l’énoncé anglais.
 
 Concepts clés :
-• Nested: with A(): with B(): (each has its own __exit__)
-• Single line: with A() as a, B() as b: (comma-separated)
-• Python 3.10+: with (A() as a, B() as b): (parenthesized for multi-line)
-• All managers' __exit__ methods are called in reverse order
+• Sens de la composition.
 
-Comment ça fonctionne :
-• with A() as a, B() as b:
-•     # A.__enter__() then B.__enter__()
-•     # code block
-• # B.__exit__() then A.__exit__() (reverse order)
-• Equivalent to nested with statements
+Distinctions clés :
+• 7 vs 8 selon l’ordre.
 
-Exemple :
-• with open("in.txt") as fin, open("out.txt", "w") as fout:
-•     fout.write(fin.read())
-• # both files are properly closed
+Fonctionnement :
+• inner appelle g puis f.
 
-Usages courants :
-• Opening multiple files simultaneously
-• Acquiring multiple locks
-• Database connection + cursor management`,
-  2250: `Context managers guarantee that cleanup code runs even if an exception occurs inside the managed block. Ce pattern, known as RAII (Resource Acquisition Is Initialization) in other languages, prevents resource leaks.
+Exécution étape par étape :
+• 3+1=4, *2=8.
+
+Ordre des opérations :
+• Même mécanisme compose, paramètres inversés.
+
+Cas d'utilisation courants :
+• Monades pédagogiques simplifiées.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• compose(inc,inc)(0)=2.
+
+Remarques :
+• Réponse : 8.`,
+  2226: `functions = [abs, str, len] ; functions[0](-5)
+
+Débutant :
+• Index 0 est abs ; abs(-5) = 5.
+
+Intermédiaire :
+• Liste d’objets callable first-class.
+
+Expert :
+• aliases = [math.fabs, ...] possible selon imports.
 
 Concepts clés :
-• Primary purpose: guaranteed cleanup regardless of exceptions
-• Resources: files, connections, locks, temporary state
-• 'with' statement ensures __exit__ is always called
-• Eliminates common bugs: forgetting to close files, release locks, etc.
+• Liste de fonctions, indexation.
 
-Comment ça fonctionne :
-• with open("file.txt") as f:
-•     data = f.read()        # if this raises, __exit__ still runs
-•     process(data)          # if this raises, __exit__ still runs
-• # f.close() called automatically by __exit__
+Distinctions clés :
+• functions[0] sans parenthèses ne fait pas l’appel.
 
-Exemple :
-• # Without context manager (error-prone):
-• f = open("file.txt")
-• try:
-•     data = f.read()
-• finally:
-•     f.close()  # must remember this
-•
-• # With context manager (safe):
-• with open("file.txt") as f:
-•     data = f.read()  # cleanup is automatic
+Fonctionnement :
+• Lookup 0 puis appel callable.
 
-Usages courants :
-• File I/O: open()
-• Threading: Lock(), Semaphore()
-• Database: connection cursors
-• Testing: mock.patch(), tempfile
-• Timing: measuring code execution time`,
+Exécution étape par étape :
+• -5 évalué, passé à abs.
+
+Ordre des opérations :
+• Évaluation de la liste puis sous-expression call.
+
+Cas d'utilisation courants :
+• Tables de dispatch, stratégies.
+
+Cas limites :
+• Index hors limites → IndexError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• functions[1](-5) → chaîne "-5".
+
+Remarques :
+• Réponse : 5.`,
+  2227: `functions[2]("hello")
+
+Débutant :
+• Index 2 est len ; len("hello") = 5.
+
+Intermédiaire :
+• len compte les caractères Unicode codepoints de la str.
+
+Expert :
+• Graphemes vs codepoints hors scope.
+
+Concepts clés :
+• len sur str.
+
+Distinctions clés :
+• Pas la longueur de la liste functions.
+
+Fonctionnement :
+• len appelle la logique CPython sur str.
+
+Exécution étape par étape :
+• Un appel.
+
+Ordre des opérations :
+• Chaîne littérale puis len.
+
+Cas d'utilisation courants :
+• Validation de saisie.
+
+Cas limites :
+• Types non Sized → erreur.
+
+Considérations de performance :
+• O(1) pour str en CPython.
+
+Exemples :
+• len("") → 0.
+
+Remarques :
+• Réponse : 5.`,
+  2228: `ops = {"+": (lambda a,b: a+b), "*": (lambda a,b: a*b)} ; ops["+"](3,4)
+
+Débutant :
+• Clé "+" pointe vers l’addition lambda → 3+4 = 7.
+
+Intermédiaire :
+• Dict mappe symboles vers callables.
+
+Expert :
+• Peut servir de mini langage d’expressions (avec prudence sécurité).
+
+Concepts clés :
+• Valeurs callable en dict.
+
+Distinctions clés :
+• ops["+"] est la fonction, pas le résultat.
+
+Fonctionnement :
+• Lookup O(1) amorti puis appel.
+
+Exécution étape par étape :
+• lambda(3,4) addition entière.
+
+Ordre des opérations :
+• Création dict puis accès puis call.
+
+Cas d'utilisation courants :
+• Parseurs simples, calculatrices.
+
+Cas limites :
+• Clé absente → KeyError.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• ops["*"](3,4) suivant.
+
+Remarques :
+• Réponse : 7.`,
+  2229: `ops["*"](3,4)
+
+Débutant :
+• Lambda multiplication → 12.
+
+Intermédiaire :
+• Indépendant de l’addition sauf partage du dict.
+
+Expert :
+• Pour floats, même opérateur *.
+
+Concepts clés :
+• Dispatch par chaîne.
+
+Distinctions clés :
+• Pas 3+4.
+
+Fonctionnement :
+• Appel binaire.
+
+Exécution étape par étape :
+• 3*4.
+
+Ordre des opérations :
+• Évaluation des arguments avant lambda.
+
+Cas d'utilisation courants :
+• Opérateurs dynamiques.
+
+Cas limites :
+• Débordement selon type (int illimité en Python).
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Clé inconnue gérée par .get.
+
+Remarques :
+• Réponse : 12.`,
+  2230: `make_validator(min_val, max_val) ; lambda x: min_val <= x <= max_val ; v(5) avec bornes 1 et 10
+
+Débutant :
+• 5 est entre 1 et 10 inclusivement en Python → True.
+
+Intermédiaire :
+• Chaînage de comparaisons équivalent à 1 <= 5 and 5 <= 10.
+
+Expert :
+• min_val et max_val capturés en fermeture.
+
+Concepts clés :
+• Prédicat booléen, intervalle fermé.
+
+Distinctions clés :
+• Pas strict < sauf si on change l’expression.
+
+Fonctionnement :
+• Deux comparaisons court-circuitées implicitement.
+
+Exécution étape par étape :
+• v(5) retourne bool.
+
+Ordre des opérations :
+• Création de v puis appel.
+
+Cas d'utilisation courants :
+• Validation de formulaires, bornes.
+
+Cas limites :
+• Si min_val > max_val, toujours False pour tout x (sauf NaN subtilités).
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• v(1) True, v(10) True aux bornes.
+
+Remarques :
+• Réponse : True (option du quiz).`,
+  2231: `v(15) avec validateur 1..10
+
+Débutant :
+• 15 > 10 → False.
+
+Intermédiaire :
+• Même fermeture que v(5), autre entrée.
+
+Expert :
+• Généralisable à des validateurs non numériques avec clé custom.
+
+Concepts clés :
+• Test d’appartenance à intervalle.
+
+Distinctions clés :
+• Pas d’exception : simple booléen.
+
+Fonctionnement :
+• 1 <= 15 <= 10 est False car 15 <= 10 faux.
+
+Exécution étape par étape :
+• Court-circuit après la seconde comparaison si implémenté ainsi.
+
+Ordre des opérations :
+• Évaluation de 15 une fois.
+
+Cas d'utilisation courants :
+• Rejet de saisie.
+
+Cas limites :
+• NaN : toute comparaison False.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• v(0) False.
+
+Remarques :
+• Réponse : False (première option).`,
+  2232: `sorted(["hello","hi","hey"], key=len)
+
+Débutant :
+• Longueurs 5, 2, 3 → ordre croissant par len : hi, hey, hello.
+
+Intermédiaire :
+• sorted renvoie une nouvelle liste ; l’originale inchangée.
+
+Expert :
+• Tri stable : à longueurs égales, ordre relatif préservé (ici pas d’égalité).
+
+Concepts clés :
+• Tri par clé, len.
+
+Distinctions clés :
+• Pas ordre alphabétique brut.
+
+Fonctionnement :
+• key appelée une fois par élément en CPython (DSU pattern).
+
+Exécution étape par étape :
+• Clés 5,2,3 puis permutation indices.
+
+Ordre des opérations :
+• sorted évalue l’itérable puis trie.
+
+Cas d'utilisation courants :
+• Ranger par longueur, date, priorité.
+
+Cas limites :
+• key qui lève → échec global du tri.
+
+Considérations de performance :
+• O(n log n).
+
+Exemples :
+• Mots même longueur : stabilité.
+
+Remarques :
+• Réponse : liste hi, hey, hello (formulation du QCM).`,
+  2233: `sorted([(1,3),(2,1),(3,2)], key=lambda x: x[1])
+
+Débutant :
+• Clé = second membre : 3, 1, 2 → ordre croissant des clés : (2,1), (3,2), (1,3).
+
+Intermédiaire :
+• Tuples entiers comparés sinon par clé seulement ici.
+
+Expert :
+• itemgetter(1) idiomatique.
+
+Concepts clés :
+• Tri de tuples par composante.
+
+Distinctions clés :
+• Ne trie pas par premier membre.
+
+Fonctionnement :
+• lambda extrait x[1] pour chaque tuple.
+
+Exécution étape par étape :
+• Tri sur [3,1,2].
+
+Ordre des opérations :
+• sorted crée nouvelle liste.
+
+Cas d'utilisation courants :
+• Classements par score, priorité.
+
+Cas limites :
+• x pas de longueur 2 → IndexError.
+
+Considérations de performance :
+• O(n log n).
+
+Exemples :
+• Inverser avec key négatif ou reverse=True.
+
+Remarques :
+• Réponse : ordre [(2,1), (3,2), (1,3)] (option du quiz).`,
+  2234: `list(map(lambda x: x.upper(), ["hello","world"]))
+
+Débutant :
+• Majuscules : HELLO et WORLD dans une nouvelle liste.
+
+Intermédiaire :
+• map paresseux matérialisé par list.
+
+Expert :
+• str.upper est méthode ; ici lambda équivalent à str.upper passé... mais lambda appelle .upper sur chaque élément.
+
+Concepts clés :
+• Transformation d’itérable.
+
+Distinctions clés :
+• Pas une seule chaîne concaténée.
+
+Fonctionnement :
+• Deux appels upper.
+
+Exécution étape par étape :
+• map puis list consomme.
+
+Ordre des opérations :
+• Ordre préservé.
+
+Cas d'utilisation courants :
+• Normalisation de colonnes.
+
+Cas limites :
+• Éléments non str → AttributeError.
+
+Considérations de performance :
+• O(n) sur la longueur totale.
+
+Exemples :
+• Liste vide → [].
+
+Remarques :
+• Réponse : [HELLO, WORLD] en contenu (option du quiz).`,
+  2235: `list(filter(lambda x: len(x)>3, ["hi","hello","hey"]))
+
+Débutant :
+• hi longueur 2 faux, hello 5 vrai, hey 3 faux → seule hello.
+
+Intermédiaire :
+• filter + list matérialise.
+
+Expert :
+• Pour « plus de 3 » strictement : len>3, donc hey exclu.
+
+Concepts clés :
+• Filtrage par prédicat.
+
+Distinctions clés :
+• len>=3 inclurait hey.
+
+Fonctionnement :
+• Prédicat booléen par élément.
+
+Exécution étape par étape :
+• Un survivant.
+
+Ordre des opérations :
+• filter puis list.
+
+Cas d'utilisation courants :
+• Nettoyage de listes de chaînes.
+
+Cas limites :
+• None comme fonction filter (identité) autre usage.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• Tous faux → [].
+
+Remarques :
+• Réponse : liste contenant uniquement hello (option du quiz).`,
+  2236: `Peut-on stocker des fonctions dans des listes ?
+
+Débutant :
+• Oui : les fonctions sont des objets de première classe comme les entiers ou les chaînes.
+
+Intermédiaire :
+• On peut aussi les mettre dans dict, tuple, parfois set si hashables (fonctions non toujours).
+
+Expert :
+• Les lambdas sont aussi stockables.
+
+Concepts clés :
+• First-class functions.
+
+Distinctions clés :
+• Pas réservé aux builtins.
+
+Fonctionnement :
+• Références dans le conteneur.
+
+Exécution étape par étape :
+• N/A conceptuel.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Pipelines, menus de commandes.
+
+Cas limites :
+• Pickle de fonctions locales limité.
+
+Considérations de performance :
+• Coût d’indirection.
+
+Exemples :
+• Voir 2226.
+
+Remarques :
+• Réponse : Oui, objets de première classe (1re option).`,
+  2237: `Peut-on passer des fonctions en arguments ?
+
+Débutant :
+• Oui : map, sorted(key=), apply, etc. le font couramment.
+
+Intermédiaire :
+• Tout callable peut être un argument.
+
+Expert :
+• Méthodes liées et partial aussi.
+
+Concepts clés :
+• Fonction d’ordre supérieur.
+
+Distinctions clés :
+• Pas limité aux lambdas.
+
+Fonctionnement :
+• Paramètre lié à l’objet fonction.
+
+Exécution étape par étape :
+• Appel interne f(x).
+
+Ordre des opérations :
+• Évaluation des arguments avant entrée dans la fonction.
+
+Cas d'utilisation courants :
+• Tri, transformation, injection.
+
+Cas limites :
+• Signature incompatible.
+
+Considérations de performance :
+• Indirection négligeable souvent.
+
+Exemples :
+• sorted(..., key=len).
+
+Remarques :
+• Réponse : Oui (1re option).`,
+  2238: `Peut-on retourner des fonctions depuis des fonctions ?
+
+Débutant :
+• Oui : fabriques, décorateurs, fermetures s’appuient là-dessus.
+
+Intermédiaire :
+• return inner sans parenthèses retourne l’objet, pas son résultat.
+
+Expert :
+• __wrapped__ en décorateurs standard.
+
+Concepts clés :
+• Fonction comme valeur de retour.
+
+Distinctions clés :
+• Différent de return inner() qui retourne un résultat d’appel.
+
+Fonctionnement :
+• Objet fonction créé dans outer puis renvoyé.
+
+Exécution étape par étape :
+• Appel ultérieur au choix de l’appelant.
+
+Ordre des opérations :
+• return évalue inner comme expression.
+
+Cas d'utilisation courants :
+• Decorators, factories, partial manuel.
+
+Cas limites :
+• Fermetures et cycles GC.
+
+Considérations de performance :
+• Allocation d’objet fonction.
+
+Exemples :
+• make_adder.
+
+Remarques :
+• Réponse : Oui (1re option).`,
+  2239: `type(lambda: None)
+
+Débutant :
+• Pas de type lambda séparé : même type que def → class function.
+
+Intermédiaire :
+• Le corps retourne None mais le type est celui de la fonction.
+
+Expert :
+• CPython affiche class function.
+
+Concepts clés :
+• lambda vs def seulement syntaxe.
+
+Distinctions clés :
+• Pas class NoneType (ce serait type(None)).
+
+Fonctionnement :
+• Builtin type sur objet fonction.
+
+Exécution étape par étape :
+• lambda créée puis type().
+
+Ordre des opérations :
+• Évaluation de lambda: None comme expression.
+
+Cas d'utilisation courants :
+• Introspection, tests.
+
+Cas limites :
+• Fonctions C builtins autre type (voir 2240).
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• type(def f(): pass) idem.
+
+Remarques :
+• Réponse : class function (1re option).`,
+  2240: `type(print)
+
+Débutant :
+• print est implémenté en C : builtin_function_or_method en CPython.
+
+Intermédiaire :
+• Toujours callable comme une def Python.
+
+Expert :
+• Peut varier légèrement selon implémentation mais QCM aligné CPython.
+
+Concepts clés :
+• Builtin vs function Python.
+
+Distinctions clés :
+• Pas class function utilisateur.
+
+Fonctionnement :
+• Objet wrapper C exposé à Python.
+
+Exécution étape par étape :
+• type lookup.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Savoir pour introspection / mocks.
+
+Cas limites :
+• Autres interpréteurs.
+
+Considérations de performance :
+• Appels builtins souvent rapides.
+
+Exemples :
+• type(len) similaire.
+
+Remarques :
+• Réponse : builtin_function_or_method (1re option).`,
+  2241: `def f(x, lst=[]): lst.append(x); return lst ; f(1); f(2)
+
+Débutant :
+• La liste par défaut est créée une fois au def ; les deux appels mutent le même objet → [1, 2].
+
+Intermédiaire :
+• Visible via id(f.__defaults__[0]) stable entre appels utilisant défaut.
+
+Expert :
+• Anti-pattern classique en entretien.
+
+Concepts clés :
+• Défaut mutable partagé.
+
+Distinctions clés :
+• Si on passait une nouvelle liste à chaque appel, comportement différent.
+
+Fonctionnement :
+• append sur le même défaut.
+
+Exécution étape par étape :
+• [1] puis [1,2] retour final de l’expression séquence ? L’énoncé demande le résultat global : dernier return [1,2].
+
+Ordre des opérations :
+• Deux appels.
+
+Cas d'utilisation courants :
+• Montrer le piège, pas à imiter.
+
+Cas limites :
+• Effet visible entre appels sans lien apparent pour le lecteur.
+
+Considérations de performance :
+• Croissance continue si répété.
+
+Exemples :
+• Voir 2249-2250.
+
+Remarques :
+• Réponse : [1, 2] (1re option).`,
+  2242: `Trois appels f(1); f(2); f(3) avec même défaut liste
+
+Débutant :
+• Accumulation sur la même liste → [1, 2, 3].
+
+Intermédiaire :
+• Chaque append réutilise le défaut sauf si argument explicite.
+
+Expert :
+• Tests unitaires doivent réinitialiser ou passer lst=[].
+
+Concepts clés :
+• État persistant dans défaut.
+
+Distinctions clés :
+• Pas trois listes séparées.
+
+Fonctionnement :
+• Un seul objet liste en __defaults__.
+
+Exécution étape par étape :
+• Croissance 1 puis 2 puis 3 éléments.
+
+Ordre des opérations :
+• Séquence de trois appels.
+
+Cas d'utilisation courants :
+• Cache accidentel (parfois voulu rarement).
+
+Cas limites :
+• Concurrence : mutations non thread-safe.
+
+Considérations de performance :
+• Réallocation amortized O(n) append.
+
+Exemples :
+• Réinitialiser : f.__defaults__ = ([],) avancé.
+
+Remarques :
+• Réponse : [1, 2, 3].`,
+  2243: `f(x, lst=None) ; lst = lst if lst is not None else [] ; deuxième appel f(2) après f(1)
+
+Débutant :
+• Chaque appel recrée une liste neuve quand lst is None → second retour [2] seul.
+
+Intermédiaire :
+• Pas de partage d’état entre les deux appels.
+
+Expert :
+• Variante if lst is None: lst = [] plus lisible.
+
+Concepts clés :
+• Sentinelle None, nouvelle liste par appel.
+
+Distinctions clés :
+• Contraire du piège lst=[] direct.
+
+Fonctionnement :
+• Deux branches : None ou liste passée.
+
+Exécution étape par étape :
+• f(1)→[1], f(2)→[2] ; la question cible le résultat du second appel.
+
+Ordre des opérations :
+• Deux appels séquentiels.
+
+Cas d'utilisation courants :
+• Pattern PEP 8 recommandé.
+
+Cas limites :
+• lst=None explicite vs omis : même branche.
+
+Considérations de performance :
+• Allocation par appel acceptable.
+
+Exemples :
+• Passer lst=[10] pour accumuler volontairement.
+
+Remarques :
+• Réponse : [2] (résultat du second appel, 1re option).`,
+  2244: `def f(x, d={}): d[x]=x; return d ; f(1); f(2)
+
+Débutant :
+• Même piège avec dict : premier appel {1:1}, second ajoute sur le même dict → {1:1, 2:2}.
+
+Intermédiaire :
+• Les clés sont les x passés, valeurs identiques.
+
+Expert :
+• Idem pour set, list, par défaut mutable.
+
+Concepts clés :
+• Défaut dict partagé.
+
+Distinctions clés :
+• Ce n’est pas deux dicts indépendants.
+
+Fonctionnement :
+• Un seul objet dict en defaults.
+
+Exécution étape par étape :
+• Mutation cumulative.
+
+Ordre des opérations :
+• f(1) puis f(2).
+
+Cas d'utilisation courants :
+• Anti-pattern ; cache parfois voulu mais explicitez-le.
+
+Cas limites :
+• Clés non hashables interdites.
+
+Considérations de performance :
+• Réhash possible lors de croissance.
+
+Exemples :
+• Utiliser d=None puis if d is None: d = {}.
+
+Remarques :
+• Réponse : {1: 1, 2: 2} (1re option).`,
+  2245: `def f(s=set()): s.add(1); return s ; f(); f()
+
+Débutant :
+• Même set par défaut partagé ; deuxième add(1) ne change rien car 1 déjà présent → affichage {1}.
+
+Intermédiaire :
+• Le partage existe même si visuellement identique au premier appel.
+
+Expert :
+• Vérifier avec id sur le set retourné : même objet.
+
+Concepts clés :
+• Mutable default + unicité des éléments ensemble.
+
+Distinctions clés :
+• Pas {1,1} ni erreur.
+
+Fonctionnement :
+• add ignore doublon.
+
+Exécution étape par étape :
+• Premier {1}, second toujours {1}.
+
+Ordre des opérations :
+• Deux appels.
+
+Cas d'utilisation courants :
+• Montrer que set se comporte différemment de list pour doublons.
+
+Cas limites :
+• add(2) au second appel donnerait {1,2} partagé.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Comparer à list append cumulatif.
+
+Remarques :
+• Réponse : ensemble {1} (1re option du quiz).`,
+  2246: `f(1, []); f(2) avec lst=[] par défaut
+
+Débutant :
+• Premier appel utilise une liste neuve explicite [1] mais ne touche pas au défaut ; second appel utilise le défaut encore vide → append 2 → [2].
+
+Intermédiaire :
+• Le défaut n’a pas été « consommé » par le premier appel car bypass.
+
+Expert :
+• Si f(1) sans second arg avant, le défaut aurait été [1] pour la suite.
+
+Concepts clés :
+• Argument explicite vs défaut.
+
+Distinctions clés :
+• Résultat surprenant vs chaîne f(1);f(2) sans [].
+
+Fonctionnement :
+• Deuxième appel seul sur défaut vierge.
+
+Exécution étape par étape :
+• f(1,[]) retourne [1] ; f(2) retourne [2].
+
+Ordre des opérations :
+• Séquence montrée par la banque.
+
+Cas d'utilisation courants :
+• Débogage de défauts mutables.
+
+Cas limites :
+• Ordre des appels crucial.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Toujours passer lst=[] pour isoler.
+
+Remarques :
+• Réponse : [2] (1re option).`,
+  2247: `def f(): pass ; f.__defaults__
+
+Débutant :
+• Aucun paramètre avec valeur par défaut → attribut None (pas tuple vide).
+
+Intermédiaire :
+• diffère de fonction avec défauts vides multiples rares.
+
+Expert :
+• __kwdefaults__ séparé pour kwargs-only.
+
+Concepts clés :
+• Introspection __defaults__.
+
+Distinctions clés :
+• None vs ().
+
+Fonctionnement :
+• Métadonnée sur l’objet fonction.
+
+Exécution étape par étape :
+• Accès attribut.
+
+Ordre des opérations :
+• Après def.
+
+Cas d'utilisation courants :
+• Libs d’inspection, tests.
+
+Cas limites :
+• Modifier __defaults__ à la main : danger.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• def g(x=1): g.__defaults__ → (1,).
+
+Remarques :
+• Réponse : None (1re option).`,
+  2248: `def f(x=1, y=2): pass ; f.__defaults__
+
+Débutant :
+• Tuple des valeurs par défaut dans l’ordre des paramètres qui en ont : (1, 2).
+
+Intermédiaire :
+• Les noms x,y sont dans co_varnames, pas dans le tuple.
+
+Expert :
+• Alignement sur les derniers paramètres de la signature.
+
+Concepts clés :
+• Tuple immuable des défauts.
+
+Distinctions clés :
+• Pas un dict {x:1,y:2} dans __defaults__.
+
+Fonctionnement :
+• Lecture seule typique.
+
+Exécution étape par étape :
+• Immédiat après def.
+
+Ordre des opérations :
+• Compilation.
+
+Cas d'utilisation courants :
+• Wrappers qui recopient la signature.
+
+Cas limites :
+• Un seul défaut parmi plusieurs params : tuple d’un élément.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• inspect.signature plus riche.
+
+Remarques :
+• Réponse : (1, 2).`,
+  2249: `Pourquoi lst=[] en argument par défaut est dangereux ?
+
+Débutant :
+• L’objet liste est créé une fois à la définition et réutilisé par tous les appels qui omettent lst.
+
+Intermédiaire :
+• Les mutations se cumulent de façon surprenante pour l’utilisateur de la fonction.
+
+Expert :
+• Stocké dans __defaults__ de l’objet fonction.
+
+Concepts clés :
+• Évaluation des défauts au define-time.
+
+Distinctions clés :
+• Pas une nouvelle liste à chaque appel.
+
+Fonctionnement :
+• Partage de référence.
+
+Exécution étape par étape :
+• Tous les appels voient le même état si défaut utilisé.
+
+Ordre des opérations :
+• def exécuté au chargement du module souvent.
+
+Cas d'utilisation courants :
+• Piège classique, questions d’entretien.
+
+Cas limites :
+• Parfois utilisé pour mémoïsation volontaire (documentez).
+
+Considérations de performance :
+• Réutilisation peut être un micro-cache accidentel.
+
+Exemples :
+• Voir 2241.
+
+Remarques :
+• Réponse : objet créé une fois et partagé (1re option).`,
+  2250: `Motif sûr pour défaut mutable
+
+Débutant :
+• Utiliser None par défaut et construire une nouvelle liste (ou dict, set) à l’intérieur du corps si besoin.
+
+Intermédiaire :
+• Tester avec is None plutôt que truthiness pour ne pas confondre avec [] passé volontairement.
+
+Expert :
+• dataclasses.field(default_factory) pour les champs.
+
+Concepts clés :
+• Sentinelle None, factory à l’appel.
+
+Distinctions clés :
+• lst or [] peut traiter [] comme falsy par erreur.
+
+Fonctionnement :
+• Nouvelle allocation par appel quand nécessaire.
+
+Exécution étape par étape :
+• Branche if lst is None: lst = [].
+
+Ordre des opérations :
+• Au début du corps de fonction.
+
+Cas d'utilisation courants :
+• Toute API avec collection optionnelle.
+
+Cas limites :
+• Besoin de distinguer « absent » et « vide explicite ».
+
+Considérations de performance :
+• Coût d’allocation attendu et souhaitable.
+
+Exemples :
+• Voir 2243.
+
+Remarques :
+• Réponse : utiliser None et créer l’objet dans la fonction (1re option).`,
   2251: `__getattr__ is a special method invoked uniquement quand the standard attribute lookup mechanism fails — that is, when the attribute is not found in the instance __dict__, the class, or any base class.
 
 Concepts clés :
