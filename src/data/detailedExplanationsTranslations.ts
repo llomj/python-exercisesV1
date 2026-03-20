@@ -89005,1348 +89005,2006 @@ Exemples :
 
 Remarques :
 • Réponse : ['a', 'b'].`,
-  2051: `functools.reduce applique une fonction à deux arguments de façon cumulative aux éléments d'un itérable, le réduisant à une seule valeur.
+  2051: `hash(42) lève-t-il une erreur ?
+
+Débutant :
+• Non : les int sont immuables et hashables ; hash(42) renvoie un entier (souvent 42 en CPython pour les petits entiers).
+
+Intermédiaire :
+• Hashable signifie présence de __hash__ cohérent avec __eq__ pour usage en clé de dict ou élément de set.
+
+Expert :
+• Les types numériques built-in sont hashables ; attention aux règles spéciales (ex. -1 en CPython).
 
 Concepts clés :
-• reduce(function, iterable) applique la fonction de gauche à droite
-• La fonction prend deux arguments : accumulateur et élément courant
-• Le premier appel utilise les deux premiers éléments, puis utilise le résultat comme nouvel accumulateur
-• Importé de functools (pas un built-in en Python 3)
+• Immuabilité, hash, dict/set.
 
-Comment ça fonctionne :
-• Étape 1 : a=1, b=2 → 1+2 = 3
-• Étape 2 : a=3, b=3 → 3+3 = 6
-• Étape 3 : a=6, b=4 → 6+4 = 10
-• Résultat final : 10
+Distinctions clés :
+• Liste ou dict ne sont pas hashables.
 
-Exemple :
-from functools import reduce
-reduce(lambda a, b: a + b, [1, 2, 3, 4])  # 10
-reduce(lambda a, b: a + b, [5])            # 5 (élément unique)
+Fonctionnement :
+• Appel interne à __hash__ sur l’objet int.
 
-Usages courants :
-• Sommer des séquences (bien que sum() soit préféré pour une simple addition)
-• Agréger des valeurs avec une logique personnalisée
-• Enchaîner des opérations sur une séquence`,
-  2052: `reduce avec la multiplication calcule le produit de tous les éléments.
+Exécution étape par étape :
+1. Aucune exception ; valeur de hash retournée.
 
-Concepts clés :
-• lambda a, b: a * b multiplie l'accumulateur par chaque élément
-• Fonctionne de gauche à droite à travers l'itérable
-• Équivalent à math.prod([1, 2, 3, 4]) en Python 3.8+
+Ordre des opérations :
+• Évaluation de hash(42).
 
-Comment ça fonctionne :
-• Étape 1 : a=1, b=2 → 1*2 = 2
-• Étape 2 : a=2, b=3 → 2*3 = 6
-• Étape 3 : a=6, b=4 → 6*4 = 24
-• Résultat final : 24
+Cas d'utilisation courants :
+• Clés entières, ensembles d’identifiants numériques.
 
-Exemple :
-from functools import reduce
-reduce(lambda a, b: a * b, [1, 2, 3, 4])  # 24
-reduce(lambda a, b: a * b, [2, 3, 5])     # 30
+Cas limites :
+• Très grands entiers : hash réduit modulo système.
 
-Usages courants :
-• Calculer des factorielles : reduce(lambda a,b: a*b, range(1, n+1))
-• Produit de séquences numériques
-• Enchaînement d'opérations multiplicatives`,
-  2053: `reduce accepte un troisième argument optionnel comme valeur initiale (aussi appelé initialiseur).
+Considérations de performance :
+• O(1) pour petits int en CPython.
+
+Exemples :
+• {42: "x"} est valide.
+
+Remarques :
+• Réponse : pas d’erreur ; les entiers sont hashables (première option).`,
+  2052: `hash("hello")
+
+Débutant :
+• Non : les chaînes sont immuables donc hashables.
+
+Intermédiaire :
+• La valeur exacte peut varier entre sessions (PYTHONHASHSEED, randomisation 3.3+).
+
+Expert :
+• hash("") vaut 0 en général.
 
 Concepts clés :
-• reduce(function, iterable, initializer) démarre l'accumulation depuis l'initialiseur
-• Sans initialiseur, le premier élément est utilisé comme accumulateur initial
-• Avec initialiseur, il devient la première valeur d'accumulateur avant tout élément
-• Utiliser un initialiseur gère aussi les itérables vides de façon sûre
+• str immuable, cache de hash possible.
 
-Comment ça fonctionne :
-• Accumulateur initial : 10
-• Étape 1 : a=10, b=1 → 10+1 = 11
-• Étape 2 : a=11, b=2 → 11+2 = 13
-• Étape 3 : a=13, b=3 → 13+3 = 16
-• Étape 4 : a=16, b=4 → 16+4 = 20
-• Résultat final : 20
+Distinctions clés :
+• bytearray mutable → non hashable.
 
-Exemple :
-from functools import reduce
-reduce(lambda a, b: a + b, [1, 2, 3, 4], 10)   # 20
-reduce(lambda a, b: a + b, [1, 2, 3, 4], 100)  # 110
-reduce(lambda a, b: a + b, [], 0)               # 0 (sûr avec vide)
+Fonctionnement :
+• Calcul déterministe pendant le processus.
 
-Usages courants :
-• Fournir une valeur par défaut pour les itérables vides
-• Démarrer l'accumulation depuis une valeur non nulle
-• Assurer une cohérence de type quand le type du résultat diffère du type des éléments`,
-  2054: `reduce peut implémenter max en gardant le plus grand entre l'accumulateur et l'élément courant à chaque étape.
+Exécution étape par étape :
+1. Pas TypeError ; entier retourné.
 
-Concepts clés :
-• lambda a, b: max(a, b) retourne le plus grand des deux valeurs
-• L'accumulateur garde toujours la plus grande valeur vue jusqu'ici
-• Équivalent à max() built-in pour cet usage
+Ordre des opérations :
+• hash appliqué au littéral str.
 
-Comment ça fonctionne :
-• Étape 1 : a=3, b=1 → max(3,1) = 3
-• Étape 2 : a=3, b=4 → max(3,4) = 4
-• Étape 3 : a=4, b=1 → max(4,1) = 4
-• Étape 4 : a=4, b=5 → max(4,5) = 5
-• Résultat final : 5
+Cas d'utilisation courants :
+• Clés texte, sets de noms.
 
-Exemple :
-from functools import reduce
-reduce(lambda a, b: max(a, b), [3, 1, 4, 1, 5])  # 5
-reduce(lambda a, b: min(a, b), [3, 1, 4, 1, 5])  # 1
+Cas limites :
+• Chaînes énormes : calcul plus coûteux.
 
-Usages courants :
-• Démontrer la logique de reduce (utiliser max() built-in en pratique)
-• Agrégations avec comparaison personnalisée
-• Exemples pédagogiques des opérations fold`,
-  2055: `reduce fonctionne avec tout type supportant l'opération — y compris les chaînes avec + pour la concaténation.
+Considérations de performance :
+• Hash peut être mis en cache sur l’objet str.
+
+Exemples :
+• set(["hello"]) OK.
+
+Remarques :
+• Réponse : pas d’erreur ; chaînes hashables.`,
+  2053: `hash((1, 2, 3))
+
+Débutant :
+• Non : un tuple n’est hashable que si tous ses éléments le sont ; ici uniquement des int.
+
+Intermédiaire :
+• Récursivité de la règle : tuple de hashables → hashable.
+
+Expert :
+• Tuple vide () est hashable.
 
 Concepts clés :
-• La concaténation de chaînes avec + fonctionne élément par élément
-• reduce n'ajoute aucun séparateur — l'espace est un élément explicite dans la liste
-• Pour joindre des chaînes, str.join() est plus idiomatique et efficace
+• Hashabilité structurelle des tuples.
 
-Comment ça fonctionne :
-• Étape 1 : a="hello", b=" " → "hello" + " " = "hello "
-• Étape 2 : a="hello ", b="world" → "hello " + "world" = "hello world"
-• Résultat final : "hello world"
+Distinctions clés :
+• Liste [1,2,3] non hashable.
 
-Exemple :
-from functools import reduce
-reduce(lambda a, b: a + b, ["hello", " ", "world"])  # "hello world"
-" ".join(["hello", "world"])                          # "hello world" (préféré)
+Fonctionnement :
+• Combinaison des hash des composantes.
 
-Usages courants :
-• Concaténation de chaînes (bien que str.join() soit préféré)
-• Démontrer reduce avec des types non numériques
-• Construire des chaînes à partir de parties`,
-  2056: `Voici une autre façon de trouver le maximum en utilisant une expression conditionnelle dans reduce.
+Exécution étape par étape :
+1. Succès, pas d’exception.
 
-Concepts clés :
-• lambda a, b: a if a > b else b est une expression ternaire
-• Retourne a si a est plus grand, sinon b
-• Fonctionnellement identique à lambda a, b: max(a, b)
-• Montre comment reduce peut implémenter une logique de comparaison
+Ordre des opérations :
+• Construction du tuple puis hash.
 
-Comment ça fonctionne :
-• Étape 1 : a=3, b=7 → 3 > 7 ? Non → 7
-• Étape 2 : a=7, b=2 → 7 > 2 ? Oui → 7
-• Étape 3 : a=7, b=8 → 7 > 8 ? Non → 8
-• Étape 4 : a=8, b=1 → 8 > 1 ? Oui → 8
-• Résultat final : 8
+Cas d'utilisation courants :
+• Clés composites (coordonnées, paires).
 
-Exemple :
-from functools import reduce
-reduce(lambda a, b: a if a > b else b, [3, 7, 2, 8, 1])  # 8
-reduce(lambda a, b: a if a < b else b, [3, 7, 2, 8, 1])  # 1
+Cas limites :
+• Tuple contenant un dict → TypeError au hash.
 
-Usages courants :
-• Opérations de comparaison personnalisées dans reduce
-• Trouver les extrêmes sans max/min built-in
-• Démontrer les expressions conditionnelles dans les lambdas`,
-  2057: `reduce peut fusionner plusieurs dictionnaires en utilisant le déballage **.
+Considérations de performance :
+• Proportionnel à la longueur du tuple.
+
+Exemples :
+• d[(1,2)] = 0.
+
+Remarques :
+• Réponse : pas d’erreur.`,
+  2054: `hash((1, [2, 3]))
+
+Débutant :
+• TypeError : la liste interne est mutable, le tuple devient non hashable.
+
+Intermédiaire :
+• Seuls les tuples récursivement hashables sont acceptés.
+
+Expert :
+• Le message d’erreur indique souvent un objet unhashable: 'list'.
 
 Concepts clés :
-• {**a, **b} crée un nouveau dict avec toutes les paires clé-valeur de a et b
-• Si les clés se chevauchent, les valeurs de b (le dict le plus tard) priment
-• reduce applique cela par paires à travers la liste de dicts
+• Mutabilité de la liste casse la hashabilité du tuple parent.
 
-Comment ça fonctionne :
-• Étape 1 : a={"a":1}, b={"b":2} → {**{"a":1}, **{"b":2}} = {"a":1, "b":2}
-• Étape 2 : a={"a":1, "b":2}, b={"c":3} → {"a":1, "b":2, "c":3}
-• Résultat final : {"a": 1, "b": 2, "c": 3}
+Distinctions clés :
+• (1, (2,3)) serait OK.
 
-Exemple :
-from functools import reduce
-reduce(lambda a, b: {**a, **b}, [{"a":1}, {"b":2}, {"c":3}])
-# {"a": 1, "b": 2, "c": 3}
+Fonctionnement :
+• Échec lors du calcul du hash en profondeur.
 
-reduce(lambda a, b: {**a, **b}, [{"x":1}, {"x":2}])
-# {"x": 2}  — la valeur la plus tardive gagne
+Exécution étape par étape :
+1. Exception TypeError.
 
-Usages courants :
-• Fusionner des dictionnaires de configuration
-• Combiner des données partielles de plusieurs sources
-• Aplatir une liste de dicts en un seul dict`,
-  2058: `reduce peut construire une liste en démarrant avec une liste vide comme initialiseur et en ajoutant chaque élément.
+Ordre des opérations :
+• Création du tuple puis tentative hash.
 
-Concepts clés :
-• L'initialiseur [] est l'accumulateur de départ (une liste vide)
-• a + [b] crée une nouvelle liste en concaténant l'accumulateur avec une liste à un élément
-• Ce n'est pas la façon idiomatique de copier une liste, mais démontre la flexibilité de reduce
+Cas d'utilisation courants :
+• Piège lors du nestage de structures.
 
-Comment ça fonctionne :
-• Accumulateur initial : []
-• Étape 1 : a=[], b=1 → [] + [1] = [1]
-• Étape 2 : a=[1], b=2 → [1] + [2] = [1, 2]
-• Étape 3 : a=[1, 2], b=3 → [1, 2] + [3] = [1, 2, 3]
-• Résultat final : [1, 2, 3]
+Cas limites :
+• Remplacer la liste par tuple ou frozenset pour hasher.
 
-Exemple :
-from functools import reduce
-reduce(lambda a, b: a + [b], [1, 2, 3], [])  # [1, 2, 3]
-reduce(lambda a, b: a + [b*2], [1, 2, 3], [])  # [2, 4, 6]
+Considérations de performance :
+• Échec rapide.
 
-Usages courants :
-• Démontrer reduce avec construction de liste
-• Transformer et collecter des résultats (les compréhensions de liste sont préférées)
-• Construire des structures de données personnalisées avec reduce`,
-  2059: `Utiliser un initialiseur de 1 avec la multiplication est un motif courant — 1 est l'élément identité multiplicatif.
+Exemples :
+• Utiliser tuple interne pour clé stable.
+
+Remarques :
+• Réponse : TypeError (comportement erreur).`,
+  2055: `hash(frozenset({1, 2}))
+
+Débutant :
+• Non : frozenset est immuable et hashable, contrairement à set.
+
+Intermédiaire :
+• Éléments du frozenset doivent être hashables (ici des int).
+
+Expert :
+• Deux frozensets égaux ont le même hash.
 
 Concepts clés :
-• 1 est l'élément identité pour la multiplication (x * 1 = x)
-• Démarrer avec 1 assure un calcul correct du produit
-• Gère aussi les itérables vides de façon sûre : reduce(lambda a,b: a*b, [], 1) retourne 1
+• Ensemble immuable, usage comme clé de dict.
 
-Comment ça fonctionne :
-• Accumulateur initial : 1
-• Étape 1 : a=1, b=2 → 1*2 = 2
-• Étape 2 : a=2, b=3 → 2*3 = 6
-• Étape 3 : a=6, b=4 → 6*4 = 24
-• Résultat final : 24
+Distinctions clés :
+• set({1,2}) ne peut pas être clé.
 
-Exemple :
-from functools import reduce
-reduce(lambda a, b: a * b, [2, 3, 4], 1)  # 24
-reduce(lambda a, b: a * b, [], 1)          # 1 (vide → retourne l'initialiseur)
+Fonctionnement :
+• Hash dérivé du contenu trié/hashé des éléments.
 
-Usages courants :
-• Calcul de produit sûr avec initialiseur identité
-• Gestion des itérables potentiellement vides
-• Assurer un type de retour cohérent`,
-  2060: `Quand l'itérable est vide, reduce retourne l'initialiseur sans appeler la fonction.
+Exécution étape par étape :
+1. Pas d’erreur.
 
-Concepts clés :
-• Itérable vide + initialiseur → l'initialiseur est retourné directement
-• Le lambda n'est jamais appelé (aucun élément à traiter)
-• Sans initialiseur, reduce sur un itérable vide lève TypeError
-• C'est pourquoi fournir un initialiseur est recommandé pour la sécurité
+Ordre des opérations :
+• frozenset puis hash.
 
-Comment ça fonctionne :
-• L'itérable est [] (vide)
-• L'initialiseur est 0
-• Aucun élément à traiter → retourne 0 immédiatement
-• La fonction lambda a, b: a + b n'est jamais invoquée
+Cas d'utilisation courants :
+• Tags, arêtes non orientées comme clés.
 
-Exemple :
-from functools import reduce
-reduce(lambda a, b: a + b, [], 0)     # 0
-reduce(lambda a, b: a + b, [], "")    # ""
-reduce(lambda a, b: a + b, [])        # TypeError ! (pas de valeur initiale)
+Cas limites :
+• frozenset vide hashable.
 
-Usages courants :
-• Agrégation sûre sur des collections potentiellement vides
-• Valeurs par défaut pour données manquantes
-• Éviter TypeError sur les itérables vides`,
-  2061: `functools.partial crée une nouvelle fonction avec certains arguments pré-remplis (application partielle).
+Considérations de performance :
+• Dépend du nombre d’éléments.
+
+Exemples :
+• Cache indexé par frozenset de voisins.
+
+Remarques :
+• Réponse : pas d’erreur ; frozenset hashable.`,
+  2056: `hash(None)
+
+Débutant :
+• Non : None est un singleton immuable, hashable.
+
+Intermédiaire :
+• Souvent hash(None) a une valeur fixe connue (implémentation dépendante mais stable en session).
+
+Expert :
+• None peut servir de clé de dict (rare mais valide).
 
 Concepts clés :
-• partial(func, *args, **kwargs) retourne un nouveau callable
-• Les arguments positionnels sont préfixés à l'appel
-• La nouvelle fonction n'a besoin que des arguments restants
-• C'est l'application partielle (de la programmation fonctionnelle)
+• Singleton None, hashabilité.
 
-Comment ça fonctionne :
-• add = lambda a, b: a + b est une fonction d'addition simple
-• partial(add, 5) fixe le premier argument a à 5
-• add5(3) appelle add(5, 3) → 5 + 3 = 8
+Distinctions clés :
+• Ne pas confondre avec absence de valeur logique en JSON.
 
-Exemple :
-from functools import partial
-add = lambda a, b: a + b
-add5 = partial(add, 5)
-add5(3)   # 8
-add5(10)  # 15
+Fonctionnement :
+• __hash__ défini sur le type NoneType.
 
-Usages courants :
-• Créer des versions spécialisées de fonctions générales
-• Fonctions de callback avec paramètres pré-définis
-• Simplifier les signatures de fonctions pour les APIs`,
-  2062: `partial avec pow built-in démontre la fixation de l'argument base.
+Exécution étape par étape :
+1. Entier de hash retourné.
 
-Concepts clés :
-• pow(base, exp) calcule base ** exp
-• partial(pow, 2) fixe base=2
-• pow2(10) appelle pow(2, 10) = 2**10 = 1024
-• Le premier argument positionnel est fixé, les autres sont transmis
+Ordre des opérations :
+• hash(None).
 
-Comment ça fonctionne :
-• partial(pow, 2) crée une nouvelle fonction où le premier argument est toujours 2
-• pow2(10) → pow(2, 10) → 2**10 → 1024
-• pow2(8) donnerait pow(2, 8) → 256
+Cas d'utilisation courants :
+• Sentinelle explicite en clé ou dans set.
 
-Exemple :
-from functools import partial
-pow2 = partial(pow, 2)
-pow2(10)  # 1024 (2**10)
-pow2(8)   # 256  (2**8)
-pow2(0)   # 1    (2**0)
+Cas limites :
+• Un seul objet None existe.
 
-Usages courants :
-• Créer des fonctions puissance avec bases fixées
-• Simplifier des calculs répétés
-• Générer des familles de fonctions liées`,
-  2063: `partial avec arguments nommés crée des convertisseurs spécialisés — ici, un parseur de chaîne binaire.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• {None: 0}.
+
+Remarques :
+• Réponse : pas d’erreur.`,
+  2057: `hash(True) == hash(1)
+
+Débutant :
+• True : bool est sous-classe de int, True == 1, contrat de hash exige même hash si égalité.
+
+Intermédiaire :
+• Évite deux entrées distinctes pour la même clé logique.
+
+Expert :
+• Même principe pour False et 0.
 
 Concepts clés :
-• int(string, base=2) parse une chaîne binaire en entier
-• partial(int, base=2) fixe l'argument nommé base
-• "1010" en binaire = 1*8 + 0*4 + 1*2 + 0*1 = 10
-• Les arguments nommés dans partial sont stockés et appliqués à l'appel
+• Cohérence hash/égalité.
 
-Comment ça fonctionne :
-• partial(int, base=2) crée une nouvelle fonction qui passe toujours base=2
-• int_base2("1010") → int("1010", base=2) → 10
-• L'argument positionnel "1010" est passé comme premier argument à int
+Distinctions clés :
+• hash(1.0) aussi aligné avec 1.
 
-Exemple :
-from functools import partial
-int_base2 = partial(int, base=2)
-int_base2("1010")    # 10
-int_base2("1111")    # 15
-int_base2("100000")  # 32
+Fonctionnement :
+• Comparaison de deux entiers de hash.
 
-Usages courants :
-• Créer des parseurs entiers spécifiques à une base
-• Convertisseurs de format de données
-• Simplifier les conversions répétées`,
-  2064: `partial avec print pré-remplit le premier argument positionnel, et les arguments supplémentaires sont ajoutés.
+Exécution étape par étape :
+1. Expression booléenne True.
 
-Concepts clés :
-• print prend plusieurs arguments positionnels séparés par un espace (sep=" " par défaut)
-• partial(print, "Hello") fixe "Hello" comme premier argument
-• greet("World") → print("Hello", "World") → affiche "Hello World"
-• Le séparateur par défaut de print est un espace
+Ordre des opérations :
+• Deux appels hash puis ==.
 
-Comment ça fonctionne :
-• partial(print, "Hello") crée une nouvelle fonction avec "Hello" pré-rempli
-• Appeler greet("World") → print("Hello", "World")
-• print joint les arguments avec sep (défaut " ") → "Hello World"
+Cas d'utilisation courants :
+• Comprendre collisions de clés bool/int.
 
-Exemple :
-from functools import partial
-greet = partial(print, "Hello")
-greet("World")    # Hello World
-greet("Python")   # Hello Python
-greet("there", "!")  # Hello there !
+Cas limites :
+• Tests d’égalité sur structures nested.
 
-Usages courants :
-• Créer des fonctions de logging avec préfixes fixés
-• Fonctions de sortie spécialisées
-• Impression de debug avec contexte`,
-  2065: `partial avec sorted et key=len crée un trieur par longueur.
+Considérations de performance :
+• Deux hash O(1).
+
+Exemples :
+• {True: "x", 1: "y"} une seule entrée.
+
+Remarques :
+• Réponse : True.`,
+  2058: `hash(0) == hash(False)
+
+Débutant :
+• True : False == 0, donc hashes égaux.
+
+Intermédiaire :
+• Même famille de collisions que True/1.
+
+Expert :
+• Clés 0 et False ne coexistent pas comme distinctes dans un dict.
 
 Concepts clés :
-• sorted(iterable, key=len) trie par longueur de chaîne
-• partial(sorted, key=len) pré-remplit l'argument key
-• f(list) → sorted(list, key=len)
-• Tri stable : les éléments de longueur égale conservent leur ordre original
+• bool sous-type de int.
 
-Comment ça fonctionne :
-• "hi" a une longueur 2, "hello" 5, "hey" 3
-• Tri par longueur (croissant) : 2 < 3 < 5
-• Résultat : ["hi", "hey", "hello"]
+Distinctions clés :
+• str "0" distinct de int 0 pour clés.
 
-Exemple :
-from functools import partial
-f = partial(sorted, key=len)
-f(["hi", "hello", "hey"])       # ["hi", "hey", "hello"]
-f(["a", "ccc", "bb"])           # ["a", "bb", "ccc"]
+Fonctionnement :
+• Vérification d’égalité des hash.
 
-Usages courants :
-• Créer des stratégies de tri réutilisables
-• Fonctions de tri paramétrées
-• Pipelines de traitement de données`,
-  2066: `partial avec max et key=abs crée une fonction qui trouve la valeur avec la plus grande valeur absolue.
+Exécution étape par étape :
+1. True.
 
-Concepts clés :
-• max(key=abs) compare les éléments par leurs valeurs absolues
-• abs(-10)=10, abs(5)=5, abs(-3)=3
-• max retourne l'élément original (pas la valeur de la clé)
-• -10 est retourné car |-10|=10 est la plus grande valeur absolue
+Ordre des opérations :
+• hash(0), hash(False), comparaison.
 
-Comment ça fonctionne :
-• f(-10, 5, -3) → max(-10, 5, -3, key=abs)
-• Compare : abs(-10)=10, abs(5)=5, abs(-3)=3
-• La plus grande valeur absolue est 10 (de -10)
-• Retourne -10 (l'élément original, pas 10)
+Cas d'utilisation courants :
+• Éviter mélanger bool et int comme clés « différentes ».
 
-Exemple :
-from functools import partial
-f = partial(max, key=abs)
-f(-10, 5, -3)     # -10
-f(1, -2, 3)       # 3
-f(-5, 5)           # -5 (ou 5, selon l'ordre — le premier max gagne)
+Cas limites :
+• Lecture confusante du repr des clés.
 
-Usages courants :
-• Trouver les extrêmes par une propriété dérivée
-• Traitement du signal (détection de pics par magnitude)
-• Fonctions de comparaison personnalisées`,
-  2067: `functools.partial implémente l'application partielle — un concept central de la programmation fonctionnelle.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• {0: "a", False: "b"} une entrée.
+
+Remarques :
+• Réponse : True.`,
+  2059: `hash(0) == hash(0.0)
+
+Débutant :
+• True : 0 == 0.0 en Python, contrat hash aligné.
+
+Intermédiaire :
+• Donc 0, False, 0.0 liés pour clés de dict.
+
+Expert :
+• Attention aux tests d’identité is qui seraient False.
 
 Concepts clés :
-• L'application partielle fixe certains arguments d'une fonction, produisant une nouvelle fonction avec moins de paramètres
-• La fonction originale n'est pas modifiée
-• Arguments positionnels et nommés peuvent être pré-remplis
-• L'objet résultant est un objet partial (callable, avec attributs func, args, keywords)
+• Égalité valeur entre int et float égaux.
 
-Comment ça fonctionne :
-• partial(func, *args, **kwargs) stocke la fonction et les arguments fixés
-• À l'appel, il combine les args fixés avec les nouveaux args
-• Les nouveaux args positionnels sont ajoutés après les args positionnels fixés
-• Les nouveaux args nommés sont fusionnés avec (et peuvent écraser) les args nommés fixés
+Distinctions clés :
+• is 0 is 0.0 est faux.
 
-Exemple :
-from functools import partial
-def power(base, exp):
-    return base ** exp
+Fonctionnement :
+• Comparaison des hash numériques.
 
-square = partial(power, exp=2)
-square(5)  # 25
-cube = partial(power, exp=3)
-cube(5)    # 125
+Exécution étape par étape :
+1. True.
 
-Usages courants :
-• Créer des fonctions spécialisées à partir de fonctions générales
-• Configuration de callbacks en programmation événementielle
-• Simplifier les signatures de fonctions dans les APIs et pipelines`,
-  2068: `partial(int, base=16) crée un convertisseur chaîne hexadécimale vers entier.
+Ordre des opérations :
+• hash sur int et float.
 
-Concepts clés :
-• int(string, base=16) interprète la chaîne comme un nombre hexadécimal
-• "ff" en hex = 15*16 + 15 = 255
-• f et F représentent tous deux 15 en hexadécimal
-• partial fixe la base pour ne passer que la chaîne hex
+Cas d'utilisation courants :
+• Clés numériques mixtes (à éviter pour clarté).
 
-Comment ça fonctionne :
-• partial(int, base=16) crée une nouvelle fonction avec base=16 pré-rempli
-• f("ff") → int("ff", base=16) → 255
-• "f" = 15 en hex, donc "ff" = 15*16 + 15 = 240 + 15 = 255
+Cas limites :
+• Autres flottaux « égaux » (ex. fractions) hors sujet ici.
 
-Exemple :
-from functools import partial
-f = partial(int, base=16)
-f("ff")    # 255
-f("a")     # 10
-f("10")    # 16
-f("1f")    # 31
+Considérations de performance :
+• Négligeable.
 
-Usages courants :
-• Parser des codes couleur hexadécimaux
-• Lire des données encodées en hex
-• Parsing de protocoles réseau`,
-  2069: `partial peut fixer plusieurs arguments positionnels à la fois.
+Exemples :
+• {0: 1, 0.0: 2} une entrée.
+
+Remarques :
+• Réponse : True.`,
+  2060: `{True: "a", 1: "b", 1.0: "c"}
+
+Débutant :
+• True, 1 et 1.0 désignent la même clé ; une seule entrée, dernière valeur gagne : "c", clé affichée souvent True.
+
+Intermédiaire :
+• Trois écritures pour un seul slot de table de hash.
+
+Expert :
+• Premier nom de clé « gagnant » pour repr peut varier mais contenu logique unique.
 
 Concepts clés :
-• partial(func, 1, 2) fixe les deux premiers arguments positionnels
-• La fonction résultante n'a besoin que de(s) argument(s) restant(s)
-• Les arguments positionnels sont appliqués dans l'ordre : a=1, b=2, et c reste ouvert
+• Collision True/1/1.0.
 
-Comment ça fonctionne :
-• Le lambda prend trois arguments : a, b, c
-• partial(lambda, 1, 2) fixe a=1 et b=2
-• f(3) → lambda(1, 2, 3) → 1 + 2 + 3 = 6
+Distinctions clés :
+• Pas trois paires distinctes.
 
-Exemple :
-from functools import partial
-f = partial(lambda a, b, c: a + b + c, 1, 2)
-f(3)    # 6
-f(10)   # 13
-f(0)    # 3
+Fonctionnement :
+• Insertions successives sur même hash/égalité.
 
-Usages courants :
-• Appliquer progressivement des arguments aux fonctions
-• Construire des pipelines de fonctions
-• Créer des fonctions spécialisées à partir de fonctions génériques`,
-  2070: `Les objets partial exposent plusieurs attributs utiles pour l'introspection.
+Exécution étape par étape :
+1. Mapping final équivalent à {True: "c"} selon QCM.
 
-Concepts clés :
-• f.func — la fonction originale qui a été enveloppée
-• f.args — les arguments positionnels fixés sous forme de tuple
-• f.keywords — les arguments nommés fixés sous forme de dict
-• Ces attributs permettent d'inspecter ce qu'un objet partial enveloppe
+Ordre des opérations :
+• Littéral évalué gauche-droite.
 
-Comment ça fonctionne :
-• partial(pow, 2) crée un objet partial
-• f.func → pow (la fonction originale)
-• f.args → (2,) (les arguments positionnels fixés)
-• f.keywords → {} (aucun argument nommé fixé)
+Cas d'utilisation courants :
+• Normaliser types de clés.
 
-Exemple :
-from functools import partial
-f = partial(pow, 2)
-f.func        # <built-in function pow>
-f.func is pow # True
-f.args        # (2,)
-f.keywords    # {}
+Cas limites :
+• JSON true vs 1 séparés.
 
-g = partial(int, base=16)
-g.func        # <class 'int'>
-g.args        # ()
-g.keywords    # {'base': 16}
+Considérations de performance :
+• Une seule entrée stockée.
 
-Usages courants :
-• Débogage et introspection d'objets partial
-• Sérialisation de configurations de fonctions
-• Tester qu'un objet partial enveloppe la fonction attendue`,
-  2071: `@lru_cache transforme une récursion Fibonacci naïve de O(2^n) en O(n) en mettant en cache les résultats.
+Exemples :
+• Voir questions précédentes sur collisions.
+
+Remarques :
+• Réponse : {True: "c"} (forme du quiz).`,
+  2061: `len(d) avec 0, False, 0.0
+
+Débutant :
+• 0, False et 0.0 sont la même clé → len(d) vaut 1.
+
+Intermédiaire :
+• Dernière valeur du littéral pour cette clé unique : "float_zero" typiquement.
+
+Expert :
+• Vérifier l’énoncé exact des chaînes ; une seule case de hash.
 
 Concepts clés :
-• lru_cache met en cache les valeurs de retour des fonctions selon les arguments
-• LRU = Least Recently Used — évince les entrées les plus anciennes quand le cache est plein
-• Sans cache, fib(10) ferait 177 appels de fonction ; avec cache, seulement 11
-• @lru_cache sans parenthèses utilise maxsize=128 par défaut
+• Triple collision de clés.
 
-Comment ça fonctionne :
-• fib(10) appelle fib(9) + fib(8)
-• fib(9) appelle fib(8) + fib(7) — mais fib(8) est mis en cache après le premier calcul
-• Chaque fib(n) n'est calculé qu'une fois, puis servi depuis le cache
-• La suite de Fibonacci : 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55
+Distinctions clés :
+• len serait 3 si clés vraiment distinctes.
 
-Exemple :
-from functools import lru_cache
-@lru_cache
-def fib(n):
-    return n if n < 2 else fib(n-1) + fib(n-2)
-fib(10)  # 55
-fib(20)  # 6765
-fib(30)  # 832040
+Fonctionnement :
+• Une entrée dans la table.
 
-Usages courants :
-• Mémoriser des fonctions récursives
-• Programmation dynamique avec approche top-down
-• Mettre en cache des calculs coûteux`,
-  2072: `@lru_cache (mémorisation) élimine les appels récursifs redondants en stockant les résultats déjà calculés.
+Exécution étape par étape :
+1. len → 1.
 
-Concepts clés :
-• Sans cache : fib(5) calcule fib(3) deux fois, fib(2) trois fois, etc.
-• Complexité temporelle sans cache : O(2^n) — croissance exponentielle
-• Avec @lru_cache : chaque fib(k) est calculé une fois, puis récupéré du cache
-• Complexité temporelle avec cache : O(n) — linéaire
+Ordre des opérations :
+• Construction du dict puis len.
 
-Comment ça fonctionne :
-• Le premier appel à fib(n) calcule et stocke le résultat
-• Les appels suivants avec le même n retournent la valeur en cache immédiatement
-• Cela transforme l'arbre récursif en une chaîne linéaire de calculs uniques
-• Utilisation mémoire : O(n) pour stocker les résultats en cache
+Cas d'utilisation courants :
+• Débogage de configs avec types mélangés.
 
-Exemple :
-# Sans cache : fib(30) prend ~1 seconde, fib(40) prend ~1 minute
-# Avec @lru_cache : fib(100) retourne instantanément
+Cas limites :
+• Repr peut afficher une des formes de la clé.
 
-# Appels sans cache pour fib(5) :
-# fib(5) → fib(4) + fib(3)
-# fib(4) → fib(3) + fib(2)   ← fib(3) recalculé !
-# ... total : 15 appels
+Considérations de performance :
+• Négligeable.
 
-# Avec cache : seulement 6 appels uniques (fib(0) à fib(5))
+Exemples :
+• Même logique que 2060.
 
-Usages courants :
-• Algorithmes récursifs avec sous-problèmes qui se chevauchent
-• Programmation dynamique (mémorisation top-down)
-• Toute fonction pure appelée répétitivement avec les mêmes arguments`,
-  2073: `maxsize contrôle combien de résultats distincts le cache LRU peut contenir avant d'évincer les anciennes entrées.
+Remarques :
+• Réponse : 1.`,
+  2062: `Deux float("nan") comme clés
+
+Débutant :
+• Chaque float("nan") est souvent un objet distinct ; NaN != NaN en égalité, donc deux clés → len 2.
+
+Intermédiaire :
+• L’identité et l’égalité des floats NaN brisent l’intuition des clés « identiques ».
+
+Expert :
+• math.isnan pour tester, pas == entre NaN.
 
 Concepts clés :
-• maxsize=128 est la valeur par défaut quand on utilise @lru_cache sans arguments
-• Quand le cache est plein et qu'un nouveau résultat est calculé, l'entrée Least Recently Used est évincée
-• maxsize=None signifie cache illimité (pas d'éviction, comme @cache en 3.9+)
-• Un maxsize plus petit utilise moins de mémoire mais peut causer plus de cache misses
+• IEEE NaN, comparaison flottante.
 
-Comment ça fonctionne :
-• Chaque ensemble unique d'arguments correspond à une entrée de cache
-• Quand currsize atteint maxsize, ajouter une nouvelle entrée évince la moins récemment accédée
-• L'ordre LRU est mis à jour à chaque hit (l'accès déplace l'entrée vers "most recent")
-• cache_info() affiche hits, misses, maxsize et currsize
+Distinctions clés :
+• Même valeur mathématique « NaN » mais objets ou eg différents.
 
-Exemple :
-from functools import lru_cache
+Fonctionnement :
+• Deux insertions avec clés non égales au sens Python.
 
-@lru_cache(maxsize=32)
-def expensive(x):
-    return x ** 2
+Exécution étape par étape :
+1. len(d) == 2.
 
-expensive(5)
-expensive.cache_info()  # hits=0, misses=1, maxsize=32, currsize=1
+Ordre des opérations :
+• Deux assignations puis len.
 
-Usages courants :
-• Limiter l'utilisation mémoire du cache
-• Ajuster la taille du cache selon le working set attendu
-• Équilibrer mémoire vs coût de recalcul`,
-  2074: `cache_info() retourne un named tuple avec les statistiques du cache.
+Cas d'utilisation courants :
+• Éviter NaN comme clé stable.
 
-Concepts clés :
-• hits — nombre d'appels qui ont trouvé un résultat en cache
-• misses — nombre d'appels qui ont dû calculer le résultat
-• maxsize — capacité maximale du cache
-• currsize — nombre actuel d'entrées dans le cache
+Cas limites :
+• CPython peut parfois réutiliser ; ne pas compter dessus pour une clé.
 
-Comment ça fonctionne :
-• f(3) premier appel : miss (3 pas dans le cache) → calcule 9, le stocke → misses=1
-• f(3) deuxième appel : hit (3 trouvé dans le cache) → retourne 9 depuis le cache → hits=1
-• currsize=1 car un seul argument unique (3) a été mis en cache
-• maxsize=128 est la valeur par défaut
+Considérations de performance :
+• Négligeable.
 
-Exemple :
-from functools import lru_cache
-@lru_cache
-def f(x): return x ** 2
-f(3)               # 9 (miss)
-f(3)               # 9 (hit)
-f.cache_info()     # CacheInfo(hits=1, misses=1, maxsize=128, currsize=1)
-f(4)               # 16 (miss)
-f.cache_info()     # CacheInfo(hits=1, misses=2, maxsize=128, currsize=2)
+Exemples :
+• Utiliser str repr ou sentinel tuple à la place.
 
-Usages courants :
-• Surveiller l'efficacité du cache
-• Ajuster maxsize selon les taux de hit
-• Déboguer les problèmes de performance`,
-  2075: `cache_clear() supprime toutes les entrées du cache LRU et réinitialise les statistiques.
+Remarques :
+• Réponse : 2.`,
+  2063: `Même objet n pour deux assignations NaN
+
+Débutant :
+• Même référence n : deuxième assignation écrase la valeur pour la même clé → len 1.
+
+Intermédiaire :
+• dict compare clés avec hash puis égalité ; pour ce n, égalité avec soi-même.
+
+Expert :
+• Contraste direct avec 2062 (deux appels float("nan")).
 
 Concepts clés :
-• Appeler cache_clear() vide tout le cache
-• Toutes les statistiques (hits, misses, currsize) sont réinitialisées à 0
-• La fonction continue de fonctionner et mettre en cache de nouveaux résultats
-• Utile quand les données en cache deviennent obsolètes ou pour libérer de la mémoire
+• Identité stable d’une variable n.
 
-Comment ça fonctionne :
-• Avant clear : le cache peut avoir de nombreux résultats stockés
-• Après cache_clear() : currsize=0, hits=0, misses=0
-• Le prochain appel de fonction sera un cache miss et recalculera le résultat
-• La fonction décorée elle-même n'est pas affectée
+Distinctions clés :
+• Une seule clé dans la table.
 
-Exemple :
-from functools import lru_cache
-@lru_cache
-def f(x): return x ** 2
+Fonctionnement :
+• Deux écritures sur même clé.
 
-f(3); f(4); f(5)
-f.cache_info()     # currsize=3
-f.cache_clear()
-f.cache_info()     # CacheInfo(hits=0, misses=0, maxsize=128, currsize=0)
+Exécution étape par étape :
+1. len → 1.
 
-Usages courants :
-• Invalider des données en cache obsolètes
-• Libérer de la mémoire dans des processus long-running
-• Tests et débogage de fonctions cachées`,
-  2076: `@lru_cache exige que tous les arguments soient hashables car il les utilise comme clés de dictionnaire en interne.
+Ordre des opérations :
+• n = float("nan"), deux d[n] = ...
 
-Concepts clés :
-• Le cache est implémenté comme un dictionnaire mappant des tuples d'arguments aux résultats
-• Les clés de dictionnaire doivent être hashables
-• Les listes, dicts et sets ne sont pas hashables → TypeError si passés à une fonction cachée
-• Convertir en tuples ou frozensets avant de passer aux fonctions cachées
+Cas d'utilisation courants :
+• Montrer l’importance de la référence d’objet.
 
-Comment ça fonctionne :
-• Quand vous appelez f([1, 2, 3]), lru_cache essaie de hasher les arguments
-• Les listes ne sont pas hashables → TypeError: unhashable type: 'list'
-• Contournement : utiliser des tuples à la place des listes
+Cas limites :
+• Valeur finale 2 pour la clé n.
 
-Exemple :
-from functools import lru_cache
+Considérations de performance :
+• Négligeable.
 
-@lru_cache
-def f(x):
-    return sum(x)
+Exemples :
+• Toujours réutiliser la même variable pour clé stable « NaN ».
 
-f([1, 2, 3])         # TypeError: unhashable type: 'list'
-f((1, 2, 3))         # 6 — les tuples sont hashables
-f(frozenset({1,2}))  # 3 — les frozensets sont hashables
+Remarques :
+• Réponse : 1.`,
+  2064: `Instance de classe comme clé par défaut
 
-Usages courants :
-• Comprendre les limitations du cache
-• Concevoir des signatures de fonctions cachables
-• Convertir des entrées mutables en immuables pour le cache`,
-  2077: `@lru_cache(maxsize=None) désactive la politique d'éviction LRU, créant un cache sans borne.
+Débutant :
+• Oui par défaut : object.__hash__ basé sur id (adresse), __eq__ par défaut sur identité.
+
+Intermédiaire :
+• Tant qu’on ne redéfinit pas __eq__ sans rétablir __hash__.
+
+Expert :
+• Classes personnalisées peuvent rendre les instances non hashables si __hash__ = None.
 
 Concepts clés :
-• maxsize=None → le cache croît indéfiniment, aucune entrée n'est jamais évincée
-• Plus d'utilisation mémoire mais aucune recalcul garanti
-• En Python 3.9+, @functools.cache est un raccourci pour @lru_cache(maxsize=None)
-• Sans limite maxsize, la partie "LRU" est irrelevante — rien n'est évincé
+• Hash par défaut, identité.
 
-Comment ça fonctionne :
-• Chaque ensemble unique d'arguments est mis en cache de façon permanente
-• Aucune éviction ne se produit quel que soit le nombre d'entrées
-• Plus rapide que le cache borné (pas de surcharge de bookkeeping LRU)
-• L'utilisation mémoire croît linéairement avec le nombre d'ensembles d'arguments uniques
+Distinctions clés :
+• Dataclass mutable peut désactiver le hash.
 
-Exemple :
-from functools import lru_cache
+Fonctionnement :
+• Clé hashable si __hash__ callable.
 
-@lru_cache(maxsize=None)
-def fib(n):
-    return n if n < 2 else fib(n-1) + fib(n-2)
+Exécution étape par étape :
+• Réponse du QCM : oui, hashables par défaut (formulation première option).
 
-fib(1000)  # instantané, les 1001 résultats sont en cache
-fib.cache_info()  # maxsize=None, currsize=1001
+Ordre des opérations :
+• Question conceptuelle.
 
-Usages courants :
-• Fonctions avec domaines d'entrée bornés (tous les résultats tiennent en mémoire)
-• Algorithmes récursifs où on veut tous les sous-problèmes en cache
-• Tables de recherche calculées de façon paresseuse`,
-  2078: `functools.cache a été ajouté en Python 3.9 comme alternative plus simple et lisible à lru_cache(maxsize=None).
+Cas d'utilisation courants :
+• Clés « uniques » par objet (rare).
 
-Concepts clés :
-• @cache est équivalent à @lru_cache(maxsize=None)
-• Fournit une mémorisation sans borne sans éviction LRU
-• Légèrement plus rapide que lru_cache car il évite la surcharge d'ordre LRU
-• Même interface : cache_info(), cache_clear() sont disponibles
+Cas limites :
+• Redéfinir __eq__ casse souvent le hash implicite.
 
-Comment ça fonctionne :
-• Utilise en interne un dictionnaire simple (pas de liste chaînée LRU)
-• Stocke chaque résultat d'appel unique de façon permanente
-• Le hashage et la recherche des arguments sont les mêmes que lru_cache
-• Ajouté pour la commodité et la lisibilité
+Considérations de performance :
+• id stable pendant la vie de l’objet.
 
-Exemple :
-from functools import cache
+Exemples :
+• {instance: data}.
 
-@cache
-def factorial(n):
-    return 1 if n < 2 else n * factorial(n - 1)
+Remarques :
+• Réponse : oui, instances hashables par défaut (option du quiz).`,
+  2065: `Deux instances C() comme clés
 
-factorial(10)   # 3628800
-factorial.cache_info()  # CacheInfo(hits=0, misses=11, maxsize=None, currsize=11)
+Débutant :
+• a et b ont des id différents → deux clés distinctes → len(d) == 2.
 
-Usages courants :
-• Mémorisation simple sans se soucier de la taille du cache
-• Fonctions pures appelées avec de nombreux arguments uniques
-• Quand la lisibilité de @cache est préférée à @lru_cache(maxsize=None)`,
-  2079: `@lru_cache utilise le tuple d'arguments exact comme clé de cache, donc l'ordre des arguments compte.
+Intermédiaire :
+• Même si __eq__ par défaut les rend inégaux sauf identité.
+
+Expert :
+• Pour une clé « par valeur », il faudrait __eq__ et __hash__ cohérents.
 
 Concepts clés :
-• Les clés de cache sont basées sur les valeurs des arguments et leurs positions
-• f(1, 2) met en cache avec la clé (1, 2), f(2, 1) avec la clé (2, 1)
-• Même si 1+2 == 2+1, ce sont des entrées de cache séparées
-• Positionnel vs nommé compte aussi : f(1, y=2) et f(1, 2) sont des clés différentes
+• Identité d’instance comme clé.
 
-Comment ça fonctionne :
-• f(1, 2) : clé = (1, 2) → miss → calcule 3, stocke à la clé (1, 2)
-• f(2, 1) : clé = (2, 1) → miss → calcule 3, stocke à la clé (2, 1)
-• f(1, 2) à nouveau : clé = (1, 2) → hit → retourne 3 en cache
-• currsize = 2 (deux entrées séparées)
+Distinctions clés :
+• Pas la même clé que deux fois la même variable a.
 
-Exemple :
-from functools import lru_cache
-@lru_cache
-def f(x, y): return x + y
+Fonctionnement :
+• Deux entrées dans le mapping.
 
-f(1, 2)   # 3 (miss)
-f(2, 1)   # 3 (miss — clé différente !)
-f(1, 2)   # 3 (hit)
-f.cache_info()  # hits=1, misses=2, currsize=2
+Exécution étape par étape :
+1. len 2.
 
-Usages courants :
-• Comprendre la sémantique des clés de cache
-• Concevoir des fonctions pour une utilisation optimale du cache
-• Éviter les cache misses inattendus`,
-  2080: `@lru_cache sur les méthodes fonctionne mais a des implications importantes car self fait partie de la clé de cache.
+Ordre des opérations :
+• Instanciation, construction dict, len.
 
-Concepts clés :
-• self est un argument, donc il devient partie de la clé de cache
-• Chaque instance a son propre ensemble d'entrées de cache
-• Le cache garde une référence à self, empêchant le garbage collection des instances
-• Cela peut causer des fuites mémoire si les instances sont de courte durée
+Cas d'utilisation courants :
+• Registres par objet.
 
-Comment ça fonctionne :
-• Quand vous appelez obj.method(arg), la clé de cache est (obj, arg)
-• Des instances différentes créent des entrées de cache différentes même pour le même arg
-• Le cache conserve des références à self, gardant les instances en vie
-• Contournement : utiliser __hash__ et __eq__, ou un cache par instance
+Cas limites :
+• Singleton partagé → une clé.
 
-Exemple :
-from functools import lru_cache
+Considérations de performance :
+• Deux slots.
 
-class MyClass:
-    @lru_cache
-    def compute(self, x):
-        return x ** 2
+Exemples :
+• WeakKeyDictionary pour éviter fuites si besoin.
 
-a = MyClass()
-b = MyClass()
-a.compute(5)  # mis en cache sous la clé (a, 5)
-b.compute(5)  # mis en cache sous la clé (b, 5) — entrée séparée !
+Remarques :
+• Réponse : 2.`,
+  2066: `Deux méthodes pour être hashable
 
-Usages courants :
-• Mettre en cache des calculs de méthodes coûteux (avec précaution)
-• Comprendre les pièges du cache au niveau des méthodes
-• Utiliser des alternatives basées sur weakref pour les méthodes`,
-  2081: `functools.singledispatch implémente des fonctions génériques à dispatch unique — une forme de surcharge de fonctions.
+Débutant :
+• Il faut __hash__ (ou héritage qui le fournit) et __eq__ pour comparaison en cas de collision.
+
+Intermédiaire :
+• Contrat : si a == b alors hash(a) == hash(b).
+
+Expert :
+• Si __eq__ personnalisé sans __hash__, Python peut mettre __hash__ à None.
 
 Concepts clés :
-• Le dispatch est basé sur le type du premier argument
-• Le décorateur @singledispatch marque l'implémentation par défaut (fallback)
-• @func.register(type) ajoute des implémentations spécifiques au type
-• Similaire à la surcharge de méthodes dans d'autres langages, mais pour les fonctions
+• Protocole hashable du modèle d’objet Python.
 
-Comment ça fonctionne :
-• La fonction de base (décorée avec @singledispatch) gère le cas par défaut
-• Des implémentations supplémentaires sont enregistrées pour des types spécifiques avec @func.register
-• À l'appel, Python vérifie le type du premier argument et dispatch en conséquence
-• Si aucun type enregistré ne correspond, l'implémentation par défaut est utilisée
+Distinctions clés :
+• __repr__ ou __str__ ne suffisent pas.
 
-Exemple :
-from functools import singledispatch
+Fonctionnement :
+• Vérifications lors insertion dans set/dict.
 
-@singledispatch
-def process(x):
-    return f"default: {x}"
+Exécution étape par étape :
+• Réponse : __hash__ et __eq__ (formulation QCM).
 
-@process.register(int)
-def _(x):
-    return f"integer: {x}"
+Ordre des opérations :
+• Question théorique.
 
-@process.register(str)
-def _(x):
-    return f"string: {x}"
+Cas d'utilisation courants :
+• Définir des clés personnalisées immuables.
 
-process(42)       # "integer: 42"
-process("hello")  # "string: hello"
-process([1, 2])   # "default: [1, 2]"
+Cas limites :
+• Objets mutables : ne doivent pas être hashables.
 
-Usages courants :
-• Surcharge de fonctions basée sur le type
-• Gérer différents types sans chaînes if/elif
-• Pipelines de traitement extensibles`,
-  2082: `singledispatch route f(42) vers l'implémentation enregistrée pour int car 42 est un int.
+Considérations de performance :
+• __hash__ devrait être rapide si clé fréquente.
 
-Concepts clés :
-• @singledispatch marque l'implémentation par défaut (retourne "other")
-• @f.register(int) enregistre un handler pour les arguments int
-• Quand f(42) est appelé, Python vérifie type(42) → int → dispatch vers le handler int
-• Le nom de la fonction enregistrée (_ ici) n'a pas d'importance — elle est accédée via f
+Exemples :
+• dataclass(frozen=True).
 
-Comment ça fonctionne :
-• f(42) est appelé
-• singledispatch vérifie le type du premier argument : type(42) = int
-• int est enregistré → dispatch vers le handler int
-• Le handler int retourne "int"
+Remarques :
+• Réponse : __hash__ et __eq__ (première option descriptive du quiz).`,
+  2067: `__eq__ sans __hash__
 
-Exemple :
-from functools import singledispatch
-@singledispatch
-def f(x): return "other"
+Débutant :
+• Définir __eq__ sans __hash__ explicite met souvent __hash__ à None → instance non hashable → TypeError sur hash(a).
 
-@f.register(int)
-def _(x): return "int"
+Intermédiaire :
+• Empêche les incohérences entre égalité logique et hash hérité de id.
 
-@f.register(str)
-def _(x): return "str"
-
-f(42)       # "int"
-f("hello")  # "str"
-f(3.14)     # "other" (float non enregistré)
-
-Usages courants :
-• Traitement spécifique au type sans isinstance
-• Séparation claire de la logique de gestion des types
-• Systèmes de dispatch de types extensibles`,
-  2083: `Quand aucun type enregistré ne correspond, singledispatch utilise l'implémentation par défaut (base).
+Expert :
+• On peut fixer __hash__ = None explicitement ou fournir un __hash__ valide compatible.
 
 Concepts clés :
-• La fonction décorée avec @singledispatch est le fallback pour les types non enregistrés
-• "hello" est un str, et str n'a pas de handler enregistré
-• L'implémentation par défaut s'exécute, retournant "other"
-• Le MRO est utilisé pour le matching des sous-classes
+• Hash None, unhashable type.
 
-Comment ça fonctionne :
-• f("hello") est appelé
-• singledispatch vérifie type("hello") = str
-• str n'est pas enregistré → pas de correspondance
-• Utilise la fonction @singledispatch de base → retourne "other"
+Distinctions clés :
+• Avant définition de __eq__, hash par défaut peut exister.
 
-Exemple :
-from functools import singledispatch
-@singledispatch
-def f(x): return "other"
+Fonctionnement :
+• Tentative hash sur instance de C.
 
-@f.register(int)
-def _(x): return "int"
+Exécution étape par étape :
+1. TypeError.
 
-f("hello")  # "other" (str non enregistré)
-f([1, 2])   # "other" (list non enregistré)
-f(42)       # "int"  (int est enregistré)
+Ordre des opérations :
+• Instanciation puis hash().
 
-Usages courants :
-• Fournir des valeurs par défaut sensées pour les types non gérés
-• Dégradation gracieuse dans le dispatch de types
-• S'assurer que tous les types sont gérés`,
-  2084: `functools.total_ordering est un décorateur de classe qui remplit les méthodes de comparaison manquantes.
+Cas d'utilisation courants :
+• Empêcher usage accidentel en clé après égalité par valeur.
 
-Concepts clés :
-• Vous devez définir __eq__ et au moins une de : __lt__, __le__, __gt__, __ge__
-• total_ordering génère automatiquement les méthodes de comparaison restantes
-• Sans cela, il faudrait définir manuellement les 4 méthodes d'ordre
-• Les méthodes auto-générées sont dérivées de celles que vous fournissez
+Cas limites :
+• frozen dataclass redonne un hash.
 
-Comment ça fonctionne :
-• Le décorateur inspecte quelles méthodes de comparaison sont définies
-• Il génère les manquantes en utilisant les équivalences logiques
-• Par ex., si vous définissez __lt__ : __le__ = __lt__ or __eq__, __gt__ = not __le__, __ge__ = not __lt__
-• Les méthodes générées peuvent être légèrement plus lentes que les manuscrites
+Considérations de performance :
+• N/A erreur.
 
-Exemple :
-from functools import total_ordering
+Exemples :
+• Ajouter __hash__ si immuable et égalité par champs.
 
-@total_ordering
-class Student:
-    def __init__(self, name, grade):
-        self.name = name
-        self.grade = grade
-    def __eq__(self, other):
-        return self.grade == other.grade
-    def __lt__(self, other):
-        return self.grade < other.grade
+Remarques :
+• Réponse : TypeError / non hashable (comportement erreur du quiz).`,
+  2068: `d.keys() & {"a", "b"}
 
-s1 = Student("Alice", 90)
-s2 = Student("Bob", 85)
-s1 > s2   # True (auto-généré à partir de __lt__ et __eq__)
-s1 >= s2  # True (auto-généré)
+Débutant :
+• Vue dict_keys supporte & : intersection avec ensemble → clés communes, ici {"a"}.
 
-Usages courants :
-• Classes personnalisées nécessitant un support complet de comparaison
-• Réduire le boilerplate dans les types ordonnés
-• Objets personnalisés triables`,
-  2085: `Le module operator fournit des équivalents fonctionnels des opérateurs Python.
+Intermédiaire :
+• Résultat de type set ou set-like selon version ; contenu a seul.
+
+Expert :
+• Nécessite Python 3 avec opérations ensemblistes sur les vues.
 
 Concepts clés :
-• operator.add(a, b) est équivalent à a + b
-• Ce sont des fonctions normales, contrairement à l'opérateur +
-• Utile quand on doit passer un opérateur comme argument de fonction
-• Plus rapide que lambda a, b: a + b car implémenté en C
+• Intersection clés / set.
 
-Comment ça fonctionne :
-• operator.add(3, 4) appelle la méthode __add__ : 3 + 4 = 7
-• Pas besoin de lambda — operator.add est déjà un callable
-• Fonctionne avec tout type supportant +
+Distinctions clés :
+• Pas les valeurs, seulement les clés.
 
-Exemple :
-from operator import add, sub, mul
-add(3, 4)    # 7
-sub(10, 3)   # 7
-mul(3, 4)    # 12
+Fonctionnement :
+• a présent dans d et dans le set littéral.
 
-from functools import reduce
-reduce(add, [1, 2, 3, 4])  # 10 (plus propre que lambda)
+Exécution étape par étape :
+1. Ensemble contenant "a".
 
-Usages courants :
-• Passer des opérateurs à des fonctions d'ordre supérieur comme reduce, map
-• Alternative plus propre aux lambdas pour les opérations simples
-• Code critique pour la performance (fonctions implémentées en C)`,
-  2086: `operator.mul est l'équivalent fonctionnel de l'opérateur de multiplication *.
+Ordre des opérations :
+• .keys() puis &.
 
-Concepts clés :
-• operator.mul(a, b) est équivalent à a * b
-• Implémenté en C pour des performances maximales
-• Souvent utilisé avec reduce pour les calculs de produit
-• Fonctionne avec tout type supportant * (nombres, séquences)
+Cas d'utilisation courants :
+• Filtrer champs présents.
 
-Comment ça fonctionne :
-• mul(3, 4) → 3 * 4 → 12
-• Peut aussi faire la répétition de chaînes/listes : mul("ab", 3) → "ababab"
+Cas limites :
+• Clé absente des deux côtés → vide.
 
-Exemple :
-from operator import mul
-mul(3, 4)       # 12
-mul(2.5, 4)     # 10.0
-mul("ab", 3)    # "ababab"
+Considérations de performance :
+• Efficace.
 
-from functools import reduce
-reduce(mul, [1, 2, 3, 4])  # 24 (produit)
-reduce(mul, range(1, 6))   # 120 (5!)
+Exemples :
+• d.keys() & other_keys.
 
-Usages courants :
-• Calculs de produit avec reduce
-• Répétition de séquences
-• Plus propre que lambda a, b: a * b`,
-  2087: `operator.itemgetter crée un callable qui récupère des éléments par index ou clé.
+Remarques :
+• Réponse : {"a"} (repr du QCM).`,
+  2069: `d.keys() | {"c"}
+
+Débutant :
+• Union : toutes les clés uniques de d plus "c" → {"a","b","c"} selon énoncé d = a,b.
+
+Intermédiaire :
+• L’ordre d’itération n’est pas celui d’un set affiché mais l’ensemble logique est correct.
+
+Expert :
+• | sur vues dict_keys suit les règles de set.
 
 Concepts clés :
-• itemgetter(index) retourne un callable qui fait obj[index]
-• Avec un seul argument, retourne l'élément unique directement (pas un tuple)
-• Fonctionne avec tout objet supportant __getitem__ (listes, dicts, tuples)
-• Souvent utilisé comme fonction key pour le tri
+• Union d’ensembles de clés.
 
-Comment ça fonctionne :
-• itemgetter(1) crée une fonction équivalente à lambda obj: obj[1]
-• f([10, 20, 30]) → [10, 20, 30][1] → 20
-• Retourne l'élément directement (pas enveloppé dans un tuple)
+Distinctions clés :
+• Ne fusionne pas les valeurs du dict.
 
-Exemple :
-from operator import itemgetter
-f = itemgetter(1)
-f([10, 20, 30])     # 20
-f("hello")          # "e"
-f({"a": 1, 1: 99})  # 99
+Fonctionnement :
+• Ajout de c aux clés existantes.
 
-Usages courants :
-• Fonction key pour sorted() : sorted(data, key=itemgetter(1))
-• Extraire des champs de enregistrements
-• Plus propre et plus rapide que lambda pour l'accès aux éléments`,
-  2088: `Quand itemgetter reçoit plusieurs arguments, il retourne un tuple des éléments récupérés.
+Exécution étape par étape :
+1. Set avec a, b, c.
 
-Concepts clés :
-• itemgetter(i, j, ...) retourne un tuple des éléments à ces indices
-• Un seul argument → retourne l'élément directement
-• Plusieurs arguments → retourne un tuple d'éléments
-• Cette distinction est importante pour le déballage et les fonctions key
+Ordre des opérations :
+• keys() puis |.
 
-Comment ça fonctionne :
-• itemgetter(0, 2) crée une fonction qui fait (obj[0], obj[2])
-• f([10, 20, 30]) → ([10,20,30][0], [10,20,30][2]) → (10, 30)
-• Retourne un tuple, pas une liste
+Cas d'utilisation courants :
+• Liste complète de champs possibles.
 
-Exemple :
-from operator import itemgetter
-f = itemgetter(0, 2)
-f([10, 20, 30])       # (10, 30)
-f("abcdef")           # ("a", "c")
+Cas limites :
+• Doublons impossibles dans un set.
 
-g = itemgetter("name", "age")
-g({"name": "Alice", "age": 30, "city": "NYC"})  # ("Alice", 30)
+Considérations de performance :
+• O(n).
 
-Usages courants :
-• Extraire plusieurs champs d'enregistrements
-• Tri multi-clé : sorted(data, key=itemgetter(1, 2))
-• Sélectionner des colonnes de données tabulaires`,
-  2089: `operator.attrgetter crée un callable qui récupère des attributs nommés d'objets.
+Exemples :
+• Planifier colonnes pour DataFrame.
+
+Remarques :
+• Réponse : ensemble des clés a,b,c (forme du quiz).`,
+  2070: `d.keys() - {"a"}
+
+Débutant :
+• Différence ensembliste : retire a des clés de d ; d ne contenait que a → ensemble vide.
+
+Intermédiaire :
+• set() vide, pas None.
+
+Expert :
+• Utile pour « clés restantes après exclusion ».
 
 Concepts clés :
-• attrgetter("attr") retourne une fonction équivalente à lambda obj: obj.attr
-• Plusieurs arguments retournent un tuple : attrgetter("a", "b")(obj) → (obj.a, obj.b)
-• Supporte les noms pointés : attrgetter("a.b") → obj.a.b (accès à attributs imbriqués)
-• Souvent utilisé comme fonction key pour trier des objets par attribut
+• Soustraction de sets.
 
-Comment ça fonctionne :
-• attrgetter("name") crée un callable qui accède à l'attribut name
-• Quand appelé sur un objet, retourne getattr(obj, "name")
-• Plus rapide que les lambdas équivalentes car implémenté en C
+Distinctions clés :
+• Ne modifie pas le dict d’origine.
 
-Exemple :
-from operator import attrgetter
+Fonctionnement :
+• {"a"} - {"a"} sur les clés.
 
-class Student:
-    def __init__(self, name, grade):
-        self.name = name
-        self.grade = grade
+Exécution étape par étape :
+1. set().
 
-students = [Student("Alice", 90), Student("Bob", 85)]
-sorted(students, key=attrgetter("grade"))  # trié par note
+Ordre des opérations :
+• .keys() puis -.
 
-get_info = attrgetter("name", "grade")
-get_info(students[0])  # ("Alice", 90)
+Cas d'utilisation courants :
+• Champs à supprimer d’un schéma.
 
-Usages courants :
-• Trier des objets par attribut
-• Extraire des attributs de collections d'objets
-• Accès aux attributs en style fonctionnel`,
-  2090: `operator.methodcaller crée un callable qui appelle une méthode nommée sur les objets.
+Cas limites :
+• Si d avait plus de clés, elles restent dans le résultat.
 
-Concepts clés :
-• methodcaller("method") retourne une fonction équivalente à lambda obj: obj.method()
-• Peut aussi passer des arguments : methodcaller("method", arg1, arg2)
-• Utile comme fonction key ou dans des opérations map/filter
-• Implémenté en C pour les performances
+Considérations de performance :
+• Linéaire.
 
-Comment ça fonctionne :
-• methodcaller("upper") crée un callable qui appelle .upper()
-• f("hello") → "hello".upper() → "HELLO"
-• La méthode est appelée sans arguments supplémentaires dans ce cas
+Exemples :
+• colonnes_ok = all_keys - forbidden.
 
-Exemple :
-from operator import methodcaller
-f = methodcaller("upper")
-f("hello")      # "HELLO"
+Remarques :
+• Réponse : ensemble vide (repr set()).`,
+  2071: `MyDict __missing__ renvoie une chaîne
 
-g = methodcaller("replace", "o", "0")
-g("hello world")  # "hell0 w0rld"
+Débutant :
+• d["b"] absent déclenche __missing__("b") qui retourne la chaîne formatée "no b".
 
-h = methodcaller("split", ",")
-h("a,b,c")    # ["a", "b", "c"]
+Intermédiaire :
+• La clé n’est pas ajoutée si __missing__ ne fait que return.
 
-Usages courants :
-• Appliquer des méthodes sur des collections : list(map(methodcaller("strip"), lines))
-• Fonctions key pour le tri : sorted(strings, key=methodcaller("lower"))
-• Invocation de méthodes en style fonctionnel`,
-  2091: `map peut prendre plusieurs itérables, passant les éléments correspondants comme arguments à la fonction.
+Expert :
+• Comportement hook __getitem__ du sous-type dict.
 
 Concepts clés :
-• map(func, iter1, iter2) appelle func(a, b) pour chaque paire (a, b) des itérables
-• S'arrête au plus court des itérables (comme zip)
-• pow(base, exp) calcule base ** exp
-• C'est une application élément par élément sur des itérables parallèles
+• __missing__, sous-classe dict.
 
-Comment ça fonctionne :
-• pow(2, 3) = 2**3 = 8
-• pow(3, 2) = 3**2 = 9
-• pow(4, 1) = 4**1 = 4
-• Résultat : [8, 9, 4]
+Distinctions clés :
+• Pas KeyError car surchargé.
 
-Exemple :
-list(map(pow, [2, 3, 4], [3, 2, 1]))     # [8, 9, 4]
-list(map(max, [1, 5, 3], [4, 2, 6]))     # [4, 5, 6]
-list(map(lambda a, b: a+b, [1,2], [3,4]))  # [4, 6]
+Fonctionnement :
+• Recherche échoue, appel __missing__, valeur retournée.
 
-Usages courants :
-• Opérations élément par élément sur des séquences parallèles
-• Appliquer des fonctions binaires sur deux listes
-• Arithmétique vectorielle et calculs par paires`,
-  2092: `En Python 3, map() retourne un itérateur paresseux, pas une liste.
+Exécution étape par étape :
+1. Valeur "no b" (avec espace selon code).
 
-Concepts clés :
-• map() retourne un objet map, qui est un itérateur
-• Les valeurs sont calculées à la demande (paresseusement), pas toutes à la fois
-• Doit être consommé (avec list(), boucle for, etc.) pour voir les valeurs
-• En Python 2, map() retournait une liste directement (changé en Python 3)
+Ordre des opérations :
+• Création MyDict avec a=1, accès b.
 
-Comment ça fonctionne :
-• map(pow, [2,3,4], [3,2,1]) retourne un objet map
-• Les calculs ne se produisent que quand l'itérateur est consommé
-• list(map(...)) force tous les calculs et collecte les résultats en liste
-• L'objet map ne peut être itéré qu'une seule fois
+Cas d'utilisation courants :
+• Valeurs par défaut calculées ou messages.
 
-Exemple :
-result = map(pow, [2, 3, 4], [3, 2, 1])
-type(result)    # <class 'map'>
-list(result)    # [8, 9, 4]
-list(result)    # [] (itérateur épuisé)
+Cas limites :
+• __missing__ peut lever une exception si on préfère.
 
-next(map(pow, [2], [3]))  # 8 (peut utiliser next() sur les itérateurs)
+Considérations de performance :
+• Coût d’un appel Python par clé manquante.
 
-Usages courants :
-• Traitement mémoire-efficient de grandes séquences
-• Pipelines d'évaluation paresseuse
-• Conversion avec list() quand une liste concrète est nécessaire`,
-  2093: `itertools.starmap est comme map, mais déballé chaque élément de l'itérable comme arguments séparés.
+Exemples :
+• Clés manquantes avec log.
+
+Remarques :
+• Réponse : "no b" (forme exacte du quiz).`,
+  2072: `__missing__ sans insertion — "x" in d ?
+
+Débutant :
+• __missing__ retourne 0 mais n’écrit pas self["x"] → la clé n’existe pas → False.
+
+Intermédiaire :
+• Contrast avec defaultdict qui insère la valeur par défaut.
+
+Expert :
+• len(d) reste 0 après seulement d["x"].
 
 Concepts clés :
-• starmap(func, iterable) où chaque élément de iterable est déballé avec *
-• Équivalent à (func(*args) for args in iterable)
-• Utile quand les arguments sont déjà groupés en tuples
-• Le "star" dans starmap réfère à l'opérateur de déballage *
+• Retour vs mutation du mapping.
 
-Comment ça fonctionne :
-• starmap(pow, [(2,3), (3,2), (4,1)])
-• Étape 1 : pow(*(2,3)) → pow(2, 3) = 8
-• Étape 2 : pow(*(3,2)) → pow(3, 2) = 9
-• Étape 3 : pow(*(4,1)) → pow(4, 1) = 4
-• Résultat : [8, 9, 4]
+Distinctions clés :
+• in utilise __contains__, pas __missing__ pour créer.
 
-Exemple :
-from itertools import starmap
-list(starmap(pow, [(2,3), (3,2), (4,1)]))  # [8, 9, 4]
-list(starmap(max, [(1,5), (3,2), (4,6)]))  # [5, 3, 6]
+Fonctionnement :
+• Accès lecture déclenche __missing__ sans stockage.
 
-# Contraste avec map :
-list(map(pow, [2,3,4], [3,2,1]))           # [8, 9, 4] (même résultat)
+Exécution étape par étape :
+1. False.
 
-Usages courants :
-• Traiter des arguments pré-appariés
-• Travailler avec la sortie de zip() : starmap(func, zip(a, b))
-• Résultats de requêtes base de données ou lignes CSV`,
-  2094: `En Python, les noms de fonctions sont juste des variables qui référencent des objets fonction. Ils peuvent être réaffectés.
+Ordre des opérations :
+• MyDict(), d["x"], puis test in.
 
-Concepts clés :
-• def f(x): ... crée un objet fonction et lie le nom f à lui
-• f = None réaffecte le nom f à None
-• L'objet fonction original peut exister encore si d'autres références pointent vers lui
-• Les fonctions sont des objets de première classe — elles peuvent être assignées, passées et supprimées
+Cas d'utilisation courants :
+• Lecture « virtuelle » sans polluer les clés.
 
-Comment ça fonctionne :
-• def f(x): return x * 2 crée un objet fonction et l'assigne au nom f
-• f = None réaffecte f à l'objet None
-• L'objet fonction n'a plus de références (peut être garbage collected)
-• f est maintenant None, pas une fonction
+Cas limites :
+• Si vous vouliez insérer, faire self[key]=... dans __missing__.
 
-Exemple :
-def f(x): return x * 2
-print(f(5))    # 10
-f = None
-print(f)       # None
-# f(5)         # TypeError: 'NoneType' is not callable
+Considérations de performance :
+• Négligeable.
 
-Usages courants :
-• Comprendre que les noms de fonctions sont juste des variables
-• Nettoyage : mettre les callbacks à None pour les désactiver
-• Remplacement dynamique de fonctions`,
-  2095: `Plusieurs noms peuvent référencer le même objet fonction. Supprimer un nom n'affecte pas les autres.
+Exemples :
+• Voir question 2073.
+
+Remarques :
+• Réponse : False.`,
+  2073: `__missing__ avec self[key] = 0
+
+Débutant :
+• Cette fois __missing__ insère la clé avant return 0 → "x" in d est True.
+
+Intermédiaire :
+• Pattern proche de defaultdict(int) pour l’effet de bord.
+
+Expert :
+• Attention aux boucles infinies si __missing__ s’appelle récursivement par erreur.
 
 Concepts clés :
-• g = f fait pointer g vers le même objet fonction que f
-• del f supprime le nom f du namespace, pas l'objet fonction
-• L'objet fonction survit car g le référence encore
-• Python utilise le comptage de références — les objets sont supprimés seulement quand il ne reste plus de références
+• Insertion explicite dans __missing__.
 
-Comment ça fonctionne :
-• def f(x): return x * 2 crée un objet fonction, f le référence (refcount=1)
-• g = f fait que g référence le même objet (refcount=2)
-• del f supprime le nom f (refcount=1, g garde une référence)
-• g(5) → appelle l'objet fonction → 5 * 2 = 10
+Distinctions clés :
+• Diffère de 2072 par self[key]=.
 
-Exemple :
-def f(x): return x * 2
-g = f
-del f
-g(5)         # 10 (la fonction existe encore via g)
-# f(5)       # NameError: name 'f' is not defined
+Fonctionnement :
+• Écriture puis retour.
 
-print(g.__name__)  # "f" (le nom original est stocké dans __name__)
+Exécution étape par étape :
+1. True.
 
-Usages courants :
-• Comprendre le modèle de référence de Python
-• Alias et renommage de fonctions
-• Patterns de remplacement de fonctions sûrs`,
-  2096: `locals() retourne un dictionnaire de la table des symboles locaux courante.
+Ordre des opérations :
+• d["x"] provoque insertion puis in vérifie présence.
 
-Concepts clés :
-• À l'intérieur d'une fonction, locals() contient toutes les variables locales et leurs valeurs
-• Le dict retourné est un snapshot — le modifier n'affecte PAS les variables réelles (en CPython)
-• Au niveau module, locals() se comporte comme globals()
-• Les paramètres sont inclus comme variables locales
+Cas d'utilisation courants :
+• Auto-vivification contrôlée.
 
-Comment ça fonctionne :
-• Python maintient une table des symboles locaux pour chaque appel de fonction
-• locals() crée un dict à partir de cette table
-• Le dict mappe les noms de chaînes aux valeurs courantes
-• Il inclut les paramètres de fonction, les assignations locales et les variables de compréhension
+Cas limites :
+• Threads : même caveats que dict normal.
 
-Exemple :
-def example(a, b):
-    c = a + b
-    d = "hello"
-    print(locals())
+Considérations de performance :
+• Une écriture supplémentaire.
 
-example(1, 2)
-# {'a': 1, 'b': 2, 'c': 3, 'd': 'hello'}
+Exemples :
+• Cache avec matérialisation paresseuse.
 
-Usages courants :
-• Débogage : inspecter l'état des variables
-• Formatage de chaînes : "%(name)s" % locals()
-• Logging et introspection
-• Accès dynamique aux variables (généralement déconseillé)`,
-  2097: `globals() retourne un dictionnaire représentant la table des symboles globaux courante.
+Remarques :
+• Réponse : True.`,
+  2074: `dict normal d["b"] manquant
+
+Débutant :
+• KeyError : dict built-in n’a pas __missing__ utilisable comme MyDict sans sous-classement.
+
+Intermédiaire :
+• Utiliser .get ou in pour éviter.
+
+Expert :
+• Message d’erreur inclut la clé manquante.
 
 Concepts clés :
-• globals() réfère toujours au module où la fonction est définie
-• Contrairement à locals(), modifier le dict globals() AFFECTE les variables globales
-• Contient tous les noms au niveau module : variables, fonctions, imports, classes
-• Inclut toujours __name__, __doc__, __builtins__
+• __getitem__ standard.
 
-Comment ça fonctionne :
-• La table des symboles globaux est maintenue par module
-• globals() retourne l'objet dict réel (pas une copie)
-• globals()["x"] = 42 crée/modifie réellement une variable globale x
-• Les fonctions définies dans le module voient le même globals()
+Distinctions clés :
+• vs defaultdict, vs sous-classe avec __missing__.
 
-Exemple :
-x = 10
-def f():
-    return globals()["x"]
+Fonctionnement :
+• Échec lookup.
 
-f()            # 10
-globals()["y"] = 20
-print(y)       # 20 (crée réellement la variable)
+Exécution étape par étape :
+1. Exception KeyError.
 
-# Clés built-in toujours présentes :
-"__name__" in globals()      # True
-"__builtins__" in globals()  # True
+Ordre des opérations :
+• Accès b sur {"a":1}.
 
-Usages courants :
-• Accéder aux variables globales dynamiquement par nom
-• Chargement de plugins/extensions
-• Débogage et introspection
-• Frameworks de sérialisation`,
-  2098: `L'attribut __code__ d'une fonction donne accès à l'objet bytecode compilé, qui contient des métadonnées.
+Cas d'utilisation courants :
+• Signaler bug ou donnée invalide.
 
-Concepts clés :
-• f.__code__ est l'objet code associé à la fonction f
-• co_varnames est un tuple de tous les noms de variables locales (arguments d'abord, puis autres locaux)
-• Les arguments apparaissent en premier dans co_varnames, dans l'ordre
-• Autres attributs code utiles : co_argcount, co_filename, co_firstlineno
+Cas limites :
+• try/except KeyError pattern.
 
-Comment ça fonctionne :
-• def f(x): return x a un paramètre x et aucune autre variable locale
-• f.__code__.co_varnames retourne ("x",)
-• Le tuple inclut TOUS les noms locaux, pas seulement les paramètres
-• Les paramètres viennent toujours en premier dans le tuple
+Considérations de performance :
+• Échec rapide.
 
-Exemple :
-def f(x): return x
-f.__code__.co_varnames    # ("x",)
+Exemples :
+• d.get("b", default).
 
-def g(a, b):
-    c = a + b
-    return c
-g.__code__.co_varnames    # ("a", "b", "c")
+Remarques :
+• Réponse : KeyError (comportement erreur).`,
+  2075: `defaultdict et __missing__
 
-Usages courants :
-• Introspection et métaprogrammation de fonctions
-• Outils de débogage et d'analyse
-• Générateurs de documentation de code
-• Comprendre les internals de Python`,
-  2099: `co_argcount rapporte le nombre total de paramètres positionnels-ou-nommés (excluant *args et **kwargs).
+Débutant :
+• Oui : defaultdict est une sous-classe de dict dont __missing__ appelle default_factory pour créer une valeur par défaut.
+
+Intermédiaire :
+• C’est le mécanisme qui permet d[k] sans clé préalable.
+
+Expert :
+• On peut implémenter des fabriques personnalisées.
 
 Concepts clés :
-• co_argcount compte les paramètres réguliers (positionnels et nommés)
-• Les paramètres avec valeur par défaut sont toujours comptés
-• *args n'est PAS compté dans co_argcount (il est dans co_flags)
-• **kwargs n'est pas compté non plus
-• Les paramètres positionnels-only (avant /) SONT comptés
+• default_factory, __missing__.
 
-Comment ça fonctionne :
-• def f(x, y, z=3): a trois paramètres : x, y et z
-• z a une valeur par défaut de 3, mais c'est toujours un paramètre régulier
-• co_argcount = 3
+Distinctions clés :
+• dict nu n’appelle pas de fabrique automatique.
 
-Exemple :
-def f(x, y, z=3): pass
-f.__code__.co_argcount    # 3
+Fonctionnement :
+• Sous-classe + hook.
 
-def g(a): pass
-g.__code__.co_argcount    # 1
+Exécution étape par étape :
+• Réponse oui (première option du QCM).
 
-def h(*args): pass
-h.__code__.co_argcount    # 0 (*args non compté)
+Ordre des opérations :
+• Question conceptuelle.
 
-def k(a, b, *args, **kwargs): pass
-k.__code__.co_argcount    # 2 (seulement a et b)
+Cas d'utilisation courants :
+• Compteurs, groupes, graphes.
 
-Usages courants :
-• Inspecter les signatures de fonctions programmatiquement
-• Code framework qui s'adapte à l'arité des fonctions
-• Débogage de problèmes de paramètres
-• Métaprogrammation et décorateurs`,
-  2100: `*args est une variable locale régulière dans la portée de la fonction — elle reçoit juste sa valeur via le mécanisme de packing.
+Cas limites :
+• default_factory None → pas de magie.
+
+Considérations de performance :
+• Appel factory par nouvelle clé.
+
+Exemples :
+• defaultdict(list).
+
+Remarques :
+• Réponse : oui, essentiellement dict + __missing__ vers factory (option correcte du quiz).`,
+  2076: `MappingProxyType lecture
+
+Débutant :
+• p est une vue en lecture seule sur d ; p["a"] lit la valeur 1 comme sur un dict.
+
+Intermédiaire :
+• Souvent utilisée pour exposer __dict__ de classes/types de façon immuable.
+
+Expert :
+• Le proxy reste lié au mapping sous-jacent.
 
 Concepts clés :
-• *args dans une signature de fonction signifie "collecter les arguments positionnels supplémentaires dans un tuple"
-• Le nom de la variable est "args" (le * est de la syntaxe, pas partie du nom)
-• co_varnames liste tous les noms de variables locales y compris le paramètre args
-• co_argcount serait 0 car *args n'est pas un paramètre positionnel régulier
+• types.MappingProxyType, vue dynamique.
 
-Comment ça fonctionne :
-• def f(*args): pass définit une fonction avec un paramètre variadique
-• À l'intérieur de la fonction, args est une variable tuple régulière
-• f.__code__.co_varnames retourne ("args",) — listant tous les noms de variables locales
-• Le nom "args" est une convention ; on pourrait utiliser *items, *values, etc.
+Distinctions clés :
+• Ce n’est pas une copie profonde.
 
-Exemple :
-def f(*args): pass
-f.__code__.co_varnames    # ("args",)
-f.__code__.co_argcount    # 0 (pas de paramètres positionnels réguliers)
+Fonctionnement :
+• Délégation de lecture au dict interne.
 
-def g(*items): pass
-g.__code__.co_varnames    # ("items",)
+Exécution étape par étape :
+1. 1.
 
-def h(x, *args, **kwargs): pass
-h.__code__.co_varnames    # ("x", "args", "kwargs")
+Ordre des opérations :
+• Créer d, proxy, sous-script.
 
-Usages courants :
-• Comprendre comment *args est représenté en interne
-• Outils d'introspection de fonctions
-• Métaprogrammation et construction de décorateurs
-• Outils d'analyse de code et linting`,
+Cas d'utilisation courants :
+• API read-only, namespaces.
+
+Cas limites :
+• Clé absente → KeyError comme dict.
+
+Considérations de performance :
+• Très léger overlay.
+
+Exemples :
+• mappingproxy du __dict__ d’un type.
+
+Remarques :
+• Réponse : 1.`,
+  2077: `MappingProxyType écriture
+
+Débutant :
+• Assigner p["b"] lève TypeError : la vue est non modifiable.
+
+Intermédiaire :
+• Il faut modifier le dict d d’origine si mutable.
+
+Expert :
+• Protège les mappings exposés publiquement.
+
+Concepts clés :
+• Immuabilité de surface du proxy.
+
+Distinctions clés :
+• dict normal accepterait l’assignation.
+
+Fonctionnement :
+• Tentative __setitem__ sur proxy → rejet.
+
+Exécution étape par étape :
+1. TypeError.
+
+Ordre des opérations :
+• Proxy créé puis assignation illégale.
+
+Cas d'utilisation courants :
+• Empêcher clients de casser un mapping interne.
+
+Cas limites :
+• Si d sous-jacent est remplacé entièrement selon usage (hors sujet).
+
+Considérations de performance :
+• N/A erreur.
+
+Exemples :
+• types.MappingProxyType(locals()) cas spéciaux.
+
+Remarques :
+• Réponse : TypeError.`,
+  2078: `Proxy reflète le dict d’origine
+
+Débutant :
+• Après d["b"]=2 sur le dict original, p["b"] voit 2 car vue vivante.
+
+Intermédiaire :
+• Pas besoin de recréer le proxy.
+
+Expert :
+• Si on remplace entièrement d par un autre objet, le proxy pointe toujours l’ancien (subtilité avancée) ; ici mutation in-place OK.
+
+Concepts clés :
+• Vue live, pas snapshot.
+
+Distinctions clés :
+• copy() du dict donnerait une copie indépendante.
+
+Fonctionnement :
+• Lecture déléguée au même mapping muté.
+
+Exécution étape par étape :
+1. p["b"] == 2.
+
+Ordre des opérations :
+• Proxy, mutation de d, lecture via p.
+
+Cas d'utilisation courants :
+• Observer changements de configuration partagée.
+
+Cas limites :
+• Thread-safety comme pour dict nu.
+
+Considérations de performance :
+• Indirection minime.
+
+Exemples :
+• Exposer dict de module en lecture seule.
+
+Remarques :
+• Réponse : 2.`,
+  2079: `dict.copy() shallow top-level
+
+Débutant :
+• d2 reçoit une copie superficielle : ajouter une clé de premier niveau dans d2 ne modifie pas d.
+
+Intermédiaire :
+• d reste {"a":1}.
+
+Expert :
+• Les valeurs internes mutables restent partagées (voir 2080).
+
+Concepts clés :
+• Shallow copy, nouvel objet dict.
+
+Distinctions clés :
+• d2 is d est False.
+
+Fonctionnement :
+• Duplication des paires clé-valeur au premier niveau.
+
+Exécution étape par étape :
+1. d inchangé top-level.
+
+Ordre des opérations :
+• copy, mutation d2.
+
+Cas d'utilisation courants :
+• Dupliquer options avant modification.
+
+Cas limites :
+• copy.deepcopy pour arbre complet.
+
+Considérations de performance :
+• O(n) clés au premier niveau.
+
+Exemples :
+• dict(d) similaire pour shallow.
+
+Remarques :
+• Réponse : {"a": 1}.`,
+  2080: `Shallow copy et dict imbriqué
+
+Débutant :
+• d2["a"] pointe vers le même sous-dict que d["a"] ; ajouter y dans ce sous-dict est visible depuis d.
+
+Intermédiaire :
+• Seule l’identité du dict externe diffère, pas celle du nested.
+
+Expert :
+• copy.deepcopy ou copie manuelle du sous-arbre pour isoler.
+
+Concepts clés :
+• Partage de références, mutation profonde implicite.
+
+Distinctions clés :
+• Erreur classique en copie de configs JSON-like.
+
+Fonctionnement :
+• d["a"]["y"] = 2 touche l’objet dict interne partagé.
+
+Exécution étape par étape :
+1. d["a"] contient x et y.
+
+Ordre des opérations :
+• copy, mutation nested via d2.
+
+Cas d'utilisation courants :
+• Arbres de paramètres.
+
+Cas limites :
+• Remplacer entièrement d2["a"] casserait le partage.
+
+Considérations de performance :
+• Pas de copie récursive par défaut.
+
+Exemples :
+• {k: v.copy() for k,v in d.items()} shallow par valeur.
+
+Remarques :
+• Réponse : {"x": 1, "y": 2} pour d["a"] selon QCM.`,
+  2081: `d.__class__
+
+Débutant :
+• Pour un littéral dict, __class__ est le type dict, affiché comme classe dict en repr.
+
+Intermédiaire :
+• type(d) équivalent pour instances classiques.
+
+Expert :
+• Sous-classes affichent leur propre type.
+
+Concepts clés :
+• Objet classe, introspection.
+
+Distinctions clés :
+• Pas "dict" simple string sans repr de classe.
+
+Fonctionnement :
+• Attribut spécial sur instance.
+
+Exécution étape par étape :
+1. <class 'dict'>.
+
+Ordre des opérations :
+• Création dict, accès __class__.
+
+Cas d'utilisation courants :
+• Tests, sérialisation conditionnelle.
+
+Cas limites :
+• types dupliqués dans certains reload.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• isinstance(d, dict) plus idiomatique pour vérifier.
+
+Remarques :
+• Réponse : <class 'dict'> (forme du quiz).`,
+  2082: `isinstance(True, int)
+
+Débutant :
+• True : bool est une sous-classe de int dans le MRO.
+
+Intermédiaire :
+• True se comporte arithmétiquement comme 1 dans beaucoup de contextes.
+
+Expert :
+• isinstance(False, int) aussi True.
+
+Concepts clés :
+• Sous-typage bool/int historique.
+
+Distinctions clés :
+• type(True) is int est False.
+
+Fonctionnement :
+• Vérification dans la hiérarchie.
+
+Exécution étape par étape :
+1. True.
+
+Ordre des opérations :
+• isinstance appel.
+
+Cas d'utilisation courants :
+• APIs acceptant int ou bool.
+
+Cas limites :
+• Éviter d’en abuser pour logique métier.
+
+Considérations de performance :
+• Rapide.
+
+Exemples :
+• True + True == 2.
+
+Remarques :
+• Réponse : True.`,
+  2083: `setdefault("b", [])
+
+Débutant :
+• "b" absent : insère b avec valeur [] et retourne cette liste ; d contient a et b.
+
+Intermédiaire :
+• Même liste retournée sert aux futurs append.
+
+Expert :
+• Si "b" existait, retournerait la valeur existante sans remplacer.
+
+Concepts clés :
+• setdefault, mutation conditionnelle.
+
+Distinctions clés :
+• get n’insère pas.
+
+Fonctionnement :
+• Test présence, insertion défaut si absent.
+
+Exécution étape par étape :
+1. d == {"a": 1, "b": []} selon QCM.
+
+Ordre des opérations :
+• dict initial, setdefault.
+
+Cas d'utilisation courants :
+• Éviter if k not in d: d[k]=[].
+
+Cas limites :
+• Piège default mutable partagé si même liste passée en argument réutilisée (ici nouveau [] chaque appel).
+
+Considérations de performance :
+• Un lookup + insertion possible.
+
+Exemples :
+• d.setdefault(k, []).append(x).
+
+Remarques :
+• Réponse : {"a": 1, "b": []}.`,
+  2084: `dict(d, b=2)
+
+Débutant :
+• Constructeur dict copie d puis applique kwargs → nouvel objet e avec a:1 et b:2.
+
+Intermédiaire :
+• d inchangé si non réassigné.
+
+Expert :
+• Ordre : copie puis surcharge par kwargs.
+
+Concepts clés :
+• Fusion à la construction.
+
+Distinctions clés :
+• Pas e is d.
+
+Fonctionnement :
+• Nouveau mapping.
+
+Exécution étape par étape :
+1. e = {"a":1,"b":2}.
+
+Ordre des opérations :
+• Appel dict(mapping, **kwargs).
+
+Cas d'utilisation courants :
+• Cloner avec patch.
+
+Cas limites :
+• Clés kwargs doivent être identifiants str valides.
+
+Considérations de performance :
+• Copie O(n).
+
+Exemples :
+• dict(**d, b=2) en 3.5+ limites similaires.
+
+Remarques :
+• Réponse : {"a": 1, "b": 2}.`,
+  2085: `Compréhension filtrant "a"
+
+Débutant :
+• Garde k != "a" → seule paire b:2.
+
+Intermédiaire :
+• dict comprehension standard.
+
+Expert :
+• Peut combiner if sur v aussi.
+
+Concepts clés :
+• Filtrage items, nouvelle dict.
+
+Distinctions clés :
+• d original non modifié si pas réassigné.
+
+Fonctionnement :
+• Itération et test booléen.
+
+Exécution étape par étape :
+1. {"b": 2}.
+
+Ordre des opérations :
+• items puis comprehension.
+
+Cas d'utilisation courants :
+• Retirer clés sensibles avant export.
+
+Cas limites :
+• Clés dynamiques à exclure en ensemble.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• {k:v for k,v in d.items() if v>0}.
+
+Remarques :
+• Réponse : {"b": 2}.`,
+  2086: `Liste en compréhension avec pop
+
+Débutant :
+• pop("a") et pop("c") enlèvent ces clés ; il reste {"b":2}.
+
+Intermédiaire :
+• La liste en compréhension construit les valeurs poppées mais l’effet est sur d.
+
+Expert :
+• Ordre des pops suit la liste ["a","c"].
+
+Concepts clés :
+• pop side effect, mutation in-place.
+
+Distinctions clés :
+• Ne pas supposer d ordonné pour pop multiple sans liste explicite.
+
+Fonctionnement :
+• Retrait successif.
+
+Exécution étape par étape :
+1. d final {"b": 2}.
+
+Ordre des opérations :
+• compréhension exécutée, pops appliqués.
+
+Cas d'utilisation courants :
+• Nettoyer plusieurs clés connues.
+
+Cas limites :
+• KeyError si clé déjà absente.
+
+Considérations de performance :
+• O(k) pour k clés.
+
+Exemples :
+• for k in keys: d.pop(k, None) plus sûr.
+
+Remarques :
+• Réponse : {"b": 2}.`,
+  2087: `d.keys() == {"a", "b"}
+
+Débutant :
+• Les vues dict_keys peuvent comparer à un set même éléments → True.
+
+Intermédiaire :
+• Ordre des clés n’influence pas cette égalité mixte.
+
+Expert :
+• Détail CPython : implémentation optimisée de comparaison.
+
+Concepts clés :
+• Égalité vue clés / set.
+
+Distinctions clés :
+• == avec liste ordonnée serait autre règle.
+
+Fonctionnement :
+• Comparaison ensembliste des membres.
+
+Exécution étape par étape :
+1. True.
+
+Ordre des opérations :
+• .keys() puis == set.
+
+Cas d'utilisation courants :
+• Vérifier même domaine de clés.
+
+Cas limites :
+• Types non comparables → False ou erreur.
+
+Considérations de performance :
+• Dépend des tailles.
+
+Exemples :
+• set(d) == set(d.keys()).
+
+Remarques :
+• Réponse : True.`,
+  2088: `d.keys() == {"a", "c"}
+
+Débutant :
+• Clés réelles a,b ; set demandé a,c → pas même ensemble → False.
+
+Intermédiaire :
+• b manque à droite, c manque à gauche.
+
+Expert :
+• Symétrie de == exige égalité stricte des éléments.
+
+Concepts clés :
+• Test d’ensemble, faux négatif attendu.
+
+Distinctions clés :
+• Ne pas confondre sous-ensemble.
+
+Fonctionnement :
+• Comparaison échoue.
+
+Exécution étape par étape :
+1. False.
+
+Ordre des opérations :
+• keys puis ==.
+
+Cas d'utilisation courants :
+• Validation de schéma.
+
+Cas limites :
+• Vides : deux vides True.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• <= pour sous-ensemble si besoin.
+
+Remarques :
+• Réponse : False.`,
+  2089: `Counter("abracadabra").most_common(3)
+
+Débutant :
+• a compte 5 ; b et r comptent 2 ; c et d à 1 → top 3 : a, puis b et r avec tie-break d’insertion.
+
+Intermédiaire :
+• Liste de tuples (lettre, count).
+
+Expert :
+• b apparaît avant r dans la chaîne pour le départage.
+
+Concepts clés :
+• Counter, most_common, tie insertion order.
+
+Distinctions clés :
+• Pas inclure c avec 1 si on demande 3 plus hauts counts.
+
+Fonctionnement :
+• Tri par effectif puis ordre stable.
+
+Exécution étape par étape :
+1. [('a', 5), ('b', 2), ('r', 2)].
+
+Ordre des opérations :
+• Counter puis most_common(3).
+
+Cas d'utilisation courants :
+• Lettres les plus fréquentes en orthographe jouet.
+
+Cas limites :
+• Chaîne vide → [].
+
+Considérations de performance :
+• Implémentation efficace en C.
+
+Exemples :
+• Analyse de logs.
+
+Remarques :
+• Réponse : [('a', 5), ('b', 2), ('r', 2)] (première option).`,
+  2090: `list(d.items())[0]
+
+Débutant :
+• Un seul item ("a", 1) ; indice 0 est ce tuple.
+
+Intermédiaire :
+• items() vue matérialisée en liste ordonnée insertion.
+
+Expert :
+• Si plusieurs entrées, ordre suit dict insertion 3.7+.
+
+Concepts clés :
+• items, list, indexation.
+
+Distinctions clés :
+• [0] sur dict direct serait clé seule en itération, pas ici.
+
+Fonctionnement :
+• Premier élément de la liste de paires.
+
+Exécution étape par étape :
+1. ("a", 1).
+
+Ordre des opérations :
+• items, list, [0].
+
+Cas d'utilisation courants :
+• Prendre un échantillon de paire.
+
+Cas limites :
+• dict vide → IndexError.
+
+Considérations de performance :
+• Copie liste complète O(n) — coûteux si grand.
+
+Exemples :
+• next(iter(d.items())) sans copie.
+
+Remarques :
+• Réponse : ("a", 1).`,
+  2091: `{**d} == d
+
+Débutant :
+• Le dépaquetage crée un nouveau dict aux mêmes paires → égalité par contenu True.
+
+Intermédiaire :
+• == compare clés et valeurs, pas identité.
+
+Expert :
+• Utile pour tests fonctionnels.
+
+Concepts clés :
+• Égalité structurelle des dicts.
+
+Distinctions clés :
+• is serait False (question suivante).
+
+Fonctionnement :
+• Construction shallow puis comparaison.
+
+Exécution étape par étape :
+1. True.
+
+Ordre des opérations :
+• ** spread, ==.
+
+Cas d'utilisation courants :
+• Cloner pour comparer après mutation ailleurs.
+
+Cas limites :
+• Valeurs mutables partagées malgré dict distinct.
+
+Considérations de performance :
+• Copie O(n).
+
+Exemples :
+• {**d, "c":3} fusion.
+
+Remarques :
+• Réponse : True.`,
+  2092: `{**d} is d
+
+Débutant :
+• is teste l’identité d’objet ; le spread produit un nouveau dict → False.
+
+Intermédiaire :
+• Même contenu ne suffit pas pour is.
+
+Expert :
+• Seul d is d est True pour la même variable.
+
+Concepts clés :
+• Identité vs égalité.
+
+Distinctions clés :
+• == True du coup souvent pour même contenu.
+
+Fonctionnement :
+• Deux objets distincts en mémoire.
+
+Exécution étape par étape :
+1. False.
+
+Ordre des opérations :
+• création nouvelle dict, is.
+
+Cas d'utilisation courants :
+• Cache keyed by id.
+
+Cas limites :
+• interning rare pour petits objets immuables, pas pour dict.
+
+Considérations de performance :
+• Allocation nouvelle table.
+
+Exemples :
+• copy = {**d}.
+
+Remarques :
+• Réponse : False.`,
+  2093: `exec sur d
+
+Débutant :
+• exec exécute la chaîne comme code Python ; assignation d["a"]=1 modifie d dans le scope courant passé (ici globals/locals implicites incluent d).
+
+Intermédiaire :
+• Sans dict globals/locals explicite, d doit être visible — l’énoncé suppose d dans le namespace.
+
+Expert :
+• Préférer ast.literal_eval pour données non fiables.
+
+Concepts clés :
+• exec, effets de bord sur dict.
+
+Distinctions clés :
+• eval ne ferait pas d’assignation multi-statement de la même façon.
+
+Fonctionnement :
+• Exécution de la suite d’assignation.
+
+Exécution étape par étape :
+1. d contient "a":1.
+
+Ordre des opérations :
+• d={}, exec(...).
+
+Cas d'utilisation courants :
+• REPL, outils dynamiques (sécurité faible).
+
+Cas limites :
+• Passer dict dédié pour globals/locals pour isolation.
+
+Considérations de performance :
+• Compilation + exécution.
+
+Exemples :
+• exec avec {"d": d} en locals.
+
+Remarques :
+• Réponse : {"a": 1}.`,
+  2094: `json.loads type
+
+Débutant :
+• Un objet JSON {} devient un dict Python.
+
+Intermédiaire :
+• Les nombres JSON deviennent int/float selon valeur.
+
+Expert :
+• json.load (fichier) idem pour type racine objet.
+
+Concepts clés :
+• Parsing JSON, mapping Python.
+
+Distinctions clés :
+• Pas OrderedDict par défaut.
+
+Fonctionnement :
+• Décodeur json standard.
+
+Exécution étape par étape :
+1. type dict.
+
+Ordre des opérations :
+• loads sur chaîne.
+
+Cas d'utilisation courants :
+• APIs REST.
+
+Cas limites :
+• Clés dupliquées JSON → dernière gagne.
+
+Considérations de performance :
+• Parser C rapide.
+
+Exemples :
+• object_hook pour types custom.
+
+Remarques :
+• Réponse : dict (type du quiz).`,
+  2095: `next(iter(d))
+
+Débutant :
+• iter(d) sur les clés ; première clé en ordre d’insertion 3.7+ est "a".
+
+Intermédiaire :
+• next consomme le premier élément.
+
+Expert :
+• Pour valeurs, iter(d.values()).
+
+Concepts clés :
+• Itérateur, ordre d’insertion.
+
+Distinctions clés :
+• Pas tri alphabétique automatique.
+
+Fonctionnement :
+• Création itérateur clés, avance une fois.
+
+Exécution étape par étape :
+1. "a".
+
+Ordre des opérations :
+• dict littéral ordre a,b,c puis next iter.
+
+Cas d'utilisation courants :
+• Prendre un élément arbitraire déterministe (premier).
+
+Cas limites :
+• dict vide → StopIteration.
+
+Considérations de performance :
+• O(1) pour créer iter.
+
+Exemples :
+• next(iter(d), default).
+
+Remarques :
+• Réponse : "a".`,
+  2096: `next(reversed(d))
+
+Débutant :
+• reversed(d) sur les clés depuis 3.8+ (comportement documenté) donne ordre inverse insertion ; dernière clé "c".
+
+Intermédiaire :
+• Première étape du reverse iterator est la fin logique.
+
+Expert :
+• Vérifier version si portabilité ancienne.
+
+Concepts clés :
+• reversed sur dict keys view.
+
+Distinctions clés :
+• Pas list(d)[-1] nécessaire.
+
+Fonctionnement :
+• Itérateur inverse, next une fois.
+
+Exécution étape par étape :
+1. "c".
+
+Ordre des opérations :
+• dict a,b,c, reversed, next.
+
+Cas d'utilisation courants :
+• Dernier inséré en LIFO logique.
+
+Cas limites :
+• Version Python <3.8 peut ne pas supporter reversed(d).
+
+Considérations de performance :
+• O(1) pour démarrer iter.
+
+Exemples :
+• Accès dernier sans pop.
+
+Remarques :
+• Réponse : "c".`,
+  2097: `Compréhension avec enumerate("abc")
+
+Débutant :
+• enumerate produit (0,"a"), (1,"b"), (2,"c") ; clés = indices, valeurs = caractères.
+
+Intermédiaire :
+• Résultat {0:"a", 1:"b", 2:"c"}.
+
+Expert :
+• start optionnel d’enumerate changerait les clés.
+
+Concepts clés :
+• enumerate, dict comprehension.
+
+Distinctions clés :
+• Pas {char: index} sans swap.
+
+Fonctionnement :
+• Boucle for sur paires.
+
+Exécution étape par étape :
+1. Mapping index → lettre.
+
+Ordre des opérations :
+• enumerate puis comprehension.
+
+Cas d'utilisation courants :
+• Positions de caractères.
+
+Cas limites :
+• Unicode graphemes vs codepoints hors scope.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• {i:x for i,x in enumerate(lst)}.
+
+Remarques :
+• Réponse : {0: "a", 1: "b", 2: "c"}.`,
+  2098: `tuple(d.items())
+
+Débutant :
+• items() donne paires dans l’ordre insertion ; tuple() fige en tuple de tuples.
+
+Intermédiaire :
+• (("a",1),("b",2)) pour l’énoncé standard.
+
+Expert :
+• Immutable snapshot superficiel des paires.
+
+Concepts clés :
+• Vue items, conversion tuple.
+
+Distinctions clés :
+• tuple(d) donnerait seulement les clés.
+
+Fonctionnement :
+• Itération complète de la vue.
+
+Exécution étape par étape :
+1. (('a', 1), ('b', 2)).
+
+Ordre des opérations :
+• items puis tuple.
+
+Cas d'utilisation courants :
+• Retourner clé-valeurs figées pour fonction.
+
+Cas limites :
+• dict vide → tuple vide.
+
+Considérations de performance :
+• O(n) copie structure.
+
+Exemples :
+• clé pour memoization ordonnée.
+
+Remarques :
+• Réponse : (('a', 1), ('b', 2)).`,
+  2099: `Plusieurs update sur "a"
+
+Débutant :
+• Premier update met a:2 ; second update(a=3) met a:3 → valeur finale 3.
+
+Intermédiaire :
+• kwargs et mapping écrasent la même clé successivement.
+
+Expert :
+• Ordre des appels prime sur la dernière écriture.
+
+Concepts clés :
+• update avec mapping et kwargs.
+
+Distinctions clés :
+• Fusion | ferait une nouvelle dict en 3.9+.
+
+Fonctionnement :
+• Deux écritures successives sur même clé.
+
+Exécution étape par étape :
+1. {"a": 3}.
+
+Ordre des opérations :
+• dict initial, update dict, update kwargs.
+
+Cas d'utilisation courants :
+• Patchs de configuration en cascade.
+
+Cas limites :
+• Clés du mapping et kwargs collision → dernière source dans l’appel update gagne selon signature.
+
+Considérations de performance :
+• Deux passes.
+
+Exemples :
+• d.update(**env_vars).
+
+Remarques :
+• Réponse : {"a": 3}.`,
+  2100: `all(k == k.lower() for k in d)
+
+Débutant :
+• Itération sur les clés "abc" et "def" ; toutes sont déjà minuscules → True.
+
+Intermédiaire :
+• all court-circuite sur premier False.
+
+Expert :
+• Si une clé avait une majuscule, résultat False.
+
+Concepts clés :
+• all, générateur, méthode str.lower.
+
+Distinctions clés :
+• Ne teste pas les valeurs, seulement les clés.
+
+Fonctionnement :
+• Deux comparaisons True.
+
+Exécution étape par étape :
+1. True.
+
+Ordre des opérations :
+• dict keys, générateur, all.
+
+Cas d'utilisation courants :
+• Valider clés snake_case.
+
+Cas limites :
+• Clés non str → erreur sur .lower.
+
+Considérations de performance :
+• Court-circuit utile.
+
+Exemples :
+• any pour existence d’une majuscule.
+
+Remarques :
+• Réponse : True.`,
   2101: `Le mot-clé class définit une nouvelle classe. Si class MyClass: pass, alors this définit une classe nommée MyClass. L'instruction class crée un objet classe, qui sert de modèle pour créer des instances (objets). L'instruction pass est un placeholder qui ne fait rien — elle est utilisée quand le corps d'une classe est vide. Les classes sont fondamentales à la programmation orientée objet en Python, permettant de définir des types personnalisés avec attributs et méthodes.
 
 Définition de classe :

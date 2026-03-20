@@ -294,7 +294,9 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
 - **Done:** **1901–1950** — `level6_intermediate_a.ts` Q1–50 (dicts imbriqués, setdefault, vues, **kwargs, etc.). Fragments: `fr-l6-1901-1925.mjs` + `fr-l6-1926-1950.mjs`, agrégateur `fr-l6-1901-1950.mjs`. Patch: `patch-fr-l6-1901-1950.mjs`. Build OK.
 - **Done:** **1951–2000** — `level6_intermediate_b.ts` Q1–50 (dict comprehensions avancées, ChainMap, fusion `|` / `|=`, dunder `__contains__`, etc.). Fragments: `fr-l6-1951-1975.mjs` + `fr-l6-1976-2000.mjs`, agrégateur `fr-l6-1951-2000.mjs`. Patch: `patch-fr-l6-1951-2000.mjs`. Build OK.
 - **Done:** **2001–2050** — `level6_expert_a.ts` Q1–50 (Counter, defaultdict, OrderedDict). Fragments: `fr-l6-2001-2025.mjs` + `fr-l6-2026-2050.mjs`, agrégateur `fr-l6-2001-2050.mjs`. Patch: `patch-fr-l6-2001-2050.mjs`. Build OK.
-- **Next:** **2051–2100** — `level6_expert_b.ts` Q1–50. Patch : START `` 2051: `functools.reduce`` → END `` 2101: `Le mot-clé class`` (héritage FR à remplacer par le thème réel de l’ID 2101 dans la banque).
+- **Done:** **2051–2100** — `level6_expert_b.ts` Q51–100 (hashabilité, __missing__, MappingProxyType, copies, vues, etc.). Fragments: `fr-l6-2051-2075.mjs` + `fr-l6-2076-2100.mjs`, agrégateur `fr-l6-2051-2100.mjs`. Patch: `patch-fr-l6-2051-2100.mjs`. Build OK.
+- **Level 6 FR 1801–2100 complete.**
+- **Next:** **Level 7 FR 2101–2150** — aligner sur `questionsBank` niveau 7. Patch : START `` 2101: `Le mot-clé class`` → END `` 2151: `La méthode __str__`` (texte actuel encore mixte EN/FR ; à remplacer selon la banque).
 
 ### Immediate next batches
 1. Level 6 FR (suite **1851–2100**): fragments + patches per `QUESTIONS_BANK`.
@@ -328,4 +330,4 @@ For each batch:
 
 ## Next Action (when resuming)
 
-Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2: **601–900 done**. Levels 3–5: **901–1800 done**. **Level 6 FR : 1801–2050 done** ; reprendre **2051–2100** (`level6_expert_b`).
+Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2: **601–900 done**. Levels 3–5: **901–1800 done**. **Level 6 FR : 1801–2100 done** ; reprendre **Level 7 : 2101+**.
