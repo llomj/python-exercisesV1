@@ -129103,6 +129103,2088 @@ Exemples :
 
 Remarques :
 • Réponse : classe MyIter (instance de type utilisateur, affichage du type <class '__main__.MyIter'> en script) — 1re option.`,
+  3051: `Décorateur def decorator(func): return func puis @decorator sur def func(): pass ; type(func) ?
+
+Débutant :
+• Le @ remplace le nom func par le résultat de decorator(ancienne_func).
+• Ici decorator renvoie la même fonction : type reste une fonction classique.
+
+Intermédiaire :
+• C'est un décorateur « no-op », utile pour cadrer des décorateurs conditionnels ou des tests.
+
+Expert :
+• À l'exécution, func pointe vers l'objet fonction retourné ; sans wraps, __name__ reste souvent correct si on retourne func tel quel.
+
+Concepts clés :
+• Syntaxe @ comme sucre pour func = decorator(func).
+
+Distinctions clés :
+• Objet décorateur vs classe avec __call__ ; vs wrapper qui remplace la fonction.
+
+Fonctionnement :
+• Après définition du def sous @, Python appelle decorator avec la fonction créée.
+
+Exécution étape par étape :
+1. Création de l'objet fonction func.
+2. Appel decorator(func) → retour func.
+3. Liaison du nom func vers cette valeur.
+
+Ordre des opérations :
+• Le corps du def est compilé avant l'appel du décorateur.
+
+Cas d'utilisation courants :
+• Placeholder, mesure de performance désactivable, enregistrement dans un registre.
+
+Cas limites :
+• Si decorator retourne autre chose qu'un callable, les appels futurs cassent.
+
+Considérations de performance :
+• Une couche de fonction supplémentaire si le décorateur retourne un wrapper.
+
+Exemples :
+• @register
+  def handler(): ...
+
+Remarques :
+• Réponse : type fonction (class function) — 1re option.`,
+  3052: `Décorateur qui définit wrapper() appelant func() ; @decorator sur func qui return 1 ; func() ?
+
+Débutant :
+• Le nom func est rebondi sur wrapper ; l'appel func() exécute wrapper puis l'originale.
+
+Intermédiaire :
+• wrapper() return func() → ici 1.
+
+Expert :
+• Sans functools.wraps, __name__ et __doc__ pointent souvent vers wrapper.
+
+Concepts clés :
+• Enveloppe autour du callable d'origine.
+
+Distinctions clés :
+• Wrapper sans *args vs wrapper générique question suivante.
+
+Fonctionnement :
+• closure : wrapper retient func de l'environnement du décorateur.
+
+Exécution étape par étape :
+1. func désigne wrapper.
+2. func() → wrapper().
+3. wrapper appelle l'ancienne fonction → 1.
+
+Ordre des opérations :
+• Évaluation des arguments au moment de l'appel extérieur.
+
+Cas d'utilisation courants :
+• Journalisation, chronométrage, contrôle d'accès.
+
+Cas limites :
+• Récursion si wrapper appelle le mauvais nom de fonction.
+
+Considérations de performance :
+• Coût d'un niveau d'appel supplémentaire par invocation.
+
+Exemples :
+• print avant/après return func(*args, **kwargs).
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  3053: `Wrapper avec *args, **kwargs relayés ; décorateur sur add(x,y) return x+y ; add(1, 2) ?
+
+Débutant :
+• Le wrapper accepte n'importe quelle signature et transmet à la fonction d'origine.
+
+Intermédiaire :
+• add(1, 2) → wrapper(1, 2) → add originale → 3.
+
+Expert :
+• Modèle standard pour décorateurs réutilisables (presque toutes signatures).
+
+Concepts clés :
+• Dépaquetage transparent des arguments.
+
+Distinctions clés :
+• *args tuple et **kwargs dict vs signature fixe.
+
+Fonctionnement :
+• L'appel func(*args, **kwargs) reconstruit l'appel utilisateur.
+
+Exécution étape par étape :
+1. Construction du tuple (1, 2) pour positions.
+2. add interne invoquée avec x=1, y=2.
+3. Somme 3 retournée à travers wrapper.
+
+Ordre des opérations :
+• Évaluation des arguments avant entrée dans wrapper.
+
+Cas d'utilisation courants :
+• retry, cache, validation d'arguments.
+
+Cas limites :
+• inspect.signature sur la fonction décorée peut ne plus refléter la réalité sans wraps.
+
+Considérations de performance :
+• Léger surcoût de tuple/dict sur appels très fréquents.
+
+Exemples :
+• def w(*a, **kw): print(a, kw); return f(*a, **kw).
+
+Remarques :
+• Réponse : 3 — 1re option.`,
+  3054: `from functools import wraps ; décorateur avec @wraps(func) sur wrapper ; func.__name__ après décoration ?
+
+Débutant :
+• wraps copie nom, doc et attributs utiles de la fonction d'origine vers le wrapper.
+
+Intermédiaire :
+• Sans wraps, __name__ serait souvent 'wrapper'.
+
+Expert :
+• Met à jour __wrapped__ pour introspection (Python 3).
+
+Concepts clés :
+• Préservation de l'identité documentaire du callable.
+
+Distinctions clés :
+• wraps vs copie manuelle des attributs.
+
+Fonctionnement :
+• Le décorateur wraps est lui-même appliqué au wrapper après sa définition.
+
+Exécution étape par étape :
+1. Création de wrapper.
+2. @wraps(func) ajuste les métadonnées du wrapper.
+3. Lecture __name__ → 'func'.
+
+Ordre des opérations :
+• wraps s'exécute au moment de la définition du décorateur, pas à chaque appel.
+
+Cas d'utilisation courants :
+• Frameworks, logs lisibles, pydoc.
+
+Cas limites :
+• Plusieurs couches de décorateurs : chaîner wraps correctement.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• help(mon_decorateur) montrant le bon nom.
+
+Remarques :
+• Réponse : chaîne 'func' — 1re option.`,
+  3055: `def decorator(arg): return lambda func: func puis @decorator(1) sur une fonction ?
+
+Débutant :
+• @decorator(1) appelle d'abord decorator(1) qui renvoie le vrai décorateur.
+
+Intermédiaire :
+• Ici le lambda renvoie func inchangée : motif d'usine à paramètres.
+
+Expert :
+• Généralisation : usine retournant une fonction décorateur qui crée wrapper.
+
+Concepts clés :
+• Deux niveaux d'appel : configuration puis cible.
+
+Distinctions clés :
+• @dec vs @dec() quand dec est déjà un décorateur.
+
+Fonctionnement :
+• Évaluation de decorator(1) avant application au def.
+
+Exécution étape par étape :
+1. decorator(1) → callable lambda.
+2. Ce callable reçoit la fonction définie.
+3. Retour func inchangée.
+
+Ordre des opérations :
+• Parenthèses du haut de la pile syntaxique en premier.
+
+Cas d'utilisation courants :
+• @retry(3), @route('/api').
+
+Cas limites :
+• Oublier de retourner un callable depuis decorator(arg).
+
+Considérations de performance :
+• Coût d'une fermeture supplémentaire par configuration.
+
+Exemples :
+• def repeat(n): ... return actual_decorator.
+
+Remarques :
+• Réponse : décorateur paramétrable (usine) — 1re option.`,
+  3056: `Classe Decorator avec __init__(self, func) et __call__ qui renvoie self.func() ; @Decorator sur func return 1 ; func() ?
+
+Débutant :
+• @Decorator remplace func par une instance dont __call__ fait office d'appel.
+
+Intermédiaire :
+• func() devient instance() → __call__ → self.func() → 1.
+
+Expert :
+• Permet de stocker un état (compteur, cache) sur self.
+
+Concepts clés :
+• Callable instance via __call__.
+
+Distinctions clés :
+• Décorateur fonction vs classe ; similitude avec functools.partial stateful.
+
+Fonctionnement :
+• Decorator(func) construit l'objet lié à la fonction d'origine.
+
+Exécution étape par étape :
+1. Instanciation avec la fonction cible.
+2. Appel () déclenche __call__.
+3. Délégation à la fonction stockée.
+
+Ordre des opérations :
+• self.func résolu avant l'appel.
+
+Cas d'utilisation courants :
+• Compteur d'appels, rate limiting par instance.
+
+Cas limites :
+• Méthodes : attention au binding self si mal décoré.
+
+Considérations de performance :
+• Un dict d'instance de plus qu'une simple fonction.
+
+Exemples :
+• class CountCalls: ... __call__ incrémente puis appelle func.
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  3057: `@staticmethod sur def func(): return 1 ?
+
+Débutant :
+• Transforme la fonction définie dans le corps de classe en méthode statique.
+
+Intermédiaire :
+• Pas de self implicite injecté à l'appel.
+
+Expert :
+• Le descripteur staticmethod renvoie la fonction nue à l'accès via la classe ou une instance.
+
+Concepts clés :
+• Regroupement logique dans la classe sans dépendre d'une instance.
+
+Distinctions clés :
+• staticmethod vs classmethod vs méthode d'instance.
+
+Fonctionnement :
+• Lookup sur la classe produit un objet fonction sans lier self.
+
+Exécution étape par étape :
+1. Résolution de l'attribut sur Classe.func ou inst.func.
+2. Appel direct sans passer l'instance.
+
+Ordre des opérations :
+• Même ordre qu'un appel de fonction ordinaire après résolution.
+
+Cas d'utilisation courants :
+• Utilitaires mathématiques, parseurs liés au domaine de la classe.
+
+Cas limites :
+• Ne peut pas accéder facilement aux attributs d'instance sans les passer.
+
+Considérations de performance :
+• Très proche d'une fonction module.
+
+Exemples :
+• MathUtils.norm(x, y).
+
+Remarques :
+• Réponse : décorateur de méthode statique — 1re option.`,
+  3058: `@classmethod sur def method(cls): return cls ?
+
+Débutant :
+• Premier paramètre implicite est la classe, pas l'instance.
+
+Intermédiaire :
+• return cls renvoie l'objet classe (constructeur alternatif possible).
+
+Expert :
+• Le descripteur lie la fonction à la classe appelante, y compris sous-classes.
+
+Concepts clés :
+• Fabriques et logique au niveau classe.
+
+Distinctions clés :
+• classmethod vs staticmethod ; cls vs self.
+
+Fonctionnement :
+• type.__get__ injecte la classe réelle lors de l'accès.
+
+Exécution étape par étape :
+1. Classe.sousmethode() ou inst.sousmethode().
+2. Python passe la classe en premier argument.
+3. Corps exécuté avec cls lié.
+
+Ordre des opérations :
+• Résolution MRO si héritage.
+
+Cas d'utilisation courants :
+• from_dict, alternative constructors.
+
+Cas limites :
+• Confondre cls et type(self) dans des héritages profonds.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Person.from_birth_year(...).
+
+Remarques :
+• Réponse : décorateur de méthode de classe — 1re option.`,
+  3059: `@property sur def x(self): return 1 ?
+
+Débutant :
+• Expose une méthode comme accès attribut : obj.x sans parenthèses.
+
+Intermédiaire :
+• Sous le capot : descripteur non-data avec getter.
+
+Expert :
+• On peut ajouter @x.setter pour l'affectation contrôlée.
+
+Concepts clés :
+• API stable lecture d'attribut calculé.
+
+Distinctions clés :
+• property vs méthode get_x() ; vs attribut public mutable.
+
+Fonctionnement :
+• __get__ du property appelle la fonction getter.
+
+Exécution étape par étape :
+1. Accès obj.x.
+2. property.__get__ invoqué.
+3. return 1 depuis la méthode décorée.
+
+Ordre des opérations :
+• Pas d'appel utilisateur explicite de fonction.
+
+Cas d'utilisation courants :
+• Champs dérivés, validation à l'écriture.
+
+Cas limites :
+• property sans setter → AttributeError en assignation.
+
+Considérations de performance :
+• Coût d'un appel Python par accès.
+
+Exemples :
+• aire d'un cercle depuis rayon.
+
+Remarques :
+• Réponse : décorateur property — 1re option.`,
+  3060: `@decorator1 puis @decorator2 au-dessus du même def ; ordre d'application ?
+
+Débutant :
+• Le décorateur le plus proche du def s'applique en premier.
+
+Intermédiaire :
+• Équivalent à func = decorator1(decorator2(func)).
+
+Expert :
+• L'ordre d'exécution à l'appel suit l'onion : d'abord decorator1 (externe), puis interne.
+
+Concepts clés :
+• Composition de comportements transverses.
+
+Distinctions clés :
+• Bas vers haut à la définition vs ordre visuel lecture.
+
+Fonctionnement :
+• Chaînage de callables successifs.
+
+Exécution étape par étape :
+1. Création fonction nue.
+2. Appliquer decorator2 → fonction intermédiaire.
+3. Appliquer decorator1 → fonction finale.
+
+Ordre des opérations :
+• Chaque décorateur reçoit le résultat du précédent.
+
+Cas d'utilisation courants :
+• auth + log + validation.
+
+Cas limites :
+• Mauvais ordre si un décorateur doit voir la fonction « brute ».
+
+Considérations de performance :
+• N niveaux = N appels enveloppants.
+
+Exemples :
+• @app.route
+  @login_required
+  def view(): ...
+
+Remarques :
+• Réponse : plusieurs décorateurs empilés — 1re option.`,
+  3061: `Singleton via __new__ : deux appels Singleton() donnent la même identité ?
+
+Débutant :
+• __new__ contrôle la création ; ici on recycle _instance de classe.
+
+Intermédiaire :
+• obj1 is obj2 → True.
+
+Expert :
+• Sous-classes : souvent un _instances par sous-classe ou pattern dédié.
+
+Concepts clés :
+• Point d'accès unique partagé.
+
+Distinctions clés :
+• Singleton vs Borg (état partagé) vs module-level object.
+
+Fonctionnement :
+• Premier appel alloue via super().__new__ ; suivants retournent le cache.
+
+Exécution étape par étape :
+1. Premier Singleton() : _instance None → création.
+2. Second : branche existante → même objet.
+
+Ordre des opérations :
+• __new__ avant __init__ (attention aux doubles init si non gardé).
+
+Cas d'utilisation courants :
+• Connexions coûteuses, configuration globale contrôlée.
+
+Cas limites :
+• Multithread : verrous nécessaires pour création sûre.
+
+Considérations de performance :
+• Une seule instance en mémoire.
+
+Exemples :
+• logger central, driver matériel.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  3062: `Factory.create(type) avec @staticmethod return type() ; Factory.create(list) ?
+
+Débutant :
+• On instancie dynamiquement la classe passée en argument.
+
+Intermédiaire :
+• list() sans arguments → liste vide [].
+
+Expert :
+• Peut router sur sous-classes ou enregistrement de builders.
+
+Concepts clés :
+• Découplage client / classe concrète.
+
+Distinctions clés :
+• Factory simple vs Abstract Factory.
+
+Fonctionnement :
+• type est un objet classe ; () appelle son constructeur.
+
+Exécution étape par étape :
+1. Résolution Factory.create.
+2. Appel list().
+3. Retour [].
+
+Ordre des opérations :
+• Évaluation de list avant l'appel.
+
+Cas d'utilisation courants :
+• Sérialisation, plugins par nom de classe.
+
+Cas limites :
+• type non callable ou abstract → TypeError.
+
+Considérations de performance :
+• Identique à un constructeur direct.
+
+Exemples :
+• Factory.create(dict) → {}.
+
+Remarques :
+• Réponse : liste vide [] — 1re option.`,
+  3063: `Classe Observer avec attach et notify qui appelle update sur chaque observateur ?
+
+Débutant :
+• Le sujet tient une liste d'observateurs et les prévient.
+
+Intermédiaire :
+• La liste en compréhension exécute o.update() pour chaque entrée.
+
+Expert :
+• Variantes : file d'événements, dispatch asynchrone, faiblesses circulaires.
+
+Concepts clés :
+• Couplage faible publication / abonnement.
+
+Distinctions clés :
+• Observer vs signaux Qt vs asyncio.Queue.
+
+Fonctionnement :
+• notify parcourt _observers dans l'ordre d'enregistrement.
+
+Exécution étape par étape :
+1. attach enregistre des callbacks.
+2. notify itère.
+3. Effets de bord dans update.
+
+Ordre des opérations :
+• Ordre d'insertion détermine l'ordre de notification.
+
+Cas d'utilisation courants :
+• Modèle MVC, flux de données réactifs.
+
+Cas limites :
+• Observer qui modifie la liste pendant notify.
+
+Considérations de performance :
+• O(n) observateurs par notification.
+
+Exemples :
+• UI qui se rafraîchit quand le modèle change.
+
+Remarques :
+• Réponse : motif Observer — 1re option.`,
+  3064: `Strategy de base avec StrategyA et StrategyB implémentant execute différemment ?
+
+Débutant :
+• Même interface execute, comportements interchangeables.
+
+Intermédiaire :
+• Le client choisit la classe concrète à l'exécution.
+
+Expert :
+• Complète Open/Closed : nouvelles stratégies sans modifier le code client.
+
+Concepts clés :
+• Polymorphisme pour algorithmes.
+
+Distinctions clés :
+• Strategy vs simple if/elif sur un code.
+
+Fonctionnement :
+• Appel dynamique sur l'instance de stratégie choisie.
+
+Exécution étape par étape :
+1. Liaison d'une variable stratégie à StrategyA ou B.
+2. stratégie.execute() résolu par MRO.
+
+Ordre des opérations :
+• Pas de magie : simple appel de méthode.
+
+Cas d'utilisation courants :
+• Tri, compression, règles métier branchées.
+
+Cas limites :
+• Trop de stratégies : registre ou dict peut aider.
+
+Considérations de performance :
+• Indirection négligeable face au coût de l'algorithme.
+
+Exemples :
+• Moteur de prix avec stratégies promo.
+
+Remarques :
+• Réponse : motif Strategy — 1re option.`,
+  3065: `Adapter avec __init__(obj) et method qui délègue à obj.other_method ?
+
+Débutant :
+• Traduit l'API attendue vers l'API réelle de l'objet enveloppé.
+
+Intermédiaire :
+• Le client appelle method() sans connaître other_method.
+
+Expert :
+• Adaptateur d'objet vs adaptateur de classe (héritage multiple).
+
+Concepts clés :
+• Compatibilité d'interfaces hétérogènes.
+
+Distinctions clés :
+• Adapter vs Facade (simplifie un sous-système entier).
+
+Fonctionnement :
+• Délégation par composition self.obj.
+
+Exécution étape par étape :
+1. Adapter construit avec l'instance legacy.
+2. method() forward.
+
+Ordre des opérations :
+• Résolution sur self.obj.
+
+Cas d'utilisation courants :
+• Wrappers API tierces, tests avec doubles.
+
+Cas limites :
+• Fuites si l'adaptateur expose trop la cible.
+
+Considérations de performance :
+• Un saut d'appel supplémentaire.
+
+Exemples :
+• XMLAdapter.wrap(legacy_parser).
+
+Remarques :
+• Réponse : motif Adapter — 1re option.`,
+  3066: `Builder avec parts, add qui append et return self, build qui join ?
+
+Débutant :
+• Construction incrémentale puis assemblage final.
+
+Intermédiaire :
+• return self permet le chaînage b.add('a').add('b').
+
+Expert :
+• Variantes avec validation obligatoire avant build.
+
+Concepts clés :
+• Séparer la représentation interne du produit exposé.
+
+Distinctions clés :
+• Builder vs constructeur géant avec 12 paramètres.
+
+Fonctionnement :
+• État accumulé dans self.parts.
+
+Exécution étape par étape :
+1. add plusieurs fois.
+2. build concatène et retourne chaîne (exemple).
+
+Ordre des opérations :
+• join lit la liste dans l'ordre courant.
+
+Cas d'utilisation courants :
+• Requêtes SQL, documents, UI pas à pas.
+
+Cas limites :
+• Oublier reset() si on réutilise le même builder.
+
+Considérations de performance :
+• join sur str est efficace.
+
+Exemples :
+• StringBuilder fluent.
+
+Remarques :
+• Réponse : motif Builder — 1re option.`,
+  3067: `Prototype clone return type(self)() ?
+
+Débutant :
+• Crée une nouvelle instance de la même classe sans nommer explicitement la classe dans le clone.
+
+Intermédiaire :
+• Ici constructeur par défaut : champs par défaut, pas copie profonde des attributs existants.
+
+Expert :
+• Vrai clonage copie souvent self.__dict__ ou utilise copy.copy.
+
+Concepts clés :
+• Duplication à partir d'un exemplaire.
+
+Distinctions clés :
+• Prototype vs Factory qui choisit le type.
+
+Fonctionnement :
+• type(self) résout la classe dynamiquement (sous-classes incluses).
+
+Exécution étape par étape :
+1. Appel clone sur instance a.
+2. type(self)() fabrique b neuf.
+
+Ordre des opérations :
+• __init__ de b s'exécute selon sa définition.
+
+Cas d'utilisation courants :
+• Graphes d'objets, éditeurs avec duplication.
+
+Cas limites :
+• États mutables partagés si shallow copy implicite.
+
+Considérations de performance :
+• Souvent meilleur que sérialiser/désérialiser.
+
+Exemples :
+• Document.clone() pour variante.
+
+Remarques :
+• Réponse : motif Prototype — 1re option.`,
+  3068: `Facade agrège subsystem1 et subsystem2 ; operation combine leurs method() ?
+
+Débutant :
+• Une porte d'entrée unique cache plusieurs collaborations.
+
+Intermédiaire :
+• return s1.method() + s2.method() illustre l'orchestration.
+
+Expert :
+• Réduit le couplage client ↔ nombre de types internes.
+
+Concepts clés :
+• Simplification surface API.
+
+Distinctions clés :
+• Facade vs Adapter ciblant une seule incompabilité.
+
+Fonctionnement :
+• __init__ tient les références ; operation orchestre.
+
+Exécution étape par étape :
+1. Création façade avec sous-systèmes.
+2. operation appelle deux méthodes internes.
+3. Agrégation du résultat.
+
+Ordre des opérations :
+• Ordre des appels internes peut importer (effets de bord).
+
+Cas d'utilisation courants :
+• SDK haut niveau au-dessus HTTP + parse + cache.
+
+Cas limites :
+• Facade « dieu » trop large.
+
+Considérations de performance :
+• Coût = somme des sous-appels.
+
+Exemples :
+• DatabaseFacade.get_user.
+
+Remarques :
+• Réponse : motif Facade — 1re option.`,
+  3069: `Command avec execute ; Invoker set_command puis execute appelle command.execute ?
+
+Débutant :
+• Encapsule une action comme objet appelable plus tard.
+
+Intermédiaire :
+• Découple qui déclenche de ce qui est exécuté.
+
+Expert :
+• Base pour undo, file d'attente, macro.
+
+Concepts clés :
+• Requête = objet first-class.
+
+Distinctions clés :
+• Command vs simple fonction passée (historique/undo).
+
+Fonctionnement :
+• Invoker retient une référence command et délègue.
+
+Exécution étape par étape :
+1. set_command enregistre cmd.
+2. execute() invoque cmd.execute().
+
+Ordre des opérations :
+• command peut être remplacée à chaud.
+
+Cas d'utilisation courants :
+• GUI boutons, tâches planifiées.
+
+Cas limites :
+• command None → AttributeError si non initialisée.
+
+Considérations de performance :
+• Indirection minime.
+
+Exemples :
+• RemoteControl et LightOnCommand.
+
+Remarques :
+• Réponse : motif Command — 1re option.`,
+  3070: `Composite Component / Composite avec children et operation sur chaque enfant ?
+
+Débutant :
+• Arbre : nœuds composites et feuilles partagent une interface operation.
+
+Intermédiaire :
+• La liste en compréhension propage operation récursivement si enfants composites.
+
+Expert :
+• Uniformité client : traiter un seul nœud ou tout un sous-arbre pareil.
+
+Concepts clés :
+• Récursion structurelle.
+
+Distinctions clés :
+• Composite vs simple conteneur de listes sans polymorphisme.
+
+Fonctionnement :
+• add stocke enfants ; operation itère.
+
+Exécution étape par étape :
+1. operation sur composite.
+2. Pour chaque enfant, operation (récursif éventuel).
+
+Ordre des opérations :
+• Parcours en profondeur selon l'ordre de children.
+
+Cas d'utilisation courants :
+• UI widgets, systèmes de fichiers logiques.
+
+Cas limites :
+• Cycles dans le graphe → boucle infinie.
+
+Considérations de performance :
+• Parcours O(taille arbre).
+
+Exemples :
+• Répertoire contenant fichiers et sous-répertoires.
+
+Remarques :
+• Réponse : motif Composite — 1re option.`,
+  3071: `class Meta(type): pass ; class MyClass(metaclass=Meta): pass ; type(MyClass) ?
+
+Débutant :
+• La métaclasse est la « classe des classes » ; ici MyClass est instance de Meta.
+
+Intermédiaire :
+• type(MyClass) retourne Meta, pas type par défaut.
+
+Expert :
+• Les instances de MyClass ont toujours type(...) == MyClass.
+
+Concepts clés :
+• Hook sur la création de classes.
+
+Distinctions clés :
+• Métaclasse vs class decorator exécuté après construction.
+
+Fonctionnement :
+• L'appel à type pour construire MyClass passe par Meta.__new__/__init__.
+
+Exécution étape par étape :
+1. Corps Meta défini.
+2. Définition MyClass déclenche Meta.
+3. type(MyClass) pointe vers Meta.
+
+Ordre des opérations :
+• MRO des métaclasses si héritage multiple de classes.
+
+Cas d'utilisation courants :
+• ORM, validation de schéma, singleton de classe.
+
+Cas limites :
+• Métaclasses incompatibles en diamant.
+
+Considérations de performance :
+• Coût à l'import une fois.
+
+Exemples :
+• enum.EnumMeta.
+
+Remarques :
+• Réponse : classe Meta (métaclasse personnalisée) — 1re option.`,
+  3072: `Meta.__new__(cls, name, bases, dct) qui délègue à super().__new__ ; effet sur MyClass(metaclass=Meta) ?
+
+Débutant :
+• __new__ de la métaclasse fabrique l'objet classe MyClass.
+
+Intermédiaire :
+• Permet d'inspecter ou modifier dct avant création.
+
+Expert :
+• Chaîne type.__new__ doit retourner un type (sous-classe de type en pratique).
+
+Concepts clés :
+• Point d'entrée bas niveau création classe.
+
+Distinctions clés :
+• __new__ métaclasse vs __init__ métaclasse.
+
+Fonctionnement :
+• Python passe name, bases, namespace à Meta.__new__.
+
+Exécution étape par étape :
+1. Préparation du dict de classe.
+2. Meta.__new__ produit l'objet classe.
+3. Meta.__init__ peut suivre.
+
+Ordre des opérations :
+• __new__ avant __init__ comme pour instances.
+
+Cas d'utilisation courants :
+• Injection automatique de méthodes, enforcement de conventions.
+
+Cas limites :
+• Oublier return super().__new__ → NoneType erreurs.
+
+Considérations de performance :
+• Surveillance : éviter travail lourd par classe.
+
+Exemples :
+• print du nom à chaque déclaration de classe.
+
+Remarques :
+• Réponse : métaclasse personnalisée contrôlant la création — 1re option.`,
+  3073: `Meta.__init__(cls, name, bases, dct) pose cls.custom_attr = 1 ; MyClass.custom_attr ?
+
+Débutant :
+• __init__ métaclasse reçoit la classe déjà créée comme cls.
+
+Intermédiaire :
+• On attache des attributs sur l'objet classe MyClass.
+
+Expert :
+• Distinct de __init__ d'instance des objets MyClass().
+
+Concepts clés :
+• Post-traitement de la définition de classe.
+
+Distinctions clés :
+• Attribut de classe ajouté par métaclasse vs ligne directe dans le corps.
+
+Fonctionnement :
+• Après __new__, __init__ métaclasse ajuste cls.
+
+Exécution étape par étape :
+1. MyClass créée.
+2. Meta.__init__ exécuté avec cls=MyClass.
+3. Lecture MyClass.custom_attr → 1.
+
+Ordre des opérations :
+• Attributs classe résolus avant recherche sur instances.
+
+Cas d'utilisation courants :
+• Registres automatiques, métadonnées ORM.
+
+Cas limites :
+• Écraser des noms réservés par inadvertance.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• cls._registry.append(cls).
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  3074: `Meta.__call__ délègue à super().__call__ ; type(MyClass()) après instanciation ?
+
+Débutant :
+• __call__ de la métaclasse entoure la construction d'instance MyClass().
+
+Intermédiaire :
+• Ici délégation standard : l'instance est bien de classe MyClass.
+
+Expert :
+• On peut injecter singleton, validation args, ou pooling avant type.__call__.
+
+Concepts clés :
+• Niveau métaclasse pour factory d'instances.
+
+Distinctions clés :
+• __call__ métaclasse vs __new__/__init__ de MyClass.
+
+Fonctionnement :
+• MyClass() → Meta.__call__(MyClass, ...).
+
+Exécution étape par étape :
+1. Appel constructeur utilisateur.
+2. Meta.__call__ peut logger puis super.
+3. Instance créée ; type(instance) est MyClass.
+
+Ordre des opérations :
+• MRO type → Meta → ...
+
+Cas d'utilisation courants :
+• Comptage d'instances, instrumentation.
+
+Cas limites :
+• super().__call__ mal utilisé casse la création.
+
+Considérations de performance :
+• Hook sur chaque instanciation.
+
+Exemples :
+• print à chaque MyClass().
+
+Remarques :
+• Réponse : classe MyClass pour l'instance — 1re option.`,
+  3075: `SingletonMeta.__call__ met en cache par cls ; MyClass() is MyClass() ?
+
+Débutant :
+• Une entrée par classe dans _instances ; réutilise la première instance.
+
+Intermédiaire :
+• Deux appels successifs renvoient le même objet → is True.
+
+Expert :
+• Thread-safety non garanti sans verrou.
+
+Concepts clés :
+• Singleton au niveau instanciation centralisé.
+
+Distinctions clés :
+• vs Singleton __new__ sur la classe elle-même.
+
+Fonctionnement :
+• __call__ intercepte avant création répétée.
+
+Exécution étape par étape :
+1. Premier appel : super().__call__ crée et stocke.
+2. Second : retour cache.
+
+Ordre des opérations :
+• Clé du dict = cls (objet classe).
+
+Cas d'utilisation courants :
+• Service partagé, pool unique.
+
+Cas limites :
+• Arguments différents au second appel ignorés si cache bête.
+
+Considérations de performance :
+• Évite allocations répétées.
+
+Exemples :
+• Configuration globale lazy.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  3076: `__slots__ = ['x'] ; obj.x = 1 puis obj.y = 2 ?
+
+Débutant :
+• Seuls les noms listés dans __slots__ peuvent être des attributs d'instance (hors exceptions de classe).
+
+Intermédiaire :
+• obj.y = 2 lève AttributeError.
+
+Expert :
+• __dict__ souvent absent ; attributs de classe restent possibles selon définition.
+
+Concepts clés :
+• Mémoire compacte et schéma d'attributs figé.
+
+Distinctions clés :
+• __slots__ vs dict dynamique standard.
+
+Fonctionnement :
+• Descripteurs internes réservent de la place pour chaque slot.
+
+Exécution étape par étape :
+1. x accepté.
+2. y hors liste → erreur à l'affectation.
+
+Ordre des opérations :
+• Même règle lecture/écriture.
+
+Cas d'utilisation courants :
+• Structures nombreuses en mémoire (points, paquets réseau).
+
+Cas limites :
+• Héritage sans déclarer __slots__ correctement → dict réapparaît.
+
+Considérations de performance :
+• Gain mémoire notable sur grosses flottes d'objets.
+
+Exemples :
+• class Vec2: __slots__ = ('x','y').
+
+Remarques :
+• Réponse : AttributeError — 1re option.`,
+  3077: `__slots__ = ['x'] ; '__dict__' in dir(obj) ?
+
+Débutant :
+• Instance typique sans __dict__ explicite : pas de dictionnaire d'attributs arbitraires.
+
+Intermédiaire :
+• La présence exacte dans dir dépend des versions mais l'intention pédagogique : False pour « pas de __dict__ instance ».
+
+Expert :
+• Classe avec __slots__ et dict = 'x' dans __slots__ peut réintroduire __dict__.
+
+Concepts clés :
+• Économie en supprimant le mapping par défaut.
+
+Distinctions clés :
+• dir inclut méthodes héritées ; le test cible la présence de __dict__.
+
+Fonctionnement :
+• CPython n'alloue pas __dict__ si slots purs.
+
+Exécution étape par étape :
+1. Instanciation MyClass.
+2. Inspection dir.
+3. '__dict__' absent de l'instance.
+
+Ordre des opérations :
+• dir() construit une liste triée de noms visibles.
+
+Cas d'utilisation courants :
+• Vérifier qu'on a bien un objet léger.
+
+Cas limites :
+• Extension de types C : comportement différent.
+
+Considérations de performance :
+• Moins de mémoire, accès par slot souvent rapide.
+
+Exemples :
+• Comparer avec classe vide class A: pass.
+
+Remarques :
+• Réponse : False — 1re option.`,
+  3078: `__getattribute__ qui délègue toujours à super() ; accès obj.x sans attribut x ?
+
+Débutant :
+• __getattribute__ court-circuite toute lecture d'attribut.
+
+Intermédiaire :
+• super().__getattribute__('x') ne trouve pas → AttributeError.
+
+Expert :
+• __getattr__ n'est pas appelé si __getattribute__ lève sans le capturer.
+
+Concepts clés :
+• Hook universel lecture (dangereux en récursion si mal codé).
+
+Distinctions clés :
+• __getattribute__ vs __getattr__ en dernier recours.
+
+Fonctionnement :
+• Chaque obj.attr passe par __getattribute__.
+
+Exécution étape par étape :
+1. Demande de x.
+2. __getattribute__ appelle la résolution normale.
+3. Échec → exception.
+
+Ordre des opérations :
+• Pas de fallback __getattr__ si AttributeError propage.
+
+Cas d'utilisation courants :
+• Traçage, proxy strict, validation lecture.
+
+Cas limites :
+• self.attr dans __getattribute__ sans super → récursion infinie.
+
+Considérations de performance :
+• Coût sur chaque accès.
+
+Exemples :
+• logger.debug sur chaque attribut.
+
+Remarques :
+• Réponse : AttributeError — 1re option.`,
+  3079: `__getattr__ retournant f'Missing: {name}' ; obj.x ?
+
+Débutant :
+• __getattr__ n'est invoqué que si l'attribut manque après le mécanisme normal.
+
+Intermédiaire :
+• Retour chaîne 'Missing: x'.
+
+Expert :
+• Pour attributs existants, __getattr__ n'intervient pas.
+
+Concepts clés :
+• Valeur par défaut dynamique « lazy ».
+
+Distinctions clés :
+• vs __getattribute__ qui voit tout.
+
+Fonctionnement :
+• Lookup échoue → Python tente __getattr__ si défini.
+
+Exécution étape par étape :
+1. Pas de x dans instance/classe visibles.
+2. __getattr__('x') exécuté.
+3. Retour formaté.
+
+Ordre des opérations :
+• Descripteurs data et propriétés avant __getattr__.
+
+Cas d'utilisation courants :
+• Accès optionnel, records souples, API rétrocompatibles.
+
+Cas limites :
+• Typos silencieuses si on retourne toujours une valeur.
+
+Considérations de performance :
+• Seulement sur misses.
+
+Exemples :
+• module lazy avec __getattr__ module-level (3.7+).
+
+Remarques :
+• Réponse : chaîne 'Missing: x' — 1re option.`,
+  3080: `__setattr__ qui stocke value*2 via super ; obj.x = 5 ; obj.x ?
+
+Débutant :
+• Chaque assignation passe par __setattr__.
+
+Intermédiaire :
+• 5 * 2 = 10 stocké.
+
+Expert :
+• Initialisation dans __init__ : attention à utiliser super pour éviter boucles.
+
+Concepts clés :
+• Point unique pour validation/transformation écriture.
+
+Distinctions clés :
+• vs property.setter ciblé sur un nom.
+
+Fonctionnement :
+• super().__setattr__(name, value*2) finalise sur le bon backing store.
+
+Exécution étape par étape :
+1. __setattr__('x', 5).
+2. Calcul 10.
+3. Stockage.
+4. Lecture → 10.
+
+Ordre des opérations :
+• __setattr__ avant création implicite d'attributs hors slots valides.
+
+Cas d'utilisation courants :
+• Unités (stockage en mm alors que API en cm).
+
+Cas limites :
+• Slots : noms invalides toujours en erreur.
+
+Considérations de performance :
+• Hook sur chaque set.
+
+Exemples :
+• clamp min/max dans __setattr__.
+
+Remarques :
+• Réponse : 10 — 1re option.`,
+  3081: `Qu'est-ce que PEP 8 ?
+
+Débutant :
+• Guide de style officiel pour écrire du Python lisible.
+
+Intermédiaire :
+• snake_case fonctions, PascalCase classes, 4 espaces, longueur de ligne, imports.
+
+Expert :
+• Outils type ruff/flake8/pep8-naming automatisent les contrôles.
+
+Concepts clés :
+• Cohérence d'équipe et revue de code.
+
+Distinctions clés :
+• PEP 8 normatif style vs PEP 484 types.
+
+Fonctionnement :
+• Document vivant sur python.org ; pas exécuté par l'interpréteur.
+
+Exécution étape par étape :
+1. Lire la spec.
+2. Appliquer dans l'éditeur.
+3. CI vérifie.
+
+Ordre des opérations :
+• isort puis black/ruff souvent en pipeline.
+
+Cas d'utilisation courants :
+• Bibliothèques open source, grandes bases.
+
+Cas limites :
+• Exceptions locales documentées (E203 avant ':').
+
+Considérations de performance :
+• Style n'impacte pas la vitesse d'exécution.
+
+Exemples :
+• def calculate_total(): ...
+
+Remarques :
+• Réponse : guide de style Python — 1re option.`,
+  3082: `def func(x: int) -> int: return x * 2 : nature des annotations ?
+
+Débutant :
+• x: int et -> int documentent les types attendus.
+
+Intermédiaire :
+• Stockées dans __annotations__ ; pas de vérification runtime par défaut.
+
+Expert :
+• mypy/pyright utilisent ces métadonnées statiquement.
+
+Concepts clés :
+• PEP 484 annotations de types.
+
+Distinctions clés :
+• Annotation vs cast runtime isinstance.
+
+Fonctionnement :
+• Le bytecode ignore les types pour la sémantique de calcul.
+
+Exécution étape par étape :
+1. Définition enregistre annotations.
+2. Appel func(5) multiplie sans contrôle int automatique.
+
+Ordre des opérations :
+• Évaluation des annotations différée possible (from __future__).
+
+Cas d'utilisation courants :
+• API stables, IDEs, générateurs de doc.
+
+Cas limites :
+• Forward refs nécessitent parfois quotes.
+
+Considérations de performance :
+• Zéro coût à l'exécution hors outils.
+
+Exemples :
+• def greet(name: str) -> str: ...
+
+Remarques :
+• Réponse : annotations de types — 1re option.`,
+  3083: `from typing import List, Dict ; func(x: List[int]) -> Dict[str, int] ?
+
+Débutant :
+• List[int] précise conteneur d'entiers ; Dict[str, int] clés str valeurs int.
+
+Intermédiaire :
+• En 3.9+ on peut écrire list[int] et dict[str, int] builtin.
+
+Expert :
+• Covariance/contravariance avancées avec TypeVar.
+
+Concepts clés :
+• Généricité pour collections.
+
+Distinctions clés :
+• List vs Sequence en typage (mutabilité).
+
+Fonctionnement :
+• Les génériques sont des alias de types pour les checkers.
+
+Exécution étape par étape :
+1. Import typing.
+2. Signature annotée disponible pour introspection.
+
+Ordre des opérations :
+• return {} satisfait le dict vide typé côté concept.
+
+Cas d'utilisation courants :
+• Services retournant mapping JSON-like.
+
+Cas limites :
+• Hétérogénéité réelle vs annotation trop stricte.
+
+Considérations de performance :
+• Aucun à l'exécution.
+
+Exemples :
+• def group_by_id(rows: List[Row]) -> Dict[str, List[Row]]: ...
+
+Remarques :
+• Réponse : indices génériques (typing) — 1re option.`,
+  3084: `def func(x: int = 1) -> int: return x ?
+
+Débutant :
+• Valeur par défaut combinée à l'annotation sur le même paramètre.
+
+Intermédiaire :
+• Ordre syntaxe : nom, annotation, = défaut.
+
+Expert :
+• dataclasses et attrs utilisent le même motif.
+
+Concepts clés :
+• Documentation du type même avec défaut.
+
+Distinctions clés :
+• x: int = 1 vs x = 1 sans hint.
+
+Fonctionnement :
+• func() lie x à 1 ; func(7) remplace.
+
+Exécution étape par étape :
+1. Appel sans args.
+2. x prend 1.
+3. return 1.
+
+Ordre des opérations :
+• Defaults évalués à la définition pour objets mutables (piège classique ailleurs).
+
+Cas d'utilisation courants :
+• Paramètres optionnels typés.
+
+Cas limites :
+• Ne pas mettre défaut mutable sans garde.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• timeout: float = 30.0.
+
+Remarques :
+• Réponse : annotations avec paramètre par défaut — 1re option.`,
+  3085: `def func(x: 'MyClass') -> None avec MyClass défini plus bas ?
+
+Débutant :
+• Guillemets : référence avant pour éviter NameError à la définition.
+
+Intermédiaire :
+• from __future__ import annotations peut rendre toutes les hints paresseuses (strings implicites).
+
+Expert :
+• get_type_hints résout les forward refs dans le bon globals.
+
+Concepts clés :
+• Graphes de types mutuellement récursifs.
+
+Distinctions clés :
+• Forward ref vs import tardif sous TYPE_CHECKING.
+
+Fonctionnement :
+• L'annotation est stockée comme chaîne jusqu'à résolution.
+
+Exécution étape par étape :
+1. def enregistré sans évaluer MyClass.
+2. Plus tard le checker résout.
+
+Ordre des opérations :
+• Création de classe MyClass après def toujours OK.
+
+Cas d'utilisation courants :
+• Arbres, listes chaînées typées.
+
+Cas limites :
+• Chaîne invalide → erreur au resolve.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• class Node: value: int; next: 'Node'.
+
+Remarques :
+• Réponse : référence avant (chaîne) — 1re option.`,
+  3086: `Optional[int] pour paramètre et return x or 0 ?
+
+Débutant :
+• Optional[int] ≡ int | None (conceptuellement).
+
+Intermédiaire :
+• x or 0 convertit None et 0 falsy en 0 (attention aux autres falsy).
+
+Expert :
+• En 3.10+ int | None préféré par beaucoup de guides.
+
+Concepts clés :
+• Modéliser valeurs manquantes.
+
+Distinctions clés :
+• Optional vs Union[int, None] explicite.
+
+Fonctionnement :
+• Aucune contrainte runtime ; mypy vérifie les branches.
+
+Exécution étape par étape :
+1. Si x None → or renvoie 0.
+2. Si x 5 → 5.
+
+Ordre des opérations :
+• Court-circuit or.
+
+Cas d'utilisation courants :
+• Paramètres API optionnels.
+
+Cas limites :
+• x=0 retourne 0 aussi : parfois besoin de « is None ».
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• def first(xs: list) -> Optional[int]: ...
+
+Remarques :
+• Réponse : indice Optional — 1re option.`,
+  3087: `Union[int, str] pour un paramètre ?
+
+Débutant :
+• Accepte soit int soit str selon la documentation statique.
+
+Intermédiaire :
+• Le corps return 1 ici ne teste pas le type réel.
+
+Expert :
+• 3.10+ int | str plus lisible.
+
+Concepts clés :
+• Union de types pour surcharge logique.
+
+Distinctions clés :
+• Union vs Protocol structurel.
+
+Fonctionnement :
+• Checker exige isinstance ou narrowing dans branches.
+
+Exécution étape par étape :
+• Runtime : aucune branche forcée par l'union seule.
+
+Ordre des opérations :
+• isinstance checks ordonnés du plus précis au plus large.
+
+Cas d'utilisation courants :
+• parse acceptant fichier ou chemin str.
+
+Cas limites :
+• Trop large → union inutile.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• JSON number vs string.
+
+Remarques :
+• Réponse : indice Union — 1re option.`,
+  3088: `Callable[[int], int] pour paramètre fonction f puis return f(1) ?
+
+Débutant :
+• Première liste = types arguments positionnels ; dernier = retour.
+
+Intermédiaire :
+• [[int], int] lit « prend int, retourne int ».
+
+Expert :
+• ..., Ellipsis pour signatures variadiques partielles selon version/outil.
+
+Concepts clés :
+• Typer l'ordre supérieur.
+
+Distinctions clés :
+• Callable vs Protocol avec __call__.
+
+Fonctionnement :
+• Vérification statique que f(1) est légal.
+
+Exécution étape par étape :
+1. f attend int.
+2. On passe 1.
+3. Retour int utilisé.
+
+Ordre des opérations :
+• f(1) évalue f puis appelle.
+
+Cas d'utilisation courants :
+• map, tri avec key, injection de dépendance.
+
+Cas limites :
+• Fonctions kwargs-only mal décrites par [int] seul.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• def apply_twice(f: Callable[[int], int], x: int) -> int: ...
+
+Remarques :
+• Réponse : indice Callable — 1re option.`,
+  3089: `@dataclass class Point: x: int; y: int ; Point(1, 2) ?
+
+Débutant :
+• Génère __init__, __repr__, __eq__ par défaut entre autres.
+
+Intermédiaire :
+• Appel positionnel ou nommé selon génération.
+
+Expert :
+• frozen=True, slots=True, field(default_factory=...) pour cas avancés.
+
+Concepts clés :
+• Réduction de boilerplate pour records.
+
+Distinctions clés :
+• dataclass vs NamedTuple vs attrs tiers.
+
+Fonctionnement :
+• Le décorateur réécrit la classe à l'import.
+
+Exécution étape par étape :
+1. Décorateur inspecte annotations de champs.
+2. Ajoute méthodes.
+3. Point(1,2) utilise __init__ synthétisé.
+
+Ordre des opérations :
+• Champs sans défaut avant champs avec défaut.
+
+Cas d'utilisation courants :
+• DTO, messages, configs.
+
+Cas limites :
+• Champs mutables partagés si default list sans factory.
+
+Considérations de performance :
+• __slots__ optionnel pour alléger.
+
+Exemples :
+• @dataclass
+  class User: id: int; name: str.
+
+Remarques :
+• Réponse : instance de dataclass — 1re option.`,
+  3090: `from enum import Enum ; class Color(Enum): RED = 1 ; Color.RED ?
+
+Débutant :
+• Membre enum avec nom RED et valeur 1.
+
+Intermédiaire :
+• Affichage Color.RED avec repr dédié.
+
+Expert :
+• IntEnum, auto(), contraintes d'unicité des valeurs.
+
+Concepts clés :
+• Constantes nommées groupées.
+
+Distinctions clés :
+• Enum vs simple namespace de constantes.
+
+Fonctionnement :
+• EnumMeta construit les membres singletons.
+
+Exécution étape par étape :
+1. Corps de classe exécuté sous métaclasse.
+2. Color.RED référence membre.
+
+Ordre des opérations :
+• Comparaison identité et égalité spécifiques.
+
+Cas d'utilisation courants :
+• États machine, codes erreur lisibles.
+
+Cas limites :
+• Alias si deux noms même valeur selon Enum functional API.
+
+Considérations de performance :
+• Léger coût lookup vs int brut.
+
+Exemples :
+• class State(Enum): IDLE=0; RUN=1.
+
+Remarques :
+• Réponse : membre Enum (ex. Color.RED: 1) — 1re option.`,
+  3091: `import sys ; sys.argv ?
+
+Débutant :
+• Liste des arguments de ligne de commande ; argv[0] est le script ou '-c'.
+
+Intermédiaire :
+• Éléments toujours des str.
+
+Expert :
+• argparse/build sur argv[1:].
+
+Concepts clés :
+• Pont entre shell et programme.
+
+Distinctions clés :
+• argv vs environ ; vs click.argv.
+
+Fonctionnement :
+• Rempli au démarrage par l'interpréteur.
+
+Exécution étape par étape :
+1. Lancement python script.py a b.
+2. argv ≈ ['script.py','a','b'].
+
+Ordre des opérations :
+• Splitting déjà fait par la plateforme.
+
+Cas d'utilisation courants :
+• CLI, flags, fichiers d'entrée.
+
+Cas limites :
+• REPL : argv peut être minimal.
+
+Considérations de performance :
+• Liste courte ; négligeable.
+
+Exemples :
+• if len(sys.argv) < 2: usage().
+
+Remarques :
+• Réponse : arguments de ligne de commande — 1re option.`,
+  3092: `import os ; os.environ ?
+
+Débutant :
+• Vue mappante des variables d'environnement du processus.
+
+Intermédiaire :
+• get évite KeyError ; modifs locales au processus.
+
+Expert :
+• Sur certaines plateformes, mise à jour peut affecter putenv sous-jacent.
+
+Concepts clés :
+• Configuration 12-factor.
+
+Distinctions clés :
+• os.environ vs os.getenv.
+
+Fonctionnement :
+• Héritage du parent au fork/spawn.
+
+Exécution étape par étape :
+1. import os.
+2. Accès clé 'PATH' etc.
+
+Ordre des opérations :
+• Lecture str → str.
+
+Cas d'utilisation courants :
+• secrets, URL base, feature flags.
+
+Cas limites :
+• Binaires vs texte sur Windows ancien.
+
+Considérations de performance :
+• Lecture occasionnelle OK.
+
+Exemples :
+• DEBUG = os.environ.get('DEBUG') == '1'.
+
+Remarques :
+• Réponse : variables d'environnement (mapping) — 1re option.`,
+  3093: `import json ; json.dumps({'a': 1}) ?
+
+Débutant :
+• Sérialise un objet Python en chaîne JSON.
+
+Intermédiaire :
+• Guillemets doubles JSON, pas apostrophes Python.
+
+Expert :
+• default= pour types non natifs ; ensure_ascii=False pour Unicode.
+
+Concepts clés :
+• Échange interop langages.
+
+Distinctions clés :
+• dumps vs dump vers fichier.
+
+Fonctionnement :
+• Parcours récursif du dict.
+
+Exécution étape par étape :
+1. {'a':1} visité.
+2. Produit '{"a": 1}' (espaces optionnels selon séparateurs).
+
+Ordre des opérations :
+• Clés triées si sort_keys=True.
+
+Cas d'utilisation courants :
+• API REST, fichiers config.
+
+Cas limites :
+• Clés non str dict → TypeError.
+
+Considérations de performance :
+• Grandes structures : orjson plus rapide hors stdlib.
+
+Exemples :
+• json.dumps([1,2,3]).
+
+Remarques :
+• Réponse : chaîne JSON '{"a": 1}' — 1re option.`,
+  3094: `import json ; json.loads('{"a": 1}') ?
+
+Débutant :
+• Parse une chaîne JSON vers objets Python.
+
+Intermédiaire :
+• Objet racine dict ici avec clé str 'a'.
+
+Expert :
+• object_hook pour types custom.
+
+Concepts clés :
+• Symétrique de dumps.
+
+Distinctions clés :
+• loads vs load depuis fichier texte.
+
+Fonctionnement :
+• Lex + parse JSON strict (types limités).
+
+Exécution étape par étape :
+1. Scanner la chaîne.
+2. Construit dict Python.
+
+Ordre des opérations :
+• Erreur JSONDecodeError si mal formé.
+
+Cas d'utilisation courants :
+• Réponses HTTP body.
+
+Cas limites :
+• Nombres JSON → int/float Python selon valeur.
+
+Considérations de performance :
+• I/O + parse dominent.
+
+Exemples :
+• payload = json.loads(request_body).
+
+Remarques :
+• Réponse : dict Python {'a': 1} — 1re option.`,
+  3095: `import pickle ; pickle.dumps([1, 2, 3]) ?
+
+Débutant :
+• Flux binaire représentant l'objet pour recréation ultérieure.
+
+Intermédiaire :
+• Spécifique Python ; non sûr sur données non fiables.
+
+Expert :
+• Protocole configurable ; picklers pour extensions C.
+
+Concepts clés :
+• Persistance fidèle à l'écosystème Python.
+
+Distinctions clés :
+• pickle vs json (sécurité, interop).
+
+Fonctionnement :
+• Sérialise opcode stream.
+
+Exécution étape par étape :
+1. Objet [1,2,3] visité.
+2. Retour bytes.
+
+Ordre des opérations :
+• Versions incompatibles entre Python majeurs possibles.
+
+Cas d'utilisation courants :
+• Celery, cache disque, IPC même machine.
+
+Cas limites :
+• JAMAIS loads sur bytes non approuvés (RCE).
+
+Considérations de performance :
+• Plus lent et plus gros que JSON pour cas simples.
+
+Exemples :
+• redis.set(key, pickle.dumps(obj)).
+
+Remarques :
+• Réponse : objet bytes — 1re option.`,
+  3096: `pickle.loads après dumps de [1,2,3] ?
+
+Débutant :
+• Reconstruit l'objet d'origine depuis les bytes.
+
+Intermédiaire :
+• Égalité structurelle [1,2,3].
+
+Expert :
+• Identité d'objets non garantie sauf protocole gère refs.
+
+Concepts clés :
+• Aller-retour sérialisation.
+
+Distinctions clés :
+• loads vs load fichier binaire.
+
+Fonctionnement :
+• Interprète le flux pickle.
+
+Exécution étape par étape :
+1. dumps produit b.
+2. loads(b) → liste égale.
+
+Ordre des opérations :
+• Même version pickle recommandée.
+
+Cas d'utilisation courants :
+• Sessions, checkpoints.
+
+Cas limites :
+• Classes custom nécessitent importabilité du chemin module.
+
+Considérations de performance :
+• Coût CPU sur gros graphes.
+
+Exemples :
+• roundtrip test.
+
+Remarques :
+• Réponse : [1, 2, 3] — 1re option.`,
+  3097: `namedtuple('Point', ['x','y']) ; Point(1, 2) ?
+
+Débutant :
+• Sous-classe tuple avec champs nommés.
+
+Intermédiaire :
+• Repr affiche Point(x=1, y=2).
+
+Expert :
+• Remplacé souvent par typing.NamedTuple ou dataclass.
+
+Concepts clés :
+• Lisibilité + immutabilité tuple.
+
+Distinctions clés :
+• namedtuple vs simple tuple.
+
+Fonctionnement :
+• Fabrique de classe à l'exécution.
+
+Exécution étape par étape :
+1. Point = namedtuple(...).
+2. Point(1,2) valide positions.
+
+Ordre des opérations :
+• Accès p.x et p[0] coexistent.
+
+Cas d'utilisation courants :
+• Lignes CSV, coordonnées.
+
+Cas limites :
+• Renommer champs : _rename=True.
+
+Considérations de performance :
+• Plus léger que dataclass mutable.
+
+Exemples :
+• Card = namedtuple('Card', 'rank suit').
+
+Remarques :
+• Réponse : instance Point(x=1, y=2) — 1re option.`,
+  3098: `defaultdict(list) ; d['key'] sans insertion préalable ?
+
+Débutant :
+• Appelle list() pour créer valeur par défaut à la première lecture.
+
+Intermédiaire :
+• Stocke la liste vide puis la retourne.
+
+Expert :
+• factory doit être callable sans args ; int pour compteurs.
+
+Concepts clés :
+• Éviter if key not in d.
+
+Distinctions clés :
+• defaultdict vs dict.setdefault.
+
+Fonctionnement :
+• __missing__ surchargé.
+
+Exécution étape par étape :
+1. Accès clé absente.
+2. factory() → [].
+3. Assignation implicite.
+
+Ordre des opérations :
+• Références ultérieures réutilisent même objet liste.
+
+Cas d'utilisation courants :
+• Adjacency list, grouping.
+
+Cas limites :
+• factory coûteuse si appelée souvent par erreur.
+
+Considérations de performance :
+• Comparable à setdefault manuel.
+
+Exemples :
+• dd = defaultdict(list); dd['k'].append(1).
+
+Remarques :
+• Réponse : liste vide [] — 1re option.`,
+  3099: `Counter([1, 1, 2, 2, 2]) ?
+
+Débutant :
+• Compte occurrences ; affichage type Counter({...}).
+
+Intermédiaire :
+• 1→2 fois, 2→3 fois ; ordre d'affichage peut mettre les plus fréquents en tête.
+
+Expert :
+• most_common(), opérations arithmétiques entre Counter.
+
+Concepts clés :
+• multiset pratique.
+
+Distinctions clés :
+• Counter vs dict manuel.
+
+Fonctionnement :
+• Itère la séquence et incrémente.
+
+Exécution étape par étape :
+1. Parcourt la liste.
+2. Met à jour compteurs.
+3. Repr formaté.
+
+Ordre des opérations :
+• counter[k] absent → 0 sans erreur.
+
+Cas d'utilisation courants :
+• fréquences texte, votes.
+
+Cas limites :
+• Éléments non hashables interdits.
+
+Considérations de performance :
+• O(n) sur iterable.
+
+Exemples :
+• Counter(words).most_common(5).
+
+Remarques :
+• Réponse : Counter({2: 3, 1: 2}) — 1re option.`,
+  3100: `@lru_cache(maxsize=128) sur fib récursif ; fib(10) ?
+
+Débutant :
+• Cache les résultats fib(k) pour éviter explosions exponentielles.
+
+Intermédiaire :
+• fib(10) vaut 55 (suite de Fibonacci classique F(0)=0,F(1)=1).
+
+Expert :
+• cache_info(), clear_cache() ; maxsize=None cache illimité.
+
+Concepts clés :
+• Mémoïsation transparente.
+
+Distinctions clés :
+• lru_cache vs dict manuel ; vs cache sur itératif bottom-up.
+
+Fonctionnement :
+• Clé = args hashables ; ici n entier.
+
+Exécution étape par étape :
+1. Appels imbriqués remplissent le cache.
+2. fib(10) calculé une fois puis réutilisable.
+
+Ordre des opérations :
+• LRU éviction si maxsize dépassé (pas le cas pour petit n).
+
+Cas d'utilisation courants :
+• DP top-down, parsers, grilles.
+
+Cas limites :
+• Arguments non hashables interdits.
+
+Considérations de performance :
+• Passe de exponentiel à linéaire en n pour ce fib naïf.
+
+Exemples :
+• @lru_cache
+  def edit_distance(...): ...
+
+Remarques :
+• Réponse : 55 — 1re option.`,
   402: `"  hello  ".lstrip() renvoie "hello  " : lstrip retire les blancs de gauche seulement.
 
 Débutant :
