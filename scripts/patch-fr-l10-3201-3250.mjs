@@ -1,6 +1,10 @@
 /**
- * Inserts French detailed explanations for bank IDs 3201–3250:
- * level10ExpertA Q3–49 (3201–3247) + level10ExpertB Q50–52 (3248–3250).
+ * @deprecated Superseded by `patch-fr-l10-rebuild-3201-3300.mjs`.
+ * The bank maps 3201–3202 to `level10IntermediateB` and 3203+ to experts; this script
+ * used an incorrect ID→question mapping. Kept for history only — do not run against
+ * current `detailedExplanationsTranslations.ts` (would duplicate or corrupt keys).
+ *
+ * (Historical) Inserts French detailed explanations for bank IDs 3201–3250.
  */
 import fs from "fs";
 import path from "path";
