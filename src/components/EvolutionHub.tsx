@@ -271,22 +271,26 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
                     </div>
                   ))}
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-3 gap-3">
                   <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 min-w-0">
                     <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1 truncate">{t('hub.totalAnswered')}</div>
                     <div className="text-lg font-black text-white truncate">{rm.totalAnswered}</div>
                   </div>
                   <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 min-w-0">
+                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1 truncate">{t('hub.incorrect')}</div>
+                    <div className="text-lg font-black text-rose-400 truncate">{rm.totalAnswered - rm.totalCorrect}</div>
+                  </div>
+                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 min-w-0">
                     <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1 truncate">{t('hub.correct')}</div>
                     <div className="text-lg font-black text-emerald-400 truncate">{rm.totalCorrect}</div>
                   </div>
-                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 col-span-2 min-w-0">
+                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 col-span-3 min-w-0">
                     <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1 truncate">{t('hub.accuracy')}</div>
                     <div className="text-lg font-black text-sky-400 truncate">
                       {rm.totalAnswered > 0 ? Math.round((rm.totalCorrect / rm.totalAnswered) * 100) : 0}%
                     </div>
                   </div>
-                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 col-span-2 min-w-0">
+                  <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 col-span-3 min-w-0">
                     <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1 truncate">{t('hub.evolutionScore')}</div>
                     <div className="text-lg font-black text-indigo-400 truncate">{randomScore}</div>
                   </div>

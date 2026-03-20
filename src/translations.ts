@@ -47,6 +47,7 @@ export const translations = {
       // Random mode
       randomModeLabel: "Random Mode",
       totalAnswered: "Total Answered",
+      incorrect: "Incorrect",
       correct: "Correct",
       accuracy: "Accuracy",
       evolutionScore: "Evolution Score",
@@ -427,6 +428,7 @@ export const translations = {
       // Random mode
       randomModeLabel: "Mode Aléatoire",
       totalAnswered: "Total Répondu",
+      incorrect: "Incorrect",
       correct: "Correct",
       accuracy: "Précision",
       evolutionScore: "Score d'Évolution",
