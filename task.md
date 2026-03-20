@@ -291,7 +291,8 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
 - **Constat :** Les entrées 1801+ parlaient de fonctions alors que le niveau 6 dans `questionsBank.ts` est **dict / mapping** (IDs **1801–2100**). Les nouveaux textes suivent `level6*.ts`.
 - **Done:** **1801–1850** — `level6.ts` Q1–50. Fragment: `scripts/fr-l6-frags/fr-l6-1801-1850.mjs`. Patch: `scripts/patch-fr-l6-1801-1850.mjs`. Build OK.
 - **Done:** **1851–1900** — `level6.ts` Q51–100 (IDs alignés : 1851 = `{x: x*2 for x in [1, 2, 3]}`, 1900 = `pop('c','default')`). Fragment: `scripts/fr-l6-frags/fr-l6-1851-1900.mjs`. Patch: `scripts/patch-fr-l6-1851-1900.mjs`. Build OK.
-- **Next:** **1901–1950** — `level6_intermediate_a.ts` Q1–50. Patch : START `` 1901: `This demonstrates`` → END `` 1951: `Une fonction génératrice``.
+- **Done:** **1901–1950** — `level6_intermediate_a.ts` Q1–50 (dicts imbriqués, setdefault, vues, **kwargs, etc.). Fragments: `fr-l6-1901-1925.mjs` + `fr-l6-1926-1950.mjs`, agrégateur `fr-l6-1901-1950.mjs`. Patch: `patch-fr-l6-1901-1950.mjs`. Build OK.
+- **Next:** **1951–2000** — `level6_intermediate_b.ts` Q1–50. Patch : START `` 1951: `Une fonction génératrice`` → END `` 2001: `Un décorateur``.
 
 ### Immediate next batches
 1. Level 6 FR (suite **1851–2100**): fragments + patches per `QUESTIONS_BANK`.
@@ -325,4 +326,4 @@ For each batch:
 
 ## Next Action (when resuming)
 
-Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2: **601–900 done**. Levels 3–5: **901–1800 done**. **Level 6 FR : 1801–1900 done** (premiers 100 IDs du niveau 6 = fichier `level6.ts` entier) ; reprendre **1901–2100** (`level6_intermediate_a/b`, `level6_expert_a/b`).
+Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2: **601–900 done**. Levels 3–5: **901–1800 done**. **Level 6 FR : 1801–1950 done** ; reprendre **1951–2100** (`level6_intermediate_b`, `level6_expert_a/b`).

@@ -82996,1148 +82996,2021 @@ Considérations de performance :
 
 Remarques :
 • Réponse : 'default'.`,
-  1901: `This demonstrates a basic closure. When outer() est appelé, il crée a local variable x = 10, defines inner() which references x, and retourne le inner function. Appeler la fonction retournée with outer()() executes inner(), which looks up x in the enclosing scope and renvoie 10.
+  1901: `Accès dict imbriqué en chaîne
+
+Débutant :
+• d["a"]["x"] lit d’abord le sous-dict sous "a", puis la clé "x" dedans → 1.
+
+Intermédiaire :
+• Équivalent à (d["a"])["x"] ; chaque [] descend d’un niveau.
+
+Expert :
+• Si d["a"] manque ou n’est pas un mapping, erreur à l’étape correspondante.
 
 Concepts clés :
-• Une fermeture capture les variables de sa portée englobante
-• inner() n'a pas de x local, so il trouve x = 10 in outer()'s scope
-• outer() retourne un objet fonction, pas une valeur
-• Le second () appelle la fonction retournée
+• Indexation chaînée, structure JSON-like.
+
+Distinctions clés :
+• d["a","x"] n’existe pas en Python (syntaxe autre langage).
 
 Fonctionnement :
-• outer() runs: x = 10, defines inner, retourne inner
-• outer()() calls the returned inner function
-• inner() returns x which is 10 from outer's scope
-• Résultat : 10
+• Évaluation de d["a"] puis ["x"] sur le résultat.
+
+Exécution étape par étape :
+1. d["a"] → {"x":1}
+2. ["x"] → 1
+
+Ordre des opérations :
+• De gauche à droite pour les crochets successifs.
+
+Cas d'utilisation courants :
+• Parcourir config["db"]["host"].
+
+Cas limites :
+• KeyError si une clé intermédiaire absente.
+
+Considérations de performance :
+• Plusieurs lookups successifs O(1) amorti chacun.
 
 Exemples :
-• def outer(): x=10; def inner(): return x; return inner
-• f = outer()  # f is inner
-• f()          # 10
+• Données utilisateur["profil"]["email"].
 
-Utilisations courantes :
-• Encapsulation de données sans classes
-• Créer des usines de fonctions
-• Maintenir l'état entre les appels`,
-  1902: `C'est a classic closure pattern called a function factory. make_adder(n) retourne une lambda that captures n from the enclosing scope. Quand vous call make_adder(5), il retourne a lambda où n est lié à 5. Appeler add5(3) exécute x + n with x=3 and n=5.
+Remarques :
+• Réponse : 1.`,
+  1902: `Mutation du dict interne
+
+Débutant :
+• d["a"]["y"] = 2 ajoute la clé "y" dans le dict référencé par "a", sans remplacer "a".
+
+Intermédiaire :
+• "x":1 est conservé ; le même objet dict interne est muté.
+
+Expert :
+• Si plusieurs clés externes pointaient vers le même sous-dict, toutes verraient le changement.
 
 Concepts clés :
-• Function factories create specialized functions via closures
-• La lambda capture n de la portée de make_adder
-• Chaque appel à make_adder crée a new closure with its own n
-• add5 = make_adder(5) crée a function qui ajoute toujours 5
+• Affectation chaînée, mutation in-place du niveau interne.
+
+Distinctions clés :
+• Remplacer d["a"] entièrement effacerait l’ancien sous-dict.
 
 Fonctionnement :
-• make_adder(5) définit n = 5, returns lambda x: x + 5
-• add5 est maintenant lambda x: x + 5
-• add5(3) évalue 3 + 5 = 8
-• Résultat : 8
+• Résolution de d["a"], puis __setitem__ pour "y".
+
+Exécution étape par étape :
+1. d["a"] est {"x":1}
+2. assignation y→2 sur ce dict
+3. d["a"] vaut {"x":1,"y":2}
+
+Ordre des opérations :
+• D’abord la cible du membre gauche, puis écriture.
+
+Cas d'utilisation courants :
+• Remplir une section de configuration imbriquée.
+
+Cas limites :
+• d["a"] absent → KeyError avant assignation.
+
+Considérations de performance :
+• Une écriture sur le sous-objet.
 
 Exemples :
-• add10 = make_adder(10); add10(7)  # 17
-• add0 = make_adder(0); add0(42)    # 42
+• d["a"]["x"] = 99 écrase x.
 
-Utilisations courantes :
-• Créer des familles de fonctions liées
-• Application partielle des arguments
-• Patterns de curryfication`,
-  1903: `Before nonlocal existed (Python 2), closures used the mutable container trick to modify enclosed state. Since you cannot rebind an immutable variable from an enclosing scope without nonlocal, wrapping the value in a list allows mutation through the list's methods.
+Remarques :
+• Réponse : {'x': 1, 'y': 2} pour la clé "a".`,
+  1903: `Trois niveaux d’imbrication
+
+Débutant :
+• d["a"]["b"]["c"] enchaîne trois accès jusqu’à la valeur 3.
+
+Intermédiaire :
+• Chaque niveau doit être un dict (ou mapping) indexable.
+
+Expert :
+• Profondeur arbitraire possible tant que la structure est cohérente.
 
 Concepts clés :
-• c = [0] is a mutable list holding the counter value
-• c[0] += 1 mutates the list element, not the variable c itself
-• No rebinding of c occurs, so no nonlocal is needed
-• Each call to inc() increments le même shared list
+• Navigation profonde, robustesse des données.
+
+Distinctions clés :
+• get chaîné avec défauts évite KeyError (hors QCM).
 
 Fonctionnement :
-• counter() creates c = [0], defines inc, returns inc
-• f = counter() — f is now inc
-• First f(): c[0] goes from 0 to 1, renvoie 1
-• Second f(): c[0] goes from 1 to 2, renvoie 2
-• Résultat : 2
+• a → dict b → dict c → int 3.
+
+Exécution étape par étape :
+1. d["a"] → {"b":{...}}
+2. ["b"] → {"c":3}
+3. ["c"] → 3
+
+Ordre des opérations :
+• Strictement de l’extérieur vers l’intérieur.
+
+Cas d'utilisation courants :
+• Arbres de paramètres, réponses API imbriquées.
+
+Cas limites :
+• None à un niveau → TypeError au niveau suivant.
+
+Considérations de performance :
+• k lookups O(k) amorti.
 
 Exemples :
-• f = counter(); f()  # 1
-• f()                 # 2
-• f()                 # 3
+• Quatre niveaux : même principe.
 
-Utilisations courantes :
-• Stateful closures en Python 2 style
-• Counter implementations without classes
-• Demonstrating mutable container trick`,
-  1904: `Le nonlocal keyword allows an inner fonction to rebind a variable in the nearest enclosing scope (that is not global). Without nonlocal, x += 1 dans inner would create a new local variable and raise UnboundLocalError car x is read avant assignment.
+Remarques :
+• Réponse : 3.`,
+  1904: `Liste dans un dict
+
+Débutant :
+• d["users"] est une liste de dicts ; [0] prend le premier élément ; ["name"] lit "Alice".
+
+Intermédiaire :
+• Mélange conteneurs : dict → list → dict → valeur.
+
+Expert :
+• Si la liste est vide, [0] lève IndexError.
 
 Concepts clés :
-• nonlocal x tells Python that x refers to outer's x
-• Without nonlocal, x += 1 would create a local x (and fail)
-• nonlocal only works in nested fonctions, not at module level
-• The modification persists in the enclosing scope
+• Indexation numérique puis clé str.
+
+Distinctions clés :
+• d["users"]["0"] serait une clé str "0", pas l’indice 0.
 
 Fonctionnement :
-• outer() creates x = 1, defines inner avec nonlocal x, retourne inner
-• f = outer() — f is inner, x = 1 in the closure
-• f(): nonlocal x; x += 1 changes x from 1 to 2; renvoie 2
-• Résultat : 2
+• users[0] → {"name":"Alice"} ; puis ["name"].
+
+Exécution étape par étape :
+1. Liste accédée.
+2. Premier dict.
+3. Clé "name".
+
+Ordre des opérations :
+• Crochets évalués de gauche à droite.
+
+Cas d'utilisation courants :
+• Premier enregistrement d’une API type REST.
+
+Cas limites :
+• Clé "name" absente dans l’élément → KeyError.
+
+Considérations de performance :
+• Accès O(1) dict + O(1) index liste.
 
 Exemples :
-• f = outer(); f()  # 2
-• f()               # 3 (x persists entre calls)
-• f()               # 4
+• users[-1] pour le dernier.
 
-Utilisations courantes :
-• Modifying enclosing scope variables cleanly
-• Stateful closures en Python 3
-• Replacing the mutable container trick`,
-  1905: `Each invocation of f() increments the shared x by 1 and retourne le new value. The closure maintains state across calls car nonlocal x binds inner to outer's x.
+Remarques :
+• Réponse : Alice (chaîne du QCM).`,
+  1905: `Longueur d’une liste stockée
+
+Débutant :
+• len(d["users"]) compte les éléments de la liste "users" → 2 entrées Alice et Bob.
+
+Intermédiaire :
+• len ne compte pas les clés du dict racine ici.
+
+Expert :
+• len sur liste vide → 0.
 
 Concepts clés :
-• The closure's x persists across all calls to f()
-• Each call adds 1: 1 → 2 → 3 → 4
-• The third call returns 4
-• nonlocal ensures all calls share le même x
+• len sur valeur de type list.
+
+Distinctions clés :
+• len(d) serait le nombre de clés racine (1 ici : "users").
 
 Fonctionnement :
-• f = outer() — x starts at 1
-• First f(): x = 1 + 1 = 2, renvoie 2
-• Second f(): x = 2 + 1 = 3, renvoie 3
-• Third f(): x = 3 + 1 = 4, returns 4
-• Résultat : 4
+• Accès users puis len de la liste.
+
+Exécution étape par étape :
+1. d["users"] → liste deux éléments.
+2. len → 2.
+
+Ordre des opérations :
+• D’abord l’expression entre parenthèses implicites de len.
+
+Cas d'utilisation courants :
+• Pagination, comptage d’éléments chargés.
+
+Cas limites :
+• Si "users" n’est pas une liste → TypeError.
+
+Considérations de performance :
+• O(1) pour len(liste) en CPython.
 
 Exemples :
-• f = outer()
-• f()  # 2
-• f()  # 3
-• f()  # 4
-• f()  # 5 (keeps going)
+• len(d["users"][0]) nombre de clés du premier user.
 
-Utilisations courantes :
-• Understanding closure state persistence
-• Building counters and accumulators
-• Demonstrating nonlocal across multiple calls`,
-  1906: `Le nonlocal instruction est utilisé dans a nested fonction to indicate that a variable refers to the nearest enclosing scope's variable (excluding global scope). Without it, assignment to a variable dans a fonction crée un new local variable.
+Remarques :
+• Réponse : 2.`,
+  1906: `setdefault avec dict par défaut
+
+Débutant :
+• setdefault("a", {}) renvoie le dict sous "a", le créant vide si absent ; ["x"]=1 écrit dedans → {"a":{"x":1}}.
+
+Intermédiaire :
+• Le {} par défaut n’est utilisé qu’à la première création de "a".
+
+Expert :
+• Attention : passer {} comme défaut partagé en boucle piège ; ici un seul appel.
 
 Concepts clés :
-• nonlocal bridges inner fonctions to their enclosing scope
-• It does NOT access module-level (global) variables — use global for that
-• It must reference an existing variable in an enclosing fonction
-• It allows rebinding, not just reading
+• setdefault, mutation du sous-dict retourné.
+
+Distinctions clés :
+• d["a"] = d.get("a", {}); d["a"]["x"]=1 en deux temps équivalent si "a" absent.
 
 Fonctionnement :
-• def outer(): x = 10
-•     def inner(): nonlocal x; x = 20
-• nonlocal x tells Python: "x is from outer, not a new local"
-• inner() can now modify outer's x
+• setdefault insère "a":{} si besoin, retourne la référence, puis assignation x.
+
+Exécution étape par étape :
+1. Création racine et clé "a" avec dict vide si manquante.
+2. Écriture x:1 dans ce dict.
+
+Ordre des opérations :
+• setdefault puis indexation assignation.
+
+Cas d'utilisation courants :
+• Agrégation multi-niveaux sans if préalable.
+
+Cas limites :
+• Si "a" existait déjà avec une non-dict → erreur au ["x"].
+
+Considérations de performance :
+• Un lookup + possible insertion.
 
 Exemples :
-• nonlocal x — binds to enclosing scope's x
-• global x — binds to module-level x
-• Without either: assignment crée un new local
+• Comptage par groupe avec setdefault(list).
 
-Utilisations courantes :
-• Stateful closures (counters, accumulators)
-• Modifying enclosing variables sans mutable containers
-• Python 3 replacement for the mutable liste trick`,
-  1907: `Le global keyword peut être utilisé dans any fonction, including nested ones. It always refers to the module-level (global) variable, skipping all enclosing fonction scopes. C'est different from nonlocal, which targets the nearest enclosing fonction scope.
+Remarques :
+• Réponse : {"a": {"x": 1}}.`,
+  1907: `setdefault avec liste
+
+Débutant :
+• Chaque setdefault("a", []) sur la même clé existante retourne la même liste ; append empile 1 puis 2 → {"a":[1,2]}.
+
+Intermédiaire :
+• Le second setdefault ne remplace pas la liste déjà là.
+
+Expert :
+• Si "a" n’existait pas, le [] par défaut serait utilisé une fois puis réutilisé.
 
 Concepts clés :
-• global always targets the module-level variable
-• nonlocal targets the nearest enclosing fonction scope
-• Both peut être utilisé dans nested fonctions
-• They serve different purposes and cannot be combined for le même variable
+• setdefault sur list, mutation append.
+
+Distinctions clés :
+• Deux appels distincts à setdefault("a",[]) partagent la liste créée au premier.
 
 Fonctionnement :
-• x = 100  # module level
-• def outer():
-•     x = 10
-•     def inner():
-•         global x  # refers to module-level x = 100, not outer's x = 10
-•         x = 200   # modifies module-level x
-•     inner()
-•     renvoyer x  # still 10 (outer's x inchangés)
-• outer()  # renvoie 10
-• x  # 200 (module-level x was changed)
+• Première fois : crée "a":[] ; append 1. Deuxième : récupère la même liste ; append 2.
+
+Exécution étape par étape :
+1. Liste unique sous "a".
+2. Contenu [1, 2].
+
+Ordre des opérations :
+• Lignes séquentielles.
+
+Cas d'utilisation courants :
+• Regrouper des éléments par clé dans une boucle.
+
+Cas limites :
+• fromkeys avec [] partagé : piège différent mais voisin.
+
+Considérations de performance :
+• Amortized O(1) par append.
 
 Exemples :
-• global x dans nested fonction: accesses module x
-• nonlocal x dans nested fonction: accesses enclosing fonction's x
+• setdefault pour accumulateur par mot-clé.
 
-Utilisations courantes :
-• Accessing module-level state from deeply nested fonctions
-• Distinguishing entre global and enclosing scope access`,
-  1908: `Without nonlocal, assigning x = 20 inside inner() crée un brand-new local variable that shadows outer's x. The outer function's x remains 10 car inner's x is a completely separate variable.
+Remarques :
+• Réponse : {"a": [1, 2]}.`,
+  1908: `Inversion clé↔valeur (valeurs uniques)
+
+Débutant :
+• {v:k for k,v in d.items()} échange : 1→'a', 2→'b' → {1:'a', 2:'b'}.
+
+Intermédiaire :
+• Les valeurs deviennent clés ; elles doivent être hachables.
+
+Expert :
+• Si deux clés originales avaient la même valeur, collision (voir 1909).
 
 Concepts clés :
-• Assignment in a function crée un local variable by default
-• inner()'s x = 20 is local to inner, not outer's x
-• outer's x = 10 is never modified
-• C'est the default scoping behavior (LEGB rule)
+• Dict comprehension, items(), inversion.
+
+Distinctions clés :
+• Inverse partiel si doublons de valeurs.
 
 Fonctionnement :
-• outer() creates x = 10
-• inner() est appelé: creates its own local x = 20, renvoie 20 (but return value is discarded)
-• Back in outer: return x returns outer's x which is still 10
-• Résultat : 10
+• Itération sur paires, construction nouvelles paires v:k.
+
+Exécution étape par étape :
+1. ('a',1)→1:'a' ; ('b',2)→2:'b'.
+
+Ordre des opérations :
+• Ordre d’insertion suit items() du dict source.
+
+Cas d'utilisation courants :
+• Index inverse pour recherche O(1) par valeur (si bijection).
+
+Cas limites :
+• Valeurs non hachables → TypeError.
+
+Considérations de performance :
+• O(n).
 
 Exemples :
-• Without nonlocal: inner's assignment crée un new local
-• With nonlocal: inner's assignment modifies outer's variable
-• x = 20 in inner is a separate variable from x = 10 in outer
+• Inverser un petit mapping d’énum.
 
-Utilisations courantes :
-• Understanding Python's LEGB scope resolution
-• Demonstrating why nonlocal is needed to modify enclosing variables`,
-  1909: `With the nonlocal declaration, inner()'s assignment x = 20 modifies le même x variable that outer() created. After inner() runs, outer's x has been changed to 20.
+Remarques :
+• Réponse : {1: 'a', 2: 'b'}.`,
+  1909: `Inversion avec valeurs dupliquées
+
+Débutant :
+• "a" et "b" valent tous deux 1 ; la comprehension écrit 1:'a' puis 1:'b' écrase → {1:'b'} seulement.
+
+Intermédiaire :
+• Dernière paire traitée dans l’ordre d’itération gagne.
+
+Expert :
+• Pour conserver toutes les clés par valeur, utiliser dict de listes ou defaultdict(list).
 
 Concepts clés :
-• nonlocal x in inner tells Python to use outer's x
-• x = 20 now modifies outer's x, not a new local
-• After inner() runs, outer's x is 20
-• C'est the key difference from the previous question (without nonlocal)
+• Unicité des clés, écrasement silencieux.
+
+Distinctions clés :
+• Pas d’erreur si collision : comportement à connaître.
 
 Fonctionnement :
-• outer() creates x = 10
-• inner() est appelé: nonlocal x binds to outer's x; x = 20 modifies outer's x
-• Back in outer: return x renvoie 20 (x was modified by inner)
-• Résultat : 20
+• Deux itérations sur la même clé cible 1.
+
+Exécution étape par étape :
+1. 1:'a' puis remplacement 1:'b'.
+
+Ordre des opérations :
+• Ordre items() en 3.7+ déterministe.
+
+Cas d'utilisation courants :
+• Détecter ambiguïtés d’inversion.
+
+Cas limites :
+• Plus de deux clés même valeur : une seule survit.
+
+Considérations de performance :
+• Toujours O(n).
 
 Exemples :
-• Without nonlocal: outer() renvoie 10 (inner has separate x)
-• With nonlocal: outer() renvoie 20 (inner modifies outer's x)
-• nonlocal bridges the scope gap
+• Inverser graphe adjacence simple.
 
-Utilisations courantes :
-• Modifying enclosing scope state
-• Comparing behavior with and without nonlocal
-• Understanding scope resolution en Python 3`,
-  1910: `C'est la solution pour the classic late-binding closure gotcha. En utilisant un paramètre par défaut i=i, la valeur actuelle de la boucle variable is captured at the time each lambda est créé, rather than all lambdas sharing the final value.
+Remarques :
+• Réponse : {1: 'b'}.`,
+  1910: `Fusion par dépaquetage et clé supplémentaire
+
+Débutant :
+• {**d1, **d2, "c":3} fusionne d1 puis d2 puis ajoute c ; clés de d2 écrasent d1 si collision, ici pas de conflit → {"a":1,"b":2,"c":3}.
+
+Intermédiaire :
+• L’ordre des ** détermine la priorité en cas de même clé.
+
+Expert :
+• Crée un nouveau dict ; d1 et d2 inchangés.
 
 Concepts clés :
-• Default arguments are evaluated quand la fonction is defined, not quand appelé
-• i=i captures the current loop value as a default parameter
-• Each lambda gets its own snapshot of i
-• This produces [0, 1, 2] instead of [2, 2, 2]
+• Unpacking PEP 448, littéral mixte.
+
+Distinctions clés :
+• vs d1.update(d2) qui mute.
 
 Fonctionnement :
-• Iteration 0: lambda i=0: i (default i is 0)
-• Iteration 1: lambda i=1: i (default i is 1)
-• Iteration 2: lambda i=2: i (default i is 2)
-• Calling each: f() uses the default → [0, 1, 2]
+• Insérer paires de d1, puis d2, puis "c":3.
+
+Exécution étape par étape :
+1. a:1, b:2, c:3 selon fusion.
+
+Ordre des opérations :
+• De gauche à droite pour résolution collisions.
+
+Cas d'utilisation courants :
+• Defaults + overrides + constantes.
+
+Cas limites :
+• Clés non str en clé expression (hors ce cas).
+
+Considérations de performance :
+• Allocation nouveau dict O(n).
 
 Exemples :
-• [lambda i=i: i for i in range(3)] — fixed version → [0, 1, 2]
-• [lambda: i for i in range(3)] — broken version → [2, 2, 2]
+• {**base, **patch}.
 
-Utilisations courantes :
-• Fixing late-binding issues in loop-created closures
-• Creating callbacks with captured loop values
-• Event handlers in GUI programming`,
-  1911: `C'est the classic late-binding closure bug. All three lambdas close over le même variable i. By the time they are called, the loop has finished and i is 2, so all lambdas return 2.
+Remarques :
+• Réponse : {"a": 1, "b": 2, "c": 3}.`,
+  1911: `Comprehension avec filtre sur valeurs
+
+Débutant :
+• Garde les paires où v > 1 → seulement "b":2 et "c":3.
+
+Intermédiaire :
+• "a":1 est exclu.
+
+Expert :
+• Peut combiner conditions sur k et v.
 
 Concepts clés :
-• Closures capture variables by reference, not by value
-• All three lambdas share le même i
-• The loop finishes with i = 2
-• All calls to f() look up i and find 2
+• if en fin de dict comprehension, prédicat sur v.
+
+Distinctions clés :
+• Filtrer avant inversion ou après selon besoin.
 
 Fonctionnement :
-• Loop runs: i = 0, 1, 2 (creates 3 lambdas sharing i)
-• Loop ends: i = 2
-• Calling funcs[0](): looks up i → 2
-• Calling funcs[1](): looks up i → 2
-• Calling funcs[2](): looks up i → 2
-• Résultat : [2, 2, 2]
+• Test v>1 pour chaque paire.
+
+Exécution étape par étape :
+1. b:2 et c:3 conservés.
+
+Ordre des opérations :
+• Ordre d’origine préservé pour les survivants.
+
+Cas d'utilisation courants :
+• Sous-ensemble de métriques au-dessus d’un seuil.
+
+Cas limites :
+• Si aucune valeur >1 → {}.
+
+Considérations de performance :
+• Un passage O(n).
 
 Exemples :
-• [lambda: i for i in range(3)] → [2, 2, 2] (bug)
-• Fix: [lambda i=i: i for i in range(3)] → [0, 1, 2]
+• if v % 2 == 0.
 
-Utilisations courantes :
-• Understanding late binding en Python closures
-• A very common interview question
-• Explains why callbacks in loops often misbehave`,
-  1912: `C'est a function factory qui crée power functions. make_power(n) retourne un closure where n is captured. Calling make_power(2) crée un squaring function, make_power(3) would create a cubing function, etc.
+Remarques :
+• Réponse : {"b": 2, "c": 3}.`,
+  1912: `list(d) rappel
+
+Débutant :
+• list(d) sur {"a":1,"b":2} donne les clés ['a','b'] en ordre d’insertion.
+
+Intermédiaire :
+• Pas les valeurs ni les paires.
+
+Expert :
+• Idem niveau précédent ; consolidation pédagogique.
 
 Concepts clés :
-• The closure captures n from make_power's scope
-• square = make_power(2) crée un function that computes x**2
-• Each call to make_power creates an independent closure
-• The returned function remembers its specific n
+• Itération dict = clés.
+
+Distinctions clés :
+• list(d.items()) pour paires.
 
 Fonctionnement :
-• make_power(2): n = 2, returns power where power(x) = x**2
-• square = make_power(2) — square is power with n = 2
-• square(5) = 5**2 = 25
-• Résultat : 25
+• Matérialisation des clés en liste.
+
+Exécution étape par étape :
+1. Itération a, b → liste.
+
+Ordre des opérations :
+• Évaluation d puis list().
+
+Cas d'utilisation courants :
+• Snapshot des clés avant mutation pendant parcours.
+
+Cas limites :
+• dict vide → [].
+
+Considérations de performance :
+• O(n) mémoire.
 
 Exemples :
-• cube = make_power(3); cube(2)  # 8
-• fourth = make_power(4); fourth(2)  # 16
-• identity = make_power(1); identity(42)  # 42
+• sorted(list(d)) pour ordre trié.
 
-Utilisations courantes :
-• Function factories for mathematical operations
-• Creating specialized functions from general templates
-• Partial application of exponent`,
-  1913: `This demonstrates currying — a technique where a function that takes multiple arguments is transformed into a chain of single-argument functions. Each nested function captures one argument de sa enclosing scope.
+Remarques :
+• Réponse : ['a', 'b'].`,
+  1913: `Tri par valeur puis dict()
+
+Débutant :
+• sorted(d.items(), key=lambda x: x[1]) trie par la valeur ; dict(...) reconstruit un dict dans l’ordre trié → {'a':1,'b':2}.
+
+Intermédiaire :
+• x est (clé, valeur) ; x[1] est la valeur.
+
+Expert :
+• En 3.7+ le dict résultat garde l’ordre d’insertion issu du tri.
 
 Concepts clés :
-• Currying transforms f(x, y, z) into f(x)(y)(z)
-• Each function captures one parameter and retourne le next function
-• inner has access to x, y, and z through nested closures
-• C'est a common functional programming pattern
+• sorted avec key, reconstruction dict.
+
+Distinctions clés :
+• sorted(d) trierait les clés, pas les valeurs.
 
 Fonctionnement :
-• outer(1): x = 1, returns middle
-• outer(1)(2): middle(2): y = 2, retourne inner
-• outer(1)(2)(3): inner(3): z = 3, returns x + y + z = 1 + 2 + 3 = 6
-• Résultat : 6
+• Paires triées par composante valeur croissante.
+
+Exécution étape par étape :
+1. Items (a,1),(b,2) déjà ordonnés par valeur ici.
+
+Ordre des opérations :
+• sorted puis appel constructeur dict.
+
+Cas d'utilisation courants :
+• Classement d’entrées par score.
+
+Cas limites :
+• Valeurs non comparables → TypeError.
+
+Considérations de performance :
+• O(n log n) pour le tri.
 
 Exemples :
-• outer(10)(20)(30)  # 60
-• f = outer(0); g = f(0); g(0)  # 0
-• partial = outer(100)(200); partial(300)  # 600
+• reverse=True pour ordre décroissant.
 
-Utilisations courantes :
-• Currying and partial application
-• Building configurable function pipelines
-• Functional programming patterns en Python`,
-  1914: `C'est another function factory pattern. multiplier(factor) crée un closure that multiplies its argument by the captured factor. Each call to multiplier produit un new multiplier function.
+Remarques :
+• Réponse : {"a": 1, "b": 2}.`,
+  1914: `Tri par clé avec sorted(items)
+
+Débutant :
+• sorted(d.items()) trie par clé (tuple compare composante par composante) → ordre a puis b → {"a":1,"b":2}.
+
+Intermédiaire :
+• L’ordre d’insertion initial b,a est réordonné alphabétiquement par clé str.
+
+Expert :
+• dict() consomme l’itérable de paires triées.
 
 Concepts clés :
-• multiplier(2) retourne un function that multiplies by 2
-• The closure captures factor = 2
-• double(10) evaluates 10 * 2 = 20
-• Different calls create independent closures
+• Tri lexicographique des clés via items.
+
+Distinctions clés :
+• key=lambda x: x[0] explicite équivalent ici.
 
 Fonctionnement :
-• multiplier(2): factor = 2, returns multiply
-• double = multiplier(2) — double(x) returns x * 2
-• double(10) = 10 * 2 = 20
-• Résultat : 20
+• ('a',1) avant ('b',2).
+
+Exécution étape par étape :
+1. Liste triée de paires.
+2. Nouveau dict.
+
+Ordre des opérations :
+• sorted puis dict.
+
+Cas d'utilisation courants :
+• Affichage canonique pour diff.
+
+Cas limites :
+• Clés hétérogènes non comparables.
+
+Considérations de performance :
+• O(n log n).
 
 Exemples :
-• triple = multiplier(3); triple(10)  # 30
-• half = multiplier(0.5); half(10)    # 5.0
-• negate = multiplier(-1); negate(42) # -42
+• sorted(d) seul donne clés ; ici on veut paires complètes.
 
-Utilisations courantes :
-• Creating scaling functions
-• Price calculators with different tax rates
-• Unit conversion functions`,
-  1915: `Le inner fonction greeting() closes over the name parameter from greet(). When greet("Alice") est appelé, il retourne greeting avec name bound to "Alice". Appeler la fonction retournée produces the f-string avec the captured name.
+Remarques :
+• Réponse : {"a": 1, "b": 2}.`,
+  1915: `max avec key=d.get
+
+Débutant :
+• max(d, key=d.get) choisit la clé dont la valeur est maximale → 'c' pour valeurs 1,2,3.
+
+Intermédiaire :
+• max itère les clés ; d.get(k) fournit la métrique.
+
+Expert :
+• Équivalent mental : max sur items par valeur puis prendre la clé.
 
 Concepts clés :
-• The closure captures the name parameter
-• f-strings evaluate expressions dans {} at call time
-• name is looked up in the closure's enclosing scope
-• The result is the formatted greeting string
+• Argument key de max, méthode get comme callable.
+
+Distinctions clés :
+• max(d) donnerait 'c' lexicographiquement par hasard aligné ici, mais la sémantique générale diffère.
 
 Fonctionnement :
-• greet("Alice"): name = "Alice", retourne greeting fonction
-• greet("Alice")(): calls greeting()
-• greeting() retourne f"Hello, {name}!" avec name = "Alice"
-• Résultat : "Hello, Alice!"
+• Compare d.get('a'), d.get('b'), d.get('c').
+
+Exécution étape par étape :
+1. Valeurs 1,2,3 ; max → clé 'c'.
+
+Ordre des opérations :
+• max évalue key pour chaque candidat clé.
+
+Cas d'utilisation courants :
+• Trouver le champion dans un tableau de scores nommés.
+
+Cas limites :
+• dict vide → ValueError.
+
+Considérations de performance :
+• O(n).
 
 Exemples :
-• greet("Bob")()    # "Hello, Bob!"
-• greet("World")()  # "Hello, World!"
-• f = greet("Eve"); f()  # "Hello, Eve!"
+• min(d, key=d.get) pour le minimum.
 
-Utilisations courantes :
-• Personalized fonction creation
-• Message formatters
-• Template fonctions avec captured context`,
-  1916: `A closure is a function object that has access to variables in its enclosing lexical scope, even quand la fonction est appelé outside that scope. The inner function "closes over" the free variables from the enclosing function.
+Remarques :
+• Réponse : 'c'.`,
+  1916: `update avec arguments nommés
+
+Débutant :
+• update(b=3, c=4) traite b et c comme des clés str ; met à jour b et ajoute c → {"a":1,"b":3,"c":4}.
+
+Intermédiaire :
+• Les noms d’arguments doivent être des identifiants valides (pas d’espace).
+
+Expert :
+• Peut combiner avec un mapping positionnel dans le même update (hors snippet).
 
 Concepts clés :
-• A closure = function + its captured environment
-• The captured variables persist après le enclosing function returns
-• Closures enable stateful functions without classes
-• Python creates closures automatically when inner functions reference outer variables
+• kwargs comme paires clé-valeur pour update.
+
+Distinctions clés :
+• update({"b":3}) vs update(b=3).
 
 Fonctionnement :
-• def outer():
-•     x = 10
-•     def inner(): return x
-•     return inner
-• f = outer()  # outer's scope is gone, but f still has x = 10
-• f()  # 10 — the closure remembers x
+• Fusion in-place des paires fournies.
+
+Exécution étape par étape :
+1. b passe de 2 à 3 ; c ajoutée 4.
+
+Ordre des opérations :
+• Appel update après création de d.
+
+Cas d'utilisation courants :
+• Patch lisible de quelques champs nommés.
+
+Cas limites :
+• Clé impossible comme identifiant → utiliser autre forme d’update.
+
+Considérations de performance :
+• O(nombre de kwargs).
 
 Exemples :
-• Functions returned from functions that access enclosing variables
-• Callbacks that capture context
-• Factory functions that produce specialized functions
+• update(a=10) écrase a.
 
-Utilisations courantes :
-• Data encapsulation (private state without classes)
-• Function factories (make_adder, make_multiplier)
-• Decorators (closures are the core mechanism)
-• Callbacks with captured context`,
-  1917: `C'est le même late-binding gotcha as the list comprehension version. Using a list comprehension to build the list of lambdas does not change the closure behavior — all lambdas still share le même loop variable i.
+Remarques :
+• Réponse : {"a": 1, "b": 3, "c": 4}.`,
+  1917: `update avec liste de paires
+
+Débutant :
+• update([("b",2),("c",3)]) ajoute/ met à jour depuis un itérable de paires → {"a":1,"b":2,"c":3}.
+
+Intermédiaire :
+• Utile quand les paires viennent d’une requête ou fichier.
+
+Expert :
+• Peut enchaîner plusieurs sources dans plusieurs update.
 
 Concepts clés :
-• The list comprehension iterates i over range(3)
-• Each lambda captures i by reference, not by value
-• After the comprehension finishes, i = 2
-• All lambdas return 2 quand appelé
+• Itérable 2-uples, mutation in-place.
+
+Distinctions clés :
+• dict() constructeur consomme pareil mais crée un nouvel objet ; update mute.
 
 Fonctionnement :
-• List comprehension runs: i = 0, 1, 2
-• Three lambdas are appended, all referencing le même i
-• After the comprehension: i = 2
-• Calling each f(): all return 2
-• Résultat : [2, 2, 2]
+• Pour chaque tuple, insertion dans d.
+
+Exécution étape par étape :
+1. a:1 existant ; ajout b, c.
+
+Ordre des opérations :
+• Évaluation de la liste puis update.
+
+Cas d'utilisation courants :
+• Fusion résultat cur.fetchall() simplifié.
+
+Cas limites :
+• Tuple mal formé → erreur.
+
+Considérations de performance :
+• Linéaire en nombre de paires.
 
 Exemples :
-• [lambda: i for i in range(3)] → same result: [2, 2, 2]
-• Fix: [lambda i=i: i for i in range(3)] → [0, 1, 2]
+• update(zip(keys, vals)).
 
-Utilisations courantes :
-• Understanding that le conteneur n'a pas d'importance
-• Late binding is about variable reference, not loop syntax`,
-  1918: `Adding the default parameter i=i fixes the late-binding issue. Each lambda gets its own copy of i's value at the time it was defined, not a shared reference to the loop variable.
+Remarques :
+• Réponse : {"a": 1, "b": 2, "c": 3}.`,
+  1918: `pop retire une clé
+
+Débutant :
+• pop("a") enlève 'a':1 et retourne 1 ; d devient {"b":2}.
+
+Intermédiaire :
+• Effet de bord visible sur d après l’expression.
+
+Expert :
+• pop sans défaut lève si clé absente.
 
 Concepts clés :
-• Default parameters are evaluated at function definition time
-• i=i captures the current loop value into the lambda's own parameter
-• Each lambda now has an independent default value
-• C'est the standard fix for late-binding in loops
+• Suppression par clé, valeur retournée.
+
+Distinctions clés :
+• del d['a'] sans valeur de retour utilisable.
 
 Fonctionnement :
-• i=0: lambda i=0: i (default is 0)
-• i=1: lambda i=1: i (default is 1)
-• i=2: lambda i=2: i (default is 2)
-• Calling each: uses default → [0, 1, 2]
+• Retrait de la paire "a".
+
+Exécution étape par étape :
+1. d après pop : une seule entrée b.
+
+Ordre des opérations :
+• Statement ou expression selon contexte.
+
+Cas d'utilisation courants :
+• File de consommation clé par clé.
+
+Cas limites :
+• pop sur dict vide après coup.
+
+Considérations de performance :
+• O(1) amorti.
 
 Exemples :
-• Without i=i: [2, 2, 2] (shared reference)
-• With i=i: [0, 1, 2] (captured values)
+• popitem pour LIFO paires.
 
-Utilisations courantes :
-• Correctly creating closures inside loops
-• Event handler registration
-• Callback factories`,
-  1919: `C'est a practical closure pattern: a running accumulator. The closure maintains total across calls using nonlocal, so chaque appel adds to the running sum.
+Remarques :
+• Réponse : {"b": 2}.`,
+  1919: `Liste en compréhension avec pop
+
+Débutant :
+• list(d) fige ['a','b'] avant les pops ; pour k='a', valeur 1<2 donc pop('a') ; pour k='b', valeur 2<2 faux → d reste {"b":2}.
+
+Intermédiaire :
+• La liste des clés est évaluée avant la boucle ; mais d change pendant l’itération.
+
+Expert :
+• Ordre des k détermine quels pops ont lieu.
 
 Concepts clés :
-• total is initialized to start (0 in this case)
-• nonlocal total allows add() to modify total
-• Each call to add(n) increases total and retourne le new value
-• State persists between calls
+• pop pendant itération guidée par snapshot de clés.
+
+Distinctions clés :
+• Si on itérait directement sur d sans copie, RuntimeError possible en 3.x selon contexte.
 
 Fonctionnement :
-• accumulator(0): total = 0, returns add
-• a = accumulator(0) — a is add with total = 0
-• a(5): total = 0 + 5 = 5, renvoie 5
-• a(3): total = 5 + 3 = 8, renvoie 8
-• Résultat : 8
+• k='a' : pop ; k='b' : condition fausse.
+
+Exécution étape par étape :
+1. Liste clés ['a','b'].
+2. Pop a ; b conservé.
+
+Ordre des opérations :
+• Compréhension évalue condition sur d courant.
+
+Cas d'utilisation courants :
+• Nettoyer sélectivement des entrées.
+
+Cas limites :
+• Logique fragile : préférer boucle explicite pour maintenance.
+
+Considérations de performance :
+• O(n) pops possibles.
 
 Exemples :
-• a = accumulator(100); a(10)  # 110
-• a(20)  # 130
-• a(-50) # 80
+• result collecte [1] ici.
 
-Utilisations courantes :
-• Running totals and sums
-• Score trackers
-• Financial calculations with running balances`,
-  1920: `C'est le même accumulator pattern but with a different starting value. The closure starts total at 10, and the first call adds 5.
+Remarques :
+• Réponse : {"b": 2}.`,
+  1920: `setdefault clé existante
+
+Débutant :
+• setdefault("a", 999) ne remplace pas 1 ; retourne 1.
+
+Intermédiaire :
+• Le 999 est ignoré si "a" présente.
+
+Expert :
+• dict inchangé.
 
 Concepts clés :
-• total is initialized to start = 10
-• a(5) adds 5 to the running total
-• nonlocal total allows modification
-• The starting value is captured in the closure
+• setdefault lecture + insertion conditionnelle.
+
+Distinctions clés :
+• vs get qui ne crée jamais de clé.
 
 Fonctionnement :
-• accumulator(10): total = 10, returns add
-• a = accumulator(10) — a is add with total = 10
-• a(5): total = 10 + 5 = 15, renvoie 15
-• Résultat : 15
+• "a" trouvée → valeur actuelle.
+
+Exécution étape par étape :
+1. Retour 1.
+
+Ordre des opérations :
+• Appel setdefault.
+
+Cas d'utilisation courants :
+• Valeur par défaut seulement si absent.
+
+Cas limites :
+• Si valeur était None, setdefault avec 999 ne l’écrase pas.
+
+Considérations de performance :
+• Un lookup.
 
 Exemples :
-• accumulator(0); a(1)  # 1
-• accumulator(100); a(50)  # 150
-• accumulator(-5); a(10)  # 5
+• setdefault pour compteur +1 patterns.
 
-Utilisations courantes :
-• Configurable accumulators with different starting points
-• Closure-based state machines
-• Parameterized stateful functions`,
-  1921: `Functions are first-class objects en Python, meaning they peut être passé as arguments to other functions. Here, the built-in abs function est passé to apply, qui calls it with -5.
+Remarques :
+• Réponse : 1.`,
+  1921: `setdefault clé absente
+
+Débutant :
+• setdefault("b", 999) insère "b":999 et retourne 999.
+
+Intermédiaire :
+• "a":1 reste ; nouveau champ b.
+
+Expert :
+• Retour == valeur insérée quand création.
 
 Concepts clés :
-• Functions peut être passé as arguments like any other object
-• abs is a function object — no parentheses means we're passing the function itself
-• apply(f, x) calls f(x), so apply(abs, -5) calls abs(-5)
-• C'est the basis of higher-order functions
+• Insertion avec défaut.
+
+Distinctions clés :
+• get("b",999) n’insérerait pas b.
 
 Fonctionnement :
-• apply(abs, -5): f = abs, x = -5
-• return f(x) → return abs(-5) → return 5
-• Résultat : 5
+• Absence de b → insertion.
+
+Exécution étape par étape :
+1. d devient {"a":1,"b":999} (effet de bord).
+
+Ordre des opérations :
+• Un appel.
+
+Cas d'utilisation courants :
+• Initialisation paresseuse.
+
+Cas limites :
+• Valeur défaut mutable partagée en boucle : danger.
+
+Considérations de performance :
+• Un insert possible.
 
 Exemples :
-• apply(len, "hello")  # 5
-• apply(str, 42)       # "42"
-• apply(type, 3.14)    # <class 'float'>
+• Cache optionnel.
 
-Utilisations courantes :
-• Higher-order functions (map, filter, sorted)
-• Callback patterns
-• Strategy pattern implementation`,
-  1922: `This demonstrates that built-in type constructors like str are also callable objects that peut être passé as arguments. str(42) converts the integer 42 to the string "42".
+Remarques :
+• Réponse : 999.`,
+  1922: `fromkeys sur chaîne
+
+Débutant :
+• fromkeys("abc", 0) crée trois clés une par caractère, toutes valeur 0.
+
+Intermédiaire :
+• La chaîne est itérée caractère par caractère.
+
+Expert :
+• Même objet 0 réutilisé (immuables, ok).
 
 Concepts clés :
-• str, int, float, list, etc. are callable objects
-• They peut être passé as function arguments just like user-defined functions
-• apply(str, 42) calls str(42) → "42"
-• Type constructors are first-class citizens en Python
+• Itérable de clés = str, valeur uniforme.
+
+Distinctions clés :
+• fromkeys("abc") sans second arg → None partout.
 
 Fonctionnement :
-• apply(str, 42): f = str, x = 42
-• return f(x) → return str(42) → return "42"
-• Résultat : "42"
+• a:0, b:0, c:0.
+
+Exécution étape par étape :
+1. Construction dict trois entrées.
+
+Ordre des opérations :
+• Ordre des caractères de la str.
+
+Cas d'utilisation courants :
+• Masques binaires ou flags par lettre.
+
+Cas limites :
+• str vide → {}.
+
+Considérations de performance :
+• O(len(str)).
 
 Exemples :
-• apply(int, "100")    # 100
-• apply(float, "3.14") # 3.14
-• apply(list, "abc")   # ["a", "b", "c"]
+• fromkeys(["a","b"], 0) liste de clés.
 
-Utilisations courantes :
-• Data type conversion pipelines
-• Passing constructors to map/filter
-• Generic processing functions`,
-  1923: `apply_twice calls f on x, alors calls f again on le résultat. With a lambda that adds 1, the first call gives 5+1=6, and the second call gives 6+1=7.
+Remarques :
+• Réponse : {'a': 0, 'b': 0, 'c': 0}.`,
+  1923: `Piège fromkeys avec liste mutable
+
+Débutant :
+• Un seul objet liste est passé comme valeur par défaut ; toutes les clés partagent cette liste ; append(1) sur "a" modifie la liste commune → tous voient [1].
+
+Intermédiaire :
+• Ce n’est pas trois listes indépendantes.
+
+Expert :
+• Solution : {k: [] for k in "abc"} ou factory.
 
 Concepts clés :
-• apply_twice(f, x) computes f(f(x))
-• The inner f(x) runs first: (lambda x: x+1)(5) = 6
-• The outer f runs on le résultat: (lambda x: x+1)(6) = 7
-• C'est function composition applied twice
+• Référence partagée, mutable default.
+
+Distinctions clés :
+• Immuable 0 ok ; liste non.
 
 Fonctionnement :
-• f = lambda x: x + 1
-• f(5) = 6 (inner call)
-• f(6) = 7 (outer call)
-• Résultat : 7
+• fromkeys crée a,b,c pointant vers la même list.
+
+Exécution étape par étape :
+1. append sur liste partagée.
+2. d["a"], d["b"], d["c"] tous [1].
+
+Ordre des opérations :
+• Mutation après création.
+
+Cas d'utilisation courants :
+• Leçon pédagogique ; éviter en production.
+
+Cas limites :
+• Même piège avec dict ou set mutables.
+
+Considérations de performance :
+• Une seule allocation liste.
 
 Exemples :
-• apply_twice(lambda x: x*2, 3)  # 12 (3→6→12)
-• apply_twice(lambda x: x**2, 2) # 16 (2→4→16)
-• apply_twice(str.upper, "hi")   # "HI" (already uppercase, no change)
+• id(d['a']) == id(d['b']) True.
 
-Utilisations courantes :
-• Repeated transformations
-• Iterative function application
-• Demonstrating higher-order function composition`,
-  1924: `Function composition crée un new function that applies g first, alors f to le résultat. compose(inc, double) means: first double, alors increment. This follows mathematical convention: (f . g)(x) = f(g(x)).
+Remarques :
+• Réponse : chaque clé mappe à [1] (liste identique partagée).`,
+  1924: `Comprehension listes indépendantes
+
+Débutant :
+• {k: [] for k in "abc"} crée trois listes distinctes ; append sur "a" n’affecte pas b,c.
+
+Intermédiaire :
+• Chaque [] est une nouvelle liste à chaque itération.
+
+Expert :
+• Pattern sûr pour accumulateurs par clé.
 
 Concepts clés :
-• compose(f, g) retourne un function that does f(g(x))
-• g is applied first (inner), f is applied second (outer)
-• compose(inc, double)(3): double(3) = 6, alors inc(6) = 7
-• Order matters: compose(f, g) != compose(g, f) in general
+• Nouvelle liste par itération, pas de partage.
+
+Distinctions clés :
+• vs fromkeys(..., []).
 
 Fonctionnement :
-• compose(inc, double) returns lambda x: inc(double(x))
-• Calling with 3: double(3) = 6, alors inc(6) = 7
-• Résultat : 7
+• Trois objets list séparés.
+
+Exécution étape par étape :
+1. append(1) seulement sous 'a'.
+
+Ordre des opérations :
+• Comprehension puis append.
+
+Cas d'utilisation courants :
+• Inversion graphe, buckets.
+
+Cas limites :
+• Coût mémoire n listes.
+
+Considérations de performance :
+• n allocations list.
 
 Exemples :
-• compose(str, abs)(-5) → str(abs(-5)) → str(5) → "5"
-• compose(len, str)(1234) → len(str(1234)) → len("1234") → 4
+• defaultdict(list) Côté collections.
 
-Utilisations courantes :
-• Functional programming pipelines
-• Data transformation chains
-• Composing validators or processors`,
-  1925: `Reversing the order of composition changes le résultat. compose(double, inc) means: first increment, alors double. Compare with compose(inc, double) which gives 7.
+Remarques :
+• Réponse : {"a": [1], "b": [], "c": []}.`,
+  1925: `Intersection de vues de clés avec un set
+
+Débutant :
+• d.keys() & {"a","c"} donne l’intersection : clés présentes dans les deux → {'a'}.
+
+Intermédiaire :
+• dict_keys supporte &, |, -, ^ avec sets (Python 3).
+
+Expert :
+• Résultat est un set des clés communes.
 
 Concepts clés :
-• compose(double, inc)(3): g=inc runs first, f=double runs second
-• inc(3) = 4, alors double(4) = 8
-• compose(f, g) vs compose(g, f) generally gives different results
-• Cela montre composition is not commutative
+• Opérations ensemblistes sur vues.
+
+Distinctions clés :
+• & ne retourne pas un dict_values.
 
 Fonctionnement :
-• compose(double, inc) returns lambda x: double(inc(x))
-• Calling with 3: inc(3) = 4, alors double(4) = 8
-• Résultat : 8
-• Compare: compose(inc, double)(3) = inc(double(3)) = inc(6) = 7
+• Clés du dict : a,b ; intersection avec a,c → a seul.
+
+Exécution étape par étape :
+1. Construction set intersection.
+
+Ordre des opérations :
+• Vue keys puis opérateur &.
+
+Cas d'utilisation courants :
+• Filtrer colonnes présentes.
+
+Cas limites :
+• Types non set à droite : parfois convertibles (autre set-like).
+
+Considérations de performance :
+• Dépend des tailles.
 
 Exemples :
-• compose(double, inc)(0) → double(inc(0)) → double(1) → 2
-• compose(inc, double)(0) → inc(double(0)) → inc(0) → 1
+• keys & keys entre deux dicts.
 
-Utilisations courantes :
-• Understanding order of operations in composition
-• Building different processing pipelines from le même components`,
-  1926: `Functions can be stored in lists just like any other object. Accessing functions[0] retrieves the abs function, and calling it with (-5) executes abs(-5).
+Remarques :
+• Réponse : {'a'}.`,
+  1926: `Intersection des clés de deux dicts
+
+Débutant :
+• d1.keys() & d2.keys() retourne les clés présentes dans les deux mappings → {'b'} ici.
+
+Intermédiaire :
+• Seul "b" est commun à d1 et d2.
+
+Expert :
+• Vue & vue ou vue & set selon opérande droit.
 
 Concepts clés :
-• Functions are objects that can be stored in data structures
-• functions[0] retrieves abs from the list
-• Adding () after it calls the function: functions[0](-5) = abs(-5)
-• Cela permet dynamic function dispatch
+• Intersection d’ensembles de clés.
+
+Distinctions clés :
+• Ne fusionne pas les valeurs ; clés seulement.
 
 Fonctionnement :
-• functions = [abs, str, len]
-• functions[0] is abs
-• functions[0](-5) is abs(-5) = 5
-• Résultat : 5
+• d1 a,b ; d2 b,c → commun b.
+
+Exécution étape par étape :
+1. Calcul d’intersection.
+
+Ordre des opérations :
+• Évaluation des deux vues puis &.
+
+Cas d'utilisation courants :
+• Schéma commun entre deux enregistrements.
+
+Cas limites :
+• Aucune clé commune → set() vide.
+
+Considérations de performance :
+• O(taille) typique.
 
 Exemples :
-• functions[1](42) → str(42) → "42"
-• functions[2]("hello") → len("hello") → 5
+• Planifier jointure sur clés.
 
-Utilisations courantes :
-• Dynamic dispatch tables
-• Plugin architectures
-• Command pattern implementation`,
-  1927: `Retrieving len from the list and calling it on "hello" demonstrates that stored functions work exactly le même que direct calls.
+Remarques :
+• Réponse : {'b'}.`,
+  1927: `Union des clés
+
+Débutant :
+• d1.keys() | d2.keys() → toutes clés apparaissant dans l’un ou l’autre → {'a','b','c'}.
+
+Intermédiaire :
+• | est l’union ensembliste.
+
+Expert :
+• Résultat set, pas dict.
 
 Concepts clés :
-• functions[2] retrieves the len function
-• len("hello") counts the characters → 5
-• Storing functions in lists enables iteration over operations
-• Each element is a callable object
+• Union de clés.
+
+Distinctions clés :
+• | sur dict eux-mêmes (3.9+) fusionne paires ; ici seulement clés.
 
 Fonctionnement :
-• functions = [abs, str, len]
-• functions[2] is len
-• functions[2]("hello") is len("hello") = 5
-• Résultat : 5
+• a depuis d1, b partagé, c depuis d2.
+
+Exécution étape par étape :
+1. Ensemble à trois éléments.
+
+Ordre des opérations :
+• Opérateur | sur vues/set.
+
+Cas d'utilisation courants :
+• Couverture totale des champs possibles.
+
+Cas limites :
+• Ordre d’itération du set non garanti pour affichage.
+
+Considérations de performance :
+• Linéaire.
 
 Exemples :
-• [f("hi") for f in [len, str.upper]] → [2, "HI"]
-• Iterating over a function list applies each to le même input
+• Planifier outer join de schémas.
 
-Utilisations courantes :
-• Applying multiple transformations to data
-• Test suites that run multiple validators
-• Functional pipelines`,
-  1928: `Functions can be stored as dictionary values, creating a dispatch table. Ce pattern maps operation names to their implementations, allowing dynamic operation selection.
+Remarques :
+• Réponse : {'a', 'b', 'c'}.`,
+  1928: `Différence de clés
+
+Débutant :
+• d1.keys() - d2.keys() : clés dans d1 absentes de d2 → {'a'}.
+
+Intermédiaire :
+• "b" est dans d2 donc exclu ; "c" n’était pas dans d1 donc n’apparaît pas à gauche du -.
+
+Expert :
+• Asymétrique : pas la même chose que d2 - d1.
 
 Concepts clés :
-• Dictionaries can store functions as values
-• ops["+"] retrieves the addition lambda
-• Calling it with (3, 4) renvoie 7
-• C'est the dispatch table or command pattern
+• Différence ensembliste.
+
+Distinctions clés :
+• Complément vs intersection.
 
 Fonctionnement :
-• ops = {"+": lambda a,b: a+b, "*": lambda a,b: a*b}
-• ops["+"](3, 4) → (lambda a,b: a+b)(3, 4) → 3 + 4 → 7
-• Résultat : 7
+• Clés d1 : a,b ; enlever celles de d2 : b → reste a.
+
+Exécution étape par étape :
+1. Résultat singleton a.
+
+Ordre des opérations :
+• - sur vues/set.
+
+Cas d'utilisation courants :
+• Champs seulement dans la première source.
+
+Cas limites :
+• Si d1 ⊆ d2 → set vide.
+
+Considérations de performance :
+• O(n).
 
 Exemples :
-• ops["*"](3, 4) → 12
-• ops.get("-", lambda a,b: None) → handles missing keys safely
+• Détecter colonnes supprimées.
 
-Utilisations courantes :
-• Calculator implementations
-• Command dispatchers
-• Replacing long if/elif chains`,
-  1929: `Selecting the multiplication operation from the dispatch table and calling it with 3 and 4 produces 12.
+Remarques :
+• Réponse : {'a'}.`,
+  1929: `Différence symétrique avec clés
+
+Débutant :
+• d.keys() ^ {"a","c"} : clés dans l’un ou l’autre mais pas les deux → b (dans d seul) et c (dans set seul) → {'b','c'}.
+
+Intermédiaire :
+• "a" est dans les deux → exclu du xor.
+
+Expert :
+• Utile pour changements bidirectionnels simples.
 
 Concepts clés :
-• ops["*"] retrieves the multiplication lambda
-• (lambda a,b: a*b)(3, 4) → 3 * 4 → 12
-• The dictionary acts as a function lookup table
-• Any hashable key can map to any callable
+• XOR ensembliste.
+
+Distinctions clés :
+• vs | et &.
 
 Fonctionnement :
-• ops["*"] is lambda a,b: a*b
-• ops["*"](3, 4) → 3 * 4 → 12
-• Résultat : 12
+• Ensemble clés d : a,b ; autre a,c ; a commun ; reste b et c.
+
+Exécution étape par étape :
+1. b seulement dans d ; c seulement dans set.
+
+Ordre des opérations :
+• ^ binaire.
+
+Cas d'utilisation courants :
+• Détecter désaccord de présence de champs.
+
+Cas limites :
+• Affichage set non ordonné.
+
+Considérations de performance :
+• O(n).
 
 Exemples :
-• ops["+"](10, 20) → 30
-• ops["*"](0, 100) → 0
-• You can add more: ops["-"] = lambda a,b: a-b
+• Symmetric diff de deux ensembles de noms.
 
-Utilisations courantes :
-• Extensible operation tables
-• Plugin systems with named operations
-• Interpreters and evaluators`,
-  1930: `make_validator crée un range-checking closure. The returned lambda captures min_val and max_val and uses Python's chained comparison to check if x is within the range.
+Remarques :
+• Réponse : {'b', 'c'}.`,
+  1930: `Appartenance à la vue keys
+
+Débutant :
+• "a" in d.keys() est équivalent à "a" in d → True.
+
+Intermédiaire :
+• La vue se comporte comme un ensemble des clés pour in.
+
+Expert :
+• O(1) amorti comme d directement.
 
 Concepts clés :
-• Closure captures min_val = 1 and max_val = 10
-• Python supports chained comparisons: min_val <= x <= max_val
-• This checks both min_val <= x AND x <= max_val in one expression
-• The validator renvoie True or False
+• Test de présence de clé.
+
+Distinctions clés :
+• in sur d.values() teste les valeurs, pas les clés.
 
 Fonctionnement :
-• make_validator(1, 10) returns lambda x: 1 <= x <= 10
-• v(5): 1 <= 5 <= 10 → True and True → True
-• Résultat : True
+• Hash lookup de "a".
+
+Exécution étape par étape :
+1. True.
+
+Ordre des opérations :
+• in après construction vue (vue cheap).
+
+Cas d'utilisation courants :
+• Code explicite sur .keys() pour lisibilité.
+
+Cas limites :
+• Sous-clé str : "a" in d vs substring.
+
+Considérations de performance :
+• Préférable à try/KeyError pour branche fréquente parfois discutable selon style.
 
 Exemples :
-• v(1)   # True (boundary)
-• v(10)  # True (boundary)
-• v(0)   # False (below range)
-• v(11)  # False (above range)
+• if k in d.keys(): rarement nécessaire vs if k in d.
 
-Utilisations courantes :
-• Input validation
-• Range checking
-• Creating reusable validation functions`,
-  1931: `Le same validator from the previous question, but avec a valeur à l’extérieur de the range. 15 exceeds max_val of 10, so the chained comparison fails.
+Remarques :
+• Réponse : True.`,
+  1931: `**kwargs capture
+
+Débutant :
+• f(a=1,b=2) avec def f(**kwargs) regroupe les arguments nommés dans un dict → {'a':1,'b':2}.
+
+Intermédiaire :
+• kwargs est un dict ordinaire (copie des bindings).
+
+Expert :
+• *args pour positionnels ; ** pour nommés.
 
 Concepts clés :
-• v = make_validator(1, 10) checks 1 <= x <= 10
-• v(15): 1 <= 15 is True, but 15 <= 10 is False
-• Chained comparison short-circuits: overall result is False
-• The closure correctly rejects out-of-range valeurs
+• Empaquetage arguments, dict résultat.
+
+Distinctions clés :
+• Noms doivent être identifiants valides pour passer en kwargs.
 
 Fonctionnement :
-• v(15): 1 <= 15 <= 10
-• 1 <= 15 → True
-• 15 <= 10 → False
-• True and False → False
-• Résultat : False
+• Construction du mapping au moment de l’appel.
+
+Exécution étape par étape :
+1. kwargs reçoit les paires.
+
+Ordre des opérations :
+• Appel de fonction.
+
+Cas d'utilisation courants :
+• Wrappers, forwarding, APIs flexibles.
+
+Cas limites :
+• Collision avec paramètres explicites nommés (ordre de définition).
+
+Considérations de performance :
+• Petit coût construction dict.
 
 Exemples :
-• v(0)   # False (too low)
-• v(15)  # False (too high)
-• v(5)   # True (in range)
+• def g(**k): return len(k).
 
-Utilisations courantes :
-• Boundary testing
-• Validating user input
-• Filter predicates`,
-  1932: `Le key parameter of sorted() accepts a fonction that transforms chaque élément avant comparison. Here, len est passé as the key, so strings are sorted by their length.
+Remarques :
+• Réponse : {'a': 1, 'b': 2}.`,
+  1932: `Dépaquetage **d dans un appel
+
+Débutant :
+• f(**d) avec d={"a":1,"b":2} passe a=1 et b=2 aux paramètres a et b → retour 3.
+
+Intermédiaire :
+• Les clés du dict doivent correspondre aux noms de paramètres requis.
+
+Expert :
+• Peut combiner positionnels et ** partiel (hors snippet).
 
 Concepts clés :
-• key=len means: compare len(element) instead of element itself
-• len("hi") = 2, len("hey") = 3, len("hello") = 5
-• Sorted by length: ["hi", "hey", "hello"]
-• Functions as key arguments is a core Python pattern
+• Unpacking d’un mapping en kwargs.
+
+Distinctions clés :
+• ** en appel vs ** en littéral dict.
 
 Fonctionnement :
-• sorted computes len for chaque élément: 2, 3, 5
-• Sorts by these valeurs: 2 < 3 < 5
-• Résultat : ["hi", "hey", "hello"]
+• Liaison a←1, b←2 puis a+b.
+
+Exécution étape par étape :
+1. 1+2 → 3.
+
+Ordre des opérations :
+• Évaluation d puis appel.
+
+Cas d'utilisation courants :
+• Passer options dict à une fonction à paramètres nommés.
+
+Cas limites :
+• Clé inconnue → TypeError unexpected keyword.
+
+Considérations de performance :
+• N/A.
 
 Exemples :
-• sorted(["abc", "a", "ab"], key=len) → ["a", "ab", "abc"]
-• sorted([3, 1, 2], key=lambda x: -x) → [3, 2, 1] (reverse)
+• plt.plot(**style_dict) patterns.
 
-Utilisations courantes :
-• Sorting by a derived property
-• Custom sort orders
-• Sorting objets by attributes`,
-  1933: `Le lambda extracts the second element (index 1) from each tuple for comparison. This sorts the tuples by their second valeur.
+Remarques :
+• Réponse : 3.`,
+  1933: `Fusion ** collision
+
+Débutant :
+• {**d1, **d2} avec même clé "a" : le second mapping l’emporte → {"a":2}.
+
+Intermédiaire :
+• d1 entièrement écrasé sur les clés communes par d2.
+
+Expert :
+• Chaîne ** gauche-droite : dernier gagne toujours.
 
 Concepts clés :
-• key=lambda x: x[1] sorts by the second element of each tuple
-• (2,1) has x[1]=1, (3,2) has x[1]=2, (1,3) has x[1]=3
-• Sorted order: [(2,1), (3,2), (1,3)]
-• Lambdas are commonly used as sort keys
+• Fusion, priorité droite.
+
+Distinctions clés :
+• | sur dicts même règle de collision.
 
 Fonctionnement :
-• (1,3): key = 3
-• (2,1): key = 1
-• (3,2): key = 2
-• Sorted by keys (1, 2, 3): [(2,1), (3,2), (1,3)]
+• Insérer d1 puis d2 écrase a.
+
+Exécution étape par étape :
+1. Résultat une clé a:2.
+
+Ordre des opérations :
+• Littéral évalué de gauche à droite.
+
+Cas d'utilisation courants :
+• Defaults puis overrides.
+
+Cas limites :
+• Plusieurs dicts : dernier gagne pour chaque clé.
+
+Considérations de performance :
+• Nouveau dict.
 
 Exemples :
-• sorted([(1,3),(2,1)], key=lambda x: x[0]) → [(1,3), (2,1)] (by first)
-• sorted([(1,3),(2,1)], key=lambda x: x[1]) → [(2,1), (1,3)] (by second)
+• {**base, **env, **cli}.
 
-Utilisations courantes :
-• Sorting records by a specific field
-• Sorting dictionnaires by valeur
-• Custom ordering of complex data structures`,
-  1934: `map() applies a function to every element of an iterable and retourne un map object. list() converts it to a list. Here, each string is converted to uppercase using the upper() method.
+Remarques :
+• Réponse : {"a": 2}.`,
+  1934: `dict(zip(keys, vals))
+
+Débutant :
+• zip aligne a:1, b:2, c:3 ; dict(...) construit le mapping.
+
+Intermédiaire :
+• zip s’arrête au plus court ; ici longueurs égales.
+
+Expert :
+• dict(zip) est l’idiome standard pour deux colonnes parallèles.
 
 Concepts clés :
-• map(function, iterable) applies function to chaque élément
-• lambda x: x.upper() converts a string to uppercase
-• map retourne un lazy iterator; list() materializes it
-• C'est equivalent to [x.upper() for x in ["hello","world"]]
+• zip, constructeur dict depuis paires.
+
+Distinctions clés :
+• zip strict=True (3.10+) pour longueurs égales exigées.
 
 Fonctionnement :
-• map applies lambda to "hello" → "HELLO"
-• map applies lambda to "world" → "WORLD"
-• list() collects results: ["HELLO", "WORLD"]
-• Résultat : ["HELLO", "WORLD"]
+• Itération trois paires.
+
+Exécution étape par étape :
+1. dict trois entrées.
+
+Ordre des opérations :
+• zip lazy puis consommation par dict().
+
+Cas d'utilisation courants :
+• Reconstituer dict depuis CSV colonnes.
+
+Cas limites :
+• longueurs différentes : perte silencieuse sans strict.
+
+Considérations de performance :
+• O(n).
 
 Exemples :
-• list(map(str.lower, ["A","B"])) → ["a", "b"]
-• list(map(len, ["hi","hey"])) → [2, 3]
+• inverser avec zip(*d.items()).
 
-Utilisations courantes :
-• Transforming sequences
-• Applying operations element-wise
-• Functional alternative to list comprehensions`,
-  1935: `filter() keeps elements for which the function renvoie True. The lambda checks if the length is greater than 3. Only "hello" (length 5) satisfies this condition.
+Remarques :
+• Réponse : {"a": 1, "b": 2, "c": 3}.`,
+  1935: `Liste en comprehension sur clés choisies
+
+Débutant :
+• [d[k] for k in ["a","c"]] récupère les valeurs pour ces clés dans l’ordre de la liste → [1, 3].
+
+Intermédiaire :
+• KeyError si une clé manque (ici a et c existent).
+
+Expert :
+• d.get(k) dans la comprehension si optionnel.
 
 Concepts clés :
-• filter(function, iterable) keeps elements where function renvoie True
-• lambda x: len(x) > 3 checks if string length exceeds 3
-• "hi" (2) → False, "hello" (5) → True, "hey" (3) → False
-• Only "hello" passe le filter
+• Lookup répété, ordre imposé par la liste de clés.
+
+Distinctions clés :
+• Pas le même ordre que d.values().
 
 Fonctionnement :
-• "hi": len("hi") = 2, 2 > 3 → False (excluded)
-• "hello": len("hello") = 5, 5 > 3 → True (kept)
-• "hey": len("hey") = 3, 3 > 3 → False (excluded)
-• Résultat : ["hello"]
+• k=a→1, k=c→3.
+
+Exécution étape par étape :
+1. Liste deux éléments.
+
+Ordre des opérations :
+• Comprehension gauche-droite.
+
+Cas d'utilisation courants :
+• Projeter colonnes dans un ordre précis.
+
+Cas limites :
+• Clé manquante → erreur.
+
+Considérations de performance :
+• O(len(liste clés)).
 
 Exemples :
-• list(filter(lambda x: x > 0, [-1, 0, 1, 2])) → [1, 2]
-• list(filter(None, [0, "", 1, "a"])) → [1, "a"]
+• [d[k] for k in sorted(d)].
 
-Utilisations courantes :
-• Selecting elements meeting a condition
-• Data filtering
-• Removing unwanted items from sequences`,
-  1936: `Dans Python, fonctions are first-classe objets. This means they can be assigned to variables, stored in data structures (listes, dicts, sets, tuples), passé comme arguments, and returned from other fonctions.
+Remarques :
+• Réponse : [1, 3].`,
+  1936: `Dict comprehension avec filtre in d
+
+Débutant :
+• Garde k dans ["a","c"] et vérifie k in d → paires a et c → {"a":1,"c":3}.
+
+Intermédiaire :
+• Le if k in d est redondant si les clés sont garanties mais reste sûr.
+
+Expert :
+• Peut combiner conditions sur v.
 
 Concepts clés :
-• First-classe objet = peut être utilisé anywhere any other valeur can
-• Functions can be stored in listes, dicts, tuples, sets
-• Both user-defined and built-in fonctions are first-classe
-• Cela permet powerful patterns like dispatch tables and pipelines
+• Filtrage par liste de clés, membership.
+
+Distinctions clés :
+• vs dict((k,d[k]) for k in ...) équivalent.
 
 Fonctionnement :
-• funcs = [abs, len, str]  # liste of fonctions
-• funcs[0](-5)  # calls abs(-5) → 5
-• for f in funcs: f(x)  # iterate and call each
+• k=a : in d oui, ajout ; k=c : oui ; ordre liste a,c → ordre insertion a puis c.
+
+Exécution étape par étape :
+1. Deux paires dans le nouveau dict.
+
+Ordre des opérations :
+• Ordre de la liste ["a","c"] pour l’itération.
+
+Cas d'utilisation courants :
+• Sous-dict stable pour API partielle.
+
+Cas limites :
+• Si k pas in d, ignoré silencieusement.
+
+Considérations de performance :
+• O(nombre de k candidats).
 
 Exemples :
-• my_list = [print, len, abs]
-• my_dict = {"add": lambda a,b: a+b}
-• my_tuple = (min, max, sum)
+• {k:d[k] for k in keys if condition}.
 
-Utilisations courantes :
-• Command pattern (liste of operations to execute)
-• Plugin systems
-• Strategy pattern (selecting behavior at runtime)`,
-  1937: `Passing functions as arguments is one of the key features of first-class functions. Built-in functions like map(), filter(), and sorted() rely on this — they accept a function argument to customize behavior.
+Remarques :
+• Réponse : {"a": 1, "c": 3}.`,
+  1937: `get manquant is None
+
+Débutant :
+• d.get("c") retourne None ; is None → True.
+
+Intermédiaire :
+• Distinction valeur absente vs valeur None stockée (voir 1938).
+
+Expert :
+• (k in d) plus explicite pour absence réelle.
 
 Concepts clés :
-• Any callable peut être passé as an argument
-• map(func, iterable) is a classic example
-• sorted(data, key=func) uses a function argument
-• C'est the foundation of higher-order programming
+• get défaut None, test is None.
+
+Distinctions clés :
+• get("c") or default mélange falsy.
 
 Fonctionnement :
-• def apply(f, x): return f(x)
-• apply(abs, -5) → abs(-5) → 5
-• La function f is just a parameter like any other
+• Pas de clé c → None.
+
+Exécution étape par étape :
+1. None is None True.
+
+Ordre des opérations :
+• Appel get puis is.
+
+Cas d'utilisation courants :
+• Branches optionnelles.
+
+Cas limites :
+• Si c existait avec valeur None, même résultat pour get is None.
+
+Considérations de performance :
+• Un lookup.
 
 Exemples :
-• map(str, [1, 2, 3]) — str est passé as an argument
-• sorted([3,1,2], key=lambda x: -x) — lambda est passé as key
-• filter(bool, [0, 1, "", "a"]) — bool est passé as filter function
+• if d.get("port") is None: ...
 
-Utilisations courantes :
-• Higher-order functions
-• Callback patterns
-• Event handlers
-• Customizable algorithms`,
-  1938: `Returning functions from functions is a core Python capability. C'est the mechanism behind closures, decorators, and function factories.
+Remarques :
+• Réponse : True.`,
+  1938: `Valeur None stockée
+
+Débutant :
+• d.get("a") retourne None (la valeur) ; is None → True.
+
+Intermédiaire :
+• Ici la clé est présente ; le test ne distingue pas absence et None sans in.
+
+Expert :
+• Pour distinguer : ("a" in d) and d["a"] is None ou sentinel unique.
 
 Concepts clés :
-• A function can return another function object
-• The returned function can be a def or a lambda
-• Cela creates closures when the inner function references outer variables
-• Decorators are built on this pattern
+• None comme valeur légitime.
+
+Distinctions clés :
+• 1937 absence vs 1938 présence valeur None.
 
 Fonctionnement :
-• def outer():
-•     def inner(): return "hello"
-•     return inner  # retourne le function object, not its result
-• f = outer()  # f is now the inner function
-• f()  # "hello"
+• get renvoie la valeur None stockée.
+
+Exécution étape par étape :
+1. is None True.
+
+Ordre des opérations :
+• get puis is.
+
+Cas d'utilisation courants :
+• JSON null, champs optionnels explicitement nuls.
+
+Cas limites :
+• Ne pas utiliser if not d.get("a") si 0 ou False valides.
+
+Considérations de performance :
+• Un lookup.
 
 Exemples :
-• def make_adder(n): return lambda x: x + n  # retourne une lambda
-• def decorator(f): def wrapper(): ...; return wrapper  # returns wrapper
+• Schéma avec trois états : absent / null / valeur.
 
-Utilisations courantes :
-• Closures and function factories
-• Decorator pattern
-• Lazy evaluation (return a function to call later)
-• Currying`,
-  1939: `Dans Python, there is no separate "lambda" type. Lambda expressions create regular fonction objets. The type of any lambda is le même que the type of any def-defined fonction: <classe 'fonction'>.
+Remarques :
+• Réponse : True.`,
+  1939: `in teste la clé pas la valeur
+
+Débutant :
+• "a" in d est True même si la valeur est None ; in vérifie la présence de clé.
+
+Intermédiaire :
+• Ne pas confondre avec test de truthiness de d["a"].
+
+Expert :
+• __contains__ du mapping.
 
 Concepts clés :
-• lambda crée un fonction objet, same as def
-• type(lambda: None) → <classe 'fonction'>
-• There is no <classe 'lambda'> en Python
-• Lambdas and def fonctions are le même type
+• Membership sur clés.
+
+Distinctions clés :
+• None in d.values() serait autre test.
 
 Fonctionnement :
-• lambda: None creates an anonymous fonction that renvoie None
-• type() checks its type → fonction
-• Same result as type(def f(): pass) → <classe 'fonction'>
+• Clé "a" existe.
+
+Exécution étape par étape :
+1. True.
+
+Ordre des opérations :
+• Opérateur in.
+
+Cas d'utilisation courants :
+• if "debug" in os.environ:
+
+Cas limites :
+• Pas de sous-chaîne : clé exacte.
+
+Considérations de performance :
+• O(1) amorti.
 
 Exemples :
-• type(lambda x: x)      # <classe 'fonction'>
-• type(lambda: 42)        # <classe 'fonction'>
-• def f(): pass; type(f)  # <classe 'fonction'>
+• "b" in {"a":None} → False.
 
-Utilisations courantes :
-• Understanding Python's type system
-• Verifying that lambdas and defs produce le même type
-• Introspection and debugging`,
-  1940: `Built-in functions implemented in C (like print, len, abs) ont un different type than user-defined Python functions. Their type is builtin_function_or_method, reflecting their implementation.
+Remarques :
+• Réponse : True.`,
+  1940: `sum(values) rappel
+
+Débutant :
+• sum(d.values()) → 1+2+3 = 6.
+
+Intermédiaire :
+• Itère les valeurs dans l’ordre d’insertion du dict.
+
+Expert :
+• start optionnel de sum.
 
 Concepts clés :
-• Built-in functions have type: builtin_function_or_method
-• User-defined functions (def/lambda) have type: function
-• Both are callable, but they're different types internally
-• This distinction reflects CPython implementation details
+• Agrégation sur mapping.
+
+Distinctions clés :
+• sum(d) invalide ici (str clés).
 
 Fonctionnement :
-• print is a built-in function (implemented in C)
-• type(print) → <class 'builtin_function_or_method'>
-• Compare: def f(): pass; type(f) → <class 'function'>
+• Addition des trois entiers.
+
+Exécution étape par étape :
+1. 6.
+
+Ordre des opérations :
+• values() puis sum.
+
+Cas d'utilisation courants :
+• Totaux, scores.
+
+Cas limites :
+• Types non additifs mélangés.
+
+Considérations de performance :
+• O(n).
 
 Exemples :
-• type(print)  # <class 'builtin_function_or_method'>
-• type(len)    # <class 'builtin_function_or_method'>
-• type(abs)    # <class 'builtin_function_or_method'>
-• type(lambda: 0)  # <class 'function'>
+• math.fsum pour floats.
 
-Utilisations courantes :
-• Understanding Python internals
-• Distinguishing built-in from user-defined functions
-• Introspection and type checking`,
-  1941: `C'est the infamous mutable default argument gotcha. The default list [] est créé once quand la fonction is defined, not each time it's called. So all calls that use the default share le même list object.
+Remarques :
+• Réponse : 6.`,
+  1941: `join sur valeurs str
+
+Débutant :
+• " ".join(d.values()) concatène "hello" et "world" avec espace → "hello world".
+
+Intermédiaire :
+• join exige des str ; ici ok.
+
+Expert :
+• join sur generator d’strings pour grandes données.
 
 Concepts clés :
-• Default arguments are evaluated once at function definition time
-• The list [] est créé once and reused across all calls
-• f(1) appends 1 to the default list: [1]
-• f(2) appends 2 to le même list: [1, 2]
+• str.join, itération des valeurs.
+
+Distinctions clés :
+• join keys au lieu de values donnerait autre texte.
 
 Fonctionnement :
-• def f(x, lst=[]): lst = [] est créé once
-• f(1): lst is the default [], appends 1 → [1], returns [1]
-• f(2): lst is STILL le même list [1], appends 2 → [1, 2], renvoie [1, 2]
-• Résultat : [1, 2]
+• mappe valeurs en une chaîne.
+
+Exécution étape par étape :
+1. "hello" + " " + "world".
+
+Ordre des opérations :
+• Ordre d’insertion a puis b → hello puis world.
+
+Cas d'utilisation courants :
+• Phrases, URLs fragments.
+
+Cas limites :
+• Valeur non str → TypeError.
+
+Considérations de performance :
+• Linéaire en longueur totale.
 
 Exemples :
-• f(1)  # [1]
-• f(2)  # [1, 2] (not [2]!)
-• f(3)  # [1, 2, 3]
+• "
+".join pour lignes.
 
-Utilisations courantes :
-• Understanding one of Python's most common gotchas
-• Why you should use None as default for mutable arguments
-• Interview question classic`,
-  1942: `Extending the mutable default gotcha to three calls. Each call appends to le même shared default list, so after three calls the list has all three elements.
+Remarques :
+• Réponse : "hello world".`,
+  1942: `all générateur sur valeurs
+
+Débutant :
+• all(v > 0 for v in d.values()) : 1>0 et 2>0 → True.
+
+Intermédiaire :
+• Générateur lazy ; all court-circuite au premier False.
+
+Expert :
+• Équivalent à min(d.values()) > 0 si numériques comparables.
 
 Concepts clés :
-• The same default list persists across all calls
-• f(1) → [1], f(2) → [1,2], f(3) → [1,2,3]
-• This behavior surprises many Python programmers
-• It occurs car defaults are function attributes, not per-call values
+• all, générateur, prédicat sur valeurs.
+
+Distinctions clés :
+• all(d) testerait les clés str (truthy).
 
 Fonctionnement :
-• f(1): appends 1 → [1]
-• f(2): appends 2 → [1, 2]
-• f(3): appends 3 → [1, 2, 3]
-• Résultat : [1, 2, 3]
+• Deux tests vrais.
+
+Exécution étape par étape :
+1. True.
+
+Ordre des opérations :
+• Itération values ordre insertion.
+
+Cas d'utilisation courants :
+• Valider positivité d’un batch.
+
+Cas limites :
+• dict vide : all(...) True (aucun faux rencontré).
+
+Considérations de performance :
+• Court-circuit.
 
 Exemples :
-• After 10 calls with 1-10: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-• The list grows indefinitely
+• all(n % 2 for ...) pour parité.
 
-Utilisations courantes :
-• Demonstrating why mutable defaults are dangerous
-• Accidental caching or accumulation bugs
-• Teaching defensive programming patterns`,
-  1943: `C'est the safe pattern for mutable defaults. By using None as the default and creating a new list inside the function, chaque appel gets its own independent list.
+Remarques :
+• Réponse : True.`,
+  1943: `any avec test égalité zéro
+
+Débutant :
+• any(v == 0 for v in d.values()) : 1==0 faux, 0==0 vrai → True.
+
+Intermédiaire :
+• any s’arrête au premier True.
+
+Expert :
+• 0 in d.values() O(n) set construction possible mais ici générateur suffit.
 
 Concepts clés :
-• lst=None is the default; a new [] est créé chaque appel
-• f(1) crée un new list [1] and returns it
-• f(2) creates another new list [2] and returns it
-• No shared state between calls
+• any, égalité sur valeurs.
+
+Distinctions clés :
+• 0 est falsy mais ici test explicite == 0.
 
 Fonctionnement :
-• f(1): lst is None → lst = [] → appends 1 → returns [1]
-• f(2): lst is None → lst = [] (new list!) → appends 2 → renvoie [2]
-• Résultat : [2]
+• Deuxième valeur déclenche True.
+
+Exécution étape par étape :
+1. Court-circuit possible après b.
+
+Ordre des opérations :
+• Ordre values a puis b.
+
+Cas d'utilisation courants :
+• Détecter anomalie nulle dans des mesures.
+
+Cas limites :
+• Float proche de zéro pas == 0.
+
+Considérations de performance :
+• Court-circuit.
 
 Exemples :
-• f(1)  # [1]
-• f(2)  # [2] (fresh list each time)
-• f(3)  # [3]
+• any(v < 0 ...).
 
-Utilisations courantes :
-• The idiomatic Python pattern for mutable defaults
-• Prevents accidental state sharing
-• Recommended by PEP 8 and linters`,
-  1944: `Le mutable default gotcha applies to all mutable types, not just listes. Here, a default dictionnaire is shared across calls, accumulating key-valeur pairs.
+Remarques :
+• Réponse : True.`,
+  1944: `len(d)
+
+Débutant :
+• len({"a":1,"b":2,"c":3}) → 3 paires.
+
+Intermédiaire :
+• Compte les entrées, pas la taille mémoire exacte.
+
+Expert :
+• O(1) en CPython pour dict standard.
 
 Concepts clés :
-• Default {} est créé once at fonction definition
-• f(1) sets d[1] = 1 → {1: 1}
-• f(2) sets d[2] = 2 on le même dict → {1: 1, 2: 2}
-• Same gotcha as avec listes — applies to any mutable default
+• Cardinalité du mapping.
+
+Distinctions clés :
+• len(d.values()) même nombre ici.
 
 Fonctionnement :
-• f(1): d = {} (the one default), d[1] = 1 → {1: 1}
-• f(2): d is still {1: 1}, d[2] = 2 → {1: 1, 2: 2}
-• Résultat : {1: 1, 2: 2}
+• Compteur interne.
+
+Exécution étape par étape :
+1. 3.
+
+Ordre des opérations :
+• len builtin.
+
+Cas d'utilisation courants :
+• Vérifier qu’un cache a grossi.
+
+Cas limites :
+• dict vide 0.
+
+Considérations de performance :
+• O(1).
 
 Exemples :
-• f("a"); f("b") → {"a": "a", "b": "b"}
-• Same fix: use d=None, create {} dans
+• if len(d) > N: prune.
 
-Utilisations courantes :
-• Understanding mutable defaults affect dicts too
-• Cache-like behavior (sometimes intentional)
-• Demonstrating the general principle`,
-  1945: `Le mutable default gotcha avec sets. The default set is shared, but since sets only store unique elements, adding 1 twice still results in {1}.
+Remarques :
+• Réponse : 3.`,
+  1945: `reversed(d)
+
+Débutant :
+• reversed(d) inverse l’ordre d’itération des clés (insertion 3.7+) → list → ['b','a'] pour a puis b insérés.
+
+Intermédiaire :
+• Ne renverse pas les valeurs sans clés.
+
+Expert :
+• reversed(d.keys()) équivalent.
 
 Concepts clés :
-• Default set() est créé once and shared
-• First f(): adds 1 → {1}
-• Second f(): adds 1 again, but sets ne permet pas duplicates → still {1}
-• The set IS being shared, but the effect is invisible avec duplicate valeurs
+• Ordre inverse d’itération, matérialisation list.
+
+Distinctions clés :
+• reversed(d.items()) pour paires inversées.
 
 Fonctionnement :
-• f(): s is the default set(), s.add(1) → {1}
-• f(): s is still {1}, s.add(1) → still {1} (1 already present)
-• Résultat : {1}
+• Itérateur inverse sur séquence de clés.
+
+Exécution étape par étape :
+1. b puis a.
+
+Ordre des opérations :
+• reversed puis list.
+
+Cas d'utilisation courants :
+• Parcourir dans l’ordre LIFO logique des clés.
+
+Cas limites :
+• Avant 3.7 ordre non portable pour inverse « logique ».
+
+Considérations de performance :
+• O(n) pour list().
 
 Exemples :
-• def f(s=set()): s.add(1); s.add(2); renvoyer s
-• f()  # {1, 2}
-• f()  # {1, 2} (no visible change since same elements added)
+• for k in reversed(d):.
 
-Utilisations courantes :
-• Understanding mutable defaults avec sets
-• Sets silently ignore duplicate additions
-• The shared default exists but may not be obvious`,
-  1946: `Quand vous pass an explicit argument, the default is not used. f(1, []) passes a brand-new list, so the default [] is never modified. The subsequent f(2) uses the untouched default.
+Remarques :
+• Réponse : ['b', 'a'].`,
+  1946: `min sur items avec key valeur
+
+Débutant :
+• min(d.items(), key=lambda x: x[1]) choisit la paire de valeur minimale → ('a', 1).
+
+Intermédiaire :
+• x est (clé, valeur) ; x[1] est la valeur comparée.
+
+Expert :
+• min sans key utiliserait ordre tuple lexicographique (pas l’intention).
 
 Concepts clés :
-• f(1, []) uses the explicitly passed [], not the default
-• The default [] has never been modified
-• f(2) uses the default [] which is empty → appends 2 → [2]
-• Passing explicit arguments bypasses the default entirely
+• min avec key, items().
+
+Distinctions clés :
+• min(d, key=d.get) donnerait seulement la clé 'a'.
 
 Fonctionnement :
-• f(1, []): lst = [] (the passed one), appends 1 → [1]. Default untouched.
-• f(2): lst = default [] (still empty!), appends 2 → [2]
-• Résultat : [2]
+• Compare 1 et 2 ; garde ('a',1).
+
+Exécution étape par étape :
+1. Résultat tuple.
+
+Ordre des opérations :
+• items() puis min.
+
+Cas d'utilisation courants :
+• Trouver entrée de score minimal avec son nom.
+
+Cas limites :
+• dict vide → ValueError.
+
+Considérations de performance :
+• O(n).
 
 Exemples :
-• f(1); f(2)       # [1, 2] (both use default)
-• f(1, []); f(2)   # [2] (first uses explicit, second uses pristine default)
-• f(1, [10]); f(2) # [2] (explicit [10] is separate from default)
+• max(..., key=lambda x: x[1]) pour max.
 
-Utilisations courantes :
-• Understanding when defaults are used vs bypassed
-• Testing default argument behavior
-• Debugging mutable default issues`,
-  1947: `Every function a un __defaults__ attribute that stores a tuple of default values for parameters that have defaults. If no parameters have defaults, __defaults__ is None (not an empty tuple).
+Remarques :
+• Réponse : ('a', 1).`,
+  1947: `+= sur valeur entière
+
+Débutant :
+• d["a"] += 1 lit 1, ajoute 1, réécrit → d["a"] vaut 2.
+
+Intermédiaire :
+• __iadd__ sur int ou équivalent in-place pour int rebinding.
+
+Expert :
+• Pour int immuable, += recrée l’int et réassigne la clé.
 
 Concepts clés :
-• __defaults__ holds default parameter values as a tuple
-• No defaults → __defaults__ is None
-• C'est different from an empty tuple ()
-• You can inspect and even modify __defaults__ at runtime
+• Opération in-place syntaxique sur slot de dict.
+
+Distinctions clés :
+• Si valeur non numérique → TypeError.
 
 Fonctionnement :
-• def f(): pass — no parameters, no defaults
-• f.__defaults__ → None
-• Compare: def g(x=1): pass → g.__defaults__ = (1,)
+• d["a"] = d["a"] + 1.
+
+Exécution étape par étape :
+1. 1+1 → 2 stocké sous a.
+
+Ordre des opérations :
+• Lookup puis add puis store.
+
+Cas d'utilisation courants :
+• Compteurs dans dict.
+
+Cas limites :
+• clé absente → KeyError.
+
+Considérations de performance :
+• O(1).
 
 Exemples :
-• def f(): pass; f.__defaults__           # None
-• def g(x): pass; g.__defaults__          # None (no defaults)
-• def h(x=1): pass; h.__defaults__        # (1,)
-• def k(x=1, y=2): pass; k.__defaults__   # (1, 2)
+• d[k] -= 1 décrément.
 
-Utilisations courantes :
-• Introspecting function signatures
-• Debugging default argument issues
-• Metaprogramming and decoration`,
-  1948: `Quand a fonction has default parameters, __defaults__ contains their valeurs in a tuple, in the order they appear in the fonction signature.
+Remarques :
+• Réponse : {"a": 2}.`,
+  1948: `Compteur avec get et +1
+
+Débutant :
+• d["a"] = d.get("a", 0) + 1 : absent → 0+1 → {"a":1}.
+
+Intermédiaire :
+• Pattern fréquent pour histogrammes.
+
+Expert :
+• Éviter defaultdict(int) explicite dans du code minimal.
 
 Concepts clés :
-• __defaults__ is a tuple of default valeurs
-• Order matches parameter order: x=1, y=2 → (1, 2)
-• It stores valeurs only, not parameter names
-• Parameter names are in __code__.co_varnames
+• get avec défaut 0, incrément.
+
+Distinctions clés :
+• Si "a" existait avec valeur 3, deviendrait 4.
 
 Fonctionnement :
-• def f(x=1, y=2): pass
-• f.__defaults__ → (1, 2)
-• First element (1) is x's default
-• Second element (2) is y's default
+• get → 0 ; +1 ; assignation.
+
+Exécution étape par étape :
+1. Premier passage compte à 1.
+
+Ordre des opérations :
+• Évaluation complète du membre droit puis assignation.
+
+Cas d'utilisation courants :
+• Word count, votes.
+
+Cas limites :
+• Valeur non int → erreur au +.
+
+Considérations de performance :
+• Deux lookups si optim naïf ; acceptable.
 
 Exemples :
-• def f(a=10, b=20, c=30): pass; f.__defaults__  # (10, 20, 30)
-• def f(a, b=5): pass; f.__defaults__  # (5,) — only b a un default
-• f.__defaults__ = (100, 200)  # You can modify defaults at runtime!
+• Boucle sur mots avec ce corps.
 
-Utilisations courantes :
-• Inspecting fonction defaults
-• Runtime modification of defaults (advanced)
-• Testing and documentation tools`,
-  1949: `Mutable default arguments are one of Python's most well-known gotchas. The default value is evaluated once quand la fonction is defined (not each time it's called), so all calls share le même object. Mutating it in one call affects all subsequent calls.
+Remarques :
+• Réponse : {"a": 1}.`,
+  1949: `Filtre k in chaîne (sous-chaîne)
+
+Débutant :
+• if k in "ac" teste si la clé k est une sous-chaîne de "ac" : 'a' oui, 'b' non → seulement {"a":1}.
+
+Intermédiaire :
+• Piège : ce n’est pas membership dans un ensemble {'a','c'} sauf coïncidence ; ici 'a' in 'ac' True, 'b' in 'ac' False.
+
+Expert :
+• Pour tester ensemble de clés, utiliser set(['a','c']) ou {'a','c'}.
 
 Concepts clés :
-• Default values are evaluated at function DEFINITION time, not call time
-• def f(lst=[]): — the [] est créé once when Python parses this def
-• Every call that uses the default gets the SAME list object
-• Mutations accumulate across calls
+• in sur str = sous-chaîne, pas caractère seul sauf si str longueur 1 chaque.
+
+Distinctions clés :
+• k in {'a','c'} serait plus clair en intention.
 
 Fonctionnement :
-• Python evaluates [] once and stores it as f.__defaults__[0]
-• f(1): appends to the stored list → [1]
-• f(2): appends to the SAME stored list → [1, 2]
-• The default object is persistent and mutable
+• 'a' sous-chaîne de 'ac' ; 'b' non.
+
+Exécution étape par étape :
+1. Seule paire a conservée.
+
+Ordre des opérations :
+• Comprehension sur items.
+
+Cas d'utilisation courants :
+• Montre le piège substring ; code réel préfère set.
+
+Cas limites :
+• 'c' in 'ac' True aussi mais pas de clé 'c' dans d.
+
+Considérations de performance :
+• O(n) items.
 
 Exemples :
-• def f(lst=[]): lst.append(1); return lst
-• f()  # [1]
-• f()  # [1, 1] — same list!
-• Fix: def f(lst=None): lst = lst if lst is not None else []
+• Remplacer par if k in {'a','c'}.
 
-Utilisations courantes :
-• Comprendre le modèle d'évaluation de Python
-• Éviter l'état accidentel dans les fonctions
-• Un classique des entretiens et du débogage`,
-  1950: `Le motif universellement recommandé consiste à utiliser None comme valeur par défaut et à créer un nouvel objet mutable dans le corps de la fonction. Ainsi, chaque appel obtient son propre objet indépendant.
+Remarques :
+• Réponse : {"a": 1}.`,
+  1950: `Alias partagé
+
+Débutant :
+• e = d copie la référence ; e["b"]=2 mute le même objet que d → d voit aussi b.
+
+Intermédiaire :
+• Pas de copy() : identité id(d)==id(e).
+
+Expert :
+• Pour copie indépendante : copy, dict(), {**d}.
 
 Concepts clés :
-• Utiliser None comme valeur sentinelle par défaut
-• Vérifier None dans la fonction et créer un nouvel objet
-• Crée une nouvelle liste/dict/set à chaque appel
-• Recommandé par PEP 8 et tous les guides de style Python
+• Référence, mutation visible via tous les noms.
+
+Distinctions clés :
+• e = d.copy() aurait isolé (shallow).
 
 Fonctionnement :
-• def f(x, lst=None):
-•     if lst is None:
-•         lst = []
-•     lst.append(x)
-•     return lst
-• f(1)  # [1] (nouvelle liste)
-• f(2)  # [2] (une autre nouvelle liste)
+• Même dict sous deux noms.
+
+Exécution étape par étape :
+1. d initial {"a":1}
+2. assignation via e ajoute b:2 sur le même objet
+
+Ordre des opérations :
+• Assignations séquentielles.
+
+Cas d'utilisation courants :
+• Fonctions qui mutent le dict passé.
+
+Cas limites :
+• Objets imbriqués toujours partagés en shallow copy.
+
+Considérations de performance :
+• Zéro copie ici.
 
 Exemples :
-• def f(data=None): data = data if data is not None else {}
-• def f(items=None): items = items if items is not None else set()
-• def f(lst=None): lst = lst or []  # plus court mais traite [] comme None aussi
+• def f(x): x['k']=1 ; f(d).
 
-Utilisations courantes :
-• Toute fonction avec paramètres par défaut mutables
-• Bonne pratique de conception d'API
-• Évite les bugs d'état partagé accidentel
-• Idiome Python standard enseigné dans tous les cours avancés`,
-  // IDs 1951-2050: Level 7 (generators, yield, scope, closures, decorators)
+Remarques :
+• Réponse : {"a": 1, "b": 2}.`,
   1951: `Une fonction génératrice contient une ou plusieurs expressions yield. Appeler gen() renvoie un objet générateur, pas les résultats directement. L'envelopper dans list() itère le générateur jusqu'à épuisement, collectant chaque valeur émise.
 
 Concepts clés :
