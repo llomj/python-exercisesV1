@@ -115009,1456 +115009,2004 @@ Exemples :
 
 Remarques :
 • Réponse : syntaxe MyClass[int] par crochets (1re option).`,
-  2701: `try/except est le mécanisme de gestion des exceptions de Python qui permet au code de gérer élégamment les erreurs et conditions inattendues. Le bloc try contient le code qui pourrait lever une exception, et le bloc except capture et gère ces exceptions. Si une exception survient dans le bloc try, l'exécution saute immédiatement au bloc except, ignorant tout code restant dans le bloc try. Cela empêche le programme de planter et permet une gestion d'erreur appropriée.
+  2701: `Qu'est-ce que l'héritage en Python ?
+
+Débutant :
+• La classe fille récupère attributs et méthodes de la classe mère via la liste de bases.
+
+Intermédiaire :
+• Relation « est-un » : Dog(Animal) signifie qu'un Dog se comporte comme un Animal pour le typage et le MRO.
+
+Expert :
+• La résolution des attributs suit le MRO ; super() s'appuie dessus.
 
 Concepts clés :
-• try: bloc_de_code_qui_peut_échouer
-• except ExceptionType: gérer_l_erreur
-• L'exécution saute à except si une exception survient
-• Le programme continue après la gestion de l'exception
+• Réutilisation et spécialisation sans dupliquer toute la base.
 
-Comment ça fonctionne :
-• Le code dans le bloc try s'exécute normalement
-• Si une exception survient, l'exécution saute au bloc except
-• L'exception est capturée et gérée
-• Le programme continue après try/except
-• Plusieurs blocs except peuvent gérer différents types d'exceptions
+Distinctions clés :
+• Ce n'est pas la mère qui hérite de l'enfant ni des classes forcément indépendantes.
 
-Exemple :
-try:
-    result = 10 / 0  # Cela lève ZeroDivisionError
-    print("This won't execute")
-except ZeroDivisionError:
-    print("Division by zero!")  # Ceci s'exécute à la place
+Fonctionnement :
+• class Enfant(Parent): enregistre Parent dans Enfant.__bases__.
 
-Usages courants :
-• Opérations fichier : gérer fichier non trouvé, erreurs de permission
-• Opérations réseau : gérer échecs de connexion, timeouts
-• Entrée utilisateur : gérer entrée invalide, erreurs de conversion
-• Opérations base de données : gérer problèmes de connexion, erreurs de requête`,
-  2702: `Une clause except nue (except: sans spécifier de type d'exception) attrape toutes les exceptions, y compris les exceptions système comme KeyboardInterrupt et SystemExit. Bien que pratique pour attraper toute erreur, les clauses except nues sont généralement déconseillées car elles peuvent masquer des erreurs importantes et compliquer le débogage. L'instruction pass ne fait rien, donc ce code ignore silencieusement toute exception dans le bloc try.
+Exécution étape par étape :
+• Accès Enfant.x ou instance.methode() : recherche dans Enfant puis ancêtres.
 
-Concepts clés :
-• except: (aucun type spécifié)
-• Attrape tous les types d'exceptions
-• Y compris KeyboardInterrupt, SystemExit, etc.
-• Pratique généralement déconseillée
-• Peut masquer des erreurs importantes
+Ordre des opérations :
+• Définition des classes d'abord ; héritage figé à la création de la classe fille.
 
-Comment ça fonctionne :
-• Toute exception dans le bloc try est attrapée
-• Peu importe le type d'exception
-• Le code dans le bloc except s'exécute
-• pass ne fait rien (ignore l'erreur silencieusement)
-• Le programme continue après try/except
+Cas d'utilisation courants :
+• Frameworks GUI, modèles métier, hiérarchies d'exceptions.
 
-Exemple :
-try:
-    result = 1 / 0  # ZeroDivisionError
-except:  # Attrape TOUTES les exceptions
-    pass  # Ne fait rien, ignore silencieusement
+Cas limites :
+• Héritage multiple : ordre des bases et C3 linearization.
 
-Problèmes avec except nu :
-• Masque les bugs et erreurs inattendues
-• Rend le débogage difficile
-• Peut attraper les signaux système (Ctrl+C)
-• Mieux vaut spécifier les types d'exceptions`,
-  2703: `Spécifier un type d'exception dans la clause except n'attrape que ce type d'exception spécifique. Quand vous écrivez except ZeroDivisionError, seules les exceptions ZeroDivisionError sont attrapées — les autres ne le seront pas et se propageront. C'est la façon recommandée de gérer les exceptions car elle permet une gestion ciblée et ne masque pas les erreurs non liées.
+Considérations de performance :
+• Coût d'accès attribut léger ; MRO calculé une fois.
+
+Exemples :
+• Child().method() délègue à Parent si non surchargé.
+
+Remarques :
+• Réponse : la classe enfant obtient les fonctionnalités du parent (1re option).`,
+  2702: `Parent.x = 1, class Child(Parent): pass — Child.x ?
+
+Débutant :
+• 1 : attribut de classe du parent visible sur la classe fille.
+
+Intermédiaire :
+• Lecture sur Child résout x dans la chaîne de classes (MRO), pas seulement dans Child.__dict__.
+
+Expert :
+• id(Parent.x) peut être partagé tant que la fille ne redéfinit pas x.
 
 Concepts clés :
-• except ZeroDivisionError : n'attrape que ZeroDivisionError
-• Les autres exceptions ne sont pas attrapées
-• Permet une gestion d'erreur ciblée
-• Ne masque pas les erreurs non liées
-• Pratique recommandée
+• Attributs de classe hérités comme clés dans le namespace résolu.
 
-Comment ça fonctionne :
-• Une exception survient dans le bloc try
-• Python vérifie le type d'exception
-• Si ZeroDivisionError, exécute le bloc except
-• Si autre exception, pas attrapée, se propage
-• Le programme peut avoir plusieurs blocs except
+Distinctions clés :
+• Pas d'erreur ni None pour ce schéma minimal.
 
-Exemple :
-try:
-    result = 1 / 0  # ZeroDivisionError
-except ZeroDivisionError:  # N'attrape que ZeroDivisionError
-    print("Division by zero!")
-except ValueError:  # Attraperait ValueError si elle survenait
-    print("Value error!")
+Fonctionnement :
+• type.__getattribute__ pour Child.x.
 
-Usages courants :
-• Gestion d'erreur ciblée
-• Différentes exceptions gérées différemment
-• Erreurs non liées encore visibles
-• Débogage plus facile`,
-  2704: `La syntaxe 'as variable' dans les clauses except capture l'objet exception, permettant l'accès aux détails de l'exception. Quand vous écrivez except ZeroDivisionError as e, l'objet exception est assigné à la variable e, et vous pouvez accéder à ses attributs et méthodes. type(e) renvoie la classe de l'objet exception, qui est ZeroDivisionError dans ce cas.
+Exécution étape par étape :
+• Child.__dict__ sans x → Parent trouvé.
 
-Concepts clés :
-• except ExceptionType as variable : capture l'exception
-• L'objet exception assigné à la variable
-• Peut accéder aux attributs de l'exception
-• type(e) renvoie la classe d'exception
-• str(e) renvoie le message d'erreur
+Ordre des opérations :
+• Résolution de nom de classe avant toute instance.
 
-Comment ça fonctionne :
-• Une exception survient dans le bloc try
-• L'objet exception est créé
-• L'objet assigné à la variable 'e'
-• Peut inspecter les détails de l'exception
-• type(e) montre le type d'exception
+Cas d'utilisation courants :
+• Constantes de classe partagées, compteurs par hiérarchie.
 
-Exemple :
-try:
-    result = 1 / 0
-except ZeroDivisionError as e:
-    print(type(e))  # <class 'ZeroDivisionError'>
-    print(str(e))   # "division by zero"
+Cas limites :
+• Si Child définit x, il masque Parent pour Child.x.
 
-Attributs de l'objet exception :
-• __class__ : type d'exception
-• args : arguments de l'exception
-• __str__() : représentation chaîne
-• Attributs personnalisés pour les exceptions personnalisées`,
-  2705: `Vous pouvez attraper plusieurs types d'exceptions dans une seule clause except en utilisant un tuple de types d'exceptions. except (ZeroDivisionError, ValueError) attrape soit ZeroDivisionError soit ValueError. Utile quand plusieurs exceptions différentes requièrent la même logique de gestion, évitant la duplication de code.
+Considérations de performance :
+• Lookup en O(1) typique sur dict de classe.
+
+Exemples :
+• Parent.x et Child.x identiques tant pas d'ombre.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2703: `Child(Parent): pass — Child().method() si Parent définit method → 1
+
+Débutant :
+• Retourne 1 : la méthode du parent s'applique à l'instance de Child avec self = cette instance.
+
+Intermédiaire :
+• Liaison : Python trouve la fonction dans Parent et passe l'instance Child comme premier argument.
+
+Expert :
+• self n'est pas typé : tout objet instance de la sous-classe convient.
 
 Concepts clés :
-• except (Type1, Type2, Type3) : attrape l'un de ceux-ci
-• Un seul bloc except gère plusieurs exceptions
-• Évite la duplication de code
-• Parenthèses requises pour le tuple
+• Héritage de code d'instance via la même résolution MRO.
 
-Comment ça fonctionne :
-• Une exception survient dans le bloc try
-• Python vérifie si le type d'exception correspond à l'un du tuple
-• Si correspondance, exécute le bloc except
-• Si pas de correspondance, l'exception se propage
-• Tous les types listés sont gérés de la même façon
+Distinctions clés :
+• Pas d'erreur si la signature correspond.
 
-Exemple :
-try:
-    result = int(input("Enter number: "))  # ValueError si pas un nombre
-    result = 10 / result  # ZeroDivisionError si 0
-except (ZeroDivisionError, ValueError):  # Attrape les deux
-    print("Invalid input or division by zero!")
+Fonctionnement :
+• Descripteur fonction sur la classe Parent.
 
-Usages courants :
-• Un handler unique pour des exceptions liées
-• Code plus propre que plusieurs blocs except
-• Grouper les exceptions avec même gestion
-• Réduire la duplication`,
-  2706: `You can have plusieurs clauses except after a single try block to handle different exception types with different logic. Each except clause is checked in order, and only les premiers matching one executes. Cela permet for specific, targeted error handling where different exceptions require different responses.
+Exécution étape par étape :
+• Cherche method dans Child puis Parent ; appelle.
 
-Multiple except clauses:
-• try: code_that_might_fail
-• except Type1: handle_type1_error
-• except Type2: handle_type2_error
-• except Type3: handle_type3_error
-• Each except gère different exception
+Ordre des opérations :
+• Création instance puis appel de méthode.
 
-Comment ça fonctionne :
-• Exception occurs in try block
-• Python checks except clauses in order
-• First matching exception type executes
-• Other except clauses skipped
-• Unmatched exceptions propagate up
+Cas d'utilisation courants :
+• Hooks par défaut surchargés plus tard dans les sous-classes.
 
-Exemple :
-try:
-    result = 10 / int(input("Enter divisor: "))
-except ZeroDivisionError:
-    print("Cannot divide by zero!")
-except ValueError:
-    print("Please enter a valid number!")
-except Exception as e:
-    print(f"Unexpected error: {e}")
+Cas limites :
+• Méthode abstraite ou manquante plus bas : erreur à l'appel.
 
-Usages courants :
-• Specific handling for chaque exception type
-• Different error messages for different errors
-• More precise error handling
-• Better user experience
+Considérations de performance :
+• Appel normal de méthode.
 
-Exemple : Multiple except clauses allow different exception types to be handled with different logic - ZeroDivisionError gets one response, ValueError gets another.`,
-  2707: `La clause else dans les blocs try/except s'exécute uniquement si aucune exception n'est survenue dans le bloc try. Utile pour du code qui ne doit s'exécuter que lorsque le bloc try se termine avec succès. La clause else s'exécute après le bloc try mais avant toute clause finally.
+Exemples :
+• Animal.speak générique, Dog surcharge plus tard.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2704: `issubclass(Child, Parent)
+
+Débutant :
+• True si Child hérite directement ou indirectement de Parent (ici direct).
+
+Intermédiaire :
+• issubclass(Child, Child) est aussi True.
+
+Expert :
+• Ne pas confondre avec isinstance(obj, cls).
 
 Concepts clés :
-• else : s'exécute seulement si pas d'exception dans le bloc try
-• S'exécute après que try se termine avec succès
-• Ignoré si une exception survient
-• S'exécute avant finally (si présent)
-• Utile pour le code de succès uniquement
-
-Comment ça fonctionne :
-• Le bloc try s'exécute
-• Si pas d'exception, le bloc else s'exécute
-• Si exception, le bloc else est ignoré, le bloc except s'exécute
-• Le bloc finally (si présent) s'exécute toujours en dernier
-
-Exemple :
-try:
-    result = 10 / 2  # Pas d'exception
-    print("Division successful")
-except ZeroDivisionError:
-    print("Division failed")
-else:
-    print("No errors occurred")  # Ceci s'exécute
-    x = result * 2
-
-Avantages :
-• Sépare la logique de succès de la gestion d'erreur
-• Le code ne s'exécute qu'en cas d'exécution réussie
-• Organisation plus claire
-• Évite d'imbriquer le code de succès dans try
-
-Exemple : Dans try: pass; except: pass; else: x = 1; x, la clause else s'exécute car aucune exception n'est survenue dans le bloc try, donc x est défini à 1.`,
-  2708: `La clause else only executes when no exception occurs in the try block. If an exception happens, the else clause is completely skipped, and l'exécution saute directement to the except block. Cela assure that else code only runs on successful execution.
-
-else clause behavior with exceptions:
-• else: skipped if exception occurs
-• Exception triggers except block
-• else never executes when exception happens
-• Separates success path from error path
-
-Comment ça fonctionne :
-• Exception occurs in try block
-• Execution jumps to except block
-• else block completely skipped
-• finally block (if present) still runs
-
-Exemple :
-try:
-    result = 1 / 0  # Exception occurs
-    print("This won't print")
-except ZeroDivisionError:
-    print("Exception caught")
-    x = "error"
-else:
-    x = 1  # C'est skipped
-    print("No exception")
-
-Résultat : • except block executes: x = "error"
-• else block skipped: x n'est pas set to 1
-• x refers to the variable from except block
-
-Exemple : In try: 1/0; except: pass; else: x = 1; x, a NameError occurs car the else clause ne execute  quand une exception se produit, donc x n'est jamais défini.`,
-  2709: `La clause finally s'exécute toujours, qu'une exception survienne ou non. Elle sert au code de nettoyage qui doit s'exécuter quoi qu'il arrive dans le bloc try. Les blocs finally sont couramment utilisés pour fermer des fichiers, libérer des ressources ou nettoyer des connexions.
-
-La clause finally s'exécute toujours :
-• finally : code qui s'exécute toujours
-• S'exécute après que try/except/else soient terminés
-• S'exécute même si une exception survient
-• S'exécute même si return/break/continue dans try
-• Exécution garantie (presque toujours)
-
-Comment ça fonctionne :
-• Le bloc try s'exécute
-• Si exception : le bloc except s'exécute
-• Si pas d'exception : le bloc else s'exécute (si présent)
-• Le bloc finally s'exécute toujours en dernier
-• Même si l'exception n'est pas attrapée
-
-Exemple :
-try:
-    print("Bloc try")
-    # Pas d'exception
-except:
-    print("Bloc except")
-else:
-    print("Bloc else")
-finally:
-    print("Bloc finally")  # S'exécute toujours
-    x = 1
-
-Usages courants :
-• Fermeture de fichiers : file.close()
-• Libération de ressources : connection.close()
-• Libération de verrous : lock.release()
-• Suppression de fichiers temporaires
-• Nettoyage de transactions base de données
-
-Exemple : La clause finally s'exécute quelle que soit l'exception, donc dans try: pass; except: pass; finally: x = 1, x retourne 1 car finally s'exécute toujours.`,
-  2710: `La clause finally executes unconditionally, even  quand une exception se produit in the try block. Cela la rend parfaite for cleanup operations that must happen regardless of success or failure. Le bloc finally runs after all try/except/else processing is complete.
-
-finally with exceptions:
-• finally: always executes
-• Even when exception occurs and is caught
-• Even when exception occurs and n'est pas caught
-• Executes before exception propagates up
-• Perfect for cleanup code
-
-Execution order with exception:
-1. Exception occurs in try
-2. except block executes (if matches)
-3. else block skipped
-4. finally block executes
-5. Exception may continue propagating
-
-Exemple :
-try:
-    result = 1 / 0  # Exception occurs
-except ZeroDivisionError:
-    print("Exception caught")
-finally:
-    print("Cleanup code")  # Always executes
-    x = 1
-
-Usages courants :
-• Guaranteed cleanup
-• Resources always released
-• No matter what happens in try/except
-• Prevents resource leaks
-• Consistent cleanup behavior
-
-Exemple : finally executes even with exceptions, so try: 1/0; except: pass; finally: x = 1; x retourne 1 car finally always runs, setting x = 1.`,
-  2711: `Le raise instruction explicitly raises an exception in Python. raise ValueError('error') creates a ValueError exception avec the message 'error' and raises it, causing the program to stop normal execution and jump to the nearest exception handler. This is how you intentionally trigger error conditions.
-
-raise instruction syntax:
-• raise ExceptionType(message)
-• Creates exception objet avec message
-• Immediately stops execution
-• Jumps to nearest except block
-• Can raise built-in or custom exceptions
-
-Comment ça fonctionne :
-• Exception objet created: ValueError('error')
-• Execution stops immediately
-• Python looks for except block to handle it
-• If no handler, program crashes avec traceback
-• Stack unwinds until handler found
-
-Exemple :
-def validate_age(age):
-    if age < 0:
-        raise ValueError("Age cannot be negative")
-    renvoyer age
-
-validate_age(-5)  # Raises ValueError avec message
-
-Usages courants :
-• Input validation: raise ValueError for invalid input
-• Preconditions: raise AssertionError for invalid state
-• Custom errors: raise custom exception classes
-• Re-raising: raise to re-raise caught exception
-
-Exemple : raise ValueError('error') creates and raises a ValueError exception avec message 'error', stopping execution and jumping to exception handler.`,
-  2712: `You can raise an exception without providing a message by just using the exception class name. raise ValueError crée a ValueError exception with no custom message. The exception will still ont un default representation, but no descriptive error message. C'est less common than raising with a message.
-
-raise without message:
-• raise ExceptionClass (no parentheses for no-arg)
-• Crée exception with default state
-• No custom error message
-• Still lève the exception normally
-• Less informative than with message
-
-Comment ça fonctionne :
-• Exception class instantiated without arguments
-• Default exception object created
-• str(e) will show class name only
-• Still triggers exception handling
-• Can be caught same as any ValueError
-
-Exemple :
-raise ValueError      # Crée ValueError()
-raise ValueError()    # Same thing, explicit instantiation
-raise ValueError('msg')  # With message
-
-Exception without message:
-• str(e) retourne '' (empty string for ValueError)
-• repr(e) shows "ValueError()""
-• Less useful for debugging
-• Still functionally lève exception
-
-Exemple : raise ValueError crée a ValueError exception without a custom message, which is still a valid exception that peut être caught and handled.`,
-  2713: `raise without any arguments inside an except block re-raises the currently caught exception. C'est useful when you want to catch an exception for logging or partial handling, but still want the exception to propagate up to higher-level handlers. The original exception object and traceback are preserved.
-
-Re-raising exceptions:
-• raise (no arguments in except block)
-• Re-raises the currently caught exception
-• Preserves original traceback
-• Useful for logging + re-raising
-• Allows partial exception handling
-
-Comment ça fonctionne :
-• Exception caught in except block
-• raise with no arguments
-• Same exception object re-raised
-• Original stack trace preserved
-• Higher-level handlers can catch it
-
-Exemple :
-try:
-    risky_operation()
-except ValueError as e:
-    log_error(e)  # Log the error
-    raise         # Re-raise le même exception
-
-Usages courants :
-• Add logging without stopping propagation
-• Cleanup before re-raising
-• Partial error handling
-• Preserve original stack trace
-
-Exemple : In except block, raise (with no arguments) re-raises the currently caught ValueError, preserving l'original exception and traceback.`,
-  2714: `You can créer custom exception classes by inheriting from the built-in Exception class or its subclasses. class MyError(Exception): pass crée a custom exception type that peut être raised and caught like built-in exceptions. Custom exceptions allow for more specific error handling and better error categorization.
-
-Custom exception creation:
-• class MyException(Exception): pass
-• Inherits from Exception base class
-• Can add custom attributes/methods
-• Behaves like built-in exceptions
-• Can be caught specifically
-
-Comment ça fonctionne :
-• Define class inheriting from Exception
-• Class becomes exception type
-• Can instantiate: MyError()
-• Can raise: raise MyError()
-• Can catch: except MyError
-
-Exemple :
-class ValidationError(Exception):
-    def __init__(self, field, value):
-        self.field = field
-        self.value = value
-        super().__init__(f"Invalid {field}: {value}")
-
-raise ValidationError("email", "invalid@email")
-
-Usages courants :
-• Specific error types for different situations
-• Better error categorization
-• Custom error messages and data
-• More precise exception handling
-• Cleaner error handling logic
-
-Exemple : class MyError(Exception): pass; raise MyError() crée and lève a custom exception instance, which peut être caught with except MyError.`,
-  2715: `Custom exceptions that inherit from Exception are instances of the Exception class. isinstance(MyError(), Exception) retourne True car MyError inherits from Exception, so instances of MyError are also instances of Exception. This inheritance relationship allows custom exceptions to be caught by except Exception blocks.
-
-Inheritance and isinstance:
-• Custom exceptions inherit from Exception
-• isinstance(custom_instance, Exception) = True
-• isinstance(custom_instance, CustomException) = True
-• Can be caught by broader exception handlers
-• Maintains Liskov Substitution Principle
-
-Comment ça fonctionne :
-• class MyError(Exception): inheritance
-• MyError() crée instance
-• isinstance checks inheritance chain
-• Exception is base class for all exceptions
-• Custom exceptions are subclasses
-
-Exemple :
-class MyError(Exception): pass
-error = MyError()
-isinstance(error, MyError)     # True - exact type
-isinstance(error, Exception)   # True - base class
-isinstance(error, ValueError)  # False - not related
-
-Exception hierarchy:
-• BaseException (root)
-• Exception (most exceptions inherit from this)
-• Custom exceptions inherit from Exception
-• Specific built-ins like ValueError, TypeError
-
-Exemple : isinstance(MyError(), Exception) retourne True car custom exceptions inherit from Exception, making them instances of the base Exception class.`,
-  2716: `str() on an exception object retourne the exception's message (if provided) or a default string representation. For ValueError('msg'), str(e) retourne 'msg' - the message passé à the exception constructor. C'est useful for displaying user-friendly error messages.
-
-Exception string representation:
-• str(exception) retourne the error message
-• For ValueError('msg'), str(e) = 'msg'
-• For exceptions without message, str(e) may be empty
-• repr(exception) retourne full representation
-• str() is for user-friendly display
-
-Comment ça fonctionne :
-• Exception created with message: ValueError('msg')
-• str(e) extracts the message string
-• Retourne 'msg' for display
-• Different from repr(e) which shows "ValueError('msg')"
-
-Exemple :
-try:
-    raise ValueError("Invalid input")
-except ValueError as e:
-    user_message = str(e)  # "Invalid input"
-    print(f"Error: {user_message}")
-
-Exception messages:
-• ValueError("message") → str(e) = "message"
-• TypeError("message") → str(e) = "message"
-• Custom exceptions can override __str__
-
-Exemple : str(ValueError('msg')) retourne 'msg' car str() on an exception retourne the message passé à the exception constructor.`,
-  2717: `repr() on an exception object retourne a string that represents the exception object, including its type and message. For ValueError('msg'), repr(e) retourne "ValueError('msg')" - a string that could be utilisé pour recreate the exception object. C'est more detailed than str() and is useful for debugging.
-
-Exception repr vs str:
-• repr(e) retourne full representation: "ValueError('msg')"
-• str(e) retourne just message: 'msg'
-• repr() for debugging/detailed info
-• str() for user-friendly messages
-• repr() shows type and constructor args
-
-Comment ça fonctionne :
-• Exception object: ValueError('msg')
-• repr(e) shows how to recreate it
-• Includes class name and arguments
-• More detailed than str()
-• Useful for logging and debugging
-
-Exemple :
-try:
-    raise ValueError("Something went wrong")
-except ValueError as e:
-    debug_info = repr(e)  # "ValueError('Something went wrong')"
-    user_info = str(e)    # "Something went wrong"
-    print(f"Debug: {debug_info}")
-    print(f"User: {user_info}")
-
-Exception representations:
-• ValueError('msg') → repr = "ValueError('msg')"
-• TypeError('msg') → repr = "TypeError('msg')"
-• Custom exceptions show their class name
-
-Exemple : repr(ValueError('msg')) retourne "ValueError('msg')" car repr() shows the full representation of the exception object, including its type and arguments.`,
-  2718: `Exception classes ont un __name__ attribute qui contient the class name as a string. For ZeroDivisionError, type(e).__name__ retourne 'ZeroDivisionError' car that's the name of the exception class. C'est useful for programmatic checking of exception types.
-
-Exception class attributes:
-• __name__ contains class name string
-• type(e).__name__ gets the exception type name
-• Useful for conditional error handling
-• More reliable than string parsing
-• Works with custom exceptions too
-
-Comment ça fonctionne :
-• Exception caught: ZeroDivisionError
-• type(e) retourne ZeroDivisionError class
-• __name__ attribute accessed
-• Retourne string: 'ZeroDivisionError'
-• Can be utilisé dans conditionals
-
-Exemple :
-try:
-    risky_operation()
-except Exception as e:
-    error_type = type(e).__name__
-    if error_type == 'ValueError':
-        handle_value_error()
-    elif error_type == 'ZeroDivisionError':
-        handle_division_error()
-    else:
-        handle_other_error()
-
-Usages courants :
-• Programmatic exception type checking
-• No string parsing needed
-• Works with any exception type
-• Reliable and clean
-
-Exemple : type(ZeroDivisionError()).__name__ retourne 'ZeroDivisionError' car the exception object's class has __name__ = 'ZeroDivisionError'.`,
-  2719: `Catching a base exception class like Exception catches all subclasses of that exception. Since ValueError inherits from Exception, except Exception will catch ValueError exceptions. C'est the inheritance-based exception handling system en Python.
-
-Exception inheritance hierarchy:
-• Exception is base class for most exceptions
-• ValueError, TypeError, etc. inherit from Exception
-• except Exception catches all Exception subclasses
-• Allows broad exception handling
-• Can be too broad (catches everything)
-
-Comment ça fonctionne :
-• Exception hierarchy: BaseException → Exception → ValueError
-• ValueError is subclass of Exception
-• except Exception catches ValueError
-• except BaseException catches everything
-• Inheritance determines catchability
-
-Exemple :
-try:
-    raise ValueError("Invalid value")
-except Exception:  # Catches ValueError car ValueError(Exception)
-    print("Some exception occurred")
-
-Exception hierarchy:
-• BaseException (catches everything)
-• Exception (catches most application errors)
-• ArithmeticError, LookupError, etc. (specific categories)
-• ValueError, KeyError, etc. (specific exceptions)
-
-Exemple : except Exception catches ValueError car ValueError inherits from Exception, allowing broad exception handling.`,
-  2720: `A tuple of exception types in an except clause catches any exception that matches any of the types in the tuple. except (ValueError, TypeError) will catch either ValueError or TypeError exceptions. Cela permet handling multiple related exception types with le même code.
-
-Multiple exception types in tuple:
-• except (Type1, Type2, Type3): catches any of these
-• Tuple syntax for multiple types
-• Single handler for multiple exceptions
-• Cleaner than separate except blocks
-• Related exceptions handled together
-
-Comment ça fonctionne :
-• Exception occurs in try block
-• Python checks chaque type in tuple
-• If exception matches any type, handler executes
-• Order ne matter (unlike multiple except blocks)
-• First matching tuple element wins
-
-Exemple :
-try:
-    # Code that might raise ValueError or TypeError
-    value = int(input("Enter number: "))  # ValueError if not number
-    result = 10 / value  # ZeroDivisionError if 0
-except (ValueError, TypeError):  # Catches both
-    print("Invalid input type")
-except ZeroDivisionError:  # Separate handler for different error
-    print("Cannot divide by zero")
-
-Usages courants :
-• Groups related exceptions
-• Single handler for similar errors
-• Cleaner than multiple except blocks
-• More readable code
-
-Exemple : except (ValueError, TypeError) catches either ValueError or TypeError with a single except clause, grouping related type errors.`,
-  2721: `L'instruction with fournit une syntaxe claire pour travailler avec context managers. with open('file') as f crée a context manager that automatically gère resource management. The open() function retourne a file object that is a context manager - it automatically closes the file when the with block exits, even if an exception occurs.
-
-with statement and context managers:
-• with expression as variable: context_manager_syntax
-• Context managers handle resource management automatically
-• Automatic setup and cleanup of resources
-• Exception-safe resource handling
-• Replaces try/finally patterns
-
-Comment ça fonctionne :
-• Expression evaluated (open('file'))
-• __enter__() method called automatically
-• Résultat assigned to variable (f)
-• Code in with block executes normally
-• __exit__() always called for cleanup (closes file)
-
-Exemple :
-with open('data.txt', 'r') as f:
-    content = f.read()  # File is open here
-# File automatically closed here, even if exception occurs
-
-Usages courants :
-• Automatic resource cleanup (no manual close needed)
-• Exception-safe (file closed even if error occurs)
-• Cleaner than try/finally blocks
-• Prevents resource leaks
-• Readable and maintainable code
-
-Exemple : with open('file') as f uses the file object's context manager to ensure the file is automatically closed après le with block, regardless of how the block exits.`,
-  2722: `Pour créer un gestionnaire de contexte personnalisé, une classe doit implémenter les deux __enter__ and __exit__ methods. __enter__ est appelé when entering the with block and retourne the object to be used. __exit__ est appelé when exiting the with block and gère cleanup. C'est the context manager protocol that makes objects fonctionner avec the with statement.
-
-Context manager protocol:
-• __enter__(self): appelé sur entry, retourne context value
-• __exit__(self, exc_type, exc_val, exc_tb): appelé sur exit, gère cleanup
-• Both methods are required for context manager functionality
-• __exit__ receives exception info if any occurred
-• Returning True from __exit__ suppresses exceptions
-
-Comment ça fonctionne :
-• with MyContext() as ctx:
-• MyContext() crée instance
-• __enter__() called, renvoyer value (self) assigned to ctx
-• Code in with block executes
-• __exit__() called for cleanup (pass ne fait rien)
-• Context manager instance available as ctx
-
-Exemple :
-class MyContext:
-    def __enter__(self):
-        print("Entering context")
-        renvoyer self  # Renvoyer self for use in with block
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        print("Exiting context")
-        renvoyer False  # Don't suppress exceptions
-
-with MyContext() as ctx:
-    print(f"Context: {ctx}")  # ctx is the MyContext instance
-
-Usages courants :
-• Custom resource management for any resource
-• Automatic cleanup logic
-• Exception handling control
-• Reusable cleanup patterns
-• Clean API for resource management
-
-Exemple : Custom context manager class must implement __enter__ and __exit__ methods to fonctionner avec the with statement. The __enter__ method retourne self, which is assigned to ctx.`,
-  2723: `Le valeur returned by __enter__ is assigned to the variable après 'as' in the avec instruction. If __enter__ retourne 1, then x will be assigned the valeur 1 dans the avec block. This allows context managers to provide different objets than themselves for use in the avec block.
-
-__enter__ renvoyer valeur assignment:
-• avec ContextManager() as variable:
-• __enter__() renvoyer valeur assigned to variable
-• Can renvoyer self (common) or different objet
-• Variable available throughout avec block
-• Variable goes out of scope après avec block
-
-Comment ça fonctionne :
-• Context manager created: MyContext()
-• __enter__() appelé, retourne 1
-• Value 1 assigned to variable x
-• x = 1 dans avec block
-• __exit__() appelé when block exits
-
-Exemple :
-classe NumberContext:
-    def __enter__(self):
-        renvoyer 42  # Return number, not self
-
-    def __exit__(self, *args):
-        pass
-
-avec NumberContext() as x:
-    print(x)  # 42 (not the context manager objet)
-
-Common patterns:
-• Return self: standard resource management (files, connections)
-• Return different objet: factory pattern, configuration objets
-• Return None: when no specific objet needed
-• Return wrapper: decorator pattern
-
-Exemple : __enter__ renvoyer valeur (1) is assigned to variable x, so x equals 1 dans the avec block. The context manager can renvoyer any valeur it wants.`,
-  2724: `__exit__ peut contrôler la gestion des exceptions en retournant True pour supprimer exceptions that occur in the with block. Quand __exit__ retourne True, any exception is caught and suppressed - it ne propagate outside the with statement. C'est useful for context managers that handle errors internally.
-
-Exception suppression in __exit__:
-• __exit__(self, exc_type, exc_val, exc_tb) receives exception info
-• Renvoyer True: suppress the exception completely
-• Renvoyer False/None: let exception propagate normally
-• Renvoyer value controls whether exception bubbles up
-• Useful for expected/handled error conditions
-
-Comment ça fonctionne :
-• Exception occurs in with block (1/0 causes ZeroDivisionError)
-• __exit__ appelé avec exception info: (ZeroDivisionError, exception_object, traceback)
-• __exit__ retourne True
-• Exception is suppressed, ne propagate
-• Program continues after with block
-
-Exemple :
-class SuppressErrors:
-    def __enter__(self):
-        renvoyer self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        print(f"Suppressed: {exc_type.__name__}")
-        renvoyer True  # Suppress any exception
-
-with SuppressErrors():
-    raise ValueError("This won't propagate")
-
-Usages courants :
-• Handle expected errors gracefully
-• Prevent error propagation for known issues
-• Cleanup even when errors occur
-• Robust error handling in specific contexts
-• Prevent crashes from anticipated errors
-
-Exemple : __exit__ returning True suppresses the ZeroDivisionError from 1/0, preventing it from being raised outside the with block.`,
-  2725: `L'instance du gestionnaire de contexte est disponible dans le bloc with via la variable assignée with 'as'. Since __enter__ retourne self, ctx refers to the MyContext instance, allowing access to its attributes and methods during the with block.
-
-Context manager instance access:
-• with MyContext() as ctx: ctx refers to context manager
-• Since __enter__ retourne self, ctx is the instance
-• Can access attributes and methods in with block
-• Useful for resource management with instance state
-• Instance persists throughout with block
-
-Comment ça fonctionne :
-• MyContext() crée instance
-• __enter__() retourne self (the instance)
-• Instance assigned to ctx variable
-• ctx available throughout with block
-• Can call methods: ctx.method()
-• Can access attributes: ctx.attribute
-
-Exemple :
-class DatabaseConnection:
-    def __init__(self):
-        self.connected = False
-
-    def __enter__(self):
-        self.connected = True
-        renvoyer self  # Renvoyer self for access
-
-    def __exit__(self, *args):
-        self.connected = False
-
-with DatabaseConnection() as conn:
-    print(conn.connected)  # True
-    # Can call methods on conn here
-
-Usages courants :
-• Access to context manager state and methods
-• Resource control during with block
-• Method appelle on managed resource
-• State inspection and modification
-• Full resource API access
-
-Exemple : Since __enter__ retourne self, ctx is the MyContext instance, so ctx refers to the context manager object inside the with block.`,
-  2726: `Le décorateur @contextmanager du module contextlib transforme une fonction générateur en context manager. La fonction doit contenir au moins un yield. La valeur après yield est assignée à la variable du bloc with.
-
-Concepts clés : @contextmanager transforme un générateur en context manager, la partie avant yield correspond à __enter__, la partie après yield correspond à __exit__, yield produit la valeur assignée après 'as'.
-
-Comment ça fonctionne : avec my_context() as x, Python exécute le générateur jusqu'au yield, la valeur yield est assignée à x, à la sortie du bloc __exit__ reprend après le yield.
-
-Usages courants : context managers concis sans classe, gestion de ressources avec yield, patterns de setup/teardown simplifiés.`,
-  2727: `Le bloc with garantit que le fichier est fermé automatiquement à la sortie du bloc, normalement ou par exception. f.closed vaut True après la sortie car le context manager appelle __exit__ qui ferme le fichier.
-
-Concepts clés : with ouvre le fichier et le ferme à la sortie, f.closed indique si le fichier est fermé, fermeture garantie même en cas d'exception.
-
-Comment ça fonctionne : entrée du bloc appelle open().__enter__(), sortie appelle __exit__() qui ferme le fichier, f.closed devient True.
-
-Usages courants : lecture/écriture de fichiers sans fuite, gestion propre des ressources, éviter les oublis de close().`,
-  2728: `Une instruction with peut gérer plusieurs context managers séparés par des virgules. Chaque context manager est initialisé avant le bloc et nettoyé à la sortie, dans l'ordre inverse d'initialisation.
-
-Concepts clés : with ctx1, ctx2: gère plusieurs context managers, __enter__ appelé pour chaque dans l'ordre, __exit__ appelé dans l'ordre inverse à la sortie.
-
-Comment ça fonctionne : open('file') puis open('file2') initialisent, le bloc s'exécute, à la sortie file2 se ferme puis file.
-
-Usages courants : ouvrir plusieurs fichiers, verrous multiples, combinaison de ressources (fichier + connexion).`,
-  2729: `Le context manager suppress() du module contextlib supprime (ignore) les exceptions spécifiées. Si une exception levée dans le bloc est dans la liste, elle est capturée et supprimée sans propagation.
-
-Concepts clés : suppress(Exception1, Exception2) ignore les exceptions listées, équivalent à try/except pass pour des exceptions spécifiques, le bloc continue après l'exception supprimée.
-
-Comment ça fonctionne : with suppress(ValueError): raise ValueError() lève ValueError, suppress la capture et la supprime, aucune exception propagée.
-
-Usages courants : ignorer des exceptions attendues, éviter try/except pass verbeux, opérations où certaines erreurs sont acceptables.`,
-  2730: `La méthode __exit__ est appelée automatiquement à la fin du bloc with, qu'il termine normalement ou par exception. L'attribut self.closed = True dans __exit__ est donc défini après pass.
-
-Concepts clés : __exit__ est appelée à la sortie du bloc with, reçoit type, valeur et traceback de l'exception (ou None), __exit__ peut marquer la fermeture via des attributs d'instance.
-
-Comment ça fonctionne : with ctx: pass termine, Python appelle ctx.__exit__(None, None, None), __exit__ définit self.closed = True, ctx.closed vaut True.
-
-Usages courants : traçage du cycle de vie, nettoyage garanti, fermeture de ressources.`,
-  2731: `Le import instruction loads a module and makes it available in the current namespace. When you write import module, Python searches for a file named module.py (or a package named module) in the module search path, loads it, and creates a module objet. The module is then accessible via the module name (e.g., module.fonction()). Importing a module executes all top-level code in the module file, but subsequent imports of the same module reuse the cached module objet.
-
-import instruction:
-• import module loads the module
-• Searches for module.py or package module
-• Executes module code on first import
-• Creates module objet in namespace
-• Access via module.name
-
-Comment ça fonctionne :
-• Python searches for module in sys.path
-• Loads module file (module.py)
-• Executes top-level code in module
-• Creates module objet
-• Adds module to current namespace
-• Subsequent imports reuse cached module
-
-Exemple :
-import math  # Imports math module
-math.pi      # 3.14159... (access module attributes)
-math.sqrt(4) # 2 (use module fonctions)
-
-Usages courants :
-• Importing standard library: import os, import sys, import math
-• Importing custom modules: import mymodule
-• Module access: module.fonction(), module.attribute
-• Modules and imports
-
-Exemple : import module loads a module and makes it available in the current namespace, allowing you to access its attributes and fonctions via module.name.`,
-  2732: `Le from...import instruction imports a specific name (fonction, classe, or variable) from a module directly into the current namespace. When you write from module import name, Python imports the module, then copies the specified name into the current namespace, so you can use it directly sans the module prefix. This is more concise than import module; module.name, but can cause namespace pollution if many names are imported.
-
-from...import instruction:
-• from module import name imports specific name
-• Loads module and copies name to current namespace
-• Use name directly (no module prefix)
-• More concise than import module; module.name
-• Can cause namespace pollution
-
-Comment ça fonctionne :
-• Python imports module
-• Finds name in module namespace
-• Copies name to current namespace
-• Use name directly
-• Original module still imported but not needed
-
-Exemple :
-from math import pi  # Imports pi directly
-pi                   # 3.14159... (use directly, no math prefix)
-from os import path
-path.join('a', 'b')  # 'a/b' (use directly)
-
-Usages courants :
-• Importing specific names: from module import fonction, from module import Class
-• Cleaner syntax: use name directly sans module prefix
-• Selective imports: import only what you need
-• Modules and imports
-
-Exemple : from module import name imports a specific name from a module directly into the current namespace, allowing you to use it directly sans the module prefix.`,
-  2733: `Le mot-clé as crée an alias for an imported name, permettant d'utiliser un nom différent dans l'espace de noms courant. Quand vous write from module import name as alias, Python imports name from the module but makes it available as alias in the current namespace. C'est useful when l'original name conflicts with an existing name, or when you want a shorter or more descriptive name.
-
-Import with alias:
-• from module import name as alias imports name as alias
-• name is imported from module
-• Available as alias in current namespace
-• Use alias instead of name
-• Prevents name conflicts
-
-Comment ça fonctionne :
-• Python imports name from module
-• Assigns name to alias in current namespace
-• Use alias to access the imported name
-• Original name not in namespace (only alias)
-• Prevents naming conflicts
-
-Exemple :
-from datetime import datetime as dt  # Import with alias
-dt.now()                              # Use alias
-from collections import defaultdict as dd
-dd(int)                               # Use shorter alias
-
-Usages courants :
-• Avoiding name conflicts: from module import name as alias
-• Shorter names: from module import long_name as short
-• Descriptive names: from module import func as descriptive_func
-• Modules and imports
-
-Exemple : from module import name as alias crée an alias for the imported name, permettant d'utiliser alias instead of name in the current namespace.`,
-  2734: `Le mot-clé as peut aussi créer an alias pour un module entier. Quand vous écrivez import module as alias, Python importe le module but makes it available as alias in the current namespace. C'est useful when the module name is long, conflicts with another name, or you want a shorter, more convenient name.
-
-Module import with alias:
-• import module as alias imports module as alias
-• Module is imported and accessible via alias
-• Use alias.name instead of module.name
-• Prevents name conflicts
-• Provides shorter names
-
-Comment ça fonctionne :
-• Python imports module
-• Assigns module to alias in current namespace
-• Use alias to access module
-• alias.name is same as module.name
-• Original module name not in namespace
-
-Exemple :
-import numpy as np  # Common alias for NumPy
-np.array([1, 2, 3]) # Use shorter alias
-import pandas as pd # Common alias for Pandas
-pd.DataFrame(...)   # Use shorter alias
-
-Usages courants :
-• Shorter names: import long_module_name as short
-• Avoiding conflicts: import module as alias when name conflicts
-• Convention: numpy as np, pandas as pd (common conventions)
-• Modules and imports
-
-Exemple : import module as alias imports a module with an alias, allowing you to access it via alias.name instead of module.name.`,
-  2735: `Le asterisk (*) in from module import * imports all public names (names not starting avec underscore) from the module into the current namespace. This allows you to use all public names directly sans the module prefix. However, this is generally discouraged car it causes namespace pollution, makes it unclear where names come from, and can cause name conflicts. If the module defines __all__, only names in __all__ are imported.
-
-Wildcard import:
-• from module import * imports all public names
-• Imports all names not starting avec _
-• If __all__ defined, imports only names in __all__
-• Names available directly (no module prefix)
-• Causes namespace pollution (discouraged)
-
-Comment ça fonctionne :
-• Python imports all public names from module
-• Names not starting avec _ are imported
-• If __all__ exists, imports only names in __all__
-• All names copied to current namespace
-• Use names directly
-
-Exemple :
-from math import *  # Imports all public names
-pi                  # 3.14159... (direct access)
-sqrt(16)            # 4 (direct access)
-# But unclear where names come from
-
-Usages courants :
-• Quick prototyping: from module import * (discouraged in production)
-• Convenience: direct access to all names
-• Namespace pollution: makes code harder to understand
-• Modules and imports
-
-Exemple : from module import * imports all public names from a module, but is generally discouraged due to namespace pollution and unclear name origins.`,
-  2736: `La variable __name__ contient le nom du module. Quand un fichier Python est exécuté directement (as a script), __name__ est défini à '__main__'. When a file is imported as a module, __name__ est défini à the module name. Cela permet you to check if a script is being run directly or imported, which is useful for running code uniquement quand the script is executed directly (not when imported).
-
-__name__ variable:
-• __name__ contains module name
-• '__main__' when script run directly
-• Module name when imported
-• Check with __name__ == '__main__'
-• Allows conditional execution
-
-Comment ça fonctionne :
-• Python sets __name__ = '__main__' when run directly
-• Python sets __name__ = 'module_name' when imported
-• Check __name__ == '__main__' to detect direct execution
-• Common pattern for script entry points
-• Allows modules to be both importable and executable
-
-Exemple :
-# my_script.py
-if __name__ == '__main__':
-    print("Script is run directly")
-    # Code here runs uniquement quand script is executed
-else:
-    print("Script is imported as module")
-
-Usages courants :
-• Script entry points: if __name__ == '__main__': main()
-• Conditional execution: run code uniquement quand script is main
-• Testing: if __name__ == '__main__': run_tests()
-• Modules and imports
-
-Exemple : __name__ == '__main__' checks if a script is run directly (not imported), allowing conditional execution of code.`,
-  2737: `Le pattern if __name__ == '__main__': is a common Python idiom that allows code to run only when a script is executed directly, not when it's imported as a module. This pattern is typically used to place code that should only run when the script is the main entry point (like main() fonction calls, tests, or script-specific logic) dans the if block.
-
-__name__ == '__main__' pattern:
-• if __name__ == '__main__': checks if script is main
-• Code in block runs only when script executed directly
-• Code doesn't run when module is imported
-• Common pattern for script entry points
-• Allows modules to be both importable and executable
-
-Comment ça fonctionne :
-• When script run directly: __name__ = '__main__'
-• When imported: __name__ = 'module_name'
-• if __name__ == '__main__': True only when run directly
-• Code in block executes only when True
-• Allows conditional execution
-
-Exemple :
-def main():
-    print("Main fonction")
-    # Script logic here
-
-if __name__ == '__main__':
-    main()  # Runs only when script is executed directly
-# Can import this module sans running main()
-
-Usages courants :
-• Script entry points: if __name__ == '__main__': main()
-• Testing: if __name__ == '__main__': unittest.main()
-• Conditional execution: run code only when script is main
-• Modules and imports
-
-Exemple : if __name__ == '__main__': pass is a common pattern that runs code only when a script is executed directly, not when imported as a module.`,
-  2738: `sys.path est une liste de chemins de répertoires où Python cherche for modules quand vous les importez. Quand vous écrivez import module, Python searches for the module in chaque directory in sys.path in order until il trouve the module. sys.path is initialized from the current directory, PYTHONPATH environment variable, and standard library paths. You can modifier sys.path to add custom directories to the module search path.
-
-sys.path:
-• sys.path is list of module search paths
-• Python searches directories in order
-• First match found est utilisé
-• Initialized from current dir, PYTHONPATH, stdlib
-• Can be modified to add custom paths
-
-Comment ça fonctionne :
-• Python searches for modules in sys.path
-• Checks chaque directory in order
-• First matching module found est utilisé
-• sys.path[0] is current directory (usually)
-• Can append directories to sys.path
-
-Exemple :
-import sys
-sys.path  # ['', '/usr/lib/python3.10', ...]
-sys.path.append('/custom/path')  # Add custom path
-import mymodule  # Now searches in /custom/path
-
-Usages courants :
-• Module search: understanding where Python looks for modules
-• Custom paths: sys.path.append('/custom/path')
-• Debugging imports: check sys.path for missing modules
-• Modules and imports
-
-Exemple : import sys; sys.path retourne une liste of directories where Python searches for modules, allowing you to see and modifier the module search path.`,
-  2739: `__all__ is a special variable in modules that explicitly defines the public API - the names that should be imported when using from module import *. If __all__ is defined, seulement le names listed in __all__ are imported by from module import *. Cela aide à éviter namespace pollution and clearly documents what the module's public API is. Names not in __all__ are still accessible if you import them explicitly.
-
-__all__ variable:
-• __all__ = ['name1', 'name2'] defines public API
-• Controls what from module import * imports
-• Only names in __all__ are imported by *
-• Names not in __all__ still accessible explicitly
-• Documents module's public API
-
-Comment ça fonctionne :
-• __all__ = ['name1', 'name2'] defines public names
-• from module import * imports only names in __all__
-• Other names not imported by *
-• Names still accessible via explicit import
-• Helps prevent namespace pollution
-
-Exemple :
-# mymodule.py
-__all__ = ['public_func', 'PublicClass']
-
-def public_func():
-    pass
-
-def _private_func():  # Not in __all__
-    pass
-
-class PublicClass:
-    pass
-
-# from mymodule import * imports only public_func and PublicClass
-
-Usages courants :
-• Defining public API: __all__ = ['public_names']
-• Controlling imports: restrict what * imports
-• Documentation: clearly document public API
-• Modules and imports
-
-Exemple : __all__ = ['name1', 'name2'] defines the public API of a module, controlling what names are imported by from module import *.`,
-  2740: `__file__ est une variable spéciale qui contient le chemin vers the current module file. Elle est automatiquement définie par Python quand un module est chargé from a file. __file__ is useful for finding the location of a module, accessing resources relative to the module file, or debugging. Note that __file__ may not exist for modules loaded from other sources (like built-in modules).
-
-__file__ variable:
-• __file__ contains path to current module file
-• Set automatically when module loaded from file
-• Useful for finding module location
-• May not exist for built-in modules
-• Useful for relative paths
-
-Comment ça fonctionne :
-• Python sets __file__ when module loaded
-• Contains absolute or relative path to module
-• Can use os.path.dirname(__file__) to get directory
-• Useful for accessing resources near module
-• May be None for built-in modules
-
-Exemple :
-# mymodule.py
-print(__file__)  # /path/to/mymodule.py
-import os
-module_dir = os.path.dirname(__file__)
-config_path = os.path.join(module_dir, 'config.json')
-
-Usages courants :
-• Finding module location: __file__ gives module path
-• Relative paths: use __file__ to find resources near module
-• Debugging: check which file is being executed
-• Modules and imports
-
-Exemple : __file__ contient le path to the current module file, allowing you to access resources relative to the module's location.`,
-  2741: `A function contenant les yield keyword becomes a generator function. Quand vous call a generator function, il retourne a generator object (not the function itself). If def gen(): yield 1; type(gen()), then type(gen()) retourne <class 'generator'> car gen() appelle the generator function, which retourne a generator object. The generator object is an itérateur that can produce values one at a time when iterated over.
-
-Generator function:
-• def gen(): yield 1 defines generator function
-• gen() appelle generator function
-• Retourne generator object (not function)
-• type(gen()) retourne <class 'generator'>
-• Generator is paresseux (ne s'exécute pas until iterated)
-
-Comment ça fonctionne :
-• def gen(): yield 1 defines generator function
-• gen() appelle function and retourne generator object
-• Generator ne execute yet (lazy)
-• type() checks object type
-• Retourne : <class 'generator'>
-
-Exemple :
-def gen():
-    yield 1
-type(gen())              # <class 'generator'> (generator object)
-type(gen)                # <class 'function'> (generator function)
-
-Usages courants :
-• Generator functions: def gen(): yield value (creates generator)
-• Lazy evaluation: generators produce values on demand
-• Memory efficiency: generators ne store all values
-• Generators and iterators
-
-Exemple : If def gen(): yield 1; type(gen()), then type(gen()) retourne <class 'generator'> car a function with yield retourne a generator object, not a regular function.`,
-  2742: `Le next() fonction gets the next valeur from a generator. If def gen(): yield 1; next(gen()), then next(gen()) retourne 1 car next() advances the generator to the next yield instruction and retourne the yielded valeur. Each call to next() on a generator consumes one valeur. Note that each gen() call creates a new generator, so this retourne 1 each time, but if you reuse the same generator objet, it will raise StopIteration après yielding all valeurs.
-
-next() avec generator:
-• next(gen()) retourne 1
-• next() advances generator to next yield
-• Returns yielded valeur (1)
-• Generator state advances
-• Returns: 1
-
-Comment ça fonctionne :
-• gen() creates new generator objet
-• next(gen()) starts generator execution
-• Generator executes until yield 1
-• next() retourne yielded valeur: 1
-• Generator pauses at yield
-• Returns: 1
-
-Exemple :
-def gen():
-    yield 1
-next(gen())              # 1 (first valeur)
-g = gen()                # Reuse same generator
-next(g)                  # 1
-next(g)                  # StopIteration (exhausted)
-
-Usages courants :
-• Generator iteration: next(generator) (get next valeur)
-• Manual iteration: next() for explicit control
-• Generator valeurs: consume valeurs one at a time
-• Generators and iterators
-
-Exemple : If def gen(): yield 1; next(gen()), then next(gen()) retourne 1 car next() gets the next valeur from the generator, advancing it to the next yield instruction.`,
-  2743: `A generator can yield multiple values. If def gen(): yield 1; yield 2; list(gen()), then list(gen()) retourne [1, 2] car the generator yields both values (1, then 2), and list() consumes all values from the generator, creating une liste with all yielded values. Each yield statement produces one value, and the generator continues until it reaches the end (or a renvoyer statement).
-
-Multiple yields:
-• list(gen()) retourne [1, 2]
-• Generator yields 1, then 2
-• list() consumes all values
-• Crée list with all yielded values
-• Retourne : [1, 2]
-
-Comment ça fonctionne :
-• gen() crée generator object
-• list() itère sur generator
-• First iteration: generator yields 1
-• Second iteration: generator yields 2
-• list() collects all values: [1, 2]
-• Retourne : [1, 2]
-
-Exemple :
-def gen():
-    yield 1
-    yield 2
-list(gen())              # [1, 2] (all yielded values)
-g = gen()
-next(g)                  # 1
-next(g)                  # 2
-next(g)                  # StopIteration
-
-Usages courants :
-• Multiple values: def gen(): yield val1; yield val2
-• List conversion: list(generator) (consume all values)
-• Generator values: produce sequence of values
-• Generators and iterators
-
-Exemple : If def gen(): yield 1; yield 2; list(gen()), then list(gen()) retourne [1, 2] car the generator yields multiple values, and list() consumes all of them.`,
-  2744: `A generator lève StopIteration when it's exhausted (n'a pas more values to yield). If def gen(): yield 1; return; g = gen(); next(g); next(g), then next(g) lève StopIteration car the generator yields 1 on les premiers next(), then reaches the renvoyer statement (or end of function), so the second next() n'a pas more values to yield and lève StopIteration. C'est the standard way iterators signal they're done.
-
-StopIteration exception:
-• next(g) lève StopIteration
-• Generator exhausted (no more values)
-• First next(g) retourne 1 (last value)
-• Second next(g) lève StopIteration
-• Standard way iterators signal completion
-
-Comment ça fonctionne :
-• g = gen() crée generator
-• next(g) starts generator, yields 1 (retourne 1)
-• Generator continues, reaches return
-• next(g) called again
-• Generator n'a pas more values
-• Raises StopIteration
-
-Exemple :
-def gen():
-    yield 1
-    return
-g = gen()
-next(g)                  # 1 (last value)
-next(g)                  # StopIteration (exhausted)
-
-Usages courants :
-• Iterator completion: StopIteration signals end
-• for loops: handle StopIteration automatically
-• Generator exhaustion: check if generator is done
-• Generators and iterators
-
-Exemple : If def gen(): yield 1; return; g = gen(); next(g); next(g), then next(g) lève StopIteration car the generator is exhausted - it n'a pas more values to yield after yielding 1.`,
-  2745: `Quand a generator has a renvoyer instruction avec a valeur, that valeur becomes the valeur attribute of the StopIteration exception. If def gen(): yield 1; renvoyer 'done'; g = gen(); next(g); g.send(None), then g.send(None) raises StopIteration avec valeur 'done' car après yielding 1, the generator reaches renvoyer 'done', and the renvoyer valeur becomes the StopIteration exception's valeur attribute. You can access it via except StopIteration as e: e.valeur.
-
-Return valeur in StopIteration:
-• g.send(None) raises StopIteration avec valeur 'done'
-• Generator retourne 'done'
-• Return valeur becomes StopIteration.valeur
-• Access via except StopIteration as e: e.valeur
-• Raises StopIteration
-
-Comment ça fonctionne :
-• g = gen() creates generator
-• next(g) yields 1 (retourne 1)
-• Generator continues, reaches renvoyer 'done'
-• g.send(None) appelé (same as next(g))
-• Generator exhausted, raises StopIteration
-• StopIteration.valeur = 'done'
-
-Exemple :
-def gen():
-    yield 1
-    renvoyer 'done'
-g = gen()
-next(g)                  # 1
-try:
-    next(g)
-except StopIteration as e:
-    print(e.valeur)       # 'done'
-
-Usages courants :
-• Generator renvoyer valeurs: renvoyer valeur (becomes StopIteration.valeur)
-• Exception valeurs: access renvoyer valeur from StopIteration
-• Generator completion: renvoyer valeur avec final state
-• Generators and iterators
-
-Exemple : If def gen(): yield 1; renvoyer 'done'; g = gen(); next(g); g.send(None), then g.send(None) raises StopIteration avec valeur 'done' car the renvoyer valeur becomes the StopIteration exception's valeur attribute.`,
-  2746: `Le send() méthode sends a valeur to a generator, and that valeur becomes the valeur of the yield expression. If def gen(): x = yield 1; yield x; g = gen(); next(g); g.send(2), then g.send(2) retourne 2 car send() sends 2 to the generator, which becomes the valeur of x = yield 1 (x = 2), then the generator yields x (2). The first next(g) is needed to start the generator and reach the first yield avant you can send valeurs. After that, send() can be used to send valeurs into the generator.
-
-send() méthode:
-• g.send(2) retourne 2
-• send() sends valeur to generator
-• Value becomes yield expression valeur
-• x = yield 1 becomes x = 2
-• Generator yields x (2)
-• Returns: 2
-
-Comment ça fonctionne :
-• g = gen() creates generator
-• next(g) starts generator, yields 1 (retourne 1)
-• Generator pauses at x = yield 1
-• g.send(2) sends 2 to generator
-• x = 2 (valeur of yield expression)
-• Generator continues, yields x (2)
-• Returns: 2
-
-Exemple :
-def gen():
-    x = yield 1
-    yield x
-g = gen()
-next(g)                  # 1 (starts generator)
-g.send(2)                # 2 (sends 2, yields x=2)
-
-Usages courants :
-• Two-way communication: send() sends valeurs to generator
-• Coroutines: generators that receive valeurs
-• Generator communication: yield receives valeurs via send()
-• Generators and iterators
-
-Exemple : If def gen(): x = yield 1; yield x; g = gen(); next(g); g.send(2), then g.send(2) retourne 2 car send() sends a valeur to the generator, which becomes the valeur of the yield expression (x = 2), and then the generator yields x.`,
-  2747: `Une expression génératrice est a compact way to créer a generator, similaire à une compréhension de liste mais avec des parenthèses au lieu of square brackets. If (x**2 for x in [1, 2, 3]), then il retourne a generator expression object, which is a generator that will produce values when iterated over. Generator expressions are paresseux - they ne compute all values at once, making them efficace en mémoire for large sequences.
-
-Generator expression:
-• (x**2 for x in [1, 2, 3]) crée generator expression
-• Similar to list comprehension but with ()
-• Lazy evaluation (doesn't compute all values)
-• Retourne generator object
-• Memory efficace for large sequences
-
-Comment ça fonctionne :
-• (x**2 for x in [1, 2, 3]) crée generator
-• Syntax: (expression for item in iterable)
-• Generator produces values on demand
-• Lazy evaluation (not computed until iterated)
-• Retourne generator object
-
-Exemple :
-gen = (x**2 for x in [1, 2, 3])  # Generator expression
-type(gen)                        # <class 'generator'>
-list(gen)                        # [1, 4, 9] (consume all values)
-# vs
-[x**2 for x in [1, 2, 3]]        # List comprehension (eager)
-
-Usages courants :
-• Memory efficiency: generator expressions for large sequences
-• Lazy evaluation: compute values on demand
-• Generator creation: compact syntax for generators
-• Generators and iterators
-
-Exemple : (x**2 for x in [1, 2, 3]) crée a generator expression, which is a generator object that produces values when iterated over.`,
-  2748: `Le liste() fonction can consume a generator expression, converting all its valeurs into a liste. If liste(x**2 for x in [1, 2, 3]), then liste() retourne [1, 4, 9] car liste() iterates over the generator expression, consuming all valeurs (1**2=1, 2**2=4, 3**2=9) and creating a liste avec those valeurs. This is equivalent to [x**2 for x in [1, 2, 3]], but using a generator expression dans liste() can be more memory-efficient if you need to process valeurs first.
-
-liste() consumes generator:
-• liste(x**2 for x in [1, 2, 3]) retourne [1, 4, 9]
-• liste() iterates over generator expression
-• Consumes all valeurs: 1, 4, 9
-• Creates liste avec all valeurs
-• Returns: [1, 4, 9]
-
-Comment ça fonctionne :
-• (x**2 for x in [1, 2, 3]) creates generator
-• liste() iterates over generator
-• Generator yields: 1 (1**2), 4 (2**2), 9 (3**2)
-• liste() collects all valeurs: [1, 4, 9]
-• Returns: [1, 4, 9]
-
-Exemple :
-liste(x**2 for x in [1, 2, 3])    # [1, 4, 9] (consumes generator)
-# Equivalent to:
-[x**2 for x in [1, 2, 3]]        # [1, 4, 9] (liste comprehension)
-
-Usages courants :
-• List creation: liste(generator) (convert generator to liste)
-• Memory efficiency: generator for processing, liste() for final result
-• Value consumption: consume all generator valeurs
-• Generators and iterators
-
-Exemple : If liste(x**2 for x in [1, 2, 3]), then liste() retourne [1, 4, 9] car liste() consumes the generator expression, converting all its valeurs into a liste.`,
-  2749: `Le yield from instruction delegates iteration to another iterable. If def gen(): yield from [1, 2, 3]; liste(gen()), then liste(gen()) retourne [1, 2, 3] car yield from [1, 2, 3] delegates to the liste, yielding each valeur from the liste. This is equivalent to for item in [1, 2, 3]: yield item, but more concise. yield from is useful for delegating to another generator or iterable, allowing composition of generators.
-
-yield from instruction:
-• yield from [1, 2, 3] delegates to liste
-• Yields each valeur from liste
-• Equivalent to for item in [1, 2, 3]: yield item
-• liste(gen()) collects all valeurs: [1, 2, 3]
-• Returns: [1, 2, 3]
-
-Comment ça fonctionne :
-• gen() creates generator
-• liste() iterates over generator
-• Generator executes: yield from [1, 2, 3]
-• yield from yields each valeur: 1, 2, 3
-• liste() collects: [1, 2, 3]
-• Returns: [1, 2, 3]
-
-Exemple :
-def gen():
-    yield from [1, 2, 3]  # Delegates to liste
-liste(gen())              # [1, 2, 3]
-# Equivalent to:
-def gen():
-    for item in [1, 2, 3]:
-        yield item
-
-Usages courants :
-• Generator composition: yield from other_generator()
-• Delegation: yield from iterable (delegate iteration)
-• Concise syntax: yield from instead of for loop
-• Generators and iterators
-
-Exemple : If def gen(): yield from [1, 2, 3]; liste(gen()), then liste(gen()) retourne [1, 2, 3] car yield from delegates to the iterable, yielding each valeur from it.`,
-  2750: `An itérateur class implements __iter__ (retourne self) and __next__ (retourne next value) methods. If class MyIter: def __iter__(self): renvoyer self; def __next__(self): renvoyer 1; type(MyIter()), then type(MyIter()) retourne <class '__main__.MyIter'> car MyIter() crée an instance of MyIter, not a generator. The class is an itérateur car it implements __iter__ and __next__, but it's still a regular class instance. Generators are a specific type of iterator, but custom itérateur classes are also iterators.
-
-Iterator class:
-• type(MyIter()) retourne <class '__main__.MyIter'>
-• MyIter() crée class instance (not generator)
-• Class implements __iter__ and __next__
-• Makes it an iterator
-• Retourne : <class '__main__.MyIter'>
-
-Comment ça fonctionne :
-• class MyIter: defines itérateur class
-• __iter__(self): renvoyer self (makes it iterable)
-• __next__(self): renvoyer 1 (makes it iterator)
-• MyIter() crée instance
-• type() retourne class type
-• Retourne : <class '__main__.MyIter'>
-
-Exemple :
-class MyIter:
-    def __iter__(self):
-        renvoyer self
-    def __next__(self):
-        renvoyer 1
-type(MyIter())          # <class '__main__.MyIter'> (class instance, not generator)
-iter(MyIter())          # <__main__.MyIter object> (is iterator)
-isinstance(MyIter(), collections.abc.Iterator)  # True
-
-Usages courants :
-• Custom iterators: class Iterator: __iter__, __next__
-• Iterator protocol: implement __iter__ and __next__
-• Iterator classes: alternative to generator functions
-• Generators and iterators
-
-Exemple : If class MyIter: def __iter__(self): renvoyer self; def __next__(self): renvoyer 1; type(MyIter()), then type(MyIter()) retourne <class '__main__.MyIter'> car MyIter() crée a class instance, not a generator - it's an itérateur class that implements the itérateur protocol.`,
-2751: `C'est a simple decorator qui retourne la fonction originale inchangés. The @decorator syntax applies the decorator to the function definition. Since the decorator just returns func, the decorated function behaves exactly like la fonction originale. C'est essentially a no-op decorator, useful for testing or as a template.
+• Relation entre objets classe.
+
+Distinctions clés :
+• Pas False ni erreur pour ce couple.
+
+Fonctionnement :
+• Vérifie la chaîne de sous-types.
+
+Exécution étape par étape :
+• Child dans les sous-classes enregistrées de Parent.
+
+Ordre des opérations :
+• Évaluation des deux arguments puis test.
+
+Cas d'utilisation courants :
+• Validation d'API, factories.
+
+Cas limites :
+• Premier argument doit être une classe (pas une instance).
+
+Considérations de performance :
+• Rapide pour hiérarchies peu profondes.
+
+Exemples :
+• issubclass(bool, int) True.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2705: `isinstance(Child(), Parent)
+
+Débutant :
+• True : une instance de sous-classe est considérée comme instance des ancêtres.
+
+Intermédiaire :
+• Plus utile que type(obj) is Parent pour accepter les sous-types.
+
+Expert :
+• Tuple de classes en 2e argument possible.
+
+Concepts clés :
+• Polymorphisme runtime.
+
+Distinctions clés :
+• Pas False ici.
+
+Fonctionnement :
+• Parcourt MRO du type de l'objet.
+
+Exécution étape par étape :
+• Child() → type Child ; Parent dans les bases.
+
+Ordre des opérations :
+• isinstance après construction.
+
+Cas d'utilisation courants :
+• Traiter uniformément Base et dérivées.
+
+Cas limites :
+• Ancêtres abstraits : isinstance peut être True alors que la classe ABC interdit instanciation directe ailleurs.
+
+Considérations de performance :
+• Optimisé en CPython.
+
+Exemples :
+• isinstance([], object) True.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2706: `Child.__bases__
+
+Débutant :
+• Tuple contenant Parent (un seul élément ici).
+
+Intermédiaire :
+• Lecture directe du tuple figé à la définition de la classe.
+
+Expert :
+• En héritage multiple : ordre des bases conservé.
+
+Concepts clés :
+• Introspection des parents directs.
+
+Distinctions clés :
+• Pas tuple vide ni erreur.
+
+Fonctionnement :
+• Attribut sur l'objet classe.
+
+Exécution étape par étape :
+• Après exécution du corps class Child(Parent).
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Outils de doc, tests, métaprogrammation légère.
+
+Cas limites :
+• Ne liste pas les grands-parents.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• len(Child.__bases__) == 1.
+
+Remarques :
+• Réponse : tuple avec Parent (1re option, forme typique __main__.Parent).`,
+  2707: `obj = Child(), Parent.x = 1 classe — obj.x ?
+
+Débutant :
+• 1 : les instances voient les attributs de classe hérités via la résolution sur le type.
+
+Intermédiaire :
+• Pas besoin de copier x sur chaque instance.
+
+Expert :
+• Si instance.__dict__ reçoit 'x', elle peut masquer la classe selon la règle data-descriptor / dict.
+
+Concepts clés :
+• Attribut de classe partagé logiquement.
+
+Distinctions clés :
+• Pas Error.
+
+Fonctionnement :
+• Cherche x dans instance.__dict__, puis Child, puis Parent.
+
+Exécution étape par étape :
+• Trouve x sur Parent.
+
+Ordre des opérations :
+• Accès attribut après __init__ implicite object.
+
+Cas d'utilisation courants :
+• Compteur partagé, configuration par défaut.
+
+Cas limites :
+• Mutation d'un mutable de classe : visible partout.
+
+Considérations de performance :
+• Un hop de plus sur la MRO.
+
+Exemples :
+• id(obj.x) cohérent avec int 1.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2708: `Parent.__init__ pose self.x = 1, Child: pass — Child().x ?
+
+Débutant :
+• 1 : Child hérite __init__ de Parent, exécuté à la construction.
+
+Intermédiaire :
+• object.__init__ seul ne suffit pas ici car Parent définit __init__.
+
+Expert :
+• Si Child redéfinit __init__ sans super, cas différent (voir questions suivantes).
+
+Concepts clés :
+• Constructeur hérité comme toute méthode.
+
+Distinctions clés :
+• Pas besoin de réécrire pass pour appeler le parent.
+
+Fonctionnement :
+• Child() résout __init__ via MRO → Parent.__init__.
+
+Exécution étape par étape :
+• Alloue instance ; appelle __init__ ; self.x = 1.
+
+Ordre des opérations :
+• __new__ puis __init__.
+
+Cas d'utilisation courants :
+• Initialisation commune factorisée.
+
+Cas limites :
+• __init__ parent avec arguments : Child doit les transmettre.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• super().__init__() explicite en sous-classe enrichie.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2709: `Parent.__subclasses__()
+
+Débutant :
+• Liste (liste en direct) des sous-classes directes enregistrées, ici [Child].
+
+Intermédiaire :
+• Ne remonte pas les petits-enfants ni classes non encore définies.
+
+Expert :
+• Utile pour registres simples ; pas un substitut robuste à un plugin loader.
+
+Concepts clés :
+• Registre maintenu par le runtime.
+
+Distinctions clés :
+• Pas liste vide si Child a été créée.
+
+Fonctionnement :
+• Mise à jour quand la sous-classe est construite.
+
+Exécution étape par étape :
+• Après définition de Child.
+
+Ordre des opérations :
+• Appel au moment de l'introspection.
+
+Cas d'utilisation courants :
+• Découverte de stratégies, tests.
+
+Cas limites :
+• Classes supprimées du module : comportement subtil selon références.
+
+Considérations de performance :
+• Liste courte en général.
+
+Exemples :
+• assert Child in Parent.__subclasses__().
+
+Remarques :
+• Réponse : liste contenant Child (1re option).`,
+  2710: `Parent.x = 1, Child(Parent): x = 2 — Child.x ?
+
+Débutant :
+• 2 : la définition sur Child masque la valeur du parent pour la résolution sur Child.
+
+Intermédiaire :
+• Parent.x reste 1 si on lit via Parent.
+
+Expert :
+• Ombre sur la classe fille n'efface pas l'attribut parent.
+
+Concepts clés :
+• Shadowing d'attribut de classe.
+
+Distinctions clés :
+• Pas 1 via Child.x.
+
+Fonctionnement :
+• Child.__dict__ contient x en premier dans la recherche pour Child.
+
+Exécution étape par étape :
+• Child.x → trouvé localement.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Surcharge de constantes, flags de feature.
+
+Cas limites :
+• Instances créées avant redéfinition : rare en pratique pour classes.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• super() pour lire la valeur parent si besoin.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2711: `Qu'est-ce que la redéfinition (override) de méthode ?
+
+Débutant :
+• La classe enfant définit une méthode du même nom que le parent pour remplacer le comportement à l'appel sur une instance enfant.
+
+Intermédiaire :
+• Le parent peut rester accessible via super().
+
+Expert :
+• Collaboratif vs remplacement total : patterns template method.
+
+Concepts clés :
+• Même nom, dispatch dynamique sur le type réel.
+
+Distinctions clés :
+• Pas le parent qui redéfinit l'enfant.
+
+Fonctionnement :
+• MRO : première implémentation trouvée gagne pour ce type.
+
+Exécution étape par étape :
+• Child().m() → cherche m dans Child d'abord.
+
+Ordre des opérations :
+• Lier puis appeler.
+
+Cas d'utilisation courants :
+• Polymorphisme OO classique.
+
+Cas limites :
+• super() mal chaîné en diamant : ordre MRO crucial.
+
+Considérations de performance :
+• Identique à un appel normal une fois résolu.
+
+Exemples :
+• area() spécialisée par forme.
+
+Remarques :
+• Réponse : l'enfant redéfinit la méthode du parent (1re option).`,
+  2712: `Parent.method → 1, Child.method → 2 — Child().method() ?
+
+Débutant :
+• 2 : version enfant prioritaire sur l'instance Child.
+
+Intermédiaire :
+• Parent().method() resterait 1.
+
+Expert :
+• Lié au type runtime, pas au type déclaré d'une variable.
+
+Concepts clés :
+• Override concret.
+
+Distinctions clés :
+• Pas 1 pour Child().
+
+Fonctionnement :
+• Résolution sur type( instance ).__mro__.
+
+Exécution étape par étape :
+• Trouve method dans Child.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Comportements spécialisés.
+
+Cas limites :
+• Méthode dans __slots__ ou descriptors : cas rares.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance garantit interface, pas implémentation unique.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2713: `Child.method return super().method(), parent return 1
+
+Débutant :
+• Résultat 1 : super() appelle l'implémentation du parent dans cette méthode enfant.
+
+Intermédiaire :
+• En Python 3, super() sans argument infère classe et instance depuis le cadre.
+
+Expert :
+• Enchaînement MRO pour héritage multiple.
+
+Concepts clés :
+• Réutiliser puis étendre.
+
+Distinctions clés :
+• Pas 2 ici.
+
+Fonctionnement :
+• super() retourne un proxy ; .method() résout vers Parent.
+
+Exécution étape par étape :
+• Entre dans Child.method → super().method → Parent.method.
+
+Ordre des opérations :
+• Appel super évalué avant return.
+
+Cas d'utilisation courants :
+• Valider puis appeler logique parent.
+
+Cas limites :
+• Oublier super dans __init__ : attributs parent absents.
+
+Considérations de performance :
+• Léger coût proxy.
+
+Exemples :
+• Chaîne de validateurs.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2714: `return super().method() + 1, parent return 1
+
+Débutant :
+• 2 : extension du résultat parent.
+
+Intermédiaire :
+• Pattern « wrap » numérique ou concaténation selon types.
+
+Expert :
+• Peut combiner listes, chaînes, etc. si + défini.
+
+Concepts clés :
+• Composition du comportement.
+
+Distinctions clés :
+• Pas 1 seul.
+
+Fonctionnement :
+• Évalue d'abord super().method() puis addition.
+
+Ordre des opérations :
+• Appel fonction avant +.
+
+Cas d'utilisation courants :
+• Logging, métriques, décorateurs via sous-classe.
+
+Cas limites :
+• Si parent lève : pas d'addition.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• return super().save() and extra_cleanup() (bool différent).
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2715: `Child redéfinit __init__ sans super — Child().x après Parent.__init__ mettait x
+
+Débutant :
+• AttributeError : le __init__ parent n'a pas couru, donc self.x jamais créé (dans ce scénario).
+
+Intermédiaire :
+• object.__init__ ne remplit pas les champs du parent personnalisé.
+
+Expert :
+• Toujours chaîner super().__init__(...) quand le parent initialise l'état.
+
+Concepts clés :
+• Override de constructeur ≠ appel automatique implicite au parent personnalisé.
+
+Distinctions clés :
+• Pas 1 silencieux.
+
+Fonctionnement :
+• Seul Child.__init__ s'exécute ; il ne pose que y.
+
+Exécution étape par étape :
+• Accès x → absent sur __dict__.
+
+Ordre des opérations :
+• __init__ puis accès attribut.
+
+Cas d'utilisation courants :
+• Bug fréquent en hiérarchies profondes.
+
+Cas limites :
+• Descriptors ou __getattr__ pourraient masquer l'erreur dans d'autres designs.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Corriger avec super().__init__().
+
+Remarques :
+• Réponse : AttributeError (1re option).`,
+  2716: `Child.__init__ appelle super().__init__ puis y — obj.x ?
+
+Débutant :
+• 1 : chaîne correcte vers Parent.__init__.
+
+Intermédiaire :
+• Ordre : souvent super d'abord, puis attributs spécifiques enfant.
+
+Expert :
+• MRO multi-bases : un seul super().__init__ bien placé peut suffire si la chaîne coopère.
+
+Concepts clés :
+• Initialisation coopérative.
+
+Distinctions clés :
+• Pas erreur.
+
+Fonctionnement :
+• Parent pose x ; enfant pose y.
+
+Exécution étape par étape :
+• Child() → Child.__init__ → super → Parent.__init__.
+
+Ordre des opérations :
+• super() avant self.y = 2 ici.
+
+Cas d'utilisation courants :
+• Modèles avec champs obligatoires parent + optionnels enfant.
+
+Cas limites :
+• Signatures incompatibles entre parents multiples : concevoir avec soin.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• dataclass + sous-classe field().
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2717: `Child sans method, Parent.method return 'parent' — Child().method() ?
+
+Débutant :
+• 'parent' : héritage pur de la méthode.
+
+Intermédiaire :
+• self est une instance Child pendant l'exécution du corps Parent.method.
+
+Expert :
+• Peut surprendre si le code parent teste type(self) strict.
+
+Concepts clés :
+• Code partagé sans override.
+
+Distinctions clés :
+• Pas 'child'.
+
+Fonctionnement :
+• MRO : Parent après Child vide pour ce nom.
+
+Exécution étape par étape :
+• Liaison Parent.method(instance Child).
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Comportement par défaut + rares surcharges.
+
+Cas limites :
+• Méthode abstraite avec corps via ABC : autres règles.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Template method avec hook abstrait ailleurs.
+
+Remarques :
+• Réponse : 'parent' (1re option).`,
+  2718: `Parent().method() alors que Child surcharge avec super
+
+Débutant :
+• 1 : l'instance est Parent, donc Parent.method direct, sans passer par Child.
+
+Intermédiaire :
+• La surcharge enfant n'affecte pas le dispatch sur Parent().
+
+Expert :
+• isinstance vs type : ici type déjà Parent.
+
+Concepts clés :
+• Polymorphisme basé sur l'objet réel.
+
+Distinctions clés :
+• Pas lecture de la méthode enfant.
+
+Fonctionnement :
+• MRO de Parent s'arrête avant Child.
+
+Exécution étape par étape :
+• Parent().method → trouve dans Parent.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Tests unitaires de la base seule.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• API qui accepte Base ou Sub.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2719: `classmethod override Parent return 1, Child return 2 — Child.method() ?
+
+Débutant :
+• 2 : même règle de nom que pour les méthodes d'instance.
+
+Intermédiaire :
+• cls sera Child lors de l'appel sur Child.
+
+Expert :
+• Fabriques : cls() dans une classmethod parent respecte la sous-classe.
+
+Concepts clés :
+• Polymorphisme sur le type lié.
+
+Distinctions clés :
+• Pas 1 via Child.method().
+
+Fonctionnement :
+• @classmethod descripteur non-data ; résolution sur Child.
+
+Exécution étape par étape :
+• Child.method → méthode de Child.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• from_config, parsers.
+
+Cas limites :
+• classmethod + staticmethod mélangés : lisibilité.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Parent.method() encore 1.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2720: `staticmethod override 1 vs 2 — Child.method() ?
+
+Débutant :
+• 2 : la version enfant remplace celle du parent pour l'attribut method sur Child.
+
+Intermédiaire :
+• Pas de self/cls : résolution purement sur le dict de classe.
+
+Expert :
+• super() inutilisable sans contexte (question suivante enchaîne).
+
+Concepts clés :
+• Les staticmethod suivent aussi l'ombre de nom.
+
+Distinctions clés :
+• Pas 1.
+
+Fonctionnement :
+• Même mécanisme d'override par nom.
+
+Exécution étape par étape :
+• Child.method() résout la fonction enfant.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Utilitaires de classe évolutifs.
+
+Cas limites :
+• Héritage : pas de late binding implicite du self.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Préférer classmethod si besoin de cls.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2721: `super() sans argument dans instance method — résultat classique
+
+Débutant :
+• Child().method() retourne 1 via parent comme vu plus haut.
+
+Intermédiaire :
+• Équivalent pratique à super(Child, self).method() en Py3 dans méthode normale.
+
+Expert :
+• Nécessite cadre de méthode ; échoue hors méthode.
+
+Concepts clés :
+• Sucre syntaxique sécurisé pour chaîne MRO.
+
+Distinctions clés :
+• Pas Error ici.
+
+Fonctionnement :
+• Compiler injecte implicite classcell pour super zero-arg.
+
+Exécution étape par étape :
+• Proxy pointe vers le lien suivant dans MRO après Child.
+
+Ordre des opérations :
+• super() puis .method().
+
+Cas d'utilisation courants :
+• 90 % des appels parent en sous-classe.
+
+Cas limites :
+• Fonctions imbriquées sans closure correct : éviter.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir doc super().
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2722: `super(Child, self).method() explicite
+
+Débutant :
+• Même effet que super() nu ici : retour 1.
+
+Intermédiaire :
+• Style explicite utile en refactor ou hors corps classique.
+
+Expert :
+• En Py2 interop ; encore valide en Py3.
+
+Concepts clés :
+• Contrôle classe départ et instance.
+
+Distinctions clés :
+• Pas Error.
+
+Fonctionnement :
+• Premier arg : point de départ MRO ; second : instance pour liaison.
+
+Exécution étape par étape :
+• Résout Parent.method lié.
+
+Ordre des opérations :
+• Évaluation Child, self, puis super, puis method.
+
+Cas d'utilisation courants :
+• Proxies, mixins dynamiques.
+
+Cas limites :
+• Mauvais premier argument : mauvais parent choisi.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• super(SubClass, self) dans mixin.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2723: `super().x pour attribut de classe Parent.x=1 même si Child.x=2
+
+Débutant :
+• Retourne 1 via super : accès au namespace « suivant » dans MRO pour ce nom, ici Parent.
+
+Intermédiaire :
+• Contourne l'ombre Child.x pour lire la valeur parent.
+
+Expert :
+• Utile pour constantes étendues ou logging.
+
+Concepts clés :
+• super n'est pas limité aux méthodes.
+
+Distinctions clés :
+• Pas 2.
+
+Fonctionnement :
+• __getattribute__ spécifique au proxy super.
+
+Exécution étape par étape :
+• method lit super().x → cherche x après Child dans MRO.
+
+Ordre des opérations :
+• Dans corps de méthode instance.
+
+Cas d'utilisation courants :
+• Valeur par défaut parent + surcharge affichage enfant.
+
+Cas limites :
+• Si aucun ancêtre n'a x : AttributeError.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Comparer avec Child.x direct = 2.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2724: `super().__init__(x) avec Parent(x), Child(x,y) — obj.x après Child(1,2)
+
+Débutant :
+• 1 : x transmis au parent.
+
+Intermédiaire :
+• y = 2 sur l'instance en plus.
+
+Expert :
+• Pattern standard args kwargs vers le haut.
+
+Concepts clés :
+• Pass-through des paramètres constructeur.
+
+Distinctions clés :
+• Pas 2 pour x.
+
+Fonctionnement :
+• Child.__init__ appelle super().__init__(x).
+
+Exécution étape par étape :
+• Parent.__init__ exécute self.x = x.
+
+Ordre des opérations :
+• super d'abord souvent pour invariant parent.
+
+Cas d'utilisation courants :
+• Formulaires, widgets hiérarchiques.
+
+Cas limites :
+• Ordre des kwargs en multi-héritage.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• super().__init__(**kwargs) générique.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2725: `classmethod avec super().method() sur Child
+
+Débutant :
+• Child.method() retourne 1 : super en classmethod suit MRO avec cls=Child.
+
+Intermédiaire :
+• Premier argument effectif est la classe liée (Child), pas une instance.
+
+Expert :
+• Cohérent avec coopération entre classmethods.
+
+Concepts clés :
+• super() sans self fonctionne car cls fourni par le descripteur.
+
+Distinctions clés :
+• Pas Error ici (contrairement au staticmethod pur avec super nu).
+
+Fonctionnement :
+• MRO : après Child vient Parent ; appelle Parent.method(cls).
+
+Exécution étape par étape :
+• Child.method() → Child subclass classmethod exécute return super().method().
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Registres de sous-classes enrichissant le parent.
+
+Cas limites :
+• staticmethod + super : voir question 2726.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• pipeline de construction cls.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2726: `staticmethod enfant qui appelle super().method()
+
+Débutant :
+• AttributeError : super() a besoin du contexte classe/instance fourni par une méthode normale ou classmethod, pas par un staticmethod.
+
+Intermédiaire :
+• Contournement : appeler Parent.method() explicitement ou passer par classmethod.
+
+Expert :
+• En restant static, utiliser super(cls, <sentinelle>) n'est pas le pattern idiomatique ici.
+
+Concepts clés :
+• Limitation du proxy super sans self/cls implicite.
+
+Distinctions clés :
+• Pas retour 1 silencieux.
+
+Fonctionnement :
+• super() tente de récupérer le frame courant ; échoue dans staticmethod nu.
+
+Exécution étape par étape :
+• Child.method() exécute super().method() → erreur.
+
+Ordre des opérations :
+• Évaluation super avant appel méthode.
+
+Cas d'utilisation courants :
+• Rappel : préférer classmethod pour hooks hérités typés au niveau classe.
+
+Cas limites :
+• Versions / CPython messages peuvent varier légèrement.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• @classmethod def f(cls): return super().f().
+
+Remarques :
+• Réponse : AttributeError (1re option).`,
+  2727: `super().method() + ' child' avec parent 'parent'
+
+Débutant :
+• 'parent child' : concaténation après appel parent.
+
+Intermédiaire :
+• Même idée pour listes avec + si types compatibles.
+
+Expert :
+• i18n : préférer f-strings ou format pour extensions.
+
+Concepts clés :
+• Extension non destructive du résultat parent.
+
+Distinctions clés :
+• Pas seulement 'parent'.
+
+Fonctionnement :
+• Évalue super().method() puis +.
+
+Exécution étape par étape :
+• Chaîne parent + suffixe enfant.
+
+Ordre des opérations :
+• Appel avant +.
+
+Cas d'utilisation courants :
+• Préfixes logs, titres UI.
+
+Cas limites :
+• Si parent retourne None : TypeError sur +.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• return super().repr() + ' [extended]'.
+
+Remarques :
+• Réponse : 'parent child' (1re option).`,
+  2728: `super(Child, Child()).method() hors définition de méthode
+
+Débutant :
+• Retourne 1 : forme explicite fonctionne en dehors du corps de méthode si types corrects.
+
+Intermédiaire :
+• Utile en introspection ou tests.
+
+Expert :
+• Attention à ne pas confondre classe et metaclass.
+
+Concepts clés :
+• super n'est pas réservé au mot-clé self à l'intérieur d'une def.
+
+Distinctions clés :
+• Pas Error.
+
+Fonctionnement :
+• Construit proxy puis appelle method lié à l'instance.
+
+Exécution étape par étape :
+• Child() puis super(Child, that).method().
+
+Ordre des opérations :
+• Child() évalué une fois passé au super.
+
+Cas d'utilisation courants :
+• Wrappers externes, sérialisation.
+
+Cas limites :
+• Mauvaise classe en premier argument : mauvais saut MRO.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Appeler la prochaine __init__ depuis une factory.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2729: `Parent.x=1, Child.x=2, method return super().x
+
+Débutant :
+• 1 : super lit x dans le parent malgré Child.x=2 pour Child.x direct.
+
+Intermédiaire :
+• Illustre différence entre accès direct attribut classe et chemin super.
+
+Expert :
+• Pour données d'instance, règles descriptors s'appliquent aussi.
+
+Concepts clés :
+• Dé-shadowing ciblé.
+
+Distinctions clés :
+• Pas 2.
+
+Fonctionnement :
+• Proxy super résout le nom dans la portion MRO après la classe courante.
+
+Exécution étape par étape :
+• Child().method → super().x → Parent.x.
+
+Ordre des opérations :
+• Dans méthode instance.
+
+Cas d'utilisation courants :
+• Défaut parent + surcharge affichage.
+
+Cas limites :
+• Si plusieurs ancêtres définissent x : premier trouvé après Child selon MRO.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Tarif de base vs tarif promo enfant.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2730: `Chaîne Parent → Middle → Child, chaque method retourne 1,2,? — Child().method()
+
+Débutant :
+• 2 : super() depuis Child appelle la méthode suivante dans le MRO, donc Middle, pas Parent direct.
+
+Intermédiaire :
+• Cœur de la coopération MRO en profondeur.
+
+Expert :
+• En diamant, super saute selon C3, pas « toujours le parent textuel ».
+
+Concepts clés :
+• super = « prochain dans MRO », pas « superclasse syntaxique unique ».
+
+Distinctions clés :
+• Pas 1.
+
+Fonctionnement :
+• MRO Child, Middle, Parent, object.
+
+Exécution étape par étape :
+• Child.method → super → Middle.method.
+
+Ordre des opérations :
+• Un seul niveau de saut par super ici.
+
+Cas d'utilisation courants :
+• Mixins empilés.
+
+Cas limites :
+• Oublier super au milieu casse la chaîne.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Trois niveaux de validateurs.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2731: `C(A,B), A.x=1, B.x=2 — C.x sans redéfinition enfant
+
+Débutant :
+• 1 : premier parent dans le tuple de bases gagne pour attribut égal sur plusieurs parents.
+
+Intermédiaire :
+• MRO C3 ordonne au-delà de la simple gauche, mais ici lecture C.x suit MRO après C vide.
+
+Expert :
+• Toujours inspecter C.__mro__ en cas de doute.
+
+Concepts clés :
+• Ordre des bases compte.
+
+Distinctions clés :
+• Pas 2 si A est à gauche de B.
+
+Fonctionnement :
+• Cherche x le long du MRO : A avant B.
+
+Exécution étape par étape :
+• C.__dict__ sans x → A.x.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Mixins : mettre la branche « dominante » à gauche.
+
+Cas limites :
+• Diamond complexe : seul mro() est la vérité.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• class C(B,A) inverserait le résultat.
+
+Remarques :
+• Réponse : 1 (1re option).`,
+  2732: `class C(B,A) avec mêmes x
+
+Débutant :
+• 2 : B est maintenant prioritaire sur A pour C.x.
+
+Intermédiaire :
+• Même mécanisme que 2731 avec ordre inversé.
+
+Expert :
+• Documenter l'ordre des bases dans les docstrings d'équipe.
+
+Concepts clés :
+• API explicite > convention implicite.
+
+Distinctions clés :
+• Pas 1.
+
+Fonctionnement :
+• MRO met B avant A.
+
+Exécution étape par étape :
+• Trouve B.x d'abord.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Réordonner pour résoudre conflit de mixin.
+
+Cas limites :
+• Si conflit de méthodes ET attributs : analyser mro() complet.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Comparer C(A,B).x vs C(B,A).x.
+
+Remarques :
+• Réponse : 2 (1re option).`,
+  2733: `C(A,B), deux method() — C().method()
+
+Débutant :
+• 'A' : MRO trouve la première implémentation dans les parents selon l'ordre.
+
+Intermédiaire :
+• Si C définissait method, elle masquerait tout avant résolution super.
+
+Expert :
+• Collaboration : enchaîner super().method() pour composer.
+
+Concepts clés :
+• Résolution de méthode = premier trouvé sur MRO.
+
+Distinctions clés :
+• Pas 'B' si A d'abord.
+
+Fonctionnement :
+• C.__mro__ parcouru.
+
+Exécution étape par étape :
+• Instance C ; cherche method ; A gagne.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Choix de stratégie par ordre de mixin.
+
+Cas limites :
+• Méthodes avec signatures différentes : erreurs à l'appel.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir mro() pour visualiser.
+
+Remarques :
+• Réponse : 'A' (1re option).`,
+  2734: `C(A,B) définit method return super().method()
+
+Débutant :
+• 'A' : super depuis C appelle le suivant dans MRO après C, souvent A en premier parent.
+
+Intermédiaire :
+• Ce n'est pas « toujours le parent syntaxique unique » mais le suivant linéarisé.
+
+Expert :
+• En diamant, super peut sauter différemment ; ici configuration classique.
+
+Concepts clés :
+• super coopératif en héritage multiple.
+
+Distinctions clés :
+• Pas 'B' en premier bond.
+
+Fonctionnement :
+• MRO [C,A,B,object] typique.
+
+Exécution étape par étape :
+• C.method → super → A.method.
+
+Ordre des opérations :
+• super évalué dans C.method.
+
+Cas d'utilisation courants :
+• Composer deux mixins ligne à ligne.
+
+Cas limites :
+• Oublier d'appeler super dans une branche : chaîne cassée.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Réécrire pour appeler aussi B via super dans A (autre design).
+
+Remarques :
+• Réponse : 'A' (1re option).`,
+  2735: `C(A,B) — C.__bases__
+
+Débutant :
+• Tuple (A, B) dans l'ordre du class statement.
+
+Intermédiaire :
+• __bases__ parents directs seulement.
+
+Expert :
+• Diffère de __mro__ qui inclut C et object.
+
+Concepts clés :
+• Introspection rapide des déclarations.
+
+Distinctions clés :
+• Pas singleton vide.
+
+Fonctionnement :
+• Figé à la création de classe.
+
+Exécution étape par étape :
+• Après définition de C.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Tests d'ordre de mixin.
+
+Cas limites :
+• Bases en tuple dynamique : rare.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• len(__bases__) == 2.
+
+Remarques :
+• Réponse : tuple (A, B) (1re option).`,
+  2736: `D(B,C), B(A), C(A) — D.mro()
+
+Débutant :
+• [D, B, C, A, object] : linéarisation C3 respectant enfants avant convergence sur A.
+
+Intermédiaire :
+• Évite l'ordre depth-first naïf qui dupliquerait mal A.
+
+Expert :
+• Impossible de créer certaines hiérarchies si C3 échoue (TypeError à la définition).
+
+Concepts clés :
+• MRO prévisible et monotonique.
+
+Distinctions clés :
+• Pas [D,A,B,C,...] ici.
+
+Fonctionnement :
+• Algorithme C3 sur les listes de préséances.
+
+Exécution étape par étape :
+• Calcul à class D(B,C).
+
+Ordre des opérations :
+• Avant instances.
+
+Cas d'utilisation courants :
+• Déboguer super() en diamant.
+
+Cas limites :
+• Hiérarchies contradictoires rejetées.
+
+Considérations de performance :
+• Calcul rare (import time).
+
+Exemples :
+• Afficher cls.__mro__ en REPL.
+
+Remarques :
+• Réponse : D, B, C, A, object (1re option).`,
+  2737: `D(B,C), B et C surchargent method, D: pass — D().method()
+
+Débutant :
+• 'B' : premier dans MRO après D qui définit method gagne, ici B avant C.
+
+Intermédiaire :
+• Même si C a aussi method, il est plus loin.
+
+Expert :
+• Pour composer B puis C, il faudrait une méthode sur D qui enchaîne super.
+
+Concepts clés :
+• Conflit résolu par ordre, pas par « meilleure » sémantique.
+
+Distinctions clés :
+• Pas 'C' ni 'A' ici.
+
+Fonctionnement :
+• Scan MRO pour premier __dict__ avec 'method'.
+
+Exécution étape par étape :
+• D instance ; résout method → B.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Choisir l'ordre B,C pour priorité.
+
+Cas limites :
+• Si B pass et C définit : saute à C (question voisine).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Réordonner bases si besoin.
+
+Remarques :
+• Réponse : 'B' (1re option).`,
+  2738: `B(A) sans method, C(A) avec method — D(B,C).method()
+
+Débutant :
+• 'C' : B ne fournit pas method, le MRO continue jusqu'à C.
+
+Intermédiaire :
+• Montre que « gauche » ne bloque pas si absent.
+
+Expert :
+• Si ni B ni C : retombée sur A.
+
+Concepts clés :
+• Recherche exhaustive le long du MRO.
+
+Distinctions clés :
+• Pas 'B'.
+
+Fonctionnement :
+• D → B skip → C trouvé.
+
+Exécution étape par étape :
+• Appelle C.method lié à D().
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Mixins optionnels + noyau commun A.
+
+Cas limites :
+• method dans B qui appelle super sans implémentation parent : erreurs possibles.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Ajouter method dans B pour changer l'issue.
+
+Remarques :
+• Réponse : 'C' (1re option).`,
+  2739: `C(A,B) redéfinit x=3 alors que A et B ont x
+
+Débutant :
+• 3 : l'attribut propre à C court-circuite la recherche dans les parents.
+
+Intermédiaire :
+• Les valeurs 1 et 2 restent sur A et B mais invisibles via C.x.
+
+Expert :
+• Accès direct A.x toujours possible.
+
+Concepts clés :
+• Ombre totale sur le point d'accès C.x.
+
+Distinctions clés :
+• Ni 1 ni 2.
+
+Fonctionnement :
+• C.__dict__['x'] trouvé immédiatement.
+
+Exécution étape par étape :
+• Lecture C.x.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Surcharge finale de configuration.
+
+Cas limites :
+• Mutable partagé si on réutilise le même objet liste : piège classique.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir aussi instance shadowing.
+
+Remarques :
+• Réponse : 3 (1re option).`,
+  2740: `C(A,B) method return super().method()
+
+Débutant :
+• 'A' : super depuis C prend le maillon suivant du MRO, ici A avant B pour la configuration standard.
+
+Intermédiaire :
+• B.method ignoré dans ce premier super depuis C.
+
+Expert :
+• Pour enchaîner B, A devrait appeler super à son tour.
+
+Concepts clés :
+• Chaîne coopérative explicitement programmée.
+
+Distinctions clés :
+• Pas 'B' en un seul super depuis C.
+
+Fonctionnement :
+• MRO [C,A,B,object] hypothèse du quiz.
+
+Exécution étape par étape :
+• C.method → super → A.method.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Mixins multiples ordonnés.
+
+Cas limites :
+• Si A ne définit pas method : poursuite MRO.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Réécrire A.method pour appeler super vers B.
+
+Remarques :
+• Réponse : 'A' (1re option).`,
+  2741: `Qu'est-ce que le polymorphisme ?
+
+Débutant :
+• Même interface (même nom de méthode ou usage attendu), comportements différents selon le type réel.
+
+Intermédiaire :
+• En Python : surcharge + duck typing.
+
+Expert :
+• Lié au dispatch dynamique et aux protocols.
+
+Concepts clés :
+• Client code stable, implémentations variées.
+
+Distinctions clés :
+• Pas « même comportement, interface différente » comme définition principale ici.
+
+Fonctionnement :
+• Attribut lookup sur le type de l'objet à l'exécution.
+
+Exécution étape par étape :
+• animal.speak() dispatch vers Dog ou Cat.
+
+Ordre des opérations :
+• Après résolution de l'objet receveur.
+
+Cas d'utilisation courants :
+• Rendu graphique, parsers, stratégies.
+
+Cas limites :
+• Pas de vérification statique par défaut.
+
+Considérations de performance :
+• Coût lookup méthode négligeable en pratique.
+
+Exemples :
+• Iterable traité uniformément.
+
+Remarques :
+• Réponse : même interface, comportements différents (1re option).`,
+  2742: `Dog et Cat surchargent speak — [Dog().speak(), Cat().speak()]
+
+Débutant :
+• ['bark','meow'].
+
+Intermédiaire :
+• Chaque classe fournit sa version de speak.
+
+Expert :
+• Fonctionne aussi avec protocols typing côté statique.
+
+Concepts clés :
+• Polymorphisme ad hoc typage dynamique.
+
+Distinctions clés :
+• Pas deux fois 'sound'.
+
+Fonctionnement :
+• Deux instances distinctes, deux dispatches.
+
+Exécution étape par étape :
+• Évalue chaque appel pour la liste.
+
+Ordre des opérations :
+• Gauche puis droite dans la liste affichée.
+
+Cas d'utilisation courants :
+• Menus d'animaux, plugins.
+
+Cas limites :
+• speak qui lève : liste incomplète.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Liste de Shape.area().
+
+Remarques :
+• Réponse : ['bark','meow'] (1re option).`,
+  2743: `Circle et Square area — [Circle().area(), Square().area()]
+
+Débutant :
+• [3.14, 1] avec les valeurs du quiz.
+
+Intermédiaire :
+• Interface commune area sur hiérarchie Shape.
+
+Expert :
+• Vrais modèles géométriques calculeraient depuis rayon/côté.
+
+Concepts clés :
+• Polymorphisme sur données numériques.
+
+Distinctions clés :
+• Pas [0,0].
+
+Fonctionnement :
+• Chaque sous-classe fournit corps area.
+
+Exécution étape par étape :
+• Deux constructions puis deux appels.
+
+Ordre des opérations :
+• Literal list éléments gauche-droite.
+
+Cas d'utilisation courants :
+• Boucle sur formes pour surface totale.
+
+Cas limites :
+• Floating rounding hors sujet ici.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Remplacer par vraies formules.
+
+Remarques :
+• Réponse : [3.14, 1] (1re option).`,
+  2744: `def process(obj): return obj.method() avec A et B
+
+Débutant :
+• [1, 2] : duck typing, pas besoin d'héritage commun déclaré.
+
+Intermédiaire :
+• hasattr ou protocols améliorent robustesse.
+
+Expert :
+• EAFP : try/except autour si contrat flou.
+
+Concepts clés :
+• Polymorphisme structurel implicite.
+
+Distinctions clés :
+• Pas [1,1].
+
+Fonctionnement :
+• process ne inspecte pas le nom de classe.
+
+Exécution étape par étape :
+• Deux appels successifs.
+
+Ordre des opérations :
+• Liste lit process(A()) puis process(B()).
+
+Cas d'utilisation courants :
+• APIs génériques json-like.
+
+Cas limites :
+• Objet sans method : AttributeError.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• write() sur fichiers ou buffers.
+
+Remarques :
+• Réponse : [1, 2] (1re option).`,
+  2745: `obj = Parent(); obj = Child(); obj.method()
+
+Débutant :
+• 'child' : le dispatch utilise l'objet actuellement référencé.
+
+Intermédiaire :
+• Les noms sont des étiquettes, pas des types fixes.
+
+Expert :
+• id(obj) change après réassignation.
+
+Concepts clés :
+• Typage dynamique des références.
+
+Distinctions clés :
+• Pas 'parent'.
+
+Fonctionnement :
+• Seconde assignation remplace la référence.
+
+Exécution étape par étape :
+• Garde Child instance ; appelle Child.method.
+
+Ordre des opérations :
+• Assignations séquentielles.
+
+Cas d'utilisation courants :
+• Registres polymorphes, états.
+
+Cas limites :
+• Si Child ne surcharge pas : retomberait sur parent.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Liste hétérogène Base.
+
+Remarques :
+• Réponse : 'child' (1re option).`,
+  2746: `A() + B() avec __add__ sur les deux
+
+Débutant :
+• 'A' : __add__ du operande gauche est appelé en premier.
+
+Intermédiaire :
+• Si NotImplemented, Python peut essayer __radd__ inverse.
+
+Expert :
+• Conception symétrique : parfois retourner NotImplemented pour laisser l'autre côté.
+
+Concepts clés :
+• Surcharge d'opérateur = polymorphisme.
+
+Distinctions clés :
+• B() + A() donnerait 'B'.
+
+Fonctionnement :
+• binaire + dispatch spécial.
+
+Exécution étape par étape :
+• A().__add__(B()).
+
+Ordre des opérations :
+• Gauche puis droite pour arguments.
+
+Cas d'utilisation courants :
+• Vecteurs, matrices custom.
+
+Cas limites :
+• Types incompatibles : TypeError après échecs NotImplemented.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• int + int builtin analogue.
+
+Remarques :
+• Réponse : 'A' (1re option).`,
+  2747: `make_sound(animal) return animal.speak(); Dog surchargé
+
+Débutant :
+• 'bark' : dispatch sur Dog malgré annotation implicite Animal.
+
+Intermédiaire :
+• Animal.speak pass ne s'exécute pas ici car override.
+
+Expert :
+• ABC pourrait forcer override.
+
+Concepts clés :
+• Fonction accepte tout objet avec speak.
+
+Distinctions clés :
+• Pas None si Dog retourne str.
+
+Fonctionnement :
+• Attribut speak trouvé sur Dog.
+
+Exécution étape par étape :
+• make_sound(Dog()).
+
+Ordre des opérations :
+• Appel fonction puis méthode.
+
+Cas d'utilisation courants :
+• Visiteurs légers.
+
+Cas limites :
+• speak qui ne retourne rien : None.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Renderer.render(obj).
+
+Remarques :
+• Réponse : 'bark' (1re option).`,
+  2748: `[A().method(), B().method(), C().method()] avec overrides 1,2,3
+
+Débutant :
+• [1,2,3] : chaque niveau fournit sa valeur.
+
+Intermédiaire :
+• Montre chaîne indépendante par type réel.
+
+Expert :
+• super pourrait relier les valeurs différemment si besoin.
+
+Concepts clés :
+• Polymorphisme vertical sur la hiérarchie.
+
+Distinctions clés :
+• Pas [1,1,1].
+
+Fonctionnement :
+• Trois constructions, trois dispatches.
+
+Exécution étape par étape :
+• Liste lit trois appels.
+
+Ordre des opérations :
+• Ordre gauche-droite.
+
+Cas d'utilisation courants :
+• Tests de régression MRO.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Pipeline de handlers numériques.
+
+Remarques :
+• Réponse : [1, 2, 3] (1re option).`,
+  2749: `Child sans override — [Parent().method(), Child().method()]
+
+Débutant :
+• ['parent','parent'] : même implémentation partagée via héritage.
+
+Intermédiaire :
+• Toujours polymorphe au sens « même appel .method() » sur types différents.
+
+Expert :
+• isinstance différents, comportement identique.
+
+Concepts clés :
+• Héritage comme mécanisme de partage.
+
+Distinctions clés :
+• Pas ['parent','child'].
+
+Fonctionnement :
+• Child instance utilise Parent.method via MRO.
+
+Exécution étape par étape :
+• Deux lookups aboutissent à même fonction.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Sous-classes marqueurs sans logique nouvelle.
+
+Cas limites :
+• Si method devient abstract plus tard : cas ABC.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Exceptions typées sans nouveau __str__.
+
+Remarques :
+• Réponse : ['parent', 'parent'] (1re option).`,
+  2750: `[str(A()), str(B())] avec __str__ sur A et B
+
+Débutant :
+• ['A','B'] : built-in str() délègue à __str__.
+
+Intermédiaire :
+• Fallback repr si __str__ absent.
+
+Expert :
+• Données-aware __str__ vs __repr__ distinctions PEP.
+
+Concepts clés :
+• Polymorphisme avec fonctions natives.
+
+Distinctions clés :
+• Pas ['A','A'].
+
+Fonctionnement :
+• tp_str / slot str en CPython.
+
+Exécution étape par étape :
+• str appelle type(obj).__str__(obj).
+
+Ordre des opérations :
+• Liste construite après deux str.
+
+Cas d'utilisation courants :
+• Logs, UI.
+
+Cas limites :
+• __str__ qui lève : exception globale.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• len sur __len__ similaire.
+
+Remarques :
+• Réponse : ['A', 'B'] (1re option).`,
+  2751: `C'est a simple decorator qui retourne la fonction originale inchangés. The @decorator syntax applies the decorator to the function definition. Since the decorator just returns func, the decorated function behaves exactly like la fonction originale. C'est essentially a no-op decorator, useful for testing or as a template.
 
 Simple decorator that ne fait rien:
 • def decorator(func): return func - returns function inchangés
