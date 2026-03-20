@@ -123000,1437 +123000,2003 @@ Exemples :
 
 Remarques :
 • Réponse : 2 — 1re option.`,
-  2901: `textwrap.dedent removes any common leading whitespace from all lines in the text. It inspects all non-empty lines, trouve le longest common whitespace prefix, and removes it.
+  2901: `Shape(ABC) avec area abstraite — instanciation Shape()
+
+Débutant :
+• TypeError : une classe avec des méthodes @abstractmethod non implémentées ne peut pas être instanciée.
+
+Intermédiaire :
+• ABCMeta enregistre les noms dans __abstractmethods__ ; l'appel Shape() est bloqué.
+
+Expert :
+• Une sous-classe concrète qui implémente area() peut être créée.
 
 Concepts clés :
-• dedent trouve le COMMON leading whitespace across all lines
-• Only removes whitespace that appears in EVERY non-empty line
-• Empty lines are ignored when computing the common prefix
-• Useful for cleaning up triple-quoted strings in code
+• Contrat explicite vs classes ordinaires.
 
-Comment ça fonctionne :
-1. Input: "  hello\\n  world"
-2. Line 1: "  hello" (2 spaces leading)
-3. Line 2: "  world" (2 spaces leading)
-4. Common leading whitespace: 2 spaces
-5. Remove 2 spaces from each line
-6. Résultat : "hello\\nworld"
+Distinctions clés :
+• Pas None ni objet Shape ni 0.
 
-Exemple :
-import textwrap
-s = """
-    def foo():
-        return 42
-"""
-print(textwrap.dedent(s))
-# \\ndef foo():\\n    return 42\\n
-# (4 spaces removed from each line, leaving relative indentation intact)
+Fonctionnement :
+• Au moment de Shape(), la métaclasse vérifie l'ensemble abstrait.
 
-Usages courants :
-• Cleaning up multi-line strings defined in indented code
-• Formatting docstrings
-• Template processing`,
-  2902: `string.Template fournit un simpler string substitution mechanism than str.format or f-strings. Variables are marked with $ prefix and replaced using substitute() or safe_substitute().
+Exécution étape par étape :
+• Échec avant __init__ instance.
 
-Concepts clés :
-• Template("$var") — marks variables with $
-• .substitute(var=value) — replaces variables, lève KeyError if missing
-• .safe_substitute(var=value) — replaces what it can, leaves missing $vars as-is
-• Simpler and safer than % formatting for user-supplied templates
+Ordre des opérations :
+• Définition classe puis tentative ().
 
-Comment ça fonctionne :
-1. Template("Hello $name") crée un template with variable $name
-2. .substitute(name="World") replaces $name with "World"
-3. Résultat : "Hello World"
+Cas d'utilisation courants :
+• Frameworks plugin (interface obligatoire).
 
-Exemple :
-from string import Template
-t = Template("$greeting, $name!")
-t.substitute(greeting="Hi", name="Alice")   # 'Hi, Alice!'
-t.safe_substitute(greeting="Hi")            # 'Hi, $name!' (missing var kept)
+Cas limites :
+• Méthode abstraite avec corps : toujours abstract jusqu'à override.
 
-# Use braces for adjacent text:
-You can use braces like Template("$\\{noun}ification") for adjacent text.
+Considérations de performance :
+• N/A.
 
-# $$ for literal dollar sign:
-Template("Price: $$100").substitute()  # 'Price: $100'
+Exemples :
+• class Circle(Shape): def area(self): return 3.14.
 
-Usages courants :
-• User-defined templates (safer than eval/exec)
-• Simple mail merge operations
-• Configuration file templates
-• Cases where f-strings or .format are too powerful/risky`,
-  2903: `Python's logging module defines exactly 5 standard logging levels, each with a numeric value. They are, from lowest to highest severity: DEBUG (10), INFO (20), WARNING (30), ERROR (40), and CRITICAL (50). These levels allow developers to categorize log messages by severity and filter output accordingly.
+Remarques :
+• Réponse : TypeError — 1re option.`,
+  2902: `Circle(Shape) implémente area — print(Circle().area())
+
+Débutant :
+• 3.14 : toutes les abstractions sont satisfaites ; l'appel normal fonctionne.
+
+Intermédiaire :
+• Circle hérite du contrat ABC et fournit une implémentation concrète.
+
+Expert :
+• super() possible si area parent avait un corps partiel.
 
 Concepts clés :
-• DEBUG (10) — detailed diagnostic information
-• INFO (20) — confirmation that things are working
-• WARNING (30) — something unexpected happened, but the software still works
-• ERROR (40) — a serious problem, some function failed
-• CRITICAL (50) — a very serious error, program may not continue
+• Passage de classe abstraite à concrète.
 
-Comment ça fonctionne :
-• Each level a un numeric value (multiples of 10)
-• Setting a level filters out messages below that severity
-• Custom levels can be added but these 5 are standard
-• The default level is WARNING
+Distinctions clés :
+• Pas TypeError.
 
-Exemple :
->>> import logging
->>> logging.DEBUG
-10
->>> logging.INFO
-20
->>> logging.WARNING
-30
->>> logging.ERROR
-40
->>> logging.CRITICAL
-50
+Fonctionnement :
+• __abstractmethods__ vide sur Circle.
 
-Usages courants :
-• DEBUG for development diagnostics
-• INFO for runtime confirmations
-• WARNING for recoverable issues
-• ERROR for failures
-• CRITICAL for fatal problems`,
-  2904: `By default, the logging module is set to WARNING level. This means only messages at WARNING, ERROR, and CRITICAL severity are displayed. DEBUG and INFO messages are silently ignored unless you explicitly configure a lower level.
+Exécution étape par étape :
+• Circle() OK puis area() retourne le flottant.
 
-Concepts clés :
-• Default level is WARNING (numeric value 30)
-• Messages below WARNING are suppressed by default
-• C'est pourquoi logging.debug() and logging.info() produce no output without configuration
-• Use logging.basicConfig(level=logging.DEBUG) to see all messages
+Ordre des opérations :
+• Définitions puis print.
 
-Comment ça fonctionne :
-• Quand vous call logging.warning("msg"), it appears
-• Quand vous call logging.info("msg"), nothing happens (below threshold)
-• Quand vous call logging.debug("msg"), nothing happens (below threshold)
-• You must configure the level to see lower-severity messages
+Cas d'utilisation courants :
+• Hiérarchies géométriques, parsers.
 
-Exemple :
->>> import logging
->>> logging.warning("This appears")
-WARNING:root:This appears
->>> logging.info("C'est hidden")
->>> logging.debug("C'est also hidden")
+Cas limites :
+• Oublier une seconde méthode abstraite : reste abstrait.
 
-Usages courants :
-• Production systems typically use WARNING or ERROR
-• Development uses DEBUG to see everything
-• Testing often uses INFO for moderate verbosity`,
-  2905: `Each logging level en Python a un corresponding integer value. DEBUG is the lowest standard level with a numeric value of 10. These numeric values determine the severity hierarchy and are used internally to compare and filter messages.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Ajouter perimeter abstrait sur Shape.
+
+Remarques :
+• Réponse : 3.14 — 1re option.`,
+  2903: `Une classe ABC peut-elle avoir des méthodes concrètes ?
+
+Débutant :
+• Oui : seules les méthodes marquées @abstractmethod doivent être surchargées.
+
+Intermédiaire :
+• Pattern Template Method : squelette concret + crochets abstraits.
+
+Expert :
+• __init__ dans une ABC reste une méthode normale sauf si marquée abstraite.
 
 Concepts clés :
-• logging.DEBUG = 10
-• Lowest of the 5 standard levels
-• Used for detailed diagnostic information
-• Messages at this level are typically only useful during development
+• Mix abstrait / concret sur une même classe.
 
-Comment ça fonctionne :
-• Levels are compared numerically: DEBUG(10) < INFO(20) < WARNING(30) < ERROR(40) < CRITICAL(50)
-• When a logger's level is set to X, only messages with level >= X are processed
-• Setting level to DEBUG shows all standard messages
+Distinctions clés :
+• Pas « uniquement staticmethod ».
 
-Exemple :
->>> import logging
->>> logging.DEBUG
-10
->>> logging.getLevelName(10)
-'DEBUG'
->>> logging.getLevelName('DEBUG')
-10`,
-  2906: `logging.INFO is the second-lowest standard logging level with a numeric value of 20. It est utilisé for general informational messages that confirm the program is working as expected.
+Fonctionnement :
+• Héritage MRO résout describe() sur la classe mère.
 
-Concepts clés :
-• logging.INFO = 20
-• Second level above DEBUG
-• Used for confirmation that things are working as expected
-• Not shown by default (default level is WARNING = 30)
+Exécution étape par étape :
+• Sous-classe instanciable si tous les abstract couverts.
 
-Comment ça fonctionne :
-• INFO messages are suppressed by default
-• To see INFO messages: logging.basicConfig(level=logging.INFO)
-• INFO is appropriate for tracking program flow in normal operation
+Ordre des opérations :
+• Définition ABC puis sous-classe.
 
-Exemple :
->>> import logging
->>> logging.INFO
-20
->>> logging.basicConfig(level=logging.INFO)
->>> logging.info("Server started")
-INFO:root:Server started`,
-  2907: `logging.WARNING a un numeric value of 30 and is the default logging level. It indicates something unexpected happened or a potential problem, but the program can still continue operating.
+Cas d'utilisation courants :
+• Code partagé (validate commune) + hooks abstraits.
 
-Concepts clés :
-• logging.WARNING = 30
-• C'est the default level — messages at WARNING and above are shown
-• Indicates something unexpected or potentially harmful
-• Program still functions despite the warning
+Cas limites :
+• Ordre des décorateurs property/abstract (voir ID 2910).
 
-Comment ça fonctionne :
-• WARNING messages are shown by default (no configuration needed)
-• Signals issues that should be investigated but are not critical
-• Commonly utilisé pour deprecation notices, resource usage alerts
+Considérations de performance :
+• N/A.
 
-Exemple :
->>> import logging
->>> logging.WARNING
-30
->>> logging.warning("Disk space low")
-WARNING:root:Disk space low`,
-  2908: `logging.ERROR a un numeric value of 40. It indicates a more serious problem — the software has not been able to perform some function.
+Exemples :
+• describe() hérité par Circle.
+
+Remarques :
+• Réponse : Oui — 1re option.`,
+  2904: `Circle().describe() — Shape a area abstraite et describe concrète
+
+Débutant :
+• "I am a shape" : describe est défini sur Shape ; Circle hérite sans override.
+
+Intermédiaire :
+• MRO Circle → Shape → object.
+
+Expert :
+• Circle ne peut exister que parce que area est implémentée.
 
 Concepts clés :
-• logging.ERROR = 40
-• Second-highest standard level
-• Indicates a significant problem that prevented a function from completing
-• Program may still run, but something definitely failed
+• Méthode concrète dans ABC utilisable telle quelle.
 
-Comment ça fonctionne :
-• ERROR messages indicate failure of a specific operation
-• Always shown at default level (40 >= 30)
-• Used when catching exceptions that prevent normal operation
+Distinctions clés :
+• Pas TypeError.
 
-Exemple :
->>> import logging
->>> logging.ERROR
-40
->>> logging.error("Database connection failed")
-ERROR:root:Database connection failed`,
-  2909: `logging.CRITICAL a un numeric value of 50 and is the highest standard logging level. It indicates a very serious error that may prevent the program from continuing to run.
+Fonctionnement :
+• Recherche describe sur Circle échoue ; remonte à Shape.
 
-Concepts clés :
-• logging.CRITICAL = 50
-• Highest standard logging level
-• Indicates a fatal error — the program may not be able to continue
-• Reserved for the most severe issues
+Exécution étape par étape :
+• Chaîne retournée littérale.
 
-Comment ça fonctionne :
-• CRITICAL messages indicate the program itself may be unable to continue
-• Always displayed regardless of configured level (unless logging is disabled entirely)
-• Used for system-level failures, unrecoverable errors
+Ordre des opérations :
+• Instanciation puis appel describe.
 
-Exemple :
->>> import logging
->>> logging.CRITICAL
-50
->>> logging.critical("System out of memory")
-CRITICAL:root:System out of memory`,
-  2910: `logging.basicConfig() is a convenience function that configures the root logger. When appelé avec level=logging.DEBUG, it sets the minimum severity threshold to DEBUG (10), meaning all standard log messages (DEBUG, INFO, WARNING, ERROR, CRITICAL) will be displayed.
+Cas d'utilisation courants :
+• Pipeline fixe avec étapes variables.
 
-Concepts clés :
-• basicConfig configures the root logger (the top-level logger)
-• level=logging.DEBUG sets the threshold to 10
-• All messages with level >= 10 will be shown
-• Can only effectively be called once (subsequent calls are ignored if handlers exist)
+Cas limites :
+• Si Circle redéfinit describe : masquage.
 
-Comment ça fonctionne :
-• Sets the root logger's level to DEBUG
-• Adds a StreamHandler (console output) if none exists
-• After this call, logging.debug("msg") will produce output
-• Without this call, debug/info messages are suppressed
+Considérations de performance :
+• N/A.
 
-Exemple :
->>> import logging
->>> logging.basicConfig(level=logging.DEBUG)
->>> logging.debug("Now visible!")
-DEBUG:root:Now visible!
->>> logging.info("Also visible!")
-INFO:root:Also visible!
+Exemples :
+• Ajouter label abstrait et describe concret.
 
-Usages courants :
-• Quick setup for development
-• Accepts format, filename, filemode, datefmt parameters
-• logging.basicConfig(filename='app.log', level=logging.DEBUG)`,
-  2911: `A logging Handler is responsible for dispatching log records to their final destination. Different handler types send records to different outputs — the console, files, network sockets, email, etc.
+Remarques :
+• Réponse : "I am a shape" — 1re option.`,
+  2905: `Une classe ABC peut-elle définir __init__ ?
+
+Débutant :
+• Oui ; les sous-classes appellent super().__init__(...) pour la partie parente.
+
+Intermédiaire :
+• L'ABC reste non instanciable si des @abstractmethod subsistent.
+
+Expert :
+• __init__ n'est pas implicitement abstrait.
 
 Concepts clés :
-• Handlers determine WHERE log messages go
-• StreamHandler sends to console (stdout/stderr)
-• FileHandler sends to a file
-• Multiple handlers can be attached to one logger
-• Each handler can have its own level and formatter
+• Initialisation partagée + contrat méthodes.
 
-Comment ça fonctionne :
-• Logger crée un LogRecord
-• LogRecord est passé to all attached handlers
-• Each handler checks its own level filter
-• If the record passes, the handler formats and emits it
+Distinctions clés :
+• Pas d'interdiction d'__init__ sur ABC.
 
-Exemple :
->>> import logging
->>> logger = logging.getLogger('myapp')
->>> console_handler = logging.StreamHandler()
->>> file_handler = logging.FileHandler('app.log')
->>> logger.addHandler(console_handler)
->>> logger.addHandler(file_handler)
+Fonctionnement :
+• __init__ s'exécute comme sur toute classe après instanciation réussie.
 
-Common handler types:
-• StreamHandler — console output
-• FileHandler — write to file
-• RotatingFileHandler — file with size-based rotation
-• SMTPHandler — send email alerts
-• SocketHandler — send over network`,
-  2912: `A logging Formatter defines the structure and content of the final log output string. It determines what information is included (timestamp, level, message, module name, etc.) and how it is arranged.
+Exécution étape par étape :
+• Dog() appelle Animal.__init__ via super.
 
-Concepts clés :
-• Formatters determine HOW log messages look
-• Applied to handlers, not loggers directly
-• Use format strings with special LogRecord attributes
-• Common attributes: %(asctime)s, %(levelname)s, %(message)s, %(name)s
+Ordre des opérations :
+• Chaîne coopérative classique.
 
-Comment ça fonctionne :
-• Create a Formatter with a format string
-• Attach the Formatter to a Handler
-• When the handler emits a record, the formatter produces the final string
+Cas d'utilisation courants :
+• Attributs communs name/id avant speak abstrait.
 
-Exemple :
->>> import logging
->>> formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
->>> handler = logging.StreamHandler()
->>> handler.setFormatter(formatter)
->>> logger = logging.getLogger('myapp')
->>> logger.addHandler(handler)
->>> logger.warning("Test")
-2024-01-15 10:30:00,123 - myapp - WARNING - Test
+Cas limites :
+• MI : super() doit rester coopératif.
 
-Common format attributes:
-• %(asctime)s — human-readable timestamp
-• %(levelname)s — level name (DEBUG, INFO, etc.)
-• %(message)s — the log message
-• %(name)s — logger name
-• %(filename)s — source file name
-• %(lineno)d — line number`,
-  2913: `Using __name__ as the logger name crée un logger that is named après le current module (e.g., 'mypackage.mymodule'). Cela permet hierarchical logging where child loggers inherit settings from parent loggers based on the dot-separated naming convention.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Animal/Dog de la banque.
+
+Remarques :
+• Réponse : Oui, sous-classes avec super() — 1re option.`,
+  2906: `B(A) n'implémente que f — g reste abstrait — B()
+
+Débutant :
+• TypeError : il faut implémenter chaque @abstractmethod hérité.
+
+Intermédiaire :
+• B.__abstractmethods__ contient encore g.
+
+Expert :
+• Message d'erreur cite la méthode manquante.
 
 Concepts clés :
-• __name__ is the module's fully qualified name (e.g., 'mypackage.utils')
-• Logger names use dot notation for hierarchy: 'a.b' is a child of 'a'
-• Child loggers propagate messages to parent loggers
-• The root logger is the ancestor of all loggers
+• Conjonction des obligations sur toute la hiérarchie.
 
-Comment ça fonctionne :
-• In mypackage/utils.py, __name__ is 'mypackage.utils'
-• logging.getLogger('mypackage.utils') crée un logger in the hierarchy
-• Settings on 'mypackage' logger apply to all 'mypackage.*' loggers
-• Cela permet configuring logging per-package or per-module
+Distinctions clés :
+• Pas d'objet B ni 1.
 
-Exemple :
-# In mypackage/utils.py
-import logging
-logger = logging.getLogger(__name__)  # logger named 'mypackage.utils'
-logger.info("Processing data")
+Fonctionnement :
+• Même une seule méthode manquante bloque.
 
-# Configure at package level
-pkg_logger = logging.getLogger('mypackage')
-pkg_logger.setLevel(logging.DEBUG)  # Affects all mypackage.* loggers
+Exécution étape par étape :
+• Échec à l'instanciation.
 
-Usages courants :
-• Best practice for library and application logging
-• Enables per-module log configuration
-• Makes log output show which module generated each message`,
-  2914: `A single logger can have any number of handlers attached to it. Each handler independently processes log records, so you can send le même log message to multiple destinations simultaneously.
+Ordre des opérations :
+• Définition A, B puis B().
 
-Concepts clés :
-• No limit on the number of handlers per logger
-• Each handler can have its own level and formatter
-• Common pattern: console handler for development + file handler for persistence
-• Handlers process records independently
+Cas d'utilisation courants :
+• Interfaces à plusieurs opérations (read/write).
 
-Comment ça fonctionne :
-• Logger receives a log message
-• Message est passé to ALL attached handlers
-• Each handler applies its own level filter
-• Each handler uses its own formatter
-• Output goes to each handler's destination
+Cas limites :
+• register() ne rend pas concrète une classe sans impl (autre mécanisme).
 
-Exemple :
->>> import logging
->>> logger = logging.getLogger('myapp')
->>> logger.setLevel(logging.DEBUG)
->>>
->>> console = logging.StreamHandler()
->>> console.setLevel(logging.WARNING)
->>>
->>> file_h = logging.FileHandler('debug.log')
->>> file_h.setLevel(logging.DEBUG)
->>>
->>> logger.addHandler(console)
->>> logger.addHandler(file_h)
->>>
->>> logger.debug("Only in file")
->>> logger.warning("In both console and file")
+Considérations de performance :
+• N/A.
 
-Usages courants :
-• Console (WARNING+) + file (DEBUG+) for development
-• File + email (CRITICAL) for production alerts
-• Rotating file + syslog for server applications`,
-  2915: `logging.exception() is like logging.error() but automatically includes the exception traceback in the log output. It should only be called from within an exception handler (except block).
+Exemples :
+• Implémenter g pour débloquer.
+
+Remarques :
+• Réponse : TypeError — 1re option.`,
+  2907: `B implémente f et g — print(B().f())
+
+Débutant :
+• 1 : B est concrète ; f retourne 1 comme dans la sous-classe.
+
+Intermédiaire :
+• g() existe aussi (retour 2 si appelé).
+
+Expert :
+• Ordre des définitions dans la classe n'affecte pas l'instanciation ici.
 
 Concepts clés :
-• Logs at ERROR level (same as logging.error)
-• Automatically appends the current exception's traceback
-• Must be called inside an except block
-• Equivalent to logging.error("msg", exc_info=True)
+• __abstractmethods__ vide.
 
-Comment ça fonctionne :
-• Captures the current exception via sys.exc_info()
-• Formats the full traceback
-• Appends it to the log message
-• Produces multi-line output showing the error chain
+Distinctions clés :
+• Pas TypeError.
 
-Exemple :
->>> import logging
->>> try:
-...     result = 1 / 0
-... except ZeroDivisionError:
-...     logging.exception("Calculation failed")
-ERROR:root:Calculation failed
-Traceback (most recent call last):
-  File "<stdin>", line 2, in <module>
-ZeroDivisionError: division by zero
+Fonctionnement :
+• B() puis dispatch sur B.f.
 
-Usages courants :
-• Logging caught exceptions with full traceback for debugging
-• Production error reporting
-• Preferred over logging.error when you want stack trace details`,
-  2916: `Le logging module fournit un robust, flexible framework for emitting log messages, whereas print() simply writes to stdout. Logging has features that print lacks entirely.
+Exécution étape par étape :
+• print affiche 1.
 
-Concepts clés :
-• Logging has severity levels (DEBUG through CRITICAL)
-• Logging has handlers (console, file, network, email, etc.)
-• Logging has formatters (custom output format)
-• Logging can be configured externally (config files, dictConfig)
-• print() writes to stdout avec no filtering or routing
+Ordre des opérations :
+• Définitions puis print(B().f()).
 
-Comment ça fonctionne :
-• print() always outputs to stdout (unless redirected)
-• Logging routes messages through a configurable pipeline
-• Log levels allow filtering sans changing code
-• Handlers allow routing to multiple destinations
-• Configuration can be changed at deployment time
+Cas d'utilisation courants :
+• Services avec plusieurs hooks obligatoires.
 
-Exemple :
-# print - no control
-print("User logged in")  # Always prints to stdout
+Cas limites :
+• Méthodes abstraites property : noms dans le frozenset.
 
-# logging - full control
-import logging
-logging.info("User logged in")  # Can be filtered, routed, formatted
+Considérations de performance :
+• N/A.
 
-Usages courants :
-• print() for quick debugging (remove avant committing)
-• logging for production applications
-• logging for libraries (let the consumer configure output)
-• logging for long-running services avec structured output`,
-  2917: `logging.FileHandler crée un handler object that sends log output to a disk file. You attach it to a logger to direct log messages to a file instead of (or in addition to) the console.
+Exemples :
+• Vérifier B().g()==2.
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  2908: `@abstractmethod peut-il avoir un corps ?
+
+Débutant :
+• Oui ; la sous-classe doit quand même override, mais peut appeler super().f().
+
+Intermédiaire :
+• Le décorateur marque la méthode comme abstraite malgré le corps.
+
+Expert :
+• Pattern « défaut extensible ».
 
 Concepts clés :
-• Creates a handler that writes to the specified file
-• File is opened in append mode ('a') by default
-• Can specify mode='w' to overwrite on each run
-• Must be attached to a logger with addHandler()
+• Corps = implémentation de base optionnelle via super.
 
-Comment ça fonctionne :
-• FileHandler("app.log") opens (or creates) app.log
-• When a log record is emitted through this handler, it writes to the file
-• Default mode is 'a' (append), so logs accumulate across runs
-• The handler can have its own level and formatter
+Distinctions clés :
+• Pas « corps toujours ignoré ».
 
-Exemple :
->>> import logging
->>> logger = logging.getLogger('myapp')
->>> handler = logging.FileHandler('app.log')
->>> handler.setLevel(logging.ERROR)
->>> formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
->>> handler.setFormatter(formatter)
->>> logger.addHandler(handler)
->>> logger.error("This goes to app.log")
+Fonctionnement :
+• La métaclasse enregistre le nom tant que non overriden concrètement.
 
-Usages courants :
-• Persisting logs for later analysis
-• Production logging to rotating files
-• Audit trails and compliance logging
-• Combining with RotatingFileHandler for size management`,
-  2918: `assertEqual(a, b) verifies that a == b. If the values are not equal, the test fails with a detailed message showing both values. It is the most commonly used assertion in unittest.
+Exécution étape par étape :
+• B.f appelle A.f via super après résolution MRO.
 
-Concepts clés :
-• Uses == operator for comparison (not 'is')
-• Fails with AssertionError if values differ
-• Shows both expected and actual values in failure message
-• Works with any types that support ==
+Ordre des opérations :
+• Override obligatoire pour instancier.
 
-Comment ça fonctionne :
-• Evaluates a == b
-• If True, the test passes silently
-• If False, lève AssertionError with diagnostic info
-• Optional third argument: self.assertEqual(a, b, "custom message")
+Cas d'utilisation courants :
+• Validation partielle + extension.
 
-Exemple :
->>> import unittest
->>> class TestMath(unittest.TestCase):
-...     def test_add(self):
-...         self.assertEqual(1 + 1, 2)      # passes
-...         self.assertEqual("ab", "a" + "b")  # passes
-...         self.assertEqual([1,2], [1,2])     # passes
+Cas limites :
+• Oublier super() : perte du comportement de base.
 
-Usages courants :
-• Verifying function return values
-• Checking computed results match expected values
-• Comparing data structures for equality`,
-  2919: `assertTrue(expr) verifies that bool(expr) is True. It uses Python's truthiness rules, so any truthy value passes — not just the literal True.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• return super().f() + " extended".
+
+Remarques :
+• Réponse : Oui, appel possible via super() — 1re option.`,
+  2909: `B.f utilise super().f() + " extended"
+
+Débutant :
+• "base extended" : super().f() exécute le corps de A.f.
+
+Intermédiaire :
+• B est concrète car f est surchargée.
+
+Expert :
+• super() suit le MRO (ici A puis object).
 
 Concepts clés :
-• Checks bool(expr) is True
-• Any truthy value passes (non-zero numbers, non-empty containers, etc.)
-• Fails with AssertionError if expr is falsy
-• Less informative failure messages than assertEqual
+• Chaînage d'implémentation abstraite avec défaut.
 
-Comment ça fonctionne :
-• Evaluates bool(expr)
-• If truthy, test passes
-• If falsy, lève AssertionError
-• Failure message just says "False is not true" — not very descriptive
+Distinctions clés :
+• Pas TypeError ni "base" seul.
 
-Exemple :
->>> self.assertTrue(1 == 1)     # passes (True is truthy)
->>> self.assertTrue([1, 2, 3])  # passes (non-empty list is truthy)
->>> self.assertTrue(42)         # passes (non-zero int is truthy)
->>> self.assertTrue("")         # FAILS (empty string is falsy)
->>> self.assertTrue(0)          # FAILS (zero is falsy)
+Fonctionnement :
+• Concaténation de str après appel parent.
 
-Usages courants :
-• Checking boolean conditions
-• Verifying predicates
-• Prefer assertEqual when comparing specific values (better failure messages)`,
-  2920: `assertFalse(expr) verifies that bool(expr) is False. It passes for any falsy value — not just the literal False.
+Exécution étape par étape :
+• B().f() → B.f → super → A.f → concat.
 
-Concepts clés :
-• Checks bool(expr) is False
-• Any falsy value passes: 0, None, "", [], {}, False, etc.
-• Fails with AssertionError if expr is truthy
-• Opposite of assertTrue
+Ordre des opérations :
+• Appel méthode puis +.
 
-Comment ça fonctionne :
-• Evaluates bool(expr)
-• If falsy, test passes
-• If truthy, lève AssertionError
-• Failure message: "True is not false"
+Cas d'utilisation courants :
+• Hooks before/after dans sous-classes.
 
-Exemple :
->>> self.assertFalse(1 == 2)   # passes (False is falsy)
->>> self.assertFalse("")       # passes (empty string is falsy)
->>> self.assertFalse(0)        # passes (zero is falsy)
->>> self.assertFalse(None)     # passes (None is falsy)
->>> self.assertFalse([1])      # FAILS (non-empty list is truthy)
+Cas limites :
+• diamond : super doit être coopératif partout.
 
-Usages courants :
-• Verifying a condition does not hold
-• Checking that a function renvoie a falsy value
-• Negative test cases`,
-  2921: `assertIs(a, b) verifies that a is b — that both variables reference the exact same object in memory. C'est stricter than assertEqual, which only checks value equality.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Logger dans A.f puis enrichir dans B.f.
+
+Remarques :
+• Réponse : "base extended" — 1re option.`,
+  2910: `property + abstractmethod sur x — A()
+
+Débutant :
+• TypeError : la propriété abstraite compte comme méthode abstraite.
+
+Intermédiaire :
+• Ordre des décorateurs : @property au-dessus de @abstractmethod (extérieur).
+
+Expert :
+• Sous-classe fournit @property concrète sur x.
 
 Concepts clés :
-• Uses the 'is' operator (identity check)
-• a is b means id(a) == id(b)
-• Different from assertEqual which uses ==
-• Two equal values can be different objects
+• Descripteur data + contrat ABC.
 
-Comment ça fonctionne :
-• Checks if a and b point to le même object in memory
-• Passes uniquement si they are le même object (same id)
-• Fails if they are different objects, even with equal values
+Distinctions clés :
+• Pas d'objet A ni None.
 
-Exemple :
->>> a = [1, 2, 3]
->>> b = a
->>> c = [1, 2, 3]
->>> self.assertIs(a, b)    # passes (same object)
->>> self.assertIs(a, c)    # FAILS (equal but different objects)
->>> self.assertIs(None, None)  # passes (None is a singleton)
+Fonctionnement :
+• Le nom 'x' entre dans __abstractmethods__.
 
-Usages courants :
-• Verifying singleton patterns
-• Checking None identity (prefer assertIsNone)
-• Verifying that two references point to le même object`,
-  2922: `assertIsNone(x) verifies that x is None. It uses the 'is' operator internally, checking identity rather than equality. Since None is a singleton en Python, this is the correct way to test for None.
+Exécution étape par étape :
+• Instanciation refusée.
 
-Concepts clés :
-• Equivalent to assertIs(x, None)
-• Uses identity check (is), not equality (==)
-• None is a singleton — there is only one None object
-• Preferred over assertEqual(x, None)
+Ordre des opérations :
+• Définition classe puis A().
 
-Comment ça fonctionne :
-• Checks x is None
-• Passes if x is the None singleton
-• Fails for any other value, including 0, False, "", []
+Cas d'utilisation courants :
+• Interface lecture contrôlée obligatoire.
 
-Exemple :
->>> self.assertIsNone(None)            # passes
->>> self.assertIsNone(some_func())     # passes if func renvoie None
->>> self.assertIsNone(0)               # FAILS (0 is not None)
->>> self.assertIsNone(False)           # FAILS (False is not None)
+Cas limites :
+• Inverser décorateurs casse souvent la sémantique.
 
-Usages courants :
-• Checking functions that return None
-• Verifying optional attributes are unset
-• Testing default return values`,
-  2923: `assertIn(a, b) verifies that a in b is True. It fonctionne avec any container or iterable that supporte le 'in' operator — lists, tuples, strings, sets, dicts, etc.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• class B(A): @property def x(self): return 42.
+
+Remarques :
+• Réponse : TypeError — 1re option.`,
+  2911: `Combinaison pour classmethod abstraite
+
+Débutant :
+• @classmethod puis @abstractmethod (classmethod le plus extérieur).
+
+Intermédiaire :
+• Même principe que staticmethod : le décorateur le plus proche de def est abstractmethod.
+
+Expert :
+• La sous-classe redéclare @classmethod sur create.
 
 Concepts clés :
-• Uses the 'in' operator
-• Works with lists, tuples, strings, sets, dicts (checks keys)
-• Fails with a clear message showing what was not found and where
+• Application décorateurs de bas en haut sur la fonction.
 
-Comment ça fonctionne :
-• Evaluates a in b
-• If True, test passes
-• If False, lève AssertionError with both values shown
+Distinctions clés :
+• Pas l'inverse abstract puis classmethod.
 
-Exemple :
->>> self.assertIn(3, [1, 2, 3])     # passes
->>> self.assertIn("el", "hello")    # passes (substring)
->>> self.assertIn("x", {"x": 1})   # passes (key in dict)
->>> self.assertIn(4, [1, 2, 3])    # FAILS
+Fonctionnement :
+• create reçoit cls une fois concrétisé.
 
-Usages courants :
-• Checking membership in collections
-• Verifying substrings in strings
-• Checking keys exist in dictionaries`,
-  2924: `assertRaises(ExceptionType) verifies that a specific exception is raised. It peut être utilisé as a context manager (with statement) or by passing a callable and arguments.
+Exécution étape par étape :
+• B.create() retourne instance B.
 
-Concepts clés :
-• Verifies that a specific exception type is raised
-• Test passes if the exception is raised
-• Test fails if the exception is NOT raised
-• Can be used as context manager or with callable
+Ordre des opérations :
+• Définition méthode avec pile de décorateurs.
 
-Comment ça fonctionne :
-• As context manager: with self.assertRaises(ValueError): risky_code()
-• As callable: self.assertRaises(ValueError, int, "abc")
-• Catches the exception and the test passes
-• If the exception is not raised, AssertionError is raised
+Cas d'utilisation courants :
+• Alternate constructors imposés.
 
-Exemple :
->>> # Context manager style
->>> with self.assertRaises(ValueError):
-...     int("abc")  # passes — ValueError is raised
->>>
->>> # Callable style
->>> self.assertRaises(ValueError, int, "abc")  # also passes
->>>
->>> # This FAILS — no ValueError raised:
->>> with self.assertRaises(ValueError):
-...     int("123")  # valid, no error
+Cas limites :
+• Oublier @classmethod en enfant : liaison incorrecte.
 
-Usages courants :
-• Testing error handling code
-• Verifying input validation
-• Ensuring edge cases raise appropriate exceptions`,
-  2925: `Ce test réussit car int("abc") lève a ValueError, et assertRaises(ValueError) vérifie that a ValueError is raised. The context manager catches the expected exception and the test passes silently.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque A/B create.
+
+Remarques :
+• Réponse : @classmethod puis @abstractmethod — 1re option.`,
+  2912: `Combinaison pour staticmethod abstraite
+
+Débutant :
+• @staticmethod puis @abstractmethod.
+
+Intermédiaire :
+• Pas de self ni cls dans la signature finale.
+
+Expert :
+• Sous-classe redéfinit avec @staticmethod.
 
 Concepts clés :
-• int("abc") lève ValueError because "abc" is not a valid integer
-• assertRaises(ValueError) expects this exact exception type
-• When the expected exception is raised, the test passes
-• If no exception or a different exception was raised, the test would fail
+• validate(data) pur fonction sur la classe.
 
-Comment ça fonctionne :
-• The with block executes int("abc")
-• ValueError is raised
-• assertLève catches it and verifies the type matches
-• Type matches (ValueError == ValueError), so the test passes
+Distinctions clés :
+• Pas @abstractmethod puis @staticmethod.
 
-Exemple :
->>> with self.assertRaises(ValueError):
-...     int("abc")
-# Test passes — ValueError was raised as expected
+Fonctionnement :
+• ABC impose présence de validate sur sous-classe concrète.
 
->>> with self.assertRaises(TypeError):
-...     int("abc")
-# Test FAILS — ValueError was raised, not TypeError
+Exécution étape par étape :
+• B.validate([1,2]) après impl.
 
->>> with self.assertRaises(ValueError):
-...     int("123")
-# Test FAILS — no exception was raised`,
-  2926: `assertAlmostEqual(a, b) checks that a and b are equal when rounded to 7 decimal places (by default). Since 0.1 + 0.2 produces 0.30000000000000004 due to IEEE 754 floating-point representation, a direct == comparison would fail. But assertAlmostEqual accounts for this imprecision.
+Ordre des opérations :
+• Définition puis appel statique.
 
-Concepts clés :
-• Default precision: 7 decimal places
-• round(a - b, 7) == 0 is the check
-• Handles floating-point representation errors
-• Optional 'places' parameter to change precision
+Cas d'utilisation courants :
+• Règles métier partagées sans état.
 
-Comment ça fonctionne :
-• Computes abs(0.30000000000000004 - 0.3) ≈ 5.5e-17
-• Rounds to 7 decimal places: 0.0000000
-• This equals 0, so the test passes
-• assertEqual(0.1+0.2, 0.3) would FAIL
+Cas limites :
+• staticmethod abstraite rare ; souvent classmethod préféré.
 
-Exemple :
->>> self.assertAlmostEqual(0.1 + 0.2, 0.3)       # passes (within 7 places)
->>> self.assertEqual(0.1 + 0.2, 0.3)              # FAILS (not exactly equal)
->>> self.assertAlmostEqual(1.0, 1.001, places=2)  # passes (within 2 places)
->>> self.assertAlmostEqual(1.0, 1.1, places=1)    # FAILS (differs at 1 place)
+Considérations de performance :
+• N/A.
 
-Usages courants :
-• Comparing floating-point computation results
-• Scientific calculations where exact equality is impossible
-• Financial calculations with rounding`,
-  2927: `setUp(self) is a special method that unittest calls before every individual test method in the class. It est utilisé pour set up test fixtures — objects, connections, or state that each test needs.
+Exemples :
+• len(data) > 0.
+
+Remarques :
+• Réponse : @staticmethod puis @abstractmethod — 1re option.`,
+  2913: `Une ABC peut-elle hériter d'une autre ABC ?
+
+Débutant :
+• Oui : les méthodes abstraites s'accumulent le long de la chaîne.
+
+Intermédiaire :
+• B peut rester abstraite tout en héritant de A abstraite.
+
+Expert :
+• Seule la feuille concrète doit tout implémenter.
 
 Concepts clés :
-• Called before EACH test method (not once for the class)
-• Used to create fresh test fixtures
-• Ensures each test starts with a clean state
-• Counterpart of tearDown (called after each test)
+• Couches d'interface progressive.
 
-Comment ça fonctionne :
-• unittest discovers all methods starting with 'test'
-• Before each test method: setUp() est appelé
-• Then the test method runs
-• Then tearDown() est appelé (if defined)
-• This cycle repeats for every test method
+Distinctions clés :
+• Pas interdit sans ABCMeta spécial.
 
-Exemple :
->>> class TestList(unittest.TestCase):
-...     def setUp(self):
-...         self.items = [1, 2, 3]   # fresh list for each test
-...
-...     def test_append(self):
-...         self.items.append(4)
-...         self.assertEqual(len(self.items), 4)
-...
-...     def test_remove(self):
-...         self.items.remove(1)
-...         self.assertEqual(len(self.items), 2)
-# setUp crée un fresh [1, 2, 3] before each test
+Fonctionnement :
+• Union des noms abstraits selon règles de sous-classe.
 
-Usages courants :
-• Creating database connections
-• Setting up test data
-• Initializing objects under test`,
-  2928: `tearDown(self) est appelé after every individual test method, even if the test raised an exception. It est utilisé pour clean up resources that setUp created.
+Exécution étape par étape :
+• C(B) avec f et g implémentés instanciable.
 
-Concepts clés :
-• Called after EACH test method
-• Runs even if the test method failed or raised an exception
-• Used for cleanup: closing files, database connections, temp files
-• Counterpart of setUp
+Ordre des opérations :
+• Définitions A, B, C.
 
-Comment ça fonctionne :
-• Test method completes (pass or fail)
-• tearDown() est appelé
-• Resources created in setUp are cleaned up
-• Next test's setUp starts fresh
+Cas d'utilisation courants :
+• Spécialisation par niveaux (Stream → BufferedStream).
 
-Exemple :
->>> class TestFile(unittest.TestCase):
-...     def setUp(self):
-...         self.f = open('test.txt', 'w')
-...
-...     def tearDown(self):
-...         self.f.close()
-...         os.remove('test.txt')
-...
-...     def test_write(self):
-...         self.f.write("hello")
-# tearDown closes file and removes it after each test
+Cas limites :
+• Conflits de signatures entre niveaux : erreurs à la conception.
 
-Usages courants :
-• Closing file handles and network connections
-• Removing temporary files
-• Rolling back database transactions
-• Restoring modified global state`,
-  2929: `setUpClass(cls) is a class method that runs exactly once before any test methods in the class execute. It est utilisé for expensive setup that should only happen once, not repeated for each test.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• C().f() → 1 de la banque.
+
+Remarques :
+• Réponse : Oui — 1re option.`,
+  2914: `Chaîne A,B,C — print(C().f())
+
+Débutant :
+• 1 : C fournit f et g ; instanciation OK.
+
+Intermédiaire :
+• f vient de l'obligation A, g de B.
+
+Expert :
+• Si C manquait g : TypeError comme ID 2906.
 
 Concepts clés :
-• Decorated with @classmethod
-• Receives cls (the class) instead of self (an instance)
-• Runs ONCE before all tests in the class
-• Counterpart: tearDownClass runs once after all tests
-• Different from setUp which runs before EACH test
+• Accumulation d'abstractions sur plusieurs niveaux.
 
-Comment ça fonctionne :
-• unittest calls setUpClass avant le first test method
-• The setup is shared across all test methods
-• tearDownClass est appelé après le last test method
-• Useful for expensive operations like database setup
+Distinctions clés :
+• Pas 2 pour f() ici.
 
-Exemple :
->>> class TestDB(unittest.TestCase):
-...     @classmethod
-...     def setUpClass(cls):
-...         cls.db = create_database()  # once
-...
-...     @classmethod
-...     def tearDownClass(cls):
-...         cls.db.close()  # once
-...
-...     def test_query(self):
-...         result = self.db.query("SELECT 1")
-...         self.assertEqual(result, 1)
+Fonctionnement :
+• C.f appelée.
 
-Usages courants :
-• Creating database connections
-• Starting test servers
-• Loading large test datasets
-• Any expensive one-time setup`,
-  2930: `@unittest.skip("reason") is a decorator that unconditionally skips the decorated test. The test is not executed, and the reason string is reported in the test output.
+Exécution étape par étape :
+• print 1.
 
-Concepts clés :
-• Test is not executed at all
-• Reason string appears in test output
-• Counted as 'skipped' (not pass, not fail)
-• Related: @unittest.skipIf(condition, reason) and @unittest.skipUnless(condition, reason)
+Ordre des opérations :
+• C() puis .f().
 
-Comment ça fonctionne :
-• unittest discovers the test method
-• Sees the @skip decorator
-• Reports the test as skipped with the reason
-• Does not execute the test body
+Cas d'utilisation courants :
+• Pipelines multi-étapes obligatoires.
 
-Exemple :
->>> @unittest.skip("Feature not implemented yet")
-... def test_new_feature(self):
-...     self.assertEqual(new_function(), 42)
-# Output: test_new_feature ... skipped 'Feature not implemented yet'
+Cas limites :
+• Oublier une méthode intermédiaire abstraite ajoutée.
 
->>> @unittest.skipIf(sys.platform == 'win32', "Not supported on Windows")
-... def test_unix_feature(self):
-...     pass
+Considérations de performance :
+• N/A.
 
->>> @unittest.skipUnless(sys.platform == 'linux', "Linux only")
-... def test_linux_feature(self):
-...     pass
+Exemples :
+• C().g() → 2.
 
-Usages courants :
-• Temporarily disabling broken tests
-• Platform-specific tests
-• Tests for unimplemented features
-• Environment-dependent tests`,
-  2931: `@unittest.expectedFailure marks a test that is expected to fail. If the test does fail, it is reported as an "expected failure" (not counted as a failure). If the test unexpectedly passes, it is reported as an "unexpected success."
+Remarques :
+• Réponse : 1 — 1re option.`,
+  2915: `class Shape(metaclass=ABCMeta)
+
+Débutant :
+• Équivalent moderne à class Shape(ABC) pour activer la mécanique abstraite.
+
+Intermédiaire :
+• ABC est une classe confort dont la métaclasse est ABCMeta.
+
+Expert :
+• Hériter de ABC reste l'idiome recommandé.
 
 Concepts clés :
-• Test fails → reported as "expected failure" (ok)
-• Test passes → reported as "unexpected success" (problem!)
-• Useful for documenting known bugs
-• Test is still executed (unlike @skip)
+• Métaclasse = usine de classes avec contrôle __call__.
 
-Comment ça fonctionne :
-• The test method runs normally
-• If it lève AssertionError or another error → "expected failure"
-• If it completes without error → "unexpected success"
-• Neither counts as a normal pass or fail
+Distinctions clés :
+• Pas « classe ordinaire sans contrôle ».
 
-Exemple :
->>> @unittest.expectedFailure
-... def test_known_bug(self):
-...     self.assertEqual(buggy_function(), 42)  # known to return wrong value
-# If buggy_function renvoie wrong value: "expected failure" (x)
-# If buggy_function is fixed and renvoie 42: "unexpected success" (u)
+Fonctionnement :
+• ABCMeta collecte abstractmethods à la création de classe.
 
-Usages courants :
-• Documenting known bugs without removing the test
-• Tracking issues that should eventually be fixed
-• Ensuring awareness when a bug is unexpectedly fixed`,
-  2932: `Le assert instruction evaluates the expression following it. If the expression is truthy, execution continues normally avec no effect. If the expression is falsy, it lève an AssertionError.
+Exécution étape par étape :
+• type(Shape) est ABCMeta.
 
-Concepts clés :
-• assert expr — lève AssertionError if expr is falsy
-• 1 == 1 evaluates to True
-• True is truthy, so no error is raised
-• The assert instruction has zero effect when the condition passes
+Ordre des opérations :
+• Déclaration metaclass=.
 
-Comment ça fonctionne :
-• Python evaluates 1 == 1
-• Résultat is True
-• Since the condition is truthy, assert ne fait rien
-• Execution continues to the next instruction
+Cas d'utilisation courants :
+• Code legacy ou mixins métaclasse custom.
 
-Exemple :
->>> assert 1 == 1       # passes, no error
->>> assert True         # passes
->>> assert "hello"      # passes (truthy)
->>> assert [1, 2, 3]    # passes (truthy)
+Cas limites :
+• Conflit si plusieurs métaclasses : union complexe.
 
-Usages courants :
-• Sanity checks during development
-• Verifying preconditions and postconditions
-• Debugging aids (can be disabled avec -O flag)`,
-  2933: `Quand an assert instruction's expression is falsy, Python lève an AssertionError. Since 1 == 2 evaluates to False, the assertion fails and AssertionError is raised.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• type(A) après class A(ABC).
+
+Remarques :
+• Réponse : équivalent à class Shape(ABC) — 1re option.`,
+  2916: `Quelle est la métaclasse de ABC ?
+
+Débutant :
+• ABCMeta.
+
+Intermédiaire :
+• C'est elle qui remplit __abstractmethods__ et bloque l'instanciation.
+
+Expert :
+• type(ABC) et ABC.__class__ pointent vers ABCMeta.
 
 Concepts clés :
-• assert avec a falsy expression lève AssertionError
-• 1 == 2 is False (falsy)
-• AssertionError is a built-in exception
-• It is a subclass of Exception
+• Couche meta sous-jacente à abc.
 
-Comment ça fonctionne :
-• Python evaluates 1 == 2
-• Résultat is False
-• Since the condition is falsy, assert lève AssertionError
-• Program terminates unless the error is caught
+Distinctions clés :
+• Pas type ni object comme réponse attendue ici.
 
-Exemple :
->>> assert 1 == 2
-Traceback (most recent call last):
-  File "<stdin>", line 1
-AssertionError
+Fonctionnement :
+• __new__ / __call__ de la métaclasse appliquent les règles.
 
->>> assert False
-AssertionError
+Exécution étape par étape :
+• Création de sous-classe déclenche scan décorateurs.
 
->>> assert 0
-AssertionError
+Ordre des opérations :
+• import abc puis introspection.
 
->>> assert []
-AssertionError`,
-  2934: `Le optional second part of an assert instruction (après le comma) fournit un custom error message that is included in the AssertionError when the assertion fails.
+Cas d'utilisation courants :
+• Comprendre erreurs TypeError abstraites.
 
-Concepts clés :
-• Syntax: assert expression, "error message"
-• The message est passé to AssertionError as its argument
-• Only evaluated if the assertion fails
-• Helps identify which assertion failed and why
+Cas limites :
+• Sous-classes de ABC : métaclasse héritée.
 
-Comment ça fonctionne :
-• Python evaluates 1 == 2 → False
-• Since falsy, lève AssertionError("numbers not equal")
-• The message appears in the traceback
-• Makes debugging easier
+Considérations de performance :
+• N/A.
 
-Exemple :
->>> assert 1 == 2, "numbers not equal"
-Traceback (most recent call last):
-  File "<stdin>", line 1
-AssertionError: numbers not equal
+Exemples :
+• from abc import ABCMeta.
 
->>> x = -5
->>> assert x >= 0, f"Expected non-negative, got {x}"
-AssertionError: Expected non-negative, got -5
+Remarques :
+• Réponse : ABCMeta — 1re option.`,
+  2917: `class A(ABC): pass puis A()
 
-Usages courants :
-• Providing descriptive failure messages
-• Including variable valeurs in failure messages
-• Making assertion failures self-documenting`,
-  2935: `Les instructions assert peuvent être complètement désactivées en exécutant Python avec l'option -O (optimize) flag. When Python runs in optimized mode, all assert statements are removed from the bytecode entirely — they are not executed at all.
+Débutant :
+• Crée une instance A : aucune méthode abstraite déclarée.
+
+Intermédiaire :
+• __abstractmethods__ vide.
+
+Expert :
+• Utile comme marqueur ou future extension.
 
 Concepts clés :
-• python -O disables assert statements
-• -O sets __debug__ to False
-• Assert statements are stripped from bytecode
-• C'est pourquoi assert should NOT be utilisé pour data validation
+• ABC seul ne rend pas la classe abstraite.
 
-Comment ça fonctionne :
-• Normal: python script.py — asserts are active, __debug__ is True
-• Optimized: python -O script.py — asserts are removed, __debug__ is False
-• The assert statements are not just skipped; they are eliminated from the compiled code
-• No runtime cost in optimized mode
+Distinctions clés :
+• Pas TypeError.
 
-Exemple :
-# script.py
-assert False, "This will crash"
-print("Reached here")
+Fonctionnement :
+• Même règles qu'une classe concrète normale.
 
-$ python script.py
-# AssertionError: This will crash
+Exécution étape par étape :
+• __call__ de la métaclasse autorise.
 
-$ python -O script.py
-# Reached here   (assert was removed!)
+Ordre des opérations :
+• pass corps vide puis ().
 
-Usages courants :
-• Production deployments often use -O for performance
-• C'est pourquoi input validation should use if/raise, not assert
-• assert is for debugging and development only`,
-  2936: `__debug__ is a built-in constant that is True under normal Python execution and False when the interpreter is started with the -O (optimize) flag. It is closely tied to assert statements.
+Cas d'utilisation courants :
+• Base taggée pour isinstance sans méthodes encore.
 
-Concepts clés :
-• __debug__ is True by default (normal execution)
-• __debug__ is False with python -O
-• It is a compile-time constant — cannot be reassigned
-• assert statements are equivalent to: if __debug__: if not expr: raise AssertionError
+Cas limites :
+• Ajouter @abstractmethod plus tard : redevient abstraite.
 
-Comment ça fonctionne :
-• Normal: python script.py → __debug__ is True, asserts active
-• Optimized: python -O script.py → __debug__ is False, asserts stripped
-• You cannot do __debug__ = False (SyntaxError)
-• The value is determined at interpreter startup
+Considérations de performance :
+• N/A.
 
-Exemple :
->>> __debug__
-True  # in normal mode
+Exemples :
+• isinstance(a, A) True.
 
->>> # With python -O:
->>> __debug__
-False
+Remarques :
+• Réponse : crée une instance A — 1re option.`,
+  2918: `print(A.__abstractmethods__) avec f abstraite
 
->>> if __debug__:
-...     print("Debug mode")
-... else:
-...     print("Optimized mode")
+Débutant :
+• frozenset({'f'}) : ensemble immuable des noms encore abstraits.
 
-Usages courants :
-• Conditional debug-only code
-• Performance-sensitive code that skips checks in production
-• Understanding how assert fonctionne en interne`,
-  2937: `Le doctest module searches for pieces of text that look like interactive Python sessions in docstrings, and then executes those sessions to verify they work exactly as shown. It serves dual purposes: documentation and testing.
+Intermédiaire :
+• Après implémentation dans B, frozenset() vide.
+
+Expert :
+• frozenset empêche la mutation accidentelle.
 
 Concepts clés :
-• Tests are written as interactive Python sessions in docstrings
-• Uses >>> prompt to identify test lines
-• Expected output follows on the next line(s)
-• Verifies that the actual output matches the expected output
+• État déclaratif inspectable.
 
-Comment ça fonctionne :
-• doctest scans docstrings for >>> prompts
-• Extracts the code après >>>
-• Executes the code
-• Compares actual output avec expected output in the docstring
-• Reports any mismatches
+Distinctions clés :
+• Pas set mutable ni tuple seul.
 
-Exemple :
->>> def add(a, b):
-...     """Add two numbers.
-...
-...     >>> add(2, 3)
-...     5
-...     >>> add(-1, 1)
-...     0
-...     >>> add(0, 0)
-...     0
-...     """
-...     renvoyer a + b
->>>
->>> import doctest
->>> doctest.testmod()  # runs all doctests in the module
+Fonctionnement :
+• ABCMeta maintient à jour à chaque sous-classe.
 
-Usages courants :
-• Self-testing documentation
-• Simple unit tests embedded in docstrings
-• Ensuring code examples in docs stay accurate
-• Quick verification of fonction behavior`,
-  2938: `Le bloc try attempts 1/0, which lève ZeroDivisionError. The except clause catches this specific exception and sets x = 0. After the except block, execution continues normally and print(x) outputs 0.
+Exécution étape par étape :
+• print affiche repr du frozenset.
 
-Concepts clés :
-• 1/0 lève ZeroDivisionError
-• except ZeroDivisionError catches it specifically
-• x = 0 executes in the except block
-• Execution continues après le try/except
+Ordre des opérations :
+• Définition A puis print.
 
-Comment ça fonctionne :
-• try: x = 1/0 → ZeroDivisionError is raised
-• x was never assigned in the try block (error happened first)
-• except ZeroDivisionError: matches the raised exception
-• x = 0 executes in the except block
-• print(x) outputs 0
+Cas d'utilisation courants :
+• Debug contrats dynamiques.
 
-Exemple :
->>> try:
-...     x = 1/0
-... except ZeroDivisionError:
-...     x = 0
->>> x
-0
+Cas limites :
+• Noms property comptent comme 'x'.
 
-Usages courants :
-• Providing default values when operations fail
-• Graceful error recovery
-• Safe division with fallback`,
-  2939: `int("abc") lève ValueError. The except clause catches it as e (the exception object). str(e) converts the exception's message to a string and assigns it to x. Therefore type(x) is str.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir B.__abstractmethods__ après override.
+
+Remarques :
+• Réponse : frozenset({'f'}) — 1re option.`,
+  2919: `À quoi sert ABC.register ?
+
+Débutant :
+• Enregistre une sous-classe virtuelle : isinstance/issubclass sans héritage réel.
+
+Intermédiaire :
+• Ne copie aucune méthode vers list.
+
+Expert :
+• Registre interne + __subclasshook__ possible sur ABC custom.
 
 Concepts clés :
-• int("abc") lève ValueError: invalid literal for int() with base 10: 'abc'
-• 'as e' binds the exception object to variable e
-• str(e) renvoie the exception's string representation (the error message)
-• x becomes a string, so type(x) is <class 'str'>
+• Nominal « marqué » vs structurel pur.
 
-Comment ça fonctionne :
-• try: int("abc") lève ValueError
-• except ValueError as e: catches it, e is the ValueError object
-• x = str(e) → x = "invalid literal for int() with base 10: 'abc'"
-• type(x) → <class 'str'>
+Distinctions clés :
+• Pas héritage de méthodes ni TypeError automatique.
 
-Exemple :
->>> try:
-...     int("abc")
-... except ValueError as e:
-...     msg = str(e)
->>> type(msg)
-<class 'str'>
->>> msg
-"invalid literal for int() with base 10: 'abc'"
+Fonctionnement :
+• Après register(list), list vu comme sous-classe de MyABC pour tests.
 
-Usages courants :
-• Extracting error messages for logging
-• Creating user-friendly error responses
-• Inspecting exception details`,
-  2940: `La clause else in a try statement runs uniquement quand no exception was raised in the try block. Here, x = 1 succeeds without error, so the else block executes and sets x = 3. Le bloc except is skipped.
+Exécution étape par étape :
+• Appel register lors de l'import ou setup.
 
-Concepts clés :
-• else runs ONLY when no exception occurred in try
-• If an exception occurs, else is skipped (except runs instead)
-• else runs after try completes successfully
-• The else block is optional
+Cas d'utilisation courants :
+• Typer builtins (list) comme ton interface.
 
-Comment ça fonctionne :
-• try: x = 1 → succeeds, no exception
-• except: x = 2 → skipped (no exception)
-• else: x = 3 → runs because try succeeded
-• print(x) → 3
+Cas limites :
+• Ne garantit pas les méthodes : responsabilité développeur.
 
-Exemple :
->>> try:
-...     result = 10 / 2
-... except ZeroDivisionError:
-...     print("Error!")
-... else:
-...     print("Success:", result)
-Success: 5.0
+Considérations de performance :
+• N/A.
 
-Usages courants :
-• Separating normal flow from error handling
-• Code that should only run if try succeeded
-• Avoiding putting too much code in the try block`,
-  2941: `Le bloc finally is guaranteed to execute regardless of what happens in the try block. It runs after try succeeds, after an exception is caught, after an uncaught exception, and even after a return statement.
+Exemples :
+• isinstance([], MyABC) True après register.
+
+Remarques :
+• Réponse : sous-classe virtuelle — 1re option.`,
+  2920: `MyABC.register(int) puis isinstance(42, MyABC)
+
+Débutant :
+• True : le registre virtuel inclut int.
+
+Intermédiaire :
+• 42 est instance de int ; int est sous-classe enregistrée de MyABC.
+
+Expert :
+• Pas de lien MRO pour les méthodes MyABC.
 
 Concepts clés :
-• finally ALWAYS runs — no exceptions (pun intended)
-• Runs after try block (success or failure)
-• Runs even if return, break, or continue is in try/except
-• Used for cleanup that must happen no matter what
+• isinstance étendu au-delà du graphe d'héritage.
 
-Comment ça fonctionne :
-• try block executes
-• If exception: except block runs (if present), then finally
-• If no exception: else block runs (if present), then finally
-• If uncaught exception: finally runs, then exception propagates
-• If return in try/except: finally runs avant le return
+Distinctions clés :
+• Pas False.
 
-Exemple :
->>> try:
-...     f = open("file.txt")
-...     data = f.read()
-... except FileNotFoundError:
-...     print("File not found")
-... finally:
-...     print("Cleanup runs always")
-# "Cleanup runs always" prints regardless of success or failure
+Fonctionnement :
+• Chemin spécial __subclasscheck__ / cache ABC.
 
-Usages courants :
-• Closing files and database connections
-• Releasing locks
-• Restoring state
-• Any cleanup that must happen`,
-  2942: `A try statement can include all three clauses: except, else, and finally. They execute in a specific order depending on whether an exception occurred.
+Exécution étape par étape :
+• Test positif.
 
-Concepts clés :
-• Full syntax: try / except / else / finally
-• All three clauses are optional but have rules:
-  - else requires at least one except clause
-  - finally can appear alone (try/finally) or with except
-• Execution order depends on whether an exception occurred
+Ordre des opérations :
+• register puis isinstance.
 
-How it works (no exception):
-• try block executes → success
-• except block → skipped
-• else block → runs
-• finally block → runs
+Cas d'utilisation courants :
+• Adapter types C natifs à ton ABC.
 
-How it works (exception caught):
-• try block → exception raised
-• except block → runs (catches exception)
-• else block → skipped
-• finally block → runs
+Cas limites :
+• Classes non enregistrées : False.
 
-Exemple :
->>> try:
-...     result = 10 / 2
-... except ZeroDivisionError:
-...     print("Error")
-... else:
-...     print("Success:", result)
-... finally:
-...     print("Done")
-Success: 5.0
-Done
+Considérations de performance :
+• N/A.
 
-Usages courants :
-• Complete error handling with cleanup
-• Database transactions (try/except for errors, else for commit, finally for close)`,
-  2943: `Exception chaining explicitly links a new exception to an original cause using the 'from' keyword. The original exception is stored in the __cause__ attribute of the new exception.
+Exemples :
+• issubclass(int, MyABC) True.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2921: `Que les sous-classes virtuelles NE font pas
+
+Débutant :
+• Elles n'héritent pas des méthodes de l'ABC.
+
+Intermédiaire :
+• greet sur MyABC n'apparaît pas sur int.
+
+Expert :
+• MRO inchangé ; pas d'injection d'attributs.
 
 Concepts clés :
-• raise X from Y chains exception Y as the cause of X
-• Y is stored in X.__cause__
-• The traceback shows both exceptions with "The above exception was the direct cause of..."
-• Helps debugging by preserving l'originale error context
+• Tests nominaux décorrélés de la table de méthodes.
 
-Comment ça fonctionne :
-• raise ValueError("msg") crée un new ValueError
-• from TypeError("cause") attaches the TypeError as __cause__
-• Both exceptions appear in the traceback
-• The chain shows the causal relationship
+Distinctions clés :
+• isinstance peut être True malgré absence de méthodes ABC.
 
-Exemple :
->>> try:
-...     int("abc")
-... except ValueError as original:
-...     raise RuntimeError("Processing failed") from original
-Traceback (most recent call last):
-  ...
-ValueError: invalid literal for int() with base 10: 'abc'
+Fonctionnement :
+• (42).greet lève AttributeError.
 
-The above exception was the direct cause of the following exception:
+Exécution étape par étape :
+• Appel méthode échoue.
 
-Traceback (most recent call last):
-  ...
-RuntimeError: Processing failed
+Ordre des opérations :
+• register puis tentative d'appel.
 
-Usages courants :
-• Wrapping low-level exceptions in higher-level ones
-• Preserving error context across abstraction layers
-• Library APIs that want to raise their own exception types`,
-  2944: `Every exception object en Python a un __traceback__ attribute that holds a traceback object. This traceback records the call stack at the point where the exception was raised, allowing programmatic inspection of the error location.
+Cas d'utilisation courants :
+• Marquage protocolaire léger (à risque si mal utilisé).
 
-Concepts clés :
-• __traceback__ is set when the exception is raised
-• It is a traceback object (not a string)
-• Contains frame, line number, and file information
-• Can be used with the traceback module for formatting
+Cas limites :
+• Préférer Protocol/runtime_checkable ou ABC réel si besoin méthodes.
 
-Comment ça fonctionne :
-• raise ValueError creates an exception and sets __traceback__
-• except ValueError as e: catches it
-• e.__traceback__ is the traceback object
-• Use traceback.format_tb(e.__traceback__) to get a formatted string
+Considérations de performance :
+• N/A.
 
-Exemple :
->>> import traceback
->>> try:
-...     raise ValueError("test")
-... except ValueError as e:
-...     tb = e.__traceback__
-...     print(type(tb))
-...     print(traceback.format_tb(tb))
-<class 'traceback'>
-['  File "<stdin>", line 2, in <module>\\n']
+Exemples :
+• Voir banque int + greet.
 
-Usages courants :
-• Logging exception tracebacks programmatically
-• Custom error reporting systems
-• Serializing error information for remote debugging`,
-  2945: `traceback.format_exc() captures the current exception's traceback and renvoie it as a formatted string, exactly as it would appear in the default Python error output.
+Remarques :
+• Réponse : pas d'héritage de méthodes — 1re option.`,
+  2922: `isinstance([], Sized)
+
+Débutant :
+• True : list définit __len__.
+
+Intermédiaire :
+• Sized utilise __subclasshook__ structurel.
+
+Expert :
+• str aussi Sized ; int ne l'est pas.
 
 Concepts clés :
-• Résultat : a string (not a traceback object)
-• Must be called inside an except block (or when an exception is active)
-• Includes the exception type, message, and full stack trace
-• Résultat : "NoneType: None" if no exception is active
+• ABC « interface » pour conteneurs avec longueur.
 
-Comment ça fonctionne :
-• 1/0 lève ZeroDivisionError
-• except: catches it
-• traceback.format_exc() calls sys.exc_info() internally
-• Formats the traceback into a human-readable string
-• The string includes file, line number, code, and exception info
+Distinctions clés :
+• Pas False.
 
-Exemple :
->>> import traceback
->>> try:
-...     1/0
-... except:
-...     s = traceback.format_exc()
->>> print(s)
-Traceback (most recent call last):
-  File "<stdin>", line 2, in <module>
-ZeroDivisionError: division by zero
+Fonctionnement :
+• Vérification présence __len__ cohérente.
 
-Usages courants :
-• Logging exception details to files
-• Sending error reports to monitoring systems
-• Custom error pages in web applications`,
-  2946: `sys.exc_info() renvoie a tuple of three values describing the current exception being handled: the exception type (class), the exception value (instance), and the traceback object.
+Exécution étape par étape :
+• isinstance True sur [].
 
-Concepts clés :
-• Résultat : (type, value, traceback) tuple
-• type: the exception class (e.g., ZeroDivisionError)
-• value: the exception instance (e.g., ZeroDivisionError('division by zero'))
-• traceback: the traceback object
-• Résultat : (None, None, None) if no exception is active
+Ordre des opérations :
+• import collections.abc puis print.
 
-Comment ça fonctionne :
-• 1/0 lève ZeroDivisionError
-• Inside except: sys.exc_info() captures the current exception
-• info[0] is <class 'ZeroDivisionError'>
-• info[1] is ZeroDivisionError('division by zero')
-• info[2] is the traceback object
+Cas d'utilisation courants :
+• APIs génériques len(obj).
 
-Exemple :
->>> import sys
->>> try:
-...     1/0
-... except:
-...     exc_type, exc_val, exc_tb = sys.exc_info()
-...     print(exc_type)
-...     print(exc_val)
-<class 'ZeroDivisionError'>
-division by zero
+Cas limites :
+• Objets proxy menteurs : rare.
 
-Usages courants :
-• Low-level exception handling
-• Custom logging frameworks
-• The traceback module uses this internally
-• Useful when you need all three pieces of exception info`,
-  2947: `Custom exceptions can carry additional data beyond the standard error message. Here, AppError extends Exception and adds a 'code' attribute that stores an error code alongside the message.
+Considérations de performance :
+• isinstance optimisé pour certains ABC.
+
+Exemples :
+• isinstance("hi", Sized).
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2923: `isinstance("hello", Iterable)
+
+Débutant :
+• True : str a __iter__.
+
+Intermédiaire :
+• Iterable ≠ Iterator (il manque __next__ seul côté itérateur).
+
+Expert :
+• 42 n'est pas Iterable.
 
 Concepts clés :
-• Custom exceptions inherit from Exception
-• super().__init__(msg) sets the standard message
-• self.code = code adds custom data
-• The exception works normally with try/except AND has extra attributes
+• Itération for x in s.
 
-Comment ça fonctionne :
-• AppError("fail", 404) creates an instance
-• super().__init__("fail") stores "fail" as the message
-• self.code = 404 stocke le code
-• e.code renvoie 404
-• str(e) renvoie "fail"
+Distinctions clés :
+• Pas False.
 
-Exemple :
->>> class AppError(Exception):
-...     def __init__(self, msg, code):
-...         super().__init__(msg)
-...         self.code = code
->>> e = AppError("Not Found", 404)
->>> e.code
-404
->>> str(e)
-'Not Found'
->>> try:
-...     raise AppError("Unauthorized", 401)
-... except AppError as err:
-...     print(f"Error {err.code}: {err}")
-Error 401: Unauthorized
+Fonctionnement :
+• Hook vérifie __iter__ sur la classe.
 
-Usages courants :
-• HTTP error codes in web frameworks
-• Database error codes
-• Application-specific error categories
-• Structured error reporting`,
-  2948: `A bare except: clause (without specifying an exception type) catches every exception, including BaseException subclasses like SystemExit, KeyboardInterrupt, and GeneratorExit. C'est generally considered bad practice.
+Exécution étape par étape :
+• print True.
 
-Concepts clés :
-• Bare except: est équivalent à except BaseException:
-• Catches SystemExit (sys.exit() calls)
-• Catches KeyboardInterrupt (Ctrl+C)
-• Catches GeneratorExit
-• Makes programs hard to stop and debug
+Ordre des opérations :
+• Création str littéral puis test.
 
-Comment ça fonctionne :
-• Python's exception hierarchy: BaseException → Exception → specific types
-• Bare except catches at the BaseException level
-• This means Ctrl+C (KeyboardInterrupt) is caught and silenced
-• sys.exit() (SystemExit) is caught and prevented
+Cas d'utilisation courants :
+• Fonctions acceptant tout itérable.
 
-Exemple :
->>> try:
-...     import sys
-...     sys.exit(0)  # SystemExit
-... except:
-...     print("Caught!")  # This catches SystemExit!
-Caught!
-# Program does NOT exit — SystemExit was caught!
+Cas limites :
+• Ancien __getitem__ sans __iter__ : séquence legacy.
 
->>> # Better practice:
->>> try:
-...     risky_code()
-... except Exception:  # Does NOT catch SystemExit, KeyboardInterrupt
-...     handle_error()
+Considérations de performance :
+• N/A.
 
-Usages courants :
-• Avoid bare except in production code
-• Use except Exception: instead
-• Only use bare except for truly last-resort error handling`,
-  2949: `except Exception: catches all exceptions that inherit from Exception, which includes the vast majority of errors you encounter. However, it does NOT catch BaseException subclasses that are not Exception subclasses: SystemExit, KeyboardInterrupt, and GeneratorExit.
+Exemples :
+• isinstance([1,2], Iterable).
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2924: `isinstance([], Hashable)
+
+Débutant :
+• False : list a __hash__ = None (mutable).
+
+Intermédiaire :
+• Hashable exige __hash__ défini et non None.
+
+Expert :
+• tuple immuable souvent Hashable si éléments hashables.
 
 Concepts clés :
-• Python exception hierarchy:
-  BaseException
-  ├── SystemExit           (NOT caught by except Exception)
-  ├── KeyboardInterrupt    (NOT caught by except Exception)
-  ├── GeneratorExit        (NOT caught by except Exception)
-  └── Exception            (caught)
-      ├── ValueError
-      ├── TypeError
-      ├── RuntimeError
-      └── ... all other standard exceptions
+• Clés dict / éléments set nécessitent hachage stable.
 
-Comment ça fonctionne :
-• except Exception: only catches Exception and its subclasses
-• SystemExit, KeyboardInterrupt, GeneratorExit inherit from BaseException directly
-• This means Ctrl+C still works (KeyboardInterrupt propagates)
-• sys.exit() still works (SystemExit propagates)
+Distinctions clés :
+• Pas True.
 
-Exemple :
->>> try:
-...     import sys
-...     sys.exit(0)
-... except Exception:
-...     print("Not caught!")
-# Program exits — SystemExit is NOT caught by except Exception
+Fonctionnement :
+• __subclasshook__ rejette list.
 
->>> try:
-...     raise ValueError("test")
-... except Exception as e:
-...     print("Caught:", e)
-Caught: test
+Exécution étape par étape :
+• print False.
 
-Usages courants :
-• Preferred over bare except for general error handling
-• Allows Ctrl+C and sys.exit() to work normally
-• Best practice for catch-all error handling`,
-  2950: `EAFP stands for "Easier to Ask Forgiveness than Permission." It is a Python coding style where you assume an operation will work and handle the exception if it doesn't, rather than checking preconditions first.
+Ordre des opérations :
+• import puis isinstance.
+
+Cas d'utilisation courants :
+• Valider avant insertion dans set.
+
+Cas limites :
+• Sous-classe list avec __hash__ custom : cas avancé dangereux.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance({}, Hashable) False.
+
+Remarques :
+• Réponse : False — 1re option.`,
+  2925: `isinstance((1, 2), Hashable)
+
+Débutant :
+• True : tuple fournit __hash__ (si contenu hashable à l'usage).
+
+Intermédiaire :
+• hash((1,2)) OK ; ([],) peut échouer au hash même si isinstance True.
+
+Expert :
+• Distinction isinstance Hashable vs hash() runtime sur contenu.
 
 Concepts clés :
-• EAFP = try the operation, catch the exception if it fails
-• Contrasted with LBYL (Look Before You Leap)
-• Considered Pythonic (the preferred Python style)
-• Uses try/except instead of if/check
+• Immuabilité surface du tuple.
 
-Comment ça fonctionne :
-• Instead of checking if something is valid before doing it
-• Just do it and catch the error if it happens
-• Often faster when the common case is success
-• More readable for complex validation scenarios
+Distinctions clés :
+• Pas False.
 
-Exemple :
-# EAFP style (Pythonic)
-try:
-    value = my_dict["key"]
-except KeyError:
-    value = "default"
+Fonctionnement :
+• tuple.__hash__ non None.
 
-# LBYL style (less Pythonic)
-if "key" in my_dict:
-    value = my_dict["key"]
-else:
-    value = "default"
+Exécution étape par étape :
+• print True.
 
-# EAFP with file operations
-try:
-    with open("config.json") as f:
-        config = json.load(f)
-except FileNotFoundError:
-    config = default_config
+Ordre des opérations :
+• Création tuple puis test.
 
-Usages courants :
-• Dictionary access (try/except KeyError vs checking 'in')
-• File operations (try/except vs os.path.exists)
-• Type conversions (try int(x) vs checking isdigit())
-• Attribute access (try/except AttributeError vs hasattr())`,
+Cas d'utilisation courants :
+• Clés composites dict.
+
+Cas limites :
+• Tuple avec liste imbriquée : TypeError au hash.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance("a", Hashable) True.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2926: `À quoi sert typing.Protocol ?
+
+Débutant :
+• Décrire une interface structurelle pour les vérificateurs de types (mypy, pyright) — canard typé.
+
+Intermédiaire :
+• PEP 544 ; pas besoin d'hériter pour « correspondre » au protocole.
+
+Expert :
+• Runtime : peu d'effet seul ; @runtime_checkable pour isinstance limité.
+
+Concepts clés :
+• Sous-typage structurel explicite.
+
+Distinctions clés :
+• Pas création automatique de classe ABC runtime stricte.
+
+Fonctionnement :
+• Analyse statique compare signatures requises.
+
+Exécution étape par étape :
+• render(Circle()) accepté si draw compatible.
+
+Ordre des opérations :
+• Définition Protocol puis classes concrètes.
+
+Cas d'utilisation courants :
+• APIs pluggables sans coupler l'héritage.
+
+Cas limites :
+• isinstance sans runtime_checkable : souvent interdit ou inutile.
+
+Considérations de performance :
+• Zéro coût à l'exécution pour la plupart des usages typage seul.
+
+Exemples :
+• Drawable avec Circle sans hériter Drawable.
+
+Remarques :
+• Réponse : interfaces structurelles (duck typing typé) — 1re option.`,
+  2927: `Quel sous-typage Protocol utilise-t-il ?
+
+Débutant :
+• Structurel : « a les bonnes méthodes / attributs ».
+
+Intermédiaire :
+• Opposé au nominal ABC (déclaration d'héritage).
+
+Expert :
+• Les checkers raisonnent sur les membres, pas sur le MRO seul.
+
+Concepts clés :
+• Compatibilité par forme.
+
+Distinctions clés :
+• Pas nominal par défaut.
+
+Fonctionnement :
+• Sprite avec draw() accepté comme Drawable annoté.
+
+Exécution étape par étape :
+• Vérification à la compilation / analyse.
+
+Ordre des opérations :
+• Déclaration Protocol puis implémentation séparée.
+
+Cas d'utilisation courants :
+• Tests doubles, adaptateurs tiers.
+
+Cas limites :
+• Covariance/contrevariance : règles avancées.
+
+Considérations de performance :
+• N/A (statique).
+
+Exemples :
+• Comparer avec class C(Shape):.
+
+Remarques :
+• Réponse : sous-typage structurel — 1re option.`,
+  2928: `Quel sous-typage ABC utilise-t-il ?
+
+Débutant :
+• Nominal : il faut hériter (ou register) pour être reconnu.
+
+Intermédiaire :
+• isinstance/issubclass basés sur hiérarchie ou registre.
+
+Expert :
+• Même avec les bonnes méthodes, sans héritage : pas sous-type ABC.
+
+Concepts clés :
+• Relation explicite is-a déclarée.
+
+Distinctions clés :
+• Pas structurel par défaut.
+
+Fonctionnement :
+• MRO et __instancecheck__ ABC.
+
+Exécution étape par étape :
+• Circle doit class Circle(Shape).
+
+Ordre des opérations :
+• Définition classe enfant explicite.
+
+Cas d'utilisation courants :
+• Contrats lourds avec défauts partagés.
+
+Cas limites :
+• register() raccourci nominal sans méthodes.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Protocol vs Shape côte à côte.
+
+Remarques :
+• Réponse : sous-typage nominal — 1re option.`,
+  2929: `Sprite avec draw — considéré Drawable (Protocol) ?
+
+Débutant :
+• Oui structurellement : draw(self)->str présent.
+
+Intermédiaire :
+• Pas besoin class Sprite(Drawable).
+
+Expert :
+• mypy/pyright valident l'appel render(Sprite()).
+
+Concepts clés :
+• Correspondance par signature attendue.
+
+Distinctions clés :
+• Pas TypeError à l'exécution pour ce snippet seul.
+
+Fonctionnement :
+• Analyseur relie Sprite aux exigences Drawable.
+
+Exécution étape par étape :
+• render appelle shape.draw().
+
+Ordre des opérations :
+• Définitions puis appel typé.
+
+Cas d'utilisation courants :
+• DI légère.
+
+Cas limites :
+• Signatures incompatibles : erreur statique.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• render(Sprite()) → 'sprite'.
+
+Remarques :
+• Réponse : oui, structurellement — 1re option.`,
+  2930: `print(Sprite().draw())
+
+Débutant :
+• "sprite" : appel méthode instance normale.
+
+Intermédiaire :
+• Indépendant de Protocol ; le protocole documente l'usage type.
+
+Expert :
+• Si Drawable existe, Sprite matche pour les outils.
+
+Concepts clés :
+• Duck typing runtime inchangé.
+
+Distinctions clés :
+• Pas TypeError.
+
+Fonctionnement :
+• Bound method draw.
+
+Exécution étape par étape :
+• Retour chaîne littérale.
+
+Ordre des opérations :
+• Sprite() puis .draw().
+
+Cas d'utilisation courants :
+• Rendu polymorphe sans base commune runtime.
+
+Cas limites :
+• Erreurs seulement si draw absent.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Variantes draw retournant autres types cassent le typage.
+
+Remarques :
+• Réponse : "sprite" — 1re option.`,
+  2931: `Protocol n'exige PAS quoi pour compatibilité structurelle ?
+
+Débutant :
+• Héritage explicite du Protocol.
+
+Intermédiaire :
+• Noms et types de méthodes doivent quand même matcher pour les checkers.
+
+Expert :
+• Implémentations runtime obligatoires ; le Protocol ne les injecte pas.
+
+Concepts clés :
+• Structure sans déclaration class X(P).
+
+Distinctions clés :
+• Pas « pas besoin de méthodes ».
+
+Fonctionnement :
+• Vérificateur compare l'API réelle au protocole.
+
+Exécution étape par étape :
+• Appel réussi si méthodes présentes.
+
+Ordre des opérations :
+• Définition Protocol puis classe indépendante.
+
+Cas d'utilisation courants :
+• Intégration bibliothèques externes.
+
+Cas limites :
+• Hériter du Protocol pour défauts (Q39).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Sprite sans Drawable dans les bases.
+
+Remarques :
+• Réponse : héritage explicite — 1re option.`,
+  2932: `@runtime_checkable HasLen — isinstance([1,2], HasLen)
+
+Débutant :
+• True : list a __len__.
+
+Intermédiaire :
+• Le décorateur active __instancecheck__ sur le Protocol.
+
+Expert :
+• Vérifie présence attributs, pas signatures fines.
+
+Concepts clés :
+• isinstance runtime pour protocoles simples.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• [1,2] → type list → __len__ existe.
+
+Exécution étape par étape :
+• isinstance retourne True.
+
+Ordre des opérations :
+• Définition classe décorée puis test.
+
+Cas d'utilisation courants :
+• Guards défensifs rapides.
+
+Cas limites :
+• 42 sans __len__ → False.
+
+Considérations de performance :
+• isinstance Protocol plus coûteux que types built-in.
+
+Exemples :
+• isinstance("hello", HasLen) True.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2933: `Que permet @runtime_checkable sur un Protocol ?
+
+Débutant :
+• Utiliser isinstance (et issubclass dans certains cas) à l'exécution.
+
+Intermédiaire :
+• Sans lui, Protocol souvent réservé à l'analyse statique.
+
+Expert :
+• Vérification superficielle (membres), pas mypy au runtime.
+
+Concepts clés :
+• Pont statique / dynamique.
+
+Distinctions clés :
+• Pas « rendre abstract » ni dispatch magique.
+
+Fonctionnement :
+• Métaclasse Protocol ajoute hooks.
+
+Exécution étape par étape :
+• isinstance([], Sizeable) selon banque.
+
+Ordre des opérations :
+• Appliquer décorateur avant isinstance.
+
+Cas d'utilisation courants :
+• Plugins chargés dynamiquement.
+
+Cas limites :
+• Faux positifs si méthode existe mais incompatible.
+
+Considérations de performance :
+• Éviter dans boucles chaudes si possible.
+
+Exemples :
+• Voir typing.runtime_checkable doc.
+
+Remarques :
+• Réponse : isinstance à l'exécution — 1re option.`,
+  2934: `isinstance sur Protocol sans @runtime_checkable
+
+Débutant :
+• TypeError : le protocole non runtime n'est pas un candidat isinstance par défaut.
+
+Intermédiaire :
+• Message peut mentionner support issubclass/instancecheck manquant.
+
+Expert :
+• Solution : ajouter @runtime_checkable ou tester hasattr manuellement.
+
+Concepts clés :
+• Séparation vérification statique / runtime.
+
+Distinctions clés :
+• Pas True/False silencieux.
+
+Fonctionnement :
+• __instancecheck__ du Protocol durcit le cas.
+
+Exécution étape par étape :
+• Exception avant logique métier.
+
+Ordre des opérations :
+• isinstance("hello", MyProto).
+
+Cas d'utilisation courants :
+• Rappel : typer avec mypy, pas isinstance aveugle.
+
+Cas limites :
+• Versions Python : messages peuvent varier.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Ajouter décorateur puis retester.
+
+Remarques :
+• Réponse : TypeError — 1re option.`,
+  2935: `Protocol Comparable avec __lt__
+
+Débutant :
+• Toute classe avec __lt__(self, other) compatible est Comparable pour le typage.
+
+Intermédiaire :
+• int, float, str ont __lt__.
+
+Expert :
+• minimum(a: Comparable, b: Comparable) accepte Temperature custom.
+
+Concepts clés :
+• Opérateur < formalisé.
+
+Distinctions clés :
+• Pas « seulement int ».
+
+Fonctionnement :
+• Analyseur vérifie présence __lt__.
+
+Exécution étape par étape :
+• a < b appelle __lt__.
+
+Ordre des opérations :
+• Définition Protocol puis classes utilisatrices.
+
+Cas d'utilisation courants :
+• Tri générique, min/max typés.
+
+Cas limites :
+• __lt__ sans __gt__ : ordre partiel.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Temperature de la banque.
+
+Remarques :
+• Réponse : toute classe avec __lt__ — 1re option.`,
+  2936: `Signification du « duck typing »
+
+Débutant :
+• Si ça se comporte comme le canard (méthodes attendues), on l'utilise comme tel.
+
+Intermédiaire :
+• Pas de déclaration de type obligatoire à l'exécution Python.
+
+Expert :
+• AttributeError si méthode manquante.
+
+Concepts clés :
+• Polymorphisme par comportement.
+
+Distinctions clés :
+• Pas héritage forcé de Duck.
+
+Fonctionnement :
+• make_quack appelle .quack() sur tout objet pourvu.
+
+Exécution étape par étape :
+• Liaison dynamique à l'appel.
+
+Ordre des opérations :
+• Passage d'instance à fonction.
+
+Cas d'utilisation courants :
+• Écriture de APIs souples.
+
+Cas limites :
+• Moins de garde-fous sans tests/types.
+
+Considérations de performance :
+• Coût normal d'appel attribut.
+
+Exemples :
+• Duck et Person de la banque.
+
+Remarques :
+• Réponse : adéquation par méthodes, pas par type déclaré — 1re option.`,
+  2937: `Protocol formalise quel concept ?
+
+Débutant :
+• Le duck typing pour les vérificateurs statiques.
+
+Intermédiaire :
+• Sans Protocol, def f(obj): obj.run() n'est pas vérifiable structurellement.
+
+Expert :
+• N'impose pas de surcharge runtime.
+
+Concepts clés :
+• Documentation machine-lisible de l'API attendue.
+
+Distinctions clés :
+• Pas hiérarchie de classes runtime Protocol obligatoire.
+
+Fonctionnement :
+• obj: Runnable dans les annotations.
+
+Exécution étape par étape :
+• mypy vérifie .run() sur les appels.
+
+Ordre des opérations :
+• Annoter puis implémenter classes.
+
+Cas d'utilisation courants :
+• Grandes bases mixtes dynamisme + sûreté.
+
+Cas limites :
+• Protocols récursifs : complexité typage.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Runnable / process de la banque.
+
+Remarques :
+• Réponse : duck typing pour analyse statique — 1re option.`,
+  2938: `Protocol Closable avec close(self)->None
+
+Débutant :
+• Fichiers, sockets, connexions, ressources custom avec close() matchent.
+
+Intermédiaire :
+• Pas besoin d'hériter Closable.
+
+Expert :
+• open() retourne des objets avec close.
+
+Concepts clés :
+• cleanup(resource: Closable) typé.
+
+Distinctions clés :
+• Pas « seulement io.IOBase » ni « rien sans héritage ».
+
+Fonctionnement :
+• Vérificateur exige méthode close.
+
+Exécution étape par étape :
+• resource.close() dans cleanup.
+
+Ordre des opérations :
+• Définir Protocol puis fonctions utilitaires.
+
+Cas d'utilisation courants :
+• try/finally ou context managers génériques.
+
+Cas limites :
+• close silencieux vs exceptions : contrat métier.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• MyResource de la banque.
+
+Remarques :
+• Réponse : tout objet avec close() — 1re option.`,
+  2939: `Un Protocol peut-il avoir des implémentations par défaut ?
+
+Débutant :
+• Oui dans le corps des méthodes du Protocol, mais seules les sous-classes explicites héritent ce code.
+
+Intermédiaire :
+• Match structurel seul ne récupère pas les défauts du Protocol.
+
+Expert :
+• Diffère des mixins ABC où héritage nominal apporte le code.
+
+Concepts clés :
+• Defaults = via arbre d'héritage Protocol, pas via shape seule.
+
+Distinctions clés :
+• Pas application automatique à toute classe compatible.
+
+Fonctionnement :
+• class Polite(Greetable): pass reçoit greet défaut.
+
+Exécution étape par étape :
+• MRO inclut le Protocol comme base.
+
+Ordre des opérations :
+• Hériter explicitement pour defaults.
+
+Cas d'utilisation courants :
+• Extension progressive avec base typée.
+
+Cas limites :
+• Protocols runtime_checkable + defaults : réfléchir MRO.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Greetable / Polite banque.
+
+Remarques :
+• Réponse : oui, mais héritage explicite requis pour les utiliser — 1re option.`,
+  2940: `Protocol vérifie ___ ; ABC vérifie ___
+
+Débutant :
+• structure ; héritage (nominal).
+
+Intermédiaire :
+• register() rapproche ABC du marquage sans structure complète.
+
+Expert :
+• mypy Protocol vs isinstance ABC runtime.
+
+Concepts clés :
+• Deux philosophies de sous-type.
+
+Distinctions clés :
+• Pas l'inverse.
+
+Fonctionnement :
+• Tableau mental : canard typé vs arbre de classes.
+
+Exécution étape par étape :
+• Choix selon besoin runtime/statique.
+
+Ordre des opérations :
+• Concevoir API puis choisir outil.
+
+Cas d'utilisation courants :
+• Protocol pour libs pures typage ; ABC pour cadres impératifs.
+
+Cas limites :
+• Hybrides (ABC + Protocol) en gros projets.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Drawable Sprite vs Circle(Shape).
+
+Remarques :
+• Réponse : structure ; héritage — 1re option.`,
+  2941: `Iterator ABC — méthodes requises
+
+Débutant :
+• __iter__ et __next__.
+
+Intermédiaire :
+• __iter__ retourne souvent self sur un itérateur.
+
+Expert :
+• Iterable seulement __iter__ ; Iterator = les deux.
+
+Concepts clés :
+• Protocole d'itération complet.
+
+Distinctions clés :
+• Pas seulement __next__.
+
+Fonctionnement :
+• for boucle appelle __iter__ puis __next__ jusqu'à StopIteration.
+
+Exécution étape par étape :
+• Counter banque : list(Counter(3)).
+
+Ordre des opérations :
+• raise StopIteration en fin.
+
+Cas d'utilisation courants :
+• Parseurs streaming, générateurs manuels.
+
+Cas limites :
+• Itérateurs consommables une fois.
+
+Considérations de performance :
+• __next__ en C pour builtins.
+
+Exemples :
+• iter([]) a __next__.
+
+Remarques :
+• Réponse : __iter__ et __next__ — 1re option.`,
+  2942: `Sequence avec __getitem__ et __len__ — mixins fournis
+
+Débutant :
+• __contains__, __iter__, __reversed__, index, count entre autres.
+
+Intermédiaire :
+• Implémentations par défaut s'appuient sur indexation + longueur.
+
+Expert :
+• Gain : pas réécrire in, boucle, count.
+
+Concepts clés :
+• ABC mixin pattern.
+
+Distinctions clés :
+• Pas « rien de plus » ni append/pop (MutableSequence).
+
+Fonctionnement :
+• MySeq([1,2,3,2]) → in et count gratuits.
+
+Exécution étape par étape :
+• Appels délèguent à __getitem__/__len__.
+
+Ordre des opérations :
+• Sous-classer Sequence.
+
+Cas d'utilisation courants :
+• Vues lecture seule sur buffer.
+
+Cas limites :
+• Complexité O(n) pour in naïf sur séquence linéaire.
+
+Considérations de performance :
+• set/dict préférés pour membership fréquent.
+
+Exemples :
+• 2 in s et s.count(2).
+
+Remarques :
+• Réponse : mixins __contains__, __iter__, __reversed__, index, count — 1re option.`,
+  2943: `MutableSequence ajoute par rapport à Sequence
+
+Débutant :
+• __setitem__, __delitem__, insert + mixins append, clear, reverse, extend, pop, etc.
+
+Intermédiaire :
+• append implémenté via insert à la fin.
+
+Expert :
+• __iadd__, remove aussi dans la famille.
+
+Concepts clés :
+• Mutation avec primitifs minimaux.
+
+Distinctions clés :
+• Pas « seulement append/pop » ni rien.
+
+Fonctionnement :
+• MyList banque utilise mixins après 4 méthodes de base.
+
+Exécution étape par étape :
+• m.append / extend après insert défini.
+
+Ordre des opérations :
+• Respecter contrat abstract restant.
+
+Cas d'utilisation courants :
+• Types liste custom (validation à l'insertion).
+
+Cas limites :
+• insert mal implémenté casse append.
+
+Considérations de performance :
+• extend naïf O(n²) possible.
+
+Exemples :
+• Voir collections.abc doc.
+
+Remarques :
+• Réponse : __setitem__, __delitem__, insert + append, clear, reverse, extend, pop… — 1re option.`,
+  2944: `isinstance({"a":1}, Mapping)
+
+Débutant :
+• True : dict a __getitem__, __len__, __iter__.
+
+Intermédiaire :
+• Mapping lecture seule conceptuelle ; dict mutable mais satisfait.
+
+Expert :
+• Mixins keys/items/values/get/eq… sur l'ABC.
+
+Concepts clés :
+• Typage des « dict-like ».
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Enregistrement virtuel + C layout dict.
+
+Exécution étape par étape :
+• print True.
+
+Ordre des opérations :
+• Littéral dict puis isinstance.
+
+Cas d'utilisation courants :
+• Fonctions acceptant read-only mapping.
+
+Cas limites :
+• Objets custom : implémenter méthodes requises.
+
+Considérations de performance :
+• isinstance ABC optimisé.
+
+Exemples :
+• isinstance([], Mapping) False.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2945: `isinstance({"a":1}, MutableMapping)
+
+Débutant :
+• True : dict supporte __setitem__ et __delitem__.
+
+Intermédiaire :
+• Mixins pop, update, setdefault, clear…
+
+Expert :
+• types.MappingProxyType : Mapping pas Mutable.
+
+Concepts clés :
+• Distinction lecture / écriture dans les ABC.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Vérification capacités de mutation.
+
+Exécution étape par étape :
+• print True.
+
+Ordre des opérations :
+• import MutableMapping puis test.
+
+Cas d'utilisation courants :
+• APIs config modifiables.
+
+Cas limites :
+• Proxy read-only : Mapping seulement.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance({}, MutableMapping).
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2946: `isinstance(frozenset(), Set)
+
+Débutant :
+• True : frozenset a __contains__, __iter__, __len__.
+
+Intermédiaire :
+• set aussi isinstance Set.
+
+Expert :
+• Set ABC = ensemble immuable en intention d'API ; set concret aussi sous-type.
+
+Concepts clés :
+• Opérations ensemblistes en lecture.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• ABC collections.abc.Set.
+
+Exécution étape par étape :
+• print True.
+
+Ordre des opérations :
+• frozenset() vide puis isinstance.
+
+Cas d'utilisation courants :
+• Fonctions unions/intersections typées.
+
+Cas limites :
+• Confusion Set typing builtins vs collections.abc.Set.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance(set(), Set) True.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2947: `isinstance(frozenset(), MutableSet)
+
+Débutant :
+• False : frozenset n'a pas add ni discard.
+
+Intermédiaire :
+• set() est MutableSet.
+
+Expert :
+• Immuabilité exclut les opérations de mutation de l'ABC.
+
+Concepts clés :
+• MutableSet = Set + add/discard.
+
+Distinctions clés :
+• Pas True.
+
+Fonctionnement :
+• isinstance vérifie méthodes de mutation.
+
+Exécution étape par étape :
+• print False.
+
+Ordre des opérations :
+• import MutableSet puis frozenset().
+
+Cas d'utilisation courants :
+• Choisir bon ABC pour APIs set/dataset.
+
+Cas limites :
+• frozenset méthodes « similaires » mais pas add.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance(set(), MutableSet) True.
+
+Remarques :
+• Réponse : False — 1re option.`,
+  2948: `isinstance(lambda: None, Callable)
+
+Débutant :
+• True : fonctions ont __call__.
+
+Intermédiaire :
+• print, méthodes, classes avec __call__, lambdas.
+
+Expert :
+• 42 n'est pas Callable.
+
+Concepts clés :
+• ABC Callable ~ objets invoquables.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• isinstance détecte __call__ sur le type.
+
+Exécution étape par étape :
+• print True.
+
+Ordre des opérations :
+• lambda créée puis test.
+
+Cas d'utilisation courants :
+• Callbacks typés.
+
+Cas limites :
+• Typage générique Callable[[int], str] au-delà.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• isinstance(Adder(), Callable) avec __call__.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2949: `Plusieurs Protocols à la fois pour une classe ?
+
+Débutant :
+• Oui : implémenter l'union des méthodes requises.
+
+Intermédiaire :
+• Pas d'héritage multiple de Protocol nécessaire.
+
+Expert :
+• Widget drawable + resizable banque.
+
+Concepts clés :
+• Composition structurelle multi-contrats.
+
+Distinctions clés :
+• Pas une seule interface à la fois.
+
+Fonctionnement :
+• Type checker vérifie chaque annotation séparément.
+
+Exécution étape par étape :
+• Passage de Widget là où Drawable ou Resizable attendu.
+
+Ordre des opérations :
+• Définir plusieurs Protocol puis classe unique.
+
+Cas d'utilisation courants :
+• Composants UI riches.
+
+Cas limites :
+• Méthodes aux signatures incompatibles : impossible.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• draw + resize sur Widget.
+
+Remarques :
+• Réponse : oui, toutes les méthodes requises — 1re option.`,
+  2950: `Protocol Printable avec __str__ -> str — combien d'objets ?
+
+Débutant :
+• Tous : object définit un __str__ par défaut ; chaque instance a une représentation.
+
+Intermédiaire :
+• Sous-classes peuvent override __str__ mais conservent la méthode.
+
+Expert :
+• Le protocole est donc trivialement large ; utile pédagogiquement.
+
+Concepts clés :
+• Racine unique object du modèle.
+
+Distinctions clés :
+• Pas seulement str ni seulement customs.
+
+Fonctionnement :
+• isinstance runtime dépend de @runtime_checkable ; question = capacité structurelle.
+
+Exécution étape par étape :
+• str(42), str([]), str(None) tous valides.
+
+Ordre des opérations :
+• Naissance objet puis str().
+
+Cas d'utilisation courants :
+• Logging, concaténation, f-strings.
+
+Cas limites :
+• __str__ levant exception : rare et mauvaise pratique.
+
+Considérations de performance :
+• str peut allouer.
+
+Exemples :
+• class Empty: pass puis str(Empty()).
+
+Remarques :
+• Réponse : tous les objets (héritage object.__str__) — 1re option.`,
   2951: `LBYL stands for "Look Before You Leap." It is a coding style where you check preconditions before performing an operation, rather than catching exceptions après le fact. While valid, LBYL is generally considered less Pythonic than EAFP.
 
 Concepts clés :
