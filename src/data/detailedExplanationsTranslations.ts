@@ -85011,2118 +85011,4000 @@ Exemples :
 
 Remarques :
 • Réponse : {"a": 1, "b": 2}.`,
-  1951: `Une fonction génératrice contient une ou plusieurs expressions yield. Appeler gen() renvoie un objet générateur, pas les résultats directement. L'envelopper dans list() itère le générateur jusqu'à épuisement, collectant chaque valeur émise.
+  1951: `Dict comprehension avec listes internes
+
+Débutant :
+• Pour chaque x de range(4), la valeur est [y for y in range(x)] : liste des entiers de 0 à x-1.
+
+Intermédiaire :
+• x=0 → range(0) vide → [] ; x=1 → [0] ; x=2 → [0,1] ; x=3 → [0,1,2].
+
+Expert :
+• Compréhension imbriquée : la boucle externe fixe x, la liste interne dépend de x.
 
 Concepts clés :
-• yield met la fonction en pause et émet une valeur
-• Chaque appel à next() reprend jusqu'au prochain yield
-• list() appelle next() à répétition jusqu'à StopIteration
+• Dict comprehension, list comprehension interne, range.
 
-Comment ça fonctionne :
-1. gen() retourne un objet générateur
-2. list() appelle next() trois fois, obtenant 1, 2, 3
-3. Le quatrième next() lève StopIteration → list() s'arrête
-4. Résultat : [1, 2, 3]
-
-Usages courants :
-• Séquences paresseuses — produire des valeurs à la demande
-• Itération efficace en mémoire sur de grandes données
-• Traitement en pipeline avec générateurs chaînés`,
-  1952: `Appeler next() sur un générateur reprend l'exécution jusqu'au prochain yield, puis retourne la valeur émise et met en pause.
-
-Concepts clés :
-• next(g) fait avancer le générateur d'un pas
-• Le générateur se met en pause à chaque yield
-• L'état (variables locales, pointeur d'instruction) est préservé entre les appels
-
-Comment ça fonctionne :
-1. g = gen() crée le générateur (corps pas encore exécuté)
-2. next(g) exécute le corps jusqu'à "yield 1" → retourne 1
-3. Le générateur est maintenant en pause juste après le premier yield
-4. Un next(g) suivant reprendrait et atteindrait "yield 2"
-
-Exemple :
-g = gen()
-next(g)  # 1 — premier yield
-next(g)  # 2 — deuxième yield`,
-  1953: `Chaque appel à next() reprend le générateur là où il s'était mis en pause. Le générateur se souvient de sa position entre les appels.
-
-Concepts clés :
-• L'état du générateur est préservé entre les appels à next()
-• Premier next() → yield 1 (pause), deuxième next() → yield 2 (pause)
-• Les valeurs sont produites paresseusement, une à la fois
-
-Comment ça fonctionne :
-1. next(g) premier appel : exécute jusqu'à "yield 1", retourne 1, met en pause
-2. next(g) deuxième appel : reprend après le premier yield, exécute jusqu'à "yield 2", retourne 2, met en pause
-3. Le générateur est maintenant en pause après le deuxième yield
-
-Exemple :
-g = gen()
-next(g)  # 1
-next(g)  # 2 — le générateur reprend là où il s'était mis en pause`,
-  1954: `Quand un générateur n'a plus de yield à exécuter, appeler next() lève une exception StopIteration. C'est le signal standard que le générateur est épuisé.
-
-Concepts clés :
-• StopIteration est le signal standard d'épuisement d'un itérateur
-• Les boucles for et list() attrapent StopIteration automatiquement
-• Les appels manuels à next() doivent la gérer avec try/except ou une valeur par défaut
-
-Comment ça fonctionne :
-1. next(g) → 1 (premier yield)
-2. next(g) → 2 (deuxième yield)
-3. next(g) → le corps du générateur se termine → StopIteration est levée
-4. Une fois épuisé, le générateur ne peut pas être redémarré
-
-Astuce : next(g, default) retourne default au lieu de lever StopIteration :
-next(g, "done")  # "done" au lieu de l'exception`,
-  1955: `Les générateurs peuvent contenir des boucles. Chaque itération de la boucle atteint le yield, se met en pause, et reprend au prochain appel à next().
-
-Concepts clés :
-• yield dans une boucle produit une valeur par itération
-• L'état de la boucle (variable i) est préservé entre les pauses
-• list() fait avancer le générateur à travers toutes les itérations
-
-Comment ça fonctionne :
-1. i=0 : yield 0**2 → émet 0
-2. i=1 : yield 1**2 → émet 1
-3. i=2 : yield 2**2 → émet 4
-4. La boucle se termine → StopIteration
-5. list() collecte [0, 1, 4]
-
-Usages courants :
-• Transformer des séquences paresseusement
-• Traiter de grands ensembles de données élément par élément`,
-  1956: `Le mot-clé yield transforme une fonction ordinaire en fonction génératrice. Lors de l'appel, la fonction retourne un objet générateur au lieu d'exécuter le corps immédiatement.
-
-Concepts clés :
-• yield met l'exécution en pause et envoie une valeur à l'appelant
-• L'état de la fonction (variables locales, position) est figé
-• Appeler next() reprend exactement là où elle s'était mise en pause
-• Quand la fonction se termine, StopIteration est levée
-
-Comment ça fonctionne :
-1. def gen(): yield value — définit une fonction génératrice
-2. g = gen() — crée l'objet générateur (corps pas encore exécuté)
-3. next(g) — exécute le corps jusqu'au yield, retourne la valeur émise, met en pause
-4. next(g) — reprend au point de pause, exécute jusqu'au prochain yield ou fin
-
-yield vs return :
-• return quitte la fonction définitivement
-• yield met la fonction en pause et peut reprendre plus tard
-• Une fonction peut émettre plusieurs valeurs à travers plusieurs appels`,
-  1957: `yield from délègue l'itération à un autre itérable, émettant chacun de ses éléments un par un. C'est équivalent à écrire une boucle for avec yield à l'intérieur.
-
-Concepts clés :
-• yield from iterable émet chaque élément de cet itérable
-• Équivalent à : for item in iterable: yield item
-• Fonctionne avec tout itérable : listes, ranges, chaînes, autres générateurs
-
-Comment ça fonctionne :
-1. yield from [1, 2, 3] itère sur la liste
-2. Émet 1, puis 2, puis 3 individuellement
-3. list(gen()) collecte les trois → [1, 2, 3]
-
-Sans yield from :
-def gen():
-    for item in [1, 2, 3]:
-        yield item  # même résultat
-
-Usages courants :
-• Aplatir des générateurs imbriqués
-• Déléguer à des sous-générateurs
-• Simplifier les générateurs récursifs`,
-  1958: `yield from fonctionne avec tout itérable, y compris les objets range. Il itère sur le range et émet chaque valeur.
-
-Concepts clés :
-• range(5) produit 0, 1, 2, 3, 4
-• yield from range(5) émet chacune de ces valeurs une à la fois
-• Le générateur agit comme un enveloppeur transparent autour du range
-
-Comment ça fonctionne :
-1. yield from range(5) commence à itérer range(5)
-2. Émet : 0, 1, 2, 3, 4 (un par appel à next())
-3. Quand le range est épuisé, le générateur continue vers la prochaine instruction (ou se termine)
-4. list() collecte toutes les valeurs → [0, 1, 2, 3, 4]
-
-Exemple :
-def gen(): yield from range(5)
-list(gen())  # [0, 1, 2, 3, 4]`,
-  1959: `Les chaînes en Python sont itérables — itérer sur une chaîne produit les caractères individuels. yield from une chaîne émet donc un caractère à la fois.
-
-Concepts clés :
-• Les chaînes sont des séquences de caractères
-• Itérer "abc" donne "a", "b", "c"
-• yield from "abc" est équivalent à : for ch in "abc": yield ch
-
-Comment ça fonctionne :
-1. yield from "abc" itère sur la chaîne
-2. Émet "a", puis "b", puis "c"
-3. list() les collecte → ["a", "b", "c"]
-
-Contraste avec yield (sans from) :
-def gen(): yield "abc"
-list(gen())  # ["abc"] — émet toute la chaîne comme un seul élément`,
-  1960: `Une expression génératrice dans un appel de fonction évite de créer une liste intermédiaire. sum() consomme les valeurs générées une à une.
-
-Concepts clés :
-• (x**2 for x in range(4)) est une expression génératrice
-• Elle produit 0, 1, 4, 9 paresseusement
-• sum() les additionne : 0 + 1 + 4 + 9 = 14
-• Aucune liste n'est créée en mémoire — les valeurs sont consommées au fur et à mesure
-
-Comment ça fonctionne :
-1. range(4) → 0, 1, 2, 3
-2. x**2 pour chacun : 0, 1, 4, 9
-3. sum() accumule : 0 + 1 + 4 + 9 = 14
-
-Expression génératrice vs compréhension de liste :
-sum([x**2 for x in range(4)])  # crée d'abord la liste, puis somme — même résultat mais plus de mémoire
-sum(x**2 for x in range(4))    # pas de liste intermédiaire — plus efficace en mémoire`,
-  1961: `max() accepte une expression génératrice et trouve la plus grande valeur sans construire de liste en mémoire.
-
-Concepts clés :
-• range(4) → 0, 1, 2, 3
-• Carrés : 0, 1, 4, 9
-• max() retourne le plus grand : 9
-
-Comment ça fonctionne :
-1. Le générateur produit 0**2=0, 1**2=1, 2**2=4, 3**2=9
-2. max() suit la plus grande valeur rencontrée
-3. Après avoir consommé toutes les valeurs, retourne 9
-
-Patterns similaires :
-min(x**2 for x in range(4))  # 0
-sum(x**2 for x in range(4))  # 14
-max(x**2 for x in range(4))  # 9`,
-  1962: `any() retourne True si au moins un élément de l'itérable est truthy. Elle court-circuite — s'arrête dès qu'elle trouve une valeur True.
-
-Concepts clés :
-• range(5) → 0, 1, 2, 3, 4
-• x > 3 est False pour 0, 1, 2, 3 et True pour 4
-• any() trouve le True à x=4 et retourne True immédiatement
-
-Comment ça fonctionne :
-1. x=0 : 0 > 3 → False
-2. x=1 : 1 > 3 → False
-3. x=2 : 2 > 3 → False
-4. x=3 : 3 > 3 → False (pas strictement supérieur)
-5. x=4 : 4 > 3 → True → any() retourne True (court-circuit)
-
-Comportement de court-circuit :
-• any() arrête d'itérer dès qu'elle trouve True
-• Efficace pour les grands itérables — pas besoin de tout vérifier`,
-  1963: `all() retourne True seulement si chaque élément de l'itérable est truthy. Elle court-circuite sur la première valeur False.
-
-Concepts clés :
-• range(5) → 0, 1, 2, 3, 4
-• x > 0 pour x=0 est False (0 n'est pas strictement supérieur à 0)
-• all() rencontre False immédiatement et retourne False
-
-Comment ça fonctionne :
-1. x=0 : 0 > 0 → False → all() retourne False immédiatement
-2. Ne vérifie même pas x=1, 2, 3, 4
-
-Comportement de court-circuit :
-• all() s'arrête dès qu'elle trouve une valeur False
-• Pour all(x > 0 for x in range(1, 5)), le résultat serait True (commence à 1)
-
-Contraste :
-all(x >= 0 for x in range(5))  # True — 0 >= 0 est True`,
-  1964: `Une expression génératrice peut inclure une clause if pour filtrer les valeurs. Seules les valeurs où la condition est True sont émises.
-
-Concepts clés :
-• range(10) → 0 à 9
-• x % 2 == 0 garde seulement les nombres pairs
-• list() collecte les résultats filtrés
-
-Comment ça fonctionne :
-1. x=0 : 0%2==0 → True → inclut 0
-2. x=1 : 1%2==0 → False → saute
-3. x=2 : 2%2==0 → True → inclut 2
-4. ... continue pour toutes les valeurs
-5. Résultat : [0, 2, 4, 6, 8]
-
-Compréhension de liste équivalente :
-[x for x in range(10) if x % 2 == 0]  # même résultat mais crée une liste immédiatement`,
-  1965: `La syntaxe de compréhension entre parenthèses crée un objet générateur, pas une liste ni un tuple. Le type est 'generator'.
-
-Concepts clés :
-• (x for x in range(3)) est une expression génératrice
-• [x for x in range(3)] serait une compréhension de liste
-• Les expressions génératrices sont paresseuses — valeurs calculées à la demande
-
-Comment ça fonctionne :
-1. (x for x in range(3)) crée un objet générateur
-2. type() retourne <class 'generator'>
-3. Aucune valeur n'a encore été calculée — elles sont produites uniquement à l'itération
-
-Distinction clé :
-type([x for x in range(3)])  # <class 'list'>
-type((x for x in range(3)))  # <class 'generator'>
-type(x for x in range(3))    # <class 'generator'> (parenthèses de l'appel de fonction)`,
-  1966: `Les générateurs ne peuvent être itérés qu'une fois. Après que toutes les valeurs sont consommées, le générateur est épuisé et ne produit plus de valeurs.
-
-Concepts clés :
-• Les générateurs sont des itérateurs à passage unique
-• Une fois épuisés, ils ne peuvent pas être réinitialisés ou redémarrés
-• list(g) la deuxième fois obtient un itérateur vide → []
-
-Comment ça fonctionne :
-1. g = (x**2 for x in range(3)) — crée le générateur
-2. a = list(g) — consomme toutes les valeurs → a = [0, 1, 4], g est maintenant épuisé
-3. b = list(g) — le générateur n'a plus rien → b = []
-
-Contraste avec les listes :
-lst = [0, 1, 4]
-list(lst)  # [0, 1, 4]
-list(lst)  # [0, 1, 4] — les listes peuvent être itérées plusieurs fois`,
-  1967: `Les générateurs peuvent représenter des séquences infinies car ils produisent des valeurs paresseusement. La boucle while True tourne indéfiniment, mais yield met en pause entre chaque valeur.
-
-Concepts clés :
-• while True: yield n crée un flux infini
-• Chaque appel à next() reprend, émet n, incrémente n, puis se met en pause à nouveau
-• Le générateur ne se termine jamais — on prend seulement ce dont on a besoin
-
-Comment ça fonctionne :
-1. next(g) : n=0 → yield 0, n devient 1
-2. next(g) : n=1 → yield 1, n devient 2
-3. next(g) : n=2 → yield 2, n devient 3
-4. next(g) : n=3 → yield 3, n devient 4
-5. next(g) : n=4 → yield 4, n devient 5
-6. La compréhension de liste collecte [0, 1, 2, 3, 4]
-
-Usages courants :
-• Compteurs infinis, générateurs d'ID
-• Flux de données paresseux
-• itertools.count(0) fait la même chose`,
-  1968: `Une fonction génératrice peut avoir une instruction return avec une valeur. Cette valeur devient l'attribut value de l'exception StopIteration quand le générateur est épuisé.
-
-Concepts clés :
-• yield 1 produit 1 au premier appel à next()
-• return "done" termine le générateur au deuxième appel à next()
-• La valeur de retour est stockée dans StopIteration.value
-• next(g) ne retourne que les valeurs émises, pas la valeur de retour
-
-Comment ça fonctionne :
-1. next(g) → exécute jusqu'à "yield 1" → retourne 1
-2. next(g) → reprend, atteint "return 'done'" → lève StopIteration
-3. L'exception StopIteration a .value = "done"
-
-Accéder à la valeur de retour :
-try:
-    next(g)  # StopIteration
-except StopIteration as e:
-    print(e.value)  # "done"`,
-  1969: `Ce générateur infini produit la suite de Fibonacci en utilisant l'affectation multiple pour échanger les valeurs.
-
-Concepts clés :
-• a, b = 0, 1 initialise les deux premiers nombres de Fibonacci
-• yield a produit le nombre courant
-• a, b = b, a + b met à jour les deux variables simultanément
-
-Comment ça fonctionne étape par étape :
-1. a=0, b=1 → yield 0 → a,b = 1,1
-2. a=1, b=1 → yield 1 → a,b = 1,2
-3. a=1, b=2 → yield 1 → a,b = 2,3
-4. a=2, b=3 → yield 2 → a,b = 3,5
-5. a=3, b=5 → yield 3 → a,b = 5,8
-6. a=5, b=8 → yield 5 → a,b = 8,13
-7. a=8, b=13 → yield 8
-Résultat : [0, 1, 1, 2, 3, 5, 8]
-
-L'affectation multiple a, b = b, a + b est cruciale — elle évalue les deux valeurs de droite avant d'affecter, donc l'ancien a est utilisé dans a + b.`,
-  1970: `Plusieurs instructions yield from s'exécutent séquentiellement. La première émet toutes ses valeurs, puis la deuxième émet toutes les siennes.
-
-Concepts clés :
-• yield from range(3) émet 0, 1, 2
-• Après que le premier yield from soit terminé, l'exécution continue vers l'instruction suivante
-• Le deuxième yield from range(3) émet 0, 1, 2 à nouveau
-
-Comment ça fonctionne :
-1. yield from range(3) → émet 0, 1, 2
-2. Premier range épuisé → l'exécution continue
-3. yield from range(3) → émet 0, 1, 2 à nouveau
-4. Résultat : [0, 1, 2, 0, 1, 2]
-
-C'est équivalent à :
-import itertools
-list(itertools.chain(range(3), range(3)))  # [0, 1, 2, 0, 1, 2]`,
-  1971: `La règle LEGB de Python permet aux fonctions de lire des variables des portées externes. Quand x n'est pas trouvé localement, Python cherche dans la portée englobante, puis globale.
-
-Concepts clés :
-• LEGB : Local → Enclosing (englobante) → Global → Built-in
-• f() n'a pas de x local, donc Python cherche dans la portée globale
-• x = 1 est dans la portée globale (module) → trouvé et retourné
-
-Comment ça fonctionne :
-1. x = 1 défini au niveau du module (portée globale)
-2. f() est appelée — Python cherche x dans la portée locale → pas trouvé
-3. Python cherche dans la portée globale → x = 1 trouvé
-4. Retourne 1
-
-Distinction importante :
-• Lire une variable globale fonctionne sans mot-clé spécial
-• Modifier (affecter à) une variable globale requiert le mot-clé global`,
-  1972: `Une affectation à l'intérieur d'une fonction crée une variable locale qui masque la globale. La variable globale n'est pas modifiée.
-
-Concepts clés :
-• x = 2 dans f() crée une nouvelle variable locale nommée x
-• Cette x locale est distincte de la x globale
-• La x globale reste 1 après le retour de f()
-
-Comment ça fonctionne :
-1. x = 1 au niveau du module (global)
-2. f() exécute : x = 2 crée une x locale (valeur 2)
-3. f() retourne — sa x locale est abandonnée
-4. La x globale est toujours 1
-
-Pourquoi cela arrive :
-• Python traite toute affectation dans une fonction comme créant une variable locale
-• La x locale et la x globale sont des objets différents dans des espaces de noms différents
-• Pour modifier la x globale, il faut le mot-clé global`,
-  1973: `Le mot-clé global déclare qu'une variable à l'intérieur d'une fonction fait référence à la variable au niveau du module (globale), permettant la modification.
-
-Concepts clés :
-• global x dit à Python : "x dans cette fonction est la x globale"
-• Sans global, x = 2 créerait une variable locale
-• Avec global, x = 2 modifie la x au niveau du module
-
-Comment ça fonctionne :
-1. x = 1 au niveau du module
-2. f() déclare global x — aucune x locale ne sera créée
-3. x = 2 modifie la x globale
-4. Après le retour de f(), la x globale est maintenant 2
-
-Quand utiliser global :
-• Rarement — l'état mutable global est généralement déconseillé
-• Préférer passer des valeurs en arguments et retourner des résultats
-• Acceptable pour des scripts simples ou une configuration au niveau du module`,
-  1974: `Le mot-clé nonlocal permet à une fonction imbriquée de modifier une variable dans sa portée englobante (non globale).
-
-Concepts clés :
-• nonlocal x lie x à la variable de la fonction englobante
-• Sans nonlocal, x = 2 dans g() créerait une nouvelle variable locale dans g
-• Avec nonlocal, g() modifie directement la x de f()
-
-Comment ça fonctionne :
-1. f() définit x = 1 (local à f)
-2. g() déclare nonlocal x — référence la x de f()
-3. g() définit x = 2 — modifie la x de f()
-4. g() retourne
-5. f() retourne x → 2 (modifié par g)
-
-nonlocal vs global :
-• global : fait référence à la variable au niveau du module
-• nonlocal : fait référence à la variable de la fonction englobante la plus proche (pas globale)`,
-  1975: `Sans le mot-clé nonlocal, une affectation dans une fonction imbriquée crée une nouvelle variable locale qui masque celle de l'extérieur.
-
-Concepts clés :
-• x = 2 dans g() crée la propre x locale de g
-• La x = 1 de f() reste intacte
-• La x locale de g() est abandonnée quand g() retourne
-
-Comment ça fonctionne :
-1. f() définit x = 1 (local à f)
-2. g() exécute x = 2 — crée une x locale dans la portée de g
-3. g() retourne — la x locale de g (valeur 2) est abandonnée
-4. f() retourne x → 1 (la x de f n'a jamais été modifiée)
-
-Contraste avec Q74 :
-• Avec nonlocal x : g() modifie la x de f() → f() retourne 2
-• Sans nonlocal : g() a sa propre x → f() retourne 1`,
-  1976: `LEGB définit l'ordre dans lequel Python cherche les noms de variables. Quand vous référencez un nom, Python parcourt ces portées dans l'ordre.
-
-Concepts clés :
-• L — Local : variables définies dans la fonction courante
-• E — Enclosing (englobante) : variables dans toute fonction englobante
-• G — Global : variables définies au niveau du module
-• B — Built-in : noms dans le module builtins (print, len, int, etc.)
-
-Comment ça fonctionne :
-1. Python rencontre un nom comme x
-2. Vérifie d'abord la portée locale (fonction courante)
-3. Si pas trouvé, vérifie les portées des fonctions englobantes (fonctions imbriquées)
-4. Si pas trouvé, vérifie la portée globale (module)
-5. Si pas trouvé, vérifie les noms built-in
-6. Si toujours pas trouvé : NameError
-
-Exemple :
-x = "global"           # portée G
-def outer():
-    x = "enclosing"    # portée E
-    def inner():
-        x = "local"    # portée L
-        print(x)       # "local" — L trouvé en premier
-    inner()`,
-  1977: `Les références aux variables dans les fonctions sont résolues au moment de l'appel (liaison tardive), pas au moment de la définition. La fonction ne capture pas la valeur de x quand elle est définie.
-
-Concepts clés :
-• f est définie quand x = 10, mais ne stocke pas la valeur de x
-• x = 20 change la x globale avant que f() soit appelée
-• Quand f() est appelée, elle cherche x et trouve 20
-
-Comment ça fonctionne :
-1. x = 10 — la x globale est 10
-2. def f(): return x — f est définie (pas encore de recherche)
-3. x = 20 — la x globale est maintenant 20
-4. f() est appelée — cherche x dans la portée globale → 20
-
-C'est la liaison tardive :
-• La fonction stocke une référence au nom "x", pas sa valeur
-• Chaque fois que f() est appelée, elle cherche la valeur courante de x
-• C'est pourquoi les fermetures dans les boucles peuvent se comporter de façon inattendue`,
-  1978: `La chaîne de portées de chaque fonction est déterminée par l'endroit où elle est définie, pas par l'endroit où elle est appelée. C'est la portée lexicale (statique).
-
-Concepts clés :
-• f() est définie au niveau du module — sa chaîne de portées est : local → global → built-in
-• La x locale = 99 de g() n'est pas dans la chaîne de portées de f()
-• f() cherche x dans la portée globale et trouve 10
-
-Comment ça fonctionne :
-1. x = 10 dans la portée globale
-2. f() est définie au niveau du module — voit la portée globale
-3. g() est appelée, définit x locale = 99
-4. g() appelle f() — mais f() a sa propre chaîne de portées
-5. f() cherche x : pas local → global → x = 10
-6. g() retourne le résultat de f() : 10
-
-C'est la portée lexicale :
-• Python utilise la portée où la fonction est écrite (définie), pas où elle est appelée
-• La portée englobante de f() est le module, peu importe qui l'appelle`,
-  1979: `Pour supprimer une variable globale depuis l'intérieur d'une fonction, vous avez besoin du mot-clé global pour indiquer que vous faites référence à la variable globale, puis utiliser del.
-
-Concepts clés :
-• global x dit à Python que x fait référence à la variable globale
-• del x supprime alors x de l'espace de noms global
-• Sans la déclaration global, del x tenterait de supprimer une variable locale
-
-Comment ça fonctionne :
-x = 42
-def remove():
-    global x
-    del x
-remove()
-# x est maintenant supprimé des globals
-# Accéder à x lèverait NameError
-
-Sans global :
-x = 42
-def remove():
-    del x  # UnboundLocalError — aucune x locale n'existe
-
-Important : Supprimer des variables globales est rarement une bonne pratique. Préférer définir à None ou restructurer le code.`,
-  1980: `Chaque fonction built-in en Python (len, print, int, etc.) est définie dans le module builtins. L'attribut __module__ indique à quel module une fonction appartient.
-
-Concepts clés :
-• len.__module__ retourne "builtins"
-• Le module builtins est le "B" de LEGB
-• Tous les noms built-in (print, len, type, int, str, etc.) viennent de ce module
-
-Comment ça fonctionne :
-1. len est une fonction built-in
-2. len.__module__ → "builtins"
-3. C'est le même module accessible via import builtins
-
-Vous pouvez même surcharger les built-ins (non recommandé) :
-import builtins
-builtins.len = lambda x: 42  # remplace len globalement !
-
-Autres exemples :
-print.__module__   # "builtins"
-int.__module__     # "builtins"
-type.__module__    # "builtins"`,
-  1981: `Quand une boucle se termine, les lambdas capturées référencent la variable de boucle à sa valeur finale à cause de la liaison tardive.
-
-Concepts clés :
-• La boucle for termine avec i=3
-• Chaque lambda capture le nom i, pas sa valeur au moment de la création
-• À l'appel, toutes les lambdas lisent i=3 (la valeur courante)
-
-Comment ça fonctionne :
-1. for i in range(4) : i prend 0, 1, 2, 3
-2. Chaque lambda x: x + i capture le nom i
-3. La boucle termine — i vaut 3
-4. funcs[0](1) cherche i → trouve 3 → 1+3=4
-5. Toutes retournent 4 car elles voient i=3
-
-Solution : utiliser un argument par défaut pour capturer la valeur :
-funcs = [lambda x, i=i: x + i for i in range(4)]`,
-  1982: `L'attribut __closure__ d'une fonction est None quand elle ne capture aucune variable, et un tuple d'objets cellule sinon.
-
-Concepts clés :
-• g référence x de la portée de f → une fermeture est créée
-• __closure__ est un tuple d'objets cellule (pas None)
-• g.__closure__ is not None s'évalue à True
-
-Comment ça fonctionne :
-1. g référence x (une variable libre de la portée de f)
-2. Python crée une fermeture pour capturer x
-3. g.__closure__ = (<objet cellule pour x>,) — un tuple avec une cellule
-4. g.__closure__ is not None → True
-
-Tester les fermetures :
-• __closure__ is None → la fonction n'a pas de variables libres
-• __closure__ is not None → la fonction capture des variables de la portée englobante`,
-  1983: `Quand une fonction imbriquée ne référence aucune variable de sa portée englobante, aucune fermeture n'est créée et __closure__ est None.
-
-Concepts clés :
-• g retourne un littéral 42 — pas de variables libres
-• Aucune variable capturée de la portée de f
-• __closure__ est None (pas un tuple vide)
-
-Comment ça fonctionne :
-1. g est définie dans f mais n'utilise que le littéral 42
-2. g n'a pas de variables libres (rien de la portée de f)
-3. Python ne crée pas de fermeture
-4. g.__closure__ → None
-
-Contraste :
-def f():
-    x = 1
-    def g(): return x      # capture x → __closure__ is not None
-    def h(): return 42     # pas de capture → __closure__ is None`,
-  1984: `La règle LEGB signifie que la portée englobante (E) est vérifiée avant la portée globale (G). La portée englobante de g() est f(), qui a x = "local".
-
-Concepts clés :
-• x = "global" est dans la portée Global
-• x = "local" est dans la portée de f() (Enclosing pour g)
-• g() cherche x : Local (aucune) → Enclosing (trouvé : "local") → s'arrête
-
-Comment ça fonctionne :
-1. x = "global" au niveau du module
-2. f() définit x = "local" (local à f)
-3. g() est définie dans f, référence x
-4. g() cherche x : pas dans la portée locale de g → vérifie englobante (portée de f) → "local"
-5. Retourne "local"
-
-LEGB en action :
-L : g n'a pas de x locale
-E : f a x = "local" ← trouvé ici
-G : le module a x = "global" (pas atteint)
-B : built-ins (pas atteint)`,
-  1985: `L'attribut __code__.co_freevars est un tuple des noms de variables qu'une fonction capture des portées englobantes (variables libres).
-
-Concepts clés :
-• g référence x et y de la portée de f
-• co_freevars = ("x", "y") — tuple des noms de variables capturées
-• len(("x", "y")) = 2
-
-Comment ça fonctionne :
-1. f() définit x = 1 et y = 2
-2. g référence x et y (variables libres)
-3. g.__code__.co_freevars → ("x", "y")
-4. len(("x", "y")) → 2
-
-Attributs connexes :
-• co_freevars : noms des variables capturées (variables libres)
-• co_varnames : noms des variables locales et paramètres
-• __closure__ : tuple d'objets cellule contenant les valeurs réelles`,
-  1986: `Les fonctions en Python sont des objets avec des attributs. L'attribut __name__ stocke le nom de la fonction sous forme de chaîne, correspondant au nom utilisé dans l'instruction def.
-
-Concepts clés :
-• f.__name__ retourne "f" — le nom de def f(x)
-• __name__ est défini automatiquement quand la fonction est définie
-• Utile pour le débogage, les logs et l'introspection
-
-Comment ça fonctionne :
-1. def f(x): return x — crée une fonction nommée "f"
-2. f.__name__ → "f"
-
-Autres attributs de fonction :
-• __name__ : nom de la fonction (chaîne)
-• __doc__ : docstring (ou None)
-• __module__ : module où la fonction est définie
-• __defaults__ : tuple des valeurs par défaut des arguments
-• __code__ : objet code avec les détails du bytecode`,
-  1987: `Python traite la première expression dans le corps d'une fonction comme la docstring si c'est une chaîne littérale. Cette chaîne est stockée dans l'attribut __doc__.
-
-Concepts clés :
-• """Ma fonction""" comme première instruction est la docstring
-• Accessible via f.__doc__ ou help(f)
-• Utilisée pour la documentation et l'introspection
-
-Comment ça fonctionne :
-1. def f(x): """Ma fonction""" — docstring définie
-2. f.__doc__ → "Ma fonction"
-3. help(f) afficherait cette docstring
-
-Conventions de docstring (PEP 257) :
-• Première ligne : résumé bref
-• Ligne vide, puis description détaillée
-• Utiliser les triples guillemets pour les docstrings multi-lignes
-
-def f(x):
-    """Multiplie x par 2.
-
-    Args:
-        x: Un nombre à multiplier.
-
-    Retourne :         x fois 2.
-    """
-    return x * 2`,
-  1988: `Python stocke les annotations de type dans le dictionnaire __annotations__. Les annotations des paramètres et du type de retour sont toutes incluses.
-
-Concepts clés :
-• x: int annote le paramètre x avec le type int
-• y: str annote le paramètre y avec le type str
-• -> bool annote le type de retour comme bool
-• Tout stocké dans f.__annotations__ comme dictionnaire
-
-Comment ça fonctionne :
-1. def f(x: int, y: str) -> bool: — annotations définies
-2. f.__annotations__ → {"x": int, "y": str, "return": bool}
-3. La clé "return" (chaîne) stocke l'annotation de retour
-4. Les valeurs sont les objets type réels (int, str, bool), pas des chaînes
-
-Notes importantes :
-• Les annotations ne sont pas appliquées à l'exécution — Python ne vérifie pas les types
-• Ce sont des métadonnées pour des outils comme mypy, les IDE et la documentation
-• Disponible depuis Python 3.0, largement adopté depuis 3.5+`,
-  1989: `En Python, les fonctions sont des objets de première classe. Vous pouvez définir des attributs arbitraires dessus comme sur tout autre objet.
-
-Concepts clés :
-• Les fonctions sont des instances du type function
-• Vous pouvez affecter des attributs personnalisés : f.custom_attr = 42
-• Ces attributs persistent sur l'objet fonction
-
-Comment ça fonctionne :
-1. def f(x): return x — crée un objet fonction
-2. f.custom_attr = 42 — définit un attribut personnalisé sur f
-3. f.custom_attr → 42
-
-Utilisations pratiques :
-• Attacher des métadonnées : f.version = "1.0"
-• Compter les appels : f.call_count = 0 (incrémenté dans f)
-• Caches de mémorisation : f.cache = {}
-
-Cela fonctionne car les fonctions ont un __dict__ :
-f.__dict__  # {"custom_attr": 42}`,
-  1990: `Une table de dispatch associe des clés à des fonctions appelables. Ce pattern remplace les chaînes if/elif par des recherches dans un dictionnaire.
-
-Concepts clés :
-• Le dict associe des chaînes d'opérateurs à des fonctions lambda
-• dispatch("+") cherche "+" → retourne lambda a,b: a+b
-• La lambda retournée est appelée avec (3, 2) → 5
-
-Comment ça fonctionne :
-1. dispatch("+") cherche "+" dans le dict
-2. Retourne lambda a,b: a+b
-3. (lambda a,b: a+b)(3, 2) → 3 + 2 → 5
-
-Pattern de table de dispatch :
-operations = {
-    "+": lambda a, b: a + b,
-    "-": lambda a, b: a - b,
-    "*": lambda a, b: a * b,
-    "/": lambda a, b: a / b,
-}
-result = operations["*"](4, 3)  # 12
-
-Usages courants :
-• Implémentation du pattern Command
-• Remplacer les longues chaînes if/elif
-• Systèmes de plugins/extensions`,
-  1991: `Ce pattern de décorateur garantit qu'une fonction ne peut s'exécuter qu'une seule fois. Les appels suivants retournent None car le corps est sauté.
-
-Concepts clés :
-• called = [False] utilise une liste (mutable) pour suivre l'état
-• Premier appel : called[0] est False → exécute f(*a), définit called[0] = True
-• Appels suivants : called[0] est True → le bloc if est sauté → retourne None
-
-Comment ça fonctionne :
-@once
-def greet(name):
-    print(f"Hello, {name}")
-
-greet("Alice")  # affiche "Hello, Alice"
-greet("Bob")    # ne fait rien (retourne None)
-
-Pourquoi une liste au lieu d'un booléen ?
-• called = [False] est un conteneur mutable
-• La fonction imbriquée peut modifier called[0] sans nonlocal
-• Alternative : utiliser nonlocal called (Python 3+)
-
-Usages courants :
-• Fonctions d'initialisation qui doivent s'exécuter exactement une fois
-• Configuration unique ou nettoyage
-• Assurer des opérations idempotentes`,
-  1992: `La mémorisation est une technique de cache qui stocke les résultats de fonction pour les entrées déjà vues, évitant les calculs redondants.
-
-Concepts clés :
-• cache = {} stocke les correspondances argument → résultat
-• Premier appel avec n : calcule f(n), stocke dans cache[n], le retourne
-• Appels suivants avec le même n : retourne cache[n] directement (pas de recalcul)
-
-Comment ça fonctionne :
-@memoize
-def fib(n):
-    if n < 2: return n
-    return fib(n-1) + fib(n-2)
-
-fib(10)  # Calcule une fois, met en cache les résultats intermédiaires
-fib(10)  # Retourne le résultat en cache instantanément
-
-Impact sur les performances :
-• Sans mémorisation : fib(30) fait ~2,7 millions d'appels
-• Avec mémorisation : fib(30) fait seulement 31 appels
-
-Équivalent de la bibliothèque standard :
-from functools import lru_cache
-@lru_cache(maxsize=None)
-def fib(n): ...`,
-  1993: `Les fonctions lambda sont anonymes — elles ne sont pas liées à un nom via def. Python leur assigne le nom générique "<lambda>".
-
-Concepts clés :
-• Les fonctions lambda ont __name__ = "<lambda>"
-• Les fonctions définies par def ont leur nom réel
-• C'est pourquoi les lambdas sont plus difficiles à déboguer — les tracebacks affichent "<lambda>"
-
-Comment ça fonctionne :
-1. lambda x: x * 2 crée un objet fonction anonyme
-2. Son attribut __name__ est "<lambda>"
-3. Contraste : def double(x): return x * 2 → double.__name__ est "double"
-
-Implication pour le débogage :
-f = lambda x: x * 2
-f.__name__  # "<lambda>" — pas "f" !
-
-Même assignée à une variable, __name__ reste "<lambda>" :
-square = lambda x: x ** 2
-square.__name__  # "<lambda>"`,
-  1994: `Une fonction contenant yield est une fonction génératrice. L'appeler n'exécute pas le corps — elle retourne plutôt un objet générateur.
-
-Concepts clés :
-• def f(): yield 1 — f est une fonction génératrice
-• f() retourne un objet générateur (corps pas encore exécuté)
-• type(f()) → <class 'generator'>
-• Pour obtenir des valeurs, itérer ou utiliser next()
-
-Comment ça fonctionne :
-1. f() est appelée — Python voit yield dans le corps
-2. Au lieu d'exécuter, retourne un objet générateur
-3. type(f()) → <class 'generator'>
-4. next(f()) retournerait 1
-
-Distinction clé :
-• type(f) → <class 'function'> (f lui-même est une fonction)
-• type(f()) → <class 'generator'> (appeler f retourne un générateur)`,
-  1995: `La fonction génératrice elle-même est de type 'function'. C'est seulement quand vous l'appelez qu'un objet générateur est créé.
-
-Concepts clés :
-• type(f) → <class 'function'> — f est une fonction
-• type(f()) → <class 'generator'> — f() est un générateur
-• La fonction et sa valeur de retour ont des types différents
-
-Comment ça fonctionne :
-1. def f(): yield 1 — définit f comme fonction
-2. type(f) → <class 'function'>
-3. f() → crée et retourne un objet générateur
-4. type(f()) → <class 'generator'>
-
-Vérifier si une fonction est génératrice :
-import inspect
-inspect.isgeneratorfunction(f)  # True
-inspect.isgenerator(f())         # True`,
-  1996: `Un * seul dans la liste des paramètres signifie que tous les paramètres suivants doivent être passés comme arguments nommés. Les arguments positionnels ne sont pas autorisés pour eux.
-
-Concepts clés :
-• def f(*, x, y): — x et y sont keyword-only
-• f(x=1, y=2) fonctionne → 1 + 2 = 3
-• f(1, 2) lèverait TypeError
-
-Comment ça fonctionne :
-1. * sépare les paramètres positionnels (aucun ici) des keyword-only
-2. x et y doivent être spécifiés par leur nom
-3. f(x=1, y=2) → x=1, y=2 → 1 + 2 → 3
-
-Pourquoi des paramètres keyword-only ?
-• Améliorer la lisibilité à l'appel
-• Éviter les bugs d'ordre des arguments positionnels accidentels
-• Courant dans les API : def connect(*, host, port, timeout=30)`,
-  1997: `Quand les paramètres sont définis après un * seul, ils ne peuvent pas accepter d'arguments positionnels. Python lève TypeError si vous essayez.
-
-Concepts clés :
-• def f(*, x, y): — x et y sont keyword-only
-• f(1, 2) tente de passer 1 et 2 positionnellement → TypeError
-• Message d'erreur : "f() takes 0 positional arguments but 2 were given"
-
-Comment ça fonctionne :
-1. * consomme tous les arguments positionnels (pas de nom *args, donc zéro argument positionnel autorisé)
-2. f(1, 2) fournit 2 arguments positionnels
-3. TypeError: f() takes 0 positional arguments but 2 were given
-
-Usage correct :
-f(x=1, y=2)  # 3 — doit utiliser les arguments nommés
-
-Exemple mixte :
-def f(a, b, *, x, y):
-    ...
-f(1, 2, x=3, y=4)  # OK — a,b positionnels, x,y keyword-only`,
-  1998: `Python 3.8+ supporte les paramètres positional-only (avant /) et keyword-only (après *) dans la même fonction.
-
-Concepts clés :
-• a, b : positional-only (avant /) — doivent être passés positionnellement
-• c : paramètre régulier — peut être positionnel ou nommé
-• d : keyword-only (après *) — doit être passé comme argument nommé
-
-Comment ça fonctionne :
-1. f(1, 2, 3, d=4)
-2. a=1 (positional-only) ✓
-3. b=2 (positional-only) ✓
-4. c=3 (régulier, passé positionnellement) ✓
-5. d=4 (keyword-only, passé comme nommé) ✓
-6. 1 + 2 + 3 + 4 = 10
-
-Ordre des paramètres en Python :
-def f(positional_only, /, regular, *, keyword_only): ...`,
-  1999: `Les paramètres entre / et * sont des paramètres réguliers — ils peuvent être passés soit positionnellement soit comme arguments nommés.
-
-Concepts clés :
-• a, b (avant /) sont positional-only → doivent être positionnels
-• c (entre / et *) est régulier → peut être positionnel OU nommé
-• d (après *) est keyword-only → doit être nommé
-
-Comment ça fonctionne :
-1. f(1, 2, c=3, d=4)
-2. a=1 (positionnel) ✓
-3. b=2 (positionnel) ✓
-4. c=3 (nommé — autorisé pour le paramètre régulier) ✓
-5. d=4 (nommé) ✓
-6. 1 + 2 + 3 + 4 = 10
-
-Les deux appels sont valides :
-f(1, 2, 3, d=4)     # c passé positionnellement
-f(1, 2, c=3, d=4)   # c passé comme nommé`,
-  2000: `Les paramètres avant / sont positional-only. Ils ne peuvent pas être passés en utilisant leurs noms comme arguments nommés.
-
-Concepts clés :
-• a et b sont avant / → positional-only
-• f(a=1, b=2, ...) utilise la syntaxe nommée pour les paramètres positional-only → TypeError
-• Erreur : "f() got some positional-only arguments passé comme keyword arguments: 'a', 'b'"
-
-Comment ça fonctionne :
-1. f(a=1, b=2, c=3, d=4) tente de passer a et b comme arguments nommés
-2. Python voit que a et b sont positional-only (avant /)
-3. Lève TypeError
-
-Usage correct :
-f(1, 2, 3, d=4)     # tous les paramètres positional-only passés positionnellement ✓
-f(1, 2, c=3, d=4)   # aussi valide ✓
-
-Pourquoi positional-only ?
-• Permet de renommer les paramètres sans casser les appelants
-• Évite les conflits d'arguments nommés avec **kwargs
-• Utilisé dans beaucoup de fonctions built-in : len(obj) pas len(obj=x)`,
-  2001: `Un décorateur est un objet appelable qui prend une fonction (ou une classe) en entrée et renvoie une version modifiée. Les décorateurs permettent d'envelopper un comportement supplémentaire autour de fonctions existantes sans modifier leur code source.
-
-Concepts clés :
-• Un décorateur reçoit une fonction comme argument
-• Il renvoie une nouvelle fonction (ou la même fonction, modifiée)
-• La fonction renvoyée appelle généralement l'originale, en ajoutant un comportement avant/après
-• C'est une application du pattern « wrapper » ou « proxy »
+Distinctions clés :
+• range(x) exclut x ; ne pas confondre avec range(x+1).
 
 Fonctionnement :
-• def decorator(func): définit le décorateur
-• À l'intérieur, une fonction wrapper est créée qui appelle func
-• Le wrapper ajoute un comportement extra (journalisation, validation, etc.)
-• Le décorateur renvoie le wrapper
+• Construction successive des clés 0,1,2,3 avec leurs listes.
 
-Exemple :
->>> def my_decorator(func):
-...     def wrapper():
-...         print("Before")
-...         func()
-...         print("After")
-...     return wrapper
+Exécution étape par étape :
+1. x=0 → 0:[] ; x=1 → 1:[0] ; x=2 → 2:[0,1] ; x=3 → 3:[0,1,2].
 
-Les décorateurs sont fondamentaux au design de Python — les built-ins comme @property, @staticmethod et @classmethod sont tous des décorateurs.`,
-  2002: `La syntaxe @decorator est du sucre syntaxique que Python fournit pour un pattern courant. Écrire @my_decorator au-dessus de def func(): est identique à définir func normalement puis à réassigner : func = my_decorator(func).
+Ordre des opérations :
+• Évaluation de range(4) puis chaque branche interne.
+
+Cas d'utilisation courants :
+• Tables d’adjacence, préfixes [0..k-1].
+
+Cas limites :
+• x=0 donne liste vide, valide.
+
+Considérations de performance :
+• Coût quadratique cumulé en taille des listes.
+
+Exemples :
+• Même motif pour factorielles ou cumuls.
+
+Remarques :
+• Réponse : {0: [], 1: [0], 2: [0, 1], 3: [0, 1, 2]}.`,
+  1952: `Longueurs des chaînes par clé
+
+Débutant :
+• La comprehension remplace chaque valeur par len(v) : "hello" → 5, "hi" → 2.
+
+Intermédiaire :
+• Les clés a et b restent ; seules les valeurs changent de type (str → int).
+
+Expert :
+• On pourrait chaîner d’autres fonctions (upper, strip) de la même manière.
 
 Concepts clés :
-• @decorator est appliqué au moment de la définition, pas au moment de l'appel
-• Il remplace le nom par ce que le décorateur renvoie
-• C'est du sucre syntaxique pur — aucune nouvelle fonctionnalité, juste une syntaxe plus propre
-• La PEP 318 a introduit cette syntaxe dans Python 2.4
+• Transformation valeur par entrée, items().
+
+Distinctions clés :
+• Ne pas inverser clé/valeur ici.
 
 Fonctionnement :
-• @my_decorator est placé directement au-dessus de def func():
-• Python crée d'abord l'objet fonction pour func
-• Puis le passe à my_decorator()
-• La valeur de retour remplace le nom func
+• Itération sur ("a","hello"), ("b","hi").
 
-Exemple :
-# Ces deux formes sont équivalentes :
-@my_decorator
-def func():
-    pass
+Exécution étape par étape :
+1. a:5, b:2.
 
-# Même chose :
-def func():
-    pass
-func = my_decorator(func)
+Ordre des opérations :
+• len appelé pour chaque v.
 
-La syntaxe @ est préférée car elle montre clairement que le décorateur fait partie de la définition de la fonction.`,
-  2003: `Le décorateur double_result enveloppe toute fonction pour que sa valeur de retour soit multipliée par 2. Quand add(3, 4) est appelé, le wrapper capture le résultat (3 + 4 = 7) et renvoie 7 * 2 = 14.
+Cas d'utilisation courants :
+• Résumés de longueur de champs texte.
+
+Cas limites :
+• v non str → erreur sur len.
+
+Considérations de performance :
+• O(total des longueurs de chaînes).
+
+Exemples :
+• len(strip(v)) pour ignorer espaces.
+
+Remarques :
+• Réponse : {"a": 5, "b": 2}.`,
+  1953: `Fréquence des caractères
+
+Débutant :
+• set("hello") donne les lettres uniques ; pour chaque c, "hello".count(c) compte les occurrences.
+
+Intermédiaire :
+• La lettre "l" apparaît deux fois dans "hello" → valeur 2.
+
+Expert :
+• L’ordre des clés dans le dict final n’est pas garanti pour l’affichage, mais la valeur pour "l" est 2.
 
 Concepts clés :
-• double_result prend la fonction f et renvoie le wrapper
-• Le wrapper appelle f(*a) et multiplie le résultat par 2
-• @double_result remplace add par le wrapper
-• add(3, 4) passe maintenant par le wrapper
+• count sur str, set pour uniques, comprehension.
+
+Distinctions clés :
+• collections.Counter est plus idiomatique en production.
 
 Fonctionnement :
-• add = double_result(add) — add est maintenant le wrapper
-• Appeler add(3, 4) appelle wrapper(3, 4)
-• Le wrapper appelle l'original f(3, 4) qui renvoie 7
-• Le wrapper renvoie 7 * 2 = 14
+• Pour c='l', count retourne 2.
 
-Exemple :
->>> add(3, 4)
-14
->>> add(1, 1)
-4
+Exécution étape par étape :
+1. Construction du mapping lettre → effectif.
 
-La syntaxe *a dans wrapper(*a) permet au wrapper d'accepter un nombre quelconque d'arguments positionnels et de les transmettre à la fonction originale.`,
-  2004: `Le décorateur uppercase enveloppe une fonction pour que sa valeur de retour chaîne soit convertie en majuscules. greet() renvoie à l'origine "hello", mais le wrapper appelle .upper() sur le résultat.
+Ordre des opérations :
+• set puis boucle sur caractères uniques.
+
+Cas d'utilisation courants :
+• Histogrammes simples, analyse texte.
+
+Cas limites :
+• Chaîne vide → set vide → dict vide.
+
+Considérations de performance :
+• count répété O(n²) sur longueur ; acceptable pour petit texte.
+
+Remarques :
+• Réponse : 2 pour la clé "l".`,
+  1954: `enumerate vers dict
+
+Débutant :
+• enumerate("abc") produit (0,'a'), (1,'b'), (2,'c') ; le dict associe indice → caractère.
+
+Intermédiaire :
+• Clés entières 0..2, valeurs str une lettre.
+
+Expert :
+• Inverse partiel d’une liste indexable.
 
 Concepts clés :
-• Le décorateur intercepte la valeur de retour de la fonction originale
-• f() appelle le greet original et obtient "hello"
-• .upper() convertit "hello" en "HELLO"
-• Le wrapper renvoie le résultat transformé
+• enumerate, unpacking i,c.
+
+Distinctions clés :
+• Pas {char: index} ici mais {index: char}.
 
 Fonctionnement :
-• greet = uppercase(greet) — greet est maintenant le wrapper
-• Appeler greet() appelle wrapper()
-• Le wrapper appelle f() → "hello"
-• Le wrapper renvoie "hello".upper() → "HELLO"
+• Chaque tuple devient une paire.
 
-Exemple :
->>> greet()
-'HELLO'
+Exécution étape par étape :
+1. 0:"a", 1:"b", 2:"c".
 
-Ce pattern de transformation des valeurs de retour est courant — les décorateurs peuvent modifier les entrées, les sorties, ou les deux.`,
-  2005: `Le décorateur log ajoute un print avant l'exécution de la fonction originale. Chaque fois que la fonction décorée est appelée, il imprime "Calling <nom_fonction>" puis exécute la fonction originale normalement.
+Ordre des opérations :
+• Parcours gauche-droite de la chaîne.
+
+Cas d'utilisation courants :
+• Position → caractère pour parsers.
+
+Cas limites :
+• Unicode : un caractère peut être hors BMP (hors QCM).
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• dict(enumerate(lst)) idiomatique.
+
+Remarques :
+• Réponse : {0: "a", 1: "b", 2: "c"}.`,
+  1955: `zip de deux itérables
+
+Débutant :
+• zip("abc", range(1,4)) aligne a:1, b:2, c:3.
+
+Intermédiaire :
+• range(1,4) = 1,2,3 (4 exclu).
+
+Expert :
+• Même longueur ici ; sinon zip tronque.
 
 Concepts clés :
-• f.__name__ accède à l'attribut nom de la fonction
-• print() s'exécute avant f(*a), donc le log apparaît avant l'exécution
-• f(*a) transmet tous les arguments à la fonction originale
-• La valeur de retour est préservée — return f(*a) la fait passer
+• zip, dict comprehension, caractères comme clés.
+
+Distinctions clés :
+• zip strict en 3.10+ pour exiger même longueur.
 
 Fonctionnement :
-• @log remplace func par le wrapper
-• Quand func(args) est appelé, le wrapper s'exécute d'abord
-• Le wrapper imprime "Calling func"
-• Puis le wrapper appelle et renvoie f(*a) — le comportement original
+• Trois paires consommées.
 
-Exemple :
->>> @log
-... def add(x, y): return x + y
->>> add(3, 4)
-Calling add
-7
+Exécution étape par étape :
+1. Construction {"a":1,"b":2,"c":3}.
 
-C'est l'un des patterns de décorateurs les plus courants — ajouter de la journalisation ou du traçage sans modifier la fonction originale.`,
-  2006: `Un décorateur bien écrit préserve le comportement fondamental de la fonction originale tout en ajoutant une fonctionnalité extra avant et/ou après. La fonction wrapper appelle la fonction originale, donc la logique originale s'exécute toujours.
+Ordre des opérations :
+• zip lazy puis comprehension.
+
+Cas d'utilisation courants :
+• Deux colonnes parallèles → mapping.
+
+Cas limites :
+• Itérables de longueurs différentes.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• dict(zip(keys, values)).
+
+Remarques :
+• Réponse : {"a": 1, "b": 2, "c": 3}.`,
+  1956: `Clés en majuscules et valeurs doublées
+
+Débutant :
+• k.upper() pour 'A','B' ; v*2 double les entiers → {"A":2,"B":4}.
+
+Intermédiaire :
+• upper() ne modifie pas la clé originale dans le dict source, seulement dans la nouvelle paire.
+
+Expert :
+• Si deux clés lower différentes donnaient la même UPPER, collision (pas ici).
 
 Concepts clés :
-• Le wrapper appelle la fonction originale (préservant le comportement)
-• Du code extra s'exécute avant et/ou après l'appel original
-• La valeur de retour de la fonction originale est typiquement préservée
-• C'est le « principe ouvert/fermé » — ouvert à l'extension, fermé à la modification
+• Méthode str sur clé, arithmétique sur valeur.
+
+Distinctions clés :
+• vs k.lower() selon normalisation voulue.
 
 Fonctionnement :
-• Le décorateur crée un wrapper qui appelle l'original
-• Le wrapper peut ajouter : journalisation, validation, chronométrage, mise en cache, etc.
-• La fonction originale s'exécute inchangée à l'intérieur du wrapper
-• La valeur de retour passe au travers (sauf modification intentionnelle)
+• Itération items du dict littéral.
 
-Exemple :
->>> @timer
-... def slow_func():
-...     return 42
->>> slow_func()  # imprime les infos de temps, renvoie quand même 42
-42
+Exécution étape par étape :
+1. A:2, B:4.
 
-Un décorateur qui n'appelle pas la fonction originale la remplacerait entièrement — c'est inhabituel et généralement indésirable.`,
-  2007: `Quand un décorateur renvoie une fonction wrapper, le nom décoré pointe vers l'objet wrapper. Comme le wrapper s'appelle w, accéder à __name__ renvoie "w", pas l'original "f".
+Ordre des opérations :
+• Ordre d’insertion du dict source.
+
+Cas d'utilisation courants :
+• Normalisation de clés pour comparaison.
+
+Cas limites :
+• k non str → pas de upper.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• strip() pour nettoyer clés.
+
+Remarques :
+• Réponse : {"A": 2, "B": 4}.`,
+  1957: `Comptage de mots avec set
+
+Débutant :
+• split() découpe la phrase ; pour chaque mot unique w, words.count(w) donne l’effectif ; "the" apparaît deux fois.
+
+Intermédiaire :
+• set(words) évite de recompt plusieurs fois la même clé pour la construction, mais count compte quand même sur la liste complète.
+
+Expert :
+• Counter(words) serait plus direct.
 
 Concepts clés :
-• @dec remplace f par la fonction wrapper w
-• f est maintenant en fait w — un objet fonction différent
-• f.__name__ renvoie le nom de w, qui est "w"
-• C'est pourquoi functools.wraps existe — pour préserver les métadonnées
+• split, count, set des uniques, accès final ["the"].
+
+Distinctions clés :
+• Distinction liste complète vs mots uniques pour les clés du dict intermédiaire.
 
 Fonctionnement :
-• dec(f) crée la fonction w et la renvoie
-• f = dec(f) — f pointe maintenant vers w
-• f.__name__ est w.__name__ qui est "w"
-• Le nom de l'original f est perdu
+• Compter "the" dans la liste tokens.
 
-Exemple :
->>> f.__name__
-'w'
->>> f.__doc__  # Aussi perdu — doc du wrapper, pas de l'original
+Exécution étape par étape :
+1. the → 2.
 
-Cette perte de métadonnées est un piège courant. Utilisez @functools.wraps(f) sur le wrapper pour corriger.`,
-  2008: `functools.wraps est un décorateur qui copie les attributs de la fonction originale vers le wrapper. Quand @wraps(f) décore le wrapper w, il copie __name__, __doc__, __module__, __qualname__, __dict__ et __wrapped__ de f.
+Ordre des opérations :
+• Création du dict comprehension puis indexation.
+
+Cas d'utilisation courants :
+• Nuage de mots, TF simple.
+
+Cas limites :
+• Casse et ponctuation affectent les tokens (hors normalisation ici).
+
+Considérations de performance :
+• count répété coûteux sur gros texte.
+
+Remarques :
+• Réponse : 2.`,
+  1958: `Valeurs booléennes dans le dict
+
+Débutant :
+• x % 2 == 0 teste la parité pour x dans range(5) → 0..4.
+
+Intermédiaire :
+• 0,2,4 → True ; 1,3 → False.
+
+Expert :
+• Les clés sont les entiers x, les valeurs sont des bool.
 
 Concepts clés :
-• @wraps(f) est lui-même un décorateur appliqué au wrapper
-• Il copie les métadonnées de f vers w
-• Après @wraps(f), w.__name__ == f.__name__ == "f"
-• Il définit aussi w.__wrapped__ = f pour l'introspection
+• Modulo, comparaison, dict comprehension.
+
+Distinctions clés :
+• True/False vs 1/0 affichés.
 
 Fonctionnement :
-• @wraps(f) décore w dans dec
-• w reçoit __name__ de f ("f"), __doc__, etc.
-• Quand dec renvoie w, il ressemble à f de l'extérieur
-• f.__name__ renvoie "f" comme prévu
+• Cinq entrées construites.
 
-Exemple :
->>> f.__name__
-'f'
->>> f.__wrapped__  # Accès à la fonction originale
-<function f at 0x...>
+Exécution étape par étape :
+1. 0:T, 1:F, 2:T, 3:F, 4:T.
 
-Utilisez toujours @functools.wraps quand vous écrivez des décorateurs — c'est considéré comme une bonne pratique.`,
-  2009: `functools.wraps est un décorateur pratique qui met à jour une fonction wrapper pour qu'elle ressemble à la fonction enveloppée. Il copie les attributs importants pour que le débogage, la documentation et les outils d'introspection fonctionnent correctement.
+Ordre des opérations :
+• range(5) séquentiel.
+
+Cas d'utilisation courants :
+• Masques pair/impair, flags.
+
+Cas limites :
+• x négatif : % se comporte différemment en math pur mais range(5) positif.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• x % 3 == 0 pour multiples de 3.
+
+Remarques :
+• Réponse : {0: True, 1: False, 2: True, 3: False, 4: True}.`,
+  1959: `Clés str depuis range
+
+Débutant :
+• str(x) pour x=0,1,2 donne clés '0','1','2' avec valeurs 0,1,2.
+
+Intermédiaire :
+• Même motif que plus tôt au niveau 6 : clés texte vs int.
+
+Expert :
+• json.dumps sérialise souvent les clés en str.
 
 Concepts clés :
-• Copie __name__, __doc__, __module__, __qualname__, __dict__
-• Définit __wrapped__ à la fonction originale
-• Utilise functools.update_wrapper en interne
-• Essentiel pour écrire des décorateurs de qualité production
+• str() en position de clé.
+
+Distinctions clés :
+• 0 et '0' ne sont pas la même clé.
 
 Fonctionnement :
-• @wraps(original_func) est appliqué à la fonction wrapper
-• Il appelle update_wrapper(wrapper, original_func)
-• Les attributs de original_func sont copiés sur wrapper
-• L'attribut __wrapped__ fournit l'accès à l'original
+• range(3) itère 0,1,2.
 
-Exemple :
->>> from functools import wraps
->>> def my_dec(f):
-...     @wraps(f)
-...     def wrapper(*args):
-...         return f(*args)
-...     return wrapper
->>> @my_dec
-... def hello():
-...     '''Say hello'''
-...     pass
->>> hello.__name__
-'hello'
->>> hello.__doc__
-'Say hello'
+Exécution étape par étape :
+1. Trois paires.
 
-Sans @wraps, hello.__name__ serait 'wrapper' et hello.__doc__ serait None.`,
-  2010: `Python permet d'empiler plusieurs décorateurs sur une seule fonction. Ils sont appliqués du bas vers le haut — le décorateur le plus proche de la définition de la fonction s'exécute en premier, et le plus extérieur en dernier.
+Ordre des opérations :
+• str puis insertion.
+
+Cas d'utilisation courants :
+• Alignement sur APIs clés string.
+
+Cas limites :
+• str sur types non triviaux.
+
+Considérations de performance :
+• Très bon pour n petit.
+
+Exemples :
+• f"{x}" équivalent conceptuel.
+
+Remarques :
+• Réponse : {"0": 0, "1": 1, "2": 2}.`,
+  1960: `Clés tuple avec filtre
+
+Débutant :
+• i,j dans range(3), i!=j ; clé (i,j), valeur i*j ; (1,2) → 1*2=2.
+
+Intermédiaire :
+• Les paires (0,0) etc. sont exclues.
+
+Expert :
+• Grille 3x3 sans diagonale.
 
 Concepts clés :
-• Plusieurs lignes @ peuvent apparaître au-dessus d'une définition de fonction
-• Ils s'appliquent du bas vers le haut (le plus intérieur en premier)
-• @dec1 @dec2 def f signifie f = dec1(dec2(f))
-• Chaque décorateur enveloppe le résultat du précédent
+• Double boucle en comprehension, tuple clé, condition if.
+
+Distinctions clés :
+• (1,2) vs (2,1) deux clés distinctes.
 
 Fonctionnement :
-• Python évalue les décorateurs de haut en bas mais les applique de bas en haut
-• @dec2 est appliqué en premier : temp = dec2(f)
-• @dec1 est appliqué en second : f = dec1(temp)
-• Résultat final : f = dec1(dec2(f))
+• Lookup d[(1,2)] après construction.
 
-Exemple :
->>> @bold
-... @italic
-... def greet():
-...     return "hello"
-# Équivalent à : greet = bold(italic(greet))
-# Si bold enveloppe dans <b> et italic dans <i> :
-# Résultat : "<b><i>hello</i></b>"
+Exécution étape par étape :
+1. Accès à la clé (1,2) → 2.
 
-L'ordre compte — inverser les décorateurs change l'ordre d'enveloppement.`,
-  2011: `Quand on empile des décorateurs, celui le plus proche de la fonction (en bas) est appliqué en premier. Dans @dec1 / @dec2 / def f, dec2 s'exécute en premier, puis dec1 enveloppe le résultat.
+Ordre des opérations :
+• Évaluation du dict puis [].
+
+Cas d'utilisation courants :
+• Matrices creuses indexées par coordonnées.
+
+Cas limites :
+• Clé absente si filtre l’exclut → KeyError.
+
+Considérations de performance :
+• O(n²) pour les ranges ici.
+
+Exemples :
+• Graphe orienté sans boucles i==j.
+
+Remarques :
+• Réponse : 2.`,
+  1961: `Filtrer les valeurs paires
+
+Débutant :
+• Garde les paires où v % 2 == 0 → b:2 et d:4.
+
+Intermédiaire :
+• a:1 et c:3 exclus.
+
+Expert :
+• v % 2 == 0 inclut 0 si présent.
 
 Concepts clés :
-• Les décorateurs s'appliquent du bas vers le haut
-• dec2 reçoit l'original f
-• dec1 reçoit dec2(f) — la version déjà enveloppée
-• Pensez-y comme f = dec1(dec2(f))
+• Prédicat sur valeur dans comprehension.
+
+Distinctions clés :
+• Filtrer sur clé vs valeur.
 
 Fonctionnement :
-• Étape 1 : Python crée la fonction f
-• Étape 2 : f = dec2(f) — dec2 enveloppe f
-• Étape 3 : f = dec1(f) — dec1 enveloppe le résultat de l'étape 2
-• Le f final est le wrapper de dec1 autour du wrapper de dec2 autour de l'original f
+• Test de parité sur chaque v.
 
-Exemple :
->>> @add_exclamation   # Appliqué en second : enveloppe le résultat de @uppercase
-... @uppercase         # Appliqué en premier : enveloppe greet original
-... def greet():
-...     return "hello"
->>> greet()
-'HELLO!'
+Exécution étape par étape :
+1. Résultat deux entrées.
 
-Pensez-y comme à une composition de fonctions : dec1(dec2(f)).`,
-  2012: `C'est un décorateur paramétré (fabrique de décorateur). repeat(3) renvoie un décorateur qui enveloppe la fonction pour l'appeler n fois et collecter les résultats dans une liste.
+Ordre des opérations :
+• Ordre d’origine conservé pour les survivants.
+
+Cas d'utilisation courants :
+• Extraire champs numériques pairs.
+
+Cas limites :
+• Valeurs non int → erreur sur %.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• if v > seuil.
+
+Remarques :
+• Réponse : {"b": 2, "d": 4}.`,
+  1962: `sorted(items) puis dict
+
+Débutant :
+• sorted sur les paires trie par clé (tuple order) → ordre a,b,c puis reconstruction dict.
+
+Intermédiaire :
+• Les valeurs suivent leurs clés triées.
+
+Expert :
+• dict accepte itérable de paires.
 
 Concepts clés :
-• repeat(n) est une fabrique de décorateur — elle renvoie le décorateur réel
-• Trois niveaux d'imbrication : fabrique → décorateur → wrapper
-• @repeat(3) appelle d'abord repeat(3), qui renvoie le décorateur
-• Puis le décorateur est appliqué à greet : greet = decorator(greet)
+• sorted(items), ordre lexicographique des clés str.
+
+Distinctions clés :
+• sorted(d) donne seulement les clés.
 
 Fonctionnement :
-• @repeat(3) appelle repeat(3) → renvoie le décorateur (avec n=3 dans la fermeture)
-• decorator(greet) renvoie le wrapper (avec f=greet dans la fermeture)
-• greet est maintenant le wrapper
-• greet() appelle [f() for _ in range(3)] → ["hi", "hi", "hi"]
+• ('a',1), ('b',2), ('c',3).
 
-Exemple :
->>> greet()
-['hi', 'hi', 'hi']
->>> @repeat(5)
-... def say(): return "x"
->>> say()
-['x', 'x', 'x', 'x', 'x']
+Exécution étape par étape :
+1. Même contenu que le dict d’origine mais ordre d’insertion réordonné a,b,c.
 
-La compréhension de liste crée une nouvelle liste avec n copies du résultat de f(*a).`,
-  2013: `Un décorateur paramétré (fabrique de décorateur) nécessite trois fonctions imbriquées. La fonction externe reçoit les arguments du décorateur, la fonction du milieu reçoit la fonction à décorer, et la fonction interne est le wrapper qui remplace l'original.
+Ordre des opérations :
+• sorted puis constructeur.
+
+Cas d'utilisation courants :
+• Canoniser pour comparaison.
+
+Cas limites :
+• Clés non comparables.
+
+Considérations de performance :
+• O(n log n).
+
+Exemples :
+• key=lambda kv: kv[1] pour tri par valeur.
+
+Remarques :
+• Réponse : {"a": 1, "b": 2, "c": 3}.`,
+  1963: `Négation des valeurs
+
+Débutant :
+• -v pour chaque valeur : 1→-1, -2→2, 3→-3.
+
+Intermédiaire :
+• Signe inversé sauf zéro (hors cas).
+
+Expert :
+• Pour types non numériques, __neg__ requis.
 
 Concepts clés :
-• Niveau 1 (fabrique) : reçoit les arguments du décorateur (ex. n dans repeat(n))
-• Niveau 2 (décorateur) : reçoit la fonction à décorer
-• Niveau 3 (wrapper) : la fonction de remplacement réelle
-• Chaque niveau crée une fermeture sur les variables du niveau au-dessus
+• Transformation unaire en comprehension.
+
+Distinctions clés :
+• Pas le même effet que not v (bool).
 
 Fonctionnement :
-• def repeat(n):          # Niveau 1 — reçoit les arguments
-•     def decorator(f):   # Niveau 2 — reçoit la fonction
-•         def wrapper(*a): # Niveau 3 — remplacement
-•             ...
-•         return wrapper
-•     return decorator
+• k inchangé, v remplacé par -v.
 
-Exemple :
->>> @repeat(3)      # repeat(3) renvoie le décorateur
-... def greet():    # decorator(greet) renvoie le wrapper
-...     return "hi"
->>> greet()         # wrapper() s'exécute
-['hi', 'hi', 'hi']
+Exécution étape par étape :
+1. a:-1, b:2, c:-3.
 
-Sans arguments, seuls 2 niveaux sont nécessaires (décorateur + wrapper).`,
-  2014: `C'est un pattern de décorateur de chronométrage ou de profiling. Il mesure le temps d'exécution d'une fonction en enregistrant le temps avant et après l'appel.
+Ordre des opérations :
+• Parcours items.
+
+Cas d'utilisation courants :
+• Inverser soldes, offsets.
+
+Cas limites :
+• Overflow rare en int Python.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• abs(v) voir 1964.
+
+Remarques :
+• Réponse : {"a": -1, "b": 2, "c": -3}.`,
+  1964: `Valeur absolue
+
+Débutant :
+• abs(-1)=1, abs(-2)=2 → {"a":1,"b":2}.
+
+Intermédiaire :
+• Utile pour distances, magnitudes.
+
+Expert :
+• abs sur complexe autre comportement (hors QCM).
 
 Concepts clés :
-• time.time() capture l'horodatage courant
-• La fonction s'exécute entre les horodatages de début et de fin
-• La différence donne la durée d'exécution
-• Couramment utilisé pour le profiling de performance et l'optimisation
+• abs builtin.
+
+Distinctions clés :
+• vs math.fabs (float).
 
 Fonctionnement :
-• Avant d'appeler f : start = time.time()
-• Appel : result = f(*a)
-• Après : on pourrait calculer elapsed = time.time() - start
-• Renvoie le résultat original inchangé
+• Parcours des paires négatives.
 
-Exemple :
->>> @timer
-... def slow_func():
-...     import time
-...     time.sleep(1)
-...     return "done"
->>> slow_func()  # Affiche ~1 seconde écoulée
-'done'
+Exécution étape par étape :
+1. Positifs résultants.
 
-Ce pattern est courant en monitoring de performance, benchmarking et débogage des fonctions lentes. Les versions production utilisent souvent time.perf_counter() pour plus de précision.`,
-  2015: `Un décorateur peut être n'importe quel objet appelable — pas seulement des fonctions. Une classe qui implémente __call__ est appelable, donc elle peut servir de décorateur. Le __init__ de la classe reçoit la fonction, et __call__ agit comme le wrapper.
+Ordre des opérations :
+• items puis comprehension.
+
+Cas d'utilisation courants :
+• Normaliser écarts.
+
+Cas limites :
+• Types non supportés par abs.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• hypot pour 2D.
+
+Remarques :
+• Réponse : {"a": 1, "b": 2}.`,
+  1965: `Liste des clés d’un dict comprehension
+
+Débutant :
+• {x:x for x in [1,2,2,3,3]} : clés uniques 1,2,3 → dict trois entrées ; list() donne les clés en ordre d’insertion [1,2,3].
+
+Intermédiaire :
+• Les doublons dans la liste source ne créent pas plusieurs clés identiques.
+
+Expert :
+• La dernière occurrence d’une clé réécrit la valeur (ici même valeur).
 
 Concepts clés :
-• callable() retourne True pour tout objet qu'on peut appeler avec ()
-• Les classes avec __call__ sont appelables
-• __init__ reçoit la fonction décorée
-• __call__ remplace le comportement d'appel de la fonction
+• Unicité des clés, stabilisation de l’ordre.
+
+Distinctions clés :
+• list du dict vs list de la liste source.
 
 Fonctionnement :
-• @MyClass décore func
-• Python appelle MyClass(func) — __init__ stocke func
-• func est maintenant une instance MyClass
-• Appeler func() invoque MyClass.__call__()
+• Construction dict puis itération clés.
 
-Exemple :
->>> class CountCalls:
-...     def __init__(self, func):
-...         self.func = func
-...         self.count = 0
-...     def __call__(self, *args):
-...         self.count += 1
-...         return self.func(*args)
->>> @CountCalls
-... def hello(): return "hi"
->>> hello()
-'hi'
->>> hello.count
-1
+Exécution étape par étape :
+1. [1,2,3].
 
-Les décorateurs basés sur des classes sont utiles quand vous devez maintenir un état entre les appels.`,
-  2016: `This class-based décorateur stocke the function in __init__ and appelle it in __call__. The decorated function becomes an instance of Dec, and calling it triggers __call__.
+Ordre des opérations :
+• Comprehension dict puis list().
 
-Concepts clés :
-• @Dec causes: f = Dec(f)
-• f is now a Dec instance with self.f = original f
-• f(5) appelle Dec.__call__(self, 5)
-• __call__ delegates to self.f(5) → 5
+Cas d'utilisation courants :
+• Dédupliquer tout en gardant ordre premier vu.
 
-Comment ça fonctionne :
-• Dec(f) crée instance, stocke f in self.f
-• f = Dec(f) — f is now a Dec instance
-• f(5) triggers Dec.__call__(self, 5)
-• __call__ retourne self.f(5) which retourne 5
+Cas limites :
+• Si valeurs différaient pour clés répétées, dernière gagne.
 
-Exemple :
->>> f(5)
-5
->>> type(f)
-<class 'Dec'>
->>> f.f  # Access to original function
-<function f at 0x...>
+Considérations de performance :
+• O(n).
 
-C'est a minimal class décorateur — it passes through without modification. Add logic in __call__ for actual behavior.`,
-  2017: `Le décorateur validate_positive vérifie si l'entrée est non négative avant d'appeler la fonction. Comme 4 >= 0, la validation passe et f(4) s'exécute normalement.
+Exemples :
+• dict.fromkeys(seq) pour clés sans valeur calculée.
+
+Remarques :
+• Réponse : [1, 2, 3].`,
+  1966: `Exclure les None
+
+Débutant :
+• if v is not None garde a:1 et c:3, enlève b:None.
+
+Intermédiaire :
+• is not None distingue absence de falsy 0 ou False si besoin ailleurs.
+
+Expert :
+• Parfois on filtre if v pour exclure tous les falsy, pas seulement None.
 
 Concepts clés :
-• Le wrapper vérifie si x < 0 avant d'appeler f
-• Si x est négatif, ValueError est levée
-• Si x est non négatif, la fonction originale s'exécute
-• 4 ** 0.5 = 2.0 (racine carrée de 4)
+• Test identité None, filtre comprehension.
+
+Distinctions clés :
+• get(k) is None vs k absent.
 
 Fonctionnement :
-• sqrt(4) appelle wrapper w(4)
-• w vérifie : 4 < 0 ? Non → continuer
-• w appelle f(4) → 4 ** 0.5 → 2.0
-• Renvoie 2.0
+• Trois paires candidates, une rejetée.
 
-Exemple :
->>> sqrt(4)
-2.0
->>> sqrt(9)
-3.0
->>> sqrt(0)
-0.0
+Exécution étape par étape :
+1. {"a":1,"c":3}.
 
-Ce pattern s'appelle un guard ou décorateur de validation — il protège les fonctions des entrées invalides.`,
-  2018: `Le validate_positive decorator raises ValueError for negative inputs. Since -1 < 0, the guard triggers avant the original sqrt fonction ever runs.
+Ordre des opérations :
+• Ordre items d’origine pour les conservés.
 
-Concepts clés :
-• sqrt(-1) calls wrapper w(-1)
-• w checks: -1 < 0? Yes → raise ValueError
-• The original sqrt fonction never executes
-• Without the decorator, Python would renvoyer a complex number (avec cmath)
+Cas d'utilisation courants :
+• Nettoyer JSON avec null.
 
-Comment ça fonctionne :
-• sqrt(-1) calls w(-1)
-• w evaluates: -1 < 0 → True
-• raise ValueError stops execution immediately
-• f(-1) is never appelé
+Cas limites :
+• NaN n’est pas None.
 
-Exemple :
->>> sqrt(-1)
-Traceback (most recent call last):
-  ...
-ValueError
-Le decorator prevents invalid computation. Without it, x ** 0.5 avec negative x raises ValueError in real math mode anyway, but the decorator provides a cleaner, explicit check.`,
-  2019: `Les décorateurs peuvent être appliqués à toute instruction def ou class. Quand appliqué à une classe, le décorateur reçoit l'objet classe et peut le modifier ou le remplacer.
+Considérations de performance :
+• O(n).
+
+Exemples :
+• if v is not None and v != "".
+
+Remarques :
+• Réponse : {"a": 1, "c": 3}.`,
+  1967: `Littéral fusionné ** et clé c
+
+Débutant :
+• ** dépaquette deux dicts puis "c":3 s’ajoute → a:1,b:2,c:3.
+
+Intermédiaire :
+• Une seule expression construit un dict neuf.
+
+Expert :
+• Collisions : ordre des ** décide (dernier gagne).
 
 Concepts clés :
-• @decorator au-dessus de class MyClass: est du Python valide
-• Équivalent à : MyClass = decorator(MyClass)
-• Le décorateur reçoit la classe et renvoie une (éventuellement modifiée) classe
-• Exemples courants : @dataclass, @total_ordering
+• Unpacking, littéral mixte.
+
+Distinctions clés :
+• vs plusieurs update.
 
 Fonctionnement :
-• Python crée l'objet classe
-• Le passe à la fonction décorateur
-• Le décorateur peut ajouter/modifier des méthodes, attributs, etc.
-• Renvoie la classe modifiée (ou une nouvelle)
+• Fusion gauche-droite puis paire c.
 
-Exemple :
->>> def add_repr(cls):
-...     cls.__repr__ = lambda self: f"{cls.__name__}()"
-...     return cls
->>> @add_repr
-... class MyClass:
-...     pass
->>> MyClass()
-MyClass()
+Exécution étape par étape :
+1. Trois clés.
 
-Les décorateurs de classe sont très utilisés : @dataclass, @functools.total_ordering, et de nombreux décorateurs de frameworks (ex. @app.route de Flask enveloppe aussi des classes).`,
-  2020: `Python includes several built-in decorators. @staticmethod and @classmethod are among the most commonly used, transforming regular methods into static or class methods respectively.
+Ordre des opérations :
+• Évaluation des sous-dicts puis fusion.
 
-Concepts clés :
-• @staticmethod removes the implicit first argument (no self/cls)
-• @classmethod changes les premiers argument from instance (self) to class (cls)
-• Both are descriptor-based decorators built into Python
-• Other built-ins: @property, @abstractmethod, @functools.wraps
+Cas d'utilisation courants :
+• Defaults + patch + constante.
 
-Comment ça fonctionne :
-• @staticmethod wraps the function in a staticmethod descriptor
-• @classmethod wraps the function in a classmethod descriptor
-• These descriptors change how Python binds the method to instances/classes
+Cas limites :
+• Clés dynamiques en expression.
 
-Exemple :
->>> class MyClass:
-...     @staticmethod
-...     def util(): renvoyer 42
-...     @classmethod
-...     def create(cls): renvoyer cls()
->>> MyClass.util()
-42
->>> MyClass.create()
-<MyClass object>
+Considérations de performance :
+• Nouvelle allocation.
 
-Built-in decorators are implemented in C for performance and are part of Python's core language design.`,
-  2021: `Ce décorateur suit le nombre de fois qu'une fonction a été appelée en maintenant un compteur comme attribut sur l'objet fonction. Chaque appel incrémente f.calls de 1.
+Exemples :
+• {**os.environ, **local}.
+
+Remarques :
+• Réponse : {"a": 1, "b": 2, "c": 3}.`,
+  1968: `Union | entre dict() (3.9+)
+
+Débutant :
+• dict(a=1) | dict(b=2) produit un nouveau dict avec a et b.
+
+Intermédiaire :
+• Ni operand n’est muté.
+
+Expert :
+• Nécessite Python 3.9+ pour | sur dict.
 
 Concepts clés :
-• f.calls = 0 initialise le compteur sur l'objet fonction
-• Chaque appel à w() incrémente f.calls += 1
-• Les fonctions sont des objets en Python, elles peuvent avoir des attributs arbitraires
-• Le compteur persiste entre les appels via la fermeture
+• Opérateur | sur mappings.
+
+Distinctions clés :
+• vs {**x, **y}.
 
 Fonctionnement :
-• count_calls(f) définit f.calls = 0
-• Renvoie le wrapper w qui incrémente f.calls à chaque appel
-• f.calls est accessible car f est capturé dans la fermeture de w
-• Après n appels, f.calls == n
+• Fusion sans collision ici.
 
-Exemple :
->>> @count_calls
-... def hello(): return "hi"
->>> hello()
-'hi'
->>> hello()
-'hi'
->>> hello()
-'hi'
+Exécution étape par étape :
+1. {"a":1,"b":2}.
 
-Note : accéder au compteur nécessite d'accéder à l'attribut de l'original f via la fermeture. Une version plus robuste définirait aussi w.calls.`,
-  2022: `Ce décorateur implémente le pattern Singleton. Il garantit qu'une classe ne peut avoir qu'une seule instance — les appels suivants renvoient le même objet.
+Ordre des opérations :
+• Évaluation des deux dict puis |.
+
+Cas d'utilisation courants :
+• Composer options immuables.
+
+Cas limites :
+• Clé dupliquée : droite gagne.
+
+Considérations de performance :
+• Nouveau dict.
+
+Exemples :
+• Chaîne a|b|c.
+
+Remarques :
+• Réponse : {"a": 1, "b": 2}.`,
+  1969: `Chaîne de |
+
+Débutant :
+• Premier merge a,b ; puis avec b:3 écrase b ; puis ajoute c:4.
+
+Intermédiaire :
+• Évaluation de gauche à droite : le | est binaire, donc ((d1|d2)|d3).
+
+Expert :
+• b passe de 2 à 3 au second merge.
 
 Concepts clés :
-• Le dict instances stocke l'instance unique par classe
-• Le premier appel crée et stocke l'instance
-• Tous les appels suivants renvoient l'instance stockée
-• La classe elle-même est remplacée par get_instance
+• Associativité effective par paires successives.
+
+Distinctions clés :
+• Dernier b gagne sur clé b.
 
 Fonctionnement :
-• @singleton remplace MyClass par get_instance
-• Premier appel MyClass() : cls not in instances → crée l'instance, la stocke
-• Deuxième appel MyClass() : cls in instances → renvoie la même instance
-• Tous les appels renvoient exactement le même objet
+• Résultat final a:1,b:3,c:4.
 
-Exemple :
->>> @singleton
-... class Database:
-...     def __init__(self):
-...         self.connection = "connected"
->>> db1 = Database()
->>> db2 = Database()
->>> db1 is db2
-True
+Exécution étape par étape :
+1. Étapes binaires successives.
 
-Le pattern Singleton est utile pour les connexions base de données, les gestionnaires de configuration et la journalisation — cas où une seule instance doit exister.`,
-  2023: `Ce décorateur implémente la mémorisation (cache). Il stocke les résultats de la fonction dans un dictionnaire indexé par les arguments, donc les appels répétés avec les mêmes arguments renvoient le résultat en cache au lieu de recalculer.
+Ordre des opérations :
+• Parenthèsage implicite gauche-droite.
+
+Cas d'utilisation courants :
+• Defaults, env, CLI en chaîne.
+
+Cas limites :
+• Version <3.9 indisponible.
+
+Considérations de performance :
+• Plusieurs copies intermédiaires possibles.
+
+Exemples :
+• Réduire avec functools si nombreux.
+
+Remarques :
+• Réponse : {"a": 1, "b": 3, "c": 4}.`,
+  1970: `|= mise à jour
+
+Débutant :
+• d |= {"a":2,"b":3} écrase a et ajoute/écrase b sur le même objet.
+
+Intermédiaire :
+• d devient {"a":2,"b":3}.
+
+Expert :
+• Comme update mais opérateur 3.9+.
 
 Concepts clés :
-• Le dict memo mappe les tuples d'arguments aux résultats
-• Premier appel avec nouveaux args : calcule et stocke le résultat
-• Appels suivants avec mêmes args : renvoie le résultat en cache
-• Accélère considérablement les fonctions récursives ou coûteuses
+• Fusion in-place.
+
+Distinctions clés :
+• | sans = créerait un nouveau dict.
 
 Fonctionnement :
-• w(*a) capture les arguments comme tuple a
-• Si a not in memo : première fois avec ces args → calcule et met en cache
-• Si a in memo : renvoie immédiatement le résultat stocké
-• memo persiste entre les appels via la fermeture
+• __ior__ sur dict.
 
-Exemple :
->>> @cache
-... def fib(n):
-...     if n < 2: return n
-...     return fib(n-1) + fib(n-2)
->>> fib(100)  # Instantané, sans cache ce serait interminable
-354224848179261915075
+Exécution étape par étape :
+1. Partant de {"a":1} → {"a":2,"b":3}.
 
-La bibliothèque standard de Python fournit @functools.lru_cache pour un usage en production, avec éviction LRU et sécurité des threads.`,
-  2024: `Le décorateur @property transforme une méthode en descriptor qui se comporte comme un attribut en lecture seule. On y accède sans parenthèses, et le corps de la méthode calcule la valeur à chaque accès.
+Ordre des opérations :
+• Statement sur d nommé.
+
+Cas d'utilisation courants :
+• Patch incrémental d’une config tenue en variable.
+
+Cas limites :
+• SyntaxError sur anciennes versions.
+
+Considérations de performance :
+• Évite parfois grande copie temporaire.
+
+Exemples :
+• d |= other en boucle.
+
+Remarques :
+• Réponse : {"a": 2, "b": 3}.`,
+  1971: `ChainMap : première carte
+
+Débutant :
+• c["x"] cherche dans a puis b ; x est dans a → 1.
+
+Intermédiaire :
+• Pas de copie des dicts sous-jacents.
+
+Expert :
+• Modifier a["x"] se répercute sur c.
 
 Concepts clés :
-• @property convertit une méthode en getter
-• Accès sans () : obj.x au lieu de obj.x()
-• La valeur est calculée dynamiquement à chaque fois
-• On peut ajouter @x.setter et @x.deleter pour support écriture/suppression
+• Chaîne de recherches, vue composite.
+
+Distinctions clés :
+• vs fusion | où une seule valeur finale.
 
 Fonctionnement :
-• @property enveloppe la méthode dans un descriptor property
-• Quand vous accédez à obj.x, Python appelle la méthode en coulisses
-• Renvoie la valeur de retour de la méthode comme si c'était un attribut simple
-• Sans setter, l'assignation lève AttributeError
+• Hit sur premier mapping.
 
-Exemple :
->>> class Circle:
-...     def __init__(self, radius):
-...         self.radius = radius
-...     @property
-...     def area(self):
-...         return 3.14159 * self.radius ** 2
->>> c = Circle(5)
->>> c.area     # Pas de parenthèses !
-78.53975
->>> c.area = 10  # AttributeError — lecture seule
+Exécution étape par étape :
+1. a servi pour x.
 
-@property est essentiel pour l'encapsulation — exposer des valeurs calculées avec une interface propre de type attribut.`,
-  2025: `Avec @property, accéder à C().x appelle automatiquement la méthode x() et renvoie sa valeur. Pas besoin de parenthèses — cela ressemble à un accès d'attribut mais exécute du code en coulisses.
+Ordre des opérations :
+• import puis construction puis [].
+
+Cas d'utilisation courants :
+• defaults < environnement < CLI.
+
+Cas limites :
+• Clé absente partout → KeyError.
+
+Considérations de performance :
+• Pire cas O(nombre de maps).
+
+Exemples :
+• ChainMap(locals(), globals()).
+
+Remarques :
+• Réponse : 1.`,
+  1972: `ChainMap : première valeur gagne
+
+Débutant :
+• x dans a et b : a est consulté en premier → 1, jamais 2.
+
+Intermédiaire :
+• Inverse sémantique de | où la droite écrase souvent.
+
+Expert :
+• Utile pour ombres style portée lexicale.
 
 Concepts clés :
-• C().x déclenche le getter de la property (la méthode x)
-• La méthode renvoie 42
-• Pas de () nécessaire — c'est le but de @property
-• C().x() lèverait en fait TypeError (42 n'est pas appelable)
+• Politique first-wins.
+
+Distinctions clés :
+• Documenter l’ordre des arguments ChainMap.
 
 Fonctionnement :
-• @property convertit x en descriptor property
-• C().x déclenche le __get__ du descriptor
-• __get__ appelle la méthode x originale sur l'instance
-• Renvoie 42
+• a masque b pour la clé x.
 
-Exemple :
->>> C().x
-42
->>> type(C.x)  # Sur la classe, c'est un objet property
-<class 'property'>
->>> C().x()    # TypeError: 'int' object is not callable
+Exécution étape par étape :
+1. Retour 1.
 
-Sans @property, il faudrait C().x() avec parenthèses. Le décorateur fournit une API plus propre.`,
-  2026: `@staticmethod crée une méthode qui ne reçoit pas l'instance (self) ni la classe (cls) comme premier argument. Elle se comporte comme une fonction régulière qui vit dans une classe.
+Ordre des opérations :
+• Ordre des maps dans le constructeur.
+
+Cas d'utilisation courants :
+• Utilisateur au-dessus des défauts.
+
+Cas limites :
+• Ordre inversé par erreur inverse la priorité.
+
+Considérations de performance :
+• Petit nombre de maps en pratique.
+
+Exemples :
+• Voir question fusion | pour last-wins.
+
+Remarques :
+• Réponse : 1.`,
+  1973: `ChainMap : fallback
+
+Débutant :
+• y absent de a, trouvé dans b → 2.
+
+Intermédiaire :
+• Parcours séquentiel des maps.
+
+Expert :
+• Si ni a ni b n’avaient y → KeyError.
 
 Concepts clés :
-• Pas de paramètre self ou cls nécessaire
-• Peut être appelée sur la classe : C.f()
-• Peut aussi être appelée sur une instance : C().f()
-• Utile pour les fonctions utilitaires qui appartiennent logiquement à la classe
+• Recherche multi-niveaux.
+
+Distinctions clés :
+• Similaire à get en chaîne manuelle.
 
 Fonctionnement :
-• @staticmethod enveloppe f dans un descriptor staticmethod
-• Quand appelée, Python ne passe pas self ni cls
-• f() renvoie simplement 1
-• Fonctionne identiquement qu'on l'appelle sur la classe ou l'instance
+• Échec sur a, succès sur b.
 
-Exemple :
->>> C.f()
-1
->>> C().f()
-1
->>> type(C.__dict__['f'])
-<class 'staticmethod'>
+Exécution étape par étape :
+1. Retour 2.
 
-Utilisez @staticmethod pour les méthodes qui n'ont pas besoin d'accéder à l'état d'instance ou de classe mais appartiennent logiquement à la classe.`,
-  2027: `@classmethod transforme une méthode pour qu'elle reçoive la classe (pas l'instance) comme premier argument. Ici, cls est la classe C, et cls.__name__ renvoie "C".
+Ordre des opérations :
+• c["y"].
+
+Cas d'utilisation courants :
+• Valeur par défaut dans carte suivante.
+
+Cas limites :
+• Clé manquante partout.
+
+Considérations de performance :
+• Linéaire en nombre de maps.
+
+Exemples :
+• Trois couches de config.
+
+Remarques :
+• Réponse : 2.`,
+  1974: `list(ChainMap) et ordre des clés
+
+Débutant :
+• list(c) sur un ChainMap renvoie la liste des clés uniques selon la règle interne de fusion : pour la question, le résultat attendu est ["b", "a"] (voir banque).
+
+Intermédiaire :
+• L’implémentation construit une vue en combinant les maps (souvent en mettant à jour depuis la dernière carte vers la première), ce qui peut inverser l’ordre par rapport à l’intuition « d’abord la première carte ».
+
+Expert :
+• Pour un ordre prévisible, utiliser explicitement list(dict.fromkeys(...)) ou trier.
 
 Concepts clés :
-• cls est la classe elle-même (C), pas une instance
-• cls.__name__ renvoie le nom de la classe comme chaîne
-• Peut être appelée sur la classe ou l'instance
-• Utile pour les constructeurs alternatifs et opérations au niveau classe
+• Itération ChainMap, clés uniques, piège d’ordre.
+
+Distinctions clés :
+• list(c) n’est pas list(c.items()).
 
 Fonctionnement :
-• @classmethod enveloppe f dans un descriptor classmethod
-• Quand appelée, Python passe la classe comme premier argument (cls)
-• cls est C, donc cls.__name__ est "C"
-• Renvoie "C"
+• CPython fusionne pour produire l’ensemble des clés ; l’ordre affiché correspond à la réponse du QCM.
 
-Exemple :
->>> C.f()
-'C'
->>> C().f()   # Fonctionne aussi sur les instances
-'C'
->>> class D(C): pass
->>> D.f()     # cls est D, pas C !
-'D'
+Exécution étape par étape :
+1. Clés finales uniques b et a dans l’ordre indiqué par la banque.
 
-La différence clé avec @staticmethod : classmethod reçoit la classe et peut accéder aux attributs de classe, tandis que staticmethod ne reçoit rien de plus.`,
-  2028: `La différence fondamentale est dans le premier argument implicite. @classmethod reçoit la classe (cls) automatiquement, tandis que @staticmethod ne reçoit aucun argument implicite.
+Ordre des opérations :
+• Itération du ChainMap matérialisée en liste.
+
+Cas d'utilisation courants :
+• Inspecter toutes les clés visibles à travers les couches.
+
+Cas limites :
+• Ne pas dépendre de cet ordre pour de la logique métier sans vérifier la version.
+
+Considérations de performance :
+• Construire la liste coûte O(n) sur le nombre total d’entrées vues.
+
+Exemples :
+• sorted(c) pour ordre alphabétique stable.
+
+Remarques :
+• Réponse du quiz : ["b", "a"].`,
+  1975: `max(d, key=lambda k: d[k])
+
+Débutant :
+• max parcourt les clés mais compare les valeurs via d[k] ; la clé de plus grande valeur est "c" (3).
+
+Intermédiaire :
+• Retourne la clé, pas la valeur.
+
+Expert :
+• Équivalent mental à max(d.items(), key=lambda kv: kv[1])[0].
 
 Concepts clés :
-• @classmethod : def f(cls, ...): — cls est la classe
-• @staticmethod : def f(...): — pas d'args implicites
-• Les deux peuvent être appelées sur la classe ou l'instance
-• @classmethod est conscient de la hiérarchie de classes (polymorphique)
+• Argument key de max, lookup dans d.
+
+Distinctions clés :
+• max(d) comparerait les clés str lexicographiquement.
 
 Fonctionnement :
-• Le descriptor classmethod passe la classe à f
-• Le descriptor staticmethod ne passe rien de plus
-• Pour l'héritage : cls dans classmethod réfère à la classe réelle utilisée (peut être une sous-classe)
-• staticmethod n'a pas conscience de la classe à laquelle il appartient
+• Compare 1,2,3 pour a,b,c.
 
-Exemple :
->>> class Animal:
-...     @classmethod
-...     def create(cls):
-...         return cls()  # Crée instance de la classe réelle
-...     @staticmethod
-...     def info():
-...         return "Animal"
->>> class Dog(Animal): pass
->>> Dog.create()   # cls est Dog → crée instance Dog
->>> Dog.info()     # Renvoie toujours "Animal" — pas de conscience de cls
+Exécution étape par étape :
+1. Gagnant c.
 
-Utilisez @classmethod quand vous avez besoin d'un comportement conscient de la classe ; @staticmethod pour les fonctions utilitaires.`,
-  2029: `C'est un décorateur de retry qui tente d'appeler une fonction plusieurs fois avant d'abandonner. Si la fonction lève une exception, il réessaie jusqu'à n fois. À la dernière tentative, il relève l'exception.
+Ordre des opérations :
+• max sur itérable de clés.
+
+Cas d'utilisation courants :
+• Trouver le nom du score maximal.
+
+Cas limites :
+• dict vide → ValueError.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• min(..., key=...) pour le minimum.
+
+Remarques :
+• Réponse : 'c'.`,
+  1976: `min(d, key=d.get)
+
+Débutant :
+• d.get passé comme key : pour chaque clé k, la valeur utilisée pour comparer est d[k] ; minimum des valeurs 1,2,3 → clé "a".
+
+Intermédiaire :
+• d.get(k) équivaut à d[k] si k présent ; ici toutes les clés existent.
+
+Expert :
+• Évite lambda si la signature convient.
 
 Concepts clés :
-• Décorateur paramétré : retry(times) renvoie dec
-• La boucle tente l'appel de la fonction jusqu'à times fois
-• try/except capture les échecs et réessaie
-• La dernière itération relève pour propager l'erreur
+• Méthode unbound d.get comme fonction de clé.
+
+Distinctions clés :
+• min(d) comparerait les chaînes de clés.
 
 Fonctionnement :
-• @retry(3) crée un décorateur qui autorise 3 tentatives
-• f(*a) est appelé dans un bloc try
-• Si ça réussit (return), la boucle sort immédiatement
-• Si ça lève, except capture
-• À la dernière tentative (i == times - 1), raise relève
+• Parcours clés avec comparaison sur valeurs.
 
-Exemple :
->>> @retry(3)
-... def connect():
-...     # Peut échouer pour des problèmes réseau
-...     return make_connection()
->>> connect()  # Tente jusqu'à 3 fois
+Exécution étape par étape :
+1. Plus petite valeur 1 → clé a.
 
-Ce pattern est courant en programmation réseau, appels API, et toute opération pouvant échouer transitoirement. Les versions production ajoutent souvent un backoff exponentiel.`,
-  2030: `C'est un décorateur de debug ou de journalisation qui enregistre les appels de fonction avec leurs arguments et valeurs de retour. Il utilise @wraps(f) pour préserver les métadonnées de la fonction originale.
+Ordre des opérations :
+• min sur itérable de clés.
+
+Cas d'utilisation courants :
+• Meilleur candidat par score minimal.
+
+Cas limites :
+• dict vide → ValueError.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• max(d, key=d.get) pour le max.
+
+Remarques :
+• Réponse : 'a'.`,
+  1977: `sorted(d, key=d.get)
+
+Débutant :
+• Trie les clés selon leurs valeurs croissantes : 1 (b), 2 (c), 3 (a) → ['b','c','a'].
+
+Intermédiaire :
+• sorted(d) donne les clés ; key réordonne par valeur.
+
+Expert :
+• Stable pour clés de valeurs égales (ordre relatif conservé).
 
 Concepts clés :
-• Appelle f(*a, **kw) d'abord pour obtenir le résultat
-• Puis imprime le nom de la fonction, args, kwargs et le résultat
-• @wraps(f) préserve __name__, __doc__, etc.
-• La valeur de retour originale est transmise inchangée
+• Tri par valeur indirecte.
+
+Distinctions clés :
+• sorted(d.values()) perd le lien clé.
 
 Fonctionnement :
-• w(*a, **kw) capture tous les arguments positionnels et keyword
-• r = f(*a, **kw) appelle la fonction originale
-• print affiche : function_name(args, kwargs) -> result
-• return r transmet le résultat
+• Comparaisons sur d.get(k).
 
-Exemple :
->>> @debug
-... def add(x, y): return x + y
->>> add(3, 4)
-add((3, 4), {}) -> 7
-7
+Exécution étape par étape :
+1. Ordre b,c,a.
 
-Ce pattern est indispensable pendant le développement. Les décorateurs de journalisation en production utilisent typiquement le module logging au lieu de print.`,
-  2031: `C'est le décorateur le plus simple possible — il prend une fonction et la renvoie inchangée. Connu comme décorateur identité, il sert de no-op.
+Ordre des opérations :
+• Timsort sur clés avec clé externe.
+
+Cas d'utilisation courants :
+• Classement de joueurs par score.
+
+Cas limites :
+• Types non comparables entre valeurs.
+
+Considérations de performance :
+• O(n log n).
+
+Exemples :
+• reverse=True pour décroissant.
+
+Remarques :
+• Réponse : ['b', 'c', 'a'].`,
+  1978: `sorted reverse par valeur
+
+Débutant :
+• Même tri que 1977 mais reverse=True : valeurs décroissantes 3,2,1 → clés a,c,b.
+
+Intermédiaire :
+• Équivalent à sorted(..., key=d.get)[::-1] conceptuellement.
+
+Expert :
+• Attention coût si on trie puis inverse inutilement deux fois.
 
 Concepts clés :
-• dec reçoit f et la renvoie immédiatement
-• Aucune fonction wrapper n'est créée
-• f reste exactement le même objet fonction
-• f.__name__, f.__doc__, etc. sont tous préservés
+• Paramètre reverse du tri.
+
+Distinctions clés :
+• Ne trie pas les valeurs seules, toujours les clés.
 
 Fonctionnement :
-• @dec au-dessus de def func() exécute : func = dec(func)
-• dec(func) renvoie func elle-même
-• func est inchangée — même objet, même comportement
+• Ordre a,c,b.
 
-Exemple :
->>> @dec
-... def hello(): return "hi"
->>> hello()
-'hi'
->>> hello.__name__
-'hello'
+Exécution étape par étape :
+1. Tri décroissant par valeur.
 
-Bien que semblant inutile, les décorateurs identité apparaissent comme : cas de base dans la décoration conditionnelle, drapeaux de fonctionnalité optionnels (@debug_only qui est un no-op en production), et comme marqueurs de documentation.`,
-  2032: `Un décorateur peut renvoyer n'importe quelle valeur — Python n'impose pas que le retour soit appelable. Cependant, si un non-callable est renvoyé, tenter d'appeler le nom décoré lèvera TypeError.
+Ordre des opérations :
+• key puis reverse.
+
+Cas d'utilisation courants :
+• Podium.
+
+Cas limites :
+• Égalités : stabilité.
+
+Considérations de performance :
+• O(n log n).
+
+Exemples :
+• heapq.nlargest pour grands n.
+
+Remarques :
+• Réponse : ['a', 'c', 'b'].`,
+  1979: `Somme des longueurs des listes en valeurs
+
+Débutant :
+• d = {"a": [1, 2], "b": [3]} : pour chaque liste v, len(v) donne 2 puis 1 ; sum(2, 1) = 3.
+
+Intermédiaire :
+• Ce n’est pas la somme des éléments des listes, seulement le nombre d’éléments par liste, additionné.
+
+Expert :
+• Générateur len(v) for v in d.values() sans liste intermédiaire.
 
 Concepts clés :
-• @dec remplace f par dec(f) qui est 42
-• f est maintenant l'entier 42
-• f() tente d'appeler 42 → TypeError
-• Pas d'erreur au moment de la décoration — l'assignation réussit
+• d.values(), len sur listes, sum sur générateur.
+
+Distinctions clés :
+• Ne pas confondre avec sum de tous les entiers contenus dans les listes.
 
 Fonctionnement :
-• def f(): ... crée une fonction
-• @dec applique : f = dec(f) = 42
-• f est maintenant 42 (un entier)
-• f() lève TypeError: 'int' object is not callable
+• Première valeur [1,2] → len 2 ; seconde [3] → len 1.
 
-Exemple :
->>> @dec
-... def f(): return "hello"
->>> f
-42
->>> f()
-TypeError: 'int' object is not callable
->>> type(f)
-<class 'int'>
+Exécution étape par étape :
+1. 2 + 1 → 3.
 
-C'est légal mais presque toujours un bug. Les décorateurs devraient renvoyer des callables sauf s'ils remplacent intentionnellement le nom par une valeur différente.`,
-  2033: `Après la décoration, f est l'entier 42. Tenter d'appeler 42 avec des parenthèses lève TypeError car les entiers ne sont pas appelables.
+Ordre des opérations :
+• sum consomme le générateur.
+
+Cas d'utilisation courants :
+• Compter le nombre total d’éléments dans des groupes (valeurs liste).
+
+Cas limites :
+• Valeur non itérable ou sans len → erreur.
+
+Considérations de performance :
+• O(nombre total d’éléments) si len est O(1) par liste.
+
+Exemples :
+• Même idée pour compter des sous-listes dans un graphe.
+
+Remarques :
+• Réponse : 3.`,
+  1980: `Intersection des clés (vues dict_keys)
+
+Débutant :
+• d.keys() et e.keys() sont des vues qui supportent les opérations d’ensemble ; & garde les clés présentes dans les deux → ici seulement "b".
+
+Intermédiaire :
+• list(...) matérialise en liste ; avec une seule clé, on obtient ["b"].
+
+Expert :
+• Équivalent conceptuel à set(d) & set(e) sur les clés, mais idiomatique avec les vues en Python 3.
 
 Concepts clés :
-• @dec définit f = dec(f) = 42
-• f est maintenant 42, pas une fonction
-• f() est équivalent à 42() qui est invalide
-• Python lève TypeError: 'int' object is not callable
+• dict_keys, &, intersection.
+
+Distinctions clés :
+• Ce n’est pas l’intersection des valeurs ni des items.
 
 Fonctionnement :
-• Décoration : f = dec(f)
-• dec renvoie 42 quel que soit l'entrée
-• f contient maintenant 42
-• f() tente d'appeler l'entier → TypeError
+• {"a","b"} & {"b","c"} → {"b"}.
 
-Exemple :
->>> f
-42
->>> callable(f)
-False
->>> f()
-TypeError: 'int' object is not callable
+Exécution étape par étape :
+1. list → ['b'] (ordre d’itération peut varier si plusieurs clés ; ici une seule).
 
-Cela démontre que la syntaxe @ est purement une assignation — Python ne vérifie pas que le résultat est appelable. L'erreur n'apparaît que quand vous essayez d'utiliser f comme fonction.`,
-  2034: `C'est un décorateur d'autorisation ou de permission. Il vérifie si l'utilisateur a des credentials d'authentification avant de permettre l'exécution de la fonction décorée.
+Ordre des opérations :
+• .keys() puis & puis list().
+
+Cas d'utilisation courants :
+• Champs communs entre deux enregistrements ou configs.
+
+Cas limites :
+• Aucune clé commune → [].
+
+Considérations de performance :
+• Efficace sur les vues sans copie complète inutile.
+
+Exemples :
+• d.keys() | e.keys() pour l’union.
+
+Remarques :
+• Réponse : ['b'].`,
+  1981: `Clés pour une valeur donnée
+
+Débutant :
+• Parcourt items ; garde k si v==1 → a et c.
+
+Intermédiaire :
+• Ordre d’insertion du dict source : a,b,c → liste ['a','c'].
+
+Expert :
+• Si plusieurs v==1, toutes les clés correspondantes apparaissent.
 
 Concepts clés :
-• Vérifie user.get("auth") avant d'appeler f
-• Lève PermissionError si non authentifié
-• N'appelle la fonction originale que si auth passe
-• Le premier argument doit être un dict user avec une clé "auth"
+• Filtrage sur valeur, liste en comprehension.
+
+Distinctions clés :
+• vs dict inverse unique (une valeur → une clé).
 
 Fonctionnement :
-• w(user, *a) attend user comme premier argument
-• user.get("auth") vérifie l'authentification
-• Si falsy (None, False, manquant) : lève PermissionError
-• Si truthy : appelle et renvoie f(user, *a) normalement
+• Test d’égalité stricte 1.
 
-Exemple :
->>> @requires_auth
-... def view_profile(user):
-...     return user["name"]
->>> view_profile({"name": "Alice", "auth": True})
-'Alice'
->>> view_profile({"name": "Bob"})
-PermissionError
+Exécution étape par étape :
+1. a:1 oui, b:2 non, c:1 oui.
 
-Ce pattern est omniprésent dans les frameworks web (@login_required de Django, @auth.login_required de Flask) pour protéger les routes et vues.`,
-  2035: `Retirer un décorateur après application n'est pas simple car la fonction originale a été remplacée. Cependant, si @functools.wraps a été utilisé, l'original est accessible via __wrapped__.
+Ordre des opérations :
+• Parcours items.
+
+Cas d'utilisation courants :
+• Index inverse partiel.
+
+Cas limites :
+• Float 1.0 vs int 1.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• defaultdict(list) pour index multi.
+
+Remarques :
+• Réponse : ['a', 'c'].`,
+  1982: `Inversion clé↔valeur
+
+Débutant :
+• {v:k for k,v in d.items()} → 1:'a', 2:'b'.
+
+Intermédiaire :
+• Si deux clés avaient la même valeur, collision (pas ici).
+
+Expert :
+• Valeurs doivent être hashables pour servir de clés.
 
 Concepts clés :
-• La décoration remplace le nom de la fonction par le wrapper
-• Sans @wraps, la fonction originale est perdue (seulement dans la fermeture)
-• Avec @wraps, __wrapped__ contient une référence à l'original
-• Il n'y a pas de mécanisme « undecorate » intégré
+• Dict comprehension swap.
+
+Distinctions clés :
+• Pas réversible si non injective.
 
 Fonctionnement :
-• Après @dec, func pointe vers le wrapper
-• Si @wraps(f) a été utilisé : wrapper.__wrapped__ = f
-• Accès à l'original : func.__wrapped__
-• Réassignation : func = func.__wrapped__ pour « undecorate »
+• Deux paires inversées.
 
-Exemple :
->>> from functools import wraps
->>> def dec(f):
-...     @wraps(f)
-...     def w(*a): return f(*a)
-...     return w
->>> @dec
-... def hello(): return "hi"
->>> hello.__wrapped__  # Fonction originale
->>> original = hello.__wrapped__
+Exécution étape par étape :
+1. Nouveau mapping.
 
-C'est pourquoi @functools.wraps est important — il préserve l'échappatoire vers la fonction originale.`,
-  2036: `Quand @wraps(f) est utilisé, il définit __wrapped__ sur la fonction wrapper pour référencer la fonction originale. Donc f.__wrapped__ pointe vers l'original f, qui n'est pas None.
+Ordre des opérations :
+• items puis comprehension.
+
+Cas d'utilisation courants :
+• Lookup inverse ponctuel.
+
+Cas limites :
+• Valeurs non uniques.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• bijection str↔int contrôlée.
+
+Remarques :
+• Réponse : {1: 'a', 2: 'b'}.`,
+  1983: `Alias : d2 is d1
+
+Débutant :
+• d2 = d1 ne copie pas le dictionnaire : les deux noms pointent vers le même objet → is renvoie True.
+
+Intermédiaire :
+• Modifier l’un change l’autre ; pour une copie superficielle : copy() ou dict(d1).
+
+Expert :
+• is compare l’identité (adresse), pas seulement le contenu.
 
 Concepts clés :
-• @wraps(f) définit w.__wrapped__ = f (l'original)
-• Après décoration, f est w mais f.__wrapped__ est l'original f
-• L'objet fonction original est une fonction valide, pas None
-• « is not None » s'évalue à True
+• Référence, alias, opérateur is.
+
+Distinctions clés :
+• d2 == d1 serait True aussi ici, mais is renforce l’identité d’objet.
 
 Fonctionnement :
-• dec(f) crée w avec @wraps(f)
-• @wraps définit w.__wrapped__ = f (original)
-• f = dec(f) — f est maintenant w
-• f.__wrapped__ est la fonction originale → not None → True
+• Assignation de référence.
 
-Exemple :
->>> f.__wrapped__
-<function f at 0x...>
->>> f.__wrapped__ is not None
-True
->>> callable(f.__wrapped__)
-True
+Exécution étape par étape :
+1. Un seul objet dict en mémoire, deux noms.
 
-L'attribut __wrapped__ est aussi utilisé par inspect.unwrap() pour retirer automatiquement les couches de décorateurs.`,
-  2037: `La syntaxe de décorateur @ ne peut apparaître qu'avant des instructions def ou class — pas des expressions lambda. Cependant, puisque la décoration est juste une application de fonction, on peut décorer manuellement une lambda.
+Ordre des opérations :
+• Création de d1 puis liaison de d2.
+
+Cas d'utilisation courants :
+• Passer un dict mutable à une fonction : risque de mutation partagée.
+
+Cas limites :
+• deepcopy si valeurs internes mutables imbriquées.
+
+Considérations de performance :
+• Alias sans coût de copie.
+
+Exemples :
+• id(d1) == id(d2).
+
+Remarques :
+• Réponse : True.`,
+  1984: `dict.fromkeys(range(5), 0)
+
+Débutant :
+• Crée les clés 0,1,2,3,4 et assigne la valeur 0 à chacune : {0:0, 1:0, 2:0, 3:0, 4:0}.
+
+Intermédiaire :
+• Le second argument est la valeur unique partagée pour toutes les clés (ici int immuable, pas de piège de partage).
+
+Expert :
+• Avec une valeur mutable (ex. []), toutes les clés partageraient la même liste.
 
 Concepts clés :
-• @decorator est du sucre syntaxique pour name = decorator(name)
-• lambda est une expression, pas une instruction
-• La syntaxe @ nécessite une instruction (def ou class)
-• Décoration manuelle : f = decorator(lambda x: x)
+• fromkeys, range(5), valeur par défaut.
+
+Distinctions clés :
+• vs compréhension {k: 0 for k in range(5)} équivalente pour int.
 
 Fonctionnement :
-• @decorator / lambda x: x → SyntaxError
-• À la place : f = decorator(lambda x: x) fonctionne
-• Le résultat est le même — la lambda est passée au décorateur
-• La valeur de retour du décorateur est assignée à f
+• Itération des clés puis remplissage.
 
-Exemple :
->>> double = lambda x: x * 2
->>> logged_double = log(double)  # Décoration manuelle
->>> logged_double(5)
-Calling <lambda>
-10
+Exécution étape par étape :
+1. Cinq entrées, toutes à 0.
 
-# Ceci serait une SyntaxError :
-# @log
-# lambda x: x * 2
+Ordre des opérations :
+• Appel statique dict.fromkeys.
 
-Comme les lambdas sont anonymes, f.__name__ serait "<lambda>" sauf si @wraps est utilisé.`,
-  2038: `Le decorator creates a wrapper w and explicitly sets w.__doc__ = "wrapped". Since @dec replaces f avec w, f.__doc__ retourne the wrapper's docstring: "wrapped".
+Cas d'utilisation courants :
+• Initialiser des compteurs ou des drapeaux à 0/false.
 
-Concepts clés :
-• f originally has __doc__ = "original"
-• The wrapper w gets __doc__ = "wrapped" explicitly
-• @dec replaces f avec w
-• f.__doc__ is now w.__doc__ = "wrapped"
+Cas limites :
+• Valeur mutable partagée (anti-pattern).
 
-Comment ça fonctionne :
-• dec(f) creates w avec __doc__ = "wrapped"
-• Returns w
-• f = dec(f) — f is now w
-• f.__doc__ retourne "wrapped"
+Considérations de performance :
+• Implémentation efficace en CPython.
 
-Exemple :
->>> f.__doc__
-'wrapped'
+Exemples :
+• fromkeys("abc", None).
 
-Without the explicit w.__doc__ = "wrapped" line, f.__doc__ would be None (wrapper fonctions don't inherit the original's docstring unless @wraps is used). With @functools.wraps(f), __doc__ would be "original".`,
-  2039: `La décoration se produit au moment de la définition — quand la ligne @dec est exécutée. Le print("decorating") s'exécute dans dec, qui est appelé dans le processus de décoration.
+Remarques :
+• Réponse : {0: 0, 1: 0, 2: 0, 3: 0, 4: 0}.`,
+  1985: `isinstance({}, dict)
+
+Débutant :
+• {} construit un dictionnaire vide ; isinstance({}, dict) est True.
+
+Intermédiaire :
+• isinstance accepte aussi les sous-classes de dict.
+
+Expert :
+• type({}) == dict est vrai pour un dict exact, mais isinstance est l’idiome pour les hiérarchies.
 
 Concepts clés :
-• @dec déclenche dec(f) immédiatement quand l'instruction def s'exécute
-• print("decorating") s'exécute pendant la décoration, pas pendant les appels
-• Le wrapper w est renvoyé et remplace f
-• Appeler f() plus tard n'exécute que w() — pas de print
+• isinstance, type dict.
+
+Distinctions clés :
+• Ne pas confondre avec isinstance({}, (dict, list)) pour unions de types.
 
 Fonctionnement :
-• Python rencontre @dec / def f()
-• Crée l'objet fonction pour f
-• Appelle dec(f) immédiatement
-• dec imprime "decorating" et renvoie w
-• f = w (décoration terminée)
-• Plus tard : f() appelle w() — pas de print
+• Vérification dans la chaîne de classes.
 
-Exemple :
->>> # Définir la fonction décorée imprime :
-decorating
->>> f()  # Pas de print — renvoie juste 1
-1
+Exécution étape par étape :
+1. True.
 
-C'est important : si vous avez des effets de bord dans un décorateur (print, journalisation, enregistrement), ils se produisent à l'import/définition, pas à l'appel.`,
-  2040: `Les décorateurs ont un contrôle total sur les arguments. La fonction wrapper reçoit les arguments, peut les transformer de toute façon, puis passe les versions modifiées à la fonction originale.
+Ordre des opérations :
+• Création du littéral puis appel.
+
+Cas d'utilisation courants :
+• Valider des paramètres (attendre un mapping).
+
+Cas limites :
+• Objets duck-typing sans héritage dict → False.
+
+Considérations de performance :
+• Coût négligeable.
+
+Exemples :
+• isinstance({"a": 1}, dict).
+
+Remarques :
+• Réponse : True.`,
+  1986: `type(d.keys())
+
+Débutant :
+• d.keys() renvoie une vue de type dict_keys ; type(...) affiche la classe, par ex. <class 'dict_keys'>.
+
+Intermédiaire :
+• Ce n’est ni une list ni un set, mais une vue dynamique sur les clés.
+
+Expert :
+• Les vues supportent aussi des opérations ensemblistes (|, &, etc.) en Python 3.
 
 Concepts clés :
-• Le wrapper reçoit tous les arguments via *args et **kwargs
-• Peut modifier, ajouter, supprimer ou valider des arguments
-• Passe les arguments transformés à la fonction originale
-• La fonction originale ne voit que ce que le wrapper fournit
+• Vue dict_keys, type(), introspection.
+
+Distinctions clés :
+• vs list(d.keys()) qui est une copie liste.
 
 Fonctionnement :
-• def w(*args, **kwargs): capture tous les arguments
-• Modifier : args = (args[0] * 2, *args[1:])
-• Ajouter : kwargs['extra'] = True
-• Appeler : f(*modified_args, **modified_kwargs)
+• La vue reste liée au dict sous-jacent.
 
-Exemple :
->>> def double_first_arg(f):
-...     def wrapper(*args):
-...         new_args = (args[0] * 2,) + args[1:]
-...         return f(*new_args)
-...     return wrapper
->>> @double_first_arg
-... def add(x, y): return x + y
->>> add(3, 4)  # x devient 6, y reste 4
-10
+Exécution étape par étape :
+1. type(d.keys()) → classe dict_keys (repr standard du QCM).
 
-Ce pattern est utilisé pour la coercition de types, l'injection de valeurs par défaut, la validation d'arguments et la normalisation.`,
-  2041: `Le décorateur @dataclass génère automatiquement des méthodes spéciales à partir des annotations de variables de classe. Il crée __init__, __repr__, __eq__, et optionnellement d'autres.
+Ordre des opérations :
+• .keys() puis type().
+
+Cas d'utilisation courants :
+• Déboguer le type exact renvoyé par l’API dict.
+
+Cas limites :
+• dict vide : vue toujours dict_keys.
+
+Considérations de performance :
+• Création de la vue en temps constant.
+
+Exemples :
+• isinstance(d.keys(), type({}.keys())).
+
+Remarques :
+• Réponse attendue : <class 'dict_keys'>.`,
+  1987: `type(d.items())
+
+Débutant :
+• dict_items paires (clé, valeur) vues.
+
+Intermédiaire :
+• Itération renvoie vues dynamiques en 3.8+ selon contexte.
+
+Expert :
+• set(d.items()) utile pour comparaison d’ensembles de paires.
 
 Concepts clés :
-• @dataclass lit les annotations de classe (x: int, y: int)
-• Génère __init__(self, x: int, y: int) automatiquement
-• Point(1, 2) crée une instance avec x=1 et y=2
-• p.x accède à l'attribut d'instance → 1
+• Vue items.
+
+Distinctions clés :
+• vs zip(d.keys(), d.values()).
 
 Fonctionnement :
-• @dataclass inspecte les annotations de Point
-• Génère : def __init__(self, x: int, y: int): self.x = x; self.y = y
-• Génère aussi __repr__ et __eq__
-• Point(1, 2) utilise le __init__ généré
+• Liaison au dict.
 
-Exemple :
->>> p = Point(1, 2)
->>> p.x
-1
->>> p.y
-2
->>> p
-Point(x=1, y=2)
->>> Point(1, 2) == Point(1, 2)
-True
+Exécution étape par étape :
+1. dict_items.
 
-@dataclass élimine le boilerplate pour les classes qui contiennent des données. C'est l'un des décorateurs les plus impactants de la bibliothèque standard (ajouté en Python 3.7).`,
-  2042: `Par défaut, @dataclass génère trois méthodes spéciales : __init__ (constructeur), __repr__ (représentation chaîne), et __eq__ (comparaison d'égalité). Des méthodes additionnelles peuvent être générées avec des paramètres du décorateur.
+Ordre des opérations :
+• .items() puis type.
+
+Cas d'utilisation courants :
+• Parcours for k,v.
+
+Cas limites :
+• Taille change pendant itération.
+
+Considérations de performance :
+• Vue légère.
+
+Exemples :
+• list(items) pour figer.
+
+Remarques :
+• Réponse : dict_items.`,
+  1988: `set(d.items())
+
+Débutant :
+• d.items() produit les paires ("a", 1) et ("b", 2) ; ce sont des tuples dont tous les éléments sont hashables → set() construit un ensemble de ces paires.
+
+Intermédiaire :
+• Le résultat est un set à deux éléments (les deux tuples), pas un set de clés seules.
+
+Expert :
+• L’ordre d’affichage du set n’est pas garanti, mais le contenu correspond aux deux paires.
 
 Concepts clés :
-• __init__ : assigne les paramètres à self selon les annotations
-• __repr__ : renvoie ClassName(field1=val1, field2=val2)
-• __eq__ : compare tous les champs pour l'égalité
-• Optionnel : __lt__, __le__, __gt__, __ge__ avec order=True
-• Optionnel : __hash__ (généré si frozen=True ou eq=False)
+• dict_items, tuples hashables, set.
+
+Distinctions clés :
+• set(d.keys()) donnerait un set de chaînes, pas de paires.
 
 Fonctionnement :
-• @dataclass inspecte les annotations
-• Génère __init__ qui accepte et assigne chaque champ
-• Génère __repr__ qui affiche le nom de classe et les valeurs des champs
-• Génère __eq__ qui compare les tuples de valeurs des champs
+• Itération sur items puis insertion dans le set.
 
-Exemple :
->>> @dataclass
-... class Point:
-...     x: int
-...     y: int
->>> Point(1, 2)
-Point(x=1, y=2)          # __repr__
->>> Point(1, 2) == Point(1, 2)
-True                       # __eq__
+Exécution étape par étape :
+1. Éléments {("a", 1), ("b", 2)} au sens logique du QCM.
 
-Utilisez @dataclass(order=True) pour les opérateurs de comparaison, @dataclass(frozen=True) pour l'immuabilité et le hachage.`,
-  2043: `Ce décorateur de classe ajoute une nouvelle méthode à la classe au moment de la décoration. La lambda devient une méthode d'instance car le protocole descriptor de Python la lie à l'instance.
+Ordre des opérations :
+• .items() puis set(...).
+
+Cas d'utilisation courants :
+• Comparer deux dicts via intersection ou différence symétrique sur les paires.
+
+Cas limites :
+• Valeur non hashable → voir question suivante (TypeError).
+
+Considérations de performance :
+• O(n) dans le nombre de paires.
+
+Exemples :
+• ("a", 1) in set(d.items()).
+
+Remarques :
+• Réponse du quiz : ensemble des deux tuples (forme affichée du type {("a", 1), ("b", 2)}).`,
+  1989: `set(d.items()) avec listes
+
+Débutant :
+• Les valeurs sont des listes → les tuples (clé, liste) contiennent une liste non hashable → TypeError.
+
+Intermédiaire :
+• set exige éléments hashables.
+
+Expert :
+• Convertir en tuple(v) ou utiliser frozenset pour représentations figées si besoin.
 
 Concepts clés :
-• @add_method reçoit la classe C
-• cls.greet = lambda self: "hi" ajoute une méthode
-• La lambda prend self (en faisant une méthode d'instance)
-• return cls renvoie la classe modifiée
+• Hashabilité, erreur à la construction du set.
+
+Distinctions clés :
+• dict OK, set(items) pas toujours.
 
 Fonctionnement :
-• add_method(C) modifie C en ajoutant l'attribut greet
-• cls.greet est défini à une lambda qui prend self
-• Quand appelée comme C().greet(), Python passe l'instance comme self
-• La lambda renvoie "hi"
+• Échec lors de tentative d’insertion.
 
-Exemple :
->>> C().greet()
-'hi'
->>> hasattr(C, 'greet')
-True
+Exécution étape par étape :
+1. Exception.
 
-Les décorateurs de classe sont puissants pour la métaprogrammation — ajouter des méthodes, modifier le comportement, ou enregistrer des classes. Ce pattern est utilisé dans les frameworks pour auto-générer des endpoints API, des méthodes de sérialisation, etc.`,
-  2044: `Ce décorateur basé sur une classe maintient un état entre les appels en utilisant des attributs d'instance. hello est remplacé par une instance Decorator qui suit combien de fois elle a été appelée.
+Ordre des opérations :
+• set() itère items et échoue.
+
+Cas d'utilisation courants :
+• Détecter valeurs non sérialisables en clé.
+
+Cas limites :
+• objets mutables comme valeurs courants en JSON-like.
+
+Considérations de performance :
+• Échec rapide.
+
+Exemples :
+• repr des valeurs pour comparaison.
+
+Remarques :
+• Réponse : TypeError.`,
+  1990: `Chaîne f avec lookups dans le dict
+
+Débutant :
+• d = {"name": "Alice", "age": 30} ; dans la f-string, d['name'] vaut Alice et d['age'] vaut 30.
+
+Intermédiaire :
+• Guillemets doubles autour de la f-string, guillemets simples à l’intérieur des crochets pour éviter le conflit.
+
+Expert :
+• Toute expression valide peut aller dans {} ; ici accès bracket standard.
 
 Concepts clés :
-• @Decorator : hello = Decorator(hello)
-• hello est maintenant une instance Decorator avec self.count = 0
-• Chaque appel à hello() déclenche __call__, incrémentant count
-• hello.count est accessible comme attribut régulier
+• f-string, interpolation, d[clé].
+
+Distinctions clés :
+• vs d.get pour éviter KeyError si clé absente.
 
 Fonctionnement :
-• Decorator(hello) stocke hello dans self.f, définit self.count = 0
-• hello() → __call__() → self.count = 1, renvoie self.f()
-• hello() → __call__() → self.count = 2, renvoie self.f()
-• hello() → __call__() → self.count = 3, renvoie self.f()
-• hello.count → 3
+• Évaluation des deux expressions entre accolades puis concaténation.
 
-Exemple :
->>> hello()
-'hi'
->>> hello.count
-1
->>> hello()
->>> hello()
->>> hello.count
-3
+Exécution étape par étape :
+1. "Name: Alice, Age: 30".
 
-Les décorateurs basés sur des classes excellent pour maintenir un état. C'est plus propre que les approches basées sur des fonctions avec arguments par défaut mutables ou attributs de fonction.`,
-  2045: `Le décorateur trace ajoute une journalisation d'entrée et de sortie à une fonction. Il imprime une flèche montrant quand l'exécution entre dans la fonction et une autre montrant quand elle sort avec le résultat.
+Ordre des opérations :
+• Lecture du littéral f puis évaluation des { }.
+
+Cas d'utilisation courants :
+• Messages utilisateur, logs structurés.
+
+Cas limites :
+• Clé manquante → KeyError comme hors f-string.
+
+Considérations de performance :
+• Implémentation optimisée (PEP 498).
+
+Exemples :
+• f"{user['id']:05d}" avec formatage.
+
+Remarques :
+• Réponse : "Name: Alice, Age: 30".`,
+  1991: `Clé tuple
+
+Débutant :
+• d[(1,2)] = "tuple key" puis lookup avec le même tuple → "tuple key".
+
+Intermédiaire :
+• Tuple hashable si éléments hashables.
+
+Expert :
+• Liste [1,2] ne pourrait pas être clé.
 
 Concepts clés :
-• "-> name" imprime avant l'exécution de la fonction (entrée)
-• r = f(*a, **kw) exécute la fonction réelle
-• "<- name: result" imprime après (sortie)
-• return r transmet le résultat inchangé
+• Clé composite immuable.
+
+Distinctions clés :
+• (1,2) vs (2,1) distincts.
 
 Fonctionnement :
-• Appeler func décorée déclenche w
-• w imprime le message d'entrée avec le nom de la fonction
-• w appelle f(*a, **kw) et capture le résultat dans r
-• w imprime le message de sortie avec le nom de la fonction et le résultat
-• w renvoie r
+• Hash et égalité de tuple.
 
-Exemple :
->>> @trace
-... def add(x, y): return x + y
->>> add(3, 4)
--> add
-<- add: 7
-7
+Exécution étape par étape :
+1. Retour chaîne.
 
-Ce pattern est essentiel pour déboguer les fonctions récursives — on peut voir la pile d'appels se déplier. Pour la production, remplacez print par des appels au module logging.`,
-  2046: `@abc.abstractmethod est un décorateur du module abc (Abstract Base Classes) qui marque une méthode comme abstraite. Les classes avec des méthodes abstraites ne peuvent pas être instanciées — les sous-classes doivent surcharger toutes les méthodes abstraites.
+Ordre des opérations :
+• Création dict puis [].
+
+Cas d'utilisation courants :
+• Grilles, paires (id, scope).
+
+Cas limites :
+• Tuple contenant liste interdit.
+
+Considérations de performance :
+• Hash tuple O(len).
+
+Exemples :
+• cache[(fn, args)].
+
+Remarques :
+• Réponse : 'tuple key'.`,
+  1992: `Clé frozenset
+
+Débutant :
+• On enregistre avec d[frozenset({1, 2})] = "fs key" ; relire avec frozenset({1, 2}) renvoie "fs key".
+
+Intermédiaire :
+• frozenset({1, 2}) et frozenset({2, 1}) ont le même contenu : accès équivalent.
+
+Expert :
+• Un set mutable ne peut pas être clé ; frozenset est immuable et hashable.
 
 Concepts clés :
-• Fait partie du module abc (Abstract Base Classes)
-• Marque les méthodes que les sous-classes doivent implémenter
-• Une classe avec des méthodes abstraites ne peut pas être instanciée directement
-• Garantit la conformité à l'interface dans la hiérarchie de classes
+• frozenset, clé composite, égalité d’ensembles.
+
+Distinctions clés :
+• Ne pas utiliser {1, 2} (set) comme clé de dict.
 
 Fonctionnement :
-• @abstractmethod définit __isabstractmethod__ = True sur la méthode
-• Le métaclasse ABCMeta vérifie les méthodes abstraites
-• Si des méthodes existent, l'instanciation lève TypeError
-• Les sous-classes doivent surcharger toutes les méthodes abstraites pour être instanciables
+• Hash et égalité basés sur les éléments, pas sur l’ordre d’écriture.
 
-Exemple :
->>> from abc import ABC, abstractmethod
->>> class Shape(ABC):
-...     @abstractmethod
-...     def area(self): pass
->>> Shape()  # TypeError: Can't instantiate abstract class
->>> class Circle(Shape):
-...     def area(self): return 3.14 * self.r ** 2
->>> Circle()  # Fonctionne — area est implémentée
+Exécution étape par étape :
+1. Retour "fs key".
 
-C'est la façon de Python d'imposer les interfaces et contrats en POO.`,
-  2047: `@functools.total_ordering est un décorateur de classe qui génère automatiquement les méthodes de comparaison manquantes. Il suffit de définir __eq__ et une méthode d'ordre (__lt__, __le__, __gt__, ou __ge__), et il remplit le reste.
+Ordre des opérations :
+• Création du frozenset, assignation, lecture.
+
+Cas d'utilisation courants :
+• Tags ou arêtes non orientées comme clé.
+
+Cas limites :
+• Éléments du frozenset doivent être hashables.
+
+Considérations de performance :
+• Coût de hash proportionnel à la taille.
+
+Exemples :
+• Cache indexé par frozenset d’arguments.
+
+Remarques :
+• Réponse : 'fs key'.`,
+  1993: `get avec défaut
+
+Débutant :
+• d.get("a", 0) retourne 1 car "a" existe.
+
+Intermédiaire :
+• Le 0 n’est pas utilisé si clé présente.
+
+Expert :
+• get évite try/except KeyError.
 
 Concepts clés :
-• Requiert __eq__ et au moins une de __lt__, __le__, __gt__, __ge__
-• Génère les méthodes de comparaison manquantes automatiquement
-• Réduit le boilerplate — au lieu de 6 méthodes, écrivez 2
-• Les méthodes générées sont dérivées de celles que vous fournissez
+• Méthode get, défaut.
+
+Distinctions clés :
+• d["a"] vs get si absent.
 
 Fonctionnement :
-• Inspecte quelles méthodes de comparaison existent
-• Pour chaque manquante, la génère à partir des définies
-• ex., si __lt__ est défini : __gt__(a,b) = __lt__(b,a)
-• __le__(a,b) = __lt__(a,b) or __eq__(a,b)
+• Test de présence puis valeur ou défaut.
 
-Exemple :
->>> from functools import total_ordering
->>> @total_ordering
-... class Score:
-...     def __init__(self, val):
-...         self.val = val
-...     def __eq__(self, other):
-...         return self.val == other.val
-...     def __lt__(self, other):
-...         return self.val < other.val
->>> Score(5) > Score(3)   # Auto-généré !
-True
->>> Score(5) >= Score(5)  # Auto-généré !
-True
+Exécution étape par étape :
+1. Retour 1.
 
-Note : les méthodes générées peuvent être légèrement plus lentes que les manuscrites à cause de la logique de délégation.`,
-  2048: `Dans un décorateur, la fonction wrapper accède à la fonction originale par une fermeture. Le paramètre (f) du décorateur est dans la portée englobante du wrapper, donc le wrapper garde une référence dessus.
+Ordre des opérations :
+• Appel get.
+
+Cas d'utilisation courants :
+• Compteurs optionnels.
+
+Cas limites :
+• get retourne None si défaut omis et absent.
+
+Considérations de performance :
+• O(1) amortized.
+
+Exemples :
+• d[k] = d.get(k,0)+1.
+
+Remarques :
+• Réponse : 1.`,
+  1994: `Collision True et 1
+
+Débutant :
+• True et 1 ont la même égalité et le même hash pour les dict : une seule entrée ; la clé affichée reste celle vue en premier (True), la valeur finale est celle du dernier doublon → "one".
+
+Intermédiaire :
+• Littéral {True: "yes", 1: "one"} se résout en {True: "one"}.
+
+Expert :
+• bool est une sous-classe de int ; True vaut 1 au sens d’égalité avec 1.
 
 Concepts clés :
-• Une fermeture capture des variables de sa portée englobante
-• Le décorateur reçoit f comme paramètre
-• Le wrapper est défini dans le décorateur, donc f est dans sa portée englobante
-• Le wrapper garde l'accès à f même après que le décorateur retourne
+• Collision de clés, égalité, hash.
+
+Distinctions clés :
+• Les chaînes "1" et la clé int 1 ne collisionnent pas.
 
 Fonctionnement :
-• def decorator(f): — f est dans la portée locale du décorateur
-•     def wrapper(*args): — wrapper est imbriqué dans decorator
-•         return f(*args) — f est une variable libre, capturée par la fermeture
-•     return wrapper — wrapper retient f
-• Après le retour du décorateur, wrapper garde accès à f
+• Deuxième paire met à jour la valeur de la clé unifiée.
 
-Exemple :
->>> def decorator(f):
-...     def wrapper():
-...         return f()  # f est capturé via la fermeture
-...     return wrapper
->>> @decorator
-... def hello(): return "hi"
->>> hello()  # wrapper appelle f (hello original) via la fermeture
-'hi'
->>> hello.__closure__[0].cell_contents  # La fonction capturée
+Exécution étape par étape :
+1. Une entrée, valeur "one".
 
-Les fermetures sont fondamentales pour le fonctionnement des décorateurs en Python.`,
-  2049: `@contextlib.contextmanager est un décorateur qui transforme une fonction génératrice (qui fait yield) en gestionnaire de contexte. Cela permet d'utiliser la syntaxe 'with' sans écrire une classe complète avec __enter__ et __exit__.
+Ordre des opérations :
+• Construction gauche-droite du littéral.
 
-Concepts clés :
-• La génératrice décorée doit faire yield exactement une fois
-• Le code avant yield s'exécute dans __enter__
-• Le code après yield s'exécute dans __exit__
-• La valeur yieldée est disponible via 'as' dans l'instruction with
+Cas d'utilisation courants :
+• Normaliser les clés avant insertion (tout en str ou tout en int).
 
-Comment ça fonctionne :
-• @contextmanager enveloppe la génératrice dans un _GeneratorContextManager
-• L'instruction with appelle __enter__, qui exécute la génératrice jusqu'au yield
-• La valeur yieldée est liée à la variable 'as'
-• Quand le bloc with se termine, __exit__ reprend la génératrice après le yield
+Cas limites :
+• Même piège avec 1.0 et True selon versions/impl (hors focus).
 
-Exemple :
->>> from contextlib import contextmanager
->>> @contextmanager
-... def managed_resource():
-...     print("Acquiring")
-...     yield "resource"
-...     print("Releasing")
->>> with managed_resource() as r:
-...     print(f"Using {r}")
-Acquiring
-Using resource
-Releasing
+Considérations de performance :
+• Négligeable.
 
-C'est beaucoup plus concis qu'écrire une classe avec __enter__ et __exit__.`,
-  2050: `Empiler @dec1 et @dec2 les applique de bas en haut. dec2 est appliqué en premier (le plus proche de def), puis dec1 enveloppe le résultat. L'expression finale est f = dec1(dec2(f)).
+Exemples :
+• {0: "a", False: "b"} → une seule clé 0/False.
+
+Remarques :
+• Réponse : {True: "one"} (forme équivalente du QCM).`,
+  1995: `Collision 0 et False
+
+Débutant :
+• 0 et False sont la même clé pour un dict ; {0: "zero", False: "false"} devient {0: "false"} : la clé conservée est 0 (vue en premier), la dernière valeur écrase.
+
+Intermédiaire :
+• Même logique que True/1 avec les booléens intégrés.
+
+Expert :
+• issubclass(bool, int) explique pourquoi 0 et False collisionnent.
 
 Concepts clés :
-• Les décorateurs s'appliquent du bas vers le haut
-• dec2 reçoit la fonction originale f
-• dec1 reçoit le résultat de dec2(f)
-• C'est une composition de fonctions : dec1 compose dec2
+• Collision 0/False, hash, égalité.
 
-Comment ça fonctionne :
-• Python crée la fonction f
-• Étape 1 : temp = dec2(f) — dec2 enveloppe le f original
-• Étape 2 : f = dec1(temp) — dec1 enveloppe le résultat de dec2
-• Équivalent à : f = dec1(dec2(f))
+Distinctions clés :
+• La chaîne "0" ne collisionne pas avec l’entier 0.
 
-Exemple :
->>> def dec1(f):
-...     def w(): return f"[{f()}]"
-...     return w
->>> def dec2(f):
-...     def w(): return f"({f()})"
-...     return w
->>> @dec1
-... @dec2
-... def greet(): return "hi"
->>> greet()
-'[(hi)]'
-# dec2 d'abord : (hi), puis dec1 : [(hi)]
+Fonctionnement :
+• Une seule case de table pour 0 et False.
 
-L'ordre compte : @dec2 @dec1 donnerait (["hi"]) à la place. Pensez-y comme une composition mathématique : (dec1 . dec2)(f).`,
+Exécution étape par étape :
+1. Résultat une entrée, valeur "false".
+
+Ordre des opérations :
+• Évaluation séquentielle du littéral.
+
+Cas d'utilisation courants :
+• Éviter d’utiliser à la fois 0 et False comme clés « différentes ».
+
+Cas limites :
+• Affichage REPL peut montrer 0 ou False selon contexte, mais une seule paire.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Préférer des clés homogènes (str ou int seul).
+
+Remarques :
+• Réponse : {0: "false"}.`,
+  1996: `del d["a"]
+
+Débutant :
+• Supprime la clé a ; d reste vide {}.
+
+Intermédiaire :
+• del sur mapping modifie in-place.
+
+Expert :
+• del d[: ] n’existe pas ; clear() pour tout vider.
+
+Concepts clés :
+• Instruction del, KeyError si absent.
+
+Distinctions clés :
+• pop retourne la valeur.
+
+Fonctionnement :
+• Retrait de l’entrée.
+
+Exécution étape par étape :
+1. dict vide.
+
+Ordre des opérations :
+• del statement.
+
+Cas d'utilisation courants :
+• Retirer option désactivée.
+
+Cas limites :
+• Clé manquante.
+
+Considérations de performance :
+• O(1) amortized.
+
+Exemples :
+• d.pop("a", None) sûr.
+
+Remarques :
+• Réponse : {}.`,
+  1997: `__contains__
+
+Débutant :
+• "a" in d appelle d.__contains__("a") → True.
+
+Intermédiaire :
+• Opérateur in sur dict teste les clés, pas les valeurs.
+
+Expert :
+• Peut être surchargé dans sous-classes.
+
+Concepts clés :
+• Containment sur clés.
+
+Distinctions clés :
+• "x" in d.values() teste valeurs.
+
+Fonctionnement :
+• Hash lookup clé.
+
+Exécution étape par étape :
+1. True.
+
+Ordre des opérations :
+• Appel spécial.
+
+Cas d'utilisation courants :
+• if key in config.
+
+Cas limites :
+• Clés NaN égalité bizarre (hors QCM).
+
+Considérations de performance :
+• O(1) amortized.
+
+Exemples :
+• hasattr pour attributs, in pour clés.
+
+Remarques :
+• Réponse : True.`,
+  1998: `__getitem__
+
+Débutant :
+• d["a"] déclenche __getitem__ → 1.
+
+Intermédiaire :
+• KeyError si absent sauf defaultdict.
+
+Expert :
+• d.__getitem__("a") équivalent direct.
+
+Concepts clés :
+• Accès par crochets.
+
+Distinctions clés :
+• get ne lève pas.
+
+Fonctionnement :
+• Lookup hash table.
+
+Exécution étape par étape :
+1. Retour 1.
+
+Ordre des opérations :
+• Opcode BINARY_SUBSCR.
+
+Cas d'utilisation courants :
+• Indexation standard.
+
+Cas limites :
+• Sous-classes peuvent intercepter.
+
+Considérations de performance :
+• O(1) amortized.
+
+Exemples :
+• MappingProxyType lecture seule.
+
+Remarques :
+• Réponse : 1.`,
+  1999: `__setitem__
+
+Débutant :
+• d["b"]=2 appelle __setitem__ ; résultat {"a":1,"b":2}.
+
+Intermédiaire :
+• Crée ou remplace l’entrée b.
+
+Expert :
+• d.update utilise plusieurs setitem en pratique.
+
+Concepts clés :
+• Affectation sur mapping.
+
+Distinctions clés :
+• setattr sur objets, setitem sur mapping.
+
+Fonctionnement :
+• Insertion hash.
+
+Exécution étape par étape :
+1. Deux clés.
+
+Ordre des opérations :
+• Statement d["b"]=2.
+
+Cas d'utilisation courants :
+• Construire dict incrémentalement.
+
+Cas limites :
+• Clé non hashable.
+
+Considérations de performance :
+• O(1) amortized.
+
+Exemples :
+• d |= {"b":2} aussi fusion.
+
+Remarques :
+• Réponse : {"a": 1, "b": 2}.`,
+  2000: `list(d.values())[::-1]
+
+Débutant :
+• values() 1 puis 2 ; list → [1,2] ; slice [::-1] inverse → [2,1].
+
+Intermédiaire :
+• Copie liste intermédiaire avant inversion.
+
+Expert :
+• reversed(list(d.values())) équivalent conceptuel.
+
+Concepts clés :
+• Vue values, list matérialisée, slice step -1.
+
+Distinctions clés :
+• reversed(d.values()) est itérateur sans copie liste complète si chaîné correctement.
+
+Fonctionnement :
+• Ordre d’insertion du dict puis inversion.
+
+Exécution étape par étape :
+1. [2,1].
+
+Ordre des opérations :
+• values → list → slice.
+
+Cas d'utilisation courants :
+• Afficher valeurs dernière entrée d’abord.
+
+Cas limites :
+• dict vide → [].
+
+Considérations de performance :
+• Copie O(n) mémoire.
+
+Exemples :
+• list(reversed(list(d.values()))).
+
+Remarques :
+• Réponse : [2, 1].`,
+  2001: `Counter("hello")
+
+Débutant :
+• Counter parcourt la chaîne et compte chaque lettre : l deux fois, h, e, o une fois.
+
+Intermédiaire :
+• La représentation affichée ordonne souvent les éléments par effectif décroissant : l en premier (2), puis les autres (1).
+
+Expert :
+• Counter est une sous-classe de dict ; clé absente → 0 sans KeyError.
+
+Concepts clés :
+• collections.Counter, itérable de hashables, comptage.
+
+Distinctions clés :
+• Counter vs dict manuel avec get(k,0).
+
+Fonctionnement :
+• Parcours h,e,l,l,o et incrémente les compteurs internes.
+
+Exécution étape par étape :
+1. Construction du mapping lettre → nombre.
+
+Ordre des opérations :
+• Appel Counter puis affichage repr.
+
+Cas d'utilisation courants :
+• Fréquences, détection d’anagrammes, analyse texte.
+
+Cas limites :
+• Éléments non hashables dans l’itérable → erreur.
+
+Considérations de performance :
+• Un passage sur l’itérable source.
+
+Exemples :
+• Counter sur liste de mots, ou mots-clés Counter(a=3).
+
+Remarques :
+• Réponse : représentation Counter avec l:2 en tête (première option du quiz).`,
+  2002: `Accès Counter["l"] sur "hello"
+
+Débutant :
+• La clé "l" a le compte 2 dans Counter("hello").
+
+Intermédiaire :
+• Même syntaxe que d[clé] sur un dict, mais comportement diffère pour clé absente (0).
+
+Expert :
+• Utile pour lire un effectif sans if préalable.
+
+Concepts clés :
+• Crochets sur Counter, valeur entière.
+
+Distinctions clés :
+• dict classique lève KeyError si clé absente.
+
+Fonctionnement :
+• Recherche du compte stocké pour la lettre l.
+
+Exécution étape par étape :
+1. Retour 2.
+
+Ordre des opérations :
+• Counter(...) puis sous-script.
+
+Cas d'utilisation courants :
+• Afficher le nombre d’occurrences d’un token.
+
+Cas limites :
+• Clé inexistante en Counter → 0 (pas d’exception ici pour lecture seule).
+
+Considérations de performance :
+• O(1) amortized comme dict.
+
+Exemples :
+• c["x"] après boucle de comptage.
+
+Remarques :
+• Réponse : 2.`,
+  2003: `Counter et clé manquante "z"
+
+Débutant :
+• z n’apparaît pas dans "hello" → le compte vaut 0.
+
+Intermédiaire :
+• __missing__ de Counter renvoie 0 sans insérer de clé (lecture seule).
+
+Expert :
+• Permet c[k] += 1 sans initialisation préalable.
+
+Concepts clés :
+• Clé absente, zéro par défaut.
+
+Distinctions clés :
+• dict["z"] lèverait KeyError.
+
+Fonctionnement :
+• Interception de l’accès manquant.
+
+Exécution étape par étape :
+1. Retour 0.
+
+Ordre des opérations :
+• Évaluation Counter puis ["z"].
+
+Cas d'utilisation courants :
+• Compteurs incrémentaux sans setdefault.
+
+Cas limites :
+• Ne pas confondre avec None.
+
+Considérations de performance :
+• Léger comme lookup dict.
+
+Exemples :
+• Histogramme avec alphabet complet.
+
+Remarques :
+• Réponse : 0.`,
+  2004: `most_common(2)
+
+Débutant :
+• Les deux paires les plus fréquentes : l avec 2, puis parmi les comptes 1 la première en ordre d’insertion h.
+
+Intermédiaire :
+• Résultat : liste de tuples (élément, compte).
+
+Expert :
+• Les ex-aequo sur le compte se départagent par ordre d’apparition dans le Counter.
+
+Concepts clés :
+• most_common, tri par effectif.
+
+Distinctions clés :
+• most_common(1) vs sans argument (tout retourner trié).
+
+Fonctionnement :
+• Tri interne par count décroissant puis règle de tie-break.
+
+Exécution étape par étape :
+1. [('l', 2), ('h', 1)].
+
+Ordre des opérations :
+• Construction Counter puis appel most_common(2).
+
+Cas d'utilisation courants :
+• Top-K fréquences.
+
+Cas limites :
+• n plus grand que le nombre de clés → tous retournés.
+
+Considérations de performance :
+• Implémentation efficace en C pour gros compteurs.
+
+Exemples :
+• most_common(3) sur corpus.
+
+Remarques :
+• Réponse : [('l', 2), ('h', 1)].`,
+  2005: `most_common() sans argument
+
+Débutant :
+• Sans n, la méthode renvoie tous les éléments triés du plus fréquent au moins fréquent.
+
+Intermédiaire :
+• Ce n’est ni « seulement count>1 » ni une seule valeur.
+
+Expert :
+• Équivalent conceptuel à un tri complet de la distribution.
+
+Concepts clés :
+• Argument optionnel, liste complète de paires.
+
+Distinctions clés :
+• Ne pas croire qu’un argument est obligatoire.
+
+Fonctionnement :
+• Parcours trié de toutes les entrées du Counter.
+
+Exécution étape par étape :
+1. Quatre paires pour "hello" ordonnées par count puis insertion.
+
+Ordre des opérations :
+• Appel sans parenthèses interne : most_common().
+
+Cas d'utilisation courants :
+• Exporter toute la distribution triée.
+
+Cas limites :
+• Counter vide → liste vide.
+
+Considérations de performance :
+• Coût lié au nombre de clés distinctes.
+
+Exemples :
+• Journaliser toutes les fréquences.
+
+Remarques :
+• Réponse : option « tous les éléments triés par count décroissant ».`,
+  2006: `most_common(1) sur liste de nombres
+
+Débutant :
+• Le 3 apparaît trois fois, plus que 1 (deux fois) et 2 (une fois).
+
+Intermédiaire :
+• Le résultat est une liste d’un tuple : (élément le plus fréquent, son compte).
+
+Expert :
+• Attention : [(3, 3)] — le premier 3 est la valeur, le second est l’effectif.
+
+Concepts clés :
+• Counter sur liste, top 1.
+
+Distinctions clés :
+• Ne pas confondre avec la valeur seule 3.
+
+Fonctionnement :
+• Comptage puis sélection du max count.
+
+Exécution étape par étape :
+1. [(3, 3)].
+
+Ordre des opérations :
+• Counter([...]) puis most_common(1).
+
+Cas d'utilisation courants :
+• Mode d’une série discrète.
+
+Cas limites :
+• Égalité de fréquence max → tie-break par ordre d’insertion.
+
+Considérations de performance :
+• Linéaire en taille de liste.
+
+Exemples :
+• Vote majoritaire simple.
+
+Remarques :
+• Réponse : [(3, 3)].`,
+  2007: `list(Counter("aab").elements())
+
+Débutant :
+• elements() répète chaque clé selon son compte : deux a puis un b.
+
+Intermédiaire :
+• L’ordre suit l’ordre de première rencontre dans le Counter (ici a puis b).
+
+Expert :
+• Les comptes nuls ou négatifs ne sont pas émis.
+
+Concepts clés :
+• Iterator elements(), matérialisation list.
+
+Distinctions clés :
+• Pas une liste de paires (élément, count).
+
+Fonctionnement :
+• Expansion des multiplicités.
+
+Exécution étape par étape :
+1. ['a', 'a', 'b'].
+
+Ordre des opérations :
+• Counter puis .elements() puis list().
+
+Cas d'utilisation courants :
+• Reconstruire une séquence équivalente en multiset.
+
+Cas limites :
+• Grand comptes → liste volumineuse.
+
+Considérations de performance :
+• Mémoire si list() sur très gros décomptes.
+
+Exemples :
+• Rééchantillonner selon fréquences.
+
+Remarques :
+• Réponse : ['a', 'a', 'b'].`,
+  2008: `Addition de deux Counter
+
+Débutant :
+• Les effectifs se additionnent clé par clé : b et c dans les deux chaînes → 2 chacun.
+
+Intermédiaire :
+• a et d ne viennent que d’un côté → compte 1.
+
+Expert :
+• Le repr peut réordonner par counts décroissants.
+
+Concepts clés :
+• Opérateur + sur Counter, somme des comptes.
+
+Distinctions clés :
+• Pas la concaténation de chaînes.
+
+Fonctionnement :
+• Union des clés avec somme des valeurs positives.
+
+Exécution étape par étape :
+1. b:2, c:2, a:1, d:1 selon affichage du quiz.
+
+Ordre des opérations :
+• Évaluation des deux Counter puis +.
+
+Cas d'utilisation courants :
+• Fusionner des histogrammes.
+
+Cas limites :
+• Counter + dict ordinaire : dict traité comme mapping de comptes.
+
+Considérations de performance :
+• Linéaire en nombre de clés.
+
+Exemples :
+• Agréger logs de plusieurs fichiers.
+
+Remarques :
+• Réponse : Counter avec b:2, c:2, a:1, d:1 (première option).`,
+  2009: `Soustraction Counter avec -
+
+Débutant :
+• On retire les comptes de "bc" à "abc" : b et c tombent à 0 et disparaissent du résultat.
+
+Intermédiaire :
+• L’opérateur - enlève les zéros et négatifs du Counter résultat.
+
+Expert :
+• Différent de subtract() qui peut laisser des zéros in-place.
+
+Concepts clés :
+• Soustraction multiset, élagage des zéros.
+
+Distinctions clés :
+• c - d vs c.subtract(d).
+
+Fonctionnement :
+• a reste 1, b et c deviennent 0 puis exclus.
+
+Exécution étape par étape :
+1. Counter({'a': 1}).
+
+Ordre des opérations :
+• Deux Counter puis binaire -.
+
+Cas d'utilisation courants :
+• Retirer un lot d’éléments d’un inventaire logique.
+
+Cas limites :
+• Résultat vide → Counter().
+
+Considérations de performance :
+• Linéaire en clés.
+
+Exemples :
+• Différence de sacs multi-ensembles.
+
+Remarques :
+• Réponse : Counter({'a': 1}).`,
+  2010: `Intersection & entre Counter
+
+Débutant :
+• Seules les clés présentes des deux côtés avec le minimum des deux comptes : b et c → 1 chacun.
+
+Intermédiaire :
+• a et d ont min 0 avec l’autre côté → exclus.
+
+Expert :
+• Analogie multi-ensemble : prendre le minimum de multiplicité.
+
+Concepts clés :
+• Opérateur &, minimum des comptes.
+
+Distinctions clés :
+• & sur Counter n’est pas identique à & sur sets simples de clés.
+
+Fonctionnement :
+• min(1,1) pour b et c.
+
+Exécution étape par étape :
+1. Counter({'b': 1, 'c': 1}).
+
+Ordre des opérations :
+• Deux Counter puis &.
+
+Cas d'utilisation courants :
+• Fréquence commune minimale entre deux sources.
+
+Cas limites :
+• Aucune clé partagée → Counter vide.
+
+Considérations de performance :
+• Linéaire en clés impliquées.
+
+Exemples :
+• Recouvrement de tokens entre deux textes.
+
+Remarques :
+• Réponse : Counter({'b': 1, 'c': 1}).`,
+  2011: `Union | entre Counter
+
+Débutant :
+• Pour chaque lettre, on garde le maximum des deux comptes : a:2, c:2, b:1.
+
+Intermédiaire :
+• "aab" donne a:2,b:1 ; "bcc" donne b:1,c:2 → max par clé.
+
+Expert :
+• Utile pour fusionner en gardant le pic de fréquence.
+
+Concepts clés :
+• Opérateur |, maximum des comptes.
+
+Distinctions clés :
+• | ici n’est pas la fusion de dicts générique 3.9+ sur types mixtes sans règle Counter.
+
+Fonctionnement :
+• Parcours de l’union des clés avec max.
+
+Exécution étape par étape :
+1. Counter({'a': 2, 'c': 2, 'b': 1}) selon repr du QCM.
+
+Ordre des opérations :
+• Deux Counter puis |.
+
+Cas d'utilisation courants :
+• Borner supérieurement des décomptes combinés.
+
+Cas limites :
+• Clé absente d’un côté → compte 0 pour le max.
+
+Considérations de performance :
+• Linéaire.
+
+Exemples :
+• Combiner deux histogrammes au « pire cas ».
+
+Remarques :
+• Réponse : Counter({'a': 2, 'c': 2, 'b': 1}) (première option).`,
+  2012: `sum(c.values()) sur Counter("aab")
+
+Débutant :
+• Les valeurs sont 2 et 1 pour a et b → somme 3 = longueur de la chaîne source.
+
+Intermédiaire :
+• values() donne les effectifs, pas les caractères.
+
+Expert :
+• En 3.10+, total() sur Counter fait équivalent.
+
+Concepts clés :
+• Vue values, agrégation sum.
+
+Distinctions clés :
+• len(c) compterait les clés distinctes, pas la taille totale.
+
+Fonctionnement :
+• 2 + 1.
+
+Exécution étape par étape :
+1. 3.
+
+Ordre des opérations :
+• Counter assigné à c puis values puis sum.
+
+Cas d'utilisation courants :
+• Nombre total d’éléments dans un multiset.
+
+Cas limites :
+• Counter vide → 0.
+
+Considérations de performance :
+• O(nombre de clés) pour la somme.
+
+Exemples :
+• Vérifier effectif total après fusion.
+
+Remarques :
+• Réponse : 3.`,
+  2013: `dict(Counter("aab"))
+
+Débutant :
+• dict() copie les paires élément→compte dans un dict classique.
+
+Intermédiaire :
+• On perd les opérateurs arithmétiques et le 0 implicite de Counter.
+
+Expert :
+• JSON et APIs attendent souvent un dict pur.
+
+Concepts clés :
+• Conversion, sous-type vers type de base.
+
+Distinctions clés :
+• Le type affiché n’est plus Counter.
+
+Fonctionnement :
+• Copie des entrées présentes.
+
+Exécution étape par étape :
+1. {'a': 2, 'b': 1}.
+
+Ordre des opérations :
+• Counter puis constructeur dict.
+
+Cas d'utilisation courants :
+• Sérialisation, immutabilité conceptuelle du type.
+
+Cas limites :
+• Comptes négatifs ou zéro selon état du Counter source.
+
+Considérations de performance :
+• Copie O(n).
+
+Exemples :
+• dict(Counter.fromkeys(...)).
+
+Remarques :
+• Réponse : {'a': 2, 'b': 1}.`,
+  2014: `update("world") après Counter("hello")
+
+Débutant :
+• hello a déjà l:2 ; world ajoute un l → 3.
+
+Intermédiaire :
+• update sur Counter additionne les comptes, ne remplace pas comme dict.update sur valeurs arbitraires.
+
+Expert :
+• o passe aussi à 2 (1+1), plus w,r,d nouveaux.
+
+Concepts clés :
+• update itérable, addition des fréquences.
+
+Distinctions clés :
+• dict.update écrase la valeur ; Counter.update cumule.
+
+Fonctionnement :
+• Pour chaque lettre de "world", incrémenter le compteur existant.
+
+Exécution étape par étape :
+1. c["l"] vaut 3.
+
+Ordre des opérations :
+• Création, update in-place, lecture.
+
+Cas d'utilisation courants :
+• Flux de données incrémental.
+
+Cas limites :
+• update avec mapping négatif possible via subtract séparé.
+
+Considérations de performance :
+• Linéaire en longueur de la chaîne ajoutée.
+
+Exemples :
+• Lire plusieurs fichiers dans le même Counter.
+
+Remarques :
+• Réponse : 3.`,
+  2015: `subtract("lo") sur Counter("hello")
+
+Débutant :
+• Retirer un l et un o : l passe de 2 à 1.
+
+Intermédiaire :
+• subtract modifie le Counter sur place et conserve les zéros (contrairement à -).
+
+Expert :
+• Méthode utile pour pipelines où on veut voir les zéros restants.
+
+Concepts clés :
+• subtract in-place, soustraction par élément.
+
+Distinctions clés :
+• Pas le même effet que l’opérateur - qui renvoie un nouveau Counter élagué.
+
+Fonctionnement :
+• Décrémenter les comptes pour l et o.
+
+Exécution étape par étape :
+1. c["l"] == 1.
+
+Ordre des opérations :
+• Counter, subtract, lecture.
+
+Cas d'utilisation courants :
+• Ajuster des inventaires étape par étape.
+
+Cas limites :
+• Peut créer des comptes négatifs si on retire trop.
+
+Considérations de performance :
+• Linéaire en taille de l’itérable passé à subtract.
+
+Exemples :
+• subtract sur autre Counter.
+
+Remarques :
+• Réponse : 1.`,
+  2016: `subtract("lo") et clé "o"
+
+Débutant :
+• o passe de 1 à 0 après soustraction d’un o.
+
+Intermédiaire :
+• La clé reste présente avec compte 0 ; "o" in c peut être True.
+
+Expert :
+• Lecture c["o"] retourne 0 comme pour clé manquante en affichage, mais la clé existe encore.
+
+Concepts clés :
+• Compte zéro conservé par subtract.
+
+Distinctions clés :
+• Avec l’opérateur -, la clé o aurait disparu du résultat.
+
+Fonctionnement :
+• 1 - 1 sur o.
+
+Exécution étape par étape :
+1. 0.
+
+Ordre des opérations :
+• subtract puis __getitem__.
+
+Cas d'utilisation courants :
+• Détecter explicitement les éléments épuisés mais encore référencés.
+
+Cas limites :
+• Nettoyer avec +c pour enlever les zéros.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Vérifier "o" in c après subtract.
+
+Remarques :
+• Réponse : 0.`,
+  2017: `Unary + sur Counter
+
+Débutant :
+• Le + unaire renvoie un nouveau Counter sans les comptes nuls ou négatifs.
+
+Intermédiaire :
+• a:4 et b:2 restent ; c:0 et d:-2 sont retirés.
+
+Expert :
+• Le Counter d’origine n’est pas modifié.
+
+Concepts clés :
+• Nettoyage, copie filtrée.
+
+Distinctions clés :
+• Différent du + binaire entre deux Counter.
+
+Fonctionnement :
+• Filtrer count > 0.
+
+Exécution étape par étape :
+1. Counter({'a': 4, 'b': 2}).
+
+Ordre des opérations :
+• Création de c puis + unaire.
+
+Cas d'utilisation courants :
+• Après subtract, obtenir un Counter « positif » seulement.
+
+Cas limites :
+• Si tout est filtré → Counter().
+
+Considérations de performance :
+• Parcours des clés.
+
+Exemples :
+• c = +c pour normaliser.
+
+Remarques :
+• Réponse : Counter({'a': 4, 'b': 2}).`,
+  2018: `Unary - sur Counter
+
+Débutant :
+• On négate tous les comptes puis on ne garde que les résultats strictement positifs.
+
+Intermédiaire :
+• d était -2 → -(-2)=2, seul positif final.
+
+Expert :
+• Interprétable comme extraire le « déficit » inversé.
+
+Concepts clés :
+• Négation puis filtrage des positifs.
+
+Distinctions clés :
+• Ne pas confondre avec soustraction binaire entre deux Counter.
+
+Fonctionnement :
+• a,b,c deviennent non positifs après négation ; seul d reste.
+
+Exécution étape par étape :
+1. Counter({'d': 2}).
+
+Ordre des opérations :
+• - unaire appliqué au Counter.
+
+Cas d'utilisation courants :
+• Manipulations algébriques rares sur multi-ensembles.
+
+Cas limites :
+• Résultat vide si aucun négatif source.
+
+Considérations de performance :
+• Parcours des entrées.
+
+Exemples :
+• Voir la doc collections.Counter pour les détails CPython.
+
+Remarques :
+• Réponse : Counter({'d': 2}).`,
+  2019: `Égalité de deux Counter
+
+Débutant :
+• Même multiset : deux a, deux b, deux c dans les deux chaînes, ordre d’écriture différent.
+
+Intermédiaire :
+• == compare les comptes, pas l’ordre d’insertion original.
+
+Expert :
+• Base de la détection d’anagrammes.
+
+Concepts clés :
+• Égalité structurelle des fréquences.
+
+Distinctions clés :
+• Deux chaînes différentes peuvent donner Counter égaux.
+
+Fonctionnement :
+• Comparaison clé à clé des effectifs.
+
+Exécution étape par étape :
+1. True.
+
+Ordre des opérations :
+• Deux constructions Counter puis ==.
+
+Cas d'utilisation courants :
+• Tests d’anagrammes, permutations.
+
+Cas limites :
+• Counter vides → True entre eux.
+
+Considérations de performance :
+• Linéaire en nombre de clés distinctes.
+
+Exemples :
+• Counter("listen") == Counter("silent") si mêmes lettres.
+
+Remarques :
+• Réponse : True.`,
+  2020: `Inégalité de Counter
+
+Débutant :
+• "abc" contient un c que "ab" n’a pas → comptes différents.
+
+Intermédiaire :
+• Un élément avec effectif différent suffit pour False.
+
+Expert :
+• Counter("ab")==Counter("ba") serait True (même multiset).
+
+Concepts clés :
+• Comparaison stricte des décomptes.
+
+Distinctions clés :
+• Extension d’un multiset ne donne pas égalité.
+
+Fonctionnement :
+• c:1 vs 0 implicite.
+
+Exécution étape par étape :
+1. False.
+
+Ordre des opérations :
+• Construction puis ==.
+
+Cas d'utilisation courants :
+• Valider sous-ensemble avec même multiplicité.
+
+Cas limites :
+• Deux Counter de tailles totales différentes souvent False.
+
+Considérations de performance :
+• Linéaire.
+
+Exemples :
+• Vérifier même sac avant permutation.
+
+Remarques :
+• Réponse : False.`,
+  2021: `Incrémenter Counter vide avec +=
+
+Débutant :
+• Première lecture de "a" vaut 0 implicite ; +=1 deux fois → 2.
+
+Intermédiaire :
+• Pattern idiomatique sans if "a" in c.
+
+Expert :
+• Sur dict normal, il faudrait initialiser avant +=.
+
+Concepts clés :
+• += sur Counter, défaut 0.
+
+Distinctions clés :
+• Évite KeyError du dict nu.
+
+Fonctionnement :
+• Lecture-modification-écriture pour chaque +=.
+
+Exécution étape par étape :
+1. c["a"] final 2.
+
+Ordre des opérations :
+• Counter(), deux +=, lecture.
+
+Cas d'utilisation courants :
+• Boucles de comptage manuel.
+
+Cas limites :
+• Clés non hashables impossibles.
+
+Considérations de performance :
+• O(1) amortized par opération.
+
+Exemples :
+• Compter mots dans un fichier ligne par ligne.
+
+Remarques :
+• Réponse : 2.`,
+  2022: `sorted sur .items() de Counter("banana")
+
+Débutant :
+• sorted trie les tuples par premier élément : ordre alphabétique a, b, n.
+
+Intermédiaire :
+• Les effectifs suivent leur lettre : a:3, b:1, n:2.
+
+Expert :
+• Pour trier par effectif, utiliser key sur le second membre.
+
+Concepts clés :
+• items(), tri lexicographique des clés caractère.
+
+Distinctions clés :
+• most_common trie par fréquence, pas sorted(items()).
+
+Fonctionnement :
+• Tri stable des paires (lettre, count).
+
+Exécution étape par étape :
+1. [('a', 3), ('b', 1), ('n', 2)].
+
+Ordre des opérations :
+• Counter puis items puis sorted.
+
+Cas d'utilisation courants :
+• Affichage canonique par nom de clé.
+
+Cas limites :
+• Clés non comparables → erreur (pas le cas ici).
+
+Considérations de performance :
+• O(k log k) pour k clés distinctes.
+
+Exemples :
+• sorted(d.items()) sur dict quelconque.
+
+Remarques :
+• Réponse : [('a', 3), ('b', 1), ('n', 2)].`,
+  2023: `Counter("hello") - Counter("hello")
+
+Débutant :
+• Chaque compte moins lui-même donne 0 ; l’opérateur - enlève tous les zéros.
+
+Intermédiaire :
+• Résultat Counter vide, pas un dict {} nu du même test d’égalité mais équivalent en contenu.
+
+Expert :
+• bool(Counter()) est False.
+
+Concepts clés :
+• Auto-soustraction, élagage.
+
+Distinctions clés :
+• subtract du même iterable laisserait des zéros visibles en interne.
+
+Fonctionnement :
+• Toutes les différences 0 puis filtrage.
+
+Exécution étape par étape :
+1. Counter().
+
+Ordre des opérations :
+• Deux Counter identiques puis -.
+
+Cas d'utilisation courants :
+• Test de différence nulle entre histogrammes.
+
+Cas limites :
+• Counter déjà vide reste vide.
+
+Considérations de performance :
+• Linéaire en clés.
+
+Exemples :
+• Vérifier multiset identique via soustraction bidirectionnelle.
+
+Remarques :
+• Réponse : Counter() (première option du quiz).`,
+  2024: `len(Counter("hello"))
+
+Débutant :
+• len compte les clés distinctes : h,e,l,o → 4, pas la longueur 5 de la chaîne.
+
+Intermédiaire :
+• Pour le total d’éléments, utiliser sum(c.values()).
+
+Expert :
+• Piège fréquent en interview.
+
+Concepts clés :
+• Cardinal de l’ensemble sous-jacent du multiset.
+
+Distinctions clés :
+• len(string) vs len(Counter(string)).
+
+Fonctionnement :
+• Dénombrement des entrées du mapping.
+
+Exécution étape par étape :
+1. 4.
+
+Ordre des opérations :
+• Counter puis len.
+
+Cas d'utilisation courants :
+• Nombre de catégories uniques.
+
+Cas limites :
+• Chaîne vide → 0.
+
+Considérations de performance :
+• O(1) en taille du Counter en CPython pour len ? En pratique instantané.
+
+Exemples :
+• len(Counter([1,1,2])) → 2.
+
+Remarques :
+• Réponse : 4.`,
+  2025: `sorted(c.elements()) avec a=2,b=3
+
+Débutant :
+• elements produit a,a,b,b,b puis sorted ordonne alphabétiquement.
+
+Intermédiaire :
+• Déjà trié ici car tous les a avant tous les b dans l’expansion triée.
+
+Expert :
+• Si lettres mélangées dans l’itération, sorted réordonne.
+
+Concepts clés :
+• elements, sorted, multiplicité.
+
+Distinctions clés :
+• sorted sur elements vs sorted sur keys.
+
+Fonctionnement :
+• Expansion puis tri Unicode des caractères.
+
+Exécution étape par étape :
+1. ['a', 'a', 'b', 'b', 'b'].
+
+Ordre des opérations :
+• Counter kwargs puis elements puis sorted.
+
+Cas d'utilisation courants :
+• Reconstituer une liste triée à partir de fréquences.
+
+Cas limites :
+• Très grands comptes → liste énorme.
+
+Considérations de performance :
+• Coût mémoire de la liste matérialisée.
+
+Exemples :
+• Même idée avec entiers hashables.
+
+Remarques :
+• Réponse : ['a', 'a', 'b', 'b', 'b'].`,
+  2026: `defaultdict(int) et clé manquante
+
+Débutant :
+• La fabrique int est appelée : int() vaut 0, stocké sous "x".
+
+Intermédiaire :
+• Après accès, d contient la clé "x" avec valeur 0.
+
+Expert :
+• Pattern standard pour compteurs sans setdefault.
+
+Concepts clés :
+• default_factory, int callable, __missing__.
+
+Distinctions clés :
+• dict nu lèverait KeyError sur la même lecture.
+
+Fonctionnement :
+• Accès déclenche création puis retour de la valeur par défaut.
+
+Exécution étape par étape :
+1. Retour 0 et effet de bord d["x"]=0.
+
+Ordre des opérations :
+• defaultdict(int) puis sous-script.
+
+Cas d'utilisation courants :
+• Histogrammes, fréquences, graphes avec degré 0.
+
+Cas limites :
+• Ne pas utiliser int si vous vouliez None par défaut.
+
+Considérations de performance :
+• Coût d’un appel int() par nouvelle clé.
+
+Exemples :
+• d[k] += 1 dans une boucle.
+
+Remarques :
+• Réponse : 0.`,
+  2027: `defaultdict(list)
+
+Débutant :
+• list() produit une liste vide associée à "a" au premier accès.
+
+Intermédiaire :
+• La même liste est réutilisée aux accès suivants sur "a".
+
+Expert :
+• Remplace le motif setdefault(k,[]).append.
+
+Concepts clés :
+• Fabrique list, mutabilité de la valeur par défaut.
+
+Distinctions clés :
+• Une nouvelle liste par nouvelle clé, pas une liste partagée globale entre clés.
+
+Fonctionnement :
+• __missing__ appelle list() et mémorise le résultat.
+
+Exécution étape par étape :
+1. d["a"] vaut [].
+
+Ordre des opérations :
+• Création du defaultdict puis premier accès.
+
+Cas d'utilisation courants :
+• Regroupements clé → liste d’éléments.
+
+Cas limites :
+• Accès concurrent lecture/écriture classique dict.
+
+Considérations de performance :
+• Une allocation liste par nouvelle clé.
+
+Exemples :
+• Index inversé mot → positions.
+
+Remarques :
+• Réponse : [].`,
+  2028: `defaultdict(set) avec add
+
+Débutant :
+• Première utilisation de d["a"] crée un set vide, puis add(1) et add(2).
+
+Intermédiaire :
+• L’ordre d’itération du set n’est pas garanti mais le contenu est {1,2}.
+
+Expert :
+• Chaînage d["a"].add sans KeyError.
+
+Concepts clés :
+• Fabrique set, méthode add in-place.
+
+Distinctions clés :
+• list.append vs set.add.
+
+Fonctionnement :
+• Création du set puis mutations.
+
+Exécution étape par étape :
+1. d["a"] affiche {1, 2}.
+
+Ordre des opérations :
+• defaultdict(set), deux add, lecture.
+
+Cas d'utilisation courants :
+• Adjacence sans doublons par nœud.
+
+Cas limites :
+• Éléments non hashables interdits dans le set.
+
+Considérations de performance :
+• Hash des éléments ajoutés.
+
+Exemples :
+• Graphe non orienté avec set de voisins.
+
+Remarques :
+• Réponse : {1, 2}.`,
+  2029: `Boucle sur "hello" avec defaultdict(int)
+
+Débutant :
+• Chaque caractère incrémente son compteur ; l est vu deux fois → 2.
+
+Intermédiaire :
+• Équivalent logique à Counter("hello") pour les lettres présentes.
+
+Expert :
+• Plus verbeux mais contrôle total sur la logique dans la boucle.
+
+Concepts clés :
+• += sur valeur par défaut 0.
+
+Distinctions clés :
+• Counter gère déjà ce cas en une ligne.
+
+Fonctionnement :
+• h,e,l,l,o incrémentent chacun leur slot.
+
+Exécution étape par étape :
+1. d["l"] == 2.
+
+Ordre des opérations :
+• defaultdict, for, +=, lecture.
+
+Cas d'utilisation courants :
+• Comptage avec filtre ou normalisation dans la boucle.
+
+Cas limites :
+• Oublier defaultdict → KeyError sur +=.
+
+Considérations de performance :
+• Un tour de boucle par caractère.
+
+Exemples :
+• Compter après lower() ou strip().
+
+Remarques :
+• Réponse : 2.`,
+  2030: `defaultdict(list) et append
+
+Débutant :
+• Une seule liste pour "a" ; deux append sur le même objet → [1,2].
+
+Intermédiaire :
+• Pas deux listes séparées pour la même clé sans nouvel accès structurant.
+
+Expert :
+• Pattern « groupement » très courant.
+
+Concepts clés :
+• Référence partagée à la liste par clé.
+
+Distinctions clés :
+• Si vous aviez besoin de copies indépendantes, il faudrait autre logique.
+
+Fonctionnement :
+• Premier d["a"] crée [], append mutent cette liste.
+
+Exécution étape par étape :
+1. [1, 2].
+
+Ordre des opérations :
+• defaultdict(list), deux append chaînés, lecture.
+
+Cas d'utilisation courants :
+• Inverted index, regroupement d’événements par id.
+
+Cas limites :
+• Clé jamais touchée → pas de liste créée.
+
+Considérations de performance :
+• Append amortized O(1).
+
+Exemples :
+• d[userid].append(timestamp).
+
+Remarques :
+• Réponse : [1, 2].`,
+  2031: `lambda comme default_factory
+
+Débutant :
+• Clé absente appelle lambda → chaîne "N/A" stockée et retournée.
+
+Intermédiaire :
+• Toute callable sans argument peut servir de fabrique.
+
+Expert :
+• Attention aux fabriques avec effets de bord involontaires.
+
+Concepts clés :
+• lambda, valeur défaut personnalisée.
+
+Distinctions clés :
+• Pas limité à int, list, set.
+
+Fonctionnement :
+• __missing__ invoque la lambda.
+
+Exécution étape par étape :
+1. "N/A".
+
+Ordre des opérations :
+• defaultdict(lambda...) puis ["missing"].
+
+Cas d'utilisation courants :
+• Valeur sentinelle lisible pour clés optionnelles.
+
+Cas limites :
+• lambda: [] créerait une nouvelle liste par clé (souvent voulu).
+
+Considérations de performance :
+• Coût d’un appel Python par nouvelle clé.
+
+Exemples :
+• defaultdict(lambda: -1) pour grille infinie logique.
+
+Remarques :
+• Réponse : "N/A".`,
+  2032: `Accès successifs créent les clés
+
+Débutant :
+• d["a"] et d["b"] forcent chacun la fabrique → deux entrées.
+
+Intermédiaire :
+• len compte donc 2 même si on n’a « rien assigné » explicitement avec =.
+
+Expert :
+• Piège : simple lecture crée la clé.
+
+Concepts clés :
+• Effet de bord de __getitem__ sur defaultdict.
+
+Distinctions clés :
+• Tester avec in ou get pour éviter la création.
+
+Fonctionnement :
+• Deux déclenchements de int().
+
+Exécution étape par étape :
+1. len(d) == 2.
+
+Ordre des opérations :
+• Création, deux accès, len.
+
+Cas d'utilisation courants :
+• Savoir si une clé a été « touchée » pour de vrai.
+
+Cas limites :
+• Parcourir toutes les clés inclut les zéros créés par erreur.
+
+Considérations de performance :
+• Deux insertions en plus des lectures.
+
+Exemples :
+• Déboguer des defaultdict trop remplis.
+
+Remarques :
+• Réponse : 2.`,
+  2033: `Opérateur in sur defaultdict vide
+
+Débutant :
+• "x" in d utilise __contains__, ne fabrique pas de valeur.
+
+Intermédiaire :
+• d reste vide après le test.
+
+Expert :
+• Toujours préférer in avant d’itérer si vous voulez éviter les clés fantômes.
+
+Concepts clés :
+• Membership vs accès par crochets.
+
+Distinctions clés :
+• d["x"] aurait créé 0.
+
+Fonctionnement :
+• Vérification pure de présence de clé.
+
+Exécution étape par étape :
+1. False.
+
+Ordre des opérations :
+• defaultdict puis in.
+
+Cas d'utilisation courants :
+• Branches conditionnelles sans pollution du mapping.
+
+Cas limites :
+• defaultdict sans factory (None) se comporte autrement pour défaut.
+
+Considérations de performance :
+• Hash lookup O(1) amortized.
+
+Exemples :
+• if k in d: ... else: première assignation contrôlée.
+
+Remarques :
+• Réponse : False.`,
+  2034: `get sur defaultdict(int)
+
+Débutant :
+• dict.get sans second argument renvoie None si la clé est absente, sans appeler la fabrique.
+
+Intermédiaire :
+• d["x"] donnerait 0 ; d.get("x") donne None — piège classique.
+
+Expert :
+• Utiliser get(..., 0) si vous voulez zéro sans créer la clé : attention, second argument explicite.
+
+Concepts clés :
+• get contourne __missing__.
+
+Distinctions clés :
+• Création de clé seulement avec crochets ou méthodes équivalentes.
+
+Fonctionnement :
+• Recherche directe sans fabrique.
+
+Exécution étape par étape :
+1. None.
+
+Ordre des opérations :
+• defaultdict puis .get("x").
+
+Cas d'utilisation courants :
+• Lecture optionnelle sans effet de bord.
+
+Cas limites :
+• get avec défaut explicite change le résultat.
+
+Considérations de performance :
+• Rapide, pas d’allocation fabrique.
+
+Exemples :
+• d.get(k, 0) pour lecture sans insertion.
+
+Remarques :
+• Réponse : None.`,
+  2035: `Crochets vs get
+
+Débutant :
+• d["x"] crée "x":0 ; get("y") ne crée pas y.
+
+Intermédiaire :
+• Une seule clé dans d au final.
+
+Expert :
+• Règle : crochets créent, get et in non.
+
+Concepts clés :
+• Comparaison des chemins d’accès.
+
+Distinctions clés :
+• len serait 2 si on avait aussi fait d["y"].
+
+Fonctionnement :
+• Une insertion pour x, aucune pour y.
+
+Exécution étape par étape :
+1. len(d) == 1.
+
+Ordre des opérations :
+• ["x"], get("y"), len.
+
+Cas d'utilisation courants :
+• API où certaines clés sont « lazy » et d’autres non.
+
+Cas limites :
+• Mélanger styles dans le même code → confusion.
+
+Considérations de performance :
+• Moins de clés = moins de mémoire.
+
+Exemples :
+• Parser avec tokens optionnels.
+
+Remarques :
+• Réponse : 1.`,
+  2036: `isinstance(defaultdict(int), dict)
+
+Débutant :
+• defaultdict hérite de dict → True.
+
+Intermédiaire :
+• Toutes les méthodes dict de base sont disponibles.
+
+Expert :
+• isinstance accepte les sous-classes ; type(dd) is dict serait False.
+
+Concepts clés :
+• Sous-typage, introspection.
+
+Distinctions clés :
+• UserDict pourrait ne pas être un dict direct.
+
+Fonctionnement :
+• Parcours MRO.
+
+Exécution étape par étape :
+1. True.
+
+Ordre des opérations :
+• isinstance après import.
+
+Cas d'utilisation courants :
+• Valider paramètre mapping dans une fonction.
+
+Cas limites :
+• Protocols typing Mapping vs runtime.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• isinstance(x, (dict, defaultdict)).
+
+Remarques :
+• Réponse : True.`,
+  2037: `defaultdict(int, a=1, b=2) et clé nouvelle
+
+Débutant :
+• c absent : fabrique int → 0, puis +=5 → 5.
+
+Intermédiaire :
+• a et b restent 1 et 2 ; seul c est créé par l’opération.
+
+Expert :
+• Les valeurs initiales ne passent pas par la fabrique.
+
+Concepts clés :
+• Arguments nommés initiaux + fabrique pour le reste.
+
+Distinctions clés :
+• += lit puis écrit la nouvelle valeur 5.
+
+Fonctionnement :
+• 0 + 5 sur la clé c.
+
+Exécution étape par étape :
+1. d["c"] == 5.
+
+Ordre des opérations :
+• Constructeur, += sur clé manquante, lecture.
+
+Cas d'utilisation courants :
+• Config partielle avec compteurs dynamiques.
+
+Cas limites :
+• Réassigner default_factory plus tard change les prochains manquants.
+
+Considérations de performance :
+• Une insertion pour c.
+
+Exemples :
+• Compteurs par défaut 0 avec quelques compteurs pré-chargés.
+
+Remarques :
+• Réponse : 5.`,
+  2038: `Attribut default_factory
+
+Débutant :
+• Pour defaultdict(int), l’attribut pointe vers le type int lui-même.
+
+Intermédiaire :
+• Repr affiche classique classe int.
+
+Expert :
+• On peut appeler d.default_factory() pour voir la valeur brute fabriquée.
+
+Concepts clés :
+• Attribut public, callable stocké.
+
+Distinctions clés :
+• Ce n’est pas encore la valeur 0, c’est le constructeur.
+
+Fonctionnement :
+• Lecture d’attribut après construction.
+
+Exécution étape par étape :
+1. Affichage du type int.
+
+Ordre des opérations :
+• defaultdict(int) puis .default_factory.
+
+Cas d'utilisation courants :
+• Sérialisation, introspection, tests.
+
+Cas limites :
+• default_factory None désactive la création automatique (KeyError revient).
+
+Considérations de performance :
+• Lecture simple.
+
+Exemples :
+• Vérifier qu’une fabrique est bien list.
+
+Remarques :
+• Réponse : <class 'int'> (forme du QCM).`,
+  2039: `Changer default_factory à l’exécution
+
+Débutant :
+• On part de defaultdict(int) vide, on remplace default_factory par list, puis d["a"] : clé absente → list() → [].
+
+Intermédiaire :
+• Aucune clé n’existait avant ; seul le premier accès "a" déclenche la nouvelle fabrique.
+
+Expert :
+• Les entrées créées avec l’ancienne fabrique gardent leur type si vous en aviez avant le changement (hors énoncé).
+
+Concepts clés :
+• Réassignation de default_factory, effet sur les prochains accès manquants.
+
+Distinctions clés :
+• Si default_factory restait int, d["a"] aurait été 0.
+
+Fonctionnement :
+• list() sans argument produit une liste vide stockée sous "a".
+
+Exécution étape par étape :
+1. Retour [].
+
+Ordre des opérations :
+• defaultdict(int), assignation default_factory=list, d["a"].
+
+Cas d'utilisation courants :
+• Bascule dynamique entre comptage et accumulation par clé.
+
+Cas limites :
+• default_factory=None désactive la création automatique (KeyError).
+
+Considérations de performance :
+• Un appel list() par nouvelle clé après changement.
+
+Exemples :
+• Réassigner à set pour passer à des ensembles par clé.
+
+Remarques :
+• Réponse : [].`,
+  2040: `dict(defaultdict(int) vide)
+
+Débutant :
+• Aucune paire à copier → dict vide classique.
+
+Intermédiaire :
+• Le defaultdict perd son default_factory dans le dict résultat.
+
+Expert :
+• Lecture de clé manquante sur le dict final → KeyError.
+
+Concepts clés :
+• Copie superficielle des items, pas du comportement.
+
+Distinctions clés :
+• Le defaultdict source reste inchangé avec sa fabrique.
+
+Fonctionnement :
+• dict() itère sur items() vides.
+
+Exécution étape par étape :
+1. {}.
+
+Ordre des opérations :
+• defaultdict puis dict().
+
+Cas d'utilisation courants :
+• Passer à une API stricte dict.
+
+Cas limites :
+• Si le defaultdict avait des clés, elles seraient copiées.
+
+Considérations de performance :
+• Instantané pour vide.
+
+Exemples :
+• json.dumps(dict(dd)).
+
+Remarques :
+• Réponse : {}.`,
+  2041: `Dict ordonnés en Python 3.7+
+
+Débutant :
+• Oui : l’ordre d’insertion est garanti par le langage depuis 3.7.
+
+Intermédiaire :
+• En 3.6 CPython c’était déjà vrai mais détail d’implémentation ; 3.7+ spec.
+
+Expert :
+• OrderedDict reste utile pour égalité sensible à l’ordre et move_to_end.
+
+Concepts clés :
+• Insertion order, sémantique du langage.
+
+Distinctions clés :
+• Pas réservé aux clés str.
+
+Fonctionnement :
+• Structure interne conserve la séquence d’ajout.
+
+Exécution étape par étape :
+1. Réponse conceptuelle Oui.
+
+Ordre des opérations :
+• Question de culture Python, pas d’expression à évaluer.
+
+Cas d'utilisation courants :
+• Prédictibilité des tests et sérialisation JSON récente.
+
+Cas limites :
+• Réinsérer une clé supprimée la place en fin.
+
+Considérations de performance :
+• Légère surcharge vs anciennes versions sans ordre.
+
+Exemples :
+• list(d) reflète l’ordre d’insertion.
+
+Remarques :
+• Réponse : Yes (première option du quiz anglais) — équivalent : Oui.`,
+  2042: `OrderedDict(a=1,b=2) et list(od)
+
+Débutant :
+• list sur un mapping renvoie les clés dans l’ordre d’insertion : a puis b.
+
+Intermédiaire :
+• Même résultat qu’un dict moderne pour cet exemple simple.
+
+Expert :
+• Pour valeurs, utiliser list(od.values()).
+
+Concepts clés :
+• Itération clés, OrderedDict.
+
+Distinctions clés :
+• Ne pas confondre avec liste de paires items.
+
+Fonctionnement :
+• Parcours de l’ordre interne a→b.
+
+Exécution étape par étape :
+1. ['a', 'b'].
+
+Ordre des opérations :
+• OrderedDict kwargs, list().
+
+Cas d'utilisation courants :
+• Préserver l’ordre logique des champs.
+
+Cas limites :
+• kwargs Python 3.6+ gardent l’ordre d’écriture dans l’appel.
+
+Considérations de performance :
+• Linéaire en nombre de clés.
+
+Exemples :
+• Pipeline ETL avec colonnes ordonnées.
+
+Remarques :
+• Réponse : ['a', 'b'].`,
+  2043: `move_to_end("a") par défaut
+
+Débutant :
+• a était premier ; on le pousse à la fin → ordre b, a.
+
+Intermédiaire :
+• last=True par défaut.
+
+Expert :
+• Méthode absente des dict standards.
+
+Concepts clés :
+• Réordonnancement O(1) amortized.
+
+Distinctions clés :
+• Ne change pas les valeurs, seulement la position de la clé.
+
+Fonctionnement :
+• Déplacer le nœud a après b.
+
+Exécution étape par étape :
+1. ['b', 'a'].
+
+Ordre des opérations :
+• Construction, move_to_end, list.
+
+Cas d'utilisation courants :
+• LRU, files avec priorités manipulées.
+
+Cas limites :
+• KeyError si clé absente.
+
+Considérations de performance :
+• Efficace comparé à reconstruire un dict.
+
+Exemples :
+• Remonter un élément récemment utilisé en fin.
+
+Remarques :
+• Réponse : ['b', 'a'].`,
+  2044: `move_to_end("b", last=False)
+
+Débutant :
+• b va au début → b, a.
+
+Intermédiaire :
+• Symétrique de la variante last=True.
+
+Expert :
+• Utile pour têtes de file FIFO explicites.
+
+Concepts clés :
+• Paramètre last, extrémité gauche.
+
+Distinctions clés :
+• Même résultat visuel que Q43 pour cet enchaînement de clés (b,a).
+
+Fonctionnement :
+• Insérer b avant a.
+
+Exécution étape par étape :
+1. ['b', 'a'].
+
+Ordre des opérations :
+• OrderedDict, move_to_end avec False, list.
+
+Cas d'utilisation courants :
+• Remettre un élément « frais » en tête.
+
+Cas limites :
+• Clé manquante → exception.
+
+Considérations de performance :
+• Opération locale sur liste chaînée interne.
+
+Exemples :
+• File d’attente avec recycle en tête.
+
+Remarques :
+• Réponse : ['b', 'a'].`,
+  2045: `Égalité OrderedDict et ordre
+
+Débutant :
+• Mêmes paires mais ordre d’insertion a,b vs b,a → OrderedDict dit non.
+
+Intermédiaire :
+• Deux dict normaux équivalents seraient True.
+
+Expert :
+• Tests unitaires sur APIs ordonnées.
+
+Concepts clés :
+• Égalité sensible à l’ordre pour OrderedDict.
+
+Distinctions clés :
+• == entre OrderedDict et dict utilise règles mixtes (voir doc) ; ici deux OrderedDict.
+
+Fonctionnement :
+• Comparaison paire à paire avec position.
+
+Exécution étape par étape :
+1. False.
+
+Ordre des opérations :
+• Construction de deux OrderedDict puis ==.
+
+Cas d'utilisation courants :
+• Vérifier canon exact de paramètres.
+
+Cas limites :
+• Comparaison OrderedDict avec dict ordinaire : règles spécifiques.
+
+Considérations de performance :
+• Linéaire en taille.
+
+Exemples :
+• Signature ordonnée pour cache.
+
+Remarques :
+• Réponse : False.`,
+  2046: `Égalité dict sans ordre
+
+Débutant :
+• Les paires a:1 et b:2 sont les mêmes ; l’ordre d’écriture du littéral n’importe pas.
+
+Intermédiaire :
+• Depuis 3.7 l’ordre est conservé mais n’entre pas dans ==.
+
+Expert :
+• Tests d’égalité de mapping « logique ».
+
+Concepts clés :
+• == sur dict, multiset fini de paires.
+
+Distinctions clés :
+• Contrast avec Q45.
+
+Fonctionnement :
+• Vérification bijective des clés et valeurs.
+
+Exécution étape par étape :
+1. True.
+
+Ordre des opérations :
+• Deux littéraux puis ==.
+
+Cas d'utilisation courants :
+• Comparer JSON décodé ou kwargs reconstruits.
+
+Cas limites :
+• Valeurs non égales → False.
+
+Considérations de performance :
+• Linéaire.
+
+Exemples :
+• Fusion de configs sans ordre imposé.
+
+Remarques :
+• Réponse : True.`,
+  2047: `OrderedDict.popitem(last=True)
+
+Débutant :
+• Dernier inséré est b → retire (b,2).
+
+Intermédiaire :
+• Comportement LIFO sur la séquence ordonnée.
+
+Expert :
+• od ne contient plus que a après coup.
+
+Concepts clés :
+• popitem avec last, tuple retourné.
+
+Distinctions clés :
+• dict.popitem() n’a pas le paramètre last mais retire en fin depuis 3.7.
+
+Fonctionnement :
+• Suppression du dernier nœud.
+
+Exécution étape par étape :
+1. ('b', 2).
+
+Ordre des opérations :
+• popitem(last=True) défaut explicite ou implicite.
+
+Cas d'utilisation courants :
+• Pile sur structure ordonnée.
+
+Cas limites :
+• OrderedDict vide → KeyError.
+
+Considérations de performance :
+• O(1) amortized.
+
+Exemples :
+• Undo stack de clés.
+
+Remarques :
+• Réponse : ('b', 2).`,
+  2048: `OrderedDict.popitem(last=False)
+
+Débutant :
+• Premier inséré est a → retire (a,1).
+
+Intermédiaire :
+• FIFO au sens de la structure ordonnée.
+
+Expert :
+• Impossible avec seul dict.popitem() standard (toujours fin).
+
+Concepts clés :
+• popitem last=False, extrémité début.
+
+Distinctions clés :
+• Contraste direct avec Q47.
+
+Fonctionnement :
+• Suppression tête de chaîne.
+
+Exécution étape par étape :
+1. ('a', 1).
+
+Ordre des opérations :
+• popitem(False).
+
+Cas d'utilisation courants :
+• Files d’attente ordonnées.
+
+Cas limites :
+• Un seul élément → le retire et vide.
+
+Considérations de performance :
+• O(1) amortized.
+
+Exemples :
+• Traitement batch ordonné.
+
+Remarques :
+• Réponse : ('a', 1).`,
+  2049: `dict.popitem() standard
+
+Débutant :
+• Ordre d’insertion a,b,c → le dernier est c → ('c',3).
+
+Intermédiaire :
+• LIFO cohérent avec 3.7+.
+
+Expert :
+• Pas d’argument last=False pour revenir en tête.
+
+Concepts clés :
+• popitem sur dict built-in.
+
+Distinctions clés :
+• vs OrderedDict.popitem(last=False).
+
+Fonctionnement :
+• Retrait dernier slot logique.
+
+Exécution étape par étape :
+1. ('c', 3).
+
+Ordre des opérations :
+• Littéral dict, popitem.
+
+Cas d'utilisation courants :
+• Dépilement rapide d’un dernier réglage.
+
+Cas limites :
+• dict vide → KeyError.
+
+Considérations de performance :
+• O(1) amortized.
+
+Exemples :
+• Tant que d: k,v = d.popitem().
+
+Remarques :
+• Réponse : ('c', 3).`,
+  2050: `Mise à jour de valeur OrderedDict
+
+Débutant :
+• Changer od["a"] à 10 ne déplace pas la clé a : ordre des clés reste a,b.
+
+Intermédiaire :
+• Seule l’ajout d’une nouvelle clé va en queue.
+
+Expert :
+• move_to_end si on veut repousser a après modification.
+
+Concepts clés :
+• Mise à jour in-place, stabilité de position.
+
+Distinctions clés :
+• del puis réinsertion recollerait a la fin.
+
+Fonctionnement :
+• Remplacement de la valeur associée au slot a.
+
+Exécution étape par étape :
+1. ['a', 'b'].
+
+Ordre des opérations :
+• OrderedDict, assignation, list.
+
+Cas d'utilisation courants :
+• Caches avec métadonnées mises à jour sans perdre la place.
+
+Cas limites :
+• Si réinsertion explicite, l’ordre change.
+
+Considérations de performance :
+• Mise à jour O(1) amortized.
+
+Exemples :
+• Compteurs LRU avec timestamp dans la valeur.
+
+Remarques :
+• Réponse : ['a', 'b'].`,
   2051: `functools.reduce applique une fonction à deux arguments de façon cumulative aux éléments d'un itérable, le réduisant à une seule valeur.
 
 Concepts clés :
