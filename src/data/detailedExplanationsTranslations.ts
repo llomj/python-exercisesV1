@@ -79083,3017 +79083,3919 @@ Exemples :
 
 Remarques :
 • enumerate + break pour contrôle fin sans exception.`,
-  1801: `Le def keyword defines a fonction in Python. def func(x): renvoyer x * 2 defines a fonction named func that takes one parameter x and retourne x * 2. The def instruction creates a fonction objet and assigns it to the name func. This is fonction definition, not fonction calling - to call the fonction, you would use func(5) which would renvoyer 10. Functions are defined using def, followed by the fonction name, parameters in parentheses, a colon, and the fonction body.
+  1801: `Littéral de dictionnaire
 
-def keyword - fonction definition:
-• def func(x): renvoyer x * 2 defines a fonction
-• def is the keyword for fonction definition
-• func is the fonction name
-• (x) is the parameter liste
-• renvoyer x * 2 is the fonction body
-• Creates fonction objet, doesn't execute it
+Débutant :
+• {'a': 1, 'b': 2} est un dict à deux entrées : la clé 'a' vaut 1, 'b' vaut 2.
+• Les accolades avec des paires clé:valeur construisent un dictionnaire.
 
-Comment ça fonctionne :
-• def func(x): creates fonction definition
-• Function name: func
-• Parameter: x
-• Body: renvoyer x * 2
-• Function objet created and assigned to name func
-• To call: func(5) retourne 10
+Intermédiaire :
+• Les clés doivent être hachables (souvent str, int, tuple immuable) ; les valeurs peuvent être de tout type.
+• En CPython 3.7+, l’ordre d’insertion est conservé (comportement du langage à partir de 3.7).
 
-Exemple :
-def func(x): renvoyer x * 2  # Defines fonction
-func(5)                    # 10 (calls fonction)
-func(3)                    # 6 (calls fonction)
+Expert :
+• Chaque paire est stockée dans une table de hachage : accès moyen O(1) pour lecture par clé.
 
-Usages courants :
-• Defining fonctions: def function_name(params): body
-• Creating reusable code: def calculate(x): renvoyer x * 2
-• Function definition
-• Code organization
+Concepts clés :
+• Mapping clé → valeur, type dict, littéral {clé: valeur, ...}.
 
-Exemple : def func(x): renvoyer x * 2 defines a fonction named func that takes parameter x and retourne x * 2. This is fonction definition - the fonction is created but not executed until appelé.`,
-  1802: `Le def keyword avec pass defines an empty fonction. def func(): pass defines a fonction named func avec no parameters and an empty body (pass is a placeholder that does nothing). This creates a valid fonction that retourne None when appelé. pass is used when you need syntactically valid code but don't want to execute anything - it's commonly used for placeholder fonctions, empty classes, or code that will be implemented later.
-
-def avec pass - empty fonction:
-• def func(): pass defines empty fonction
-• func is fonction name
-• () means no parameters
-• pass is placeholder (does nothing)
-• Function retourne None when appelé
-
-Comment ça fonctionne :
-• def func(): creates fonction definition
-• Function name: func
-• No parameters: ()
-• Body: pass (placeholder)
-• Function objet created
-• When appelé: func() retourne None
-
-Exemple :
-def func(): pass          # Defines empty fonction
-func()                    # None (retourne None)
-def placeholder(): pass   # Placeholder for future code
-
-Usages courants :
-• Placeholder fonctions: def func(): pass (to be implemented)
-• Empty fonctions: def stub(): pass
-• Syntax requirement: pass needed for empty body
-• Function stubs
-
-Exemple : def func(): pass defines an empty fonction named func avec no parameters. The pass instruction is a placeholder that does nothing, making this a valid fonction that retourne None when appelé.`,
-  1803: `A renvoyer statement without a value retourne None. def func(): renvoyer définit une fonction that explicitly retourne None. Quand vous use renvoyer without a value, Python retourne None. This est équivalent à renvoyer None or having no renvoyer statement at all - all three result in the function returning None. Explicitly using renvoyer without a value can make it clear that the function intentionally retourne None.
-
-renvoyer without value:
-• def func(): renvoyer defines function returning None
-• renvoyer without value retourne None
-• Equivalent to renvoyer None
-• Equivalent to no renvoyer statement
-• Function retourne None
-
-Comment ça fonctionne :
-• def func(): crée function definition
-• Function name: func
-• No parameters: ()
-• Body: renvoyer (no value)
-• When called: func() retourne None
-• Explicit None return
-
-Exemple :
-def func(): renvoyer        # Retourne None
-func()                    # None
-def func(): renvoyer None   # Same: None
-def func(): pass          # Same: None (no return)
-
-Usages courants :
-• Explicit None return: def func(): return
-• Clear intent: renvoyer None explicitly
-• Function termination
-• None renvoyer pattern
-
-Exemple : def func(): renvoyer définit une fonction that explicitly retourne None. The renvoyer statement without a value retourne None, making it clear that the function intentionally retourne None.`,
-  1804: `Returning multiple values en Python crée a tuple. def func(): renvoyer 1, 2 définit une fonction that retourne un tuple (1, 2). Quand vous write renvoyer 1, 2, Python automatically crée un tuple - the comma crée a tuple, not parentheses. C'est Python's way of returning multiple values - you can unpack them when calling the function: a, b = func() assigns 1 to a and 2 to b.
-
-Multiple renvoyer values:
-• def func(): renvoyer 1, 2 defines function returning tuple
-• renvoyer 1, 2 crée tuple (1, 2)
-• Comma crée tuple (parentheses optional)
-• Retourne single tuple object
-• Can be unpacked: a, b = func()
-
-Comment ça fonctionne :
-• def func(): crée function definition
-• Function name: func
-• No parameters: ()
-• Body: renvoyer 1, 2
-• Comma crée tuple: (1, 2)
-• When called: func() retourne (1, 2)
-
-Exemple :
-def func(): renvoyer 1, 2   # Retourne (1, 2)
-func()                    # (1, 2) (tuple)
-a, b = func()            # a = 1, b = 2 (unpacking)
-
-Usages courants :
-• Returning multiple values: renvoyer x, y
-• Tuple return: renvoyer (1, 2) (same as renvoyer 1, 2)
-• Multiple value return
-• Unpacking renvoyer values
-
-Exemple : def func(): renvoyer 1, 2 définit une fonction that retourne un tuple (1, 2). The comma crée a tuple, so renvoyer 1, 2 est équivalent à renvoyer (1, 2).`,
-  1805: `Functions without a renvoyer statement automatically renvoyer None. If a function n'a pas renvoyer statement, when it finishes executing, it implicitly retourne None. C'est Python's default behavior - every function retourne a value, and if no renvoyer statement is executed, the function retourne None. C'est pourquoi functions without explicit renvoyer values can still be utilisé dans expressions - they renvoyer None, which is a valid value (though often not useful).
-
-No renvoyer statement:
-• Function without renvoyer retourne None
-• Implicit None return
-• Default behavior en Python
-• Every function retourne a value
-• None est retourné if no renvoyer executed
-
-Comment ça fonctionne :
-• Function executes body
-• Reaches end of function
-• No renvoyer statement encountered
-• Implicitly retourne None
-• Function call evaluates to None
-
-Exemple :
-def func(): pass          # No return, retourne None
-func()                    # None
-def func(): print("hi")   # No return, retourne None
-result = func()           # result = None
-
-Usages courants :
-• Functions without return: def func(): body (retourne None)
-• Side-effect functions: def print_data(): print(x) (retourne None)
-• Implicit None return
-• Default renvoyer behavior
-
-Exemple : If a function n'a pas renvoyer statement, it automatically retourne None when it finishes executing. C'est Python's default behavior - every function retourne a value, and None is the default.`,
-  1806: `Functions can have multiple parameters. def func(x, y): renvoyer x + y définit une fonction named func that takes two parameters x and y and retourne their sum. Parameters are listed in the parentheses separated by commas. Quand vous call the function, you provide arguments for chaque parameter: func(1, 2) passes 1 to x and 2 to y, returning 3. Multiple parameters allow functions to fonctionner avec multiple inputs.
-
-Multiple parameters:
-• def func(x, y): renvoyer x + y defines function with two parameters
-• x and y are parameters
-• Parameters separated by commas
-• Function takes two arguments quand appelé
-• Retourne sum of parameters
-
-Comment ça fonctionne :
-• def func(x, y): crée function definition
-• Function name: func
-• Parameters: x, y
-• Body: renvoyer x + y
-• When called: func(1, 2) assigns 1 to x, 2 to y, retourne 3
-
-Exemple :
-def func(x, y): renvoyer x + y  # Two parameters
-func(1, 2)                    # 3 (1 + 2)
-func(5, 10)                   # 15 (5 + 10)
-
-Usages courants :
-• Multiple inputs: def calculate(x, y): renvoyer x + y
-• Parameter lists: def process(a, b, c): body
-• Multiple parameter functions
-• Function parameters
-
-Exemple : def func(x, y): renvoyer x + y définit une fonction with two parameters x and y that retourne their sum. When appelé avec func(1, 2), il retourne 3.`,
-  1807: `Calling a function with positional arguments passes values in order. If def func(x, y): renvoyer x + y, then func(1, 2) retourne 3 car 1 est passé to les premiers parameter x and 2 est passé to the second parameter y, so the function retourne 1 + 2 = 3. Positional arguments are matched to parameters by position - les premiers argument goes to les premiers parameter, the second argument goes to the second parameter, and so on.
-
-Positional arguments:
-• func(1, 2) with def func(x, y): renvoyer x + y retourne 3
-• 1 est passé to x (first parameter)
-• 2 est passé to y (second parameter)
-• Function retourne x + y = 1 + 2 = 3
-• Arguments matched by position
-
-Comment ça fonctionne :
-• func(1, 2) appelle function func
-• Premier argument 1 assigned to first parameter x
-• Second argument 2 assigned to second parameter y
-• La fonction s'exécute : renvoyer x + y
-• Retourne : 1 + 2 = 3
-
-Exemple :
-def func(x, y): renvoyer x + y
-func(1, 2)                    # 3 (positional: 1→x, 2→y)
-func(5, 10)                   # 15 (positional: 5→x, 10→y)
-
-Usages courants :
-• Calling functions: result = func(arg1, arg2)
-• Positional argument passing: func(1, 2, 3)
-• Function invocation
-• Argument passing
-
-Exemple : If def func(x, y): renvoyer x + y, then func(1, 2) retourne 3 car 1 est passé to x and 2 est passé to y (positional arguments), so the function retourne 1 + 2 = 3.`,
-  1808: `Calling a function with keyword arguments passes values by parameter name. If def func(x, y): renvoyer x + y, then func(x=1, y=2) retourne 3 car x=1 explicitly assigns 1 to parameter x and y=2 explicitly assigns 2 to parameter y, so the function retourne 1 + 2 = 3. Keyword arguments are matched by parameter name, not position, which makes function appelle more readable and allows arguments to be passed in any order.
-
-Keyword arguments:
-• func(x=1, y=2) with def func(x, y): renvoyer x + y retourne 3
-• x=1 assigns 1 to parameter x
-• y=2 assigns 2 to parameter y
-• Function retourne x + y = 1 + 2 = 3
-• Arguments matched by name
-
-Comment ça fonctionne :
-• func(x=1, y=2) appelle function func
-• x=1 assigns 1 to parameter x
-• y=2 assigns 2 to parameter y
-• La fonction s'exécute : renvoyer x + y
-• Retourne : 1 + 2 = 3
-
-Exemple :
-def func(x, y): renvoyer x + y
-func(x=1, y=2)               # 3 (keyword: x=1, y=2)
-func(y=2, x=1)               # 3 (same, order ne matter)
-
-Usages courants :
-• Calling functions: result = func(param1=value1, param2=value2)
-• Keyword argument passing: func(x=1, y=2)
-• Readable function calls
-• Named argument passing
-
-Exemple : If def func(x, y): renvoyer x + y, then func(x=1, y=2) retourne 3 car x=1 assigns 1 to x and y=2 assigns 2 to y (keyword arguments), so the function retourne 1 + 2 = 3.`,
-  1809: `You can mix positional and keyword arguments in a function call. If def func(x, y): renvoyer x + y, then func(1, y=2) retourne 3 car 1 est passé positionally to x and y=2 est passé as a keyword argument to y, so the function retourne 1 + 2 = 3. Positional arguments must come before keyword arguments - you ne peut pas ont un keyword argument followed by a positional argument. This mixing allows flexibility in function calls.
-
-Mixed arguments:
-• func(1, y=2) with def func(x, y): renvoyer x + y retourne 3
-• 1 is positional argument (goes to x)
-• y=2 is keyword argument (goes to y)
-• Function retourne x + y = 1 + 2 = 3
-• Positional before keyword
-
-Comment ça fonctionne :
-• func(1, y=2) appelle function func
-• 1 is positional, assigned to first parameter x
-• y=2 is keyword, assigned to parameter y
-• La fonction s'exécute : renvoyer x + y
-• Retourne : 1 + 2 = 3
-
-Exemple :
-def func(x, y): renvoyer x + y
-func(1, y=2)                 # 3 (mixed: 1→x, y=2)
-func(x=1, 2)                 # SyntaxError (keyword before positional not allowed)
-
-Usages courants :
-• Mixed calls: result = func(1, param2=value)
-• Flexible argument passing: func(pos1, keyword=value)
-• Positional and keyword mixing
-• Function call flexibility
-
-Exemple : If def func(x, y): renvoyer x + y, then func(1, y=2) retourne 3 car 1 est passé positionally to x and y=2 est passé as a keyword argument to y, so the function retourne 1 + 2 = 3.`,
-  1810: `Functions with default parameters peut être called without providing arguments. If def func(x=1): renvoyer x, then func() retourne 1 car x a un default value of 1, so when func() is appelé avec no arguments, x uses its default value of 1, and the function retourne 1. Default parameters allow functions to be appelé avec fewer arguments - if an argument n'est pas provided, the default value est utilisé. This makes functions more flexible.
-
-Default parameters:
-• func() with def func(x=1): renvoyer x retourne 1
-• x has default value 1
-• No argument provided for x
-• x uses default value: 1
-• Function retourne 1
-
-Comment ça fonctionne :
-• func() appelle function func
-• No argument provided for parameter x
-• x has default value 1
-• x uses default: x = 1
-• La fonction s'exécute : renvoyer x
-• Retourne : 1
-
-Exemple :
-def func(x=1): renvoyer x
-func()                      # 1 (uses default x=1)
-func(5)                     # 5 (overrides default)
-
-Usages courants :
-• Optional parameters: def process(data, verbose=False):
-• Default values: def calculate(x, y=0): renvoyer x + y
-• Flexible function calls
-• Default parameter functions
-
-Exemple : If def func(x=1): renvoyer x, then func() retourne 1 car x a un default value of 1, so when appelé avec no arguments, x uses its default value and the function retourne 1.`,
-  1811: `Default parameters allow functions to be appelé avec fewer arguments. def func(x=1): renvoyer x définit une fonction with a default parameter x=1, which means if no argument is provided for x, it will use la valeur 1. This makes the parameter optional - you can call func() without arguments (uses default 1), or func(5) to override the default. Default parameters are defined using = in the parameter list.
-
-Default parameters:
-• def func(x=1): renvoyer x defines function with default parameter
-• x=1 sets default value to 1
-• Parameter x is optional
-• Can call func() (uses x=1) or func(5) (uses x=5)
-• Default allows omitting argument
-
-Comment ça fonctionne :
-• def func(x=1): crée function definition
-• Function name: func
-• Parameter x has default value 1
-• If no argument provided, x = 1
-• If argument provided, x = argument value
-
-Exemple :
-def func(x=1): renvoyer x
-func()                    # 1 (uses default x=1)
-func(5)                    # 5 (overrides default)
-
-Usages courants :
-• Optional parameters: def process(data, verbose=False):
-• Default values: def calculate(x, y=0): renvoyer x + y
-• Flexible function calls
-• Default parameter functions
-
-Exemple : def func(x=1): renvoyer x définit une fonction with a default parameter x=1, which means if called without arguments, x uses its default value of 1.`,
-  1812: `Passing an argument to a function with a default parameter overrides the default. If def func(x=1): renvoyer x, then func(2) retourne 2 car the argument 2 est passé to x, overriding the default value of 1. The default value is only used when no argument is provided - if an argument is provided, it takes precedence over the default.
-
-Argument overrides default:
-• func(2) with def func(x=1): renvoyer x retourne 2
-• Argument 2 passé à parameter x
-• Overrides default value 1
-• Function retourne 2 (not default 1)
-• Default only used if no argument provided
-
-Comment ça fonctionne :
-• func(2) appelle function func
-• Argument 2 provided for parameter x
-• x uses argument value 2 (not default 1)
-• La fonction s'exécute : renvoyer x
-• Retourne : 2
-
-Exemple :
-def func(x=1): renvoyer x
-func(2)                    # 2 (overrides default x=1)
-func(5)                    # 5 (overrides default x=1)
-func()                      # 1 (uses default x=1)
-
-Usages courants :
-• Overriding defaults: func(value) (overrides default)
-• Flexible calls: func() or func(value)
-• Argument precedence
-• Default parameter behavior
-
-Exemple : If def func(x=1): renvoyer x, then func(2) retourne 2 car the argument 2 overrides the default value of 1, so x = 2 and the function retourne 2.`,
-  1813: `Required parameters must come before default parameters in the function definition. def func(x, y=2): renvoyer x + y définit une fonction with a required parameter x and a default parameter y=2. C'est valid car the required parameter x comes avant le default parameter y. You can call it with func(1) (uses default y=2) or func(1, 3) (overrides default y=2). This ordering is required by Python's syntax.
-
-Required before default:
-• def func(x, y=2): renvoyer x + y defines function correctly
-• x is required parameter (no default)
-• y is default parameter (y=2)
-• Required parameters must come first
-• Valid: required before default
-
-Comment ça fonctionne :
-• def func(x, y=2): crée function definition
-• Function name: func
-• Parameter x is required (no default)
-• Parameter y has default value 2
-• Required parameter x comes before default parameter y
-
-Exemple :
-def func(x, y=2): renvoyer x + y
-func(1)                    # 3 (uses default y=2: 1 + 2)
-func(1, 3)                 # 4 (overrides default: 1 + 3)
-
-Usages courants :
-• Mixed parameters: def process(data, verbose=False):
-• Required and optional: def calculate(x, y=0): renvoyer x + y
-• Parameter ordering
-• Required before default
-
-Exemple : def func(x, y=2): renvoyer x + y définit une fonction with a required parameter x and a default parameter y=2. The required parameter x comes avant le default parameter y, which is correct.`,
-  1814: `Quand calling a fonction avec required and default parameters, you can omit arguments for default parameters. If def func(x, y=2): renvoyer x + y, then func(1) retourne 3 car 1 is passed to the required parameter x, and y uses its default valeur of 2, so the fonction retourne 1 + 2 = 3. You must provide arguments for all required parameters, but you can omit arguments for default parameters.
-
-Using default for second parameter:
-• func(1) avec def func(x, y=2): renvoyer x + y retourne 3
-• 1 is passed to required parameter x
-• y uses default valeur 2 (no argument provided)
-• Function retourne x + y = 1 + 2 = 3
-• Default valeur used for y
-
-Comment ça fonctionne :
-• func(1) calls fonction func
-• Argument 1 provided for required parameter x
-• No argument provided for default parameter y
-• y uses default valeur: y = 2
-• Function executes: renvoyer x + y
-• Returns: 1 + 2 = 3
-
-Exemple :
-def func(x, y=2): renvoyer x + y
-func(1)                    # 3 (uses default y=2: 1 + 2)
-func(1, 5)                 # 6 (overrides default: 1 + 5)
-
-Usages courants :
-• Omitting defaults: func(required) (uses defaults)
-• Optional parameters: func(data) (uses defaults)
-• Default parameter usage
-• Flexible fonction calls
-
-Exemple : If def func(x, y=2): renvoyer x + y, then func(1) retourne 3 car 1 is passed to x and y uses its default valeur of 2, so the fonction retourne 1 + 2 = 3.`,
-  1815: `Default parameters must come after non-default parameters in the function definition. def func(x=1, y): renvoyer x + y lève a SyntaxError car x a un default value but y doesn't, and default parameters must come after non-default parameters. Python requires this ordering - required parameters (without defaults) must come first, followed by default parameters. Cela empêche ambiguity about which parameters get which arguments.
-
-Default after required:
-• def func(x=1, y): renvoyer x + y lève SyntaxError
-• x has default value (x=1)
-• y is required (no default)
-• Default parameters must come after required
-• SyntaxError: non-default argument follows default argument
-
-Comment ça fonctionne :
-• def func(x=1, y): attempts to define function
-• x has default value 1
-• y is required (no default)
-• Required parameter y comes after default parameter x
-• Raises SyntaxError (invalid ordering)
-
-Exemple :
-def func(x=1, y): renvoyer x + y  # SyntaxError
-def func(y, x=1): renvoyer x + y  # Valid (required before default)
-
-Usages courants :
-• Understanding syntax: required parameters must come first
-• Parameter ordering: required, then defaults
-• Syntax error avoidance
-• Function definition rules
-
-Exemple : def func(x=1, y): renvoyer x + y lève a SyntaxError car default parameters must come after non-default parameters - required parameter y must come before default parameter x.`,
-  1816: `Using a mutable object (like a list) as a default parameter is problematic car the default value est créé once and shared across all function calls. def func(x=[]): x.append(1); renvoyer x définit une fonction with a mutable default parameter, which is a common pitfall en Python. The list [] est créé once quand la fonction is defined, and le même list object is reused for all calls. This means modifications to la liste persist across calls, which is usually not what you want.
-
-Mutable default parameter:
-• def func(x=[]): x.append(1); renvoyer x defines function with mutable default
-• Default value [] est créé once (when function defined)
-• Same list object reused for all calls
-• Modifications persist across calls
-• Common pitfall (usually not desired)
-
-Comment ça fonctionne :
-• def func(x=[]): crée function definition
-• Default value [] est créé once (when function defined)
-• Same list object shared across calls
-• First call: x is [], appends 1, retourne [1]
-• Second call: x is [1] (same list!), appends 1, retourne [1, 1]
-
-Exemple :
-def func(x=[]): x.append(1); renvoyer x
-func()                      # [1] (first call)
-func()                      # [1, 1] (second call, list persists!)
-func()                      # [1, 1, 1] (third call, list grows!)
-
-Usages courants :
-• Understanding pitfall: mutable defaults are shared
-• Avoiding mutable defaults: use None instead
-• Common Python mistake
-• Default parameter behavior
-
-Exemple : def func(x=[]): x.append(1); renvoyer x définit une fonction with a mutable default parameter. The list [] est créé once and shared across all calls, so modifications persist, which is usually not desired.`,
-  1817: `Using None as a default and creating a new mutable object inside the function is a common pattern to avoid mutable default issues. def func(x=None): x = x or []; x.append(1); renvoyer x définit une fonction that safely gère mutable defaults. If x is None (default), x = x or [] crée a new list, ensuring chaque call gets its own list. Ce pattern prevents the shared mutable default problem - chaque call gets a fresh list instead of sharing one.
-
-Safe mutable default pattern:
-• def func(x=None): x = x or []; x.append(1); renvoyer x uses safe pattern
-• Default is None (immutable)
-• x = x or [] crée nouvelle liste if x is None
-• Each call gets its own list (not shared)
-• Avoids mutable default pitfall
-
-Comment ça fonctionne :
-• def func(x=None): crée function definition
-• Default value None (immutable)
-• x = x or [] crée nouvelle liste if x is None
-• First call: x is None, crée new [], appends 1, retourne [1]
-• Second call: x is None, crée new [], appends 1, retourne [1] (fresh list!)
-
-Exemple :
-def func(x=None): x = x or []; x.append(1); renvoyer x
-func()                      # [1] (first call, new list)
-func()                      # [1] (second call, new list, not [1, 1]!)
-func([10])                  # [10, 1] (uses provided list)
-
-Usages courants :
-• Safe mutable defaults: def func(x=None): x = x or []
-• Avoiding shared state: use None as default
-• Common Python pattern
-• Mutable default workaround
-
-Exemple : def func(x=None): x = x or []; x.append(1); renvoyer x définit une fonction that safely gère mutable defaults by using None as the default and creating a nouvelle liste inside the function if needed, avoiding the shared mutable default problem.`,
-  1818: `Mutable default parameters accumulate changes across function appelle car le même objet is reused. If def func(x=[]): x.append(1); renvoyer x, then func(); func() causes the second call to renvoyer [1, 1] car the default list [] est créé once and shared across all calls. The first call appends 1, making la liste [1], and the second call starts with [1] (same shared list) and appends 1 again, resulting in [1, 1].
-
-Mutable default - accumulation:
-• func(); func() with def func(x=[]): x.append(1); renvoyer x retourne [1, 1]
-• Default list [] is shared across calls
-• First call: x is [], appends 1, retourne [1]
-• Second call: x is [1] (same list!), appends 1, retourne [1, 1]
-• List accumulates changes
-
-Comment ça fonctionne :
-• def func(x=[]): crée function definition
-• Default value [] est créé once (when function defined)
-• Same list object shared across calls
-• First call: x is [], appends 1, retourne [1]
-• Second call: x is [1] (same list!), appends 1, retourne [1, 1]
-
-Exemple :
-def func(x=[]): x.append(1); renvoyer x
-func()                      # [1] (first call)
-func()                      # [1, 1] (second call, list accumulated!)
-
-Usages courants :
-• Understanding mutable defaults: accumulate changes
-• Demonstrating pitfall: shared state
-• Mutable default behavior
-• Common Python mistake
-
-Exemple : If def func(x=[]): x.append(1); renvoyer x, then func(); func() causes the second call to renvoyer [1, 1] car the default list [] is shared across calls, so les premiers call modifie it to [1], and the second call continues with [1] and appends 1 again.`,
-  1819: `Functions can have multiple default parameters. def func(x=1, y=2, z=3): renvoyer x, y, z définit une fonction with three default parameters, chaque with its own default value. All parameters have defaults, so you can call the function with 0, 1, 2, or 3 arguments. Si vous provide arguments, they are assigned to parameters in order, starting with les premiers parameter. Cela permet flexible function appelle with different numbers of arguments.
-
-Multiple default parameters:
-• def func(x=1, y=2, z=3): renvoyer x, y, z defines function with multiple defaults
-• All three parameters have default values
-• x defaults to 1, y defaults to 2, z defaults to 3
-• Can call with 0, 1, 2, or 3 arguments
-• Arguments assigned in order
-
-Comment ça fonctionne :
-• def func(x=1, y=2, z=3): crée function definition
-• Function name: func
-• All parameters have defaults: x=1, y=2, z=3
-• Arguments assigned to parameters in order
-• Missing arguments use defaults
-
-Exemple :
-def func(x=1, y=2, z=3): renvoyer x, y, z
-func()                      # (1, 2, 3) (all defaults)
-func(10)                    # (10, 2, 3) (only x overridden)
-func(10, 20)                # (10, 20, 3) (x and y overridden)
-
-Usages courants :
-• Multiple optional parameters: def process(data, verbose=False, output=None):
-• Flexible functions: def create(width=100, height=100, color='blue'):
-• Multiple default parameters
-• Flexible function calls
-
-Exemple : def func(x=1, y=2, z=3): renvoyer x, y, z définit une fonction with multiple default parameters. All parameters have defaults, so you can call it with 0, 1, 2, or 3 arguments.`,
-  1820: `Quand calling a fonction avec multiple default parameters, arguments are assigned to parameters in order, starting avec the first parameter. If def func(x=1, y=2, z=3): renvoyer x, y, z, then func(10) retourne (10, 2, 3) car the argument 10 is assigned to the first parameter x, and y and z use their default valeurs of 2 and 3. Arguments are matched to parameters positionally, from left to right.
-
-First argument to first parameter:
-• func(10) avec def func(x=1, y=2, z=3): renvoyer x, y, z retourne (10, 2, 3)
-• Argument 10 assigned to first parameter x
-• y uses default valeur 2
-• z uses default valeur 3
-• Arguments assigned in order
-
-Comment ça fonctionne :
-• func(10) calls fonction func
-• Argument 10 provided
-• Assigned to first parameter x: x = 10
-• y uses default: y = 2
-• z uses default: z = 3
-• Function executes: renvoyer x, y, z
-• Returns: (10, 2, 3)
-
-Exemple :
-def func(x=1, y=2, z=3): renvoyer x, y, z
-func(10)                    # (10, 2, 3) (x=10, y=2, z=3)
-func(10, 20)                # (10, 20, 3) (x=10, y=20, z=3)
-func(10, 20, 30)            # (10, 20, 30) (all overridden)
-
-Usages courants :
-• Positional argument assignment: func(arg1) (goes to first param)
-• Flexible calls: func(valeur) or func(value1, value2)
-• Argument matching
-• Default parameter behavior
-
-Exemple : If def func(x=1, y=2, z=3): renvoyer x, y, z, then func(10) retourne (10, 2, 3) car 10 is assigned to x (first parameter), and y and z use their default valeurs of 2 and 3.`,
-  1821: `Le *args syntax allows a fonction to accept a variable number of positional arguments. def func(*args): renvoyer args defines a fonction that collects all positional arguments into a tuple named args. The * avant args tells Python to collect all extra positional arguments into a tuple. This allows the fonction to be appelé avec any number of arguments, which are then accessible as a tuple dans the fonction.
-
-*args parameter:
-• def func(*args): renvoyer args defines fonction avec *args
-• *args collects variable positional arguments
-• Collects all extra positional arguments into tuple
-• Function can accept any number of arguments
-• Arguments accessible as tuple: args
-
-Comment ça fonctionne :
-• def func(*args): creates fonction definition
-• Function name: func
-• *args collects all positional arguments into tuple
-• When appelé: func(1, 2, 3), args = (1, 2, 3)
-• Returns tuple of arguments
-
-Exemple :
-def func(*args): renvoyer args
-func(1, 2, 3)              # (1, 2, 3) (all arguments collected)
-func(1)                     # (1,) (single argument)
-func()                      # () (no arguments, empty tuple)
-
-Usages courants :
-• Variable arguments: def process(*items): for item in items:
-• Flexible fonctions: def sum_values(*numbers): renvoyer sum(numbers)
-• Variable positional arguments
-• Function flexibility
-
-Exemple : def func(*args): renvoyer args defines a fonction that collects all positional arguments into a tuple named args, allowing the fonction to accept any number of arguments.`,
-  1822: `Quand calling a fonction avec *args, all positional arguments are collected into a tuple. If def func(*args): renvoyer args, then func(1, 2, 3) retourne (1, 2, 3) car *args collects all positional arguments (1, 2, 3) into a tuple named args. The fonction can accept any number of arguments, and they are all collected into the args tuple.
-
-*args collection:
-• func(1, 2, 3) avec def func(*args): renvoyer args retourne (1, 2, 3)
-• Arguments 1, 2, 3 are positional
-• *args collects all positional arguments into tuple
-• args = (1, 2, 3) dans fonction
-• Returns tuple: (1, 2, 3)
-
-Comment ça fonctionne :
-• func(1, 2, 3) calls fonction func
-• Arguments 1, 2, 3 are positional
-• *args collects all arguments: args = (1, 2, 3)
-• Function executes: renvoyer args
-• Returns: (1, 2, 3)
-
-Exemple :
-def func(*args): renvoyer args
-func(1, 2, 3)              # (1, 2, 3) (tuple of arguments)
-func(1, 2, 3, 4, 5)        # (1, 2, 3, 4, 5) (tuple of arguments)
-func('a', 'b')              # ('a', 'b') (tuple of arguments)
-
-Usages courants :
-• Collecting arguments: def sum_values(*numbers): renvoyer sum(numbers)
-• Variable arguments: def process(*items): for item in items:
-• Flexible fonction calls
-• Tuple collection
-
-Exemple : If def func(*args): renvoyer args, then func(1, 2, 3) retourne (1, 2, 3) car *args collects all positional arguments into a tuple named args.`,
-  1823: `Quand calling a fonction avec *args but no arguments, args becomes an empty tuple. If def func(*args): renvoyer args, then func() retourne () car *args collects positional arguments, and when no arguments are provided, it collects into an empty tuple. This is different from an empty liste - *args always creates a tuple, even if it's empty.
-
-*args avec no arguments:
-• func() avec def func(*args): renvoyer args retourne ()
-• No arguments provided
-• *args collects into empty tuple
-• args = () dans fonction
-• Returns empty tuple: ()
-
-Comment ça fonctionne :
-• func() calls fonction func
-• No arguments provided
-• *args collects into empty tuple: args = ()
-• Function executes: renvoyer args
-• Returns: () (empty tuple)
-
-Exemple :
-def func(*args): renvoyer args
-func()                      # () (empty tuple)
-func(1)                     # (1,) (single-element tuple)
-func(1, 2)                  # (1, 2) (tuple)
-
-Usages courants :
-• Handling no arguments: if not args: renvoyer default
-• Empty tuple check: if len(args) == 0:
-• Variable argument handling
-• Tuple collection
-
-Exemple : If def func(*args): renvoyer args, then func() retourne () car *args collects positional arguments into a tuple, and when no arguments are provided, it creates an empty tuple.`,
-  1824: `Required parameters can come before *args in a function definition. def func(x, *args): renvoyer x, args définit une fonction with a required parameter x followed by *args. The required parameter x gets les premiers argument, and *args collects all remaining positional arguments into a tuple. Cela permet functions to have both required parameters and variable positional arguments.
-
-Required parameter before *args:
-• def func(x, *args): renvoyer x, args defines function correctly
-• x is required parameter (must be provided)
-• *args collects remaining positional arguments
-• Required parameters must come before *args
-• Valid: required before *args
-
-Comment ça fonctionne :
-• def func(x, *args): crée function definition
-• Function name: func
-• Parameter x is required (no default)
-• *args collects remaining positional arguments
-• Required parameter x comes before *args
-
-Exemple :
-def func(x, *args): renvoyer x, args
-func(1, 2, 3)              # (1, (2, 3)) (x=1, args=(2, 3))
-func(1)                     # (1, ()) (x=1, args=())
-func(1, 2)                  # (1, (2,)) (x=1, args=(2,))
-
-Usages courants :
-• Mixed parameters: def process(first, *rest): process(first); process(*rest)
-• Required and variable: def calculate(base, *values): renvoyer base + sum(values)
-• Parameter ordering
-• Required before *args
-
-Exemple : def func(x, *args): renvoyer x, args définit une fonction with a required parameter x that must come before *args, allowing the function to have both required and variable positional arguments.`,
-  1825: `Quand calling a fonction avec a required parameter and *args, the first argument goes to the required parameter and the rest go to *args. If def func(x, *args): renvoyer x, args, then func(1, 2, 3) retourne (1, (2, 3)) car 1 is assigned to x (the required parameter), and 2, 3 are collected into *args as a tuple (2, 3). The fonction retourne a tuple containing x and args.
-
-Argument distribution:
-• func(1, 2, 3) avec def func(x, *args): renvoyer x, args retourne (1, (2, 3))
-• First argument 1 goes to required parameter x
-• Remaining arguments 2, 3 go to *args
-• args = (2, 3) (tuple)
-• Returns tuple: (x, args) = (1, (2, 3))
-
-Comment ça fonctionne :
-• func(1, 2, 3) calls fonction func
-• First argument 1 assigned to required parameter x
-• Remaining arguments 2, 3 collected into *args
-• args = (2, 3) (tuple)
-• Function executes: renvoyer x, args
-• Returns: (1, (2, 3))
-
-Exemple :
-def func(x, *args): renvoyer x, args
-func(1, 2, 3)              # (1, (2, 3)) (x=1, args=(2, 3))
-func(10, 20, 30, 40)       # (10, (20, 30, 40)) (x=10, args=(20, 30, 40))
-func(5)                     # (5, ()) (x=5, args=())
-
-Usages courants :
-• Separating first from rest: def process(first, *rest): process(first); process(*rest)
-• Required and variable: def calculate(base, *valeurs): renvoyer base + sum(valeurs)
-• Argument distribution
-• Parameter assignment
-
-Exemple : If def func(x, *args): renvoyer x, args, then func(1, 2, 3) retourne (1, (2, 3)) car 1 is assigned to x and 2, 3 are collected into *args as a tuple.`,
-  1826: `Le **kwargs syntax allows a fonction to accept a variable number of keyword arguments. def func(**kwargs): renvoyer kwargs defines a fonction that collects all keyword arguments into a dictionnaire named kwargs. The ** avant kwargs tells Python to collect all extra keyword arguments into a dictionnaire. This allows the fonction to be appelé avec any number of keyword arguments, which are then accessible as a dictionnaire dans the fonction.
-
-**kwargs parameter:
-• def func(**kwargs): renvoyer kwargs defines fonction avec **kwargs
-• **kwargs collects variable keyword arguments
-• Collects all extra keyword arguments into dictionnaire
-• Function can accept any number of keyword arguments
-• Arguments accessible as dictionnaire: kwargs
-
-Comment ça fonctionne :
-• def func(**kwargs): creates fonction definition
-• Function name: func
-• **kwargs collects all keyword arguments into dictionnaire
-• When appelé: func(a=1, b=2), kwargs = {'a': 1, 'b': 2}
-• Returns dictionnaire of arguments
-
-Exemple :
-def func(**kwargs): renvoyer kwargs
-func(a=1, b=2)             # {'a': 1, 'b': 2} (all keyword args collected)
-func(x=10, y=20)           # {'x': 10, 'y': 20} (all keyword args collected)
-func()                      # {} (no keyword args, empty dict)
-
-Usages courants :
-• Variable keyword arguments: def process(**options): use options
-• Flexible fonctions: def create(**attributes): renvoyer objet(**attributes)
-• Variable keyword arguments
-• Dictionary collection
-
-Exemple : def func(**kwargs): renvoyer kwargs defines a fonction that collects all keyword arguments into a dictionnaire named kwargs, allowing the fonction to accept any number of keyword arguments.`,
-  1827: `Quand calling a fonction avec **kwargs, all keyword arguments are collected into a dictionnaire. If def func(**kwargs): renvoyer kwargs, then func(a=1, b=2) retourne {'a': 1, 'b': 2} car **kwargs collects all keyword arguments (a=1, b=2) into a dictionnaire named kwargs. The fonction can accept any number of keyword arguments, and they are all collected into the kwargs dictionnaire.
-
-**kwargs collection:
-• func(a=1, b=2) avec def func(**kwargs): renvoyer kwargs retourne {'a': 1, 'b': 2}
-• Arguments a=1, b=2 are keyword arguments
-• **kwargs collects all keyword arguments into dictionnaire
-• kwargs = {'a': 1, 'b': 2} dans fonction
-• Returns dictionnaire: {'a': 1, 'b': 2}
-
-Comment ça fonctionne :
-• func(a=1, b=2) calls fonction func
-• Arguments a=1, b=2 are keyword arguments
-• **kwargs collects all keyword arguments: kwargs = {'a': 1, 'b': 2}
-• Function executes: renvoyer kwargs
-• Returns: {'a': 1, 'b': 2}
-
-Exemple :
-def func(**kwargs): renvoyer kwargs
-func(a=1, b=2)             # {'a': 1, 'b': 2} (dictionnaire of keyword args)
-func(x=10, y=20, z=30)     # {'x': 10, 'y': 20, 'z': 30} (dictionnaire)
-func()                      # {} (no keyword args, empty dict)
-
-Usages courants :
-• Collecting keyword args: def process(**options): use options['key']
-• Variable keyword arguments: def create(**attributes): renvoyer objet(**attributes)
-• Dictionary collection
-• Flexible fonction calls
-
-Exemple : If def func(**kwargs): renvoyer kwargs, then func(a=1, b=2) retourne {'a': 1, 'b': 2} car **kwargs collects all keyword arguments into a dictionnaire named kwargs.`,
-  1828: `Quand calling a fonction avec **kwargs but no keyword arguments, kwargs becomes an empty dictionnaire. If def func(**kwargs): renvoyer kwargs, then func() retourne {} car **kwargs collects keyword arguments, and when no keyword arguments are provided, it collects into an empty dictionnaire. This is different from an empty tuple - **kwargs always creates a dictionnaire, even if it's empty.
-
-**kwargs avec no arguments:
-• func() avec def func(**kwargs): renvoyer kwargs retourne {}
-• No keyword arguments provided
-• **kwargs collects into empty dictionnaire
-• kwargs = {} dans fonction
-• Returns empty dictionnaire: {}
-
-Comment ça fonctionne :
-• func() calls fonction func
-• No keyword arguments provided
-• **kwargs collects into empty dictionnaire: kwargs = {}
-• Function executes: renvoyer kwargs
-• Returns: {} (empty dictionnaire)
-
-Exemple :
-def func(**kwargs): renvoyer kwargs
-func()                      # {} (empty dictionnaire)
-func(a=1)                   # {'a': 1} (single-key dictionnaire)
-func(a=1, b=2)              # {'a': 1, 'b': 2} (dictionnaire)
-
-Usages courants :
-• Handling no keyword args: if not kwargs: renvoyer default
-• Empty dictionnaire check: if len(kwargs) == 0:
-• Variable keyword argument handling
-• Dictionary collection
-
-Exemple : If def func(**kwargs): renvoyer kwargs, then func() retourne {} car **kwargs collects keyword arguments into a dictionnaire, and when no keyword arguments are provided, it creates an empty dictionnaire.`,
-  1829: `Functions can have all parameter types together: required parameters, *args, and **kwargs. def func(x, *args, **kwargs): renvoyer x, args, kwargs définit une fonction with a required parameter x, variable positional arguments *args, and variable keyword arguments **kwargs. The order is important: required parameters must come first, followed by *args, followed by **kwargs. Cela permet maximum flexibility in function calls.
-
-All parameter types:
-• def func(x, *args, **kwargs): renvoyer x, args, kwargs defines function with all types
-• x is required parameter
-• *args collects remaining positional arguments en tuple
-• **kwargs collecte les arguments nommés into dictionary
-• Order: required, *args, **kwargs
-• Maximum flexibility
-
-Comment ça fonctionne :
-• def func(x, *args, **kwargs): crée function definition
-• Function name: func
-• Parameter x is required (no default)
-• *args collects remaining positional arguments
-• **kwargs collecte les arguments nommés
-• Order: required, *args, **kwargs
-
-Exemple :
-def func(x, *args, **kwargs): renvoyer x, args, kwargs
-func(1, 2, 3, a=4)         # (1, (2, 3), {'a': 4}) (all types)
-func(1, a=2)                # (1, (), {'a': 2}) (required + kwargs)
-func(1, 2, a=3)             # (1, (2,), {'a': 3}) (all types)
-
-Usages courants :
-• Maximum flexibility: def process(required, *args, **kwargs): handle all
-• Wrapper functions: def wrapper(func, *args, **kwargs): renvoyer func(*args, **kwargs)
-• All parameter types
-• Function flexibility
-
-Exemple : def func(x, *args, **kwargs): renvoyer x, args, kwargs définit une fonction with all parameter types, allowing maximum flexibility with required, variable positional, and variable keyword arguments.`,
-  1830: `Quand calling a fonction avec all parameter types, arguments are distributed appropriately. If def func(x, *args, **kwargs): renvoyer x, args, kwargs, then func(1, 2, 3, a=4) retourne (1, (2, 3), {'a': 4}) car 1 is assigned to x (the required parameter), 2 and 3 are collected into *args as (2, 3), and a=4 is collected into **kwargs as {'a': 4}. Positional arguments go to required parameters and *args, keyword arguments go to **kwargs.
-
-Argument distribution:
-• func(1, 2, 3, a=4) avec def func(x, *args, **kwargs): renvoyer x, args, kwargs retourne (1, (2, 3), {'a': 4})
-• First argument 1 goes to required parameter x
-• Remaining positional arguments 2, 3 go to *args
-• Keyword argument a=4 goes to **kwargs
-• Returns tuple: (x, args, kwargs) = (1, (2, 3), {'a': 4})
-
-Comment ça fonctionne :
-• func(1, 2, 3, a=4) calls fonction func
-• First argument 1 assigned to required parameter x
-• Remaining positional arguments 2, 3 collected into *args: args = (2, 3)
-• Keyword argument a=4 collected into **kwargs: kwargs = {'a': 4}
-• Function executes: renvoyer x, args, kwargs
-• Returns: (1, (2, 3), {'a': 4})
-
-Exemple :
-def func(x, *args, **kwargs): renvoyer x, args, kwargs
-func(1, 2, 3, a=4)         # (1, (2, 3), {'a': 4})
-func(10, 20, x=30)          # TypeError (x already assigned positionally!)
-func(10, 20, y=30)          # (10, (20,), {'y': 30})
-
-Usages courants :
-• Argument distribution: def process(required, *args, **kwargs): distribute
-• Wrapper fonctions: def wrapper(func, *args, **kwargs): renvoyer func(*args, **kwargs)
-• Flexible argument handling
-• Parameter assignment
-
-Exemple : If def func(x, *args, **kwargs): renvoyer x, args, kwargs, then func(1, 2, 3, a=4) retourne (1, (2, 3), {'a': 4}) car 1 goes to x, 2 and 3 go to *args, and a=4 goes to **kwargs.`,
-  1831: `Lambda crée une fonction anonyme function (a function without a name). lambda x: x * 2 crée une fonction anonyme function that takes parameter x and retourne x * 2. Lambda functions are concise one-line functions defined using the lambda keyword, followed by parameters (x), a colon (:), and an expression (x * 2). Lambda functions peut être used wherever function objects are required, but they're limited to a single expression and ne peut pas contain statements.
-
-Lambda function:
-• lambda x: x * 2 crée anonymous function
-• lambda keyword crée function
-• x is parameter
-• x * 2 is expression (returned)
-• Function n'a pas name (anonymous)
-• Single expression only
-
-Comment ça fonctionne :
-• lambda x: x * 2 crée function object
-• Function takes parameter x
-• Retourne x * 2 (expression evaluated)
-• Function object created but not called
-• Can be assigned: f = lambda x: x * 2
-
-Exemple :
-lambda x: x * 2              # Anonymous function object
-(lambda x: x * 2)(5)         # 10 (appelé avec 5)
-f = lambda x: x * 2; f(5)    # 10 (assigned then called)
-
-Usages courants :
-• Anonymous functions: lambda x: x * 2
-• Callbacks: map(lambda x: x * 2, [1, 2, 3])
-• Short functions: sorted(items, key=lambda x: x[1])
-• Lambda functions
-• One-line functions
-
-Exemple : lambda x: x * 2 crée une fonction anonyme function that takes parameter x and retourne x * 2. Lambda functions are concise one-line functions without names.`,
-  1832: `Lambda functions peut être called immediately by placing arguments in parentheses après le lambda expression. (lambda x: x * 2)(5) retourne 10 car the lambda function lambda x: x * 2 is defined and immediately appelé avec argument 5. The lambda function takes 5 as x, evaluates x * 2 (5 * 2), and retourne 10. C'est called an immediately invoked function expression (IIFE) pattern, though less common en Python than in JavaScript.
-
-Lambda function call:
-• (lambda x: x * 2)(5) retourne 10
-• Lambda function created: lambda x: x * 2
-• Immediately appelé avec argument: (5)
-• x = 5, evaluates x * 2 = 5 * 2 = 10
-• Retourne 10
-
-Comment ça fonctionne :
-• (lambda x: x * 2)(5) crée and appelle function
-• Lambda function defined: lambda x: x * 2
-• Argument 5 passé à parameter x
-• Expression evaluated: x * 2 = 5 * 2 = 10
-• Retourne 10
-
-Exemple :
-(lambda x: x * 2)(5)         # 10 (immediately called)
-(lambda x: x ** 2)(4)        # 16 (immediately called)
-(lambda x: x + 1)(10)        # 11 (immediately called)
-
-Usages courants :
-• Immediate invocation: (lambda x: f(x))(value)
-• One-time use: (lambda x: x * 2)(5)
-• Lambda calls
-• Anonymous function invocation
-
-Exemple : (lambda x: x * 2)(5) retourne 10 car the lambda function lambda x: x * 2 is immediately appelé avec argument 5, so x = 5 and il retourne 5 * 2 = 10.`,
-  1833: `Lambda functions can have no parameters. lambda: 42 crée une fonction anonyme function with no parameters that retourne 42. When a lambda function n'a pas parameters, you just use lambda followed by a colon (:) and the expression. C'est useful for creating constant functions or functions that ne need input parameters. To call it, you use empty parentheses: (lambda: 42)().
-
-Lambda with no parameters:
-• lambda: 42 crée anonymous function with no parameters
-• lambda keyword crée function
-• No parameters (empty before colon)
-• 42 is expression (returned)
-• Function always retourne 42
-
-Comment ça fonctionne :
-• lambda: 42 crée function object
-• Function takes no parameters
-• Always retourne 42 (expression evaluated)
-• Function object created but not called
-• Can be called: (lambda: 42)()
-
-Exemple :
-lambda: 42                   # Anonymous function with no params
-(lambda: 42)()               # 42 (appelé avec no args)
-f = lambda: 42; f()          # 42 (assigned then called)
-
-Usages courants :
-• Constant functions: lambda: default_value
-• No-parameter functions: lambda: get_current_time()
-• Lambda without parameters
-• Constant function pattern
-
-Exemple : lambda: 42 crée une fonction anonyme function with no parameters that always retourne 42. Lambda functions can have zero or more parameters.`,
-  1834: `Lambda functions with no parameters are appelé avec empty parentheses. (lambda: 42)() retourne 42 car the lambda function lambda: 42 is immediately appelé avec no arguments (empty parentheses ()). The lambda function n'a pas parameters, so it ne expect any arguments quand appelé. It simply evaluates the expression 42 and retourne it.
-
-Lambda call with no parameters:
-• (lambda: 42)() retourne 42
-• Lambda function created: lambda: 42
-• Immediately appelé avec no arguments: ()
-• Expression evaluated: 42
-• Retourne 42
-
-Comment ça fonctionne :
-• (lambda: 42)() crée and appelle function
-• Lambda function defined: lambda: 42
-• No arguments provided (empty parentheses)
-• Expression evaluated: 42
-• Retourne 42
-
-Exemple :
-(lambda: 42)()               # 42 (appelé avec no args)
-(lambda: 'hello')()          # 'hello' (appelé avec no args)
-(lambda: [1, 2, 3])()        # [1, 2, 3] (appelé avec no args)
-
-Usages courants :
-• Immediate invocation: (lambda: value)()
-• Constant functions: f = lambda: default; f()
-• Lambda calls
-• No-parameter function invocation
-
-Exemple : (lambda: 42)() retourne 42 car the lambda function lambda: 42 is immediately appelé avec no arguments, so it evaluates and retourne 42.`,
-  1835: `Lambda functions can have multiple parameters separated by commas. lambda x, y: x + y crée une fonction anonyme function with two parameters x and y that retourne their sum x + y. Lambda functions can have any number of parameters, just like regular functions, but they're limited to a single expression. To call it, you provide arguments for all parameters: (lambda x, y: x + y)(3, 4).
-
-Lambda with multiple parameters:
-• lambda x, y: x + y crée anonymous function with two parameters
-• lambda keyword crée function
-• x, y are parameters (comma-separated)
-• x + y is expression (returned)
-• Function takes two arguments quand appelé
-
-Comment ça fonctionne :
-• lambda x, y: x + y crée function object
-• Function takes parameters x and y
-• Retourne x + y (expression evaluated)
-• Function object created but not called
-• Can be called: (lambda x, y: x + y)(3, 4)
-
-Exemple :
-lambda x, y: x + y           # Anonymous function with two params
-(lambda x, y: x + y)(3, 4)   # 7 (appelé avec 3, 4)
-(lambda a, b, c: a * b + c)(2, 3, 4) # 10 (three params)
-
-Usages courants :
-• Multiple parameters: lambda x, y: x + y
-• Two-argument functions: sorted(items, key=lambda x, y: (x[1], y[0]))
-• Lambda with multiple params
-• Multi-parameter functions
-
-Exemple : lambda x, y: x + y crée une fonction anonyme function with two parameters x and y that retourne their sum. Lambda functions can have any number of parameters.`,
-  1836: `Lambda functions with multiple parameters are appelé avec arguments in le même order. (lambda x, y: x + y)(3, 4) retourne 7 car the lambda function lambda x, y: x + y is immediately appelé avec arguments 3 and 4. The arguments are assigned to parameters in order: x = 3 and y = 4, then the expression x + y evaluates to 3 + 4 = 7, which est retourné.
-
-Lambda call with multiple parameters:
-• (lambda x, y: x + y)(3, 4) retourne 7
-• Lambda function created: lambda x, y: x + y
-• Immediately appelé avec arguments: (3, 4)
-• x = 3, y = 4 (assigned in order)
-• Expression evaluated: x + y = 3 + 4 = 7
-
-Comment ça fonctionne :
-• (lambda x, y: x + y)(3, 4) crée and appelle function
-• Lambda function defined: lambda x, y: x + y
-• Arguments 3, 4 passé à parameters x, y
-• x = 3, y = 4 (assigned in order)
-• Expression evaluated: x + y = 3 + 4 = 7
-• Retourne 7
-
-Exemple :
-(lambda x, y: x + y)(3, 4)   # 7 (3 + 4)
-(lambda x, y: x * y)(5, 6)   # 30 (5 * 6)
-(lambda a, b: a ** b)(2, 3)  # 8 (2 ** 3)
-
-Usages courants :
-• Immediate invocation: (lambda x, y: f(x, y))(a, b)
-• Two-argument functions: (lambda x, y: x + y)(1, 2)
-• Lambda calls
-• Multi-parameter function invocation
-
-Exemple : (lambda x, y: x + y)(3, 4) retourne 7 car the lambda function lambda x, y: x + y is immediately appelé avec arguments 3 and 4, so x = 3, y = 4, and il retourne 3 + 4 = 7.`,
-  1837: `Lambda functions peut être assigned to variables, making them essentially named functions. f = lambda x: x**2; f(5) retourne 25 car the lambda function lambda x: x**2 is assigned to the variable f, and then f(5) appelle the function with argument 5. When assigned to a variable, a lambda function works just like a regular function - you can call it multiple times, pass it as an argument, etc. However, def is generally preferred for named functions as it's more readable.
-
-Lambda assigned to variable:
-• f = lambda x: x**2; f(5) retourne 25
-• Lambda function created: lambda x: x**2
-• Assigned to variable f
-• f(5) appelle function with argument 5
-• Retourne 25 (5 ** 2)
-
-Comment ça fonctionne :
-• f = lambda x: x**2 crée function and assigns to f
-• Variable f now contains function object
-• f(5) appelle function stored in f
-• Argument 5 passé à parameter x
-• Expression evaluated: x**2 = 5**2 = 25
-• Retourne 25
-
-Exemple :
-f = lambda x: x**2
-f(5)                        # 25 (appelé avec 5)
-f(3)                        # 9 (appelé avec 3)
-f(10)                       # 100 (appelé avec 10)
-
-Usages courants :
-• Named lambda: f = lambda x: x**2 (less common, prefer def)
-• Reusable lambda: func = lambda x: transform(x)
-• Lambda assignment
-• Function objects
-
-Exemple : f = lambda x: x**2; f(5) retourne 25 car the lambda function lambda x: x**2 is assigned to f, and then f(5) appelle it with argument 5, returning 5**2 = 25.`,
-  1838: `Les fonctions lambda peuvent contenir conditional expressions (ternary operators). lambda x: x if x > 0 else 0 crée une fonction anonyme function that takes parameter x and retourne x if x > 0, otherwise retourne 0. Lambda functions can use if-else expressions (but not if-else statements) car they're limited to a single expression. The syntax is value_if_true if condition else value_if_false.
-
-Lambda with conditional:
-• lambda x: x if x > 0 else 0 crée anonymous function with conditional
-• lambda keyword crée function
-• x is parameter
-• x if x > 0 else 0 is conditional expression
-• Retourne x if x > 0, else retourne 0
-
-Comment ça fonctionne :
-• lambda x: x if x > 0 else 0 crée function object
-• Function takes parameter x
-• Evaluates condition: x > 0
-• If True: retourne x
-• If False: retourne 0
-
-Exemple :
-lambda x: x if x > 0 else 0  # Conditional function
-(lambda x: x if x > 0 else 0)(5)   # 5 (x > 0, retourne x)
-(lambda x: x if x > 0 else 0)(-5)  # 0 (x <= 0, retourne 0)
-
-Usages courants :
-• Conditional lambda: lambda x: x if condition else default
-• Ternary in lambda: lambda x: 'big' if x > 10 else 'small'
-• Conditional expressions
-• Lambda with conditions
-
-Exemple : lambda x: x if x > 0 else 0 crée une fonction anonyme function with a conditional expression that retourne x if x > 0, otherwise retourne 0.`,
-  1839: `Les fonctions lambda avec des conditions expressions évaluent la condition et retournent la valeur appropriée. (lambda x: x if x > 0 else 0)(-5) retourne 0 car the lambda function lambda x: x if x > 0 else 0 is immediately appelé avec argument -5. The condition x > 0 evaluates to False (since -5 n'est pas greater than 0), so the else branch is taken, returning 0 instead of x.
-
-Lambda conditional evaluation:
-• (lambda x: x if x > 0 else 0)(-5) retourne 0
-• Lambda function created: lambda x: x if x > 0 else 0
-• Immediately appelé avec argument: (-5)
-• x = -5, condition evaluated: -5 > 0 is False
-• Else branch taken: retourne 0 (not x)
-
-Comment ça fonctionne :
-• (lambda x: x if x > 0 else 0)(-5) crée and appelle function
-• Lambda function defined: lambda x: x if x > 0 else 0
-• Argument -5 passé à parameter x
-• Condition evaluated: x > 0 → -5 > 0 → False
-• Else branch executed: retourne 0
-
-Exemple :
-(lambda x: x if x > 0 else 0)(-5)  # 0 (condition False, retourne 0)
-(lambda x: x if x > 0 else 0)(5)   # 5 (condition True, retourne x)
-(lambda x: x if x > 0 else 0)(0)   # 0 (condition False, retourne 0)
-
-Usages courants :
-• Conditional evaluation: (lambda x: x if condition else default)(value)
-• Ternary in lambda: (lambda x: 'pos' if x > 0 else 'neg')(-5)
-• Conditional expressions
-• Lambda with conditions
-
-Exemple : (lambda x: x if x > 0 else 0)(-5) retourne 0 car the condition -5 > 0 is False, so the else branch is taken and 0 est retourné.`,
-  1840: `Le key difference entre def and lambda is that def creates a named fonction while lambda creates an anonymous fonction. def func(x): renvoyer x * 2 creates a fonction named func, while lambda x: x * 2 creates a fonction sans a name. Additionally, def fonctions can contain multiple instructions, while lambda fonctions are limited to a single expression. def is generally preferred for named fonctions, while lambda is useful for short, one-line fonctions used as arguments to other fonctions.
-
-def vs lambda:
-• def creates named fonction, lambda creates anonymous fonction
-• def can have multiple instructions, lambda limited to single expression
-• def preferred for named fonctions, lambda for short inline fonctions
-• def fonctions have names, lambda fonctions don't (unless assigned)
-• Both create fonction objets
-
-Comment ça fonctionne :
-• def func(x): renvoyer x * 2 creates fonction named 'func'
-• lambda x: x * 2 creates anonymous fonction (no name)
-• def can have: multiple instructions, docstrings, annotations
-• lambda can have: single expression only
-• lambda often used as argument: map(lambda x: x*2, [1,2,3])
-
-Exemple :
-def func(x): renvoyer x * 2  # Named fonction 'func'
-lambda x: x * 2            # Anonymous fonction (no name)
-f = lambda x: x * 2        # Assigned to variable (essentially named)
-
-Usages courants :
-• def: named fonctions, multiple instructions: def process(x): ...; ...; renvoyer result
-• lambda: short inline fonctions, single expression: map(lambda x: x*2, items)
-• Function definition
-• Lambda fonctions
-
-Exemple : The difference is def creates a named fonction (e.g., def func(x): renvoyer x * 2 creates fonction 'func'), while lambda creates an anonymous fonction (e.g., lambda x: x * 2 creates a fonction sans a name). def fonctions can contain multiple instructions, while lambda fonctions are limited to a single expression.`,
-  1841: `Functions renvoyer values using the renvoyer statement. def func(): renvoyer 1 définit une fonction that retourne la valeur 1 quand appelé. The renvoyer statement immediately exits the function and sends back the specified value. Functions can renvoyer any type of value - numbers, strings, lists, dictionaries, objects, etc. If no renvoyer statement is executed, the function retourne None implicitly.
-
-Renvoyer statement:
-• def func(): renvoyer 1 defines function returning 1
-• renvoyer statement exits function
-• Retourne specified value: 1
-• Function call evaluates to returned value
-• Can renvoyer any type
-
-Comment ça fonctionne :
-• def func(): crée function definition
-• Function name: func
-• No parameters: ()
-• Body: renvoyer 1
-• When called: func() retourne 1
-
-Exemple :
-def func(): renvoyer 1
-func()                      # 1 (retourne 1)
-result = func()             # result = 1
-print(func())               # 1 (prints returned value)
-
-Usages courants :
-• Returning values: def calculate(): renvoyer result
-• Function results: def get_value(): renvoyer value
-• Renvoyer statement
-• Function renvoyer values
-
-Exemple : def func(): renvoyer 1 définit une fonction that retourne la valeur 1 quand appelé. The renvoyer statement immediately exits the function and sends back the value.`,
-  1842: `Calling a function that retourne a value evaluates to that value. If def func(): renvoyer 1, then func() retourne 1 car calling the function exécute le renvoyer statement, which exits the function and retourne la valeur 1. The appel de fonction func() evaluates to the returned value, so it peut être utilisé dans expressions, assigned to variables, or printed.
-
-Function call retourne value:
-• func() with def func(): renvoyer 1 retourne 1
-• Function call evaluates to returned value
-• renvoyer 1 executes when function called
-• Function call becomes 1
-• Can be utilisé dans expressions
-
-Comment ça fonctionne :
-• func() appelle function func
-• La fonction s'exécute : renvoyer 1
-• renvoyer statement exits function
-• Function call evaluates to returned value: 1
-• Retourne : 1
-
-Exemple :
-def func(): renvoyer 1
-func()                      # 1 (retourne 1)
-result = func()             # result = 1
-print(func())               # 1 (prints 1)
-func() * 2                  # 2 (uses returned value: 1 * 2)
-
-Usages courants :
-• Using renvoyer values: result = func()
-• In expressions: total = calculate() + 10
-• Renvoyer value usage
-• Function call evaluation
-
-Exemple : If def func(): renvoyer 1, then func() retourne 1 car calling the function exécute le renvoyer statement, which retourne la valeur 1, and the appel de fonction evaluates to that value.`,
-  1843: `Returning multiple values en Python crée a tuple. def func(): renvoyer 1, 2, 3 définit une fonction that retourne un tuple (1, 2, 3) car when you write renvoyer 1, 2, 3, Python automatically crée un tuple - the comma crée a tuple, not parentheses. C'est Python's way of returning multiple values - you can unpack them when calling the function: a, b, c = func() assigns 1 to a, 2 to b, and 3 to c.
-
-Multiple renvoyer values:
-• def func(): renvoyer 1, 2, 3 defines function returning tuple
-• renvoyer 1, 2, 3 crée tuple (1, 2, 3)
-• Comma crée tuple (parentheses optional)
-• Retourne single tuple object
-• Can be unpacked: a, b, c = func()
-
-Comment ça fonctionne :
-• def func(): crée function definition
-• Function name: func
-• No parameters: ()
-• Body: renvoyer 1, 2, 3
-• Comma crée tuple: (1, 2, 3)
-• When called: func() retourne (1, 2, 3)
-
-Exemple :
-def func(): renvoyer 1, 2, 3
-func()                      # (1, 2, 3) (retourne tuple)
-a, b, c = func()            # a=1, b=2, c=3 (unpacking)
-
-Usages courants :
-• Returning multiple values: renvoyer x, y, z
-• Tuple return: renvoyer (1, 2, 3) (same as renvoyer 1, 2, 3)
-• Multiple value return
-• Unpacking renvoyer values
-
-Exemple : def func(): renvoyer 1, 2, 3 définit une fonction that retourne un tuple (1, 2, 3). The comma crée a tuple, so renvoyer 1, 2, 3 est équivalent à renvoyer (1, 2, 3).`,
-  1844: `Calling a function that retourne multiple values retourne a tuple. If def func(): renvoyer 1, 2, 3, then func() retourne (1, 2, 3) car the comma in renvoyer 1, 2, 3 crée a tuple. The appel de fonction evaluates to un tuple containing all the returned values. You can unpack this tuple: a, b, c = func() assigns chaque value to a variable, or you can use it as a tuple.
-
-Function retourne tuple:
-• func() with def func(): renvoyer 1, 2, 3 retourne (1, 2, 3)
-• Multiple values in renvoyer créer tuple
-• Function call evaluates to tuple
-• Retourne single tuple object
-• Can be unpacked or used as tuple
-
-Comment ça fonctionne :
-• func() appelle function func
-• La fonction s'exécute : renvoyer 1, 2, 3
-• Comma crée tuple: (1, 2, 3)
-• renvoyer statement retourne tuple
-• Function call evaluates to: (1, 2, 3)
-
-Exemple :
-def func(): renvoyer 1, 2, 3
-func()                      # (1, 2, 3) (retourne tuple)
-a, b, c = func()            # a=1, b=2, c=3 (unpacking)
-result = func()             # result = (1, 2, 3) (tuple)
-
-Usages courants :
-• Returning multiple values: renvoyer x, y, z (retourne tuple)
-• Tuple return: result = func() (result is tuple)
-• Multiple value return
-• Tuple unpacking
-
-Exemple : If def func(): renvoyer 1, 2, 3, then func() retourne (1, 2, 3) car returning multiple values crée a tuple, and the appel de fonction evaluates to that tuple.`,
-  1845: `You can unpack multiple renvoyer values using tuple unpacking. If def func(): renvoyer 1, 2, then a, b = func() assigns 1 to a and 2 to b car func() retourne un tuple (1, 2), and the assignment a, b = (1, 2) unpacks the tuple, assigning chaque element to the corresponding variable. C'est a common pattern for functions that renvoyer multiple values - you can unpack them directly into variables.
-
-Tuple unpacking from return:
-• a, b = func() with def func(): renvoyer 1, 2 assigne un=1, b=2
-• func() retourne tuple (1, 2)
-• a, b = (1, 2) unpacks tuple
-• First element 1 assigned to a
-• Second element 2 assigned to b
-
-Comment ça fonctionne :
-• func() appelle function func
-• La fonction s'exécute : renvoyer 1, 2
-• Retourne tuple: (1, 2)
-• a, b = (1, 2) unpacks tuple
-• a = 1, b = 2 (assigned)
-
-Exemple :
-def func(): renvoyer 1, 2
-a, b = func()               # a=1, b=2 (unpacking)
-x, y, z = func()            # ValueError (not enough values to unpack)
-result = func()             # result = (1, 2) (no unpacking)
-
-Usages courants :
-• Unpacking renvoyer values: a, b = func()
-• Multiple assignments: x, y, z = calculate()
-• Tuple unpacking
-• Multiple value return
-
-Exemple : If def func(): renvoyer 1, 2, then a, b = func() assigns 1 to a and 2 to b car func() retourne un tuple (1, 2), which is unpacked into the variables a and b.`,
-  1846: `A renvoyer statement without a value retourne None. def func(): renvoyer définit une fonction that explicitly retourne None. Quand vous use renvoyer without a value, Python retourne None. This est équivalent à renvoyer None or having no renvoyer statement at all - all three result in the function returning None. Explicitly using renvoyer without a value can make it clear that the function intentionally retourne None.
-
-renvoyer without value:
-• def func(): renvoyer defines function returning None
-• renvoyer without value retourne None
-• Equivalent to renvoyer None
-• Equivalent to no renvoyer statement
-• Function retourne None
-
-Comment ça fonctionne :
-• def func(): crée function definition
-• Function name: func
-• No parameters: ()
-• Body: renvoyer (no value)
-• When called: func() retourne None
-• Explicit None return
-
-Exemple :
-def func(): renvoyer          # Retourne None
-func()                      # None
-def func(): renvoyer None     # Same: None
-def func(): pass            # Same: None (no return)
-
-Usages courants :
-• Explicit None return: def func(): return
-• Clear intent: renvoyer None explicitly
-• Function termination
-• None renvoyer pattern
-
-Exemple : def func(): renvoyer définit une fonction that explicitly retourne None. The renvoyer statement without a value retourne None, making it clear that the function intentionally retourne None.`,
-  1847: `Calling a function with a renvoyer statement that n'a pas value retourne None. If def func(): return, then func() retourne None car the renvoyer statement without a value explicitly retourne None. The appel de fonction evaluates to None, which is Python's null value. C'est useful when you want to explicitly indicate that a function retourne nothing meaningful.
-
-renvoyer without value - call:
-• func() with def func(): renvoyer retourne None
-• renvoyer without value retourne None
-• Function call evaluates to None
-• None is Python's null value
-• Explicit None return
-
-Comment ça fonctionne :
-• func() appelle function func
-• La fonction s'exécute : renvoyer (no value)
-• renvoyer without value retourne None
-• Function call evaluates to None
-• Retourne : None
-
-Exemple :
-def func(): return
-func()                      # None (retourne None)
-result = func()             # result = None
-if func() is None:          # True (retourne None)
-    print("returned None")
-
-Usages courants :
-• Explicit None return: def process(): renvoyer (retourne None)
-• None return: result = func() (result is None)
-• Renvoyer value usage
-• None renvoyer pattern
-
-Exemple : If def func(): return, then func() retourne None car the renvoyer statement without a value explicitly retourne None, and the appel de fonction evaluates to that value.`,
-  1848: `Functions without a renvoyer statement automatically renvoyer None. def func(): pass définit une fonction with an empty body (pass is a placeholder), and quand appelé, il retourne None car no renvoyer statement is executed. C'est Python's default behavior - every function retourne a value, and if no renvoyer statement is executed, the function retourne None implicitly. C'est consistent with the behavior of functions with renvoyer or renvoyer None.
-
-Function without return:
-• def func(): pass defines function returning None
-• No renvoyer statement in function
-• Implicitly retourne None
-• Default behavior en Python
-• Every function retourne a value
-
-Comment ça fonctionne :
-• def func(): crée function definition
-• Function name: func
-• No parameters: ()
-• Body: pass (placeholder, ne fait rien)
-• When called: func() executes pass, then retourne None implicitly
-• Retourne : None
-
-Exemple :
-def func(): pass            # No return, retourne None
-func()                      # None (implicitly retourne None)
-def func(): print("hi")     # No return, retourne None
-result = func()             # result = None (implicit return)
-
-Usages courants :
-• Functions without return: def func(): body (retourne None)
-• Side-effect functions: def print_data(): print(x) (retourne None)
-• Implicit None return
-• Default renvoyer behavior
-
-Exemple : def func(): pass définit une fonction without a renvoyer statement. When called, it implicitly retourne None car no renvoyer statement is executed, which is Python's default behavior.`,
-  1849: `Calling a function with only pass retourne None. If def func(): pass, then func() retourne None car the function n'a pas renvoyer statement, so it implicitly retourne None when it finishes executing. The pass statement ne fait rien - it's just a placeholder for syntactically valid code. When the function reaches the end without encountering a renvoyer statement, Python automatically retourne None.
-
-Function with pass - call:
-• func() with def func(): pass retourne None
-• pass ne fait rien (placeholder)
-• No renvoyer statement executed
-• Function implicitly retourne None
-• Retourne None
-
-Comment ça fonctionne :
-• func() appelle function func
-• La fonction s'exécute : pass (ne fait rien)
-• Reaches end of function
-• No renvoyer statement encountered
-• Implicitly retourne None
-• Retourne : None
-
-Exemple :
-def func(): pass
-func()                      # None (implicitly retourne None)
-result = func()             # result = None
-if func() is None:          # True (retourne None)
-    print("returned None")
-
-Usages courants :
-• Empty functions: def placeholder(): pass (retourne None)
-• Stub functions: def todo(): pass (retourne None)
-• Implicit None return
-• Placeholder functions
-
-Exemple : If def func(): pass, then func() retourne None car the function n'a pas renvoyer statement, so when it finishes executing (after doing nothing with pass), it implicitly retourne None.`,
-  1850: `Functions can renvoyer any type of value, including lists. def func(): renvoyer [1, 2, 3] définit une fonction that retourne une liste [1, 2, 3] quand appelé. The renvoyer statement can renvoyer any Python object - numbers, strings, lists, tuples, dictionaries, sets, objects, None, etc. Functions ne sont pas restricted to returning specific types - they can renvoyer whatever type is appropriate for their purpose.
-
-Returning any type:
-• def func(): renvoyer [1, 2, 3] defines function returning list
-• Functions can renvoyer any type
-• renvoyer can return: numbers, strings, lists, tuples, dicts, objects, None
-• List [1, 2, 3] est retourné
-• Function call evaluates to list
-
-Comment ça fonctionne :
-• def func(): crée function definition
-• Function name: func
-• No parameters: ()
-• Body: renvoyer [1, 2, 3]
-• Retourne list object: [1, 2, 3]
-• When called: func() retourne [1, 2, 3]
-
-Exemple :
-def func(): renvoyer [1, 2, 3]
-func()                      # [1, 2, 3] (retourne list)
-def func(): renvoyer {'a': 1} # Retourne dictionary
-def func(): renvoyer "hello"   # Retourne string
-def func(): renvoyer None      # Retourne None
-
-Usages courants :
-• Returning collections: def get_list(): renvoyer [1, 2, 3]
-• Returning objects: def create_object(): renvoyer MyClass()
-• Renvoyer any type
-• Flexible renvoyer values
-
-Exemple : def func(): renvoyer [1, 2, 3] définit une fonction that retourne une liste [1, 2, 3]. Functions can renvoyer any type of value - numbers, strings, lists, dictionaries, objects, etc.`,
-  // IDs 1851-1950: Level 7 (scope, closures, recursion, map/filter, function attributes, mutable defaults)
-  1851: `Les fonctions peuvent accéder aux variables globales (variables définies en dehors de la fonction). If x = 1; def func(): return x; func(), alors func() renvoie 1 car la fonction peut lire les variables globales. Quand une fonction référence une variable non définie localement, Python cherche dans la portée externe (portée globale) et trouve x = 1, qu'elle utilise. C'est ce qu'on appelle la recherche de variable - Python cherche de la portée locale à la portée globale.
-
-Accès aux variables globales :
-• x = 1; def func(): return x; func() renvoie 1
-• x = 1 définit la variable globale
-• func() référence x (non défini localement)
-• Python cherche en portée globale, trouve x = 1
-• Renvoie la valeur globale : 1
+Distinctions clés :
+• Dict vs liste (accès par indice) vs ensemble (pas de valeurs associées) vs tuple (fixe, ordonné).
 
 Fonctionnement :
-• x = 1 creates global variable x = 1
-• def func(): creates function definition
-• Function references x (not defined in function)
-• Python cherche de la portée locale à la portée globale
-• Finds x = 1 in global scope
-• Retourne : 1
+• Python construit un objet dict et y enregistre les paires dans l’ordre du littéral.
 
-Exemple :
-x = 1
-def func(): return x
-func()                      # 1 (accesses global x)
-x = 10
-func()                      # 10 (still accesses global x)
+Exécution étape par étape :
+1. Création du conteneur dict.
+2. Insertion de 'a': 1 puis 'b': 2.
+3. L’expression a pour valeur ce dict.
 
-Utilisations courantes :
-• Reading globals: def func(): return global_var
-• Global access: def calculate(): return base * rate
-• Variable lookup
-• Global variable access
+Ordre des opérations :
+• Pas d’appel : évaluation directe du littéral.
 
-Exemple : If x = 1; def func(): return x; func(), alors func() renvoie 1 car la fonction peut accéder the global variable x, and Python finds x = 1 in the global scope.
-`,
-  1852: `Assigner à une variable dans une fonction crée une variable locale, même si une variable globale du même nom existe. If x = 1; def func(): x = 2; return x; func(), alors func() renvoie 2 car x = 2 inside la fonction crée a local variable x that masque la variable globale x. When the function references x, it uses the local variable x = 2, not the global x = 1. C'est Python's scoping rule - assignment crée un local variable.
+Cas d'utilisation courants :
+• Configurations, index par identifiant, caches simples clé → valeur.
 
-Assignation locale :
-• x = 1; def func(): x = 2; return x; func() renvoie 2
-• x = 1 définit la variable globale
-• x = 2 inside function creates local variable
-• Local variable shadows global variable
-• Function uses local x = 2
-• Renvoie la valeur locale : 2
+Cas limites :
+• Clés dupliquées dans un même littéral : la dernière occurrence l’emporte.
 
-Fonctionnement :
-• x = 1 creates global variable x = 1
-• def func(): creates function definition
-• x = 2 inside function creates local variable x = 2
-• Local x shadows global x
-• return x uses local x = 2
-• Retourne : 2
+Considérations de performance :
+• Petits dicts : coût négligeable ; éviter de recréer des très gros dicts en boucle serrée.
 
-Exemple :
-x = 1
-def func(): x = 2; return x
-func()                      # 2 (uses local x = 2)
-x                           # 1 (global x inchangés)
+Exemples :
+• type({'a': 1}) → <class 'dict'>
+• {'x': 10}['x'] → 10
 
-Utilisations courantes :
-• Local variables: def func(): x = value (creates local)
-• Variable shadowing: local x shadows global x
-• Local variable creation
-• Function scoping
+Remarques :
+• La bonne réponse est « un dictionnaire », pas une liste ni un tuple.`,
+  1802: `Dictionnaire vide {}
 
-Exemple : If x = 1; def func(): x = 2; return x; func(), alors func() renvoie 2 car assigning x = 2 inside la fonction crée a local variable x that shadows the global variable x, so the function uses the local x = 2.
-`,
-  1853: `Assigning to a variable inside a function n'affecte pas the global variable with le même name. If x = 1; def func(): x = 2; func(); x, alors x renvoie 1 car assigning x = 2 inside la fonction crée a local variable x, which n'affecte pas the global variable x. Local variables exist only within the function and ne modifie pas global variables unless you use the global keyword. The global variable x remains 1.
+Débutant :
+• {} en Python est un dictionnaire vide (zéro paire), pas un ensemble.
+• len({}) vaut 0 ; bool({}) est faux.
 
-Local n'affecte pas le global :
-• x = 1; def func(): x = 2; func(); x renvoie 1
-• x = 1 définit la variable globale x = 1
-• x = 2 inside function creates local variable x = 2
-• Local x n'affecte pas global x
-• Global x remains 1
-• Retourne : 1
+Intermédiaire :
+• Pour un ensemble vide on utilise set() car {} est réservé au dict vide.
+
+Expert :
+• {} et dict() produisent tous deux un dict vide ; même type, objets distincts si créés séparément.
+
+Concepts clés :
+• Littéral vide, dict de longueur 0, vérité booléenne.
+
+Distinctions clés :
+• {} vs set() vs frozenset() ; ne pas confondre avec tuple vide ().
 
 Fonctionnement :
-• x = 1 creates global variable x = 1
-• def func(): creates function definition
-• x = 2 inside function creates local variable x = 2
-• func() executes (local x = 2, n'affecte pas global)
-• func() returns (local x destroyed)
-• x evaluates global x = 1
-• Retourne : 1
+• Le parseur voit des accolades sans paire clé:valeur et instancie un dict vide.
 
-Exemple :
-x = 1
-def func(): x = 2  # Creates local x = 2
-func()                      # Local x = 2 (n'affecte pas global)
-x                           # 1 (global x inchangés)
+Exécution étape par étape :
+1. Construction du dict sans entrées.
+2. Valeur : {}.
 
-Utilisations courantes :
-• Understanding scope: local variables n'affecte pas globals
-• Variable independence: def func(): local = value (independent)
-• Local vs global
-• Variable scoping
+Ordre des opérations :
+• Littéral évalué en une fois.
 
-Exemple : If x = 1; def func(): x = 2; func(); x, alors x renvoie 1 car assigning x = 2 inside la fonction crée a local variable that n'affecte pas the global variable x, which remains 1.
-`,
-  1854: `Le mot-clé global permet à une fonction de modifier une variable globale. If x = 1; def func(): global x; x = 2; func(); x, alors x renvoie 2 car the global keyword tells Python that x inside the function refers to the global variable x, not a local variable. Quand vous assign x = 2 inside the function, it modifies the global variable x, changing it from 1 to 2. Without the global keyword, assignment would create a local variable instead.
+Cas d'utilisation courants :
+• Point de départ avant d’ajouter des clés dynamiquement.
 
-Mot-clé global :
-• x = 1; def func(): global x; x = 2; func(); x renvoie 2
-• global x tells Python to use global variable x
-• x = 2 inside function modifies global x
-• Global x changed from 1 to 2
-• Retourne : 2
+Cas limites :
+• Accès d['clé'] sur {} lève KeyError.
 
-Fonctionnement :
-• x = 1 creates global variable x = 1
-• def func(): creates function definition
-• global x tells Python x refers to global variable
-• x = 2 inside function modifies global x
-• func() executes (global x becomes 2)
-• x evaluates global x = 2
-• Retourne : 2
+Considérations de performance :
+• Réutiliser et mettre à jour un dict peut éviter d’allouer souvent de nouveaux {}.
 
-Exemple :
-x = 1
-def func(): global x; x = 2  # Modifies global x
-func()                      # Global x becomes 2
-x                           # 2 (global x modified)
+Exemples :
+• d = {}; d['k'] = 1 → {'k': 1}
 
-Utilisations courantes :
-• Modifying globals: def func(): global var; var = new_value
-• Global modification: def update(): global counter; counter += 1
-• global keyword
-• Global variable modification
+Remarques :
+• Réponse attendue : dictionnaire vide.`,
+  1803: `dict() sans argument
 
-Exemple : If x = 1; def func(): global x; x = 2; func(); x, alors x renvoie 2 car the global keyword tells Python to use the global variable x, so assigning x = 2 inside the function modifies the global variable, changing it from 1 to 2.
-`,
-  1855: `Inner functions (nested functions) can access variables from outer functions. If def outer(): x = 1; def inner(): return x; return inner(); outer(), alors outer() renvoie 1 car the inner function inner() can access the outer function's local variable x = 1. C'est called a closure - the inner function "closes over" the outer function's variables, allowing it to access them even après le outer function has finished executing (if the inner function est retourné).
+Débutant :
+• dict() crée un nouveau dictionnaire vide, comme {}.
 
-Closure — inner accède à outer :
-• def outer(): x = 1; def inner(): return x; return inner(); outer() renvoie 1
-• outer() defines local variable x = 1
-• inner() is defined inside outer()
-• inner() can access outer()'s local variable x
-• inner() returns x = 1
-• outer() retourne inner()'s result: 1
+Intermédiaire :
+• C’est le constructeur du type dict ; d’autres formes acceptent itérables de paires ou arguments nommés.
+
+Expert :
+• dict() et {} sont équivalents fonctionnellement pour « vide » ; choix surtout stylistique.
+
+Concepts clés :
+• Constructeur dict(), dict vide, équivalence avec {}.
+
+Distinctions clés :
+• dict() vs {} (littéral) ; les deux donnent un dict vide.
 
 Fonctionnement :
-• outer() creates function definition
-• outer() defines local variable x = 1
-• inner() is defined inside outer()
-• inner() references x (not defined in inner())
-• Python searches outer scope, finds x = 1 in outer()
-• inner() returns x = 1
-• outer() retourne inner()'s result: 1
+• Appel de type sans argument → nouvel objet dict sans paires.
 
-Exemple :
-def outer():
-    x = 1
-    def inner(): return x
-    return inner()
-outer()                      # 1 (inner accesses outer's x)
+Exécution étape par étape :
+1. Allocation d’un dict.
+2. Retour de l’objet vide.
 
-Utilisations courantes :
-• Nested functions: def outer(): x = value; def inner(): use x
-• Closures: def factory(x): def inner(): return x; return inner
-• Variable access
-• Closure behavior
+Ordre des opérations :
+• Appel de fonction : évaluation des arguments (ici aucun) puis construction.
 
-Exemple : If def outer(): x = 1; def inner(): return x; return inner(); outer(), alors outer() renvoie 1 car the inner function inner() can access the outer function's local variable x = 1, which est appelé a closure.
-`,
-  1856: `Closures can capture outer function parameters, allowing the inner function to access them even après le outer function returns. If def outer(x): def inner(): return x; return inner; f = outer(5); f(), alors f() renvoie 5 car outer(5) crée un closure where the inner function inner() captures the outer function's parameter x = 5. When inner est retourné and assigned to f, it still "remembers" the value of x = 5, so calling f() renvoie 5. C'est a powerful feature that allows functions to "remember" their environment.
+Cas d'utilisation courants :
+• Code qui généralise « construire un dict » avec la même syntaxe que les autres signatures.
 
-La closure capture le paramètre :
-• def outer(x): def inner(): return x; return inner; f = outer(5); f() renvoie 5
-• outer(5) creates closure with x = 5
-• inner() captures x = 5 from outer function
-• inner returned and assigned to f
-• f() calls inner(), qui returns captured x = 5
-• Retourne : 5
+Cas limites :
+• dict(None) lève une erreur ; seul l’appel sans argument donne {}.
 
-Fonctionnement :
-• outer(5) calls outer function with x = 5
-• outer() defines inner() that references x
-• inner() captures x = 5 from outer function
-• outer() retourne inner function object
-• f = inner (inner function assigned to f)
-• f() calls inner(), qui returns captured x = 5
-• Retourne : 5
+Considérations de performance :
+• Identique à {} pour un dict vide.
 
-Exemple :
-def outer(x): def inner(): return x; return inner
-f = outer(5)                  # f is inner function that captured x = 5
-f()                          # 5 (returns captured x = 5)
-g = outer(10)                 # g is inner function that captured x = 10
-g()                          # 10 (returns captured x = 10)
+Exemples :
+• dict() == {} → True (même contenu, objets différents : id différent en général)
 
-Utilisations courantes :
-• Factory functions: def make_multiplier(n): return lambda x: x * n
-• Closures: def create_closure(x): def inner(): return x; return inner
-• Parameter capture
-• Closure behavior
+Remarques :
+• La réponse affichée est souvent représentée comme {}.`,
+  1804: `dict() depuis une liste de tuples
 
-Exemple : If def outer(x): def inner(): return x; return inner; f = outer(5); f(), alors f() renvoie 5 car the inner function inner() captures the outer function's parameter x = 5 in a closure, so when f() est appelé, il retourne the captured value 5.
-`,
-  1857: `Local variables (variables defined inside a function) are not accessible outside the function. If def func(): x = 1; return x; func(); x, alors x raises a NameError car x is a local variable defined inside func(), and local variables only exist within the function where they're defined. Once la fonction retourne, local variables are destroyed and cannot be accessed from outside the function. C'est Python's scoping rule - local variables have local scope only.
+Débutant :
+• dict([('a', 1), ('b', 2)]) produit {'a': 1, 'b': 2}.
+• Chaque élément de la liste doit être une paire (clé, valeur).
 
-Portée des variables locales :
-• def func(): x = 1; return x; func(); x raises NameError
-• x = 1 inside function creates local variable x
-• Local variables only exist inside function
-• After func() returns, local x is destroyed
-• x outside function raises NameError (x not defined)
-• Error: NameError: name 'x' is not defined
+Intermédiaire :
+• Tout itérable de paires (deux éléments) convient : tuples 2-uples, listes de deux éléments, etc.
+
+Expert :
+• Si une clé apparaît deux fois, la dernière valeur gagne (comme en fusion de dict).
+
+Concepts clés :
+• Constructeur depuis itérable de paires, conversion vers dict.
+
+Distinctions clés :
+• Une liste seule n’est pas un dict ; il faut des paires (clé, valeur).
 
 Fonctionnement :
-• def func(): creates function definition
-• x = 1 inside function creates local variable x = 1
-• func() executes: renvoie 1, local x destroyed
-• x outside function tries to access x
-• x not defined in global scope
-• Raises NameError
+• dict parcourt l’itérable et insère chaque (k, v) dans le nouveau dict.
 
-Exemple :
-def func(): x = 1; return x
-func()                      # 1 (returns local x)
-x                           # NameError: name 'x' is not defined
+Exécution étape par étape :
+1. Création du dict cible.
+2. Pour ('a',1) puis ('b',2) : insertion des paires.
+3. Retour du dict rempli.
 
-Utilisations courantes :
-• Understanding scope: local variables not accessible outside
-• Variable lifetime: local vars destroyed after function returns
-• Local vs global
-• Variable scoping
+Ordre des opérations :
+• D’abord l’argument itérable est évalué/construit, puis le constructeur consomme ses éléments.
 
-Exemple : If def func(): x = 1; return x; func(); x, alors x raises a NameError car x is a local variable defined inside func(), and local variables are not accessible outside the function where they're defined.
-`,
-  1858: `Functions can access both global variables and function parameters. If x = 1; def func(y): return x + y; func(2), alors func(2) renvoie 3 car the function accesses the global variable x = 1 and uses the parameter y = 2, returning x + y = 1 + 2 = 3. Functions can reference variables from different scopes - they can use global variables (like x) and function parameters (like y) in le même expression.
+Cas d'utilisation courants :
+• Convertir le résultat de DB ou CSV (colonnes clé/valeur) en dict.
 
-Global et paramètre :
-• x = 1; def func(y): return x + y; func(2) renvoie 3
-• x = 1 définit la variable globale
-• func(y) has parameter y
-• func(2) passes y = 2
-• return x + y uses global x = 1 and parameter y = 2
-• Retourne 1 + 2 = 3
+Cas limites :
+• Élément d’une seule valeur ou de plus de deux : TypeError.
 
-Fonctionnement :
-• x = 1 creates global variable x = 1
-• def func(y): creates function with parameter y
-• func(2) calls function with y = 2
-• return x + y references global x = 1 and parameter y = 2
-• Evaluates: 1 + 2 = 3
-• Retourne : 3
+Considérations de performance :
+• O(n) sur le nombre de paires.
 
-Exemple :
-x = 1
-def func(y): return x + y
-func(2)                      # 3 (global x=1 + parameter y=2)
-func(5)                      # 6 (global x=1 + parameter y=5)
+Exemples :
+• dict([('x', 0)]) → {'x': 0}
 
-Utilisations courantes :
-• Using globals and parameters: def calculate(y): return global_var + y
-• Mixed scope access: def process(param): return base + param
-• Global and parameter access
-• Variable scoping
+Remarques :
+• Aligné sur la question : même contenu que le littéral {'a':1,'b':2}.`,
+  1805: `dict() avec arguments nommés
 
-Exemple : If x = 1; def func(y): return x + y; func(2), alors func(2) renvoie 3 car the function accesses the global variable x = 1 and uses the parameter y = 2, returning 1 + 2 = 3.
-`,
-  1859: `Assigning to a variable inside a function makes it local, which prevents reading it before assignment. If def func(): x = x + 1; return x; func(), alors func() raises an UnboundLocalError car x = x + 1 assigns to x, making it a local variable, but x is referenced on the right side (x + 1) before it's assigned, so Python raises an error. Python determines that x is local car of the assignment, but alors tries to read x before it's been assigned a value, causing the error.
+Débutant :
+• dict(a=1, b=2) crée {'a': 1, 'b': 2} ; les noms deviennent des clés str.
 
-UnboundLocalError :
-• def func(): x = x + 1; return x; func() raises UnboundLocalError
-• x = x + 1 assigns to x (makes x local)
-• Python determines x is local variable
-• Tries to read x in x + 1 before assignment
-• x not yet assigned (unbound)
-• Raises UnboundLocalError
+Intermédiaire :
+• Les identifiants doivent être des noms de variables Python valides (pas d’espace, pas de tiret).
+
+Expert :
+• Les clés sont toujours des str ici ; utile pour prototypes rapides, moins pour clés non identifiants.
+
+Concepts clés :
+• Mot-clés → clés str, constructeur dict, sucre syntaxique.
+
+Distinctions clés :
+• dict(a=1) vs {a: 1} si a est une variable : le second utilise la valeur de a comme clé.
 
 Fonctionnement :
-• def func(): creates function definition
-• x = x + 1 assigns to x (makes x local)
-• Python determines x is local (car of assignment)
-• Tries to evaluate x + 1 (reads x)
-• x is local but not yet assigned
-• Raises UnboundLocalError : local variable 'x' referenced before assignment
+• Le constructeur mappe chaque nom de paramètre à sa valeur dans le dict.
 
-Exemple :
-def func(): x = x + 1; return x
-func()                      # UnboundLocalError
-# Fix: def func(): global x; x = x + 1; return x
+Exécution étape par étape :
+1. Interprétation des kwargs comme paires ('a',1), ('b',2).
+2. Construction du dict.
+3. Retour {'a':1,'b':2}.
 
-Utilisations courantes :
-• Understanding error: assignment makes variable local
-• Fixing error: use global keyword if modifying global
-• Local variable binding
-• UnboundLocalError
+Ordre des opérations :
+• Évaluation des valeurs des arguments nommés avant l’appel.
 
-Exemple : If def func(): x = x + 1; return x; func(), alors func() raises an UnboundLocalError car assigning x = x + 1 makes x local, but alors x is referenced in x + 1 before it's assigned, so Python raises an error. To fix, use global x if you want to modify a global variable.
-`,
-  1860: `Functions can call built-in functions just like any other code. If def func(): return len([1, 2, 3]); func(), alors func() renvoie 3 car the function calls the built-in len() function with [1, 2, 3], which renvoie 3 (the length of the list). Functions have access to all built-in functions (like len, print, range, etc.) and can call them just like they can call other functions. Built-in functions are available in all scopes.
+Cas d'utilisation courants :
+• Construire vite un petit dict dont les clés sont des identifiants simples.
 
-Appel de fonction intégrée :
-• def func(): return len([1, 2, 3]); func() renvoie 3
-• Function can call built-in functions
-• len([1, 2, 3]) called inside function
-• len() renvoie 3 (length of list)
-• Function renvoie 3
+Cas limites :
+• Clés comme 'class' possibles en kwargs mais attention aux mots réservés en syntaxe alternative.
 
-Fonctionnement :
-• def func(): creates function definition
-• Function name: func
-• No parameters: ()
-• Body: return len([1, 2, 3])
-• len([1, 2, 3]) called, renvoie 3
-• Function renvoie 3
+Considérations de performance :
+• Comparable à un petit littéral.
 
-Exemple :
-def func(): return len([1, 2, 3])
-func()                      # 3 (returns len result)
-def func(): return sum([1, 2, 3])  # Retourne 6
-def func(): return max([1, 2, 3])  # Retourne 3
+Exemples :
+• dict(x=10) → {'x': 10}
 
-Utilisations courantes :
-• Built-in usage: def func(): return len(data)
-• Composition de fonctions : def process(): return sorted(items)
-• Built-in function access
-• Function capabilities
+Remarques :
+• Réponse : équivalent au dict littéral avec les mêmes paires.`,
+  1806: `Accès par clé existante ['a']
 
-Exemple : If def func(): return len([1, 2, 3]); func(), alors func() renvoie 3 car the function calls the built-in len() function with [1, 2, 3], which renvoie 3, and la fonction retourne that value.
-`,
-  1861: `A recursive function calls itself to solve a problem. If def fact(n): return 1 if n <= 1 else n * fact(n-1); fact(5), alors fact(5) renvoie 120 car fact(5) calls fact(4), qui calls fact(3), qui calls fact(2), qui calls fact(1), which renvoie 1 (base case). Then chaque appel multiplies by n: 1 * 2 * 3 * 4 * 5 = 120. Recursion breaks a problem into smaller subproblems of le même type, with a base case that stops the recursion.
+Débutant :
+• {'a': 1, 'b': 2}['a'] vaut 1 : on lit la valeur associée à la clé 'a'.
 
-Fonction récursive :
-• def fact(n): return 1 if n <= 1 else n * fact(n-1); fact(5) renvoie 120
-• fact(5) calls fact(4), qui calls fact(3), etc.
-• Base case: n <= 1 renvoie 1 (stops recursion)
-• Recursive case: n * fact(n-1) (calls itself)
-• Evaluates: 5 * 4 * 3 * 2 * 1 = 120
+Intermédiaire :
+• Les crochets exigent une clé présente sinon KeyError (contrairement à .get()).
+
+Expert :
+• __getitem__ du dict : recherche par hachage de la clé.
+
+Concepts clés :
+• Indexation par clé, lecture O(1) en moyenne.
+
+Distinctions clés :
+• d['a'] vs d.get('a') pour clé absente : exception vs None/défaut.
 
 Fonctionnement :
-• fact(5) calls fact(4): 5 * fact(4)
-• fact(4) calls fact(3): 4 * fact(3)
-• fact(3) calls fact(2): 3 * fact(2)
-• fact(2) calls fact(1): 2 * fact(1)
-• fact(1) renvoie 1 (base case: n <= 1)
-• Unwinds: 2 * 1 = 2, 3 * 2 = 6, 4 * 6 = 24, 5 * 24 = 120
-• Retourne : 120
+• Python hache 'a', trouve l’emplacement, retourne la valeur 1.
 
-Exemple :
-def fact(n): return 1 if n <= 1 else n * fact(n-1)
-fact(5)                      # 120 (5 * 4 * 3 * 2 * 1)
-fact(3)                      # 6 (3 * 2 * 1)
-fact(1)                      # 1 (base case)
+Exécution étape par étape :
+1. Évaluation du dict puis de la clé 'a'.
+2. Recherche de la clé.
+3. Retour de la valeur 1.
 
-Utilisations courantes :
-• Recursive algorithms: def factorial(n): return base if condition else recursive
-• Divide and conquer: def solve(problem): return solve(smaller_problem)
-• Recursive functions
-• Problem decomposition
+Ordre des opérations :
+• D’abord l’objet dict, puis l’opération [].
 
-Exemple : If def fact(n): return 1 if n <= 1 else n * fact(n-1); fact(5), alors fact(5) renvoie 120 car the recursive function calls itself with decreasing values until it reaches the base case (n <= 1), alors multiplies all values together: 5 * 4 * 3 * 2 * 1 = 120.
-`,
-  1862: `Le Fibonacci sequence is computed recursively where each number is the sum of the two preceding ones. If def fib(n): renvoyer n if n < 2 else fib(n-1) + fib(n-2); fib(5), alors fib(5) renvoie 5 car fib(5) = fib(4) + fib(3), which expands further. The base case is n < 2, qui retourne n (fib(0) = 0, fib(1) = 1). The recursive case computes fib(n) = fib(n-1) + fib(n-2). Note: fib(5) actually renvoie 5 (the 5th Fibonacci number), not 8.
+Cas d'utilisation courants :
+• Lecture directe quand la clé est garantie (souvent après un test in).
 
-Fibonacci récursif :
-• def fib(n): renvoyer n if n < 2 else fib(n-1) + fib(n-2); fib(5) renvoie 5
-• Base case: n < 2 retourne n (fib(0) = 0, fib(1) = 1)
-• Recursive case: fib(n-1) + fib(n-2) (sum of previous two)
-• fib(5) = fib(4) + fib(3), expands recursively
-• Evaluates: 0, 1, 1, 2, 3, 5
+Cas limites :
+• Clé manquante → KeyError.
 
-Fonctionnement :
-• fib(5) calls fib(4) + fib(3)
-• fib(4) calls fib(3) + fib(2)
-• fib(3) calls fib(2) + fib(1)
-• fib(2) calls fib(1) + fib(0) = 1 + 0 = 1
-• Unwinds: fib(3) = 2, fib(4) = 3, fib(5) = 5
-• Retourne : 5
+Considérations de performance :
+• Très rapide pour dicts standards en CPython.
 
-Exemple :
-def fib(n): renvoyer n if n < 2 else fib(n-1) + fib(n-2)
-fib(5)                      # 5 (5th Fibonacci number)
-fib(6)                      # 8 (6th Fibonacci number)
-fib(0)                      # 0 (base case)
+Exemples :
+• {'x': 42}['x'] → 42
 
-Utilisations courantes :
-• Recursive sequences: def fibonacci(n): renvoyer base if condition else recursive
-• Mathematical sequences: fib(n) = fib(n-1) + fib(n-2)
-• Recursive algorithms
-• Fibonacci sequence
+Remarques :
+• Réponse attendue : 1.`,
+  1807: `Accès par une autre clé ['b']
 
-Exemple : If def fib(n): renvoyer n if n < 2 else fib(n-1) + fib(n-2); fib(5), alors fib(5) renvoie 5 car the recursive Fibonacci fonction computes the 5th Fibonacci number (0, 1, 1, 2, 3, 5) by summing the previous two Fibonacci numbers.
-`,
-  1863: `A recursive counting function counts from n down to 1. If def count(n): return 0 if n <= 0 else 1 + count(n-1); count(5), alors count(5) renvoie 5 car count(5) = 1 + count(4) = 1 + (1 + count(3)) = ... = 1 + 1 + 1 + 1 + 1 + 0 = 5. The base case is n <= 0, qui returns 0 (stops counting). The recursive case renvoie 1 plus the count of the next smaller number, effectively counting how many numbers from n down to 1.
+Débutant :
+• {'a': 1, 'b': 2}['b'] vaut 2.
 
-Comptage récursif :
-• def count(n): return 0 if n <= 0 else 1 + count(n-1); count(5) renvoie 5
-• Base case: n <= 0 returns 0 (stops counting)
-• Recursive case: 1 + count(n-1) (adds 1 for each number)
-• count(5) = 1 + count(4) = 1 + 1 + count(3) = ...
-• Evaluates: 1 + 1 + 1 + 1 + 1 + 0 = 5
+Intermédiaire :
+• Chaque clé est indépendante ; l’ordre d’insertion n’change pas le résultat d’un accès par clé fixe.
+
+Expert :
+• Deux accès successifs sur la même clé relisent la même entrée (sauf si le dict a été muté entre-temps).
+
+Concepts clés :
+• Sélection de valeur par clé str 'b'.
+
+Distinctions clés :
+• Ne pas confondre avec l’accès par position (liste).
 
 Fonctionnement :
-• count(5) calls 1 + count(4)
-• count(4) calls 1 + count(3)
-• count(3) calls 1 + count(2)
-• count(2) calls 1 + count(1)
-• count(1) calls 1 + count(0)
-• count(0) returns 0 (base case: n <= 0)
-• Unwinds: 1 + 0 = 1, 1 + 1 = 2, 1 + 2 = 3, 1 + 3 = 4, 1 + 4 = 5
-• Retourne : 5
+• Recherche de 'b' → valeur 2.
 
-Exemple :
-def count(n): return 0 if n <= 0 else 1 + count(n-1)
-count(5)                     # 5 (counts 5 numbers)
-count(10)                    # 10 (counts 10 numbers)
-count(0)                     # 0 (base case)
+Exécution étape par étape :
+1. Dict évalué.
+2. Clé 'b' résolue.
+3. Retour 2.
 
-Utilisations courantes :
-• Comptage récursif : def count(n): return base if condition else 1 + recursive
-• Counting sequences: def count_down(n): return count(n)
-• Recursive algorithms
-• Counting functions
+Ordre des opérations :
+• Sous-expression dict puis [].
 
-Exemple : If def count(n): return 0 if n <= 0 else 1 + count(n-1); count(5), alors count(5) renvoie 5 car the recursive function counts from 5 down to 1, adding 1 for each number: 1 + 1 + 1 + 1 + 1 + 0 = 5.
-`,
-  1864: `A recursive function can sum list elements by adding the first element to the sum of the rest. If def sum_list(lst): return 0 if not lst else lst[0] + sum_list(lst[1:]); sum_list([1,2,3]), alors sum_list([1,2,3]) renvoie 6 car sum_list([1,2,3]) = 1 + sum_list([2,3]) = 1 + (2 + sum_list([3])) = 1 + 2 + (3 + sum_list([])) = 1 + 2 + 3 + 0 = 6. The base case is an empty list, qui returns 0. The recursive case adds the first element to the sum of the remaining list.
+Cas d'utilisation courants :
+• Champs nommés : prix = row['prix'].
 
-Somme récursive :
-• def sum_list(lst): return 0 if not lst else lst[0] + sum_list(lst[1:]); sum_list([1,2,3]) renvoie 6
-• Base case: not lst returns 0 (empty list)
-• Recursive case: lst[0] + sum_list(lst[1:]) (first + sum of rest)
-• sum_list([1,2,3]) = 1 + sum_list([2,3])
-• Evaluates: 1 + 2 + 3 + 0 = 6
+Cas limites :
+• Typo de clé → KeyError.
 
-Fonctionnement :
-• sum_list([1,2,3]) calls 1 + sum_list([2,3])
-• sum_list([2,3]) calls 2 + sum_list([3])
-• sum_list([3]) calls 3 + sum_list([])
-• sum_list([]) returns 0 (base case: empty list)
-• Unwinds: 3 + 0 = 3, 2 + 3 = 5, 1 + 5 = 6
-• Retourne : 6
+Considérations de performance :
+• Identique à tout accès [] réussi.
 
-Exemple :
-def sum_list(lst): return 0 if not lst else lst[0] + sum_list(lst[1:])
-sum_list([1,2,3])           # 6 (1 + 2 + 3)
-sum_list([10, 20])          # 30 (10 + 20)
-sum_list([])                # 0 (base case)
+Exemples :
+• {'b': 0}['b'] → 0
 
-Utilisations courantes :
-• Somme récursive : def sum_list(lst): return base if empty else first + recursive
-• List processing: def process(lst): return process(lst[1:])
-• Recursive algorithms
-• List reduction
+Remarques :
+• Réponse : 2.`,
+  1808: `Clé absolente avec []
 
-Exemple : If def sum_list(lst): return 0 if not lst else lst[0] + sum_list(lst[1:]); sum_list([1,2,3]), alors sum_list([1,2,3]) renvoie 6 car the recursive function sums list elements by adding the first element to the sum of the rest: 1 + 2 + 3 = 6.
-`,
-  1865: `A recursive power function computes x raised to the power n by multiplying x by x raised to the power (n-1). If def power(x, n): return 1 if n == 0 else x * power(x, n-1); power(2, 3), alors power(2, 3) renvoie 8 car power(2, 3) = 2 * power(2, 2) = 2 * (2 * power(2, 1)) = 2 * 2 * (2 * power(2, 0)) = 2 * 2 * 2 * 1 = 8. The base case is n == 0, which renvoie 1 (any number to the power 0 is 1). The recursive case multiplies x by power(x, n-1).
+Débutant :
+• {'a': 1, 'b': 2}['c'] lève KeyError : la clé 'c’ n’existe pas.
 
-Puissance récursive :
-• def power(x, n): return 1 if n == 0 else x * power(x, n-1); power(2, 3) renvoie 8
-• Base case: n == 0 renvoie 1 (x^0 = 1)
-• Recursive case: x * power(x, n-1) (multiply x by x^(n-1))
-• power(2, 3) = 2 * power(2, 2) = 2 * 2 * power(2, 1) = 2 * 2 * 2 * 1
-• Evaluates: 2 * 2 * 2 * 1 = 8
+Intermédiaire :
+• Pour éviter l’exception : 'c' in d, d.get('c'), ou try/except KeyError.
+
+Expert :
+• Le message d’erreur inclut la clé manquante (utile au débogage).
+
+Concepts clés :
+• KeyError, accès strict, contrat de [] sur dict.
+
+Distinctions clés :
+• [] vs .get('c') qui retourne None sans lever d’erreur.
 
 Fonctionnement :
-• power(2, 3) calls 2 * power(2, 2)
-• power(2, 2) calls 2 * power(2, 1)
-• power(2, 1) calls 2 * power(2, 0)
-• power(2, 0) renvoie 1 (base case: n == 0)
-• Unwinds: 2 * 1 = 2, 2 * 2 = 4, 2 * 4 = 8
-• Retourne : 8
+• Recherche de 'c' échoue → mécanisme d’exception.
 
-Exemple :
-def power(x, n): return 1 if n == 0 else x * power(x, n-1)
-power(2, 3)                  # 8 (2^3 = 8)
-power(3, 2)                  # 9 (3^2 = 9)
-power(5, 0)                  # 1 (base case: 5^0 = 1)
+Exécution étape par étape :
+1. Évaluation du dict.
+2. Tentative de récupération de 'c'.
+3. Échec → KeyError.
 
-Utilisations courantes :
-• Puissance récursive : def power(x, n): return base if condition else x * recursive
-• Mathematical operations: x^n = x * x^(n-1)
-• Recursive algorithms
-• Power computation
+Ordre des opérations :
+• L’accès [] est atomique ; pas de valeur partielle.
 
-Exemple : If def power(x, n): return 1 if n == 0 else x * power(x, n-1); power(2, 3), alors power(2, 3) renvoie 8 car the recursive function computes x^n by multiplying x by x^(n-1) until reaching the base case (n == 0): 2 * 2 * 2 * 1 = 8.
-`,
-  1866: `A recursive function without a base case causes infinite recursion, which eventually raises a RecursionError. If a recursive function n'a pas base case (no condition that stops the recursion), it will call itself forever, chaque appel creating a new function call on the call stack. Python a un recursion limit (usually around 1000), so after a certain number of recursive calls, Python raises a RecursionError to prevent stack overflow and program crash. Every recursive function must ont un base case that stops the recursion.
+Cas d'utilisation courants :
+• Code où une clé absente est une erreur de programme → [] est adapté.
 
-Récursion infinie :
-• Recursive function without base case causes infinite recursion
-• Function calls itself forever
-• Each call creates new function call on stack
-• Stack grows until recursion limit reached
-• Raises RecursionError (prevents stack overflow)
+Cas limites :
+• Clé None ou non hachable interdite comme clé (hors cas de cette question).
 
-Fonctionnement :
-• Recursive function calls itself
-• No base case to stop recursion
-• Function keeps calling itself: func() → func() → func() → ...
-• Call stack grows: func() → func() → func() → ...
-• Recursion limit reached (usually ~1000)
-• Raises RecursionError: maximum recursion depth exceeded
+Considérations de performance :
+• L’échec est détecté après la recherche (coût proche d’un succès).
 
-Exemple :
-def func(): return func()  # No base case!
-func()                      # RecursionError (infinite recursion)
-# Fix: def func(n): return n if n <= 0 else func(n-1)
+Exemples :
+• d = {}; d['x']  # KeyError
 
-Utilisations courantes :
-• Understanding recursion: always need base case
-• Preventing errors: ensure base case exists
-• Recursion limits
-• Stack overflow prevention
+Remarques :
+• Réponse : KeyError.`,
+  1809: `len() sur un dict
 
-Exemple : A recursive function without a base case causes infinite recursion, which eventually raises a RecursionError car Python a un recursion limit to prevent stack overflow. Every recursive function must ont un base case that stops the recursion.
-`,
-  1867: `A recursive function that calls itself without a base case causes infinite recursion. If def func(): return func(); func(), alors func() raises a RecursionError car func() calls func(), qui calls func(), qui calls func(), etc., with no condition to stop. Each recursive call adds a new frame to the call stack. When the recursion limit is reached (usually around 1000), Python raises a RecursionError: maximum recursion depth exceeded. C'est a common error when writing recursive functions without proper base cases.
+Débutant :
+• len({'a': 1, 'b': 2}) vaut 2 : on compte le nombre de paires clé-valeur.
 
-Exemple de récursion infinie :
-• def func(): return func(); func() raises RecursionError
-• func() calls func() (no base case)
-• func() calls func() again (no base case)
-• Continues forever: func() → func() → func() → ...
-• Call stack grows until limit reached
-• Raises RecursionError
+Intermédiaire :
+• Ce n’est ni le nombre de clés + valeurs séparément comptées, ni la « taille en mémoire ».
+
+Expert :
+• len appelle la longueur du mapping (cardinal de l’ensemble des clés).
+
+Concepts clés :
+• Cardinalité du dict, comptage des entrées.
+
+Distinctions clés :
+• len(d) vs len(list(d.keys())) — équivalent en nombre.
 
 Fonctionnement :
-• func() calls function func
-• La fonction s'exécute : return func()
-• Calls func() again (recursive call)
-• func() calls func() again (recursive call)
-• Continues: func() → func() → func() → ...
-• Recursion limit reached (~1000)
-• Raises RecursionError: maximum recursion depth exceeded
+• Parcourt ou lit le compteur interne selon l’implémentation CPython.
 
-Exemple :
-def func(): return func()  # No base case!
-func()                      # RecursionError: maximum recursion depth exceeded
-# Fix: def func(n): return n if n <= 0 else func(n-1)
+Exécution étape par étape :
+1. dict évalué.
+2. len interroge la taille.
+3. Retour 2.
 
-Utilisations courantes :
-• Understanding recursion errors: need base case
-• Debugging recursion: check for base case
-• Recursion limits
-• Infinite recursion prevention
+Ordre des opérations :
+• Appel de fonction len après évaluation de l’argument.
 
-Exemple : If def func(): return func(); func(), alors func() raises a RecursionError car the function calls itself infinitely without a base case to stop the recursion, eventually hitting Python's recursion limit.
-`,
-  1868: `A recursive function can reverse a string by taking the reverse of the rest and appending the first character. If def reverse(s): return '' if not s else reverse(s[1:]) + s[0]; reverse('abc'), alors reverse('abc') renvoie 'cba' car reverse('abc') = reverse('bc') + 'a' = (reverse('c') + 'b') + 'a' = ((reverse('') + 'c') + 'b') + 'a' = ('' + 'c' + 'b') + 'a' = 'cba'. The base case is an empty string, qui returns ''. The recursive case reverses the substring (s[1:]) and appends the first character (s[0]).
+Cas d'utilisation courants :
+• Vérifier si un cache contient déjà des entrées.
 
-Inversion récursive de chaîne :
-• def reverse(s): return '' if not s else reverse(s[1:]) + s[0]; reverse('abc') renvoie 'cba'
-• Base case: not s returns '' (empty string)
-• Recursive case: reverse(s[1:]) + s[0] (reverse rest + first char)
-• reverse('abc') = reverse('bc') + 'a' = reverse('c') + 'b' + 'a' = ...
-• Evaluates: '' + 'c' + 'b' + 'a' = 'cba'
+Cas limites :
+• len({}) == 0.
 
-Fonctionnement :
-• reverse('abc') calls reverse('bc') + 'a'
-• reverse('bc') calls reverse('c') + 'b'
-• reverse('c') calls reverse('') + 'c'
-• reverse('') returns '' (base case: empty string)
-• Unwinds: '' + 'c' = 'c', 'c' + 'b' = 'cb', 'cb' + 'a' = 'cba'
-• Retourne : 'cba'
+Considérations de performance :
+• O(1) en CPython pour la plupart des dicts.
 
-Exemple :
-def reverse(s): return '' if not s else reverse(s[1:]) + s[0]
-reverse('abc')               # 'cba' (reversed)
-reverse('hello')             # 'olleh' (reversed)
-reverse('')                  # '' (base case)
+Exemples :
+• len({'k': None}) → 1
 
-Utilisations courantes :
-• Recursive reversal: def reverse(s): return base if empty else recursive + first
-• String processing: def process(s): return process(s[1:]) + transform(s[0])
-• Recursive algorithms
-• String manipulation
+Remarques :
+• Réponse : 2.`,
+  1810: `len({})
 
-Exemple : If def reverse(s): return '' if not s else reverse(s[1:]) + s[0]; reverse('abc'), alors reverse('abc') renvoie 'cba' car the recursive function reverses the string by reversing the rest and appending the first character: '' + 'c' + 'b' + 'a' = 'cba'.
-`,
-  1869: `Le Euclidean algorithm computes the greatest common divisor (GCD) recursively. If def gcd(a, b): renvoyer a if b == 0 else gcd(b, a % b); gcd(48, 18), alors gcd(48, 18) renvoie 6 car gcd(48, 18) = gcd(18, 48 % 18) = gcd(18, 12) = gcd(12, 18 % 12) = gcd(12, 6) = gcd(6, 12 % 6) = gcd(6, 0) = 6. The base case is b == 0, qui retourne un (the GCD). The recursive case computes gcd(b, a % b), where a % b is the remainder when a is divided by b.
+Débutant :
+• len({}) est 0 : dictionnaire sans aucune paire.
 
-PGCD récursif (algorithme d'Euclide) :
-• def gcd(a, b): renvoyer a if b == 0 else gcd(b, a % b); gcd(48, 18) renvoie 6
-• Base case: b == 0 retourne un (GCD found)
-• Recursive case: gcd(b, a % b) (GCD of b and remainder)
-• gcd(48, 18) = gcd(18, 12) = gcd(12, 6) = gcd(6, 0) = 6
-• Evaluates: GCD of 48 and 18 is 6
+Intermédiaire :
+• Un dict vide reste un objet valide ; on peut y assigner tout de suite.
+
+Expert :
+• Deux dicts vides ont contenu égal mais peuvent être des objets distincts.
+
+Concepts clés :
+• Dict vide, longueur nulle.
+
+Distinctions clés :
+• len({}) vs len(()) vs len([]) — tous 0 mais types différents.
 
 Fonctionnement :
-• gcd(48, 18) calls gcd(18, 48 % 18) = gcd(18, 12)
-• gcd(18, 12) calls gcd(12, 18 % 12) = gcd(12, 6)
-• gcd(12, 6) calls gcd(6, 12 % 6) = gcd(6, 0)
-• gcd(6, 0) renvoie 6 (base case: b == 0)
-• Retourne : 6
+• len sur dict vide retourne 0 immédiatement.
 
-Exemple :
-def gcd(a, b): renvoyer a if b == 0 else gcd(b, a % b)
-gcd(48, 18)                 # 6 (GCD of 48 and 18)
-gcd(100, 25)                # 25 (GCD of 100 and 25)
-gcd(17, 13)                 # 1 (GCD of 17 and 13)
+Exécution étape par étape :
+1. {} construit.
+2. len → 0.
 
-Utilisations courantes :
-• Recursive GCD: def gcd(a, b): renvoyer a if b == 0 else gcd(b, a % b)
-• Euclidean algorithm: GCD(a, b) = GCD(b, a % b)
-• Recursive algorithms
-• Mathematical algorithms
+Ordre des opérations :
+• Littéral puis appel len.
 
-Exemple : If def gcd(a, b): renvoyer a if b == 0 else gcd(b, a % b); gcd(48, 18), alors gcd(48, 18) renvoie 6 car the recursive Euclidean algorithm computes the GCD by repeatedly taking the GCD of b and the remainder (a % b) until b becomes 0, at which point a is the GCD.
-`,
-  1870: `A recursive function can calculate list length by adding 1 for chaque élément. If def length(lst): return 0 if not lst else 1 + length(lst[1:]); length([1,2,3]), alors length([1,2,3]) renvoie 3 car length([1,2,3]) = 1 + length([2,3]) = 1 + (1 + length([3])) = 1 + 1 + (1 + length([])) = 1 + 1 + 1 + 0 = 3. The base case is an empty list, qui returns 0 (length 0). The recursive case adds 1 for the first element and recursively computes the length of the rest of the list.
+Cas d'utilisation courants :
+• Initialisation avant accumulation.
 
-Longueur récursive :
-• def length(lst): return 0 if not lst else 1 + length(lst[1:]); length([1,2,3]) renvoie 3
-• Base case: not lst returns 0 (empty list length 0)
-• Recursive case: 1 + length(lst[1:]) (add 1 for first, length of rest)
-• length([1,2,3]) = 1 + length([2,3]) = 1 + 1 + length([3]) = 1 + 1 + 1 + 0
-• Evaluates: 1 + 1 + 1 + 0 = 3
+Cas limites :
+• Après clear(), len repasse à 0 sur le même objet.
 
-Fonctionnement :
-• length([1,2,3]) calls 1 + length([2,3])
-• length([2,3]) calls 1 + length([3])
-• length([3]) calls 1 + length([])
-• length([]) returns 0 (base case: empty list)
-• Unwinds: 1 + 0 = 1, 1 + 1 = 2, 1 + 2 = 3
-• Retourne : 3
+Considérations de performance :
+• Négligeable.
 
-Exemple :
-def length(lst): return 0 if not lst else 1 + length(lst[1:])
-length([1,2,3])             # 3 (length of list)
-length([10, 20, 30, 40])    # 4 (length of list)
-length([])                  # 0 (base case)
+Exemples :
+• bool({}) → False
 
-Utilisations courantes :
-• Longueur récursive : def length(lst): return base if empty else 1 + recursive
-• List processing: def process(lst): return process(lst[1:])
-• Recursive algorithms
-• List reduction
+Remarques :
+• Réponse : 0.`,
+  1811: `.get('a') clé présente
 
-Exemple : If def length(lst): return 0 if not lst else 1 + length(lst[1:]); length([1,2,3]), alors length([1,2,3]) renvoie 3 car the recursive function counts list elements by adding 1 for the first element and recursively computing the length of the rest: 1 + 1 + 1 + 0 = 3.
-`,
-  1871: `A higher-order function is a function that takes another function as a parameter. If def apply(func, x): return func(x); apply(lambda x: x*2, 5), alors apply(lambda x: x*2, 5) renvoie 10 car apply() is a higher-order function that takes func (a function) as its first parameter and x (a value) as its second parameter, alors calls func(x). In this case, it calls lambda x: x*2 with argument 5, which renvoie 5 * 2 = 10.
+Débutant :
+• {'a': 1, 'b': 2}.get('a') retourne 1.
 
-Fonction d'ordre supérieur :
-• def apply(func, x): return func(x); apply(lambda x: x*2, 5) renvoie 10
-• apply() takes function func as parameter
-• Takes value x as parameter
-• Calls func(x) inside apply()
-• Higher-order function (function that takes function)
-• Retourne result of func(x)
+Intermédiaire :
+• .get ne modifie pas le dict ; c’est une lecture optionnelle avec défaut implicite None si absent.
+
+Expert :
+• Utile pour éviter KeyError quand la clé peut manquer.
+
+Concepts clés :
+• Lecture sûre, valeur par défaut None, méthode get.
+
+Distinctions clés :
+• d.get('a') vs d['a'] si clé absente : 1 vs exception (pour absent).
 
 Fonctionnement :
-• apply(lambda x: x*2, 5) calls function apply
-• First argument: lambda x: x*2 (function object)
-• Second argument: 5 (value)
-• apply() calls func(x): (lambda x: x*2)(5)
-• Lambda evaluates: 5 * 2 = 10
-• Retourne : 10
+• Recherche de 'a' ; trouvée → retourne 1.
 
-Exemple :
-def apply(func, x): return func(x)
-apply(lambda x: x*2, 5)     # 10 (applies function to value)
-apply(lambda x: x**2, 3)    # 9 (applies function to value)
-apply(len, 'hello')          # 5 (applies len to string)
+Exécution étape par étape :
+1. Objet dict.
+2. Appel .get('a').
+3. Retour 1.
 
-Utilisations courantes :
-• Higher-order functions: def apply(func, x): return func(x)
-• Function application: def map(func, items): return [func(x) for x in items]
-• Function as parameter
-• Higher-order functions
+Ordre des opérations :
+• Évaluation du récepteur puis des arguments de get.
 
-Exemple : If def apply(func, x): return func(x); apply(lambda x: x*2, 5), alors apply(lambda x: x*2, 5) renvoie 10 car apply() is a higher-order function that takes a function as a parameter and calls it with the value: (lambda x: x*2)(5) = 10.
-`,
-  1872: `A factory function is a function qui retourne another function. If def make_multiplier(n): return lambda x: x * n; f = make_multiplier(3); f(4), alors f(4) renvoie 12 car make_multiplier(3) retourne une lambda function that captures the value n = 3 from the outer function, creating a closure. The returned function f multiplies its argument by 3, so f(4) returns 4 * 3 = 12. C'est a common pattern for creating specialized functions.
+Cas d'utilisation courants :
+• Lecture de préférences optionnelles : theme = cfg.get('theme').
 
-Fonction factory :
-• def make_multiplier(n): return lambda x: x * n; f = make_multiplier(3); f(4) renvoie 12
-• make_multiplier(3) returns function that captures n = 3
-• Returned function multiplies argument by 3
-• f = make_multiplier(3) assigns returned function to f
-• f(4) calls returned function with 4
-• Retourne : 4 * 3 = 12
+Cas limites :
+• get('a', None) équivalent à get('a') pour absent.
 
-Fonctionnement :
-• make_multiplier(3) calls function make_multiplier
-• Parameter n = 3
-• Retourne lambda x: x * n (captures n = 3)
-• f = lambda x: x * 3 (assigned to f)
-• f(4) calls lambda with x = 4
-• Evaluates: 4 * 3 = 12
-• Retourne : 12
+Considérations de performance :
+• Comparable à [] pour clé présente.
 
-Exemple :
-def make_multiplier(n): return lambda x: x * n
-f = make_multiplier(3)      # f is lambda x: x * 3
-f(4)                        # 12 (4 * 3)
-g = make_multiplier(5)      # g is lambda x: x * 5
-g(4)                        # 20 (4 * 5)
+Exemples :
+• {}.get('x') → None
 
-Utilisations courantes :
-• Factory functions: def make_adder(n): return lambda x: x + n
-• Function factories: def create_function(n): return lambda x: f(x, n)
-• Closure creation
-• Specialized functions
+Remarques :
+• Réponse : 1.`,
+  1812: `.get('c') clé absente
 
-Exemple : If def make_multiplier(n): return lambda x: x * n; f = make_multiplier(3); f(4), alors f(4) renvoie 12 car make_multiplier(3) retourne une lambda function that captures n = 3 in a closure, creating a function that multiplies its argument by 3: 4 * 3 = 12.
-`,
-  1873: `Function composition combines two functions into one. If def compose(f, g): return lambda x: f(g(x)); compose(lambda x: x+1, lambda x: x*2)(3), alors compose(lambda x: x+1, lambda x: x*2)(3) renvoie 7 car compose() crée un new function that applies g first, alors applies f to le résultat. So it evaluates g(3) = 3 * 2 = 6, alors f(6) = 6 + 1 = 7. Function composition is a fundamental concept in functional programming: f(g(x)) means "apply g, alors apply f to le résultat".
+Débutant :
+• .get('c') sur {'a':1,'b':2} retourne None car 'c’ n’existe pas et aucun défaut n’est fourni.
 
-Composition de fonctions :
-• def compose(f, g): return lambda x: f(g(x)); compose(lambda x: x+1, lambda x: x*2)(3) renvoie 7
-• compose() combines two functions
-• Retourne new function: lambda x: f(g(x))
-• Applies g first: g(x), alors applies f: f(g(x))
-• Evaluates: f(g(3)) = f(6) = 7
+Intermédiaire :
+• None est la valeur de retour, pas une exception.
+
+Expert :
+• Distinction importante avec [] qui lèverait KeyError.
+
+Concepts clés :
+• Défaut implicite None, absence de clé.
+
+Distinctions clés :
+• get vs [] pour clé manquante.
 
 Fonctionnement :
-• compose(lambda x: x+1, lambda x: x*2) creates composed function
-• f = lambda x: x+1 (adds 1)
-• g = lambda x: x*2 (multiplies by 2)
-• compose() returns lambda x: f(g(x))
-• compose(..., ...)(3) calls with x = 3
-• Evaluates: g(3) = 3 * 2 = 6, alors f(6) = 6 + 1 = 7
-• Retourne : 7
+• Recherche échoue → retour None sans lever.
 
-Exemple :
-def compose(f, g): return lambda x: f(g(x))
-compose(lambda x: x+1, lambda x: x*2)(3)  # 7 (f(g(3)) = f(6) = 7)
-compose(lambda x: x*2, lambda x: x+1)(3)  # 8 (g(3) = 4, f(4) = 8)
+Exécution étape par étape :
+1. dict évalué.
+2. get('c') : pas de 'c'.
+3. Retour None.
 
-Utilisations courantes :
-• Composition de fonctions : def compose(f, g): return lambda x: f(g(x))
-• Combining functions: result = compose(func1, func2)(value)
-• Functional programming
-• Function chaining
+Ordre des opérations :
+• Méthode puis arguments.
 
-Exemple : If def compose(f, g): return lambda x: f(g(x)); compose(lambda x: x+1, lambda x: x*2)(3), alors compose(...)(3) renvoie 7 car it applies g first (3 * 2 = 6), alors applies f (6 + 1 = 7), so f(g(3)) = f(6) = 7.
-`,
-  1874: `Le map() fonction retourne un map objet (iterator), not a liste. map(lambda x: x*2, [1, 2, 3]) retourne un map objet car map() applies a fonction to chaque élément of an iterable and retourne un iterator qui produit the results lazily. The map objet is an iterator - it doesn't compute all valeurs immediately, but yields them on-demand quand vous itérez. To get a liste, you need to convert it avec liste().
+Cas d'utilisation courants :
+• Chaînage optionnel de lookups.
 
-map() renvoie un itérateur :
-• map(lambda x: x*2, [1, 2, 3]) retourne map objet
-• map() applies fonction to chaque élément
-• Retourne iterator (lazy evaluation)
-• Doesn't compute all valeurs immediately
-• Yields valeurs on-demand
+Cas limites :
+• Si la valeur stockée est réellement None, get ne permet pas de distinguer « absent » de « None » sans tester la clé avec l’opérateur in.
 
-Fonctionnement :
-• map(lambda x: x*2, [1, 2, 3]) creates map objet
-• map() applies lambda x: x*2 to chaque élément
-• Creates iterator qui produit: 2, 4, 6
-• L'itérateur ne calcule pas until iterated
-• Retourne map objet (iterator)
+Considérations de performance :
+• Une seule recherche.
 
-Exemple :
-map(lambda x: x*2, [1, 2, 3])  # <map objet> (iterator)
-liste(map(lambda x: x*2, [1, 2, 3])) # [2, 4, 6] (converted to liste)
-for x in map(lambda x: x*2, [1, 2, 3]):  # Itère : 2, 4, 6
-    print(x)
+Exemples :
+• d.get('missing', 0) → 0
 
-Utilisations courantes :
-• Mapping: map(func, items) (retourne iterator)
-• Converting: liste(map(func, items)) (converts to liste)
-• Lazy evaluation
-• Iterator creation
+Remarques :
+• Réponse : None.`,
+  1813: `.get('c', 0)
 
-Exemple : map(lambda x: x*2, [1, 2, 3]) retourne un map objet (iterator) car map() applies the fonction to chaque élément and retourne un iterator qui produit results on-demand, not a liste.
-`,
-  1875: `Le liste() fonction converts a map objet (iterator) to a liste. liste(map(lambda x: x*2, [1, 2, 3])) renvoie [2, 4, 6] car map() retourne un map objet that applies lambda x: x*2 to chaque élément of [1, 2, 3], and liste() consumes the iterator, collecting all valeurs into a liste. The map objet yields 2, 4, 6 when iterated, and liste() collects them into [2, 4, 6].
+Débutant :
+• Avec défaut 0, si la clé manque, .get retourne 0.
 
-liste() sur objet map :
-• liste(map(lambda x: x*2, [1, 2, 3])) renvoie [2, 4, 6]
-• map() retourne map objet (iterator)
-• liste() consumes iterator
-• Collects valeurs into liste
-• Creates liste: [2, 4, 6]
+Intermédiaire :
+• Le dict n’est pas modifié ; seule la valeur de retour change.
+
+Expert :
+• Le second argument est évalué à chaque appel (attention si c’est une expression coûteuse — préférer autre pattern si besoin).
+
+Concepts clés :
+• Valeur par défaut explicite, pas d’insertion de clé.
+
+Distinctions clés :
+• get(k, dflt) vs setdefault qui peut insérer.
 
 Fonctionnement :
-• map(lambda x: x*2, [1, 2, 3]) creates map objet
-• map objet yields: 2, 4, 6 (when iterated)
-• liste() itère sur map objet
-• Collects valeurs: 2, 4, 6
-• Retourne new liste: [2, 4, 6]
+• 'c' absente → retour 0.
 
-Exemple :
-liste(map(lambda x: x*2, [1, 2, 3]))  # [2, 4, 6] (converted to liste)
-liste(map(lambda x: x**2, [1, 2, 3])) # [1, 4, 9] (converted to liste)
-liste(map(str, [1, 2, 3]))            # ['1', '2', '3'] (converted to liste)
+Exécution étape par étape :
+1. dict puis get('c', 0).
+2. Absence de 'c'.
+3. Retour 0.
 
-Utilisations courantes :
-• Converting map to liste: liste(map(func, items))
-• Getting results: results = liste(map(transform, data))
-• Iterator consumption
-• List creation
+Ordre des opérations :
+• Les arguments sont évalués avant l’appel (0 est trivial).
 
-Exemple : liste(map(lambda x: x*2, [1, 2, 3])) renvoie [2, 4, 6] car map() retourne un map objet qui produit 2, 4, 6 when iterated, and liste() consumes the iterator, collecting all valeurs into a liste.
-`,
-  1876: `Le filter() fonction retourne un filter objet (iterator), not a liste. filter(lambda x: x > 2, [1, 2, 3, 4]) retourne un filter objet car filter() applies a predicate fonction to chaque élément of an iterable and retourne un iterator qui produit seulement le elements for which the predicate is True. The filter objet is an iterator - it doesn't compute all valeurs immediately, but yields them on-demand quand vous itérez. To get a liste, you need to convert it avec liste().
+Cas d'utilisation courants :
+• Compteurs : counts.get(word, 0) + 1.
 
-filter() renvoie un itérateur :
-• filter(lambda x: x > 2, [1, 2, 3, 4]) retourne filter objet
-• filter() applies predicate fonction to chaque élément
-• Retourne iterator (lazy evaluation)
-• Yields only elements where predicate is True
-• Doesn't compute all valeurs immediately
+Cas limites :
+• Si 'c' existait avec valeur None, get retournerait None, pas 0.
 
-Fonctionnement :
-• filter(lambda x: x > 2, [1, 2, 3, 4]) creates filter objet
-• filter() tests lambda x: x > 2 for chaque élément
-• Creates iterator qui produit: 3, 4 (where condition is True)
-• L'itérateur ne calcule pas until iterated
-• Retourne filter objet (iterator)
+Considérations de performance :
+• Identique à get à un argument si présent.
 
-Exemple :
-filter(lambda x: x > 2, [1, 2, 3, 4])  # <filter objet> (iterator)
-liste(filter(lambda x: x > 2, [1, 2, 3, 4])) # [3, 4] (converted to liste)
-for x in filter(lambda x: x > 2, [1, 2, 3, 4]):  # Itère : 3, 4
-    print(x)
+Exemples :
+• {'c': 5}.get('c', 0) → 5
 
-Utilisations courantes :
-• Filtering: filter(predicate, items) (retourne iterator)
-• Converting: liste(filter(predicate, items)) (converts to liste)
-• Lazy evaluation
-• Iterator creation
+Remarques :
+• Réponse : 0.`,
+  1814: `.get('a', 0) clé présente
 
-Exemple : filter(lambda x: x > 2, [1, 2, 3, 4]) retourne un filter objet (iterator) car filter() applies the predicate fonction to chaque élément and retourne un iterator qui produit seulement le elements where the predicate is True (3 and 4), not a liste.
-`,
-  1877: `Le liste() fonction converts a filter objet (iterator) to a liste. liste(filter(lambda x: x > 2, [1, 2, 3, 4])) renvoie [3, 4] car filter() retourne un filter objet that applies lambda x: x > 2 to chaque élément of [1, 2, 3, 4], and liste() consumes the iterator, collecting seulement le elements where the predicate is True into a liste. The filter objet yields 3, 4 when iterated (only elements where x > 2 is True), and liste() collects them into [3, 4].
+Débutant :
+• La clé 'a' existe, donc .get retourne sa valeur 1 ; le défaut 0 est ignoré.
 
-liste() sur objet filter :
-• liste(filter(lambda x: x > 2, [1, 2, 3, 4])) renvoie [3, 4]
-• filter() retourne filter objet (iterator)
-• liste() consumes iterator
-• Collects filtered valeurs into liste
-• Creates liste: [3, 4]
+Intermédiaire :
+• Le défaut n’est utilisé que si la clé est absente.
+
+Expert :
+• Pattern fréquent pour normaliser des entrées partielles tout en gardant une valeur par défaut seulement si la clé manque.
+
+Concepts clés :
+• Présence de clé prime sur le défaut.
+
+Distinctions clés :
+• Diffère de l’opérateur or qui traiterait 0 ou None comme « faux » selon contexte.
 
 Fonctionnement :
-• filter(lambda x: x > 2, [1, 2, 3, 4]) creates filter objet
-• filter objet yields: 3, 4 (where x > 2 is True)
-• liste() itère sur filter objet
-• Collects valeurs: 3, 4
-• Retourne new liste: [3, 4]
+• 'a' trouvée → 1.
 
-Exemple :
-liste(filter(lambda x: x > 2, [1, 2, 3, 4]))  # [3, 4] (converted to liste)
-liste(filter(lambda x: x % 2 == 0, [1, 2, 3, 4])) # [2, 4] (converted to liste)
-liste(filter(lambda x: len(x) > 3, ['a', 'ab', 'abc', 'abcd'])) # ['abcd'] (converted to liste)
+Exécution étape par étape :
+1. Recherche 'a'.
+2. Valeur 1 retournée.
 
-Utilisations courantes :
-• Converting filter to liste: liste(filter(predicate, items))
-• Getting filtered results: results = liste(filter(condition, data))
-• Iterator consumption
-• List creation
+Ordre des opérations :
+• Court-circuit logique interne : pas d’usage du défaut.
 
-Exemple : liste(filter(lambda x: x > 2, [1, 2, 3, 4])) renvoie [3, 4] car filter() retourne un filter objet qui produit only elements where x > 2 is True (3 and 4), and liste() consumes the iterator, collecting them into a liste.
-`,
-  1878: `Le reduce() fonction from functools accumulates valeurs by applying a fonction cumulatively to elements. from functools import reduce; reduce(lambda x, y: x + y, [1, 2, 3, 4]) renvoie 10 car reduce() applies lambda x, y: x + y cumulatively: first it adds 1 + 2 = 3, alors 3 + 3 = 6, alors 6 + 4 = 10. reduce() takes a fonction and an iterable, and repeatedly applies the fonction to the accumulated result and the next element, reducing the iterable to a single valeur.
+Cas d'utilisation courants :
+• Fusion « lire ou 0 » sans écraser une valeur 0 légitime stockée (ici la clé est présente).
 
-Fonction reduce() :
-• from functools import reduce; reduce(lambda x, y: x + y, [1, 2, 3, 4]) renvoie 10
-• reduce() accumulates valeurs using fonction
-• Applies fonction cumulatively: (1+2) → 3, (3+3) → 6, (6+4) → 10
-• Reduces iterable to single valeur
-• Retourne accumulated result: 10
+Cas limites :
+• Si la valeur était 0, get retournerait quand même 0 (correct).
 
-Fonctionnement :
-• reduce(lambda x, y: x + y, [1, 2, 3, 4]) starts avec first two elements
-• First: 1 + 2 = 3 (accumulated result)
-• Second: 3 + 3 = 6 (accumulated result)
-• Third: 6 + 4 = 10 (accumulated result)
-• Retourne : 10
+Considérations de performance :
+• Une recherche réussie.
 
-Exemple :
-from functools import reduce
-reduce(lambda x, y: x + y, [1, 2, 3, 4])  # 10 (1+2+3+4)
-reduce(lambda x, y: x * y, [1, 2, 3, 4])  # 24 (1*2*3*4)
-reduce(lambda x, y: x if x > y else y, [1, 3, 2, 4]) # 4 (max)
+Exemples :
+• {'a': 0}.get('a', 99) → 0
 
-Utilisations courantes :
-• Accumulating valeurs: reduce(func, items) (reduces to single valeur)
-• Cumulative operations: reduce(lambda x, y: x + y, items)
-• Functional reduction
-• Iterable reduction
+Remarques :
+• Réponse : 1.`,
+  1815: `setdefault clé déjà présente
 
-Exemple : from functools import reduce; reduce(lambda x, y: x + y, [1, 2, 3, 4]) renvoie 10 car reduce() applies the fonction cumulatively: (1+2) → 3, (3+3) → 6, (6+4) → 10, reducing the iterable to a single valeur.
-`,
-  1879: `Le sorted() fonction can take a key parameter for custom sorting. sorted([3, 1, 2], key=lambda x: -x) renvoie [3, 2, 1] car the key fonction lambda x: -x transforms chaque élément avant comparison. Here, key=lambda x: -x negates chaque élément, so comparisons use -3, -1, -2, which sorts as -3 < -1 < -2 (ascending by negated valeurs), resulting in [3, 2, 1] in descending order. The key fonction ne change pas the elements in le résultat - it only affects the comparison order.
+Débutant :
+• {'a': 1}.setdefault('a', 2) retourne 1 : la clé existe, rien n’est écrit.
 
-sorted() avec key :
-• sorted([3, 1, 2], key=lambda x: -x) renvoie [3, 2, 1]
-• key parameter transforms elements for comparison
-• lambda x: -x negates chaque élément
-• Sorts using negated valeurs: -3 < -1 < -2
-• Résultat : [3, 2, 1] (descending order)
+Intermédiaire :
+• setdefault insère default seulement si la clé manque ; ici 'a' est là.
+
+Expert :
+• Retourne toujours la valeur associée à la clé après l’opération (existante ou nouvellement insérée).
+
+Concepts clés :
+• Insertion conditionnelle, valeur existante préservée.
+
+Distinctions clés :
+• setdefault vs get : setdefault peut muter le dict si clé absente.
 
 Fonctionnement :
-• sorted() appelé avec [3, 1, 2], key=lambda x: -x
-• Applies key fonction: -3, -1, -2 (negated)
-• Compares using negated valeurs: -3 < -1 < -2
-• Sorts in descending order (car negated)
-• Retourne new liste: [3, 2, 1]
+• 'a' présente → retour 1, dict inchangé {'a':1}.
 
-Exemple :
-sorted([3, 1, 2], key=lambda x: -x)  # [3, 2, 1] (descending)
-sorted(['abc', 'a', 'ab'], key=len)  # ['a', 'ab', 'abc'] (by length)
-sorted([1, 2, 3], key=lambda x: x**2) # [1, 2, 3] (squares: 1 < 4 < 9)
+Exécution étape par étape :
+1. Vérification de 'a'.
+2. Trouvée → retour 1 sans assigner 2.
 
-Utilisations courantes :
-• Custom sorting: sorted(items, key=func)
-• Descending sort: sorted(items, key=lambda x: -x)
-• Transform-based sorting
-• Flexible sorting criteria
+Ordre des opérations :
+• Méthode sur l’objet dict mutable.
 
-Exemple : sorted([3, 1, 2], key=lambda x: -x) renvoie [3, 2, 1] car the key fonction negates chaque élément for comparison, causing the liste to be sorted in descending order (largest to smallest).
-`,
-  1880: `Le max() fonction can take a key parameter to find the element avec the maximum transformed valeur. max([1, 2, 3], key=lambda x: -x) renvoie 1 car the key fonction lambda x: -x transforms chaque élément avant comparison. Here, key=lambda x: -x negates chaque élément, so comparisons use -1, -2, -3, and max trouve le element avec the maximum negated valeur (which is -1, corresponding to element 1). The key fonction ne change pas the element returned - it only affects the comparison. Since max() retourne l'originale element (not the transformed valeur), it renvoie 1.
+Cas d'utilisation courants :
+• Initialiser des listes dans un dict de groupes : d.setdefault(k, []).append(x).
 
-max() avec key :
-• max([1, 2, 3], key=lambda x: -x) renvoie 1
-• key parameter transforms elements for comparison
-• lambda x: -x negates chaque élément
-• Compares using negated valeurs: -1, -2, -3
-• max finds maximum negated valeur: -1 (corresponds to element 1)
-• Retourne original element: 1
+Cas limites :
+• Attention : la valeur par défaut est le même objet si réutilisé (éviter [] mutable partagé en boucle naive).
 
-Fonctionnement :
-• max() appelé avec [1, 2, 3], key=lambda x: -x
-• Applies key fonction: -1, -2, -3 (negated)
-• Compares using negated valeurs: -1 > -2 > -3
-• max finds element avec maximum negated valeur: -1
-• -1 corresponds to original element 1
-• Retourne original element: 1
+Considérations de performance :
+• Une recherche ; pas d’insertion ici.
 
-Exemple :
-max([1, 2, 3], key=lambda x: -x)  # 1 (max negated valeur -1)
-max(['abc', 'a', 'ab'], key=len)  # 'abc' (max length 3)
-min([1, 2, 3], key=lambda x: -x)  # 3 (min negated valeur -3)
+Exemples :
+• {'a':1}.setdefault('a', 999) → 1
 
-Utilisations courantes :
-• Custom max: max(items, key=func)
-• Transform-based max: max(items, key=lambda x: transform(x))
-• Key-based selection
-• Flexible comparison
+Remarques :
+• Réponse : 1.`,
+  1816: `setdefault crée une entrée
 
-Exemple : max([1, 2, 3], key=lambda x: -x) renvoie 1 car the key fonction negates chaque élément for comparison, and max trouve le element avec the maximum negated valeur (-1, which corresponds to original element 1).
-`,
-  1881: `Functions ont un __name__ attribute qui contient the function's name. If def func(): pass; func.__name__, alors func.__name__ renvoie 'func' car __name__ is a special attribute that stocke le function's name as a string. This attribute is automatically set quand la fonction is defined using def. It's useful for debugging, introspection, or creating dynamic code that needs to know function names.
+Débutant :
+• {'a': 1}.setdefault('b', 2) retourne 2 et le dict devient {'a':1,'b':2}.
 
-Attribut __name__ :
-• def func(): pass; func.__name__ renvoie 'func'
-• __name__ contains function name as string
-• Automatically set when function defined
-• Retourne function name: 'func'
-• Useful for introspection
+Intermédiaire :
+• C’est à la fois lecture et écriture potentielle.
+
+Expert :
+• Atomique relativement à un accès test puis assign séparé en mono-thread (évite course simple dans du code synchrone basique).
+
+Concepts clés :
+• Insertion de 'b':2 si absent, retour de la valeur.
+
+Distinctions clés :
+• setdefault('b',2) vs get('b',2) : le second ne crée pas 'b'.
 
 Fonctionnement :
-• def func(): pass creates function definition
-• Python automatically sets func.__name__ = 'func'
-• __name__ attribute stores function name
-• func.__name__ accesses attribute
-• Retourne : 'func'
+• 'b' absent → enregistre 2, retourne 2.
 
-Exemple :
-def func(): pass
-func.__name__                # 'func' (function name)
-def my_function(): pass
-my_function.__name__         # 'my_function' (function name)
+Exécution étape par étape :
+1. Clé 'b' absente.
+2. Insertion (b,2).
+3. Retour 2.
 
-Utilisations courantes :
-• Introspection: print(func.__name__) (debugging)
-• Dynamic code: code that uses function names
-• Function attributes
-• Function metadata
+Ordre des opérations :
+• Mutation du dict pendant l’appel.
 
-Exemple : If def func(): pass; func.__name__, alors func.__name__ renvoie 'func' car __name__ is a special attribute that stocke le function's name as a string, automatically set quand la fonction is defined.
-`,
-  1882: `Functions ont un __doc__ attribute qui contient the function's docstring (documentation string). If def func(): """doc"""; pass; func.__doc__, alors func.__doc__ renvoie 'doc' car __doc__ is a special attribute that stocke le docstring - the string literal that appears as the first statement in the function body. Docstrings are utilisé pour documentation and are accessible via __doc__. If there's no docstring, __doc__ is None.
+Cas d'utilisation courants :
+• Premier accès qui doit créer une valeur par défaut.
 
-Attribut __doc__ :
-• def func(): """doc"""; pass; func.__doc__ renvoie 'doc'
-• __doc__ contains docstring (documentation string)
-• Docstring is first statement in function body
-• Retourne docstring: 'doc'
-• None if no docstring
+Cas limites :
+• Si default est mutable et partagé, effets de bord entre clés — utiliser factory ou copie.
 
-Fonctionnement :
-• def func(): """doc"""; pass creates function definition
-• """doc""" is docstring (first statement)
-• Python automatically sets func.__doc__ = 'doc'
-• __doc__ attribute stores docstring
-• func.__doc__ accesses attribute
-• Retourne : 'doc'
+Considérations de performance :
+• Une insertion supplémentaire vs simple get.
 
-Exemple :
-def func(): """doc"""; pass
-func.__doc__                # 'doc' (docstring)
-def func(): """C'est a function."""; pass
-func.__doc__                # 'C'est a function.' (docstring)
+Exemples :
+• d = {}; d.setdefault('x', 0) → 0 et d == {'x':0}
 
-Utilisations courantes :
-• Documentation: def func(): """doc"""; print(func.__doc__)
-• Introspection: help(func) uses __doc__
-• Function documentation
-• Docstring access
+Remarques :
+• Réponse affichée : 2 (valeur retournée par l’expression).`,
+  1817: `Différence get vs setdefault
 
-Exemple : If def func(): """doc"""; pass; func.__doc__, alors func.__doc__ renvoie 'doc' car __doc__ is a special attribute that stocke le docstring - the documentation string that appears as the first statement in the function body.
-`,
-  1883: `Le __doc__ attribute is None if a fonction n'a pas docstring. If def func(): pass; func.__doc__, alors func.__doc__ renvoie None car the fonction n'a pas docstring - there's no string literal as the first instruction in the fonction body. __doc__ only contains a valeur if a docstring is provided. If there's no docstring, __doc__ is None, not an empty string. C'est the default state for fonctions sans documentation.
+Débutant :
+• get ne modifie jamais le dict ; setdefault ajoute la clé avec la valeur par défaut si elle manque.
 
-__doc__ sans docstring :
-• def func(): pass; func.__doc__ renvoie None
-• Function n'a pas docstring
-• __doc__ attribute is None (not empty string)
-• Default state for fonctions sans documentation
-• Retourne None
+Intermédiaire :
+• Tous deux acceptent un défaut pour lecture, mais seul setdefault écrit.
+
+Expert :
+• Choix : get pour pure lecture ; setdefault pour « obtenir ou initialiser » en une opération.
+
+Concepts clés :
+• Pureté de lecture vs mutation, API dict.
+
+Distinctions clés :
+• Performance identique en ordre de grandeur ; sémantique différente.
 
 Fonctionnement :
-• def func(): pass creates fonction definition
-• No docstring in fonction body
-• Python sets func.__doc__ = None (default)
-• __doc__ attribute is None
-• func.__doc__ accesses attribute
-• Retourne : None
+• get : lookup ; setdefault : lookup puis insertion conditionnelle.
 
-Exemple :
-def func(): pass
-func.__doc__                # None (no docstring)
-def func(): """doc"""; pass
-func.__doc__                # 'doc' (has docstring)
-def func(): x = 1; renvoyer x
-func.__doc__                # None (no docstring)
+Exécution étape par étape :
+1. Identifier si la question porte sur effet de bord.
+2. Si effet de bord sur absence → setdefault ; sinon get.
 
-Utilisations courantes :
-• Checking docstring: if func.__doc__: print(func.__doc__)
-• Documentation check: has_doc = func.__doc__ is not None
-• Function documentation
-• Docstring checking
+Ordre des opérations :
+• N/A (conceptuel).
 
-Exemple : If def func(): pass; func.__doc__, alors func.__doc__ renvoie None car the fonction n'a pas docstring, so __doc__ is None (the default state for fonctions sans documentation).
-`,
-  1884: `Functions ont un __defaults__ attribute qui contient a tuple of default parameter values. If def func(x, y=2): pass; func.__defaults__, alors func.__defaults__ renvoie (2,) car __defaults__ stores default parameter values in a tuple, ordered from left to right for parameters with defaults. Only parameters with default values are included, in the order they appear. In this case, y=2 a un default value, so __defaults__ = (2,).
+Cas d'utilisation courants :
+• get pour JSON optionnel ; setdefault pour caches multi-valeurs.
 
-Attribut __defaults__ :
-• def func(x, y=2): pass; func.__defaults__ renvoie (2,)
-• __defaults__ contains tuple of default values
-• Only parameters with defaults included
-• Ordered from left to right
-• Retourne tuple: (2,)
+Cas limites :
+• Valeurs mutables par défaut : risque majeur avec setdefault et listes.
 
-Fonctionnement :
-• def func(x, y=2): pass creates function definition
-• Parameter x n'a pas default (not in __defaults__)
-• Parameter y has default value 2 (in __defaults__)
-• Python sets func.__defaults__ = (2,)
-• __defaults__ tuple contains: (2,)
-• Retourne : (2,)
+Considérations de performance :
+• Insérer coûte plus qu’un simple miss de get, mais souvent négligeable.
 
-Exemple :
-def func(x, y=2): pass
-func.__defaults__           # (2,) (only y has default)
-def func(x, y=2, z=3): pass
-func.__defaults__           # (2, 3) (y and z have defaults)
-def func(x): pass
-func.__defaults__           # None (no defaults)
+Exemples :
+• d={'a':1}; d.get('b',2); d → toujours {'a':1}
 
-Utilisations courantes :
-• Introspection: print(func.__defaults__) (check defaults)
-• Default values: defaults = func.__defaults__
-• Function attributes
-• Default parameter access
+Remarques :
+• La réponse attendue du QCM résume cette différence (get = pas de mutation ; setdefault = peut insérer).`,
+  1818: `pop('a') retire et renvoie
 
-Exemple : If def func(x, y=2): pass; func.__defaults__, alors func.__defaults__ renvoie (2,) car __defaults__ contains a tuple of default parameter values, and only y a un default value of 2.
-`,
-  1885: `Functions ont un __code__ attribute qui contient the function's code object. If def func(*args, **kwargs): pass; func.__code__, alors func.__code__ retourne un code object car __code__ is a special attribute that stocke le compiled bytecode and other metadata about the function's code. The code object contains information like the number of arguments, variable names, constants, etc. It's an internal Python object utilisé pour execution and introspection.
+Débutant :
+• {'a':1,'b':2}.pop('a') retourne 1 ; le dict devient {'b':2}.
 
-Attribut __code__ :
-• def func(*args, **kwargs): pass; func.__code__ returns code object
-• __code__ contains function's code object
-• Code object stores compiled bytecode
-• Contains metadata: arguments, variables, constants
-• Internal Python object
+Intermédiaire :
+• pop enlève la paire ; ce n’est pas seulement une lecture.
+
+Expert :
+• Deux signatures : pop(k) strict, pop(k, default) tolérant.
+
+Concepts clés :
+• Suppression par clé, valeur retournée, mutation in-place.
+
+Distinctions clés :
+• pop vs del d[k] : del ne retourne pas la valeur (expression None en statement del).
 
 Fonctionnement :
-• def func(*args, **kwargs): pass creates function definition
-• Python compiles function body to bytecode
-• Creates code object with bytecode and metadata
-• Python sets func.__code__ = code_object
-• __code__ attribute stores code object
-• func.__code__ accesses attribute
-• Retourne : code object
+• Trouve 'a', retire, renvoie 1.
 
-Exemple :
-def func(*args, **kwargs): pass
-func.__code__               # <code object> (code object)
-func.__code__.co_argcount   # 0 (number of arguments)
-func.__code__.co_varnames   # ('args', 'kwargs') (variable names)
+Exécution étape par étape :
+1. Localiser 'a'.
+2. Détacher la paire.
+3. Retourner 1.
 
-Utilisations courantes :
-• Introspection: func.__code__.co_varnames (variable names)
-• Code inspection: func.__code__.co_consts (constants)
-• Function internals
-• Bytecode access
+Ordre des opérations :
+• L’expression a pour valeur 1, effet de bord sur le dict.
 
-Exemple : If def func(*args, **kwargs): pass; func.__code__, alors func.__code__ retourne un code object car __code__ is a special attribute that stocke le compiled bytecode and metadata about the function's code.
-`,
-  1886: `Le callable() fonction checks if an objet is callable (peut être appelé like a fonction). If def func(): pass; callable(func), alors callable(func) renvoie True car func is a fonction objet, and fonctions are callable. callable() renvoie True for fonctions, méthodes, classes (which are callable to create instances), and any objet that implements __call__. It renvoie False for non-callable objets like integers, strings, listes, etc.
+Cas d'utilisation courants :
+• File d’attente dict : traiter et retirer une entrée.
 
-Fonction callable() :
-• def func(): pass; callable(func) renvoie True
-• callable() checks if objet is callable
-• Functions are callable
-• Retourne True for callable objets
-• Retourne False for non-callable objets
+Cas limites :
+• pop sur clé absente sans défaut → KeyError.
 
-Fonctionnement :
-• def func(): pass creates fonction objet
-• func is a fonction (callable)
-• callable(func) checks if func is callable
-• Functions are callable (peut être appelé)
-• Retourne : True
+Considérations de performance :
+• O(1) amortized typiquement.
 
-Exemple :
-def func(): pass
-callable(func)              # True (fonctions are callable)
-callable(5)                 # False (integers are not callable)
-callable(str)               # True (classes are callable)
+Exemples :
+• d.pop('x') après coup sur dict sans 'x' → erreur
 
-Utilisations courantes :
-• Checking callable: if callable(obj): obj()
-• Type checking: is_callable = callable(item)
-• Callable check
-• Object inspection
+Remarques :
+• Réponse : 1 (valeur de l’expression).`,
+  1819: `pop sans défaut, clé absente
 
-Exemple : If def func(): pass; callable(func), alors callable(func) renvoie True car fonctions are callable objets - they peut être appelé avec parentheses like func().
-`,
-  1887: `Integers are not callable objects. callable(5) renvoie False car integers cannot be called like functions - you cannot use 5() to call an integer. callable() renvoie True only for objects that peut être appelé (like functions, methods, classes), and renvoie False for non-callable objects like integers, strings, lists, dictionaries, etc. C'est useful for checking if an object is a function before trying to call it.
+Débutant :
+• .pop('c') lève KeyError sur {'a':1,'b':2}.
 
-callable() sur entier :
-• callable(5) renvoie False
-• Integers are not callable
-• Cannot call integer: 5() raises TypeError
-• callable() renvoie False for non-callable objects
-• Retourne False
+Intermédiaire :
+• Même famille d’erreur que d['c'].
+
+Expert :
+• pop doit retirer une paire ; sans paire, impossible d’honorer le contrat → exception.
+
+Concepts clés :
+• KeyError avec pop, symétrie avec [].
+
+Distinctions clés :
+• pop(k, default) évite l’erreur.
 
 Fonctionnement :
-• callable(5) checks if 5 is callable
-• 5 is an integer (not callable)
-• Integers cannot be called like functions
-• Cannot use 5() (raises TypeError)
-• Retourne : False
+• Recherche 'c' échoue avant toute suppression.
 
-Exemple :
-callable(5)                 # False (integers not callable)
-callable('hello')           # False (strings not callable)
-callable([1, 2, 3])         # False (lists not callable)
-callable(lambda x: x)       # True (functions callable)
+Exécution étape par étape :
+1. Tentative pop.
+2. Échec → KeyError.
 
-Utilisations courantes :
-• Type checking: if callable(obj): obj() else use obj
-• Safe calling: callable(func) and func()
-• Callable check
-• Object inspection
+Ordre des opérations :
+• Pas de valeur retournée si exception.
 
-Exemple : callable(5) renvoie False car integers are not callable objects - you cannot call an integer like a function, so callable() renvoie False for non-callable objects like integers.
-`,
-  1888: `Le type() fonction retourne le type of an objet. If def func(): renvoyer 1; type(func), alors type(func) retourne <classe 'fonction'> car func is a fonction objet, and fonctions are of type fonction. The type() fonction retourne le classe/type of an objet, and for fonctions, il retourne the fonction classe. C'est useful for type checking or introspection to determine if an objet is a fonction.
+Cas d'utilisation courants :
+• Code strict où clé manquante = bug.
 
-type() sur fonction :
-• def func(): renvoyer 1; type(func) retourne <classe 'fonction'>
-• type() retourne objet's type
-• Functions are of type fonction
-• Retourne fonction classe
-• Useful for type checking
+Cas limites :
+• Message d’erreur mentionne la clé.
 
-Fonctionnement :
-• def func(): renvoyer 1 creates fonction objet
-• func is a fonction objet
-• type(func) checks type of func
-• Functions are of type fonction
-• Retourne : <classe 'fonction'>
+Considérations de performance :
+• N/A.
 
-Exemple :
-def func(): renvoyer 1
-type(func)                  # <classe 'fonction'> (fonction type)
-type(5)                     # <classe 'int'> (integer type)
-type('hello')               # <classe 'str'> (string type)
+Exemples :
+• d.pop('missing', None) pour éviter l’erreur (hors question).
 
-Utilisations courantes :
-• Type checking: if type(obj) == type(lambda: None): ...
-• Type inspection: print(type(func))
-• Object type
-• Type identification
+Remarques :
+• Réponse : KeyError.`,
+  1820: `pop avec défaut
 
-Exemple : If def func(): renvoyer 1; type(func), alors type(func) retourne <classe 'fonction'> car fonctions are of type fonction, and type() retourne le classe/type of the objet.
-`,
-  1889: `Le hasattr() fonction checks if an objet a un specific attribute. If def func(): pass; hasattr(func, '__name__'), alors hasattr(func, '__name__') renvoie True car fonctions ont un __name__ attribute. hasattr(obj, attr) renvoie True if the objet has the attribute (whether it's defined or inherited), and False otherwise. It's useful for checking if an attribute exists avant accessing it to avoid AttributeError.
+Débutant :
+• .pop('c', 0) retourne 0 si 'c’ absent, sans modifier les paires existantes.
 
-Fonction hasattr() :
-• def func(): pass; hasattr(func, '__name__') renvoie True
-• hasattr() checks if objet has attribute
-• Functions have __name__ attribute
-• Retourne True if attribute exists
-• Retourne False if attribute n'existe pas
+Intermédiaire :
+• Le dict reste {'a':1,'b':2} après l’appel.
+
+Expert :
+• Utile pour consommer optionnellement une entrée : si présente, retire et retourne la vraie valeur ; sinon défaut.
+
+Concepts clés :
+• pop tolérant, pas de suppression si absent + défaut fourni.
+
+Distinctions clés :
+• vs pop('c') qui lève.
 
 Fonctionnement :
-• def func(): pass creates fonction objet
-• Functions have __name__ attribute automatically
-• hasattr(func, '__name__') checks if __name__ exists
-• Attribute exists (fonctions have __name__)
-• Retourne : True
+• Absence de 'c' → retour 0, aucune clé retirée.
 
-Exemple :
-def func(): pass
-hasattr(func, '__name__')   # True (fonctions have __name__)
-hasattr(func, '__doc__')    # True (fonctions have __doc__)
-hasattr(5, '__name__')      # False (integers n'a pas __name__)
+Exécution étape par étape :
+1. Lookup 'c'.
+2. Échec → retour second argument.
 
-Utilisations courantes :
-• Attribute checking: if hasattr(obj, 'attr'): use obj.attr
-• Safe access: hasattr(func, '__doc__') and func.__doc__
-• Attribute existence
-• Object inspection
+Ordre des opérations :
+• Évaluation de 0 avant l’appel.
 
-Exemple : If def func(): pass; hasattr(func, '__name__'), alors hasattr(func, '__name__') renvoie True car fonctions ont un __name__ attribute, and hasattr() checks if an objet a un specific attribute.
-`,
-  1890: `Functions can have custom attributes assigned to them. If def func(): pass; func.attr = 'value'; func.attr, alors func.attr returns 'value' car you can assign custom attributes to function objects just like any other Python object. Functions are objects, so they can have attributes. After assigning func.attr = 'value', the attribute 'attr' exists on the function object and can be accessed like any other attribute. C'est useful for storing metadata or state associated with a function.
+Cas d'utilisation courants :
+• Dépilement sécurisé de clés optionnelles.
 
-Attributs personnalisés des fonctions :
-• def func(): pass; func.attr = 'value'; func.attr returns 'value'
-• Functions can have custom attributes
-• Assignment: func.attr = 'value' creates attribute
-• Access: func.attr retrieves attribute value
-• Functions are objects (can have attributes)
+Cas limites :
+• Si 'c' existait, pop retournerait sa valeur et la retirerait (pas 0 sauf si valeur était 0).
 
-Fonctionnement :
-• def func(): pass creates function object
-• func.attr = 'value' assigns custom attribute
-• Attribute 'attr' created on function object
-• func.attr accesses attribute
-• Retourne : 'value'
+Considérations de performance :
+• Une recherche.
 
-Exemple :
-def func(): pass
-func.attr = 'value'         # Assigns custom attribute
-func.attr                   # 'value' (accesses attribute)
-func.count = 0              # Assigns another attribute
-func.count                  # 0 (accesses attribute)
+Exemples :
+• {'c':5}.pop('c',0) → 5 et retire
 
-Utilisations courantes :
-• Storing metadata: func.metadata = {'author': 'Alice'}
-• Function state: func.call_count = 0 (tracking)
-• Custom attributes
-• Function metadata
+Remarques :
+• Réponse : 0.`,
+  1821: `.keys()
 
-Exemple : If def func(): pass; func.attr = 'value'; func.attr, alors func.attr returns 'value' car functions can have custom attributes assigned to them, and func.attr = 'value' creates the attribute, which can alors be accessed.
-`,
-  1891: `Functions ont un __annotations__ attribute qui contient type hints (type annotations). If def func(x): return x; func.__annotations__, alors func.__annotations__ renvoie {} car the function n'a pas type hints, so __annotations__ is an empty dictionary. Type hints are optional annotations that indicate the expected types of parameters and return values, written using : for parameters and -> for return types. If there are no type hints, __annotations__ is an empty dictionary.
+Débutant :
+• .keys() renvoie une vue dynamique des clés du dict.
 
-__annotations__ without type hints:
-• def func(x): return x; func.__annotations__ renvoie {}
-• __annotations__ contains type hints as dictionary
-• No type hints in function (empty dict)
-• Default state: {} (empty dictionary)
-• Retourne : {}
+Intermédiaire :
+• La vue reflète les mutations ultérieures du dict (tant que le dict existe).
+
+Expert :
+• Itération et appartenance sur la vue restent cohérentes avec le dict sous-jacent.
+
+Concepts clés :
+• dict_keys, vue, pas une liste copiée.
+
+Distinctions clés :
+• list(d.keys()) matérialise une liste figée à l’instant t.
 
 Fonctionnement :
-• def func(x): return x creates function definition
-• No type hints provided (no : or ->)
-• Python sets func.__annotations__ = {} (empty dict)
-• __annotations__ attribute stores type hints
-• func.__annotations__ accesses attribute
-• Retourne : {}
+• Création d’un objet vue lié au dict.
 
-Exemple :
-def func(x): return x
-func.__annotations__       # {} (empty, no type hints)
-def func(x: int): return x
-func.__annotations__       # {'x': <class 'int'>} (has type hints)
+Exécution étape par étape :
+1. dict évalué.
+2. .keys() retourne la vue.
 
-Utilisations courantes :
-• Type hints: def func(x: int) -> int: (has annotations)
-• Type checking: def func(x): (no annotations, {} empty)
-• Function annotations
-• Type hint access
+Ordre des opérations :
+• Méthode sur instance.
 
-Exemple : If def func(x): return x; func.__annotations__, alors func.__annotations__ renvoie {} car the function n'a pas type hints, so __annotations__ is an empty dictionary (the default state).
-`,
-  1892: `Functions with type hints have them stored in __annotations__. If def func(x: int) -> int: return x; func.__annotations__, alors func.__annotations__ returns {'x': <class 'int'>, 'return': <class 'int'>} car __annotations__ stores type hints as a dictionary where keys are parameter names (like 'x') or 'return' for the return type, and values are the type annotations. Type hints are optional but useful for documentation and type checking tools.
+Cas d'utilisation courants :
+• Itérer for k in d: (équivaut à itérer les clés).
 
-__annotations__ with type hints:
-• def func(x: int) -> int: return x; func.__annotations__ returns {'x': <class 'int'>, 'return': <class 'int'>}
-• __annotations__ contains type hints as dictionary
-• 'x': <class 'int'> (parameter type hint)
-• 'return': <class 'int'> (return type hint)
-• Retourne dictionary of annotations
+Cas limites :
+• Modifier le dict pendant itération : comportement défini mais pièges (taille changeante).
 
-Fonctionnement :
-• def func(x: int) -> int: return x creates function definition
-• x: int is parameter type hint
-• -> int is return type hint
-• Python sets func.__annotations__ = {'x': int, 'return': int}
-• __annotations__ attribute stores type hints
-• func.__annotations__ accesses attribute
-• Retourne : {'x': <class 'int'>, 'return': <class 'int'>}
+Considérations de performance :
+• Éviter list() si une simple itération suffit.
 
-Exemple :
-def func(x: int) -> int: return x
-func.__annotations__       # {'x': <class 'int'>, 'return': <class 'int'>}
-def func(x: str, y: int) -> str: return x
-func.__annotations__       # {'x': <class 'str'>, 'y': <class 'int'>, 'return': <class 'str'>}
+Exemples :
+• set({'a':1}.keys()) → {'a'}
 
-Utilisations courantes :
-• Type hints: def func(x: int) -> int: (annotations)
-• Type checking: type hints for static analysis
-• Function documentation
-• Type hint access
+Remarques :
+• La réponse du QCM est le type « vue des clés », souvent décrit comme dict_keys / objet keys.`,
+  1822: `list(.keys())
 
-Exemple : If def func(x: int) -> int: return x; func.__annotations__, alors func.__annotations__ returns {'x': <class 'int'>, 'return': <class 'int'>} car __annotations__ stores type hints as a dictionary where 'x' maps to the parameter type and 'return' maps to the return type.
-`,
-  1893: `Calling a function with too many arguments raises a TypeError. If def func(x, y): return x + y; func(1, 2, 3), alors func(1, 2, 3) raises a TypeError car the function expects 2 arguments (x and y), but 3 arguments (1, 2, 3) are provided. Python requires that the number of arguments matches the number of parameters (unless using *args or default parameters). Too many or too few arguments causes a TypeError.
+Débutant :
+• list({'a':1,'b':2}.keys()) produit ['a','b'] en général (ordre d’insertion).
 
-Trop d'arguments :
-• def func(x, y): return x + y; func(1, 2, 3) raises TypeError
-• Function expects 2 arguments (x and y)
-• 3 arguments provided (1, 2, 3)
-• Too many arguments
-• Raises TypeError: func() takes 2 positional arguments but 3 were given
+Intermédiaire :
+• Nouvelle liste : copie des références aux clés au moment de l’appel.
+
+Expert :
+• Les clés restent les objets originaux (ex. str partagés).
+
+Concepts clés :
+• Matérialisation, ordre d’insertion préservé en 3.7+.
+
+Distinctions clés :
+• Liste vs vue : la liste ne se met pas à jour si le dict change après coup.
 
 Fonctionnement :
-• func(1, 2, 3) calls function func
-• Function expects 2 arguments (x, y)
-• 3 arguments provided: 1, 2, 3
-• First two arguments assigned: x=1, y=2
-• Third argument 3 n'a pas corresponding parameter
-• Raises TypeError
+• Itération sur la vue, construction de la liste.
 
-Exemple :
-def func(x, y): return x + y
-func(1, 2, 3)              # TypeError: func() takes 2 positional arguments but 3 were given
-func(1, 2)                 # 3 (correct number of arguments)
+Exécution étape par étape :
+1. Vue des clés.
+2. list() consomme l’itérable.
+3. ['a','b'].
 
-Utilisations courantes :
-• Understanding errors: too many arguments raises TypeError
-• Argument validation: ensure correct number of arguments
-• Function calls
-• Error handling
+Ordre des opérations :
+• D’abord .keys(), puis list().
 
-Exemple : If def func(x, y): return x + y; func(1, 2, 3), alors func(1, 2, 3) raises a TypeError car the function expects 2 arguments but 3 are provided, causing an error.
-`,
-  1894: `Calling a function with too few arguments raises a TypeError. If def func(x, y): return x + y; func(1), alors func(1) raises a TypeError car the function expects 2 arguments (x and y), but only 1 argument (1) is provided. Python requires that all required parameters (parameters without default values) receive arguments. Too few arguments means some required parameters are missing, causing a TypeError.
+Cas d'utilisation courants :
+• Trier les clés : sorted(d.keys()).
 
-Pas assez d'arguments :
-• def func(x, y): return x + y; func(1) raises TypeError
-• Function expects 2 arguments (x and y)
-• Only 1 argument provided (1)
-• Too few arguments
-• Raises TypeError: func() missing 1 required positional argument: 'y'
+Cas limites :
+• dict vide → [].
 
-Fonctionnement :
-• func(1) calls function func
-• Function expects 2 arguments (x, y)
-• Only 1 argument provided: 1
-• First argument assigned: x=1
-• Second parameter y n'a pas argument
-• Raises TypeError
+Considérations de performance :
+• O(n) temps et mémoire pour la liste.
 
-Exemple :
-def func(x, y): return x + y
-func(1)                     # TypeError: func() missing 1 required positional argument: 'y'
-func(1, 2)                  # 3 (correct number of arguments)
+Exemples :
+• list({}.keys()) → []
 
-Utilisations courantes :
-• Understanding errors: too few arguments raises TypeError
-• Argument validation: ensure all required arguments provided
-• Function calls
-• Error handling
+Remarques :
+• Réponse : liste des clés, typiquement ['a','b'].`,
+  1823: `.values()
 
-Exemple : If def func(x, y): return x + y; func(1), alors func(1) raises a TypeError car the function expects 2 arguments but only 1 is provided, causing an error for the missing required parameter y.
-`,
-  1895: `Keyword arguments can be in any order after positional arguments. If def func(x, y, z): return x + y + z; func(1, z=3, y=2), alors func(1, z=3, y=2) renvoie 6 car 1 est passé positionally to x, and z=3 and y=2 are keyword arguments that can be in any order. Keyword arguments n'a pas besoin to match the parameter order - they're matched by name, not position. So z=3 and y=2 can be in any order as long as they come after positional arguments.
+Débutant :
+• .values() est une vue sur les valeurs, dans l’ordre aligné sur les clés (insertion).
 
-Ordre des arguments nommés :
-• def func(x, y, z): return x + y + z; func(1, z=3, y=2) renvoie 6
-• 1 is positional argument (goes to x)
-• z=3 and y=2 are keyword arguments (l'ordre n'a pas d'importance)
-• Keyword arguments matched by name, not position
-• Retourne : 1 + 2 + 3 = 6
+Intermédiaire :
+• Les valeurs peuvent être dupliquées ; la vue peut grandir si le dict grandit.
+
+Expert :
+• x in d ne teste pas les valeurs — seulement les clés ; pour les valeurs il faut x in d.values() ou une boucle.
+
+Concepts clés :
+• dict_values, vue dynamique.
+
+Distinctions clés :
+• values vs keys vs items.
 
 Fonctionnement :
-• func(1, z=3, y=2) calls function func
-• First argument 1 is positional, assigned to x: x=1
-• z=3 est un argument mot-clé, assigned to z: z=3
-• y=2 is keyword argument, assigned to y: y=2
-• La fonction s'exécute : return x + y + z
-• Retourne : 1 + 2 + 3 = 6
+• Création vue liée au dict.
 
-Exemple :
-def func(x, y, z): return x + y + z
-func(1, z=3, y=2)          # 6 (keyword args in any order)
-func(1, y=2, z=3)          # 6 (same, different order)
-func(1, 2, 3)              # 6 (all positional)
+Exécution étape par étape :
+1. dict évalué.
+2. .values() retourné.
 
-Utilisations courantes :
-• Flexible calls: func(pos1, keyword2=value2, keyword3=value3)
-• Named arguments: func(value, param2=value2, param3=value3)
-• Keyword argument flexibility
-• Argument ordering
+Ordre des opérations :
+• Méthode.
 
-Exemple : If def func(x, y, z): return x + y + z; func(1, z=3, y=2), alors func(1, z=3, y=2) renvoie 6 car keyword arguments can be in any order after positional arguments - they're matched by name, not position.
-`,
-  1896: `You can mix positional and keyword arguments in a function call. If def func(x, y, z): return x + y + z; func(1, 2, z=3), alors func(1, 2, z=3) renvoie 6 car 1 and 2 sont passés positionally to x and y, and z=3 est passé as a keyword argument to z. Positional arguments must come before keyword arguments - you cannot ont un keyword argument followed by a positional argument. This mixing allows flexibility in function calls.
+Cas d'utilisation courants :
+• if target in d.values(): pour tester présence d’une valeur.
 
-Arguments mixtes :
-• def func(x, y, z): return x + y + z; func(1, 2, z=3) renvoie 6
-• 1, 2 are positional arguments (go to x, y)
-• z=3 est un argument mot-clé (goes to z)
-• Positional before keyword
-• Retourne : 1 + 2 + 3 = 6
+Cas limites :
+• Valeurs égales mais objets distincts : == peut différer de is.
 
-Fonctionnement :
-• func(1, 2, z=3) appelle la fonction func
-• First argument 1 is positional, assigned to x: x=1
-• Second argument 2 is positional, assigned to y: y=2
-• z=3 est un argument mot-clé, assigned to z: z=3
-• La fonction s'exécute : return x + y + z
-• Retourne : 1 + 2 + 3 = 6
+Considérations de performance :
+• Tester appartenance dans values est O(n).
 
-Exemple :
-def func(x, y, z): return x + y + z
-func(1, 2, z=3)            # 6 (mixed: pos1, pos2, keyword3)
-func(1, z=3, y=2)          # 6 (mixed: pos1, keyword2, keyword3)
-func(1, 2, 3)              # 6 (all positional)
+Exemples :
+• sum({'a':1,'b':2}.values()) → 3
 
-Utilisations courantes :
-• Flexible calls: func(pos1, pos2, keyword3=value)
-• Arguments mixtes : func(required1, keyword2=value2)
-• Positional and keyword mixing
-• Function call flexibility
+Remarques :
+• Réponse : vue des valeurs (type values).`,
+  1824: `list(.values())
 
-Exemple : If def func(x, y, z): return x + y + z; func(1, 2, z=3), alors func(1, 2, z=3) renvoie 6 car you can mix positional arguments (1, 2) and keyword arguments (z=3), with positional arguments coming first.
-`,
-  1897: `Positional arguments cannot come after keyword arguments in a function call. If def func(x, y, z): return x + y + z; func(1, z=3, 2), alors func(1, z=3, 2) raises a SyntaxError car the positional argument 2 comes après le keyword argument z=3. Python requires that all positional arguments come before keyword arguments - you cannot ont un keyword argument followed by a positional argument. Cela empêche ambiguity about which parameters get which arguments.
+Débutant :
+• Liste matérialisée des valeurs, ex. [1,2] pour {'a':1,'b':2}.
 
-Positionnel après le nommé :
-• def func(x, y, z): return x + y + z; func(1, z=3, 2) raises SyntaxError
-• 1 is positional argument
-• z=3 est un argument mot-clé
-• 2 is positional argument (comes after keyword)
-• Invalid: positional after keyword
-• Raises SyntaxError: positional argument follows keyword argument
+Intermédiaire :
+• L’ordre suit celui des paires dans le dict.
+
+Expert :
+• Copie superficielle : les objets valeur sont les mêmes références.
+
+Concepts clés :
+• Conversion vue → liste, ordre d’insertion.
+
+Distinctions clés :
+• Deux appels list(d.values()) après mutation peuvent différer.
 
 Fonctionnement :
-• func(1, z=3, 2) attempts to call function func
-• First argument 1 is positional, assigned to x: x=1
-• z=3 est un argument mot-clé, assigned to z: z=3
-• 2 is positional argument, but comes after keyword argument
-• Invalid syntax (positional after keyword)
-• Raises SyntaxError
+• Itération sur les valeurs, append dans la liste.
 
-Exemple :
-def func(x, y, z): return x + y + z
-func(1, z=3, 2)            # SyntaxError: positional argument follows keyword argument
-func(1, 2, z=3)            # 6 (valid: positional before keyword)
+Exécution étape par étape :
+1. Vue values.
+2. list construit [1,2].
 
-Utilisations courantes :
-• Understanding syntax: positional before keyword
-• Argument ordering: all positional, alors all keyword
-• Syntax error avoidance
-• Function call rules
+Ordre des opérations :
+• values puis list.
 
-Exemple : If def func(x, y, z): return x + y + z; func(1, z=3, 2), alors func(1, z=3, 2) raises a SyntaxError car positional arguments cannot come after keyword arguments - all positional arguments must come first.
-`,
-  1898: `Parameters after *args are keyword-only - they can only be passé comme keyword arguments. If def func(*args, x): return args, x; func(1, 2, x=3), alors func(1, 2, x=3) renvoie ((1, 2), 3) car *args collecte les arguments positionnels (1, 2) into a tuple, and x doit être passé as a keyword argument (x=3). Parameters after *args cannot be passed positionally - they're keyword-only parameters. C'est enforced by Python's syntax: after *args, all following parameters doit être mot-clé-only.
+Cas d'utilisation courants :
+• Passer les valeurs à une API attendant une liste.
 
-Paramètre keyword-only après *args :
-• def func(*args, x): return args, x; func(1, 2, x=3) renvoie ((1, 2), 3)
-• *args collecte les arguments positionnels (1, 2)
-• x est mot-clé uniquement parameter (after *args)
-• x doit être passé as keyword: x=3
-• Retourne tuple: (args, x) = ((1, 2), 3)
+Cas limites :
+• Dict avec valeurs non ordonnées conceptuellement : l’ordre est celui du dict, pas tri mathématique.
 
-Fonctionnement :
-• func(1, 2, x=3) calls function func
-• Arguments 1, 2 are positional, collected into *args: args = (1, 2)
-• x=3 is keyword argument, assigned to x: x=3
-• La fonction s'exécute : return args, x
-• Retourne : ((1, 2), 3)
+Considérations de performance :
+• O(n).
 
-Exemple :
-def func(*args, x): return args, x
-func(1, 2, x=3)            # ((1, 2), 3) (x doit être mot-clé)
-func(1, 2, 3)              # TypeError (x doit être mot-clé)
-func(x=3)                  # ((), 3) (args empty, x keyword)
+Exemples :
+• list({'x':10}.values()) → [10]
 
-Utilisations courantes :
-• Paramètres keyword-only : def func(*args, keyword_only): ...
-• Forcing keywords: def process(*items, strict=True): ...
-• Restrictions sur les paramètres
-• Keyword-only enforcement
+Remarques :
+• Réponse : [1, 2] (ordre insertion paires a puis b).`,
+  1825: `.items()
 
-Exemple : If def func(*args, x): return args, x; func(1, 2, x=3), alors func(1, 2, x=3) renvoie ((1, 2), 3) car *args collecte les arguments positionnels (1, 2), and x is a keyword-only parameter (doit être passé as x=3) since it comes after *args.
-`,
-  1899: `Parameters after a bare * are keyword-only - they can only be passé comme keyword arguments. If def func(x, *, y): return x + y; func(1, y=2), alors func(1, y=2) renvoie 3 car x est passé positionally (1), and y est passé as a keyword argument (y=2) car it comes après le bare *. The bare * acts as a separator - all parameters after it doit être mot-clé-only. This forces certain parameters to be passed by name, making function calls more explicit.
+Débutant :
+• .items() fournit des paires (clé, valeur) une à une via itération.
 
-Paramètres keyword-only :
-• def func(x, *, y): return x + y; func(1, y=2) renvoie 3
-• x est régulier parameter (peut être positionnel)
-• * separates parameters
-• y est mot-clé uniquement parameter (after *)
-• y doit être passé as keyword: y=2
-• Retourne : 1 + 2 = 3
+Intermédiaire :
+• Chaque élément se comporte comme un tuple de longueur 2.
+
+Expert :
+• Vue dynamique : modification du dict visible lors d’itérations ultérieures.
+
+Concepts clés :
+• dict_items, paires clé-valeur.
+
+Distinctions clés :
+• items vs zip(d.keys(), d.values()) — proche mais items est la API idiomatique.
 
 Fonctionnement :
-• func(1, y=2) calls function func
-• L'argument 1 est positionnel, assigned to x: x=1
-• y=2 is keyword argument, assigned to y: y=2
-• y doit être mot-clé (comes after *)
-• La fonction s'exécute : return x + y
-• Retourne : 1 + 2 = 3
+• Vue sur entrées du dict.
 
-Exemple :
-def func(x, *, y): return x + y
-func(1, y=2)                # 3 (y doit être mot-clé)
-func(1, 2)                  # TypeError (y doit être mot-clé)
-func(x=1, y=2)              # 3 (both keyword, but y required keyword)
+Exécution étape par étape :
+1. dict.
+2. .items().
 
-Utilisations courantes :
-• Paramètres keyword-only : def process(data, *, strict=True): ...
-• Forcing keywords: def create(*, name, value): ... (all keyword-only)
-• Restrictions sur les paramètres
-• Keyword-only enforcement
+Ordre des opérations :
+• Méthode.
 
-Exemple : If def func(x, *, y): return x + y; func(1, y=2), alors func(1, y=2) renvoie 3 car x est passé positionally (1), and y doit être passé as a keyword argument (y=2) since it comes après le bare *, making it keyword-only.
-`,
-  1900: `Parameters before / are positional-only, and parameters after * are keyword-only. If def func(x, /, y, *, z): return x + y + z; func(1, 2, z=3), alors func(1, 2, z=3) renvoie 6 car x est positionnel uniquement (doit être passé positionally), y est régulier (peut être positionnel or keyword), and z est mot-clé uniquement (doit être passé as keyword). The / separates positional-only parameters from regular parameters, and * separates regular parameters from keyword-only parameters. Cela donne fine-grained control over how parameters peut être passé.
+Cas d'utilisation courants :
+• for k, v in d.items(): pour parcourir clés et valeurs.
 
-Positionnel-only et keyword-only :
-• def func(x, /, y, *, z): return x + y + z; func(1, 2, z=3) renvoie 6
-• x est positionnel uniquement (before /, doit être positionnel)
-• y est régulier (between / and *, peut être positionnel or keyword)
-• z est mot-clé uniquement (after *, doit être mot-clé)
-• Retourne : 1 + 2 + 3 = 6
+Cas limites :
+• Itération + mutation du même dict : suivre les règles du langage (certaines modifications autorisées, d’autres non).
+
+Considérations de performance :
+• Itérer items évite deux recherches par clé.
+
+Exemples :
+• len(list({'a':1}.items())) → 1
+
+Remarques :
+• Réponse : vue items (objet items).`,
+  1826: `list(.items())
+
+Débutant :
+• Liste de tuples (clé, valeur), ex. [('a',1),('b',2)].
+
+Intermédiaire :
+• Utile pour sérialiser ou trier par clé/valeur hors du dict.
+
+Expert :
+• Les tuples contiennent références ; modifier un objet mutable valeur affecte le dict.
+
+Concepts clés :
+• Matérialisation des paires, ordre d’insertion.
+
+Distinctions clés :
+• Liste figée vs vue live.
 
 Fonctionnement :
-• func(1, 2, z=3) appelle la fonction func
-• L'argument 1 est positionnel, assigned to x: x=1 (positional-only)
-• L'argument 2 est positionnel, assigned to y: y=2 (regular, peut être positionnel)
-• z=3 est un argument mot-clé, assigned to z: z=3 (keyword-only)
-• La fonction s'exécute : return x + y + z
-• Retourne : 1 + 2 + 3 = 6
+• Itération items → liste.
 
-Exemple :
-def func(x, /, y, *, z): return x + y + z
-func(1, 2, z=3)            # 6 (x positional-only, y regular, z keyword-only)
-func(1, y=2, z=3)          # 6 (x positional-only, y keyword, z keyword-only)
-func(x=1, 2, z=3)          # TypeError (x cannot be keyword)
+Exécution étape par étape :
+1. items().
+2. list(...) collecte.
 
-Utilisations courantes :
-• Positional-only: def process(data, /, options): ... (data positional-only)
-• Keyword-only: def create(*, name, value): ... (all keyword-only)
-• Restrictions sur les paramètres
-• Contrôle granulaire
+Ordre des opérations :
+• Comme pour keys/values.
 
-Exemple : If def func(x, /, y, *, z): return x + y + z; func(1, 2, z=3), alors func(1, 2, z=3) renvoie 6 car x est positionnel uniquement (doit être positionnel), y est régulier (peut être positionnel or keyword), and z est mot-clé uniquement (doit être mot-clé), so 1 and 2 sont passés positionally and z=3 est passé as a keyword.
-`,
+Cas d'utilisation courants :
+• sorted(d.items(), key=lambda kv: kv[1]) pour tri par valeur.
+
+Cas limites :
+• Gros dicts : coût mémoire de la liste complète.
+
+Considérations de performance :
+• O(n) mémoire.
+
+Exemples :
+• dict([('a',1)]).items() en liste → [('a',1)]
+
+Remarques :
+• Réponse : liste des paires dans l’ordre du dict.`,
+  1827: `'a' in dict
+
+Débutant :
+• 'a' in {'a':1,'b':2} est True : in teste l’appartenance des clés.
+
+Intermédiaire :
+• Ce n’est pas une recherche dans les valeurs.
+
+Expert :
+• Complexité moyenne O(1) comme un accès.
+
+Concepts clés :
+• Membership sur clés, opérateur in.
+
+Distinctions clés :
+• 1 in d est False ici (1 n’est pas une clé).
+
+Fonctionnement :
+• Hachage de 'a', recherche dans la table des clés.
+
+Exécution étape par étape :
+1. Évaluation du dict.
+2. Test in avec 'a'.
+3. True.
+
+Ordre des opérations :
+• Operandes gauche puis droit selon grammaire in.
+
+Cas d'utilisation courants :
+• if 'debug' in os.environ:
+
+Cas limites :
+• Clé hachable requise ; valeur de test doit être hachable pour dict.
+
+Considérations de performance :
+• Préférer in à try/KeyError pour branche fréquente parfois discutable selon style.
+
+Exemples :
+• 'x' in {'x':0} → True
+
+Remarques :
+• Réponse : True.`,
+  1828: `1 in dict — clés seulement
+
+Débutant :
+• 1 in {'a':1,'b':2} est False : les clés sont 'a' et 'b', pas l’entier 1.
+
+Intermédiaire :
+• La valeur 1 est ignorée par in sur le dict direct.
+
+Expert :
+• Piège classique pour débutants venant des listes.
+
+Concepts clés :
+• Sémantique de in sur dict = clés uniquement.
+
+Distinctions clés :
+• 1 in d.values() serait True ici.
+
+Fonctionnement :
+• Recherche de la clé 1 → absent.
+
+Exécution étape par étape :
+1. dict évalué.
+2. Test clé 1.
+3. False.
+
+Ordre des opérations :
+• in après dict.
+
+Cas d'utilisation courants :
+• Toujours préciser .values() ou .items() si on cherche une valeur.
+
+Cas limites :
+• dict avec clé entière 1 : alors 1 in d serait True.
+
+Considérations de performance :
+• O(1) moyen.
+
+Exemples :
+• 2 in {'a':2} → False
+
+Remarques :
+• Réponse : False.`,
+  1829: `1 in .values()
+
+Débutant :
+• 1 est une valeur du dict, donc 1 in d.values() est True.
+
+Intermédiaire :
+• Linear scan ou structure interne selon implémentation — souvent O(n) pour values.
+
+Expert :
+• Pour grandes structures, indexer par valeur inverse si besoin fréquent.
+
+Concepts clés :
+• Membership sur valeurs, pas sur clés.
+
+Distinctions clés :
+• Complément de la question 1828.
+
+Fonctionnement :
+• Parcourt les valeurs jusqu’à trouver 1.
+
+Exécution étape par étape :
+1. Vue values.
+2. Test appartenance 1.
+3. True.
+
+Ordre des opérations :
+• d puis .values() puis in.
+
+Cas d'utilisation courants :
+• Vérifier si un utilisateur est dans un mapping inversé mal modélisé (mieux : structure adaptée).
+
+Cas limites :
+• Égalité par == ; 1 vs 1.0 selon types.
+
+Considérations de performance :
+• O(n) sur le nombre de valeurs.
+
+Exemples :
+• 99 in {0:99}.values() → True
+
+Remarques :
+• Réponse : True.`,
+  1830: `Tuple dans .items()
+
+Débutant :
+• ('a',1) in {'a':1,'b':2}.items() est True : items se comporte comme ensemble de paires.
+
+Intermédiaire :
+• L’ordre dans le tuple doit correspondre (clé, valeur).
+
+Expert :
+• Chaque élément de la vue items est un tuple-like de longueur 2.
+
+Concepts clés :
+• Membership sur paires clé-valeur.
+
+Distinctions clés :
+• ('a',1) in d serait False (in d teste seulement clés).
+
+Fonctionnement :
+• Itération ou recherche équivalente sur les paires exposées.
+
+Exécution étape par étape :
+1. items() sur le dict.
+2. Test ('a',1) in vue.
+3. True.
+
+Ordre des opérations :
+• Création vue puis membership.
+
+Cas d'utilisation courants :
+• Vérifier présence exacte d’une association.
+
+Cas limites :
+• Objet valeur non égal au tuple testé → False.
+
+Considérations de performance :
+• Souvent O(n).
+
+Exemples :
+• ('b',2) in même dict → True
+
+Remarques :
+• Réponse : True.`,
+  1831: `Assignation nouvelle clé
+
+Débutant :
+• d = {'a':1}; d['b']=2; d vaut {'a':1,'b':2}.
+
+Intermédiaire :
+• Mutation in-place du même objet référencé par d.
+
+Expert :
+• Si une autre variable pointait vers le même dict, elle voit aussi 'b'.
+
+Concepts clés :
+• Insertion par [] avec assignation.
+
+Distinctions clés :
+• vs création d’un nouveau dict par union ou littéral.
+
+Fonctionnement :
+• __setitem__ sur 'b' avec valeur 2.
+
+Exécution étape par étape :
+1. Créer d.
+2. Assigner clé 'b'.
+3. d affiché avec deux clés.
+
+Ordre des opérations :
+• Statements exécutés de gauche à droite, séquentiellement.
+
+Cas d'utilisation courants :
+• Construire un dict au fil de l’eau.
+
+Cas limites :
+• Clé déjà présente : écrasement (voir 1832).
+
+Considérations de performance :
+• Insertion amortized O(1).
+
+Exemples :
+• d['b']=2 après d={'a':1}
+
+Remarques :
+• Réponse : dict à deux clés a et b.`,
+  1832: `Écrasement de clé
+
+Débutant :
+• d['a']=2 remplace l’ancienne valeur 1.
+
+Intermédiaire :
+• Toujours le même objet dict, une seule clé 'a'.
+
+Expert :
+• L’ancienne valeur 1 peut être garbage-collectée si plus référencée.
+
+Concepts clés :
+• Mise à jour par assignation [].
+
+Distinctions clés :
+• vs setdefault qui ne remplace pas si présent avec autre logique.
+
+Fonctionnement :
+• Même emplacement de clé, nouvelle valeur 2.
+
+Exécution étape par étape :
+1. d = {'a':1}.
+2. d['a']=2.
+3. d == {'a':2}.
+
+Ordre des opérations :
+• Assignation après création.
+
+Cas d'utilisation courants :
+• Compteurs : counts[k] = counts.get(k,0)+1 (variantes).
+
+Cas limites :
+• Si la valeur était mutable partagée, attention aux alias.
+
+Considérations de performance :
+• Remplacement O(1) moyen.
+
+Exemples :
+• {'a':1}; d['a']=2 → {'a':2}
+
+Remarques :
+• Réponse : {'a': 2} (selon formulation du QCM).`,
+  1833: `update() valeur de retour
+
+Débutant :
+• {'a':1}.update({'b':2}) retourne None : update mute sur place.
+
+Intermédiaire :
+• Comme list.sort() vs sorted() : pas de nouvel objet dict retourné.
+
+Expert :
+• Chaîner .update(...) dans une expression renvoie None, piège fréquent.
+
+Concepts clés :
+• API in-place, retour None.
+
+Distinctions clés :
+• {**a,**b} ou | en 3.9+ produit un nouveau dict (selon syntaxe).
+
+Fonctionnement :
+• Méthode update termine avec return implicite None.
+
+Exécution étape par étape :
+1. Dict receveur {'a':1}.
+2. Fusion {'b':2}.
+3. Expression a pour valeur None.
+
+Ordre des opérations :
+• Effet de bord puis résultat None.
+
+Cas d'utilisation courants :
+• Fusionner sans rebinder : d.update(autre).
+
+Cas limites :
+• Ne pas faire return d.update(...) en espérant le dict.
+
+Considérations de performance :
+• Souvent O(taille de l’autre mapping).
+
+Exemples :
+• x = {}.update({'a':1}); x → None
+
+Remarques :
+• Réponse : None.`,
+  1834: `Séquence avec update sur variable
+
+Débutant :
+• Après d.update({'b':2}), d contient les deux clés.
+
+Intermédiaire :
+• La dernière expression du snippet est souvent la valeur de d affichée au REPL selon formulation.
+
+Expert :
+• update accepte aussi itérables de paires et kwargs supplémentaires.
+
+Concepts clés :
+• Mutation observée via variable d.
+
+Distinctions clés :
+• Résultat None de update vs contenu de d.
+
+Fonctionnement :
+• Fusion in-place.
+
+Exécution étape par étape :
+1. d = {'a':1}.
+2. d.update({'b':2}) → None.
+3. d → {'a':1,'b':2}.
+
+Ordre des opérations :
+• Statements séquentiels.
+
+Cas d'utilisation courants :
+• Agrégation de plusieurs sources dans un dict.
+
+Cas limites :
+• Clés en conflit : valeur du second mapping gagne (pour même clé).
+
+Considérations de performance :
+• Linéaire en nombre de nouvelles paires.
+
+Exemples :
+• id(d) stable avant/après update
+
+Remarques :
+• Réponse attendue : {'a': 1, 'b': 2}.`,
+  1835: `update écrase une clé
+
+Débutant :
+• d.update({'a':2}) remplace 1 par 2 pour la clé 'a'.
+
+Intermédiaire :
+• Une seule clé 'a' subsiste avec valeur 2.
+
+Expert :
+• update peut recevoir plusieurs sources ; ordre de fusion détermine le gagnant.
+
+Concepts clés :
+• Écrasement de valeur existante via update.
+
+Distinctions clés :
+• vs setdefault qui ne remplace pas une clé présente.
+
+Fonctionnement :
+• Pour clé 'a' existante, nouvelle valeur 2.
+
+Exécution étape par étape :
+1. d={'a':1}.
+2. update({'a':2}).
+3. d={'a':2}.
+
+Ordre des opérations :
+• update applique chaque paire.
+
+Cas d'utilisation courants :
+• Patch de configuration partielle.
+
+Cas limites :
+• Fusion de dicts imbriqués : update superficiel, pas récursif.
+
+Considérations de performance :
+• O(1) par clé mise à jour en moyenne.
+
+Exemples :
+• d={'a':1,'b':3}; d.update({'a':2}) → {'a':2,'b':3}
+
+Remarques :
+• Réponse : {'a': 2}.`,
+  1836: `popitem() sur deux paires
+
+Débutant :
+• popitem() enlève une paire (clé, valeur) du dict et la retourne sous forme de tuple.
+
+Intermédiaire :
+• Depuis Python 3.7, l’ordre d’insertion est garanti : popitem() retire en général la dernière paire insérée (comportement LIFO sur cet ordre).
+
+Expert :
+• Avant 3.7, l’ordre n’était pas garanti pour les dicts ; le QCM couvre le cas usuel 3.7+ avec {'a':1,'b':2}.
+
+Concepts clés :
+• popitem, mutation in-place, tuple (clé, valeur), ordre d’insertion.
+
+Distinctions clés :
+• popitem() sans argument vs pop('a') qui cible une clé précise.
+
+Fonctionnement :
+• Pour {'a': 1, 'b': 2}, 'a' est inséré avant 'b' ; la dernière insérée est 'b', donc popitem() retourne souvent ('b', 2) et laisse {'a': 1}.
+
+Exécution étape par étape :
+1. Dict évalué avec deux entrées.
+2. popitem() choisit la dernière paire selon l’ordre d’insertion (3.7+).
+3. Retour d’un tuple et retrait de cette paire dans le dict.
+
+Ordre des opérations :
+• Appel de méthode sur l’objet dict ; effet de bord immédiat.
+
+Cas d'utilisation courants :
+• Parcourir et vider un dict comme une pile de paires (patterns spécifiques ; souvent deque préférable pour une vraie pile).
+
+Cas limites :
+• Dict vide : KeyError.
+
+Considérations de performance :
+• En pratique O(1) amorti sur CPython pour la suppression d’une paire.
+
+Exemples :
+• d = {'a': 1, 'b': 2}; d.popitem() → souvent ('b', 2); d → {'a': 1}
+
+Remarques :
+• La bonne réponse du quiz correspond à « ('b', 2) ou ('a', 1) » selon les options : en 3.7+ c’est typiquement ('b', 2) pour ce littéral.`,
+  1837: `popitem() une seule entrée
+
+Débutant :
+• Sur {'a':1}, popitem() retourne ('a',1) et laisse {}.
+
+Intermédiaire :
+• Après coup, dict vide ; un second popitem lève KeyError.
+
+Expert :
+• Utile pour dépiler des piles implémentées par dict ordonné (pattern rare ; deque souvent préférable).
+
+Concepts clés :
+• Dernière (seule) paire consommée.
+
+Distinctions clés :
+• popitem() sans argument seulement.
+
+Fonctionnement :
+• Retire l’unique paire.
+
+Exécution étape par étape :
+1. Un élément.
+2. popitem → ('a',1).
+3. dict {}.
+
+Ordre des opérations :
+• Mutation immédiate.
+
+Cas d'utilisation courants :
+• Vider un dict par étapes.
+
+Cas limites :
+• Dict vide → KeyError.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• {'a':1}.popitem() → ('a',1)
+
+Remarques :
+• Réponse : ('a', 1) ou équivalent selon options.`,
+  1838: `popitem() sur dict vide
+
+Débutant :
+• {}.popitem() lève KeyError : rien à retirer.
+
+Intermédiaire :
+• Même famille que pop sur clé absente.
+
+Expert :
+• Tester if d: avant popitem ou try/except.
+
+Concepts clés :
+• Erreur sur conteneur vide.
+
+Distinctions clés :
+• popitem ne prend pas de défaut (pas de popitem(default)).
+
+Fonctionnement :
+• Échec immédiat.
+
+Exécution étape par étape :
+1. Dict vide.
+2. popitem → KeyError.
+
+Ordre des opérations :
+• Exception.
+
+Cas d'utilisation courants :
+• Boucles while d: k,v = d.popitem().
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• while d: d.popitem()
+
+Remarques :
+• Réponse : KeyError.`,
+  1839: `clear() retour
+
+Débutant :
+• .clear() retourne None après avoir vidé le dict.
+
+Intermédiaire :
+• L’objet dict existe toujours, seulement sans paires.
+
+Expert :
+• Partage d’alias : tous les référents voient {}.
+
+Concepts clés :
+• Mutation in-place, retour None.
+
+Distinctions clés :
+• clear vs réassigner d = {} (identité d’objet différente si autre alias).
+
+Fonctionnement :
+• Supprime toutes les entrées, return None.
+
+Exécution étape par étape :
+1. clear appelé.
+2. Dict vide.
+3. None retourné.
+
+Ordre des opérations :
+• Expression vaut None.
+
+Cas d'utilisation courants :
+• Réinitialiser un cache réutilisé.
+
+Cas limites :
+• clear sur {} reste valide.
+
+Considérations de performance :
+• O(n) nombre d’entrées.
+
+Exemples :
+• d.clear(); print(d) → {}
+
+Remarques :
+• Réponse : None.`,
+  1840: `clear() via variable
+
+Débutant :
+• d.clear() puis d est {}.
+
+Intermédiaire :
+• Même objet qu’avant clear (id stable en général).
+
+Expert :
+• Si b = a et a.clear(), b voit aussi vide.
+
+Concepts clés :
+• Vidage in-place.
+
+Distinctions clés :
+• vs d = {} qui peut casser le lien avec d’autres alias selon réassignation.
+
+Fonctionnement :
+• Retire toutes les paires de l’instance.
+
+Exécution étape par étape :
+1. d={'a':1}.
+2. clear.
+3. d == {}.
+
+Ordre des opérations :
+• Statement clear puis inspection de d.
+
+Cas d'utilisation courants :
+• Réutiliser le même dict nommé dans une boucle.
+
+Cas limites :
+• Références externes aux anciennes valeurs peuvent subsister.
+
+Considérations de performance :
+• Libère les références aux valeurs ; GC peut suivre.
+
+Exemples :
+• a={}; b=a; a.clear(); b == {}
+
+Remarques :
+• Réponse : {}.`,
+  1841: `copy() superficiel
+
+Débutant :
+• .copy() donne un nouveau dict avec les mêmes paires au premier niveau.
+
+Intermédiaire :
+• Les valeurs ne sont pas clonées profondément.
+
+Expert :
+• dict.copy, copy.copy(dict), et {**d} sont des shallow copies (nuances mineures).
+
+Concepts clés :
+• Copie superficielle, nouvel objet externe.
+
+Distinctions clés :
+• deepcopy pour indépendance complète des contenus imbriqués.
+
+Fonctionnement :
+• Duplication des clés et références aux valeurs.
+
+Exécution étape par étape :
+1. Nouveau dict alloué.
+2. Paires copiées.
+3. Retour nouvel objet égal en contenu à l’original pour dict plat.
+
+Ordre des opérations :
+• Méthode copy.
+
+Cas d'utilisation courants :
+• Modifier une copie sans toucher l’original pour clés/valeurs immuables.
+
+Cas limites :
+• Valeurs mutables partagées (voir 1849).
+
+Considérations de performance :
+• O(n) sur nombre de paires.
+
+Exemples :
+• a={'x':1}; b=a.copy(); b['x']=2; a['x'] → 1
+
+Remarques :
+• Réponse : un dict égal {'a':1,'b':2} mais distinct de l’original.`,
+  1842: `dict(autre_dict)
+
+Débutant :
+• dict({'a':1,'b':2}) construit un nouveau dict avec les mêmes paires (shallow).
+
+Intermédiaire :
+• Équivalent à .copy() pour un dict simple passé en entrée.
+
+Expert :
+• Le constructeur peut aussi accepter kwargs et itérables selon surcharge.
+
+Concepts clés :
+• Copie via constructeur, shallow.
+
+Distinctions clés :
+• dict(d) vs d : nouvel id en général.
+
+Fonctionnement :
+• Itère les paires de l’argument mapping.
+
+Exécution étape par étape :
+1. Argument dict évalué.
+2. Nouveau dict rempli.
+3. Retour.
+
+Ordre des opérations :
+• Appel constructeur.
+
+Cas d'utilisation courants :
+• Normaliser un mapping-like en dict pur.
+
+Cas limites :
+• Objets non mapping : erreur ou comportement différent selon type.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• dict({'a':1}) == {'a':1}
+
+Remarques :
+• Réponse : {'a': 1, 'b': 2} (nouveau dict).`,
+  1843: `Fusion par dépaquetage **
+
+Débutant :
+• {**{'a':1}, **{'b':2}} fusionne en un seul dict avec clés a et b.
+
+Intermédiaire :
+• Crée un nouveau dict ; les originaux ne sont pas modifiés.
+
+Expert :
+• Ordre : clés du second dict peuvent écraser celles du premier si collision.
+
+Concepts clés :
+• PEP 448, littéral avec unpacking.
+
+Distinctions clés :
+• vs | en 3.9+.
+
+Fonctionnement :
+• Construction littérale avec fusion de mappings.
+
+Exécution étape par étape :
+1. Premier mapping dépaqueté.
+2. Second dépaqueté.
+3. Résultat {'a':1,'b':2}.
+
+Ordre des opérations :
+• De gauche à droite pour résolution des collisions.
+
+Cas d'utilisation courants :
+• Fusion immuable de defaults et overrides.
+
+Cas limites :
+• Clés non str si acceptées par le littéral (clés expression).
+
+Considérations de performance :
+• Nouvelle allocation.
+
+Exemples :
+• {**{}, **{'k':0}} → {'k':0}
+
+Remarques :
+• Réponse : dict fusionné sans collision ici.`,
+  1844: `** collision de clés
+
+Débutant :
+• {**{'a':1}, **{'a':2}} : la clé 'a' vaut 2 (le second mapping gagne).
+
+Intermédiaire :
+• Règle : droite écrase gauche pour même clé.
+
+Expert :
+• Même logique pour plusieurs ** successifs.
+
+Concepts clés :
+• Précédence de fusion, écrasement.
+
+Distinctions clés :
+• vs update qui mute.
+
+Fonctionnement :
+• Insère a:1 puis a:2 remplace.
+
+Exécution étape par étape :
+1. a:1.
+2. a:2 écrase.
+3. {'a':2}.
+
+Ordre des opérations :
+• Ordre des dépaquetages dans le littéral.
+
+Cas d'utilisation courants :
+• Defaults puis overrides.
+
+Cas limites :
+• Chaînes longues de ** : dernier gagne pour chaque clé.
+
+Considérations de performance :
+• Linéaire.
+
+Exemples :
+• {**{'x':0},**{'x':1},**{'x':2}} → {'x':2}
+
+Remarques :
+• Réponse : {'a': 2}.`,
+  1845: `Opérateur | sur dicts
+
+Débutant :
+• {'a':1} | {'b':2} produit un nouveau dict {'a':1,'b':2} (Python 3.9+).
+
+Intermédiaire :
+• Ni operand n’est muté.
+
+Expert :
+• __or__ sur dict ; retourne nouveau dict.
+
+Concepts clés :
+• Union de mappings, nouvel objet.
+
+Distinctions clés :
+• | vs |= (in-place).
+
+Fonctionnement :
+• Fusion à droite pour collisions futures ; ici pas de collision.
+
+Exécution étape par étape :
+1. Gauche et droite évalués.
+2. Union créée.
+3. Nouveau dict.
+
+Ordre des opérations :
+• Opérateur binaire.
+
+Cas d'utilisation courants :
+• Composer options sans muter les defaults.
+
+Cas limites :
+• Version <3.9 : syntaxe absente.
+
+Considérations de performance :
+• O(taille totale).
+
+Exemples :
+• a|{} → copy shallow-like nouvelle instance
+
+Remarques :
+• Réponse : dict union {'a':1,'b':2}.`,
+  1846: `| avec clé dupliquée
+
+Débutant :
+• {'a':1} | {'a':2} donne {'a':2} : le côté droit l’emporte.
+
+Intermédiaire :
+• Symétrique aux règles de ** pour collision.
+
+Expert :
+• dict.__or__ documenté pour cette sémantique.
+
+Concepts clés :
+• Priorité du mapping de droite.
+
+Distinctions clés :
+• Inverse n’est pas commutatif pour valeurs différentes.
+
+Fonctionnement :
+• Fusion avec écrasement par droite.
+
+Exécution étape par étape :
+1. Commencer par gauche.
+2. Fusionner droite : remplace 'a'.
+3. {'a':2}.
+
+Ordre des opérations :
+• Évaluation opérandes puis |.
+
+Cas d'utilisation courants :
+• Overrides explicites lisibles.
+
+Cas limites :
+• Types non dict à droite : autres règles (hors portée).
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• {'a':1}|{'a':1} → {'a':1}
+
+Remarques :
+• Réponse : {'a': 2}.`,
+  1847: `|= mise à jour in-place
+
+Débutant :
+• Avec d = {'a': 1} puis d |= {'b': 2} (Python 3.9+), le dict d contient ensuite {'a': 1, 'b': 2}.
+
+Intermédiaire :
+• L’opérateur |= fusionne le mapping de droite dans celui de gauche et modifie d sur place ; ce n’est pas une nouvelle variable.
+
+Expert :
+• dict.__ior__ implémente |= ; la valeur de retour de l’opérateur en soi importe peu ici : la question porte sur l’état de d après l’instruction.
+
+Concepts clés :
+• Fusion in-place, syntaxe |=, Python 3.9+.
+
+Distinctions clés :
+• d |= autre (mutation) vs d = d | autre (nouveau dict réassigné à d).
+
+Fonctionnement :
+• Les paires de {'b': 2} sont intégrées dans le dict référencé par d.
+
+Exécution étape par étape :
+1. d pointe vers {'a': 1}.
+2. d |= {'b': 2} exécute la fusion sur ce même objet.
+3. d référence toujours le même objet, maintenant {'a': 1, 'b': 2}.
+
+Ordre des opérations :
+• Instruction d’affectation augmentée après la création initiale de d.
+
+Cas d'utilisation courants :
+• Mettre à jour des options ou defaults accumulés sans recréer un dict à chaque étape.
+
+Cas limites :
+• Versions antérieures à 3.9 : SyntaxError sur |= entre dicts.
+
+Considérations de performance :
+• Souvent moins de copies intermédiaires qu’une chaîne répétée de d = d | patch.
+
+Exemples :
+• d = {'x': 0}; d |= {'x': 1} → d == {'x': 1}
+
+Remarques :
+• Réponse attendue : {'a': 1, 'b': 2}.`,
+  1848: `| vs |=
+
+Débutant :
+• | crée un nouveau dict ; |= modifie le dict de gauche.
+
+Intermédiaire :
+• Après |, les opérandes originaux inchangés ; après |=, le gauche change.
+
+Expert :
+• Choix lié à immuabilité locale vs performance mémoire.
+
+Concepts clés :
+• Pur fonctionnel vs mutation.
+
+Distinctions clés :
+• Pareil que + vs += sur listes (esprit).
+
+Fonctionnement :
+• __or__ vs __ior__.
+
+Exécution étape par étape :
+1. Identifier si nouvel objet requis.
+2. Si oui → | ; si mise à jour locale → |=.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• | pour defaults immuables ; |= dans boucles d’agrégation.
+
+Cas limites :
+• Références partagées : |= affecte tous les alias.
+
+Considérations de performance :
+• | alloue ; |= évite parfois une grosse copie temporaire.
+
+Exemples :
+• a={'x':1}; b=a; c=a|{'y':2}; b → {'x':1}
+
+Remarques :
+• La réponse du QCM résume cette différence sémantique.`,
+  1849: `Copie superficielle et liste imbriquée
+
+Débutant :
+• a = {'a':[1]}; b = a.copy(); b['a'].append(2) : la liste interne est partagée, donc a devient {'a':[1,2]}.
+
+Intermédiaire :
+• copy() n’a pas dupliqué la liste, seulement la référence dans le nouveau dict.
+
+Expert :
+• Idem pour dict(), slicing [:] sur listes de dicts, etc. au premier niveau.
+
+Concepts clés :
+• Partage de sous-objet mutable, shallow copy.
+
+Distinctions clés :
+• deepcopy pour listes/dicts imbriqués indépendants.
+
+Fonctionnement :
+• b['a'] pointe vers la même liste que a['a'].
+
+Exécution étape par étape :
+1. Liste [1] créée une fois.
+2. Deux dicts référencent cette liste via valeur 'a'.
+3. append mute la liste commune.
+
+Ordre des opérations :
+• append après copy.
+
+Cas d'utilisation courants :
+• Arbres ou graphes : exiger deepcopy ou structures immuables.
+
+Cas limites :
+• Si avait fait b['a'] = b['a'] + [2] selon forme, comportement différent (réassignation de clé).
+
+Considérations de performance :
+• deepcopy plus coûteux mais sûr.
+
+Exemples :
+• a = {'a': [1]}; b = a.copy(); b['a'].append(2); a → {'a': [1, 2]}
+
+Remarques :
+• Réponse : {'a': [1, 2]}.`,
+  1850: `copy.deepcopy
+
+Débutant :
+• copy.deepcopy({'a':[1]}) produit un dict dont la liste interne est une copie indépendante.
+
+Intermédiaire :
+• Il faut import copy ; la fonction traverse récursivement.
+
+Expert :
+• Gère les cycles avec mémo interne ; plus lent que shallow.
+
+Concepts clés :
+• Clonage profond, indépendance des niveaux imbriqués.
+
+Distinctions clés :
+• deepcopy vs copy() / slice.
+
+Fonctionnement :
+• Duplique dict puis duplique récursivement la liste [1].
+
+Exécution étape par étape :
+1. import copy (dans le snippet de la question).
+2. deepcopy construit nouvelle liste et nouveau dict.
+3. Résultat affiché égal en structure à l’entrée pour cet exemple simple.
+
+Ordre des opérations :
+• import puis appel.
+
+Cas d'utilisation courants :
+• Dupliquer structures de configuration imbriquées avant mutation.
+
+Cas limites :
+• Objets non copiables (verrous, etc.) ; fonctions ; signaux.
+
+Considérations de performance :
+• Coût potentiellement exponentiel sur graphes profonds — mémo pour cycles.
+
+Exemples :
+• Après deepcopy, append sur copie n’affecte pas l’original.
+
+Remarques :
+• Réponse du QCM : dict équivalent {'a': [1]} avec indépendance profonde (formulation « deep copy »).`,
+  1851: `Dict comprehension x*2
+
+Débutant :
+• {x: x*2 for x in [1, 2, 3]} fabrique les paires 1:2, 2:4, 3:6.
+
+Intermédiaire :
+• Chaque clé est l’élément courant ; la valeur est le double.
+
+Expert :
+• Ordre d’insertion suit l’itération de la liste source (3.7+).
+
+Concepts clés :
+• Dict comprehension, transformation linéaire des clés numériques.
+
+Distinctions clés :
+• Ensemble en comprehension utiliserait des accolades différemment (set).
+
+Fonctionnement :
+• Itération sur [1,2,3], insertion x : x*2 à chaque pas.
+
+Exécution étape par étape :
+1. 1→2, 2→4, 3→6 dans l’ordre.
+
+Ordre des opérations :
+• Évaluation de la liste puis construction du dict.
+
+Cas d'utilisation courants :
+• Tables indexées par identifiants numériques simples.
+
+Cas limites :
+• Clés dupliquées possibles si l’itérable se répète (pas ici).
+
+Considérations de performance :
+• O(n) sur la longueur de la liste.
+
+Exemples :
+• Même idée avec str : {x: str(x) for x in range(2)}.
+
+Remarques :
+• Réponse : {1: 2, 2: 4, 3: 6}.`,
+  1852: `Dict comprehension avec range et carré
+
+Débutant :
+• {x: x**2 for x in range(3)} parcourt 0,1,2 et produit 0:0, 1:1, 2:4.
+
+Intermédiaire :
+• range(3) exclut 3 ; trois entrées.
+
+Expert :
+• x**2 est la puissance, pas x*2.
+
+Concepts clés :
+• range en comprehension, exposant 2.
+
+Distinctions clés :
+• range(3) vs [0,1,2] équivalent ici.
+
+Fonctionnement :
+• Itération 0,1,2 ; clé et base du carré identiques.
+
+Exécution étape par étape :
+1. x=0 → 0:0 ; x=1 → 1:1 ; x=2 → 2:4.
+
+Ordre des opérations :
+• range évalué puis boucle de comprehension.
+
+Cas d'utilisation courants :
+• Précalcul de petites tables de carrés.
+
+Cas limites :
+• range vide → {}.
+
+Considérations de performance :
+• O(n) avec n = stop de range.
+
+Exemples :
+• {x: x**3 for x in range(2)} → {0:0, 1:1}.
+
+Remarques :
+• Réponse : {0: 0, 1: 1, 2: 4}.`,
+  1853: `Compréhension à partir de .items()
+
+Débutant :
+• {k: v*2 for k, v in {'a':1,'b':2}.items()} double chaque valeur : {'a':2,'b':4}.
+
+Intermédiaire :
+• k reste str ; seules les valeurs sont multipliées.
+
+Expert :
+• On peut filtrer ou transformer k aussi (hors énoncé).
+
+Concepts clés :
+• Unpacking k,v, dict comprehension, lecture d’un dict existant.
+
+Distinctions clés :
+• Ne pas muter le dict source dans cette expression seule.
+
+Fonctionnement :
+• Itère sur les paires du dict littéral puis construit un nouveau dict.
+
+Exécution étape par étape :
+1. ('a',1)→'a':2 ; ('b',2)→'b':4.
+
+Ordre des opérations :
+• items() puis comprehension.
+
+Cas d'utilisation courants :
+• Normaliser ou mettre à l’échelle des champs d’un mapping.
+
+Cas limites :
+• v non numérique → erreur sur *2.
+
+Considérations de performance :
+• O(n) paires.
+
+Exemples :
+• {k: v+1 for k,v in d.items()} pour incrémenter.
+
+Remarques :
+• Réponse : {'a': 2, 'b': 4}.`,
+  1854: `Compréhension avec filtre if
+
+Débutant :
+• {x: x for x in [1, 2, 3] if x > 1} ne garde que 2 et 3, clés = valeurs : {2:2, 3:3}.
+
+Intermédiaire :
+• x==1 est exclu avant de créer la paire.
+
+Expert :
+• Équivalent mental à une boucle for avec if interne.
+
+Concepts clés :
+• Clause if finale, identité clé=valeur ici.
+
+Distinctions clés :
+• Filtrer les clés vs filtrer après coup sur un dict complet.
+
+Fonctionnement :
+• Tests x>1 pour x=1 (faux), 2 (vrai), 3 (vrai).
+
+Exécution étape par étape :
+1. Insérer 2:2 puis 3:3.
+
+Ordre des opérations :
+• Ordre de la liste source conservé.
+
+Cas d'utilisation courants :
+• Projeter un sous-ensemble d’indices.
+
+Cas limites :
+• Si aucun x ne passe → {}.
+
+Considérations de performance :
+• Un passage.
+
+Exemples :
+• if x % 2 == 0 pour les pairs seulement.
+
+Remarques :
+• Réponse : {2: 2, 3: 3}.`,
+  1855: `Valeurs pair / impair en comprehension
+
+Débutant :
+• {x: ('even' si x pair sinon 'odd') for x in [1,2,3]} donne 1:'odd', 2:'even', 3:'odd'.
+
+Intermédiaire :
+• Expression conditionnelle dans la partie valeur uniquement.
+
+Expert :
+• Ordre d’insertion : 1, 2, 3.
+
+Concepts clés :
+• Dict comprehension + opérateur %, chaînes de parité.
+
+Distinctions clés :
+• x%2==0 pour pair en Python.
+
+Fonctionnement :
+• Évaluation de la condition pour chaque x.
+
+Exécution étape par étape :
+1. 1 impair → odd ; 2 pair → even ; 3 impair → odd.
+
+Ordre des opérations :
+• Liste [1,2,3] gauche-droite.
+
+Cas d'utilisation courants :
+• Étiqueter des données pour affichage ou tri.
+
+Cas limites :
+• Types non numériques casseraient % (hors cas).
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• Remplacer 'even' par un bool selon besoin pédagogique.
+
+Remarques :
+• Réponse : {1: 'odd', 2: 'even', 3: 'odd'}.`,
+  1856: `Clés str via str(x)
+
+Débutant :
+• {str(x): x for x in [1,2,3]} → '1':1, '2':2, '3':3.
+
+Intermédiaire :
+• Clés chaîne, valeurs int.
+
+Expert :
+• str(x) est hachable ; distinct de la clé int 1 dans un autre dict.
+
+Concepts clés :
+• Conversion str en position de clé.
+
+Distinctions clés :
+• '1' n’est pas la clé 1.
+
+Fonctionnement :
+• str sur chaque entier avant insertion.
+
+Exécution étape par étape :
+1. Trois paires dans l’ordre d’itération.
+
+Ordre des opérations :
+• str puis insertion.
+
+Cas d'utilisation courants :
+• Sérialisation proche JSON (clés string).
+
+Cas limites :
+• str peut varier pour types exotiques.
+
+Considérations de performance :
+• Coût str par élément.
+
+Exemples :
+• repr diffère de str pour certains objets.
+
+Remarques :
+• Réponse : {'1': 1, '2': 2, '3': 3}.`,
+  1857: `Boucles imbriquées et clés tuple
+
+Débutant :
+• {(x,y): x+y for x in [1,2] for y in [3,4]} produit (1,3):4, (1,4):5, (2,3):5, (2,4):6.
+
+Intermédiaire :
+• Ordre : x fixe, y parcourt [3,4], puis x suivant.
+
+Expert :
+• Clés tuple hachables si éléments hachables.
+
+Concepts clés :
+• Double for dans une comprehension, clés composites.
+
+Distinctions clés :
+• Deux couples différents peuvent avoir la même somme (5).
+
+Fonctionnement :
+• Quatre itérations internes/externes successives.
+
+Exécution étape par étape :
+1. (1,3):4 ; (1,4):5 ; (2,3):5 ; (2,4):6.
+
+Ordre des opérations :
+• Comme for x ... for y imbriqués classiques.
+
+Cas d'utilisation courants :
+• Grilles discrètes.
+
+Cas limites :
+• Tuple avec liste interdit comme clé.
+
+Considérations de performance :
+• O(n*m).
+
+Exemples :
+• zip peut remplacer double boucle quand longueurs égales.
+
+Remarques :
+• Réponse : les quatre paires tuple→somme indiquées.`,
+  1858: `zip en dict comprehension
+
+Débutant :
+• {x: y for x, y in zip([1,2],[3,4])} → {1:3, 2:4}.
+
+Intermédiaire :
+• zip s’arrête au plus court ; ici deux paires.
+
+Expert :
+• Idiomatique pour aligner deux colonnes.
+
+Concepts clés :
+• zip, unpacking, dict comprehension.
+
+Distinctions clés :
+• zip longest vs zip strict (3.10+) hors QCM.
+
+Fonctionnement :
+• (1,3) puis (2,4) deviennent entrées.
+
+Exécution étape par étape :
+1. 1:3 ; 2:4.
+
+Ordre des opérations :
+• zip lazy consommé par la comprehension.
+
+Cas d'utilisation courants :
+• Fusion clé liste + valeur liste.
+
+Cas limites :
+• Longueurs inégales : zip tronque.
+
+Considérations de performance :
+• Linéaire.
+
+Exemples :
+• dict(zip(keys, vals)) sans comprehension.
+
+Remarques :
+• Réponse : {1: 3, 2: 4}.`,
+  1859: `Compréhension sur liste vide
+
+Débutant :
+• {x: x for x in []} donne {}.
+
+Intermédiaire :
+• Aucune itération.
+
+Expert :
+• Type résultat : dict vide, pas set.
+
+Concepts clés :
+• Dict vide, itération zéro fois.
+
+Distinctions clés :
+• set() pour set comprehension vide.
+
+Fonctionnement :
+• Conteneur créé puis boucle jamais exécutée.
+
+Exécution étape par étape :
+1. Résultat immédiat {}.
+
+Ordre des opérations :
+• [] évalué d’abord.
+
+Cas d'utilisation courants :
+• Sources dynamiques parfois vides.
+
+Cas limites :
+• if jamais vrai sur source non vide → {} aussi.
+
+Considérations de performance :
+• Coût minimal.
+
+Exemples :
+• all([]) True (rappel logique, autre contexte).
+
+Remarques :
+• Réponse : {}.`,
+  1860: `Filtre if avec x*2
+
+Débutant :
+• {x: x*2 for x in [1,2] if x > 0} inclut 1 et 2 → {1:2, 2:4}.
+
+Intermédiaire :
+• Condition toujours vraie pour 1 et 2 ; si la liste contenait 0, 0 serait exclu.
+
+Expert :
+• Combine filtre et transformation valeur.
+
+Concepts clés :
+• if en fin de comprehension, multiplication.
+
+Distinctions clés :
+• x>0 vs x>=0.
+
+Fonctionnement :
+• x=1 et x=2 passent le filtre.
+
+Exécution étape par étape :
+1. 1:2 ; 2:4.
+
+Ordre des opérations :
+• Test puis calcul x*2.
+
+Cas d'utilisation courants :
+• Ignorer sentinelles négatives ou zéro.
+
+Cas limites :
+• Liste vide → {}.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• if x % 2 pour pairs uniquement.
+
+Remarques :
+• Réponse : {1: 2, 2: 4}.`,
+  1861: `Égalité de dicts indépendante de l’ordre d’écriture
+
+Débutant :
+• {'a':1,'b':2} == {'b':2,'a':1} est True.
+
+Intermédiaire :
+• == compare clés et valeurs, pas l’ordre d’insertion affiché.
+
+Expert :
+• Depuis 3.7 l’ordre est conservé mais n’entre pas dans ==.
+
+Concepts clés :
+• Égalité structurelle.
+
+Distinctions clés :
+• == vs is.
+
+Fonctionnement :
+• Même ensemble de paires.
+
+Exécution étape par étape :
+1. Vérification clés puis valeurs appariées.
+
+Ordre des opérations :
+• Opérateur == sur deux dicts.
+
+Cas d'utilisation courants :
+• Tests après fusion ou parsing.
+
+Cas limites :
+• Valeurs mutables : règles récursives de == pour listes internes.
+
+Considérations de performance :
+• O(n).
+
+Exemples :
+• {} == {}.
+
+Remarques :
+• Réponse : True.`,
+  1862: `Égalité fausse si valeur diffère
+
+Débutant :
+• {'a':1} == {'a':2} → False.
+
+Intermédiaire :
+• Même clé, contenu différent.
+
+Expert :
+• Une seule différence de valeur suffit.
+
+Concepts clés :
+• Comparaison par valeur associée à chaque clé.
+
+Distinctions clés :
+• Deux objets dict distincts peuvent être ==.
+
+Fonctionnement :
+• 1 != 2 pour 'a'.
+
+Exécution étape par étape :
+1. == échoue.
+
+Ordre des opérations :
+• Comparaison dict.
+
+Cas d'utilisation courants :
+• Détecter changement de champ.
+
+Cas limites :
+• 1 == 1.0 pour valeurs numériques.
+
+Considérations de performance :
+• O(1) ici.
+
+Remarques :
+• Réponse : False.`,
+  1863: `Cardinalités différentes
+
+Débutant :
+• {'a':1} == {'a':1,'b':2} est False (clé 'b' manque à gauche).
+
+Intermédiaire :
+• == exige exactement les mêmes clés.
+
+Expert :
+• Pas de sous-ensemble implicite.
+
+Concepts clés :
+• Taille et complétude des clés.
+
+Distinctions clés :
+• <= sur dicts (3.9+) autre sémantique.
+
+Fonctionnement :
+• Ensembles de clés différents.
+
+Exécution étape par étape :
+1. False immédiat après constat de 'b'.
+
+Ordre des opérations :
+• Comparaison globale.
+
+Cas d'utilisation courants :
+• Validation stricte de schéma.
+
+Cas limites :
+• dict vide vs non vide.
+
+Considérations de performance :
+• O(n).
+
+Remarques :
+• Réponse : False.`,
+  1864: `Inégalité !=
+
+Débutant :
+• {'a':1} != {'a':2} → True.
+
+Intermédiaire :
+• != est la négation de ==.
+
+Expert :
+• Utile en assertions.
+
+Concepts clés :
+• Négation logique.
+
+Distinctions clés :
+• != ne teste pas l’identité.
+
+Fonctionnement :
+• Valeurs 1 et 2 différentes.
+
+Exécution étape par étape :
+1. == False donc != True.
+
+Ordre des opérations :
+• Opérateur !=.
+
+Cas d'utilisation courants :
+• Détection de modification.
+
+Cas limites :
+• Si == True alors != False.
+
+Considérations de performance :
+• Comme ==.
+
+Remarques :
+• Réponse : True.`,
+  1865: `is entre littéraux dict
+
+Débutant :
+• {'a':1} is {'a':1} → False : deux objets distincts.
+
+Intermédiaire :
+• is compare l’identité mémoire.
+
+Expert :
+• == peut être True quand is est False.
+
+Concepts clés :
+• Identité vs égalité.
+
+Distinctions clés :
+• Seul le même nom réutilisé donne is True.
+
+Fonctionnement :
+• Construction de deux dicts puis comparaison id.
+
+Exécution étape par étape :
+1. Deux allocations ; is False.
+
+Ordre des opérations :
+• Création puis is.
+
+Cas d'utilisation courants :
+• Cache singletons.
+
+Cas limites :
+• Petits int internés, pas les dicts.
+
+Considérations de performance :
+• N/A.
+
+Remarques :
+• Réponse : False.`,
+  1866: `Réflexivité d is
+
+Débutant :
+• d = {'a':1}; d is d → True.
+
+Intermédiaire :
+• Une variable est identique à elle-même.
+
+Expert :
+• Même après mutation, d is d reste True.
+
+Concepts clés :
+• Auto-référence.
+
+Distinctions clés :
+• d is e après e = d.copy() → False en général.
+
+Fonctionnement :
+• Même objet des deux côtés.
+
+Exécution étape par étape :
+1. Liaison puis is → True.
+
+Ordre des opérations :
+• Assignation puis expression.
+
+Cas d'utilisation courants :
+• if x is None.
+
+Considérations de performance :
+• N/A.
+
+Remarques :
+• Réponse : True.`,
+  1867: `bool({})
+
+Débutant :
+• bool({}) est False.
+
+Intermédiaire :
+• Dict vide est falsy.
+
+Expert :
+• if d: dépend de la non-vacuité, pas des valeurs.
+
+Concepts clés :
+• Truthiness des conteneurs.
+
+Distinctions clés :
+• bool({'a':0}) reste True (non vide).
+
+Fonctionnement :
+• len 0 → faux.
+
+Exécution étape par étape :
+1. {} puis bool → False.
+
+Ordre des opérations :
+• Appel bool.
+
+Cas d'utilisation courants :
+• Branches if not cfg.
+
+Cas limites :
+• Ne pas confondre avec None.
+
+Considérations de performance :
+• O(1) taille en CPython.
+
+Remarques :
+• Réponse : False.`,
+  1868: `bool(dict non vide)
+
+Débutant :
+• bool({'a':1}) → True.
+
+Intermédiaire :
+• Présence d’au moins une clé suffit.
+
+Expert :
+• Même si toutes les valeurs étaient falsy, le dict non vide reste truthy.
+
+Concepts clés :
+• Vacuité vs valeurs.
+
+Distinctions clés :
+• all(d.values()) peut être False pendant que bool(d) True.
+
+Fonctionnement :
+• len > 0.
+
+Exécution étape par étape :
+1. Une paire → True.
+
+Ordre des opérations :
+• bool.
+
+Cas d'utilisation courants :
+• if data: sans len.
+
+Cas limites :
+• Clés avec valeur None : toujours truthy si le dict a des clés.
+
+Considérations de performance :
+• O(1).
+
+Remarques :
+• Réponse : True.`,
+  1869: `Addition de dicts interdite
+
+Débutant :
+• {'a':1,'b':2} + {'c':3} lève TypeError.
+
+Intermédiaire :
+• Utiliser |, **, update, etc.
+
+Expert :
+• + a du sens pour listes et chaînes, pas dict natif.
+
+Concepts clés :
+• Absence de __add__ pour dict.
+
+Distinctions clés :
+• | depuis 3.9.
+
+Fonctionnement :
+• Erreur à l’évaluation de +.
+
+Exécution étape par étape :
+1. TypeError.
+
+Ordre des opérations :
+• Évaluation des opérandes puis +.
+
+Cas d'utilisation courants :
+• Éviter erreurs de débutant.
+
+Considérations de performance :
+• N/A.
+
+Remarques :
+• Réponse : TypeError.`,
+  1870: `Multiplication dict interdite
+
+Débutant :
+• {'a':1} * 2 → TypeError.
+
+Intermédiaire :
+• Répéter un dict n’est pas défini (clés uniques).
+
+Expert :
+• Copier : copy, dict(), {**d}.
+
+Concepts clés :
+• Pas de * pour dict.
+
+Distinctions clés :
+• [1]*2 ok, dict non.
+
+Fonctionnement :
+• TypeError.
+
+Exécution étape par étape :
+1. Échec immédiat.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Signal pédagogique.
+
+Considérations de performance :
+• N/A.
+
+Remarques :
+• Réponse : TypeError.`,
+  1871: `Vue keys dynamique
+
+Débutant :
+• k = d.keys() puis d['c']=3 puis list(k) inclut 'c' : ['a','b','c'].
+
+Intermédiaire :
+• La vue reflète l’état actuel du dict.
+
+Expert :
+• Pas une copie figée au moment de keys().
+
+Concepts clés :
+• dict_keys live.
+
+Distinctions clés :
+• list(d.keys()) immédiatement avant mutation figerait un instantané différent.
+
+Fonctionnement :
+• list() lit la vue au moment de l’appel, après ajout de 'c'.
+
+Exécution étape par étape :
+1. d a,b ; vue créée ; mutation ; matérialisation liste.
+
+Ordre des opérations :
+• Mutation entre création vue et list().
+
+Cas d'utilisation courants :
+• Surveillance pendant construction incrémentale.
+
+Cas limites :
+• Modifier pendant itération directe : prudence.
+
+Considérations de performance :
+• list O(n).
+
+Remarques :
+• Réponse : ['a', 'b', 'c'].`,
+  1872: `Vue values dynamique
+
+Débutant :
+• d={'a':1}; v=d.values(); d['b']=2; list(v) → [1,2].
+
+Intermédiaire :
+• Ordre des valeurs suit l’ordre d’insertion des clés (3.7+).
+
+Expert :
+• Même mécanisme que keys pour la « vivacité ».
+
+Concepts clés :
+• dict_values dynamique.
+
+Distinctions clés :
+• figer tôt si besoin d’instantané immuable.
+
+Fonctionnement :
+• Nouvelle paire avant list(v).
+
+Exécution étape par étape :
+1. Valeurs finales 1 puis 2.
+
+Ordre des opérations :
+• Assignation 'b' puis list.
+
+Cas d'utilisation courants :
+• Agrégation pendant remplissage.
+
+Cas limites :
+• Valeurs dupliquées pour clés différentes.
+
+Considérations de performance :
+• O(n).
+
+Remarques :
+• Réponse : [1, 2].`,
+  1873: `Vue items dynamique
+
+Débutant :
+• i = d.items(); d['b']=2 sur {'a':1} puis list(i) → [('a',1),('b',2)].
+
+Intermédiaire :
+• Chaque élément est une paire clé-valeur à jour.
+
+Expert :
+• Cohérent avec keys/values sur le même dict.
+
+Concepts clés :
+• dict_items live.
+
+Distinctions clés :
+• tuple(list(i)) possible.
+
+Fonctionnement :
+• list() consomme la vue après mutation.
+
+Exécution étape par étape :
+1. Paire initiale puis ajout b.
+
+Ordre des opérations :
+• Mutation puis conversion liste.
+
+Cas d'utilisation courants :
+• Débogage pas à pas.
+
+Cas limites :
+• Itération + mutation structurelle risquée.
+
+Considérations de performance :
+• O(n).
+
+Remarques :
+• Réponse : liste des deux paires dans l’ordre d’insertion.`,
+  1874: `for k in dict
+
+Débutant :
+• for k in {'a':1,'b':2}: print(k) affiche les clés 'a' puis 'b' (ordre insertion du littéral).
+
+Intermédiaire :
+• Équivalent à for k in d.keys():.
+
+Expert :
+• Effet : sortie console, pas une valeur de retour d’expression for isolée.
+
+Concepts clés :
+• Itération par défaut sur clés.
+
+Distinctions clés :
+• vs .values() et .items().
+
+Fonctionnement :
+• Itérateur sur les clés du dict.
+
+Exécution étape par étape :
+1. print 'a' ; print 'b'.
+
+Ordre des opérations :
+• Ordre d’insertion 3.7+.
+
+Cas d'utilisation courants :
+• Parcourir des registres.
+
+Cas limites :
+• dict vide : rien n’est imprimé.
+
+Considérations de performance :
+• O(n) lignes.
+
+Remarques :
+• Réponse QCM : affiche 'a' puis 'b'.`,
+  1875: `for v in .values()
+
+Débutant :
+• Affiche 1 puis 2 pour les valeurs de {'a':1,'b':2}.
+
+Intermédiaire :
+• L’ordre suit celui des clés en 3.7+.
+
+Expert :
+• Pas les clés.
+
+Concepts clés :
+• Itération ciblée sur valeurs.
+
+Distinctions clés :
+• Confusion fréquente avec itération directe du dict.
+
+Fonctionnement :
+• Vue values → itérateur sur 1, 2.
+
+Exécution étape par étape :
+1. print(1); print(2).
+
+Ordre des opérations :
+• Séquentiel.
+
+Cas d'utilisation courants :
+• Traiter payloads sans noms.
+
+Cas limites :
+• Valeurs égales répétées.
+
+Considérations de performance :
+• O(n).
+
+Remarques :
+• Réponse : imprime 1 puis 2.`,
+  1876: `for k, v in .items()
+
+Débutant :
+• print(k, v) affiche « a 1 » puis « b 2 » (espaces par défaut de print).
+
+Intermédiaire :
+• Déballage de paires (clé, valeur).
+
+Expert :
+• Nécessite exactement deux variables pour ce forme.
+
+Concepts clés :
+• items(), unpacking.
+
+Distinctions clés :
+• Une seule variable recevrait les tuples entiers.
+
+Fonctionnement :
+• ('a',1) puis ('b',2).
+
+Exécution étape par étape :
+1. Deux appels print.
+
+Ordre des opérations :
+• Ordre d’insertion.
+
+Cas d'utilisation courants :
+• Export CSV, logs.
+
+Cas limites :
+• Mutation du dict pendant boucle : précautions.
+
+Considérations de performance :
+• O(n).
+
+Remarques :
+• Réponse : lignes « a 1 » puis « b 2 ».`,
+  1877: `list(dict)
+
+Débutant :
+• list({'a':1,'b':2}) → ['a','b'].
+
+Intermédiaire :
+• Itération implicite sur les clés.
+
+Expert :
+• Pas les valeurs.
+
+Concepts clés :
+• Conversion vers liste de clés.
+
+Distinctions clés :
+• list(d.values()) autre résultat.
+
+Fonctionnement :
+• Consommation de l’itérable clés.
+
+Exécution étape par étape :
+1. 'a', 'b' dans une liste.
+
+Ordre des opérations :
+• Ordre insertion.
+
+Cas d'utilisation courants :
+• APIs demandant une liste de noms.
+
+Cas limites :
+• dict vide → [].
+
+Considérations de performance :
+• O(n) temps et espace.
+
+Remarques :
+• Réponse : ['a', 'b'].`,
+  1878: `tuple(dict)
+
+Débutant :
+• tuple({'a':1,'b':2}) → ('a','b').
+
+Intermédiaire :
+• Tuple immuable des clés.
+
+Expert :
+• Même ordre que list(d).
+
+Concepts clés :
+• Clés comme séquence.
+
+Distinctions clés :
+• tuple(d.items()) donnerait paires.
+
+Fonctionnement :
+• Itération clés → tuple.
+
+Exécution étape par étape :
+1. Construction ('a','b').
+
+Ordre des opérations :
+• Un passage.
+
+Cas d'utilisation courants :
+• Signature ordonnée, clés pour tri stable.
+
+Cas limites :
+• une clé : tuple un élément a besoin de virgule si littéral manuel ailleurs.
+
+Considérations de performance :
+• O(n).
+
+Remarques :
+• Réponse : ('a', 'b').`,
+  1879: `set(dict)
+
+Débutant :
+• set({'a':1,'b':2}) → {'a','b'} (ensemble des clés).
+
+Intermédiaire :
+• Affichage ensemble sans ordre garanti logique.
+
+Expert :
+• len = 2 ici.
+
+Concepts clés :
+• Itération dict = clés pour set().
+
+Distinctions clés :
+• set(d.values()) pour valeurs distinctes.
+
+Fonctionnement :
+• Insertion de chaque clé dans le set.
+
+Exécution étape par étape :
+1. Deux clés uniques.
+
+Ordre des opérations :
+• Évaluation dict puis set().
+
+Cas d'utilisation courants :
+• Couverture de champs.
+
+Cas limites :
+• Clés non hashables impossibles.
+
+Considérations de performance :
+• O(n) amorti.
+
+Remarques :
+• Réponse : {'a', 'b'}.`,
+  1880: `sorted(dict)
+
+Débutant :
+• sorted({'c':3,'a':1,'b':2}) trie les clés str → ['a','b','c'].
+
+Intermédiaire :
+• sorted sur dict itère les clés par défaut.
+
+Expert :
+• Pour trier par valeur : sorted(d, key=d.get).
+
+Concepts clés :
+• Tri lexicographique des clés.
+
+Distinctions clés :
+• sorted(d.values()) numérique ici serait [1,2,3].
+
+Fonctionnement :
+• Extraction clés puis Timsort.
+
+Exécution étape par étape :
+1. 'a'<'b'<'c'.
+
+Ordre des opérations :
+• Nouvelle liste, dict inchangé.
+
+Cas d'utilisation courants :
+• Affichage déterministe.
+
+Cas limites :
+• Clés non comparables entre elles → TypeError.
+
+Considérations de performance :
+• O(n log n).
+
+Remarques :
+• Réponse : ['a', 'b', 'c'].`,
+  1881: `fromkeys (appel sur instance)
+
+Débutant :
+• {'a':1}.fromkeys(['a','b']) → {'a': None, 'b': None} ; le contenu du receveur est ignoré.
+
+Intermédiaire :
+• Méthode de classe ; valeur par défaut None.
+
+Expert :
+• Même effet que dict.fromkeys(['a','b']).
+
+Concepts clés :
+• fromkeys, None par défaut, nouvel objet.
+
+Distinctions clés :
+• Ne pas croire que 'a' garde 1.
+
+Fonctionnement :
+• Création d’un dict neuf avec les clés demandées.
+
+Exécution étape par étape :
+1. Ignorer {'a':1} pour le contenu ; insérer a,b → None.
+
+Ordre des opérations :
+• Appel statique effectif.
+
+Cas d'utilisation courants :
+• Squelettes de clés.
+
+Cas limites :
+• Valeur mutable partagée si second argument liste (piège).
+
+Considérations de performance :
+• O(k).
+
+Remarques :
+• Réponse : {'a': None, 'b': None}.`,
+  1882: `dict.fromkeys avec valeur 0
+
+Débutant :
+• dict.fromkeys(['a','b'], 0) → {'a':0,'b':0}.
+
+Intermédiaire :
+• Toutes les clés reçoivent la même valeur initiale.
+
+Expert :
+• Un seul objet 0 int partagé (immuables ici, pas de souci).
+
+Concepts clés :
+• Second argument valeur unique pour toutes les clés.
+
+Distinctions clés :
+• Sans second arg → None.
+
+Fonctionnement :
+• Boucle interne d’assignation.
+
+Exécution étape par étape :
+1. a:0, b:0.
+
+Ordre des opérations :
+• Appel dict.fromkeys.
+
+Cas d'utilisation courants :
+• Compteurs à zéro.
+
+Cas limites :
+• fromkeys(['a','a'],0) → une seule clé 'a'.
+
+Considérations de performance :
+• Linéaire.
+
+Remarques :
+• Réponse : {'a': 0, 'b': 0}.`,
+  1883: `fromkeys nouvelles clés c, d
+
+Débutant :
+• {'a':1,'b':2}.fromkeys(['c','d']) → {'c': None, 'd': None}.
+
+Intermédiaire :
+• Ni 'a' ni 'b' dans le résultat.
+
+Expert :
+• L’instance ne sert qu’à la résolution de la méthode.
+
+Concepts clés :
+• Class method, dict neuf.
+
+Distinctions clés :
+• vs update sur variable existante.
+
+Fonctionnement :
+• Clés c,d avec None.
+
+Exécution étape par étape :
+1. Nouveau dict deux entrées.
+
+Ordre des opérations :
+• Pas de mutation du littéral receveur hors portée.
+
+Cas d'utilisation courants :
+• Modèle colonnes séparé des données actuelles.
+
+Cas limites :
+• Itérable vide → {}.
+
+Considérations de performance :
+• O(n clés).
+
+Remarques :
+• Réponse : {'c': None, 'd': None}.`,
+  1884: `max sur dict (clés)
+
+Débutant :
+• max({'a':1,'b':2,'c':3}) compare les clés str ; 'c' est le maximum lexicographique.
+
+Intermédiaire :
+• Ce n’est pas le max des valeurs 1,2,3.
+
+Expert :
+• max(d, key=d.get) donnerait la clé de plus grande valeur.
+
+Concepts clés :
+• max itère les clés par défaut.
+
+Distinctions clés :
+• max(d.values()) → 3.
+
+Fonctionnement :
+• Parcourt 'a','b','c' ; ordre lexicographique.
+
+Exécution étape par étape :
+1. Retour 'c'.
+
+Ordre des opérations :
+• max sans key.
+
+Cas d'utilisation courants :
+• Dernière clé alphabétique.
+
+Cas limites :
+• dict vide → ValueError.
+
+Considérations de performance :
+• O(n).
+
+Remarques :
+• Réponse : 'c'.`,
+  1885: `min sur dict (clés)
+
+Débutant :
+• min sur les mêmes clés → 'a' (plus petite str lexicographiquement).
+
+Intermédiaire :
+• Symétrique de max.
+
+Expert :
+• min(d, key=d.get) pour clé de valeur minimale.
+
+Concepts clés :
+• min des clés.
+
+Distinctions clés :
+• min(d.values()) → 1.
+
+Fonctionnement :
+• Choix du minimum sur 'a','b','c'.
+
+Exécution étape par étape :
+1. 'a'.
+
+Ordre des opérations :
+• min builtin.
+
+Cas limites :
+• Vide → ValueError.
+
+Considérations de performance :
+• O(n).
+
+Remarques :
+• Réponse : 'a'.`,
+  1886: `max sur .values()
+
+Débutant :
+• max des valeurs 1,2,3 → 3.
+
+Intermédiaire :
+• Comparaison numérique standard.
+
+Expert :
+• key=abs si besoin de magnitude.
+
+Concepts clés :
+• Agrégation sur valeurs.
+
+Distinctions clés :
+• max(dict) ≠ max(dict.values()).
+
+Fonctionnement :
+• Itération 1,2,3.
+
+Exécution étape par étape :
+1. Retour 3.
+
+Ordre des opérations :
+• values() puis max.
+
+Cas limites :
+• Valeurs vides → ValueError.
+
+Considérations de performance :
+• O(n).
+
+Remarques :
+• Réponse : 3.`,
+  1887: `sum sur .values()
+
+Débutant :
+• 1+2+3 = 6.
+
+Intermédiaire :
+• start implicite 0.
+
+Expert :
+• start personnalisable en second argument de sum.
+
+Concepts clés :
+• Somme des valeurs.
+
+Distinctions clés :
+• sum(d) tenterait d’additionner des clés str (invalide ici).
+
+Fonctionnement :
+• Accumulation entière.
+
+Exécution étape par étape :
+1. 6.
+
+Ordre des opérations :
+• Gauche à droite.
+
+Cas d'utilisation courants :
+• Totaux d’inventaire.
+
+Cas limites :
+• floats et précision.
+
+Considérations de performance :
+• O(n).
+
+Remarques :
+• Réponse : 6.`,
+  1888: `all sur .values()
+
+Débutant :
+• Valeurs 1 et 0 → 0 est falsy → all retourne False.
+
+Intermédiaire :
+• all court-circuite au premier faux.
+
+Expert :
+• all([]) serait True (hors cas).
+
+Concepts clés :
+• Vérité des valeurs.
+
+Distinctions clés :
+• all(d) serait True (clés str non vides).
+
+Fonctionnement :
+• 1 truthy, 0 falsy → False.
+
+Exécution étape par étape :
+1. Échec sur 0.
+
+Ordre des opérations :
+• Ordre des valeurs selon le dict.
+
+Cas d'utilisation courants :
+• Valider qu’aucun compteur n’est à zéro si interdit.
+
+Considérations de performance :
+• Court-circuit.
+
+Remarques :
+• Réponse : False.`,
+  1889: `any sur .values()
+
+Débutant :
+• Valeurs 0 et 0 → aucune truthy → any False.
+
+Intermédiaire :
+• 0 est falsy ; None aussi.
+
+Expert :
+• any([0,1]) serait True.
+
+Concepts clés :
+• any cherche une valeur vraie.
+
+Distinctions clés :
+• any(d) True car clés non vides.
+
+Fonctionnement :
+• Deux zéros → False.
+
+Exécution étape par étape :
+1. Parcours complet sans True.
+
+Ordre des opérations :
+• Itération values.
+
+Cas limites :
+• any([]) False.
+
+Considérations de performance :
+• Court-circuit si True tôt.
+
+Remarques :
+• Réponse : False.`,
+  1890: `or court-circuit avec .get()
+
+Débutant :
+• get('a') rend 1 (truthy) ; le second get('c') n’est pas évalué ; résultat 1.
+
+Intermédiaire :
+• or retourne le premier opérande truthy ou le dernier évalué.
+
+Expert :
+• Piège si la valeur « valide » est 0 ou None stockée.
+
+Concepts clés :
+• Short-circuit, get, truthiness.
+
+Distinctions clés :
+• (get a) or (get c) vs get(a, get(c)) — pas équivalent en général.
+
+Fonctionnement :
+• Premier membre suffit.
+
+Exécution étape par étape :
+1. get('a')→1 ; or arrête.
+
+Ordre des opérations :
+• Gauche à droite avec court-circuit.
+
+Cas d'utilisation courants :
+• Fallbacks quand seules les valeurs « vraies » comptent.
+
+Considérations de performance :
+• Évite second lookup.
+
+Remarques :
+• Réponse : 1.`,
+  1891: `Clé entière
+
+Débutant :
+• {1:'a',2:'b',3:'c'}[1] → 'a'.
+
+Intermédiaire :
+• Accès [] avec int.
+
+Expert :
+• Pas un index de liste.
+
+Concepts clés :
+• Dict numérique.
+
+Distinctions clés :
+• Clé 1 vs indice 1.
+
+Fonctionnement :
+• Lookup O(1) moyen.
+
+Exécution étape par étape :
+1. Trouver 1 → 'a'.
+
+Ordre des opérations :
+• Dict puis [].
+
+Cas limites :
+• Clé absente → KeyError.
+
+Considérations de performance :
+• O(1) amorti.
+
+Remarques :
+• Réponse : 'a'.`,
+  1892: `Clé tuple
+
+Débutant :
+• {(1,2):'a',(3,4):'b'}[(1,2)] → 'a'.
+
+Intermédiaire :
+• Tuple immuable → hachable.
+
+Expert :
+• [1,2] comme clé serait TypeError.
+
+Concepts clés :
+• Clé composite.
+
+Distinctions clés :
+• Égalité de tuples par contenu.
+
+Fonctionnement :
+• Hash (1,2).
+
+Exécution étape par étape :
+1. Retour 'a'.
+
+Ordre des opérations :
+• Création dict puis accès.
+
+Cas limites :
+• Tuple contenant liste → impossible comme clé.
+
+Considérations de performance :
+• Hash tuple petit O(1).
+
+Remarques :
+• Réponse : 'a'.`,
+  1893: `Liste comme clé
+
+Débutant :
+• {[1,2]:'a'} → TypeError : liste non hachable.
+
+Intermédiaire :
+• Message unhashable type list.
+
+Expert :
+• Utiliser tuple([1,2]) si besoin.
+
+Concepts clés :
+• Exigence de hachabilité.
+
+Distinctions clés :
+• Liste en valeur ok.
+
+Fonctionnement :
+• Échec lors du hachage de la clé.
+
+Exécution étape par étape :
+1. TypeError à la construction.
+
+Ordre des opérations :
+• Littéral invalide.
+
+Considérations de performance :
+• N/A.
+
+Remarques :
+• Réponse : TypeError.`,
+  1894: `Dict comme clé
+
+Débutant :
+• {{'a':1}:'b'} → TypeError : dict non hachable.
+
+Intermédiaire :
+• Même principe que liste mutable.
+
+Expert :
+• Représenter une clé complexe par frozenset d’items ou str sérialisée.
+
+Concepts clés :
+• dict mutable.
+
+Distinctions clés :
+• dict en valeur autorisé.
+
+Fonctionnement :
+• Échec au hash.
+
+Exécution étape par étape :
+1. TypeError.
+
+Ordre des opérations :
+• Construction.
+
+Considérations de performance :
+• N/A.
+
+Remarques :
+• Réponse : TypeError.`,
+  1895: `Clés None, True, False
+
+Débutant :
+• {None:'a', True:'b', False:'c'}[None] → 'a'.
+
+Intermédiaire :
+• Singletons hashables.
+
+Expert :
+• Attention collisions 1 et True en clés si mélangés (hors combinaison ici).
+
+Concepts clés :
+• Clés non string, accès avec None.
+
+Distinctions clés :
+• None comme clé vs absence de clé.
+
+Fonctionnement :
+• Lookup exact de None.
+
+Exécution étape par étape :
+1. Retour 'a'.
+
+Ordre des opérations :
+• [] avec argument None.
+
+Cas limites :
+• Mélange bool et int clés.
+
+Considérations de performance :
+• O(1).
+
+Remarques :
+• Réponse : 'a' (chaîne).`,
+  1896: `Collision int / float en accès
+
+Débutant :
+• {1:'a', 1.0:'b'}[1] → 'b' car 1 et 1.0 sont la même clé ; la seconde valeur écrase.
+
+Intermédiaire :
+• 1 == 1.0 et hash compatibles.
+
+Expert :
+• Éviter de mélanger types numériques comme clés si la clarté compte.
+
+Concepts clés :
+• Égalité et hachage des clés numériques.
+
+Distinctions clés :
+• Une seule entrée effective.
+
+Fonctionnement :
+• Insertion 1:'a' puis remplacement par 1.0:'b'.
+
+Exécution étape par étape :
+1. Slot unique ; valeur finale 'b'.
+
+Ordre des opérations :
+• Construction gauche-droite du littéral.
+
+Cas limites :
+• Decimal, Fraction autres règles.
+
+Considérations de performance :
+• O(1).
+
+Remarques :
+• Réponse : 'b'.`,
+  1897: `Littéral avec collision 1 / 1.0
+
+Débutant :
+• {1:'a', 1.0:'b'} s’affiche comme un seul mapping, valeur 'b', souvent clé affichée 1.
+
+Intermédiaire :
+• len vaut 1.
+
+Expert :
+• 1 in d et 1.0 in d tous deux True.
+
+Concepts clés :
+• Unicité logique des clés.
+
+Distinctions clés :
+• '1' str serait une autre clé.
+
+Fonctionnement :
+• Fusion à la construction.
+
+Exécution étape par étape :
+1. Écrasement lors de la seconde paire.
+
+Ordre des opérations :
+• De gauche à droite.
+
+Cas limites :
+• NaN spécial.
+
+Considérations de performance :
+• Une entrée.
+
+Remarques :
+• Réponse : {1: 'b'} (formulation QCM).`,
+  1898: `Assignations d[1] puis d[1.0]
+
+Débutant :
+• d = {}; d[1]='a'; d[1.0]='b' → un seul slot, valeur finale 'b'.
+
+Intermédiaire :
+• Deux écritures sur la même clé logique.
+
+Expert :
+• len(d) est 1.
+
+Concepts clés :
+• Mutation successive, collision.
+
+Distinctions clés :
+• d['1'] serait une clé str distincte.
+
+Fonctionnement :
+• Première assignation crée 1:'a', seconde remplace par 'b'.
+
+Exécution étape par étape :
+1. Vide → {'1':...} non ; clé int/float unifiée → {1:'b'}.
+
+Ordre des opérations :
+• Séquence de statements.
+
+Cas limites :
+• Types non numériques autres.
+
+Considérations de performance :
+• Deux ops sur même slot.
+
+Remarques :
+• Réponse : {1: 'b'} (une entrée).`,
+  1899: `pop avec défaut, clé présente
+
+Débutant :
+• pop('a','default') retourne 1 (valeur réelle), pas la chaîne 'default'.
+
+Intermédiaire :
+• Le défaut sert seulement si la clé manque.
+
+Expert :
+• pop retire aussi la paire 'a'.
+
+Concepts clés :
+• pop à deux arguments, priorité valeur stockée.
+
+Distinctions clés :
+• vs get sans suppression.
+
+Fonctionnement :
+• 'a' trouvée → 1.
+
+Exécution étape par étape :
+1. Retour 1, dict devient {'b':2} (effet de bord hors expression isolée).
+
+Ordre des opérations :
+• Appel méthode.
+
+Cas limites :
+• Si valeur était réellement la chaîne 'default', on la retournerait quand même.
+
+Considérations de performance :
+• O(1) amorti.
+
+Remarques :
+• Réponse : 1.`,
+  1900: `pop avec défaut, clé absente
+
+Débutant :
+• pop('c','default') retourne 'default' sans KeyError ; le dict reste {'a':1,'b':2}.
+
+Intermédiaire :
+• Pas de suppression si clé absente.
+
+Expert :
+• Chaîne 'default' est ici la valeur de repli, pas un mot-clé du langage.
+
+Concepts clés :
+• pop tolérant.
+
+Distinctions clés :
+• pop('c') sans défaut lèverait.
+
+Fonctionnement :
+• Clé absente → second argument.
+
+Exécution étape par étape :
+1. Retour 'default'.
+
+Ordre des opérations :
+• 'default' évalué avant l’appel.
+
+Cas limites :
+• default None possible.
+
+Considérations de performance :
+• Une recherche.
+
+Remarques :
+• Réponse : 'default'.`,
   1901: `This demonstrates a basic closure. When outer() est appelé, il crée a local variable x = 10, defines inner() which references x, and retourne le inner function. Appeler la fonction retournée with outer()() executes inner(), which looks up x in the enclosing scope and renvoie 10.
 
 Concepts clés :
