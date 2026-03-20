@@ -135247,7 +135247,171 @@ Exemples :
 
 Remarques :
 • Réponse : WARNING — 1re option.`,
-  3201: `print(logging.DEBUG) — valeur numérique ?
+  3201: `import textwrap — textwrap.dedent("  hello\n  world") — résultat ?
+
+Débutant :
+• Les espaces communs en tête de chaque ligne sont retirés : on obtient "hello\nworld" sans indentation de bloc.
+
+Intermédiaire :
+• Seules les lignes « vides » avec espaces sont normalisées ; la coupure de ligne est conservée.
+
+Expert :
+• Utile pour réaligner des chaînes littérales indentées comme du code dans le source.
+
+Concepts clés :
+• dedent lit toutes les lignes et enlève le plus grand préfixe blanc partagé.
+
+Distinctions clés :
+• dedent vs strip() global vs lstrip ligne par ligne à la main.
+
+Fonctionnement :
+• Calcule la marge minimale non vide puis la retire à chaque ligne.
+
+Exécution étape par étape :
+1. Découpe en lignes.
+2. Trouve l’indentation minimale.
+3. Retire ce préfixe ; première ligne vide ignorée pour le calcul.
+
+Ordre des opérations :
+• Pas d’évaluation Python des sous-chaînes : traitement texte pur.
+
+Cas d'utilisation courants :
+• Docstrings ou snippets SQL/HTML indentés dans le fichier .py.
+
+Cas limites :
+• Mélange tabs/espaces peut surprendre ; mélange d’indentations profondes différentes.
+
+Considérations de performance :
+• Linéaire en taille de chaîne.
+
+Exemples :
+• dedent('''\n  a\n    b''') aligne sur la marge réelle.
+
+Remarques :
+• Réponse : "hello\nworld" — 1re option.`,
+  3202: `from string import Template — Template("Hello $name").substitute(name="World") ?
+
+Débutant :
+• "Hello World" : les placeholders $name sont remplacés par les clés du mapping.
+
+Intermédiaire :
+• substitute exige toutes les clés ; safe_substitute laisse le texte si manquant.
+
+Expert :
+• Moins flexible que str.format / f-strings mais utile pour entrées utilisateur (évite l’injection de format).
+
+Concepts clés :
+• Template PEP 292 ; syntaxe « dollar + identifiant » ou forme avec accolades.
+
+Distinctions clés :
+• Template vs format avec {} ; sécurité et erreurs différentes.
+
+Fonctionnement :
+• Parse le modèle, remplace par valeurs str() du dictionnaire.
+
+Exécution étape par étape :
+1. Crée l’objet Template.
+2. substitute injecte name="World".
+3. Retourne la chaîne finale.
+
+Ordre des opérations :
+• Remplacement après validation des noms attendus.
+
+Cas d'utilisation courants :
+• Messages i18n simples, modèles édités par des non-développeurs.
+
+Cas limites :
+• $$ pour un dollar littéral ; attributs $obj.attr non supportés comme en format.
+
+Considérations de performance :
+• Suffisant pour volumes modestes.
+
+Exemples :
+• Template("$$99").substitute() → "$99".
+
+Remarques :
+• Réponse : "Hello World" — 1re option.`,
+  3203: `import logging — combien de niveaux « standard » documentés ?
+
+Débutant :
+• Cinq : DEBUG, INFO, WARNING, ERROR, CRITICAL (valeurs numériques croissantes).
+
+Intermédiaire :
+• NOTSET (0) existe en dessous mais n’est pas compté comme « niveau usuel » dans la question.
+
+Expert :
+• Le filtrage compare entiers ; le seuil du logger décide de l’émission.
+
+Concepts clés :
+• Hiérarchie de gravité.
+
+Distinctions clés :
+• 5 vs mention de NOTSET.
+
+Fonctionnement :
+• Chaque niveau est une constante entière prédéfinie.
+
+Exécution étape par étape :
+• Lecture de la doc / constantes du module.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Choix du niveau basicConfig.
+
+Cas limites :
+• Bibliothèques tierces peuvent logger en DEBUG très verbeux.
+
+Considérations de performance :
+• Coût surtout si handlers nombreux.
+
+Exemples :
+• logging.INFO typique pour services.
+
+Remarques :
+• Réponse : 5 — 1re option.`,
+  3204: `import logging — niveau par défaut du logger racine sans configuration explicite ?
+
+Débutant :
+• WARNING : en dessous, DEBUG et INFO ne passent pas sur le handler par défaut.
+
+Intermédiaire :
+• basicConfig(level=logging.DEBUG) abaisse le seuil pour la durée du processus.
+
+Expert :
+• Les loggers enfants héritent du niveau du parent jusqu’à ajustement.
+
+Concepts clés :
+• Politique « bruit réduit » par défaut.
+
+Distinctions clés :
+• Niveau du logger vs niveau du handler.
+
+Fonctionnement :
+• lastResort handler stderr avec seuil WARNING.
+
+Exécution étape par étape :
+• Premier log ou getLogger root utilise ces défauts.
+
+Ordre des opérations :
+• Configuration utilisateur peut tout changer.
+
+Cas d'utilisation courants :
+• Scripts courts sans setup : voir seulement avertissements et erreurs.
+
+Cas limites :
+• Tests qui oublient basicConfig : absence de logs INFO attendus.
+
+Considérations de performance :
+• Moins de logs = moins d’I/O.
+
+Exemples :
+• print(logging.getLogger().level) peut montrer NOTSET sur l’objet mais le handler filtre WARNING.
+
+Remarques :
+• Réponse : WARNING — 1re option.`,
+  3205: `print(logging.DEBUG) — valeur numérique ?
 
 Débutant :
 • DEBUG vaut 10 : le niveau standard le plus bas.
@@ -135288,7 +135452,7 @@ Exemples :
 
 Remarques :
 • Réponse : 10 — 1re option.`,
-  3202: `print(logging.INFO) — valeur ?
+  3206: `print(logging.INFO) — valeur ?
 
 Débutant :
 • INFO = 20.
@@ -135328,7 +135492,7 @@ Exemples :
 
 Remarques :
 • Réponse : 20 — 1re option.`,
-  3203: `print(logging.WARNING) — valeur ?
+  3207: `print(logging.WARNING) — valeur ?
 
 Débutant :
 • WARNING = 30, niveau par défaut du root logger.
@@ -135368,7 +135532,7 @@ Exemples :
 
 Remarques :
 • Réponse : 30 — 1re option.`,
-  3204: `print(logging.ERROR) — valeur ?
+  3208: `print(logging.ERROR) — valeur ?
 
 Débutant :
 • ERROR = 40.
@@ -135408,7 +135572,7 @@ Exemples :
 
 Remarques :
 • Réponse : 40 — 1re option.`,
-  3205: `print(logging.CRITICAL) — valeur ?
+  3209: `print(logging.CRITICAL) — valeur ?
 
 Débutant :
 • CRITICAL = 50, plus haut des cinq standards.
@@ -135448,7 +135612,7 @@ Exemples :
 
 Remarques :
 • Réponse : 50 — 1re option.`,
-  3206: `logging.basicConfig(level=logging.DEBUG) — effet ?
+  3210: `logging.basicConfig(level=logging.DEBUG) — effet ?
 
 Débutant :
 • Configure le logger racine pour accepter DEBUG et au-dessus (tous les standards).
@@ -135489,7 +135653,7 @@ Exemples :
 
 Remarques :
 • Réponse : affiche DEBUG et tous les niveaux supérieurs — 1re option.`,
-  3207: `Rôle d’un Handler dans logging ?
+  3211: `Rôle d’un Handler dans logging ?
 
 Débutant :
 • Envoie les enregistrements de log vers une destination (console, fichier, socket, etc.).
@@ -135530,7 +135694,7 @@ Exemples :
 
 Remarques :
 • Réponse : envoie les enregistrements vers une destination — 1re option.`,
-  3208: `Rôle d’un Formatter ?
+  3212: `Rôle d’un Formatter ?
 
 Débutant :
 • Définit la mise en page du message final (timestamp, niveau, nom logger, message).
@@ -135571,7 +135735,7 @@ Exemples :
 
 Remarques :
 • Réponse : précise la disposition / format des lignes de log — 1re option.`,
-  3209: `Pourquoi logging.getLogger(__name__) ?
+  3213: `Pourquoi logging.getLogger(__name__) ?
 
 Débutant :
 • Crée un logger nommé comme le module, utile pour hiérarchie paquet.sousmodule.
@@ -135612,7 +135776,7 @@ Exemples :
 
 Remarques :
 • Réponse : logger hiérarchique par module — 1re option.`,
-  3210: `Plusieurs handlers sur un même logger ?
+  3214: `Plusieurs handlers sur un même logger ?
 
 Débutant :
 • Oui : par ex. console + fichier.
@@ -135653,7 +135817,7 @@ Exemples :
 
 Remarques :
 • Réponse : Oui — 1re option.`,
-  3211: `logging.exception("msg") vs logging.error() ?
+  3215: `logging.exception("msg") vs logging.error() ?
 
 Débutant :
 • exception ajoute la pile d’appels de l’erreur courante (niveau ERROR).
@@ -135694,7 +135858,7 @@ Exemples :
 
 Remarques :
 • Réponse : inclut la traceback — 1re option.`,
-  3212: `Différence clé print() vs logging ?
+  3216: `Différence clé print() vs logging ?
 
 Débutant :
 • Logging offre niveaux, handlers, formatage, configuration externe ; print écrit sur stdout sans pipeline.
@@ -135734,7 +135898,7 @@ Exemples :
 
 Remarques :
 • Réponse : niveaux, handlers, formatage, config sans changer le code — 1re option.`,
-  3213: `logging.FileHandler("app.log") crée quoi ?
+  3217: `logging.FileHandler("app.log") crée quoi ?
 
 Débutant :
 • Un handler qui écrit les enregistrements dans le fichier indiqué (append par défaut).
@@ -135775,7 +135939,7 @@ Exemples :
 
 Remarques :
 • Réponse : handler vers fichier — 1re option.`,
-  3214: `self.assertEqual(1+1, 2) vérifie quoi ?
+  3218: `self.assertEqual(1+1, 2) vérifie quoi ?
 
 Débutant :
 • Égalité de valeurs avec ==, pas l’identité.
@@ -135816,7 +135980,7 @@ Exemples :
 
 Remarques :
 • Réponse : deux valeurs égales (==) — 1re option.`,
-  3215: `self.assertTrue(expr) ?
+  3219: `self.assertTrue(expr) ?
 
 Débutant :
 • Vérifie que bool(expr) est vrai (toute valeur truthy passe).
@@ -135856,7 +136020,7 @@ Exemples :
 
 Remarques :
 • Réponse : expr évaluée vraie (truthy) — 1re option.`,
-  3216: `self.assertFalse(expr) ?
+  3220: `self.assertFalse(expr) ?
 
 Débutant :
 • Vérifie que bool(expr) est faux (0, None, "", [], False, etc.).
@@ -135896,7 +136060,7 @@ Exemples :
 
 Remarques :
 • Réponse : expr fausse (falsy) — 1re option.`,
-  3217: `self.assertIs(a, b) ?
+  3221: `self.assertIs(a, b) ?
 
 Débutant :
 • Vérifie l’identité : a is b (même objet en mémoire).
@@ -135936,7 +136100,7 @@ Exemples :
 
 Remarques :
 • Réponse : même objet (identité) — 1re option.`,
-  3218: `self.assertIsNone(x) ?
+  3222: `self.assertIsNone(x) ?
 
 Débutant :
 • Vérifie x is None (identité au singleton None).
@@ -135976,7 +136140,7 @@ Exemples :
 
 Remarques :
 • Réponse : x est None — 1re option.`,
-  3219: `self.assertIn(a, b) ?
+  3223: `self.assertIn(a, b) ?
 
 Débutant :
 • Vérifie a in b (appartenance).
@@ -136016,7 +136180,7 @@ Exemples :
 
 Remarques :
 • Réponse : a est dans b (in) — 1re option.`,
-  3220: `self.assertRaises(ValueError) sert à ?
+  3224: `self.assertRaises(ValueError) sert à ?
 
 Débutant :
 • Vérifier qu’une ValueError est bien levée (callable ou bloc with).
@@ -136057,7 +136221,7 @@ Exemples :
 
 Remarques :
 • Réponse : qu’une ValueError est levée — 1re option.`,
-  3221: `with self.assertRaises(ValueError): int("abc") — le test passe ?
+  3225: `with self.assertRaises(ValueError): int("abc") — le test passe ?
 
 Débutant :
 • Oui : int("abc") lève ValueError comme attendu.
@@ -136098,7 +136262,7 @@ Exemples :
 
 Remarques :
 • Réponse : Oui — 1re option.`,
-  3222: `self.assertAlmostEqual(0.1 + 0.2, 0.3) passe ?
+  3226: `self.assertAlmostEqual(0.1 + 0.2, 0.3) passe ?
 
 Débutant :
 • Oui : tolérance décimale par défaut (places) gère l’imprécision IEEE 754.
@@ -136138,7 +136302,7 @@ Exemples :
 
 Remarques :
 • Réponse : Oui — 1re option.`,
-  3223: `setUp(self) dans TestCase ?
+  3227: `setUp(self) dans TestCase ?
 
 Débutant :
 • Exécuté avant chaque méthode de test pour préparer l’état.
@@ -136178,7 +136342,7 @@ Exemples :
 
 Remarques :
 • Réponse : avant chaque test — 1re option.`,
-  3224: `tearDown(self) ?
+  3228: `tearDown(self) ?
 
 Débutant :
 • Après chaque test, même en cas d’échec du test, pour nettoyer.
@@ -136218,7 +136382,7 @@ Exemples :
 
 Remarques :
 • Réponse : après chaque test — 1re option.`,
-  3225: `setUpClass(cls) ?
+  3229: `setUpClass(cls) ?
 
 Débutant :
 • Méthode de classe exécutée une seule fois avant tous les tests de la classe.
@@ -136259,7 +136423,7 @@ Exemples :
 
 Remarques :
 • Réponse : une fois avant tous les tests de la classe — 1re option.`,
-  3226: `@unittest.skip("raison") sur un test ?
+  3230: `@unittest.skip("raison") sur un test ?
 
 Débutant :
 • Le test est ignoré : non exécuté, compté comme « skipped » avec la raison.
@@ -136299,7 +136463,7 @@ Exemples :
 
 Remarques :
 • Réponse : saute le test décoré — 1re option.`,
-  3227: `@unittest.expectedFailure ?
+  3231: `@unittest.expectedFailure ?
 
 Débutant :
 • Échec attendu du test → rapport « expected failure » (pas un fail rouge classique).
@@ -136339,7 +136503,7 @@ Exemples :
 
 Remarques :
 • Réponse : marque un test censé échouer — 1re option.`,
-  3228: `assert 1 == 1 lève une erreur ?
+  3232: `assert 1 == 1 lève une erreur ?
 
 Débutant :
 • Non : la condition est vraie, assert ne fait rien.
@@ -136379,7 +136543,7 @@ Exemples :
 
 Remarques :
 • Réponse : Non — 1re option.`,
-  3229: `assert 1 == 2 — quelle erreur ?
+  3233: `assert 1 == 2 — quelle erreur ?
 
 Débutant :
 • AssertionError.
@@ -136419,7 +136583,7 @@ Exemples :
 
 Remarques :
 • Réponse : AssertionError — 1re option.`,
-  3230: `assert 1 == 2, "numbers not equal" — où apparaît le message ?
+  3234: `assert 1 == 2, "numbers not equal" — où apparaît le message ?
 
 Débutant :
 • Dans l’AssertionError comme argument du message.
@@ -136459,7 +136623,7 @@ Exemples :
 
 Remarques :
 • Réponse : dans l’AssertionError — 1re option.`,
-  3231: `Peut-on désactiver assert à l’exécution ?
+  3235: `Peut-on désactiver assert à l’exécution ?
 
 Débutant :
 • Oui : python -O (optimisation) supprime les assert du bytecode.
@@ -136499,7 +136663,7 @@ Exemples :
 
 Remarques :
 • Réponse : Oui, avec python -O — 1re option.`,
-  3232: `__debug__ vaut True quand ?
+  3236: `__debug__ vaut True quand ?
 
 Débutant :
 • En exécution normale ; False si lancement avec l’option -O (mode optimisé).
@@ -136539,7 +136703,7 @@ Exemples :
 
 Remarques :
 • Réponse : mode normal (True) ; False avec -O — 1re option.`,
-  3233: `doctest en Python ?
+  3237: `doctest en Python ?
 
 Débutant :
 • Cadre qui extrait et exécute des exemples style REPL dans les docstrings pour vérifier la sortie.
@@ -136581,7 +136745,7 @@ Exemples :
 
 Remarques :
 • Réponse : tests extraits des docstrings (sessions interactives) — 1re option.`,
-  3234: `try: x=1/0 except ZeroDivisionError: x=0 ; print(x) ?
+  3238: `try: x=1/0 except ZeroDivisionError: x=0 ; print(x) ?
 
 Débutant :
 • 1/0 lève, except assigne 0, affiche 0.
@@ -136623,7 +136787,7 @@ Exemples :
 
 Remarques :
 • Réponse : 0 — 1re option.`,
-  3235: `int("abc") dans try ; except ValueError as e: x=str(e) ; type(x) ?
+  3239: `int("abc") dans try ; except ValueError as e: x=str(e) ; type(x) ?
 
 Débutant :
 • str : le message d’erreur est une chaîne.
@@ -136663,7 +136827,7 @@ Exemples :
 
 Remarques :
 • Réponse : classe str — 1re option.`,
-  3236: `try: x=1 except: pass else: x=3 ; print(x) ?
+  3240: `try: x=1 except: pass else: x=3 ; print(x) ?
 
 Débutant :
 • try réussit sans exception → else s’exécute → x vaut 3.
@@ -136705,7 +136869,7 @@ Exemples :
 
 Remarques :
 • Réponse : 3 — 1re option.`,
-  3237: `Quand le finally s’exécute-t-il ?
+  3241: `Quand le finally s’exécute-t-il ?
 
 Débutant :
 • Toujours : succès, exception catchée ou non, même autour d’un return dans try/except (finally avant propagation du return).
@@ -136745,7 +136909,7 @@ Exemples :
 
 Remarques :
 • Réponse : toujours (avec ou sans exception) — 1re option.`,
-  3238: `except, else et finally peuvent-ils coexister ?
+  3242: `except, else et finally peuvent-ils coexister ?
 
 Débutant :
 • Oui : syntaxe complète try / except / else / finally autorisée.
@@ -136785,7 +136949,7 @@ Exemples :
 
 Remarques :
 • Réponse : Oui, les trois peuvent coexister — 1re option.`,
-  3239: `raise ValueError("msg") from TypeError("cause") — nom du mécanisme ?
+  3243: `raise ValueError("msg") from TypeError("cause") — nom du mécanisme ?
 
 Débutant :
 • Chaînage d’exceptions (exception chaining).
@@ -136826,7 +136990,7 @@ Exemples :
 
 Remarques :
 • Réponse : exception chaining / chaînage — 1re option.`,
-  3240: `e.__traceback__ après except ValueError as e ?
+  3244: `e.__traceback__ après except ValueError as e ?
 
 Débutant :
 • Objet traceback décrivant la pile au point de la levée.
@@ -136866,7 +137030,7 @@ Exemples :
 
 Remarques :
 • Réponse : objet traceback — 1re option.`,
-  3241: `traceback.format_exc() dans un except — s contient ?
+  3245: `traceback.format_exc() dans un except — s contient ?
 
 Débutant :
 • Une chaîne avec le traceback formaté comme l’affichage stderr classique.
@@ -136906,7 +137070,7 @@ Exemples :
 
 Remarques :
 • Réponse : chaîne traceback formatée — 1re option.`,
-  3242: `sys.exc_info() dans except ?
+  3246: `sys.exc_info() dans except ?
 
 Débutant :
 • Tuple (type, valeur, traceback) de l’exception en cours de traitement.
@@ -136946,7 +137110,7 @@ Exemples :
 
 Remarques :
 • Réponse : tuple (type, valeur, traceback) — 1re option.`,
-  3243: `AppError("fail", 404) ; e.code ?
+  3247: `AppError("fail", 404) ; e.code ?
 
 Débutant :
 • 404 : attribut personnalisé stocké sur l’instance.
@@ -136986,7 +137150,7 @@ Exemples :
 
 Remarques :
 • Réponse : 404 — 1re option.`,
-  3244: `except: sans type explicite (« bare except ») — qu’est-ce qui est attrapé ?
+  3248: `except: sans type explicite (« bare except ») — qu’est-ce qui est attrapé ?
 
 Débutant :
 • Tout BaseException : y compris SystemExit, KeyboardInterrupt, GeneratorExit — d’où le déconseillé.
@@ -137026,7 +137190,7 @@ Exemples :
 
 Remarques :
 • Réponse : toutes les exceptions y compris SystemExit et KeyboardInterrupt — 1re option.`,
-  3245: `except Exception: vs bare except ?
+  3249: `except Exception: vs bare except ?
 
 Débutant :
 • Exception attrape toutes les sous-classes d’Exception mais pas SystemExit, KeyboardInterrupt, GeneratorExit (héritant direct de BaseException).
@@ -137066,7 +137230,7 @@ Exemples :
 
 Remarques :
 • Réponse : toutes sauf SystemExit, KeyboardInterrupt, GeneratorExit — 1re option.`,
-  3246: `EAFP signifie ?
+  3250: `EAFP signifie ?
 
 Débutant :
 • Easier to Ask Forgiveness than Permission : essayer puis except si échec.
@@ -137106,7 +137270,7 @@ Exemples :
 
 Remarques :
 • Réponse : Easier to Ask Forgiveness than Permission — 1re option.`,
-  3247: `LBYL signifie ?
+  3251: `LBYL signifie ?
 
 Débutant :
 • Look Before You Leap : vérifier les préconditions avant l’action.
@@ -137146,7 +137310,7 @@ Exemples :
 
 Remarques :
 • Réponse : Look Before You Leap — 1re option.`,
-  3248: `PEP 8 : indentation recommandée ?
+  3252: `PEP 8 : indentation recommandée ?
 
 Débutant :
 • 4 espaces par niveau ; pas de tabulations mélangées.
@@ -137183,7 +137347,7 @@ Exemples :
 
 Remarques :
 • Réponse : 4 espaces — 1re option.`,
-  3249: `PEP 8 : longueur de ligne recommandée pour le code ?
+  3253: `PEP 8 : longueur de ligne recommandée pour le code ?
 
 Débutant :
 • 79 caractères pour le code ; 72 pour commentaires/docstrings (souplesse d’équipe jusqu’à ~99 parfois).
@@ -137220,7 +137384,7 @@ Exemples :
 
 Remarques :
 • Réponse : 79 — 1re option.`,
-  3250: `PEP 8 : nommage des fonctions ?
+  3254: `PEP 8 : nommage des fonctions ?
 
 Débutant :
 • snake_case : minuscules et underscores entre mots.
@@ -137257,6 +137421,1848 @@ Exemples :
 
 Remarques :
 • Réponse : snake_case — 1re option.`,
+  3255: `PEP 8 — convention pour les noms de classes ?
+
+Débutant :
+• CamelCase / CapitalizedWords : chaque mot commence par une majuscule, sans underscores entre mots.
+
+Intermédiaire :
+• Les exceptions se nomment souvent …Error en CamelCase.
+
+Expert :
+• Les builtins int, str restent minuscules : exception historique, pas modèle pour vos classes.
+
+Concepts clés :
+• Lisibilité et cohérence avec le reste de l’écosystème.
+
+Distinctions clés :
+• Classe CamelCase vs fonction snake_case.
+
+Fonctionnement :
+• Convention pure ; le langage n’impose pas la casse.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• class UserProfile, class HTTPClient.
+
+Cas limites :
+• Acronymes longs : HTTPResponse vs HttpResponse selon équipe.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• class BankAccount: pass.
+
+Remarques :
+• Réponse : CamelCase — 1re option.`,
+  3256: `PEP 8 — style pour les constantes ?
+
+Débutant :
+• TOUT_EN_MAJUSCULES avec underscores entre mots (MAX_CONNECTIONS).
+
+Intermédiaire :
+• Souvent en tête de module ; Python ne force pas l’immuabilité.
+
+Expert :
+• typing.Final peut documenter l’intention « ne pas réassigner ».
+
+Concepts clés :
+• Signal visuel fort pour valeurs de configuration.
+
+Distinctions clés :
+• Constante ALL_CAPS vs variable snake_case.
+
+Fonctionnement :
+• Convention humaine.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• TIMEOUT_SEC = 30, PI = 3.14159.
+
+Cas limites :
+• Constantes dans une classe : parfois MAJUSCULES en attributs de classe.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• DEFAULT_LOCALE = "fr_FR".
+
+Remarques :
+• Réponse : ALL_CAPS — 1re option.`,
+  3257: `PEP 8 — nommage des modules ?
+
+Débutant :
+• Court, tout en minuscules ; underscores possibles si ça améliore la lisibilité (pep8 le tolère).
+
+Intermédiaire :
+• Éviter CamelCase pour les fichiers modules.
+
+Expert :
+• Le nom du fichier importable doit rester un identifiant valide sans espace.
+
+Concepts clés :
+• Alignement avec import my_module.
+
+Distinctions clés :
+• Module vs paquet (répertoire avec __init__.py).
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• json_loader.py, http_utils.py.
+
+Cas limites :
+• Noms réservés ou collision avec stdlib à éviter.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• import re, import pathlib.
+
+Remarques :
+• Réponse : short_lowercase — 1re option.`,
+  3258: `PEP 8 — espaces autour du = en affectation simple (x = 1) ?
+
+Débutant :
+• Oui : un espace de chaque côté du signe égal pour l’affectation.
+
+Intermédiaire :
+• Distinction avec les arguments par mot-clé dans un appel (sans espaces autour du =).
+
+Expert :
+• Annotated assign ou opérateurs composés (+ = interdit : += sans espace au milieu).
+
+Concepts clés :
+• Lisibilité : séparer opérateur et opérandes.
+
+Distinctions clés :
+• Affectation vs paramètre nommé.
+
+Fonctionnement :
+• Style PEP 8.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• x = 1, name = "Ada".
+
+Cas limites :
+• Alignement vertical de = en colonnes : parfois toléré mais secondaire.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• y = a + b.
+
+Remarques :
+• Réponse : Oui, toujours — 1re option.`,
+  3259: `PEP 8 — espaces autour du = dans un argument nommé func(x=1) ?
+
+Débutant :
+• Pas d’espaces autour du = dans la liste d’arguments d’un appel.
+
+Intermédiaire :
+• Contraste avec x = 1 en instruction d’affectation seule.
+
+Expert :
+• Les défauts de déf def f(x=0): suivent la même règle « serré » dans la signature.
+
+Concepts clés :
+• Deux contextes syntaxiques différents.
+
+Distinctions clés :
+• Appel vs assignation statement.
+
+Fonctionnement :
+• Grammaire Python.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• sorted(items, reverse=True).
+
+Cas limites :
+• Black normalise automatiquement.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• print(sep="", end="\n").
+
+Remarques :
+• Réponse : Non, pas d’espaces — 1re option.`,
+  3260: `PEP 8 — lignes vides entre fonctions de niveau module ?
+
+Débutant :
+• Deux lignes blanches pour séparer définitions de fonctions/classes au plus haut niveau.
+
+Intermédiaire :
+• Une seule ligne entre méthodes à l’intérieur d’une classe (question suivante).
+
+Expert :
+• Cohérence avec les outils de formatage.
+
+Concepts clés :
+• Scan visuel des blocs.
+
+Distinctions clés :
+• Top-level vs intra-classe.
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Fichiers > 200 lignes avec plusieurs API publiques.
+
+Cas limites :
+• Groupes logiques : parfois commentaire de section.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• def a(): pass\n\n\ndef b(): pass.
+
+Remarques :
+• Réponse : 2 — 1re option.`,
+  3261: `PEP 8 — lignes vides entre méthodes dans une classe ?
+
+Débutant :
+• Une seule ligne blanche entre méthodes.
+
+Intermédiaire :
+• Deux lignes avant la première méthode si la classe suit un bloc top-level dense (contexte module).
+
+Expert :
+• Les attributs de classe simples peuvent rester sans ligne vide superflue entre eux.
+
+Concepts clés :
+• Compacité raisonnable à l’intérieur de la classe.
+
+Distinctions clés :
+• Méthodes vs fonctions module.
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• class Foo avec __init__, helpers publics, méthodes privées.
+
+Cas limites :
+• Mélange attributs/méthodes : une ligne vide peut séparer groupes.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• def a(self): pass\n\n    def b(self): pass.
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  3262: `PEP 8 — comment écrire les import ?
+
+Débutant :
+• En général un import par ligne, en tête de fichier (après docstring/module comment).
+
+Intermédiaire :
+• from x import a, b est toléré si court et lié.
+
+Expert :
+• Pas d’import au milieu du fichier sauf contournement de dépendance circulaire rare.
+
+Concepts clés :
+• Lisibilité et ordre de résolution clair.
+
+Distinctions clés :
+• import mod vs from mod import nom.
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• stdlib d’abord, puis tiers, puis local (question suivante).
+
+Cas d'utilisation courants :
+• import os\nimport sys.
+
+Cas limites :
+• Imports conditionnels (TYPE_CHECKING).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• import asyncio.
+
+Remarques :
+• Réponse : un par ligne, en haut du fichier — 1re option.`,
+  3263: `PEP 8 — ordre des import ?
+
+Débutant :
+• Bibliothèque standard, puis paquets tiers, puis modules du projet local.
+
+Intermédiaire :
+• Séparer chaque groupe par une ligne vide.
+
+Expert :
+• isort / ruff appliquent cette politique automatiquement.
+
+Concepts clés :
+• Dépendances explicites et revue de code.
+
+Distinctions clés :
+• stdlib vs site-packages vs src.
+
+Fonctionnement :
+• Convention.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• import json puis import requests puis from .models import User.
+
+Cas limites :
+• Monorepo : frontière « local » à définir par équipe.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir isort profile black.
+
+Remarques :
+• Réponse : stdlib, tiers, local — 1re option.`,
+  3264: `PEP 8 — comparer à None ?
+
+Débutant :
+• Utiliser is None / is not None, pas == None.
+
+Intermédiaire :
+• None est singleton ; == peut être surchargé par __eq__ trompeur.
+
+Expert :
+• if x: exclut None mais aussi 0 et [] ; pas équivalent à is None.
+
+Concepts clés :
+• Identité pour None.
+
+Distinctions clés :
+• is vs ==.
+
+Fonctionnement :
+• CPython une seule instance None.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• if value is None: return default.
+
+Cas limites :
+• numpy scalar : parfois is None insuffisant ; cas spéciaux.
+
+Considérations de performance :
+• is est rapide.
+
+Exemples :
+• assert x is not None.
+
+Remarques :
+• Réponse : x is None — 1re option.`,
+  3265: `PEP 8 — tester la « vérité » d’une valeur ?
+
+Débutant :
+• if x: (truthiness) plutôt que if x == True:.
+
+Intermédiaire :
+• if x is True: seulement si vous devez distinguer True booléen d’autres valeurs vraies.
+
+Expert :
+• __bool__ / __len__ définissent la vérité des objets custom.
+
+Concepts clés :
+• Idiomatique et concis.
+
+Distinctions clés :
+• Truthiness vs égalité à True.
+
+Fonctionnement :
+• Appel bool(x) en interne pour le test.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• if items: process(items).
+
+Cas limites :
+• if value is False: pour rejeter explicitement False sans exclure 0.
+
+Considérations de performance :
+• Léger.
+
+Exemples :
+• if name: print(name).
+
+Remarques :
+• Réponse : if x: — 1re option.`,
+  3266: `PEP 8 — qu’est-ce qu’une docstring ?
+
+Débutant :
+• Chaîne littérale en première instruction d’un module, classe ou fonction ; devient __doc__.
+
+Intermédiaire :
+• Triple quotes habituelles ; première ligne peut être résumé seul.
+
+Expert :
+• help() et outils Sphinx s’en servent.
+
+Concepts clés :
+• Documentation vivante à côté du code.
+
+Distinctions clés :
+• Docstring vs commentaire # ignoré par __doc__.
+
+Fonctionnement :
+• Compile en constante attachée à l’objet.
+
+Exécution étape par étape :
+• Exécutée à la définition.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• def foo(): """Return twice x.""".
+
+Cas limites :
+• Docstring après code avant elle : ne compte plus comme docstring.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• module doc en tête de fichier.
+
+Remarques :
+• Réponse : littéral de chaîne en première instruction module/classe/fonction — 1re option.`,
+  3267: `PEP 8 — fin de ligne avec espaces invisibles ?
+
+Débutant :
+• Les supprimer : trailing whitespace inutile et bruyant en diff.
+
+Intermédiaire :
+• pre-commit hooks ou éditeur « trim on save ».
+
+Expert :
+• Les chaînes multilignes intentionnelles ne doivent pas être cassées par un trim aveugle hors contexte.
+
+Concepts clés :
+• Hygiène du dépôt.
+
+Distinctions clés :
+• Espace significatif dans une chaîne vs hors chaîne.
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• PR propres, merge sans bruit.
+
+Cas limites :
+• Markdown deux espaces fin de ligne pour <br> : hors code Python.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• git diff sans lignes « whitespace only ».
+
+Remarques :
+• Réponse : les enlever — 1re option.`,
+  3268: `async def f(): return 1 — que produit l’appel f() ?
+
+Débutant :
+• Un objet coroutine (pas encore exécuté) ; pas l’entier 1.
+
+Intermédiaire :
+• Il faut await ou asyncio.run pour obtenir 1.
+
+Expert :
+• Coroutine fermée après await ; double await invalide.
+
+Concepts clés :
+• Modèle asyncio : fonctions async retournent des coroutines.
+
+Distinctions clés :
+• Coroutine vs générateur vs tâche.
+
+Fonctionnement :
+• f() construit coroutine, le corps s’exécute quand planifié.
+
+Exécution étape par étape :
+• Appel sync retourne coroutine object immédiatement.
+
+Ordre des opérations :
+• Planification par la boucle d’événements.
+
+Cas d'utilisation courants :
+• I/O réseau concurrent.
+
+Cas limites :
+• Oublier await : warnings « coroutine was never awaited ».
+
+Considérations de performance :
+• Pas de threads OS par coroutine.
+
+Exemples :
+• asyncio.run(f()) → 1.
+
+Remarques :
+• Réponse : un objet coroutine — 1re option.`,
+  3269: `async def f(): return 1 — type(f()) ?
+
+Débutant :
+• coroutine (repr <class 'coroutine'>).
+
+Intermédiaire :
+• collections.abc.Coroutine pour tests abstraits.
+
+Expert :
+• inspect.iscoroutine pour vérification runtime.
+
+Concepts clés :
+• Typage dynamique réel du retour d’appel.
+
+Distinctions clés :
+• coroutine vs function.
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Tests unitaires mock loop.
+
+Cas limites :
+• async generator : async def avec yield → async_generator.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• type(asyncio.sleep(0)).
+
+Remarques :
+• Réponse : <class 'coroutine'> — 1re option.`,
+  3270: `Pour obtenir le résultat d’une coroutine, il faut : ?
+
+Débutant :
+• asyncio.run(coro) au point d’entrée script, ou await coro dans une autre fonction async.
+
+Intermédiaire :
+• run crée une boucle, exécute jusqu’au bout, ferme la boucle.
+
+Expert :
+• Dans une app déjà async (FastAPI), le framework appelle await pour vous.
+
+Concepts clés :
+• Pas d’exécution magique au simple call ().
+
+Distinctions clés :
+• run vs loop manuel vs create_task.
+
+Fonctionnement :
+• Planification sur l’event loop.
+
+Exécution étape par étape :
+• run jusqu’à complétion.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• main async : asyncio.run(main()).
+
+Cas limites :
+• asyncio.run depuis coroutine déjà en cours : interdit (Python 3.11+ message clair).
+
+Considérations de performance :
+• I/O parallèle logique, pas CPU parallèle.
+
+Exemples :
+• asyncio.run(fetch()).
+
+Remarques :
+• Réponse : asyncio.run() ou await — 1re option.`,
+  3271: `asyncio.run(coroutine) fait quoi ?
+
+Débutant :
+• Lance la coroutine dans une nouvelle boucle d’événements et renvoie sa valeur de retour.
+
+Intermédiaire :
+• Gère la création/fermeture de loop et default executor.
+
+Expert :
+• Point d’entrée haut niveau depuis code synchrone.
+
+Concepts clés :
+• Pont sync → monde async.
+
+Distinctions clés :
+• run vs get_event_loop().run_until_complete (ancien style).
+
+Fonctionnement :
+• asyncio.runners.run.
+
+Exécution étape par étape :
+1. Crée loop.
+2. run_until_complete(coro).
+3. Ferme générateurs async pending.
+
+Ordre des opérations :
+• Bloquant jusqu’à fin de coro.
+
+Cas d'utilisation courants :
+• Scripts CLI async.
+
+Cas limites :
+• Une seule run imbriquée simple ; libs avancées gèrent la loop existante.
+
+Considérations de performance :
+• Overhead modest pour scripts.
+
+Exemples :
+• asyncio.run(asyncio.sleep(0)).
+
+Remarques :
+• Réponse : exécute dans une boucle et renvoie le résultat — 1re option.`,
+  3272: `Où peut-on utiliser await ?
+
+Débutant :
+• Uniquement à l’intérieur d’une fonction définie avec async def (ou dans certaines constructions async comprehension limitées).
+
+Intermédiaire :
+• SyntaxError en module top-level avant 3.8+ REPL cas spéciaux.
+
+Expert :
+• async def requis pour parser await.
+
+Concepts clés :
+• Cohérence du parseur.
+
+Distinctions clés :
+• await vs yield from.
+
+Fonctionnement :
+• Grammar rule async.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• await session.get(url).
+
+Cas limites :
+• IPython top-level await.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• async def g(): return await f().
+
+Remarques :
+• Réponse : seulement dans une fonction async — 1re option.`,
+  3273: `import asyncio — async def f(): return 42 — asyncio.run(f()) ?
+
+Débutant :
+• 42 : la coroutine retourne 42, run propage la valeur.
+
+Intermédiaire :
+• Pas besoin de await à l’extérieur : run s’en charge.
+
+Expert :
+• Si f levait, run propage l’exception.
+
+Concepts clés :
+• Chemin complet call→await implicite via run.
+
+Distinctions clés :
+• run(f()) vs f() seul.
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• run attend la coroutine complète.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Tests rapides.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• assert asyncio.run(f()) == 42.
+
+Remarques :
+• Réponse : 42 — 1re option.`,
+  3274: `asyncio.sleep(1), c’est : ?
+
+Débutant :
+• Une coroutine qui suspend la tâche courante ~1 s sans bloquer le thread pour les autres tâches du loop.
+
+Intermédiaire :
+• Retourne awaitable ; il faut await.
+
+Expert :
+• Précision liée à la charge du loop, pas temps réel dur.
+
+Concepts clés :
+• Coopération : donne la main au scheduler.
+
+Distinctions clés :
+• vs time.sleep qui bloque le thread entier.
+
+Fonctionnement :
+• Schedule callback après délai.
+
+Exécution étape par étape :
+• Yield contrôle au loop, reprise après timeout.
+
+Ordre des opérations :
+• Autres tâches peuvent tourner.
+
+Cas d'utilisation courants :
+• Simulation latence, backoff.
+
+Cas limites :
+• sleep(0) pour point de cession utile.
+
+Considérations de performance :
+• Meilleure concurrence I/O.
+
+Exemples :
+• await asyncio.sleep(0.1).
+
+Remarques :
+• Réponse : coroutine qui pause sans bloquer le thread (coopératif) — 1re option.`,
+  3275: `Différence clé time.sleep(1) vs asyncio.sleep(1) ?
+
+Débutant :
+• time.sleep bloque tout le thread OS ; asyncio.sleep cède au loop asyncio.
+
+Intermédiaire :
+• Dans une coroutine, time.sleep fige le loop : fuite de performance.
+
+Expert :
+• Pour CPU pur, threads ou multiprocessing restent nécessaires.
+
+Concepts clés :
+• Concurrence coopérative vs blocage.
+
+Distinctions clés :
+• Thread bloqué vs tâche suspendue.
+
+Fonctionnement :
+• sleep OS vs timer géré par loop.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Serveur async : jamais time.sleep dans coro.
+
+Cas limites :
+• to_thread pour appeler code bloquant.
+
+Considérations de performance :
+• Un seul thread bloqué stoppe tout le worker mono-thread.
+
+Exemples :
+• await asyncio.sleep(1) dans deux tâches concurrentes.
+
+Remarques :
+• Réponse : time.sleep bloque le thread entier — 1re option.`,
+  3276: `asyncio.gather(*coroutines) ?
+
+Débutant :
+• Lance plusieurs coroutines « en parallèle » sous le même loop et collecte tous les résultats (ordre des arguments conservé).
+
+Intermédiaire :
+• return_exceptions=True pour ne pas faire échouer tout le lot.
+
+Expert :
+• Ce n’est pas du parallélisme CPU ; c’est du chevauchement I/O.
+
+Concepts clés :
+• Orchestration multi-await.
+
+Distinctions clés :
+• gather vs TaskGroup (3.11+).
+
+Fonctionnement :
+• Enregistre chaque coro comme tâche, attend toutes.
+
+Exécution étape par étape :
+• Progression entrelacée jusqu’à complétions.
+
+Ordre des opérations :
+• Résultats alignés sur l’ordre d’appel gather.
+
+Cas d'utilisation courants :
+• fan-out HTTP.
+
+Cas limites :
+• Une coroutine infinie bloque gather.
+
+Considérations de performance :
+• Limite le nombre de connexions ouvertes.
+
+Exemples :
+• await asyncio.gather(a(), b()).
+
+Remarques :
+• Réponse : exécute plusieurs coroutines et renvoie tous les résultats — 1re option.`,
+  3277: `À quoi sert async for ?
+
+Débutant :
+• Itérer sur un asynchronous iterator (__anext__ awaitable).
+
+Intermédiaire :
+• Nécessite async def englobant.
+
+Expert :
+• Exemple : lire flux réseau par morceaux.
+
+Concepts clés :
+• Protocole async iteration.
+
+Distinctions clés :
+• async for vs for sur liste synchrone.
+
+Fonctionnement :
+• Appelle __aiter__ puis await __anext__ jusqu’à StopAsyncIteration.
+
+Exécution étape par étape :
+• Chaque step peut suspendre.
+
+Ordre des opérations :
+• Séquentiel logique malgré suspension.
+
+Cas d'utilisation courants :
+• asyncpg cursors, aiofiles patterns.
+
+Cas limites :
+• Oublier async sur l’itérateur : TypeError.
+
+Considérations de performance :
+• Back-pressure naturelle.
+
+Exemples :
+• async for line in reader:.
+
+Remarques :
+• Réponse : itérer sur itérateurs asynchrones — 1re option.`,
+  3278: `À quoi sert async with ?
+
+Débutant :
+• Utiliser un gestionnaire de contexte asynchrone (__aenter__/__aexit__ awaitables).
+
+Intermédiaire :
+• Semaphore, connexion pool, session HTTP async.
+
+Expert :
+• Garantit libération même si exception.
+
+Concepts clés :
+• with async pour ressources async.
+
+Distinctions clés :
+• async with vs with synchrone.
+
+Fonctionnement :
+• await __aenter__, bloc, await __aexit__.
+
+Exécution étape par étape :
+• Setup/teardown asynchrones.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• async with aiohttp.ClientSession().
+
+Cas limites :
+• __aexit__ doit gérer exc trio.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• verrous asyncio.Lock.
+
+Remarques :
+• Réponse : context managers asynchrones — 1re option.`,
+  3279: `Qu’est-ce qu’une event loop (asyncio) ?
+
+Débutant :
+• Le cœur qui planifie et exécute les coroutines quand elles sont prêtes (futures complétées, timers).
+
+Intermédiaire :
+• Une thread peut héberger une loop ; run_until_complete classique.
+
+Expert :
+• Sélecteurs OS (epoll, kqueue) en dessous pour I/O.
+
+Concepts clés :
+• Boucle infinie traitant une file de callbacks.
+
+Distinctions clés :
+• Loop vs simple for sur événements UI.
+
+Fonctionnement :
+• run_forever / run_until_complete.
+
+Exécution étape par étape :
+• Réveil des tâches prêtes, await des I/O pending.
+
+Ordre des opérations :
+• Non déterministe entre tâches indépendantes.
+
+Cas d'utilisation courants :
+• Serveurs, clients async.
+
+Cas limites :
+• Callbacks CPU lourds bloquent la loop.
+
+Considérations de performance :
+• Un seul thread : éviter le bloquant.
+
+Exemples :
+• asyncio.get_running_loop().
+
+Remarques :
+• Réponse : noyau qui gère et planifie les coroutines — 1re option.`,
+  3280: `asyncio.create_task(coro) ?
+
+Débutant :
+• Enregistre la coroutine pour s’exécuter « en concurrence » avec les autres tâches du même loop (dès que le contrôle est cédé).
+
+Intermédiaire :
+• Retourne un objet Task awaitable.
+
+Expert :
+• Il faut un loop actif ; sinon asyncio.run crée implicitement le contexte.
+
+Concepts clés :
+• Fire-and-forget contrôlé avec Task.
+
+Distinctions clés :
+• create_task vs ensure_future.
+
+Fonctionnement :
+• Task wrap coroutine, schedule.
+
+Exécution étape par étape :
+• Schedule immédiat au prochain cycle.
+
+Ordre des opérations :
+• Concurrence coopérative.
+
+Cas d'utilisation courants :
+• Ping plusieurs endpoints sans attendre séquentiellement.
+
+Cas limites :
+• Tâche non awaitée : exception « task exception was never retrieved ».
+
+Considérations de performance :
+• Meilleure latence agrégée.
+
+Exemples :
+• t = asyncio.create_task(foo()); await t.
+
+Remarques :
+• Réponse : planifie la coroutine comme tâche concurrente — 1re option.`,
+  3281: `Mélanger code synchrone et asynchrone ?
+
+Débutant :
+• Possible, mais un appel synchrone bloquant à l’intérieur d’async def bloque tout le loop.
+
+Intermédiaire :
+• asyncio.to_thread pour déléguer le bloquant à un thread pool.
+
+Expert :
+• CPU-bound : multiprocessing souvent préférable.
+
+Concepts clés :
+• Le loop est single-threaded logiquement.
+
+Distinctions clés :
+• I/O non bloquant vs calcul pur.
+
+Fonctionnement :
+• await cède ; bloquant sans await ne cède pas.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• ORM sync dans FastAPI : run_in_threadpool.
+
+Cas limites :
+• Deadlocks si thread attend le loop.
+
+Considérations de performance :
+• Profiler les sections bloquantes.
+
+Exemples :
+• await asyncio.to_thread(blocking_read).
+
+Remarques :
+• Réponse : oui, mais le sync bloquant dans async peut bloquer le loop — 1re option.`,
+  3282: `Quel problème async/await résout-il surtout ?
+
+Débutant :
+• Concurrence efficace pour tâches I/O-bound sans multiplier les threads.
+
+Intermédiaire :
+• Meilleure scalabilité pour milliers de connexions légères.
+
+Expert :
+• Ne remplace pas vectorisation CPU ni processus pour calcul pur.
+
+Concepts clés :
+• Chevauchement des temps d’attente réseau/disque.
+
+Distinctions clés :
+• vs threading pour I/O.
+
+Fonctionnement :
+• Coopération au lieu de préemption lourde.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Proxies HTTP, websockets, scrapers polis.
+
+Cas limites :
+• GIL toujours là pour CPU Python pur.
+
+Considérations de performance :
+• Moins de RAM que 10k threads.
+
+Exemples :
+• aiohttp serveur.
+
+Remarques :
+• Réponse : concurrence I/O-bound efficace sans threads — 1re option.`,
+  3283: `Échanger deux variables a et b, façon pythonique ?
+
+Débutant :
+• a, b = b, a en une ligne (tuple packing/unpacking).
+
+Intermédiaire :
+• Pas besoin de variable temporaire explicite.
+
+Expert :
+• Fonctionne pour toute paire d’objets réassignables.
+
+Concepts clés :
+• Simultanéité sémantique des affectations multiples.
+
+Distinctions clés :
+• vs swap avec temp en C.
+
+Fonctionnement :
+• CPython crée tuple intermédiaire.
+
+Exécution étape par étape :
+• Évalue droite puis assigne gauche.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Tri in-place, rotate.
+
+Cas limites :
+• a, b = b, a + b est une autre forme (attention ordre).
+
+Considérations de performance :
+• Très rapide.
+
+Exemples :
+• x, y = y, x.
+
+Remarques :
+• Réponse : a, b = b, a — 1re option.`,
+  3284: `Tester si une liste est vide, façon pythonique ?
+
+Débutant :
+• if not my_list: (truthiness : liste vide est faux).
+
+Intermédiaire :
+• len(my_list) == 0 est plus verbeux et moins idiomatique.
+
+Expert :
+• None et [] se distinguent : if my_list is None vs if not my_list.
+
+Concepts clés :
+• Truth value testing.
+
+Distinctions clés :
+• Vide vs None.
+
+Fonctionnement :
+• __len__ ou __bool__.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Garde clauses en début de fonction.
+
+Cas limites :
+• numpy array : truthiness ambiguë → explicite .size.
+
+Considérations de performance :
+• O(1) pour list.
+
+Exemples :
+• if not rows: return.
+
+Remarques :
+• Réponse : if not my_list: — 1re option.`,
+  3285: `Construire une chaîne à partir de morceaux, façon pythonique ?
+
+Débutant :
+• "".join(parts) où parts est un itérable de str.
+
+Intermédiaire :
+• Éviter s += fragment en boucle (quadratic sur certaines implémentations).
+
+Expert :
+• join exige str ; map(str, parts) si besoin.
+
+Concepts clés :
+• Allocation unique côté C pour join.
+
+Distinctions clés :
+• join vs f-string dans boucle répétée.
+
+Fonctionnement :
+• Méthode str.join.
+
+Exécution étape par étape :
+• Parcourt une fois.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• CSV manuel, construction URL.
+
+Cas limites :
+• Séparateur non vide : ",".join.
+
+Considérations de performance :
+• Linéaire.
+
+Exemples :
+• "".join(chunks).
+
+Remarques :
+• Réponse : "".join(parts) — 1re option.`,
+  3286: `Vérifier que x est un entier, façon pythonique ?
+
+Débutant :
+• isinstance(x, int) — respecte les sous-types (bool est sous-classe d’int en Python).
+
+Intermédiaire :
+• type(x) is int si vous voulez rejeter bool explicitement.
+
+Expert :
+• numbers.Integral pour tests abstraits rares.
+
+Concepts clés :
+• isinstance vs type strict.
+
+Distinctions clés :
+• bool hérite int : piège classique.
+
+Fonctionnement :
+• isinstance consulte la MRO.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Validation d’API.
+
+Cas limites :
+• numpy int64 : pas int Python.
+
+Considérations de performance :
+• Rapide.
+
+Exemples :
+• assert isinstance(n, int).
+
+Remarques :
+• Réponse : isinstance(x, int) — 1re option.`,
+  3287: `Tester None de façon pythonique ?
+
+Débutant :
+• if x is None: / is not None.
+
+Intermédiaire :
+• if not x: attrape aussi 0, [], "".
+
+Expert :
+• PEP 8 recommande is pour None.
+
+Concepts clés :
+• Singleton None.
+
+Distinctions clés :
+• is vs ==.
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Paramètre optionnel défaut None.
+
+Cas limites :
+• numpy.newaxis etc. hors scope.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• if cache is None: cache = {}.
+
+Remarques :
+• Réponse : if x is None: — 1re option.`,
+  3288: `[x*2 for x in lst] vs list(map(lambda x: x*2, lst)) ?
+
+Débutant :
+• La liste en intention est généralement plus pythonique : lisible, locale, sans lambda bruit.
+
+Intermédiaire :
+• map avec fonction nommée peut être OK.
+
+Expert :
+• generator (x*2 for x in lst) si flux unique passage.
+
+Concepts clés :
+• PEP 20 lisibilité.
+
+Distinctions clés :
+• comprehension vs map/filter.
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• transformations simples.
+
+Cas limites :
+• comprehension avec effet de bord : mauvaise idée.
+
+Considérations de performance :
+• Comparable pour petits n.
+
+Exemples :
+• [n+1 for n in nums].
+
+Remarques :
+• Réponse : liste en compréhension — 1re option.`,
+  3289: `Parcourir clés et valeurs d’un dict, pythonique ?
+
+Débutant :
+• for k, v in d.items():.
+
+Intermédiaire :
+• Évite for k in d: v = d[k] répété.
+
+Expert :
+• .items() vue dynamique en Python 3.
+
+Concepts clés :
+• Itération directe.
+
+Distinctions clés :
+• items vs iteritems Python2.
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• Ordre insertion (3.7+ dict).
+
+Cas d'utilisation courants :
+• formatage, filtrage.
+
+Cas limites :
+• mutation du dict pendant itération : RuntimeError.
+
+Considérations de performance :
+• C efficace.
+
+Exemples :
+• for name, score in scores.items():.
+
+Remarques :
+• Réponse : for k, v in d.items(): — 1re option.`,
+  3290: `Boucler avec indice et valeur, pythonique ?
+
+Débutant :
+• for i, x in enumerate(lst):.
+
+Intermédiaire :
+• enumerate(start=1) pour compte humain.
+
+Expert :
+• zip avec range évitable si enumerate suffit.
+
+Concepts clés :
+• Énumérateur lazy.
+
+Distinctions clés :
+• vs range(len).
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• logs numérotés, alignement colonnes.
+
+Cas limites :
+• enumerate sur dict itère clés seules par défaut.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• for i, line in enumerate(lines):.
+
+Remarques :
+• Réponse : for i, x in enumerate(lst): — 1re option.`,
+  3291: `Itérer deux listes en parallèle, pythonique ?
+
+Débutant :
+• for a, b in zip(xs, ys):.
+
+Intermédiaire :
+• itertools.zip_longest si longueurs différentes avec sentinelle.
+
+Expert :
+• zip s’arrête au plus court en Python 3.
+
+Concepts clés :
+• Lock-step iteration.
+
+Distinctions clés :
+• zip vs index manuel.
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• fusionner colonnes, tracer x/y.
+
+Cas limites :
+• longueurs inégales : perte silencieuse sans zip_longest.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• for name, age in zip(names, ages):.
+
+Remarques :
+• Réponse : for a, b in zip(xs, ys): — 1re option.`,
+  3292: `Fichiers, façon pythonique ?
+
+Débutant :
+• with open(path) as fh: — fermeture garantie.
+
+Intermédiaire :
+• try/finally manuel est plus verbeux et sujet aux oublis.
+
+Expert :
+• Path.open() idem avec pathlib.
+
+Concepts clés :
+• Protocol context manager.
+
+Distinctions clés :
+• with vs close() oubliée.
+
+Fonctionnement :
+• __enter__/__exit__.
+
+Exécution étape par étape :
+• close même si exception.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• lecture CSV, logs.
+
+Cas limites :
+• encoding='utf-8' explicite recommandé.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• with open("f.txt", encoding="utf-8") as f: data = f.read().
+
+Remarques :
+• Réponse : with open(...) as fh: — 1re option.`,
+  3293: `f-strings préférées à quelles méthodes anciennes ?
+
+Débutant :
+• À .format() et à l’opérateur % pour la plupart des cas modernes (lisibilité, perf).
+
+Intermédiaire :
+• f-string évalue expressions en scope local.
+
+Expert :
+• str.format_map pour Mapping custom subsiste pour cas rares.
+
+Concepts clés :
+• PEP 498.
+
+Distinctions clés :
+• f"{x}" vs "%s" % x.
+
+Fonctionnement :
+• Compile-time hooks.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• logs, messages d’erreur.
+
+Cas limites :
+• Pas d’expressions trop lourdes dans f-string (lisibilité).
+
+Considérations de performance :
+• Souvent rapide.
+
+Exemples :
+• f"{user.id}:{user.name}".
+
+Remarques :
+• Réponse : .format() et % — 1re option.`,
+  3294: `collections.defaultdict est préférable à quoi ?
+
+Débutant :
+• À vérifier manuellement if key not in d avant d’initialiser une liste/compteur.
+
+Intermédiaire :
+• Réduit branches et erreurs KeyError.
+
+Expert :
+• factory int pour comptages : defaultdict(int).
+
+Concepts clés :
+• Usine par défaut callable.
+
+Distinctions clés :
+• defaultdict vs dict.setdefault.
+
+Fonctionnement :
+• __missing__ injecte valeur par défaut.
+
+Exécution étape par étape :
+• Accès manquant appelle factory.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• adjacency list, histogrammes.
+
+Cas limites :
+• factory partagée mutable : attention même objet.
+
+Considérations de performance :
+• Comparable à setdefault.
+
+Exemples :
+• dd = defaultdict(list); dd[k].append(v).
+
+Remarques :
+• Réponse : vérifier l’existence de clé avant d’assigner — 1re option.`,
+  3295: `« Flat is better than nested » (Zen) signifie ?
+
+Débutant :
+• Préférer des structures peu profondes et des retours anticipés plutôt que if dans if dans if.
+
+Intermédiaire :
+• Early return réduit indentation.
+
+Expert :
+• Refactor en fonctions nommées pour aplatir.
+
+Concepts clés :
+• Lisibilité et maintenance.
+
+Distinctions clés :
+• nested vs guard clauses.
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• validation pipelines.
+
+Cas limites :
+• parfois pattern matching clarifie au lieu d’aplatir aveuglément.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• if not ok: return au lieu d’énorme else.
+
+Remarques :
+• Réponse : éviter imbrication profonde ; structures plates et early returns — 1re option.`,
+  3296: `« Explicit is better than implicit » (Zen) signifie ?
+
+Débutant :
+• Le code doit montrer clairement ce qu’il fait plutôt que compter sur la magie cachée.
+
+Intermédiaire :
+• Imports explicites, noms parlants, éviter trop de contexte implicite global.
+
+Expert :
+• Ne pas confondre avec « tout annoter » : c’est surtout clarté du flux.
+
+Concepts clés :
+• Prévisibilité pour lecteur et outil.
+
+Distinctions clés :
+• explicite vs DSL trop magique.
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• API publiques stables.
+
+Cas limites :
+• surcharge raisonnable __getattr__ documentée.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• éviter import * en libs.
+
+Remarques :
+• Réponse : le code montre clairement son comportement — 1re option.`,
+  3297: `« There should be one obvious way… » vient d’où ?
+
+Débutant :
+• The Zen of Python, affiché via import this (PEP 20).
+
+Intermédiaire :
+• Pas une règle PEP 8 syntaxique mais philosophie.
+
+Expert :
+• En pratique Python offre parfois plusieurs façons ; l’idiome commun prime.
+
+Concepts clés :
+• Cohérence communautaire.
+
+Distinctions clés :
+• Zen vs PEP 8.
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• choisir pathlib vs os.path : tendance pathlib moderne.
+
+Cas limites :
+• « one way » idéal vs réalité historique.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• import this dans REPL.
+
+Remarques :
+• Réponse : The Zen of Python (import this) — 1re option.`,
+  3298: `Que fait import this ?
+
+Débutant :
+• Affiche The Zen of Python (PEP 20), aphorismes sur la philosophie du langage.
+
+Intermédiaire :
+• Easter egg ; le module s’appelle this.py.
+
+Expert :
+• Rot13 obfuscation historique du texte source.
+
+Concepts clés :
+• Culture Python.
+
+Distinctions clés :
+• vs help().
+
+Fonctionnement :
+• print du zen.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• blague + pédagogie.
+
+Cas limites :
+• N/A.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• >>> import this.
+
+Remarques :
+• Réponse : The Zen of Python (PEP 20) — 1re option.`,
+  3299: `Que signifie EAFP en Python (cette question, ID 3299) ?
+
+Débutant :
+• Easier to Ask Forgiveness than Permission : essayer l’action puis gérer l’exception si échec.
+
+Intermédiaire :
+• Style typique try/except KeyError vs if key in dict.
+
+Expert :
+• Les distracteurs « Every Argument… » etc. sont des pièges ; la bonne expansion officielle reste Easier to Ask Forgiveness than Permission.
+
+Concepts clés :
+• Idiomatique pour beaucoup d’API Python.
+
+Distinctions clés :
+• EAFP vs LBYL.
+
+Fonctionnement :
+• Exceptions ne sont pas « rares » en coût si chemin heureux domine.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• lecture fichier, clés dict.
+
+Cas limites :
+• chemins ultra chauds : profiler.
+
+Considérations de performance :
+• dépend du cas.
+
+Exemples :
+• try: v=d[k] except KeyError: ...
+
+Remarques :
+• Réponse : Easier to Ask Forgiveness than Permission — 1re option.`,
+  3300: `Que signifie le principe DRY ?
+
+Débutant :
+• Don't Repeat Yourself : chaque connaissance ne devrait avoir qu’une représentation autoritaire dans le code.
+
+Intermédiaire :
+• Factoriser fonctions, constantes, modules plutôt que copier-coller.
+
+Expert :
+• Ne pas sur-abstraire : « trois règles » avant de généraliser.
+
+Concepts clés :
+• Maintenance et bugs uniques.
+
+Distinctions clés :
+• DRY vs WET (write everything twice).
+
+Fonctionnement :
+• N/A.
+
+Exécution étape par étape :
+• N/A.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• helpers pour validation répétée.
+
+Cas limites :
+• duplication légitime pour découplage.
+
+Considérations de performance :
+• factorisation peut ajouter indirection.
+
+Exemples :
+• constante TAILLE_MAX au lieu de 4096 éparpillés.
+
+Remarques :
+• Réponse : Don't Repeat Yourself — 1re option.`,
   402: `"  hello  ".lstrip() renvoie "hello  " : lstrip retire les blancs de gauche seulement.
 
 Débutant :
