@@ -131185,6 +131185,2064 @@ Exemples :
 
 Remarques :
 • Réponse : 55 — 1re option.`,
+  3101: `open("file.txt", "r") : effet ?
+
+Débutant :
+• Ouvre le fichier en lecture texte ; le fichier doit exister sinon FileNotFoundError.
+
+Intermédiaire :
+• "r" est le mode par défaut si on omet le second argument.
+
+Expert :
+• Texte : décodage selon encoding ; newline universel sauf newline=''.
+
+Concepts clés :
+• Flux lecture seule, pointeur au début.
+
+Distinctions clés :
+• r vs w vs a vs x ; rb pour bytes.
+
+Fonctionnement :
+• os.open sous-jacent puis wrapper io.
+
+Exécution étape par étape :
+1. Résolution du chemin.
+2. Vérification existence.
+3. Retour file object.
+
+Ordre des opérations :
+• open avant read.
+
+Cas d'utilisation courants :
+• Config, logs, données texte.
+
+Cas limites :
+• Fichier verrouillé, permissions, chemins relatifs au cwd.
+
+Considérations de performance :
+• read() entier charge tout en RAM.
+
+Exemples :
+• with open(path, encoding='utf-8') as f: data = f.read().
+
+Remarques :
+• Réponse : ouverture en lecture — 1re option.`,
+  3102: `open("file.txt", "w") ?
+
+Débutant :
+• Écriture : crée le fichier ou tronque à zéro s'il existait.
+
+Intermédiaire :
+• Contenu précédent perdu immédiatement à l'ouverture.
+
+Expert :
+• wb pour bytes ; newline et buffering configurables.
+
+Concepts clés :
+• Destruction silencieuse du contenu existant.
+
+Distinctions clés :
+• w vs a (ajout) vs x (création exclusive).
+
+Fonctionnement :
+• Truncate à l'ouverture côté implémentation.
+
+Exécution étape par étape :
+1. Création ou vidage.
+2. Pointeur au début.
+
+Ordre des opérations :
+• Pas de lecture fiable sans rouvrir en r.
+
+Cas d'utilisation courants :
+• Régénération export, sauvegarde écrasante.
+
+Cas limites :
+• Erreur si dossier parent absent.
+
+Considérations de performance :
+• Très gros fichiers : préférer écriture streamée.
+
+Exemples :
+• open('out.csv','w',newline='').
+
+Remarques :
+• Réponse : écriture avec troncature ou création — 1re option.`,
+  3103: `open("file.txt", "a") ?
+
+Débutant :
+• Ajoute à la fin ; ne vide pas le fichier existant.
+
+Intermédiaire :
+• Pointeur positionné en fin de fichier à l'ouverture.
+
+Expert :
+• En mode texte, écriture décodée comme pour w.
+
+Concepts clés :
+• Préservation de l'historique.
+
+Distinctions clés :
+• a vs w vs r+ avec seek fin.
+
+Fonctionnement :
+• seek EOF implicite à chaque open a.
+
+Exécution étape par étape :
+1. Ouvre ou crée.
+2. Prêt à écrire après le dernier octet.
+
+Ordre des opérations :
+• Lecture possible seulement si mode a+.
+
+Cas d'utilisation courants :
+• Logs append-only.
+
+Cas limites :
+• Multiprocessus : entrelacement sans verrou OS.
+
+Considérations de performance :
+• Coût positionnement fin négligeable.
+
+Exemples :
+• logging.FileHandler.
+
+Remarques :
+• Réponse : ajout en fin de fichier — 1re option.`,
+  3104: `open("file.txt", "x") ?
+
+Débutant :
+• Création exclusive : erreur si le fichier existe déjà.
+
+Intermédiaire :
+• FileExistsError si collision.
+
+Expert :
+• Utile pour fichiers temporaires atomiques avec os.open O_EXCL.
+
+Concepts clés :
+• Éviter l'écrasement accidentel.
+
+Distinctions clés :
+• x vs w.
+
+Fonctionnement :
+• Appel système avec flag création exclusive.
+
+Exécution étape par étape :
+1. Test existence.
+2. Création ou exception.
+
+Ordre des opérations :
+• Atomicité meilleure sur FS locaux que sur certains réseaux.
+
+Cas d'utilisation courants :
+• Job output unique, idempotence.
+
+Cas limites :
+• Race TOCTOU rare sur NFS mal configuré.
+
+Considérations de performance :
+• Identique à w après création.
+
+Exemples :
+• try: open('id.txt','x') ...
+
+Remarques :
+• Réponse : crée ou échoue si existe — 1re option.`,
+  3105: `open("file.txt", "rb") ?
+
+Débutant :
+• Lecture binaire : read retourne des bytes, pas des str.
+
+Intermédiaire :
+• Pas de décodage Unicode ni translation newline.
+
+Expert :
+• Essentiel pour formats binaires, hachage, crypto.
+
+Concepts clés :
+• str vs bytes selon le mode.
+
+Distinctions clés :
+• rb vs r ; wb vs w.
+
+Fonctionnement :
+• Couche buffered raw I/O.
+
+Exécution étape par étape :
+1. Ouvre en binaire.
+2. read() → bytes.
+
+Ordre des opérations :
+• Concaténation bytes avec +.
+
+Cas d'utilisation courants :
+• Images, PDF, pickles (attention sécurité).
+
+Cas limites :
+• Mélanger write str sur fichier binaire → TypeError.
+
+Considérations de performance :
+• Souvent plus prévisible pour gros volumes.
+
+Exemples :
+• hashlib.filedigest.
+
+Remarques :
+• Réponse : lecture binaire (bytes) — 1re option.`,
+  3106: `f.read() sur fichier texte ?
+
+Débutant :
+• Lit tout le reste du fichier en une seule chaîne str.
+
+Intermédiaire :
+• Second read() → '' si curseur en fin.
+
+Expert :
+• read(n) limite la taille ; utile chunks.
+
+Concepts clés :
+• Chargement mémoire monolithique.
+
+Distinctions clés :
+• read vs readline vs readlines vs itération.
+
+Fonctionnement :
+• Boucle interne jusqu'à EOF.
+
+Exécution étape par étape :
+1. Depuis tell() courant.
+2. Concatène jusqu'à fin.
+
+Ordre des opérations :
+• Inclut les caractères fin de ligne.
+
+Cas d'utilisation courants :
+• Petits fichiers JSON/XML en mémoire.
+
+Cas limites :
+• Fichier énorme → OOM.
+
+Considérations de performance :
+• Préférer itération ligne par ligne pour gros fichiers.
+
+Exemples :
+• content = f.read(); json.loads(content).
+
+Remarques :
+• Réponse : tout le contenu en une chaîne — 1re option.`,
+  3107: `f.readline() ?
+
+Débutant :
+• Une ligne par appel, souvent avec le caractère fin de ligne inclus.
+
+Intermédiaire :
+• EOF → chaîne vide ''.
+
+Expert :
+• universal newlines normalisent \r\n en \n en texte.
+
+Concepts clés :
+• Lecture incrémentale.
+
+Distinctions clés :
+• readline vs next(iter(f)).
+
+Fonctionnement :
+• Cherche séparateur ligne dans le buffer.
+
+Exécution étape par étape :
+1. Lire jusqu'au \n ou fin.
+2. Avancer le curseur.
+
+Ordre des opérations :
+• Ligne vide fichier → souvent '\n' seul.
+
+Cas d'utilisation courants :
+• Parsing ligne à ligne contrôlé.
+
+Cas limites :
+• Très longues lignes sans \n → grosse chaîne.
+
+Considérations de performance :
+• Meilleur que read() pour streams.
+
+Exemples :
+• while (line := f.readline()): ...
+
+Remarques :
+• Réponse : une ligne avec saut de ligne si présent — 1re option.`,
+  3108: `f.readlines() ?
+
+Débutant :
+• Liste de str, une entrée par ligne (souvent avec \n).
+
+Intermédiaire :
+• Équivalent pratique à list(f) depuis la position courante.
+
+Expert :
+• hint size obsolète / peu utilisé pour buffer interne.
+
+Concepts clés :
+• Matérialisation de toutes les lignes restantes.
+
+Distinctions clés :
+• readlines vs itération lazy.
+
+Fonctionnement :
+• Itère jusqu'à EOF en accumulant.
+
+Exécution étape par étape :
+1. Tant que pas EOF, append ligne.
+
+Ordre des opérations :
+• Mémoire O(nombre de lignes).
+
+Cas d'utilisation courants :
+• Traitement par index de ligne.
+
+Cas limites :
+• Gros fichiers → même problème que read().
+
+Considérations de performance :
+• Itérer for line in f évite la liste intermédiaire.
+
+Exemples :
+• lines = f.readlines(); strip batch.
+
+Remarques :
+• Réponse : liste de toutes les lignes — 1re option.`,
+  3109: `f.write("text") : valeur de retour ?
+
+Débutant :
+• Entier = nombre de caractères (texte) ou octets (binaire) écrits.
+
+Intermédiaire :
+• Pas de \n automatique après la chaîne.
+
+Expert :
+• Peut être < len en encodage rare si write buffer spécial — cas usuel str complet.
+
+Concepts clés :
+• Confirmation de quantité écrite.
+
+Distinctions clés :
+• write vs print(file=f).
+
+Fonctionnement :
+• Encode puis envoie au buffer.
+
+Exécution étape par étape :
+1. Encoder.
+2. Écrire buffer.
+3. Retourner compte.
+
+Ordre des opérations :
+• flush pas forcé avant return.
+
+Cas d'utilisation courants :
+• Vérifier écriture complète, logs de volume.
+
+Cas limites :
+• write('') → 0.
+
+Considérations de performance :
+• writelines en boucle vs join + single write.
+
+Exemples :
+• n = f.write('hello'); assert n == 5.
+
+Remarques :
+• Réponse : nombre de caractères écrits — 1re option.`,
+  3110: `f.writelines(["a\n", "b\n"]) ajoute-t-il des sauts de ligne ?
+
+Débutant :
+• Non : chaque chaîne est écrite telle quelle, concaténée.
+
+Intermédiaire :
+• Le nom « lines » est trompeur : pas de séparateur magique.
+
+Expert :
+• Pour CRLF sous Windows, inclure \r\n si besoin explicite.
+
+Concepts clés :
+• Contrôle total du format.
+
+Distinctions clés :
+• writelines vs print(..., file=f).
+
+Fonctionnement :
+• Itère et write successif.
+
+Exécution étape par étape :
+1. Pour chaque élément, write sans ajout auto.
+
+Ordre des opérations :
+• Ordre de la liste conservé.
+
+Cas d'utilisation courants :
+• Rejouer lignes déjà terminées par \n.
+
+Cas limites :
+• Oublier \n → fichier sur une seule ligne visuelle.
+
+Considérations de performance :
+• Peut être rapide sans join intermédiaire.
+
+Exemples :
+• f.writelines(lines) où lines déjà terminées par \n.
+
+Remarques :
+• Réponse : non, il faut inclure les \n soi-même — 1re option.`,
+  3111: `with open('f.txt') as f vs f = open(...) ?
+
+Débutant :
+• with garantit fermeture via __exit__ même si exception.
+
+Intermédiaire :
+• Équivalent try/finally avec close.
+
+Expert :
+• Gère aussi la chaîne d'exceptions si __exit__ supprime la levée.
+
+Concepts clés :
+• Gestionnaire de contexte pour ressources.
+
+Distinctions clés :
+• with vs pathlib Path.open identique en esprit.
+
+Fonctionnement :
+• __enter__ retourne f ; __exit__ appelle close.
+
+Exécution étape par étape :
+1. Entrée bloc.
+2. Corps.
+3. Sortie normale ou except : close quand même.
+
+Ordre des opérations :
+• finally sémantique du CM.
+
+Cas d'utilisation courants :
+• Tout fichier ouvert.
+
+Cas limites :
+• Processus tué brutalement : OS recycle handle.
+
+Considérations de performance :
+• Coût négligeable.
+
+Exemples :
+• with open(path) as f: return f.read().
+
+Remarques :
+• Réponse : fermeture assurée même en cas d'erreur — 1re option.`,
+  3112: `f.seek(0) ?
+
+Débutant :
+• Replace le curseur au début (offset 0).
+
+Intermédiaire :
+• seek(0, 2) irait en fin ; 1 = relatif position courante.
+
+Expert :
+• En texte, seek arbitraire autorisé seulement sur positions issues de tell() valides.
+
+Concepts clés :
+• Navigation aléatoire dans fichier.
+
+Distinctions clés :
+• seek vs rewind lecture seule.
+
+Fonctionnement :
+• Appel OS lseek ou équivalent.
+
+Exécution étape par étape :
+1. Valider mode fichier.
+2. Déplacer offset.
+
+Ordre des opérations :
+• Après seek, read relit depuis le début.
+
+Cas d'utilisation courants :
+• Relire fichier après écriture en r+.
+
+Cas limites :
+• seek invalide texte → undefined behavior / error.
+
+Considérations de performance :
+• seek disque vs SSD négligeable.
+
+Exemples :
+• f.seek(0); second_pass = f.read().
+
+Remarques :
+• Réponse : curseur au début du fichier — 1re option.`,
+  3113: `f.tell() ?
+
+Débutant :
+• Entier : position courante en octets (binaire) ou unité opaque fiable en texte.
+
+Intermédiaire :
+• Paires tell/seek pour reprendre plus tard.
+
+Expert :
+• En texte, seul tell() comme argument seek est portable.
+
+Concepts clés :
+• Introspection offset.
+
+Distinctions clés :
+• tell vs len(data) après read.
+
+Fonctionnement :
+• Interroge le buffer + offset sous-jacent.
+
+Exécution étape par étape :
+1. Après lectures/écritures, nombre reflète progression.
+
+Ordre des opérations :
+• Mis à jour après chaque opération.
+
+Cas d'utilisation courants :
+• Reprise parsing, barres de progression.
+
+Cas limites :
+• Fichier fermé → ValueError.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• pos = f.tell().
+
+Remarques :
+• Réponse : position actuelle du curseur — 1re option.`,
+  3114: `f.closed ?
+
+Débutant :
+• True si close() déjà appelé (ou sortie du with).
+
+Intermédiaire :
+• Propriété booléenne sur file object.
+
+Expert :
+• Détecter réutilisation après fermeture.
+
+Concepts clés :
+• État du descripteur côté Python.
+
+Distinctions clés :
+• closed vs fileno() valide.
+
+Fonctionnement :
+• Flag interne mis à True dans close.
+
+Exécution étape par étape :
+1. Après close, toute opération I/O lève.
+
+Ordre des opérations :
+• Vérifier avant réouverture.
+
+Cas d'utilisation courants :
+• Wrappers, tests.
+
+Cas limites :
+• Garbage collector peut fermer si plus de ref — rare.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• assert not f.closed.
+
+Remarques :
+• Réponse : indique si le fichier est fermé — 1re option.`,
+  3115: `Pourquoi encoding="utf-8" dans open() ?
+
+Débutant :
+• Force le décodage/encodage UTF-8 explicite au lieu du défaut plateforme.
+
+Intermédiaire :
+• Évite mojibake sur Windows avec locale CP1252.
+
+Expert :
+• Python 3.15+ tend vers UTF-8 par défaut mais explicite reste recommandé portable.
+
+Concepts clés :
+• Texte = bytes + encoding.
+
+Distinctions clés :
+• errors='replace' vs strict.
+
+Fonctionnement :
+• Codec utf-8 sur read/write.
+
+Exécution étape par étape :
+1. Bytes disque → str via utf-8.
+
+Ordre des opérations :
+• BOM utf-8 géré par codec.
+
+Cas d'utilisation courants :
+• CSV, JSON, sources multilingues.
+
+Cas limites :
+• Fichier latin1 lu en utf-8 → UnicodeDecodeError.
+
+Considérations de performance :
+• UTF-8 très optimisé en CPython.
+
+Exemples :
+• open(f, encoding='utf-8', errors='surrogateescape').
+
+Remarques :
+• Réponse : contrôler l'encodage texte (UTF-8 explicite) — 1re option.`,
+  3116: `Mode par défaut de open() sans second argument ?
+
+Débutant :
+• "r" lecture texte.
+
+Intermédiaire :
+• open(path) ≡ open(path, 'r').
+
+Expert :
+• Pas binaire tant que 'b' absent.
+
+Concepts clés :
+• Moindre surprise lecture.
+
+Distinctions clés :
+• Défaut r vs anciennes APIs autres langages.
+
+Fonctionnement :
+• Signature open(file, mode='r', ...).
+
+Exécution étape par étape :
+1. Même cheminement que mode r explicite.
+
+Ordre des opérations :
+• Échec si fichier absent.
+
+Cas d'utilisation courants :
+• Quick read configs.
+
+Cas limites :
+• Oublier 'w' et penser créer fichier → erreur.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• open('.env').
+
+Remarques :
+• Réponse : lecture "r" — 1re option.`,
+  3117: `Itération for line in fichier ?
+
+Débutant :
+• Oui : file object est itérable ligne par ligne sans tout charger.
+
+Intermédiaire :
+• Équivalent répété readline avec optimisations.
+
+Expert :
+• Taille buffer interne ; pas de strip automatique.
+
+Concepts clés :
+• Streaming mémoire efficace.
+
+Distinctions clés :
+• for line vs readlines().
+
+Fonctionnement :
+• __iter__ sur TextIOWrapper.
+
+Exécution étape par étape :
+1. Chaque next lit jusqu'à prochain \n.
+
+Ordre des opérations :
+• line garde souvent \n final.
+
+Cas d'utilisation courants :
+• grep Python, gros logs.
+
+Cas limites :
+• Modification fichier pendant lecture → comportement OS.
+
+Considérations de performance :
+• Optimal pour gros fichiers.
+
+Exemples :
+• for line in f: process(line.rstrip()).
+
+Remarques :
+• Réponse : oui, itération ligne par ligne — 1re option.`,
+  3118: `f.truncate() sans taille ?
+
+Débutant :
+• Coupe le fichier à la position courante du curseur : tout après est supprimé.
+
+Intermédiaire :
+• truncate(0) avec curseur 0 vide le fichier.
+
+Expert :
+• Nécessite mode writable ; comportement taille > fichier dépend plateforme.
+
+Concepts clés :
+• Redimensionnement fichier sur disque.
+
+Distinctions clés :
+• truncate vs open w qui vide d'entrée.
+
+Fonctionnement :
+• ftruncate syscall.
+
+Exécution étape par étape :
+1. Mesurer position.
+2. Tronquer à cette longueur.
+
+Ordre des opérations :
+• seek puis truncate pattern courant.
+
+Cas d'utilisation courants :
+• Annuler fin de fichier log.
+
+Cas limites :
+• Lecture seule → unsupported.
+
+Considérations de performance :
+• Opération disque.
+
+Exemples :
+• f.seek(0); f.truncate().
+
+Remarques :
+• Réponse : tronque à la position courante — 1re option.`,
+  3119: `date.today() — type de result ?
+
+Débutant :
+• Objet datetime.date du jour local.
+
+Intermédiaire :
+• Pas d'heure ni fuseau : date seule.
+
+Expert :
+• today() vs datetime.now().date().
+
+Concepts clés :
+• Horloge locale système.
+
+Distinctions clés :
+• date vs datetime vs timestamp.
+
+Fonctionnement :
+• Appel système date puis construction date(y,m,d).
+
+Exécution étape par étape :
+1. now local.
+2. Tronquer à jour.
+
+Ordre des opérations :
+• Attributs .year .month .day.
+
+Cas d'utilisation courants :
+• Factures, échéances « aujourd'hui ».
+
+Cas limites :
+• Minuit autour : tests flaky sans freezegun.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• if file_date < date.today(): ...
+
+Remarques :
+• Réponse : objet date du jour — 1re option.`,
+  3120: `datetime.now() ?
+
+Débutant :
+• datetime naïf local (sans tz sauf si tz passée).
+
+Intermédiaire :
+• Contient date + heure + microseconde.
+
+Expert :
+• now(timezone.utc) pour UTC conscient.
+
+Concepts clés :
+• Horodatage wall-clock local par défaut.
+
+Distinctions clés :
+• now vs utcnow déprécié en faveur de now(UTC).
+
+Fonctionnement :
+• gettimeofday ou équivalent.
+
+Exécution étape par étape :
+1. Capturer instantané.
+2. Construire datetime.
+
+Ordre des opérations :
+• Comparaisons naïves dangereuses entre fuseaux.
+
+Cas d'utilisation courants :
+• Logs, timestamps fichiers.
+
+Cas limites :
+• DST transitions ambiguës sans zone.
+
+Considérations de performance :
+• Très rapide.
+
+Exemples :
+• datetime.now().isoformat().
+
+Remarques :
+• Réponse : date et heure actuelles (datetime) — 1re option.`,
+  3121: `date(2024, 1, 15).year ?
+
+Débutant :
+• 2024.
+
+Intermédiaire :
+• Attribut entier du composant année.
+
+Expert :
+• date immutable ; pas de setter.
+
+Concepts clés :
+• Décomposition calendrier.
+
+Distinctions clés :
+• .year vs strftime %Y.
+
+Fonctionnement :
+• Champs stockés en C int.
+
+Exécution étape par étape :
+1. Construction validée (mois/jour).
+2. Lecture attribut.
+
+Ordre des opérations :
+• ValueError si date invalide à la construction.
+
+Cas d'utilisation courants :
+• Filtres année comptable.
+
+Cas limites :
+• Années avant 1 ? date min selon plateforme.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• d.year == 2024.
+
+Remarques :
+• Réponse : 2024 — 1re option.`,
+  3122: `date(2024, 1, 15).month ?
+
+Débutant :
+• 1 (janvier).
+
+Intermédiaire :
+• Mois 1–12.
+
+Expert :
+• Combiner avec calendar.month_name.
+
+Concepts clés :
+• Composante mois.
+
+Distinctions clés :
+• month vs strftime %m zero-padded string.
+
+Fonctionnement :
+• Stockage entier.
+
+Exécution étape par étape :
+• Accès direct.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Bucket mensuel.
+
+Cas limites :
+• N/A pour date valide.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• if d.month == 12: ...
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  3123: `date(2024, 1, 15).day ?
+
+Débutant :
+• 15.
+
+Intermédiaire :
+• Jour du mois 1–31.
+
+Expert :
+• weekday() autre info.
+
+Concepts clés :
+• Composante jour.
+
+Distinctions clés :
+• .day vs timedelta.days durée.
+
+Fonctionnement :
+• Champ entier.
+
+Exécution étape par étape :
+• Lecture simple.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Échéance le 15.
+
+Cas limites :
+• 31 février interdit à la construction.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• assert d.day >= 1.
+
+Remarques :
+• Réponse : 15 — 1re option.`,
+  3124: `datetime(2024, 1, 15, 10, 30).hour ?
+
+Débutant :
+• 10.
+
+Intermédiaire :
+• Heure 0–23.
+
+Expert :
+• time() extrait time seul.
+
+Concepts clés :
+• Horloge dans datetime.
+
+Distinctions clés :
+• hour vs strftime %H.
+
+Fonctionnement :
+• Champ entier.
+
+Exécution étape par étape :
+• Direct.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Fenêtres horaires.
+
+Cas limites :
+• 24h interdit — utiliser 0 lendemain.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• if dt.hour < 12: matin.
+
+Remarques :
+• Réponse : 10 — 1re option.`,
+  3125: `datetime(2024, 1, 15, 10, 30).minute ?
+
+Débutant :
+• 30.
+
+Intermédiaire :
+• Minutes 0–59.
+
+Expert :
+• second microsecond aussi disponibles.
+
+Concepts clés :
+• Granularité temps civil.
+
+Distinctions clés :
+• minute vs timedelta.total_seconds().
+
+Fonctionnement :
+• Champ entier.
+
+Exécution étape par étape :
+• Direct.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Arrondis 5 minutes.
+
+Cas limites :
+• leap second pas modélisé en datetime std.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• cron-like checks.
+
+Remarques :
+• Réponse : 30 — 1re option.`,
+  3126: `from datetime import timedelta
+print(timedelta(days=5).days) — résultat ?
+
+Débutant :
+• .days renvoie la composante « jours entiers » de la durée : ici 5.
+
+Intermédiaire :
+• Ce n'est pas total_seconds() : 432000 serait les secondes de 5 jours.
+
+Expert :
+• timedelta normalise tout en (days, seconds, microseconds).
+
+Concepts clés :
+• Durée additive, pas un instant.
+
+Distinctions clés :
+• .days vs .seconds (reste après jours) vs total_seconds().
+
+Fonctionnement :
+• Construction puis lecture du champ days.
+
+Exécution étape par étape :
+1. timedelta(days=5) crée une durée de 5 jours.
+2. .days lit 5.
+
+Ordre des opérations :
+• Pas d'impression du timedelta brut ici.
+
+Cas d'utilisation courants :
+• Délais SLA, échéances relatives.
+
+Cas limites :
+• Combinaisons heures/jours : .days peut être négatif si durée négative.
+
+Considérations de performance :
+• Objets légers.
+
+Exemples :
+• timedelta(weeks=1).days vaut 7.
+
+Remarques :
+• Réponse : 5 — 1re option.`,
+  3127: `date(2024, 1, 15) + timedelta(days=10) — résultat affiché ?
+
+Débutant :
+• On avance de 10 jours : 15 + 10 = 25 janvier 2024.
+
+Intermédiaire :
+• Le + sur date et timedelta produit une nouvelle date immuable.
+
+Expert :
+• Mois bissextile et fins de mois gérés par le calendrier du module.
+
+Concepts clés :
+• Arithmétique de dates sans fuseau explicite.
+
+Distinctions clés :
+• date + timedelta vs datetime + timedelta vs date - date.
+
+Fonctionnement :
+• Addition normalisée du calendrier grégorien.
+
+Exécution étape par étape :
+1. date fixe le point de départ.
+2. timedelta ajoute 10 jours.
+3. print affiche 2024-01-25.
+
+Ordre des opérations :
+• + avant print.
+
+Cas d'utilisation courants :
+• Factures « +10 j », rappels.
+
+Cas limites :
+• Très grandes durées : limites du type date.
+
+Considérations de performance :
+• O(1) en pratique.
+
+Exemples :
+• Reculer avec timedelta(days=-10).
+
+Remarques :
+• Réponse : 2024-01-25 — 1re option.`,
+  3128: `(date(2024, 1, 15) - date(2024, 1, 10)).days — résultat ?
+
+Débutant :
+• Différence de 5 jours ; .days donne 5.
+
+Intermédiaire :
+• date - date → timedelta, pas un entier direct.
+
+Expert :
+• Inverser l'ordre donne timedelta avec .days négatif.
+
+Concepts clés :
+• Mesure d'écart entre deux dates.
+
+Distinctions clés :
+• .days du timedelta vs nombre de jours calendaires « visuels » (souvent identique ici).
+
+Fonctionnement :
+• Soustraction puis extraction du champ days.
+
+Exécution étape par étape :
+1. Soustraction produit timedelta(days=5) normalisé.
+2. .days vaut 5.
+
+Ordre des opérations :
+• Parenthèses puis attribut.
+
+Cas d'utilisation courants :
+• Âge en jours, pénalités de retard.
+
+Cas limites :
+• Heures non modélisées sur date seule.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Comparer deux deadlines.
+
+Remarques :
+• Réponse : 5 — 1re option.`,
+  3129: `datetime(2024, 1, 15).strftime("%Y-%m-%d") — résultat ?
+
+Débutant :
+• Format ISO-like année-mois-jour avec tirets : chaîne 2024-01-15.
+
+Intermédiaire :
+• %Y année 4 chiffres, %m et %d zero-padded.
+
+Expert :
+• strftime locale dépendante pour certains codes, pas pour ces trois-là.
+
+Concepts clés :
+• Sérialisation lisible et triable.
+
+Distinctions clés :
+• strftime vs isoformat() sur datetime sans heure affichée ici.
+
+Fonctionnement :
+• Substitution des codes dans la chaîne de format.
+
+Exécution étape par étape :
+1. datetime minimal (minuit implicite si date seule non : ici constructeur 3 args → minuit).
+2. strftime produit la chaîne.
+
+Ordre des opérations :
+• Appel méthode après construction.
+
+Cas d'utilisation courants :
+• Clés de partition, noms de fichiers.
+
+Cas limites :
+• Années < 1900 autrefois problématiques ; aujourd'hui largement OK.
+
+Considérations de performance :
+• Coût faible.
+
+Exemples :
+• %d/%m/%Y pour affichage européen.
+
+Remarques :
+• Réponse : "2024-01-15" — 1re option.`,
+  3130: `strftime("%d/%m/%Y") sur le 15 janvier 2024 — résultat ?
+
+Débutant :
+• Jour / mois / année avec slashes : 15/01/2024.
+
+Intermédiaire :
+• Ne pas confondre avec le format US mois/jour.
+
+Expert :
+• Les séparateurs / sont littéraux dans le format.
+
+Concepts clés :
+• Ordre des composantes entièrement contrôlé par le format.
+
+Distinctions clés :
+• %d vs %m vs %Y.
+
+Fonctionnement :
+• Même moteur strftime que la question précédente.
+
+Exécution étape par étape :
+1. %d → 15, %m → 01, %Y → 2024.
+2. Joint par /.
+
+Ordre des opérations :
+• Gauche à droite dans la chaîne de format.
+
+Cas d'utilisation courants :
+• Affichage utilisateur Europe, rapports.
+
+Cas limites :
+• Zéros de tête sur mois et jour.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Inverser en %m/%d/%Y pour style US.
+
+Remarques :
+• Réponse : "15/01/2024" — 1re option.`,
+  3131: `strptime("2024-01-15", "%Y-%m-%d").day — résultat ?
+
+Débutant :
+• Le jour du mois parsé est 15.
+
+Intermédiaire :
+• strptime renvoie datetime à minuit par défaut pour cette chaîne.
+
+Expert :
+• ValueError si la chaîne ne correspond pas au format.
+
+Concepts clés :
+• Parse inverse de strftime pour une forme fixe.
+
+Distinctions clés :
+• .day vs .month vs .year sur l'objet retourné.
+
+Fonctionnement :
+• Analyse lexicale selon les codes de format.
+
+Exécution étape par étape :
+1. Parse en datetime(2024,1,15,0,0,0).
+2. .day → 15.
+
+Ordre des opérations :
+• strptime d'abord, puis attribut.
+
+Cas d'utilisation courants :
+• API REST dates ISO en chaîne.
+
+Cas limites :
+• Fuseaux : datetime naïf ici.
+
+Considérations de performance :
+• Parse plus coûteux qu'un accès attribut ; acceptable.
+
+Exemples :
+• Extraire année pour index annuel.
+
+Remarques :
+• Réponse : 15 — 1re option.`,
+  3132: `date(2024, 1, 15).weekday() — résultat ?
+
+Débutant :
+• Convention weekday : lundi = 0 ; le 15 janvier 2024 est un lundi → 0.
+
+Intermédiaire :
+• Ne pas confondre avec isoweekday (lundi = 1).
+
+Expert :
+• Les options peuvent rappeler « 0 (lundi) » pour ancrer la convention.
+
+Concepts clés :
+• Index cyclique sur 7 jours.
+
+Distinctions clés :
+• weekday vs isoweekday vs strftime %w.
+
+Fonctionnement :
+• Calcul calendrier depuis date ordinaire.
+
+Exécution étape par étape :
+1. Normalisation interne du jour de semaine.
+2. Retour 0 pour lundi.
+
+Ordre des opérations :
+• Méthode sur date immuable.
+
+Cas d'utilisation courants :
+• Planning « ouvert le lundi ».
+
+Cas limites :
+• Pas de fuseau : date seule.
+
+Considérations de performance :
+• O(1).
+
+Exemples :
+• Comparer weekday() à 4 pour vendredi.
+
+Remarques :
+• Réponse : 0 (lundi) — 1re option.`,
+  3133: `date(2024, 1, 15).isoformat() — résultat ?
+
+Débutant :
+• Chaîne ISO 8601 date seule : 2024-01-15.
+
+Intermédiaire :
+• Équivalent à str(d) pour un objet date.
+
+Expert :
+• datetime.isoformat ajouterait T et l'heure.
+
+Concepts clés :
+• Interop JSON schémas, logs.
+
+Distinctions clés :
+• isoformat vs strftime personnalisé.
+
+Fonctionnement :
+• Format fixe YYYY-MM-DD.
+
+Exécution étape par étape :
+1. Lecture y,m,d.
+2. Assemblage avec tirets et zéros.
+
+Ordre des opérations :
+• stable.
+
+Cas d'utilisation courants :
+• Colonnes DATE en CSV export.
+
+Cas limites :
+• Années très grandes : même limites que date.
+
+Considérations de performance :
+• Très rapide.
+
+Exemples :
+• Comparer deux isoformat() lexicographiquement pour dates même mois.
+
+Remarques :
+• Réponse : "2024-01-15" — 1re option.`,
+  3134: `timedelta(hours=25).days — résultat ?
+
+Débutant :
+• 25 heures = 1 jour + 1 heure ; .days vaut 1.
+
+Intermédiaire :
+• L'heure restante vit dans .seconds (3600), pas dans .days.
+
+Expert :
+• Normalisation toujours en jours entiers + reste secondes.
+
+Concepts clés :
+• Décomposition normalisée, pas arrondi flou.
+
+Distinctions clés :
+• .days vs total_seconds() = 90000.
+
+Fonctionnement :
+• Division entière implicite par 86400 s pour la partie days.
+
+Exécution étape par étape :
+1. Convertir 25 h en secondes totales.
+2. Extraire jours entiers → 1.
+
+Ordre des opérations :
+• Attribut après construction.
+
+Cas d'utilisation courants :
+• Facturation au jour prorata.
+
+Cas limites :
+• Microsecondes ajoutées peuvent encore normaliser.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Vérifier .seconds après un excès d'heures.
+
+Remarques :
+• Réponse : 1 — 1re option.`,
+  3135: `timedelta(hours=25).seconds — résultat ?
+
+Débutant :
+• Après retrait d'un jour entier, il reste 1 h = 3600 secondes dans .seconds.
+
+Intermédiaire :
+• .seconds n'est pas la durée totale en secondes.
+
+Expert :
+• Plage de .seconds toujours [0, 86400).
+
+Concepts clés :
+• Piège classique timedelta.
+
+Distinctions clés :
+• .seconds vs .total_seconds().
+
+Fonctionnement :
+• Stockage interne (days, seconds, microseconds).
+
+Exécution étape par étape :
+1. 25 h normalisées.
+2. .seconds lit le reliquat 3600.
+
+Ordre des opérations :
+• Lire .days et .seconds ensemble pour reconstruire mentalement.
+
+Cas d'utilisation courants :
+• Debug de durées composées.
+
+Cas limites :
+• Durées négatives : signes à surveiller.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• timedelta(days=2, hours=3).seconds vaut 10800.
+
+Remarques :
+• Réponse : 3600 — 1re option.`,
+  3136: `re.match(r"\d+", "123abc").group() — résultat ?
+
+Débutant :
+• match ancre au début ; \d+ consomme les chiffres initiaux : "123".
+
+Intermédiaire :
+• S'arrête avant "a" car plus un chiffre.
+
+Expert :
+• group(0) implicite dans group() sans argument.
+
+Concepts clés :
+• Ancrage implicite au début pour match.
+
+Distinctions clés :
+• match vs search sur cette chaîne.
+
+Fonctionnement :
+• Moteur re compile et applique le motif.
+
+Exécution étape par étape :
+1. Évalue match au début.
+2. Greedy + sur chiffres.
+3. group renvoie la sous-chaîne capturée entière.
+
+Ordre des opérations :
+• Lecture gauche-droite au début seulement.
+
+Cas d'utilisation courants :
+• Préfixes numériques (IDs, codes).
+
+Cas limites :
+• Chaîne sans chiffre au début → None et .group() lève.
+
+Considérations de performance :
+• Linéaire en longueur du préfixe chiffres.
+
+Exemples :
+• Tester "abc123" → match None.
+
+Remarques :
+• Réponse : "123" — 1re option.`,
+  3137: `re.search(r"\d+", "abc123def").group() — résultat ?
+
+Débutant :
+• search trouve la première occurrence de chiffres : "123".
+
+Intermédiaire :
+• Peu importe le début de chaîne tant que le motif apparaît.
+
+Expert :
+• span() donnerait (3,6).
+
+Concepts clés :
+• Scan global du texte.
+
+Distinctions clés :
+• search vs match sur la même entrée.
+
+Fonctionnement :
+• Parcours avec retour à la première réussite.
+
+Exécution étape par étape :
+1. Ignore "abc".
+2. Trouve "123".
+3. group() retourne "123".
+
+Ordre des opérations :
+• Première correspondance gagne.
+
+Cas d'utilisation courants :
+• Extraire un numéro dans un log bruité.
+
+Cas limites :
+• Plusieurs groupes : group() reste le match entier si pas de parenthèses.
+
+Considérations de performance :
+• Coût dépend de la position du hit.
+
+Exemples :
+• finditer pour toutes les occurrences.
+
+Remarques :
+• Réponse : "123" — 1re option.`,
+  3138: `Différence entre re.match() et re.search() ?
+
+Débutant :
+• match teste seulement le début de chaîne ; search parcourt toute la chaîne pour la première occurrence.
+
+Intermédiaire :
+• Les deux renvoient un Match ou None.
+
+Expert :
+• match avec ^ explicite redondant mais documente l'intention.
+
+Concepts clés :
+• Ancrage sémantique.
+
+Distinctions clés :
+• match vs fullmatch vs search.
+
+Fonctionnement :
+• Algorithmes de NFA similaires, point de départ différent.
+
+Exécution étape par étape :
+1. match : tentative à l'index 0.
+2. search : tentatives à chaque position (optimisations internes).
+
+Ordre des opérations :
+• Choisir l'API selon le contrat du format d'entrée.
+
+Cas d'utilisation courants :
+• Ligne de protocole fixe → match ; fouille → search.
+
+Cas limites :
+• Chaîne vide : souvent aucune correspondance.
+
+Considérations de performance :
+• search peut coûter plus sur très longues chaînes.
+
+Exemples :
+• Valider préfixe UUID vs trouver UUID dans une phrase.
+
+Remarques :
+• Réponse : match début seulement ; search n'importe où — 1re option.`,
+  3139: `re.findall(r"\d+", "a1b2c3") — résultat ?
+
+Débutant :
+• Liste de toutes les plages de chiffres non chevauchantes : "1", "2", "3".
+
+Intermédiaire :
+• Retourne des str, pas des objets Match.
+
+Expert :
+• Avec groupes capturants, findall change de forme de retour.
+
+Concepts clés :
+• Extraction multiple.
+
+Distinctions clés :
+• findall vs finditer vs subn.
+
+Fonctionnement :
+• Balayage répété après chaque fin de match.
+
+Exécution étape par étape :
+1. Trouve "1".
+2. Puis "2".
+3. Puis "3".
+4. Liste ["1","2","3"].
+
+Ordre des opérations :
+• Ordre d'apparition.
+
+Cas d'utilisation courants :
+• Parser des nombres épars.
+
+Cas limites :
+• Motifs qui se chevauchent : findall ne chevauche pas.
+
+Considérations de performance :
+• Peut allouer une grande liste.
+
+Exemples :
+• Extraire années d'un texte.
+
+Remarques :
+• Réponse : ["1", "2", "3"] — 1re option.`,
+  3140: `re.sub(r"\d", "X", "a1b2c3") — résultat ?
+
+Débutant :
+• Chaque chiffre isolé est remplacé par X : aXbXcX.
+
+Intermédiaire :
+• \d une seule position ; trois remplacements.
+
+Expert :
+• count limite le nombre de remplacements si besoin.
+
+Concepts clés :
+• Transformation globale par défaut.
+
+Distinctions clés :
+• sub vs subn (compte).
+
+Fonctionnement :
+• Scan et construction d'une nouvelle chaîne.
+
+Exécution étape par étape :
+1. Remplace 1.
+2. Remplace 2.
+3. Remplace 3.
+
+Ordre des opérations :
+• De gauche à droite.
+
+Cas d'utilisation courants :
+• Masquage partiel, anonymisation légère.
+
+Cas limites :
+• Fonction de remplacement : ordre d'appel par match.
+
+Considérations de performance :
+• Nouvelle chaîne immuable à chaque étape interne optimisée en C.
+
+Exemples :
+• sub(r"\d+", "N", "a12b") → "aNb".
+
+Remarques :
+• Réponse : "aXbXcX" — 1re option.`,
+  3141: `re.split(r"\s+", "hello  world  python") — résultat ?
+
+Débutant :
+• Coupe sur un ou plusieurs blancs ; pas de champs vides entre espaces multiples : ["hello","world","python"].
+
+Intermédiaire :
+• str.split sans argument gère aussi les espaces multiples mais regex généralise les séparateurs.
+
+Expert :
+• maxsplit et flags optionnels.
+
+Concepts clés :
+• Tokenisation robuste.
+
+Distinctions clés :
+• split regex vs str.split fixe.
+
+Fonctionnement :
+• Trouve zones de blancs comme délimiteur.
+
+Exécution étape par étape :
+1. Ignore le bloc d'espaces entre hello et world.
+2. Idem avant python.
+3. Liste trois tokens.
+
+Ordre des opérations :
+• Si la chaîne commence par des blancs, premier élément peut être '' selon motif — ici non sur cet exemple.
+
+Cas d'utilisation courants :
+• Colonnes irrégulières dans fichiers texte.
+
+Cas limites :
+• Séparateurs multiples types : élargir la classe \s.
+
+Considérations de performance :
+• Regex coûteux vs split simple ; ici justifié.
+
+Exemples :
+• split sur [,;] pour liste hétérogène.
+
+Remarques :
+• Réponse : ["hello", "world", "python"] — 1re option.`,
+  3142: `bool(re.match(r"^\d+$", "12345")) — résultat ?
+
+Débutant :
+• Toute la chaîne est des chiffres : le motif ancré réussit → True.
+
+Intermédiaire :
+• ^ et $ forcent couverture totale (avec match au début, redondant partiel mais clair).
+
+Expert :
+• Pour chaîne vide, + exige au moins un chiffre → False.
+
+Concepts clés :
+• Validation de format « entier décimal en texte ».
+
+Distinctions clés :
+• ^\d+$ vs \d+ sans ancrage.
+
+Fonctionnement :
+• Un seul match couvrant toute la chaîne.
+
+Exécution étape par étape :
+1. match renvoie un objet Match truthy.
+2. bool(...) → True.
+
+Ordre des opérations :
+• bool après match.
+
+Cas d'utilisation courants :
+• Champs numériques avant int().
+
+Cas limites :
+• Espaces latéraux : échec ; strip d'abord.
+
+Considérations de performance :
+• Très rapide pour petites chaînes.
+
+Exemples :
+• Autoriser signe : motif différent.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  3143: `bool(re.match(r"^\d+$", "123a5")) — résultat ?
+
+Débutant :
+• La lettre casse la continuité de chiffres : pas de match complet → None → False.
+
+Intermédiaire :
+• Ne pas utiliser search si on veut « toute la chaîne est des chiffres ».
+
+Expert :
+• fullmatch explicite sur d'autres motifs multi-segments.
+
+Concepts clés :
+• Échec de validation stricte.
+
+Distinctions clés :
+• Motif trop strict vs trop laxiste.
+
+Fonctionnement :
+• Le moteur échoue à satisfaire $ après les chiffres initiaux.
+
+Exécution étape par étape :
+1. Lit 123 puis bloque sur a.
+2. match None.
+3. bool(None) False.
+
+Ordre des opérations :
+• Court-circuit interne du moteur.
+
+Cas d'utilisation courants :
+• Rejeter identifiants alphanumériques quand on veut pur digit.
+
+Cas limites :
+• Unicode digits autres que 0-9 : \d inclut certains caractères unicode selon flags ASCII.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Tester " 123 " sans strip → False.
+
+Remarques :
+• Réponse : False — 1re option.`,
+  3144: `re.findall(r"[aeiou]", "hello world") — résultat ?
+
+Débutant :
+• Voyelles minuscules dans l'ordre : e, o dans hello puis o dans world → ["e","o","o"].
+
+Intermédiaire :
+• L'espace n'est pas une voyelle ; pas de Y ici.
+
+Expert :
+• Classe de caractères = un seul caractère par match.
+
+Concepts clés :
+• Filtrage par ensemble fini.
+
+Distinctions clés :
+• [aeiou] vs motif lookahead complexe.
+
+Fonctionnement :
+• Balayage caractère par caractère éligible.
+
+Exécution étape par étape :
+1. h ignoré, e pris.
+2. ll ignorés, o pris.
+3. espace ignoré, w ignoré, o pris, rld ignorés.
+
+Ordre des opérations :
+• Ordre de lecture gauche-droite.
+
+Cas d'utilisation courants :
+• Comptage vocalique, jeux pédagogiques.
+
+Cas limites :
+• Accents : hors de la classe simple.
+
+Considérations de performance :
+• Linéaire en longueur.
+
+Exemples :
+• Ajouter A-Z dans une seconde classe pour titre.
+
+Remarques :
+• Réponse : ["e", "o", "o"] — 1re option.`,
+  3145: `re.findall(r"\b\w+\b", "hello world") — résultat ?
+
+Débutant :
+• Deux mots entiers séparés par espace : ["hello","world"].
+
+Intermédiaire :
+• \b est une assertion de largeur nulle ; \w+ consomme lettres/chiffres/_.
+
+Expert :
+• Ponctuation colle aux limites de mots différemment selon contexte.
+
+Concepts clés :
+• Tokenisation « mot » regex.
+
+Distinctions clés :
+• \w vs Unicode lettres avec re.UNICODE par défaut Py3.
+
+Fonctionnement :
+• Trouve transitions mot/non-mot.
+
+Exécution étape par étape :
+1. Mot hello.
+2. Espace saute.
+3. Mot world.
+
+Ordre des opérations :
+• findall concatène les captures pleines correspondances.
+
+Cas d'utilisation courants :
+• NLP léger, indexation.
+
+Cas limites :
+• Mots avec apostrophe : coupes inattendues selon motif.
+
+Considérations de performance :
+• OK pour phrases courtes.
+
+Exemples :
+• "hello, world!" donne encore hello et world.
+
+Remarques :
+• Réponse : ["hello", "world"] — 1re option.`,
+  3146: `re.match(r"(\w+)@(\w+)", "user@host").groups() — résultat ?
+
+Débutant :
+• Deux groupes capturants : user et host → tuple ("user", "host").
+
+Intermédiaire :
+• group(0) serait la chaîne entière user@host.
+
+Expert :
+• Nommer les groupes avec (?P<name>...) pour lisibilité.
+
+Concepts clés :
+• Décomposition structurée d'un match.
+
+Distinctions clés :
+• groups() vs groupdict() avec noms.
+
+Fonctionnement :
+• Sous-matches stockés dans l'objet Match.
+
+Exécution étape par étape :
+1. Match global réussit.
+2. Extraction groupe 1 et 2.
+3. Tuple ordonné.
+
+Ordre des opérations :
+• Ordre des parenthèses dans le motif.
+
+Cas d'utilisation courants :
+• Parser emails simplistes, tokens key@value.
+
+Cas limites :
+• Emails réels : RFC bien plus riche.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Ajouter TLD en troisième groupe.
+
+Remarques :
+• Réponse : ("user", "host") — 1re option.`,
+  3147: `.group(1) sur le match (\w+)@(\w+) sur "user@host" — résultat ?
+
+Débutant :
+• Premier groupe avant @ : "user".
+
+Intermédiaire :
+• group(2) serait "host".
+
+Expert :
+• IndexError si numéro hors plage.
+
+Concepts clés :
+• Accès positionnel aux captures.
+
+Distinctions clés :
+• group(1) vs lastgroup.
+
+Fonctionnement :
+• Référence à la sous-correspondance mémorisée.
+
+Exécution étape par étape :
+1. Vérifier match non None.
+2. Retourner la sous-chaîne du premier groupe.
+
+Ordre des opérations :
+• Après match réussi seulement.
+
+Cas d'utilisation courants :
+• Extraire utilisateur pour authentification.
+
+Cas limites :
+• Groupe optionnel absent : peut être None selon motif.
+
+Considérations de performance :
+• O(1) accès.
+
+Exemples :
+• Chaînes avec plusieurs @ : motif à affiner.
+
+Remarques :
+• Réponse : "user" — 1re option.`,
+  3148: `re.sub(r"(\w+)", lambda m: m.group().upper(), "hello world") — résultat ?
+
+Débutant :
+• Chaque mot matché est passé à la lambda ; upper() sur "hello" et "world" → "HELLO WORLD".
+
+Intermédiaire :
+• L'espace n'est pas \w donc préservé.
+
+Expert :
+• La fonction reçoit l'objet Match ; possibilité de logique conditionnelle.
+
+Concepts clés :
+• Remplacement calculé par occurrence.
+
+Distinctions clés :
+• lambda vs fonction nommée pour debug.
+
+Fonctionnement :
+• sub appelle le callable par match.
+
+Exécution étape par étape :
+1. Match "hello" → remplacé par HELLO.
+2. Espace inchangé.
+3. Match "world" → WORLD.
+
+Ordre des opérations :
+• De gauche à droite, non chevauchant par défaut.
+
+Cas d'utilisation courants :
+• Title case custom, substitutions dépendant du contenu.
+
+Cas limites :
+• Erreur dans le callable : exception propage.
+
+Considérations de performance :
+• Callable Python par match plus lent que remplacement str fixe.
+
+Exemples :
+• Capitaliser seulement mots > 3 lettres.
+
+Remarques :
+• Réponse : "HELLO WORLD" — 1re option.`,
+  3149: `À quoi sert le préfixe r"..." (chaîne brute) pour les regex en Python ?
+
+Débutant :
+• Empêcher Python d'interpréter les antislash comme échappements avant le moteur re ; ils arrivent tels quels au motif.
+
+Intermédiaire :
+• Sinon il faudrait souvent doubler les antislash à la main.
+
+Expert :
+• EXCEPTION : une quote finale avant fin de chaîne brute peut encore nécessiter des contorsions.
+
+Concepts clés :
+• Séparation des couches lexicales Python vs regex.
+
+Distinctions clés :
+• r"\n" (deux caractères) vs "\n" (saut de ligne).
+
+Fonctionnement :
+• Le lexer Python garde le backslash littéral.
+
+Exécution étape par étape :
+1. Construction de la chaîne motif.
+2. Compilation regex côté re.
+
+Ordre des opérations :
+• Toujours préférer r pour motifs avec \d, \w, \b.
+
+Cas d'utilisation courants :
+• Tous les motifs non triviaux.
+
+Cas limites :
+• f-string + raw : combinaisons à maîtriser.
+
+Considérations de performance :
+• Aucun gain perf ; lisibilité et exactitude.
+
+Exemples :
+• r"\\" pour matcher un antislash dans le texte cible.
+
+Remarques :
+• Réponse : empêche Python d'interpréter les antislash — 1re option.`,
+  3150: `from itertools import chain
+list(chain([1,2],[3,4],[5])) — résultat ?
+
+Débutant :
+• Enchaîne les éléments des trois itérables dans l'ordre : [1,2,3,4,5].
+
+Intermédiaire :
+• Pas de liste imbriquée : un seul niveau « aplati » par concaténation séquentielle.
+
+Expert :
+• Lazy jusqu'à consommation ; list() matérialise.
+
+Concepts clés :
+• Itérateur sans copie des sources entières à l'avance au-delà du protocole iter.
+
+Distinctions clés :
+• chain vs chain.from_iterable vs extend de listes.
+
+Fonctionnement :
+• Délègue à chaque __iter__ successif.
+
+Exécution étape par étape :
+1. Consomme 1,2.
+2. Puis 3,4.
+3. Puis 5.
+4. list agrège.
+
+Ordre des opérations :
+• Ordre des arguments = ordre de sortie.
+
+Cas d'utilisation courants :
+• Fusionner résultats de plusieurs requêtes paresseuses.
+
+Cas limites :
+• itérables infinis en premier : suivants jamais atteints si on ne coupe pas.
+
+Considérations de performance :
+• Évite parfois une grande concaténation de listes intermédiaires.
+
+Exemples :
+• chain("AB","CD") → caractères A,B,C,D.
+
+Remarques :
+• Réponse : [1, 2, 3, 4, 5] — 1re option.`,
   402: `"  hello  ".lstrip() renvoie "hello  " : lstrip retire les blancs de gauche seulement.
 
 Débutant :
