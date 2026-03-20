@@ -97012,1129 +97012,2006 @@ Exemples :
 
 Remarques :
 • Réponse : utiliser None et créer l’objet dans la fonction (1re option).`,
-  2251: `__getattr__ is a special method invoked uniquement quand the standard attribute lookup mechanism fails — that is, when the attribute is not found in the instance __dict__, the class, or any base class.
+  2251: `def gen(): yield 1; yield 2; yield 3 — list(gen())
+
+Débutant :
+• gen est une fonction générateur ; gen() renvoie un itérateur ; list() consomme toutes les valeurs jusqu’à StopIteration.
+
+Intermédiaire :
+• Chaque yield suspend puis reprend ; list matérialise [1, 2, 3].
+
+Expert :
+• Le protocole itérateur lève StopIteration en fin de générateur.
 
 Concepts clés :
-• __getattr__(self, name) is a fallback hook
-• Only triggered when the attribute is NOT found by normal means
-• The name parameter reçoit le attribute name as a string
-• Must return a value or raise AttributeError
+• Générateur, yield, list sur itérateur.
 
-Comment ça fonctionne :
-1. C().xyz triggers attribute lookup for "xyz"
-2. "xyz" is not in the instance dict or class dict
-3. Python appelle __getattr__(self, "xyz")
-4. La method returns f"no xyz" → "no xyz"
+Distinctions clés :
+• list(gen) sans parenthèses sur gen serait erreur.
 
-Exemple :
-c = C()
-c.xyz    # "no xyz"
-c.hello  # "no hello"
-c.foo    # "no foo"
+Fonctionnement :
+• Appels next implicites dans list().
 
-Usages courants :
-• Dynamic attribute proxying
-• Default values for missing attributes
-• Lazy attribute computation`,
-  2252: `Python's attribute access protocol a un specific order. __getattr__ sits at the end as a fallback mechanism.
+Exécution étape par étape :
+• Trois yields puis fin.
 
-Concepts clés :
-• Normal lookup: instance __dict__ → class __dict__ → base classes
-• __getattr__ est appelé ONLY if normal lookup fails
-• Contrast with __getattribute__ which est appelé on EVERY access
-• __getattr__ is never called if the attribute exists normally
+Ordre des opérations :
+• gen() crée l’objet générateur avant itération.
 
-Comment ça fonctionne :
-1. obj.attr triggers __getattribute__ (default behavior)
-2. Default __getattribute__ searches instance dict, class dict, bases
-3. If attribute found → returned directly, __getattr__ is NOT called
-4. If attribute NOT found → __getattr__(self, "attr") est appelé
-5. If __getattr__ also fails → AttributeError
-
-Exemple :
-class C:
-    def __init__(self):
-        self.x = 1
-    def __getattr__(self, name):
-        return "fallback"
-c = C()
-c.x      # 1 (found normally, __getattr__ NOT called)
-c.y      # "fallback" (__getattr__ called)`,
-  2253: `__getattribute__ est appelé on EVERY attribute access, unlike __getattr__ which is only a fallback. Overriding it intercepts all attribute lookups.
-
-Concepts clés :
-• __getattribute__ est appelé for every dot-access on an instance
-• It completely overrides the normal lookup mechanism
-• If overridden carelessly, even self.x inside the method triggers recursion
-• Use object.__getattribute__(self, name) to access real attributes safely
-
-Comment ça fonctionne :
-1. C().anything triggers __getattribute__(self, "anything")
-2. La method ignores the name entirely and returns 42
-3. This happens for ANY attribute name — .foo, .bar, .xyz all return 42
-
-Exemple :
-c = C()
-c.anything  # 42
-c.x         # 42
-c.hello     # 42
+Cas d'utilisation courants :
+• Parcours paresseux puis besoin d’une liste.
 
 Cas limites :
-• Accessing self.something inside __getattribute__ causes infinite recursion
-• Must use object.__getattribute__(self, name) to break the cycle`,
-  2254: `__getattribute__ and __getattr__ serve different roles en Python's attribute access protocol.
+• Générateur infini : ne pas list() sans limite.
+
+Considérations de performance :
+• Mémoire O(n) une fois listé.
+
+Exemples :
+• tuple(gen()) même principe.
+
+Remarques :
+• Réponse : [1, 2, 3].`,
+  2252: `g = gen() avec deux yields — next(g) premier
+
+Débutant :
+• Premier next démarre le corps jusqu’au premier yield → 1.
+
+Intermédiaire :
+• L’état local du générateur est figé entre les next.
+
+Expert :
+• send/throw/close pour contrôle avancé hors QCM.
 
 Concepts clés :
-• __getattribute__ → called on EVERY attribute access (unconditionally)
-• __getattr__ → called ONLY when normal lookup fails (fallback)
-• __getattribute__ runs first; if it raises AttributeError, __getattr__ runs
-• Default __getattribute__ implements the standard lookup (instance → class → bases)
+• next built-in, reprise d’exécution.
 
-Comment ça fonctionne :
-1. obj.attr always calls __getattribute__ first
-2. Default implementation searches instance dict, class, bases
-3. If found → retourne le attribute
-4. If not found → raises AttributeError
-5. If AttributeError → Python appelle __getattr__ as fallback
+Distinctions clés :
+• g n’est pas encore 1 : c’est l’objet générateur.
 
-Exemple :
-class C:
-    def __getattribute__(self, name):
-        print(f"accessing {name}")
-        return object.__getattribute__(self, name)
-c = C()
-c.x = 1
-c.x  # prints "accessing x", returns 1`,
-  2255: `__setattr__ est appelé whenever an attribute assignment is attempted on an instance. En le surchargeant, you can transform, validate, or log every assignment.
+Fonctionnement :
+• FRAME du générateur suspendu.
 
-Concepts clés :
-• __setattr__(self, name, val) intercepts all attribute assignments
-• Must use object.__setattr__() to actually store the value (avoid recursion)
-• self.name = val inside __setattr__ would cause infinite recursion
-• Called for every assignment including those inside __init__
+Exécution étape par étape :
+• Une seule avancée.
 
-Comment ça fonctionne :
-1. c.x = 5 calls C.__setattr__(c, "x", 5)
-2. Inside, object.__setattr__(self, "x", 5 * 2) stores x = 10
-3. c.x retrieves the stored value → 10
+Ordre des opérations :
+• gen() puis next.
 
-Exemple :
-c = C()
-c.x = 5   # stored as 10
-c.y = 3   # stored as 6
-c.x       # 10
-c.y       # 6
-
-Usages courants :
-• Validation: reject negative values, wrong types
-• Transformation: normalize, convert units
-• Logging: record every attribute change`,
-  2256: `__delattr__ is the counterpart of __setattr__ — it est appelé whenever an attribute deletion is attempted with the del statement.
-
-Concepts clés :
-• __delattr__(self, name) intercepts del obj.attr
-• Can be utilisé pour prevent deletion, log it, or customize behavior
-• To actually remove the attribute, call object.__delattr__(self, name)
-• Without calling object.__delattr__, the attribute is not actually removed
-
-Comment ça fonctionne :
-1. del C().x triggers __delattr__(self, "x")
-2. The custom method prints "deleting x"
-3. Since it doesn't call object.__delattr__, nothing is actually deleted
-4. La method simply runs the print statement
-
-Exemple :
-class Protected:
-    def __delattr__(self, name):
-        raise AttributeError(f"Cannot delete {name}")
-
-Usages courants :
-• Preventing attribute deletion
-• Logging deletions for debugging
-• Cleanup logic before removing an attribute`,
-  2257: `Ce pattern implements custom attribute storage using a backing dictionary. It combines __setattr__ and __getattr__ to control where attributes live.
-
-Concepts clés :
-• __setattr__ intercepts all assignments
-• Special case for "_data" uses object.__setattr__ to avoid recursion
-• All other attributes sont stockés in self._data
-• __getattr__ reads from self._data when normal lookup fails
-
-Comment ça fonctionne :
-1. __init__: self._data = {} triggers __setattr__ with name="_data"
-2. The if-branch uses object.__setattr__ to store _data normally
-3. c.x = 42 triggers __setattr__ with name="x"
-4. The else-branch stores self._data["x"] = 42
-5. c.x: "x" not in instance __dict__ → __getattr__ called
-6. Retourne self._data.get("x", "missing") → 42
-
-Usages courants :
-• Attribute proxying and delegation
-• Implementing record-like objects
-• Attribute access logging with custom storage`,
-  2258: `Every Python object (unless using __slots__) a un __dict__ attribute that stores its instance attributes as a dictionary.
-
-Concepts clés :
-• __dict__ maps attribute names (strings) to their values
-• A new instance with no attributes has an empty dict {}
-• Setting c.x = 1 would add {"x": 1} to c.__dict__
-• Class attributes are NOT stored in instance __dict__
-
-Comment ça fonctionne :
-1. class C: pass defines a class with no __init__
-2. c = C() creates an instance with no attributes
-3. c.__dict__ returns {} — empty dictionary
-4. No assignments have been made, so no entries exist
-
-Exemple :
-c = C()
-c.__dict__        # {}
-c.x = 1
-c.__dict__        # {"x": 1}
-c.y = "hello"
-c.__dict__        # {"x": 1, "y": "hello"}`,
-  2259: `Each assignment to self.attr in __init__ adds an entry to the instance's __dict__ dictionary.
-
-Concepts clés :
-• self.x = 1 adds {"x": 1} to __dict__
-• self.y = 2 adds {"y": 2} to __dict__
-• __dict__ only contains instance attributes, not class attributes or methods
-• len(__dict__) counts the number of instance attributes
-
-Comment ça fonctionne :
-1. C() calls __init__, which runs self.x = 1 and self.y = 2
-2. c.__dict__ is now {"x": 1, "y": 2}
-3. len(c.__dict__) = 2
-
-Exemple :
-c = C()
-c.__dict__         # {"x": 1, "y": 2}
-len(c.__dict__)    # 2
-c.z = 3
-len(c.__dict__)    # 3`,
-  2260: `__slots__ explicitly declares which instance attributes a class allows. Any attempt to assign an attribute absent de __slots__ raises AttributeError.
-
-Concepts clés :
-• __slots__ = ["x", "y"] only allows attributes x and y
-• Assigning an unlisted attribute raises AttributeError
-• __slots__ also prevents the creation of __dict__
-• Benefits: reduced memory usage and faster attribute access
-
-Comment ça fonctionne :
-1. class C defines __slots__ = ["x", "y"]
-2. c = C() creates an instance without __dict__
-3. c.x = 1 succeeds — "x" is in __slots__
-4. c.z = 2 raises AttributeError — "z" is absent de __slots__
-
-Exemple :
-c = C()
-c.x = 1       # OK
-c.y = 2       # OK
-c.z = 3       # AttributeError: 'C' object n'a pas attribute 'z'`,
-  2261: `Quand a classe defines __slots__, Python does not create a per-instance __dict__. Instead, it allocates fixed slots for the declared attributes.
-
-Concepts clés :
-• Normal classes: each instance gets a __dict__ (a dictionnaire)
-• __slots__ classes: no __dict__, attributes stored in fixed-size structure
-• This saves ~40-50 bytes per instance (the dict overhead)
-• You can add "__dict__" to __slots__ to have both, but that defeats the purpose
-
-Comment ça fonctionne :
-1. classe C defines __slots__ = ["x"]
-2. c = C() creates an instance avec a slot for "x" but no __dict__
-3. hasattr(c, "__dict__") → False
-4. The instance uses descriptor-based slots instead
-
-Exemple :
-classe Normal: pass
-classe Slotted:
-    __slots__ = ["x"]
-hasattr(Normal(), "__dict__")   # True
-hasattr(Slotted(), "__dict__")  # False`,
-  2262: `__slots__ restricts which attributes can exist, but attributes that ARE listed work just like normal instance attributes.
-
-Concepts clés :
-• __slots__ declares allowed attribute names
-• Declared attributes can be assigned and read normally
-• Internally, each slot is implemented as a descriptor on the class
-• Access speed is slightly faster than __dict__-based lookup
-
-Comment ça fonctionne :
-1. __slots__ = ["x", "y"] declares two allowed attributes
-2. c.x = 1 stores 1 in the "x" slot
-3. c.y = 2 stores 2 in the "y" slot
-4. (c.x, c.y) returns (1, 2)
-
-Exemple :
-c = C()
-c.x = 10
-c.y = 20
-print(c.x, c.y)  # 10 20`,
-  2263: `__slots__ is an optimization that replaces the per-instance __dict__ with a fixed-size data structure.
-
-Concepts clés :
-• Without __slots__: each instance a un __dict__ (Python dict, ~100+ bytes overhead)
-• With __slots__: attributes stored in compact fixed slots (~8 bytes each)
-• For classes with millions of instances, this saves significant memory
-• Attribute access is also slightly faster (descriptor lookup vs dict lookup)
-
-Comparaison mémoire :
-class Normal:
-    def __init__(self):
-        self.x = 1
-        self.y = 2
-# Each instance: ~168 bytes (includes __dict__)
-
-class Slotted:
-    __slots__ = ["x", "y"]
-    def __init__(self):
-        self.x = 1
-        self.y = 2
-# Each instance: ~56 bytes (no __dict__)
-
-Compromis :
-• Cannot add arbitrary attributes at runtime
-• Cannot use __dict__-based introspection
-• Slightly more complex with inheritance`,
-  2264: `Every Python object a un __class__ attribute that references the class (type) utilisé pour create it.
-
-Concepts clés :
-• __class__ est équivalent à type(obj) for most purposes
-• Retourne the actual class object, not a string
-• The repr shows <class '__main__.C'> (module-qualified name)
-• Can be utilisé pour create new instances: c.__class__()
-
-Comment ça fonctionne :
-1. class C: pass defines class C
-2. c = C() creates an instance of C
-3. c.__class__ retourne le class object C
-4. Displayed as <class '__main__.C'>
-
-Exemple :
-c = C()
-c.__class__           # <class '__main__.C'>
-c.__class__ is C      # True
-type(c) is c.__class__  # True`,
-  2265: `Le __name__ attribute of a classe objet is a string contenant les classe's simple name (sans module qualification).
-
-Concepts clés :
-• __class__ retourne le classe objet
-• __name__ on a classe retourne its name as a string
-• C'est the unqualified name (just "C", not "__main__.C")
-• Useful for logging, debugging, and dynamic type checking
-
-Comment ça fonctionne :
-1. c.__class__ retourne le classe C
-2. C.__name__ retourne le string "C"
-3. So c.__class__.__name__ is "C"
-
-Exemple :
-classe MyClass: pass
-obj = MyClass()
-obj.__class__.__name__  # "MyClass"
-type(obj).__name__      # "MyClass" (equivalent)`,
-  2266: `Composition is a design pattern where a class contains instances of other classes as attributes, creating a "has-a" relationship.
-
-Concepts clés :
-• Car "has-a" Engine (composition)
-• Engine est créé inside Car.__init__ → Car owns the Engine
-• Delegation: Car can expose Engine methods through its own interface
-• Stronger than aggregation: Engine's lifecycle is tied to Car
-
-Comment ça fonctionne :
-1. Car() calls __init__, qui creates self.engine = Engine()
-2. Car().engine retourne le Engine instance
-3. .start() calls Engine.start() → returns "vroom"
-
-Exemple :
-car = Car()
-car.engine           # <Engine instance>
-car.engine.start()   # "vroom"
-
-Usages courants :
-• Building complex objects from simpler components
-• Favored over inheritance for flexibility ("favor composition over inheritance")`,
-  2267: `Composition is a fundamental OOP design principle where complex objects are built by containing references to other objects, rather than inheriting from them.
-
-Concepts clés :
-• "Has-a" relationship: Car has an Engine, House has Rooms
-• Contrasts with inheritance ("is-a" relationship)
-• More flexible than inheritance — can change components at runtime
-• Components can be swapped, tested independently, and reused
-
-Composition vs héritage :
-• Inheritance: class Car(Vehicle) — Car IS-A Vehicle
-• Composition: class Car: engine = Engine() — Car HAS-A Engine
-
-Exemple :
-class CPU:
-    def compute(self): return "computing"
-
-class Computer:
-    def __init__(self):
-        self.cpu = CPU()
-    def run(self):
-        return self.cpu.compute()
-
-Usages courants :
-• Dependency injection
-• Strategy pattern (swap algorithms)
-• Plugin architectures`,
-  2268: `Aggregation is a "has-a" relationship like composition, but the contained objects can exist independently of the container.
-
-Concepts clés :
-• Aggregation: container references objects but doesn't own them
-• Composition: container creates and owns the objects
-• In aggregation, objects can outlive the container
-• In composition, objects are destroyed with the container
-
-Exemple :
-# Composition — Engine created inside Car
-class Car:
-    def __init__(self):
-        self.engine = Engine()  # Car owns Engine
-
-# Aggregation — Engine passed in from outside
-class Car:
-    def __init__(self, engine):
-        self.engine = engine  # Car uses Engine but doesn't own it
-
-engine = Engine()
-car = Car(engine)
-del car         # engine still exists
-print(engine)   # still alive
-
-Usages courants :
-• Team has members (members exist independently)
-• University has students (students exist outside university)
-• Playlist has songs (songs exist in multiple playlists)`,
-  2269: `Defining a mutable object (like a list) as a class variable means all instances share le même object. C'est a common Python gotcha.
-
-Concepts clés :
-• logs = [] in the class body crée un class variable
-• All instances reference le même list object
-• Appending to self.logs modifies the shared list
-• self.logs doesn't create an instance variable — il trouve the class variable
-
-Comment ça fonctionne :
-1. Logger.logs = [] is a single list shared by all instances
-2. l1.log("a") does self.logs.append("a") → modifies the shared list
-3. l2.logs now also contains ["a"] because it's le même list
-
-Exemple :
-l1 = Logger()
-l2 = Logger()
-l1.log("hello")
-print(l2.logs)  # ["hello"] — oops, l2 sees l1's log!
-
-Correction :
-class Logger:
-    def __init__(self):
-        self.logs = []  # instance variable — each has its own list`,
-  2270: `Quand a mutable objet est créé in __init__ avec self.attr = ..., each instance gets its own independent copy.
-
-Concepts clés :
-• self.logs = [] in __init__ crée un new liste per instance
-• l1.logs and l2.logs are different liste objets
-• Modifying l1.logs does NOT affect l2.logs
-• C'est the correct pattern for per-instance mutable data
-
-Comment ça fonctionne :
-1. l1 = Logger() creates l1 avec l1.logs = [] (new liste)
-2. l2 = Logger() creates l2 avec l2.logs = [] (different new liste)
-3. l1.log("a") appends to l1's liste → l1.logs = ["a"]
-4. l2.logs is still [] — its own separate liste
-
-Exemple :
-l1.logs is l2.logs  # False — different objets
-l1.log("a")
-l1.logs  # ["a"]
-l2.logs  # [] — unaffected`,
-  2271: `Le Singleton pattern ensures only one instance of a classe ever exists. This implementation uses __new__ to control instance creation.
-
-Concepts clés :
-• __new__ est appelé avant __init__ to create the instance
-• _instance stocke le single instance as a classe variable
-• First call: creates and stocke le instance
-• Subsequent calls: renvoyer the existing instance
-
-Comment ça fonctionne :
-1. First Singleton(): cls._instance is None → creates new instance, stores it
-2. Second Singleton(): cls._instance is not None → retourne stored instance
-3. Both calls renvoyer the exact same objet
-4. Singleton() is Singleton() → True (same identity)
-
-Exemple :
-a = Singleton()
-b = Singleton()
-a is b        # True
-id(a) == id(b)  # True
-
-Usages courants :
-• Database connection pools
-• Configuration managers
-• Logging services`,
-  2272: `__new__ is the first step in object creation. It allocates memory and retourne un new instance, which is then passé à __init__ for initialization.
-
-Concepts clés :
-• __new__(cls) is a static method (implicitly)
-• It reçoit le class as its first argument
-• Must return an instance (usually via object.__new__(cls))
-• If it doesn't return an instance of cls, __init__ is NOT called
-• __init__(self) reçoit le instance created by __new__
-
-Comment ça fonctionne :
-1. MyClass() calls MyClass.__new__(MyClass)
-2. __new__ crée un bare instance (no attributes yet)
-3. If __new__ retourne un instance of MyClass, __init__ est appelé on it
-4. __init__ sets up instance attributes
-
-Exemple :
-class C:
-    def __new__(cls):
-        print("Creating instance")
-        return object.__new__(cls)
-    def __init__(self):
-        print("Initializing instance")
-C()  # prints "Creating instance" then "Initializing instance"
-
-Usages courants :
-• Singleton pattern
-• Les types immuables (str, int), tuple subclasses)
-• Object caching / flyweight pattern`,
-  2273: `__new__ and __init__ are the two phases of Python object construction.
-
-Concepts clés :
-• __new__: CREATION — allocates memory, returns bare instance
-• __init__: INITIALIZATION — sets up attributes on the created instance
-• __new__ est appelé FIRST, receives class (cls)
-• __init__ est appelé SECOND, receives instance (self)
-
-Comment ça fonctionne :
-1. obj = MyClass(args)
-2. Python appelle MyClass.__new__(MyClass, args) → creates instance
-3. If result is a MyClass instance, Python appelle result.__init__(args)
-4. obj now references the fully initialized instance
-
-Exemple :
-class C:
-    def __new__(cls, value):
-        instance = object.__new__(cls)
-        print(f"Created: {id(instance)}")
-        return instance
-    def __init__(self, value):
-        self.value = value
-        print(f"Initialized: {self.value}")
-C(42)
-# Created: 140234567890
-# Initialized: 42`,
-  2274: `Python's object creation protocol always calls __new__ before __init__. This order is fixed et ne peut pas être modifiée.
-
-Concepts clés :
-• __new__ s'exécute en premier — il crée et retourne l'instance brute
-• __init__ s'exécute ensuite — il reçoit l'instance et l'initialise
-• Both are called automatically by Python when you do ClassName()
-• If __new__ doesn't return an instance of the class, __init__ is skipped
-
-Comment ça fonctionne :
-1. C() déclenche le creation protocol
-2. Python appelle C.__new__(C) → prints "new", returns new instance
-3. Since le résultat is a C instance, Python appelle result.__init__()
-4. __init__ prints "init"
-5. Output: "new" then "init"
-
-Exemple :
-class C:
-    def __new__(cls):
-        print("1. new")
-        return object.__new__(cls)
-    def __init__(self):
-        print("2. init")
-C()
-# 1. new
-# 2. init`,
-  2275: `A class variable (list) combined with __init__ can track all instances ever created. Each new instance registers itself.
-
-Concepts clés :
-• C.instances = [] is a class variable shared by all instances
-• __init__ appends self (the new instance) to this shared list
-• After two instantiations, the list holds two instance references
-• C'est intentional shared-state (unlike the mutable default bug)
-
-Comment ça fonctionne :
-1. C() creates instance #1, appends it to C.instances → [instance1]
-2. C() creates instance #2, appends it to C.instances → [instance1, instance2]
-3. len(C.instances) → 2
-
-Exemple :
-a = C()
-b = C()
-C.instances      # [<C instance>, <C instance>]
-len(C.instances) # 2
-C.instances[0] is a  # True
-
-Usages courants :
-• Instance registry / tracking
-• Object pool management
-• Debugging: see all live instances`,
-  2276: `Using a class variable as a counter and incrementing it in __init__ tracks how many instances have been created.
-
-Concepts clés :
-• C.count = 0 is a class variable (shared state)
-• C.count += 1 in __init__ increments the shared counter
-• Using C.count (not self.count) ensures the class variable is modified
-• self.count += 1 would create an instance variable and shadow the class variable
-
-Comment ça fonctionne :
-1. C() → C.count becomes 1
-2. C() → C.count becomes 2
-3. C() → C.count becomes 3
-4. C.count → 3
-
-Exemple :
-print(C.count)  # 3
-C()
-print(C.count)  # 4
-
-Edge case:
-Si vous used self.count += 1 instead of C.count += 1, the first access
-reads C.count (0), adds 1, and stores 1 as an INSTANCE variable,
-leaving C.count still at 0.`,
-  2277: `Le Proxy pattern uses __getattr__ to forward attribute access to a wrapped objet. Any attribute not found on the Proxy itself is looked up on the wrapped objet.
-
-Concepts clés :
-• __init__ stores _obj normally (in __dict__)
-• __getattr__ is only appelé for attributes NOT found on Proxy
-• p._obj is found normally (in __dict__), so __getattr__ is NOT appelé for it
-• p.append is NOT found on Proxy → __getattr__ appelé → retourne liste.append
-
-Comment ça fonctionne :
-1. p = Proxy([1, 2, 3]) stocke le liste as p._obj
-2. p.append: "append" not in Proxy → __getattr__ appelé
-3. getattr(self._obj, "append") retourne le liste's append méthode
-4. p.append(4) calls [1, 2, 3].append(4) → liste becomes [1, 2, 3, 4]
-5. p._obj retourne le modified liste [1, 2, 3, 4]
-
-Usages courants :
-• Lazy loading proxies
-• Access control wrappers
-• Logging / monitoring decorators
-• Remote objet proxies (RPC)`,
-  2278: `Dans Python, everything is an objet — including classes themselves. A classe can be stored as an attribute of another classe, an instance, or any other objet.
-
-Concepts clés :
-• Classes are first-classe objets en Python
-• They can be assigned to variables, stored in collections, passé comme arguments
-• A classe attribute can hold a reference to another classe
-• C'est different from inheritance — no is-a relationship est créé
-
-Exemple :
-classe Inner:
-    def greet(self):
-        renvoyer "hello"
-
-classe Outer:
-    helper = Inner  # classe as attribute
-
-obj = Outer.helper()   # creates an Inner instance
-obj.greet()            # "hello"
-
-Usages courants :
-• Factory classes storing product classes
-• Strategy pattern: swappable algorithm classes
-• Plugin registries: mapping names to handler classes`,
-  2279: `Storing a class as an attribute of another class allows you to create instances of the stored class through the container.
-
-Concepts clés :
-• B.inner_class = A stores a reference to class A
-• B.inner_class is A → True
-• Calling B.inner_class() is le même que calling A()
-• The resulting instance is an A instance, not a B instance
-
-Comment ça fonctionne :
-1. class A: pass defines class A
-2. class B: inner_class = A stores reference to A
-3. B.inner_class → returns class A
-4. B.inner_class() → calls A() → creates and retourne un A instance
-5. isinstance(B.inner_class(), A) → True
-
-Exemple :
-result = B.inner_class()
-type(result)              # <class 'A'>
-isinstance(result, A)     # True
-isinstance(result, B)     # False`,
-  2280: `Updating self.__dict__ directly with a dictionary is a concise way to turn keyword arguments into instance attributes.
-
-Concepts clés :
-• **kw collects all keyword arguments as a dictionary
-• self.__dict__ is the instance's attribute dictionary
-• .update(kw) merges the keyword dict into __dict__
-• Each key becomes an attribute name, each value becomes the attribute value
-
-Comment ça fonctionne :
-1. C(x=1, y=2) passes kw = {"x": 1, "y": 2}
-2. self.__dict__.update({"x": 1, "y": 2})
-3. Now self.x = 1 and self.y = 2
-4. c.x → 1
-
-Exemple :
-c = C(x=1, y=2, name="hello")
-c.x      # 1
-c.y      # 2
-c.name   # "hello"
-
-Usages courants :
-• Flexible constructors accepting arbitrary attributes
-• Configuration objects
-• Data transfer objects (DTOs)`,
-  2281: `__del__ est le finaliseur de Python method. It est appelé quand le compteur de références de l'objet tombe à zéro and the garbage collector is about to reclaim its memory.
-
-Concepts clés :
-• __del__ is NOT a destructor in the C++ sense
-• Called when the garbage collector decides to reclaim the object
-• del obj reduces reference count but doesn't guarantee immediate __del__ call
-• The timing of __del__ is non-deterministic
-
-Comment ça fonctionne :
-1. An object's reference count tombe à zéro
-2. The garbage collector identifies the object for collection
-3. __del__ est appelé on the object
-4. The object's memory is reclaimed
-
-Exemple :
-c = C()
-del c   # MAY print "deleted" (reference count drops to 0)
-
-# But with multiple references:
-c = C()
-d = c
-del c   # does NOT print "deleted" (d still references the object)
-del d   # NOW may print "deleted"
+Cas d'utilisation courants :
+• Pipelines un élément à la fois.
 
 Cas limites :
-• Circular references may delay __del__ calls
-• __del__ may not run if the interpreter is shutting down`,
-  2282: `Python's garbage collection makes no guarantees about when or if __del__ will be called.
+• next sur générateur épuisé → StopIteration.
+
+Considérations de performance :
+• Pas d’allocation liste complète.
+
+Exemples :
+• next(g, défaut) évite exception.
+
+Remarques :
+• Réponse : 1.`,
+  2253: `Après un premier next, second next(g)
+
+Débutant :
+• Reprend après le premier yield et va jusqu’au second → 2.
+
+Intermédiaire :
+• Ordre strict des yields.
+
+Expert :
+• ValueError si send mal utilisé hors init.
 
 Concepts clés :
-• CPython uses reference counting + cyclic GC
-• Reference counting usually triggers __del__ promptly
-• Circular references require the cyclic GC, which n'a pas timing guarantees
-• During interpreter shutdown, __del__ may not be called at all
-• Exceptions inside __del__ are silently ignored
+• Suite du flux du générateur.
 
-Scénarios où __del__ peut ne pas s'exécuter :
-1. Circular references — objects referencing each other
-2. Interpreter shutdown — global cleanup is unordered
-3. Objects in failed __init__ — partially constructed objects
-4. Daemon threads — may not clean up properly
+Distinctions clés :
+• Pas recycling au début.
 
-Bonnes pratiques :
-• Use context managers (with statement) for cleanup instead
-• Use weakref for breaking circular references
-• Don't rely on __del__ for critical resource release
-• Prefer explicit .close() methods`,
-  2283: `copy.copy() performs a shallow copy: il crée a new instance but does NOT recursively copy nested objects. The new instance's attributes reference le même objects as l'originale.
+Fonctionnement :
+• PC interne du générateur avance.
 
-Concepts clés :
-• Copie superficielle : nouveau conteneur, mêmes contenus
-• d is not c (different objects), but d.x IS c.x (same list)
-• Modifying d.x would also affect c.x (they share the list)
-• Only the top-level object is duplicated
+Exécution étape par étape :
+• Deuxième valeur produite.
 
-Comment ça fonctionne :
-1. c = C([1]) creates c with c.x = [1]
-2. d = copy.copy(c) crée un new C instance
-3. d.x is assigned le même reference as c.x (not a new list)
-4. d.x is c.x → True (same list object)
+Ordre des opérations :
+• Séquence de deux next sur le même g.
 
-Exemple :
-d.x.append(2)
-c.x  # [1, 2] — affected because d.x and c.x are le même list!
-d is c     # False (different C instances)
-d.x is c.x  # True (same list)`,
-  2284: `copy.deepcopy() performs a deep copy: it recursively copies the object and all objects it references, creating fully independent copies.
+Cas d'utilisation courants :
+• Lecture streaming.
 
-Concepts clés :
-• Copie profonde : nouveau conteneur ET nouveaux contenus (récursivement)
-• d.x is a completely independent copy of c.x
-• Modifying d.x does NOT affect c.x
-• Handles circular references safely (uses a memo dict)
+Cas limites :
+• Un seul consommateur typique par générateur.
 
-Comment ça fonctionne :
-1. c = C([1]) creates c with c.x = [1]
-2. d = copy.deepcopy(c) crée un new C instance
-3. d.x is set to a NEW list [1] (copy of c.x)
-4. d.x is c.x → False (different list objects)
-5. d.x == c.x → True (equal contents)
+Considérations de performance :
+• O(1) par next.
 
-Exemple :
-d.x.append(2)
-d.x  # [1, 2]
-c.x  # [1] — NOT affected (independent copy)
-d.x is c.x  # False
-d.x == c.x  # False (contents now differ)`,
-  2285: `Quand vous define __copy__ on a class, copy.copy() calls your method instead of the default shallow copy logic. This lets you control exactly how copying works.
+Exemples :
+• for _ in range(2): next(g).
+
+Remarques :
+• Réponse : 2.`,
+  2254: `Troisième next après deux yields 1 et 2
+
+Débutant :
+• Plus de yield : le générateur se termine → StopIteration.
+
+Intermédiaire :
+• for et list attrapent StopIteration pour arrêter proprement.
+
+Expert :
+• En Python 3.7+, return dans générateur alimente StopIteration.value.
 
 Concepts clés :
-• copy.copy(obj) vérifie d'abord obj.__copy__()
-• If defined, it calls __copy__() and returns le résultat
-• Similarly, copy.deepcopy() checks for __deepcopy__()
-• Cela donne you full control over the copy semantics
+• Fin d’itérateur, exception contrôlée.
 
-Comment ça fonctionne :
-1. copy.copy(c) detects that C defines __copy__
-2. Calls c.__copy__() instead of default shallow copy
-3. __copy__ crée un new C with self.x[:] (a list slice copy)
-4. Retourne a C instance with an independent copy of the list
+Distinctions clés :
+• Ce n’est pas None ni 2 répété.
 
-Exemple :
-c = C([1, 2, 3])
-d = copy.copy(c)
-d.x is c.x  # False (list was sliced, creating a new list)
-d.x == c.x  # True (same contents)
+Fonctionnement :
+• Lever StopIteration depuis le générateur.
 
-Usages courants :
-• Converting a shallow copy into something deeper for specific attributes
-• Skipping certain attributes during copy
-• Custom initialization of the copied object`,
-  2286: `__repr__ defines the "official" string representation of an object. It should ideally be an expression that could recreate the object.
+Exécution étape par étape :
+• Troisième tentative d’avance.
 
-Concepts clés :
-• repr(obj) calls obj.__repr__()
-• Should return a string that looks like a valid Python expression
-• Convention: repr should allow eval(repr(obj)) == obj when possible
-• Also used when printing objects in the REPL and in containers
+Ordre des opérations :
+• Après épuisement.
 
-Comment ça fonctionne :
-1. C(5) creates an instance with self.x = 5
-2. repr(C(5)) calls __repr__ on the instance
-3. __repr__ returns f"C({self.x})" → "C(5)"
+Cas d'utilisation courants :
+• Boucles for sur générateurs.
 
-Exemple :
-c = C(5)
-repr(c)    # "C(5)"
-str(c)     # "C(5)" (__str__ falls back to __repr__ if not defined)
-print([c]) # [C(5)] (__repr__ used inside containers)
+Cas limites :
+• PEP 479 interactions async hors scope.
 
-Usages courants :
-• Debugging: clear representation of object state
-• Logging: meaningful object descriptions
-• REPL: shows object details when typed interactively`,
-  2287: `__eq__ defines custom equality comparison. Without it, == uses identity (same object). With it, you can compare by value.
+Considérations de performance :
+• N/A.
+
+Exemples :
+• next(g, "fini") retourne défaut.
+
+Remarques :
+• Réponse : StopIteration est levée (1re option).`,
+  2255: `gen avec boucle for i in range(3): yield i**2 — list(gen())
+
+Débutant :
+• i = 0,1,2 → carrés 0, 1, 4.
+
+Intermédiaire :
+• L’état de boucle survit entre yields.
+
+Expert :
+• Équivalent à générateur avec trois yield explicites ici.
 
 Concepts clés :
-• Sans __eq__ : C(1) == C(1) est False (objets différents)
-• Avec __eq__ : la comparaison utilise votre logique personnalisée
-• isinstance check ensures you only compare with same type
-• If other is not a C, returns False (not NotImplemented here)
+• yield en boucle.
 
-Comment ça fonctionne :
-1. C(1) == C(1) calls __eq__ on the left operand
-2. isinstance(other, C) → True (both are C instances)
-3. self.x == other.x → 1 == 1 → True
-4. Retourne True
+Distinctions clés :
+• Pas [0,1,2] ni [1,4,9] (ce dernier serait 1²,2²,3² mais range(3) s’arrête avant 3).
 
-Exemple :
-C(1) == C(1)    # True (same value)
-C(1) == C(2)    # False (different values)
-C(1) == "hello" # False (isinstance fails)
+Fonctionnement :
+• range(3) pilote trois itérations.
 
-Edge case:
-Defining __eq__ makes the class unhashable by default (sets __hash__ to None).
-You must define __hash__ explicitly if you want instances in sets or as dict keys.`,
-  2288: `Le isinstance check in __eq__ prevents comparison avec incompatible types. When other is not a C instance, la méthode retourne False immediately.
+Exécution étape par étape :
+• Trois yields puis fin.
 
-Concepts clés :
-• isinstance(1, C) → False (int is not C)
-• The and short-circuits: False and ... → False
-• C'est a common defensive pattern in __eq__
-• An alternative is to renvoyer NotImplemented for unknown types
+Ordre des opérations :
+• i**2 évalué à chaque tour.
 
-Comment ça fonctionne :
-1. C(1) == 1 calls C.__eq__(C(1), 1)
-2. isinstance(1, C) → False
-3. False and self.x == other.x → False (short-circuit)
-4. Retourne False
+Cas d'utilisation courants :
+• Transformations paresseuses.
 
-Bonne pratique :
-def __eq__(self, other):
-    if not isinstance(other, C):
-        renvoyer NotImplemented  # lets Python try other.__eq__
-    renvoyer self.x == other.x`,
-  2289: `Hash equality is necessary but not sufficient for set membership. Two objects with le même hash still need to be equal (via __eq__) to be considered duplicates.
+Cas limites :
+• range énorme : toujours paresseux, attention au list().
 
-Concepts clés :
-• Sets use hash to find the bucket, then __eq__ to check for duplicates
-• Same hash does NOT mean same object
-• Without custom __eq__, Python uses identity (is) for equality
-• Two C(1) calls create two different objects → not equal by identity
+Considérations de performance :
+• list matérialise.
 
-Comment ça fonctionne :
-1. C(1) creates object A, hash = hash(1) = 1
-2. C(1) creates object B, hash = hash(1) = 1
-3. Set inserts A in bucket for hash 1
-4. Set tries to insert B: same hash bucket, checks A == B
-5. Default __eq__ uses identity: A is B → False
-6. Both A and B remain in the set → len = 2
+Exemples :
+• yield i**3 variant.
 
-Exemple :
-a = C(1)
-b = C(1)
-hash(a) == hash(b)  # True (same hash)
-a == b              # False (identity check, different objects)
-len({a, b})         # 2`,
-  2290: `Quand both __eq__ and __hash__ are defined consistently, sets can properly deduplicate objets based on valeur equality.
+Remarques :
+• Réponse : [0, 1, 4].`,
+  2256: `Rôle du mot-clé yield
+
+Débutant :
+• Il suspend la fonction générateur, renvoie une valeur au consommateur, et permet de reprendre plus tard.
+
+Intermédiaire :
+• Transforme la def en générateur : l’appel renvoie un objet générateur, pas une liste.
+
+Expert :
+• Diffère de return qui termine définitivement la fonction normale.
 
 Concepts clés :
-• __hash__ determines the bucket (same hash → same bucket)
-• __eq__ determines if two objets in le même bucket are duplicates
-• Both must be consistent: a == b implies hash(a) == hash(b)
-• With both defined, valeur-equal objets are treated as duplicates
+• Pause, reprise, valeur produite.
 
-Comment ça fonctionne :
-1. C(1) creates objet A: hash = hash(1), valeur = 1
-2. C(1) creates objet B: hash = hash(1), valeur = 1
-3. Set inserts A in bucket for hash 1
-4. Set tries to insert B: same hash, checks A.__eq__(B)
-5. self.x == other.x → 1 == 1 → True → B is a duplicate
-6. Only A remains → len = 1
+Distinctions clés :
+• Pas import ; pas « terminer pour toujours » seul sens return.
 
-Exemple :
-s = {C(1), C(2), C(1), C(3), C(2)}
-len(s)  # 3 (deduplicated to C(1), C(2), C(3))`,
-  2291: `Le 'is' operator checks objet identity — whether two names point to the exact same objet in memory.
+Fonctionnement :
+• Opcode YIELD_VALUE côté VM.
 
-Concepts clés :
-• is checks identity (same memory address / same id())
-• == checks equality (same valeur, via __eq__)
-• Each call to C(5) crée un NEW objet avec a different id
-• c is c2 → False car they are different objets
+Exécution étape par étape :
+• État sauvegardé sur la pile du générateur.
 
-Comment ça fonctionne :
-1. c = C(5) creates objet at address X
-2. c2 = C(5) crée un DIFFERENT objet at address Y
-3. c is c2 checks: id(c) == id(c2) → X != Y → False
-4. c == c2 would depend on __eq__ (default: also False, same as is)
+Ordre des opérations :
+• Premier next entre dans le corps jusqu’au premier yield.
 
-Exemple :
-c = C(5)
-c2 = C(5)
-c is c2    # False
-id(c)      # e.g., 140234567890
-id(c2)     # e.g., 140234567920 (different!)`,
-  2292: `Assignment en Python does not copy — il crée another reference (alias) to le même object.
+Cas d'utilisation courants :
+• Flux, lectures fichiers ligne à ligne, pipelines.
 
-Concepts clés :
-• c2 = c does NOT create a new object
-• c2 now points to le même object as c
-• id(c) == id(c2) → True
-• Modifying c.x also changes c2.x (same object)
+Cas limites :
+• yield dans try/finally : finally au close.
 
-Comment ça fonctionne :
-1. c = C(5) creates one object
-2. c2 = c makes c2 point to that same object
-3. c is c2 → True (same identity)
-4. id(c) == id(c2) → True
+Considérations de performance :
+• Souvent meilleure empreinte mémoire qu’une grande liste.
 
-Exemple :
-c = C(5)
-c2 = c
-c is c2     # True
-c.x = 10
-c2.x        # 10 (same object, same attribute)
-id(c) == id(c2)  # True`,
-  2293: `Class variables are shared by all instances. When accessed through instances, they all reference le même object.
+Exemples :
+• Voir questions list(gen()).
+
+Remarques :
+• Réponse : met en pause et produit une valeur (1re option).`,
+  2257: `yield from [1, 2, 3]
+
+Débutant :
+• Délègue l’itération : produit 1 puis 2 puis 3 comme yields successifs.
+
+Intermédiaire :
+• Équivaut à boucle for sur l’itérable avec yield interne.
+
+Expert :
+• Avec un sous-générateur, propage aussi send/throw (hors détail QCM).
 
 Concepts clés :
-• class_var = "shared" is a class variable (defined in class body)
-• All instances share this single string object
-• c1.class_var and c2.class_var point to le même object
-• String interning may also apply, but the key point is class-level sharing
+• Délégation d’itération.
 
-Comment ça fonctionne :
-1. C.class_var = "shared" creates one string object
-2. c1 = C() and c2 = C() create two instances
-3. c1.class_var looks up "class_var" — not in instance dict, found in class
-4. c2.class_var does le même — finds le même class variable
-5. c1.class_var is c2.class_var → True (same object)
+Distinctions clés :
+• Pas une liste imbriquée [[1,2,3]] en sortie.
 
-Exemple :
-c1.class_var is c2.class_var  # True
-c1.class_var is C.class_var   # True
-id(c1.class_var) == id(c2.class_var)  # True`,
-  2294: `Quand mutable objets are created in __init__, each instance gets its own independent objet.
+Fonctionnement :
+• Itérateur sur la liste consommé entièrement.
 
-Concepts clés :
-• self.data = [] dans __init__ crée une NOUVELLE liste à chaque fois
-• c1.data and c2.data are different liste objets
-• Modifying c1.data does NOT affect c2.data
-• C'est the correct pattern (vs. the classe variable bug)
+Exécution étape par étape :
+• list() collecte trois valeurs.
 
-Comment ça fonctionne :
-1. c1 = C() runs __init__, creates self.data = [] (liste A)
-2. c2 = C() runs __init__, creates self.data = [] (liste B)
-3. c1.data is c2.data → False (A and B are different objets)
-4. c1.data == c2.data → True (both are empty listes, equal content)
+Ordre des opérations :
+• yield from consomme l’itérable.
 
-Exemple :
-c1.data.append(1)
-c1.data  # [1]
-c2.data  # [] — not affected
-c1.data is c2.data  # False`,
-  2295: `sys.getsizeof() works by calling the object's __sizeof__() method and adding the garbage collector overhead.
+Cas d'utilisation courants :
+• Aplatir chaînage de générateurs.
 
-Concepts clés :
-• sys.getsizeof(obj) calls obj.__sizeof__() internally
-• Then adds gc overhead (typically 16 bytes for GC header)
-• Overriding __sizeof__ changes what getsizeof reports
-• The return value should represent bytes of memory used
+Cas limites :
+• Itérable infini dangereux avec list().
 
-Comment ça fonctionne :
-1. sys.getsizeof(C()) calls C().__sizeof__()
-2. Custom __sizeof__ returns 0
-3. sys.getsizeof adds GC overhead (e.g., 16)
-4. Résultat is approximately 16 (not the true memory usage)
+Considérations de performance :
+• Évite code boilerplate.
 
-Exemple :
-import sys
-c = C()
-c.__sizeof__()      # 0 (custom)
-sys.getsizeof(c)    # 16 (0 + GC overhead)
+Exemples :
+• yield from range(n).
 
-# Default behavior without override:
-class Normal: pass
-sys.getsizeof(Normal())  # typically ~48 bytes`,
-  2296: `__init_subclass__ is a hook method called on the parent class whenever a new subclass est créé. It was introduced en Python 3.6.
+Remarques :
+• Réponse : [1, 2, 3].`,
+  2258: `yield from range(5)
+
+Débutant :
+• range(5) produit 0..4 ; list donne ces cinq entiers.
+
+Intermédiaire :
+• range est paresseux mais entièrement consommé ici.
+
+Expert :
+• yield from sur range évite boucle explicite.
 
 Concepts clés :
-• Defined on the parent class, appelé quand a child class est créé
-• cls parameter is the NEW subclass (not the parent)
-• Called at class definition time, not at instantiation
-• Can accept keyword arguments from the class statement
+• Délégation sur range.
 
-Comment ça fonctionne :
-1. class C defines __init_subclass__
-2. class D(C): pass triggers C.__init_subclass__ with cls=D
-3. Prints f"Subclass {D.__name__}" → "Subclass D"
-4. This happens at class definition, before any D instances are created
+Distinctions clés :
+• Pas [0..5] (5 exclus).
 
-Exemple :
-class Base:
-    def __init_subclass__(cls, **kwargs):
-        print(f"New subclass: {cls.__name__}")
+Fonctionnement :
+• Cinq itérations.
 
-class Child(Base): pass    # prints "New subclass: Child"
-class Other(Base): pass    # prints "New subclass: Other"
+Exécution étape par étape :
+• Jusqu’à StopIteration de range.
 
-Usages courants :
-• Automatic subclass registration
-• Validation of subclass structure
-• Plugin discovery systems`,
-  2297: `__init_subclass__ fournit un clean way to customize class creation for subclasses without needing a metaclass.
+Ordre des opérations :
+• gen() puis list.
 
-Concepts clés :
-• Called automatically when a subclass is defined
-• Simpler alternative to metaclasses for many use cases
-• Receives the new subclass as cls parameter
-• Can accept keyword arguments from the class statement
+Cas d'utilisation courants :
+• Réémettre des indices.
 
-Example with keyword arguments:
-class Validator:
-    def __init_subclass__(cls, required_attr=None, **kwargs):
-        super().__init_subclass__(**kwargs)
-        if required_attr and not hasattr(cls, required_attr):
-            raise TypeError(f"{cls.__name__} must define {required_attr}")
+Cas limites :
+• range négatif pas ici.
 
-class Good(Validator, required_attr="validate"):
-    def validate(self): pass  # OK
+Considérations de performance :
+• O(n) pour list.
 
-class Bad(Validator, required_attr="validate"):
-    pass  # TypeError!
+Exemples :
+• len(list(gen())) → 5.
 
-Usages courants :
-• Automatic registration of plugins/handlers
-• Enforcing interface contracts on subclasses
-• Class-level configuration via keyword arguments
-• Replacing simple metaclass use cases`,
-  2298: `By default, Python objects can have arbitrary attributes added at any time. C'est because instances ont un __dict__ that can store any key-value pair.
+Remarques :
+• Réponse : [0, 1, 2, 3, 4].`,
+  2259: `yield from "abc"
+
+Débutant :
+• Itération sur la str caractère par caractère → trois chaînes une lettre.
+
+Intermédiaire :
+• Chaque caractère est une str de longueur 1.
+
+Expert :
+• Même mécanisme que sur tout itérable str.
 
 Concepts clés :
-• Python does not require attributes to be declared in advance
-• Any attribute can be added to an instance after creation
-• The attribute is stored in the instance's __dict__
-• This dynamic nature is a core feature of Python
+• Itérable chaîne.
 
-Comment ça fonctionne :
-1. class C: pass defines a class with no predefined attributes
-2. c = C() creates an instance with an empty __dict__
-3. c.dynamic_attr = "hello" adds {"dynamic_attr": "hello"} to __dict__
-4. c.dynamic_attr retrieves "hello"
+Distinctions clés :
+• Pas une seule str "abc" comme un seul yield.
 
-Exemple :
-c = C()
-c.x = 1
-c.name = "test"
-c.items = [1, 2, 3]
-c.__dict__  # {"x": 1, "name": "test", "items": [1, 2, 3]}
+Fonctionnement :
+• yield from consomme l’itérateur de la str.
 
-Note :
-This can be restricted with __slots__, which prevents dynamic attribute creation.`,
-  2299: `type() peut être utilisé as a class factory quand appelé with three arguments: name, bases, and namespace dictionary.
+Exécution étape par étape :
+• a, b, c.
 
-Concepts clés :
-• type(name, bases, dict) crée un new class dynamically
-• name: string for the class name
-• bases: tuple of base classes (empty tuple = inherits from object)
-• dict: dictionary of class attributes and methods
-• Equivalent to using the class statement
+Ordre des opérations :
+• list matérialise.
 
-Comment ça fonctionne :
-1. type("MyClass", (), {"x": 1}) crée un class named MyClass
-2. () means no explicit base classes (inherits from object)
-3. {"x": 1} sets class attribute x = 1
-4. .x accesses the class attribute → 1
+Cas d'utilisation courants :
+• Stream de caractères.
 
-Instruction de classe équivalente :
-class MyClass:
-    x = 1
+Cas limites :
+• Surrogate pairs Unicode rares hors scope.
 
-Exemple :
-MyClass = type("MyClass", (), {"x": 1})
-MyClass.x       # 1
-obj = MyClass()
-obj.x           # 1
-type(obj)       # <class '__main__.MyClass'>`,
-  2300: `Methods can be added to dynamically-created classes by including functions in the namespace dictionary. Lambda functions work as methods when they accept self.
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• yield from "" → [].
+
+Remarques :
+• Réponse : liste des caractères a, b, c (formulation du QCM).`,
+  2260: `sum(x**2 for x in range(4))
+
+Débutant :
+• Générateur implicite : 0²+1²+2²+3² = 0+1+4+9 = 14.
+
+Intermédiaire :
+• Les parenthèses autour de l’expression pour sum sont celles d’appel de fonction, pas une tuple comprehension.
+
+Expert :
+• math.fsum pour stabilité float si on généralisait.
 
 Concepts clés :
-• Functions in the class dict become methods
-• Lambda with self parameter works as an instance method
-• The class is fully functional — supports instantiation, method calls, etc.
-• Equivalent to defining the method in a class body
+• Generator expression, sum.
 
-Comment ça fonctionne :
-1. type("MyClass", (), {"greet": lambda self: "hi"}) crée un class
-2. "greet" key maps to a lambda that accepts self and returns "hi"
-3. () at the end instantiates the class: MyClass()
-4. .greet() calls the method on the instance → "hi"
+Distinctions clés :
+• Pas max ni len.
 
-Équivalent :
-class MyClass:
-    def greet(self):
-        return "hi"
-MyClass().greet()  # "hi"
+Fonctionnement :
+• sum itère jusqu’à épuisement.
 
-Exemple :
-Cls = type("Cls", (), {
-    "x": 10,
-    "get_x": lambda self: self.x,
-    "set_x": lambda self, v: setattr(self, "x", v)
-})
-obj = Cls()
-obj.get_x()    # 10
-obj.set_x(20)
-obj.get_x()    # 20`,
+Exécution étape par étape :
+• Quatre termes.
+
+Ordre des opérations :
+• range(4) puis carré puis cumul.
+
+Cas d'utilisation courants :
+• Agrégations sans liste intermédiaire.
+
+Cas limites :
+• Vide : sum([]) 0 mais ici non vide.
+
+Considérations de performance :
+• Pas de liste matérialisée.
+
+Exemples :
+• sum(x for x in range(4)) → 6.
+
+Remarques :
+• Réponse : 14.`,
+  2261: `max(x**2 for x in range(4))
+
+Débutant :
+• Carrés 0,1,4,9 → maximum 9.
+
+Intermédiaire :
+• max sur itérateur consomme tout sauf optimisation interne.
+
+Expert :
+• key= personnalisable hors énoncé.
+
+Concepts clés :
+• Generator expression + max.
+
+Distinctions clés :
+• Pas la somme 14.
+
+Fonctionnement :
+• Parcours complet pour max générique.
+
+Exécution étape par étape :
+• Garde le plus grand vu.
+
+Ordre des opérations :
+• Évaluation paresseuse terme par terme.
+
+Cas d'utilisation courants :
+• Trouver un extrême sans stocker la suite.
+
+Cas limites :
+• Itérable vide → ValueError.
+
+Considérations de performance :
+• O(n) temps, O(1) espace.
+
+Exemples :
+• range(1) → max 0.
+
+Remarques :
+• Réponse : 9.`,
+  2262: `any(x > 3 for x in range(5))
+
+Débutant :
+• Dès qu’un élément vérifie la condition, any short-circuit True ; 4 > 3 donc True.
+
+Intermédiaire :
+• range(5) = 0..4.
+
+Expert :
+• Peut ne pas consommer tout l’itérable.
+
+Concepts clés :
+• any, court-circuit.
+
+Distinctions clés :
+• Pas all.
+
+Fonctionnement :
+• Test sur 0,1,2,3 puis 4 vrai → arrêt.
+
+Exécution étape par étape :
+• Arrêt tôt.
+
+Ordre des opérations :
+• Génération paresseuse compatible.
+
+Cas d'utilisation courants :
+• Existence dans un flux coûteux.
+
+Cas limites :
+• Itérable vide → False.
+
+Considérations de performance :
+• Peut éviter travail inutile.
+
+Exemples :
+• any(x>10 for ...) False ici.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2263: `all(x > 0 for x in range(5))
+
+Débutant :
+• x=0 donne 0 > 0 faux → all s’arrête et retourne False.
+
+Intermédiaire :
+• all exige que tous soient truthy pour le prédicat.
+
+Expert :
+• 0 est le premier élément de range(5).
+
+Concepts clés :
+• all, court-circuit.
+
+Distinctions clés :
+• Pas True.
+
+Fonctionnement :
+• Premier test échoue.
+
+Exécution étape par étape :
+• Évaluation sur 0.
+
+Ordre des opérations :
+• range commence à 0.
+
+Cas d'utilisation courants :
+• Valider une collection.
+
+Cas limites :
+• Itérable vide : all([]) True mais ici non vide.
+
+Considérations de performance :
+• Arrêt immédiat.
+
+Exemples :
+• range(1,5) changerait le résultat.
+
+Remarques :
+• Réponse : False (1re option).`,
+  2264: `list(x for x in range(10) if x % 2 == 0)
+
+Débutant :
+• Filtre les pairs entre 0 et 9 → 0,2,4,6,8.
+
+Intermédiaire :
+• if dans genexpr comme dans listcomp.
+
+Expert :
+• Équivalent list comprehension avec crochets.
+
+Concepts clés :
+• Filtrage paresseux matérialisé.
+
+Distinctions clés :
+• Pas les impairs.
+
+Fonctionnement :
+• Test modulo pour chaque x.
+
+Exécution étape par étape :
+• Cinq valeurs conservées.
+
+Ordre des opérations :
+• range(10) ordre naturel.
+
+Cas d'utilisation courants :
+• Pipeline map/filter style.
+
+Cas limites :
+• Modulo sur négatifs hors range ici.
+
+Considérations de performance :
+• list alloue.
+
+Exemples :
+• if x%2==1 pour impairs.
+
+Remarques :
+• Réponse : [0, 2, 4, 6, 8].`,
+  2265: `type(x for x in range(3))
+
+Débutant :
+• Parenthèses autour de la comprehension sans crochets → generator object, type generator.
+
+Intermédiaire :
+• type(...) reçoit un genexpr car virgule d’appel ou parenthèses d’appel englobantes.
+
+Expert :
+• Attention : (x for x in r) seul dans certains contextes = gen ; avec crochets = list.
+
+Concepts clés :
+• Generator expression vs list comprehension.
+
+Distinctions clés :
+• Pas list, tuple, range.
+
+Fonctionnement :
+• Objet iterator protocol.
+
+Exécution étape par étape :
+• Aucune valeur consommée tant qu’on n’itère pas.
+
+Ordre des opérations :
+• Création lazy.
+
+Cas d'utilisation courants :
+• Passer à any/all/sum sans liste.
+
+Cas limites :
+• Syntaxe ambiguë avec tuples : virgule finale.
+
+Considérations de performance :
+• Faible empreinte initiale.
+
+Exemples :
+• type([x for x in range(3)]) serait list.
+
+Remarques :
+• Réponse : class generator (1re option).`,
+  2266: `g = (x**2 for x in range(3)) ; a = list(g) ; b = list(g)
+
+Débutant :
+• Premier list épuise g ; second list sur générateur vide → [].
+
+Intermédiaire :
+• Les générateurs ne « reviennent » pas au début.
+
+Expert :
+• Pour rejouer, recréer le genexpr ou utiliser une liste.
+
+Concepts clés :
+• Itérateur à usage unique.
+
+Distinctions clés :
+• Liste Python serait réitérable.
+
+Fonctionnement :
+• Deuxième list déclenche immédiatement StopIteration.
+
+Exécution étape par étape :
+• b reste [].
+
+Ordre des opérations :
+• a prend [0,1,4] puis g mort.
+
+Cas d'utilisation courants :
+• Éviter de réutiliser un générateur épuisé par erreur.
+
+Cas limites :
+• tee de itertools pour dupliquer.
+
+Considérations de performance :
+• Économie mémoire vs relecture.
+
+Exemples :
+• Voir banque.
+
+Remarques :
+• Réponse : [] (1re option).`,
+  2267: `Générateur infini n += 1 ; cinq next via compréhension
+
+Débutant :
+• Premier next 0, puis 1,2,3,4 → liste de cinq premiers entiers.
+
+Intermédiaire :
+• while True sans limite mais seulement cinq next demandés.
+
+Expert :
+• Risque si on list() sans borne : infini.
+
+Concepts clés :
+• Générateur infini borné par consommation.
+
+Distinctions clés :
+• Pas [0..5] en six éléments : cinq appels seulement.
+
+Fonctionnement :
+• État n persistant.
+
+Exécution étape par étape :
+• Cinq incréments après init 0.
+
+Ordre des opérations :
+• Compréhension de next.
+
+Cas d'utilisation courants :
+• Streams, simulations.
+
+Cas limites :
+• Précision entiers très grands OK en Python.
+
+Considérations de performance :
+• O(k) pour k next.
+
+Exemples :
+• itertools.count similaire.
+
+Remarques :
+• Réponse : [0, 1, 2, 3, 4].`,
+  2268: `yield 1 puis return "done" — premier next(g)
+
+Débutant :
+• Le premier next s’arrête au yield → 1.
+
+Intermédiaire :
+• La valeur "done" apparaît dans StopIteration.value au second next, pas comme retour direct de next.
+
+Expert :
+• PEP 380 sémantique return dans générateur.
+
+Concepts clés :
+• yield vs return en générateur.
+
+Distinctions clés :
+• next ne renvoie pas "done" tout de suite.
+
+Fonctionnement :
+• Machine à états du générateur suspendue après premier yield.
+
+Exécution étape par étape :
+• Un seul next dans la question.
+
+Ordre des opérations :
+• yield avant return.
+
+Cas d'utilisation courants :
+• Résultats finaux via asyncio.Task hors scope.
+
+Cas limites :
+• yield from sous-générateur transmet valeur.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Second next → StopIteration value done.
+
+Remarques :
+• Réponse : 1.`,
+  2269: `fibonacci générateur — sept premiers next
+
+Débutant :
+• Suite classique 0,1,1,2,3,5,8 pour sept termes.
+
+Intermédiaire :
+• a, b = b, a+b met à jour en une assignation tuple.
+
+Expert :
+• Générateur infini tronqué par range(7) de next.
+
+Concepts clés :
+• Fibonacci, tuple unpacking, yield.
+
+Distinctions clés :
+• Ne commence pas par 1,1 selon cette implémentation.
+
+Fonctionnement :
+• État a,b partagé dans le frame générateur.
+
+Exécution étape par étape :
+• Sept yields.
+
+Ordre des opérations :
+• Compréhension [next(g) for _ in range(7)].
+
+Cas d'utilisation courants :
+• Flux de nombres sans liste complète.
+
+Cas limites :
+• Croissance exponentielle temps récursif naïf hors générateur.
+
+Considérations de performance :
+• Linéaire en k pour k next.
+
+Exemples :
+• Huitième serait 13.
+
+Remarques :
+• Réponse : [0, 1, 1, 2, 3, 5, 8].`,
+  2270: `def gen(n): yield from range(n) ; yield from range(n) — list(gen(3))
+
+Débutant :
+• Deux fois 0,1,2 concaténés par yields successifs → six éléments.
+
+Intermédiaire :
+• Les deux yield from s’exécutent séquentiellement dans le même générateur.
+
+Expert :
+• Équivalent à itertools.chain(range(n), range(n)).
+
+Concepts clés :
+• Enchaînement de sous-itérables.
+
+Distinctions clés :
+• Pas [0,1,2,3,4,5].
+
+Fonctionnement :
+• Premier range épuisé puis second.
+
+Exécution étape par étape :
+• Six valeurs.
+
+Ordre des opérations :
+• n=3 fixé.
+
+Cas d'utilisation courants :
+• Fusionner segments paresseusement.
+
+Cas limites :
+• n=0 → deux séquences vides.
+
+Considérations de performance :
+• Toujours paresseux avant list.
+
+Exemples :
+• gen(1) → [0,0].
+
+Remarques :
+• Réponse : [0, 1, 2, 0, 1, 2].`,
+  2271: `x = 1 global ; def f(): return x — f()
+
+Débutant :
+• Pas d’assignation locale à x dans f : lecture du global → 1.
+
+Intermédiaire :
+• LEGB : pas L, pas E, trouve G.
+
+Expert :
+• Si f assignait x sans global, autre histoire.
+
+Concepts clés :
+• Lecture de global.
+
+Distinctions clés :
+• Pas d’erreur.
+
+Fonctionnement :
+• LOAD_GLOBAL x.
+
+Exécution étape par étape :
+• Un appel.
+
+Ordre des opérations :
+• def puis f().
+
+Cas d'utilisation courants :
+• Constantes module-level.
+
+Cas limites :
+• Shadowing ultérieur.
+
+Considérations de performance :
+• Lookup global.
+
+Exemples :
+• Voir 2277 pour rebinding.
+
+Remarques :
+• Réponse : 1.`,
+  2272: `x=1 ; def f(): x=2 ; f() ; x au module
+
+Débutant :
+• x=2 est local à f ; le global x reste 1.
+
+Intermédiaire :
+• Assignation crée locale sans toucher au global.
+
+Expert :
+• print(x) dans f verrait 2.
+
+Concepts clés :
+• Assignation → local par défaut.
+
+Distinctions clés :
+• Pas besoin de global pour lire avant assign ? Ici assign donc local seulement.
+
+Fonctionnement :
+• Binding global inchangé.
+
+Exécution étape par étape :
+• f() termine, locale détruite.
+
+Ordre des opérations :
+• Après f(), évaluer x module.
+
+Cas d'utilisation courants :
+• Éviter effets de bord sur globals.
+
+Cas limites :
+• nonlocal autre cas.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• global x dans f pour changer module.
+
+Remarques :
+• Réponse : 1.`,
+  2273: `def f(): global x ; x=2 ; f() ; x
+
+Débutant :
+• global annonce la cible module ; x devient 2 partout au module.
+
+Intermédiaire :
+• Sans global, x=2 serait locale et NameError si x lu avant.
+
+Expert :
+• Anti-pattern fréquent pour état global mutable.
+
+Concepts clés :
+• global, mutation du binding module.
+
+Distinctions clés :
+• Diffère de nonlocal.
+
+Fonctionnement :
+• STORE_GLOBAL.
+
+Exécution étape par étape :
+• Après f(), x module vaut 2.
+
+Ordre des opérations :
+• f() puis lecture x.
+
+Cas d'utilisation courants :
+• Scripts courts ; à éviter en libs.
+
+Cas limites :
+• x non défini avant → bind global créé ? Ici x=1 avant dans banque implicite - actually question might start x=1 - the bank says global x=2 - assume x exists.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir banque anglaise.
+
+Remarques :
+• Réponse : 2.`,
+  2274: `f avec x=1 ; g nonlocal x x=2 ; g() ; return x
+
+Débutant :
+• nonlocal modifie le x de f ; return voit 2.
+
+Intermédiaire :
+• g sans nonlocal créerait locale ou erreur selon usage.
+
+Expert :
+• Cellule partagée entre f et g.
+
+Concepts clés :
+• nonlocal, helper nested.
+
+Distinctions clés :
+• Pas global module.
+
+Fonctionnement :
+• x dans f passe à 2.
+
+Exécution étape par étape :
+• g() pour effet puis return.
+
+Ordre des opérations :
+• Définitions puis f() appelée (question demande valeur de f()).
+
+Cas d'utilisation courants :
+• Petits compteurs encapsulés.
+
+Cas limites :
+• nonlocal sans binding englobant → erreur compile.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Voir niveau 7 intermédiaire a.
+
+Remarques :
+• Réponse : 2.`,
+  2275: `g assigne x=2 sans nonlocal ; return x dans f
+
+Débutant :
+• Le x de g masque une nouvelle locale ; le x de f reste 1.
+
+Intermédiaire :
+• return x lit le x de f, pas celui de g.
+
+Expert :
+• La valeur 2 dans g est perdue si non retournée.
+
+Concepts clés :
+• Shadowing interne sans nonlocal.
+
+Distinctions clés :
+• Contraste avec 2274.
+
+Fonctionnement :
+• x_f inchangé.
+
+Exécution étape par étape :
+• g() exécute assignation locale ; f return 1.
+
+Ordre des opérations :
+• Appel f() entier.
+
+Cas d'utilisation courants :
+• Piège de portée en refactoring.
+
+Cas limites :
+• UnboundLocal si g lisait x avant assign local.
+
+Considérations de performance :
+• Négligeable.
+
+Exemples :
+• Ajouter nonlocal pour 2.
+
+Remarques :
+• Réponse : 1.`,
+  2276: `Que signifie la règle LEGB en Python ? (QCM)
+
+Débutant :
+• L = Local, E = Enclosing (englobant), G = Global (module), B = Built-in — c’est l’ordre de recherche des noms.
+
+Intermédiaire :
+• Les trois autres formulations proposées ne correspondent pas à la terminologie officielle de la doc Python.
+
+Expert :
+• La résolution est lexicale : le texte du code définit la chaîne de portées, pas le site d’appel.
+
+Concepts clés :
+• Résolution de noms, portées imbriquées, module builtins.
+
+Distinctions clés :
+• « Enclosing » n’est pas « Element » ni « Lexical » dans l’acronyme standard LEGB.
+
+Fonctionnement :
+• À chaque lecture d’un nom, Python parcourt L puis E puis G puis B.
+
+Exécution étape par étape :
+• Si le nom est trouvé dans une étape, la recherche s’arrête.
+
+Ordre des opérations :
+• Assignation locale peut masquer sans toucher aux niveaux externes.
+
+Cas d'utilisation courants :
+• Déboguer NameError, comprendre global / nonlocal.
+
+Cas limites :
+• Boucles et fermetures : liaison tardive des valeurs, autre piège classique.
+
+Considérations de performance :
+• Coût négligeable ; clarté du code prime.
+
+Exemples :
+• Voir 2277–2278 pour liaison tardive et portée lexicale.
+
+Remarques :
+• Réponse : Local, Enclosing, Global, Built-in (1re option).`,
+  2277: `x = 10 ; def f(): return x ; x = 20 — f()
+
+Débutant :
+• f ne capture pas la valeur de x à la définition : au moment de l’appel, x global vaut 20.
+
+Intermédiaire :
+• C’est la liaison tardive (late binding) sur les variables libres non locales.
+
+Expert :
+• Pour figer une valeur à la création, utiliser une valeur par défaut d’argument ou une variable locale intermédiaire.
+
+Concepts clés :
+• Lecture de global, réaffectation de x avant l’appel.
+
+Distinctions clés :
+• Diffère d’une constante « capturée » par défaut d’argument.
+
+Fonctionnement :
+• LOAD_GLOBAL ou équivalent au moment de l’appel.
+
+Exécution étape par étape :
+• x passe à 20 puis f() s’exécute.
+
+Ordre des opérations :
+• Les deux assignations module s’enchaînent avant l’appel typique.
+
+Cas d'utilisation courants :
+• Factories et callbacks qui doivent voir l’état actuel.
+
+Cas limites :
+• Si x est supprimé avant l’appel : NameError.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Lambdas dans une boucle : piège classique de la même règle.
+
+Remarques :
+• Réponse : 20.`,
+  2278: `x = 10 ; def f(): return x ; def g(): x = 99 ; return f() — g()
+
+Débutant :
+• f est défini au niveau module : sa chaîne LEGB pour x est locale → globale, pas la locale de g.
+
+Intermédiaire :
+• Le x = 99 de g n’existe que dans le cadre de g ; f ne « voit » pas ce binding.
+
+Expert :
+• Portée lexicale : le corps de f est lié au module, pas au point d’appel dynamique.
+
+Concepts clés :
+• Portée statique, global vs local d’une autre fonction.
+
+Distinctions clés :
+• Ce n’est pas la règle « qui appelle » mais « où la fonction est définie ».
+
+Fonctionnement :
+• f cherche x : pas en local → global 10.
+
+Exécution étape par étape :
+• Entrée dans g, assignation locale x, appel f(), retour 10.
+
+Ordre des opérations :
+• L’appel f() ne pousse pas le cadre de g dans la résolution de x pour f.
+
+Cas d'utilisation courants :
+• Helpers module-level vs fonctions internes avec état.
+
+Cas limites :
+• Si f était imbriqué dans g et utilisait x sans l’assigner, autre résultat.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Déplacer def f dans g changerait la résolution.
+
+Remarques :
+• Réponse : 10.`,
+  2279: `Peut-on supprimer une variable globale depuis une fonction ?
+
+Débutant :
+• Oui : déclarer global x puis del x retire x du namespace du module.
+
+Intermédiaire :
+• Sans global, del ciblerait une locale inexistante → erreur.
+
+Expert :
+• Pratique rare ; préférer refactor ou None.
+
+Concepts clés :
+• global, del, namespace module.
+
+Distinctions clés :
+• Pas « del seul » ni impossibilité totale.
+
+Fonctionnement :
+• DELETE_GLOBAL après déclaration.
+
+Exécution étape par étape :
+• Après remove(), toute lecture de x hors redéfinition → NameError.
+
+Ordre des opérations :
+• global avant del dans le même bloc.
+
+Cas d'utilisation courants :
+• Scripts de réinitialisation ponctuels (peu recommandé en lib).
+
+Cas limites :
+• Autres références peuvent subsister (objets vivants).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir banque anglaise pour squelette remove().
+
+Remarques :
+• Réponse : Oui, avec global puis del (1re option).`,
+  2280: `len.__module__
+
+Débutant :
+• Les fonctions built-in comme len viennent du module builtins → __module__ vaut la chaîne "builtins".
+
+Intermédiaire :
+• C’est le « B » de LEGB : noms prédéfinis résolus via builtins si absents ailleurs.
+
+Expert :
+• import builtins permet d’inspecter ou (mal) monkey-patcher.
+
+Concepts clés :
+• Attribut __module__ sur callables.
+
+Distinctions clés :
+• Pas "__main__" pour len en usage normal.
+
+Fonctionnement :
+• C API ou wrapper expose le module d’origine.
+
+Exécution étape par étape :
+• Accès attribut sans appel.
+
+Ordre des opérations :
+• len est déjà lié au moment de l’expression.
+
+Cas d'utilisation courants :
+• Introspection, tests, outils.
+
+Cas limites :
+• Fonctions définies en __main__ auront "__main__".
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• print.__module__, int.__module__ → "builtins".
+
+Remarques :
+• Réponse : "builtins" (1re option).`,
+  2281: `f avec x=1, g return x, return g.__closure__[0].cell_contents — f()
+
+Débutant :
+• g ferme sur x ; la cellule 0 contient 1.
+
+Intermédiaire :
+• __closure__ est un tuple de cellules ; .cell_contents lit la valeur capturée.
+
+Expert :
+• co_freevars nomme les variables libres ; __closure__ aligné sur cet ordre.
+
+Concepts clés :
+• Fermeture, cellule, variable libre.
+
+Distinctions clés :
+• Ce n’est pas l’objet fonction g retourné, mais un entier.
+
+Fonctionnement :
+• Création des cellules à la définition de g dans l’appel de f.
+
+Exécution étape par étape :
+• f() exécute return sur cell_contents → 1.
+
+Ordre des opérations :
+• Un seul freevar ici → index 0.
+
+Cas d'utilisation courants :
+• Déboguer closures, cours avancés.
+
+Cas limites :
+• g sans free vars → __closure__ None → erreur si indexation.
+
+Considérations de performance :
+• Inspection coûteuse, réservée au debug.
+
+Exemples :
+• Plusieurs freevars : plusieurs cellules.
+
+Remarques :
+• Réponse : 1.`,
+  2282: `g.__closure__ is not None avec g qui return x depuis f
+
+Débutant :
+• g capture x → __closure__ est un tuple non vide → is not None est True.
+
+Intermédiaire :
+• Si g n’utilisait aucune variable de f, __closure__ serait None.
+
+Expert :
+• Tester __closure__ est un proxy grossier : détails dans inspect.
+
+Concepts clés :
+• Tuple de cellules vs None.
+
+Distinctions clés :
+• Pas False sauf absence de capture.
+
+Fonctionnement :
+• Le compilateur marque g comme ayant des free variables.
+
+Exécution étape par étape :
+• f() retourne le booléen évalué.
+
+Ordre des opérations :
+• Création de g puis lecture d’attribut.
+
+Cas d'utilisation courants :
+• Vérifier rapidement si une nested fonction est une closure.
+
+Cas limites :
+• __closure__ peut exister avec cell « vide » dans cas avancés CPython.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir 2283 pour contre-exemple.
+
+Remarques :
+• Réponse : True (1re option).`,
+  2283: `def g(): return 42 dans f — return g.__closure__ — f()
+
+Débutant :
+• g n’utilise aucune variable de f → pas de fermeture → __closure__ vaut None.
+
+Intermédiaire :
+• Ce n’est pas un tuple vide () : l’attribut est explicitement None.
+
+Expert :
+• inspect.getclosurevars lève sur certaines fonctions sans closure.
+
+Concepts clés :
+• Free variables absentes.
+
+Distinctions clés :
+• Diffère de 2282 où x était lu.
+
+Fonctionnement :
+• Pas d’entrées dans co_freevars.
+
+Exécution étape par étape :
+• f() retourne None.
+
+Ordre des opérations :
+• def g exécuté dans f ; pas de capture.
+
+Cas d'utilisation courants :
+• Fabriquer des fonctions sans état partagé.
+
+Cas limites :
+• builtins ou globaux lus sans nonlocal/global comptent comme free vars dans certains cas.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Ajouter return x dans g changerait le résultat.
+
+Remarques :
+• Réponse : None (1re option).`,
+  2284: `x global "global", f avec x "local", g return x — f()
+
+Débutant :
+• Pour g, E (f) fournit x = "local" avant G → la chaîne "local".
+
+Intermédiaire :
+• LEGB : L vide dans g, E trouve x dans f.
+
+Expert :
+• global module jamais consulté pour ce x tant que l’englobant définit le nom.
+
+Concepts clés :
+• Portée englobante prioritaire sur globale pour ce nom.
+
+Distinctions clés :
+• Pas "global" ni None.
+
+Fonctionnement :
+• Résolution lexicale sur la pile statique des blocs.
+
+Exécution étape par étape :
+• f() appelle g() qui retourne la str locale à f.
+
+Ordre des opérations :
+• Assignation dans f avant return g().
+
+Cas d'utilisation courants :
+• Encapsuler état dans une fonction externe.
+
+Cas limites :
+• Si f n’assignait pas x, g irait au global homonyme.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir 2278 pour contraste module-level.
+
+Remarques :
+• Réponse : "local" (1re option).`,
+  2285: `len(g.__code__.co_freevars) avec g qui return x+y capturant x,y dans f
+
+Débutant :
+• co_freevars est ('x','y') → longueur 2.
+
+Intermédiaire :
+• Aligné sur __closure__ : deux cellules pour deux noms.
+
+Expert :
+• co_varnames liste les locales/paramètres ; ne pas confondre.
+
+Concepts clés :
+• Free variables, introspection bytecode.
+
+Distinctions clés :
+• Pas 1 ni 0.
+
+Fonctionnement :
+• Le compilateur enregistre les noms externes référencés.
+
+Exécution étape par étape :
+• f() évalue len(...) et retourne 2.
+
+Ordre des opérations :
+• g créé mais pas appelé ici.
+
+Cas d'utilisation courants :
+• Outils statiques, debug.
+
+Cas limites :
+• Ordre des noms doit correspondre aux indices de __closure__.
+
+Considérations de performance :
+• Rare en prod.
+
+Exemples :
+• Un seul free var → len 1.
+
+Remarques :
+• Réponse : 2.`,
+  2286: `def f(x): return x — f.__name__
+
+Débutant :
+• __name__ sur une fonction def est le nom symbolique donné à la définition : "f".
+
+Intermédiaire :
+• Utile pour logs, functools.wraps, sérialisation.
+
+Expert :
+• Les fonctions peuvent être renommées par assignation mais __name__ reste sauf mise à jour manuelle.
+
+Concepts clés :
+• Attribut __name__.
+
+Distinctions clés :
+• Pas "function" ni le nom du paramètre.
+
+Fonctionnement :
+• Rempli à la création de l’objet fonction.
+
+Exécution étape par étape :
+• Accès attribut sans appeler f.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Traces d’erreur lisibles.
+
+Cas limites :
+• lambda → "<lambda>" (voir 2293).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir 2293 pour contraste lambda.
+
+Remarques :
+• Réponse : "f" (1re option).`,
+  2287: `Docstring """My function""" — f.__doc__
+
+Débutant :
+• La première chaîne littérale du corps devient la docstring → "My function".
+
+Intermédiaire :
+• help(f) et pydoc utilisent ce champ.
+
+Expert :
+• PEP 257 conventions pour multi-lignes.
+
+Concepts clés :
+• __doc__ sur callable.
+
+Distinctions clés :
+• Pas None ici.
+
+Fonctionnement :
+• Le compilateur attache la constante au code object puis à la fonction.
+
+Exécution étape par étape :
+• Lecture attribut.
+
+Ordre des opérations :
+• Après def complet.
+
+Cas d'utilisation courants :
+• Documentation automatique.
+
+Cas limites :
+• f.__doc__ = None possible après coup.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Docstring après code exécutable : n’est plus docstring.
+
+Remarques :
+• Réponse : "My function" (1re option).`,
+  2288: `def f(x: int, y: str) -> bool — f.__annotations__
+
+Débutant :
+• Dictionnaire avec clés x, y et "return" pointant vers les objets int, str, bool.
+
+Intermédiaire :
+• Annotations ne sont pas vérifiées à l’exécution par défaut.
+
+Expert :
+• typing.get_type_hints résout les forward refs.
+
+Concepts clés :
+• PEP 526/484 métadonnées.
+
+Distinctions clés :
+• Pas des chaînes "int" dans la première option du QCM.
+
+Fonctionnement :
+• Rempli à la définition, évalue les expressions d’annotation.
+
+Exécution étape par étape :
+• Accès attribut.
+
+Ordre des opérations :
+• from __future__ import annotations retarderait en str sous 3.7+ selon config — ici banque classique.
+
+Cas d'utilisation courants :
+• mypy, IDE, FastAPI.
+
+Cas limites :
+• Annotation forward-ref sans quotes ancien style.
+
+Considérations de performance :
+• Coût définition seulement.
+
+Exemples :
+• Voir typing module.
+
+Remarques :
+• Réponse : {"x": int, "y": str, "return": bool} (1re option).`,
+  2289: `f.custom_attr = 42 après def f — f.custom_attr
+
+Débutant :
+• Les fonctions ont __dict__ (sauf cas __slots__ rares) → attribut utilisateur 42.
+
+Intermédiaire :
+• Idem décorateurs qui attachent métadonnées.
+
+Expert :
+• Peut servir de cache simple (attention thread-safety).
+
+Concepts clés :
+• Objets fonction mutables.
+
+Distinctions clés :
+• Pas d’erreur.
+
+Fonctionnement :
+• SETATTR sur l’objet fonction.
+
+Exécution étape par étape :
+• Lecture après assignation.
+
+Ordre des opérations :
+• Assignation puis accès.
+
+Cas d'utilisation courants :
+• Compteurs, version, registry.
+
+Cas limites :
+• Types built-in C sans __dict__ ne permettent pas ça — ici f est def Python.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• functools.lru_cache utilise dict interne.
+
+Remarques :
+• Réponse : 42.`,
+  2290: `dispatch(op) retourne dict de lambdas — dispatch("+")(3, 2)
+
+Débutant :
+• Clé "+" → lambda addition → 3+2 = 5.
+
+Intermédiaire :
+• Table de dispatch remplace if/elif.
+
+Expert :
+• KeyError si op absent sans .get.
+
+Concepts clés :
+• Dict de callables, double appel.
+
+Distinctions clés :
+• Pas 1 ni la chaîne "+".
+
+Fonctionnement :
+• Premier appel renvoie fonction, second l’exécute.
+
+Exécution étape par étape :
+• Lookup puis call avec (3,2).
+
+Ordre des opérations :
+• Crochets puis parenthèses externes.
+
+Cas d'utilisation courants :
+• Parseurs, calculatrices.
+
+Cas limites :
+• Lambdas partagent pas de doc/ nom utile.
+
+Considérations de performance :
+• Lookup O(1) moyen.
+
+Exemples :
+• Étendre avec "*", "/".
+
+Remarques :
+• Réponse : 5.`,
+  2291: `Décorateur @once — effet sur la fonction
+
+Débutant :
+• Le drapeau called[0] ne laisse passer f(*a) qu’une fois ; les appels suivants retombent dans wrapper sans return explicite → None.
+
+Intermédiaire :
+• Liste mutable évite nonlocal pour le booléen.
+
+Expert :
+• Variante : lever après première exécution si politique stricte.
+
+Concepts clés :
+• Closure + état mutable, décorateur.
+
+Distinctions clés :
+• Pas « deux fois », pas cache complet des valeurs, pas erreur systématique.
+
+Fonctionnement :
+• wrapper remplace la fonction exposée.
+
+Exécution étape par étape :
+• Premier appel exécute f ; suivants court-circuitent.
+
+Ordre des opérations :
+• @ appliqué à la définition.
+
+Cas d'utilisation courants :
+• Init unique, flags globaux encapsulés.
+
+Cas limites :
+• Threads : besoin de verrous pour atomicité.
+
+Considérations de performance :
+• Évite travail répété.
+
+Exemples :
+• Voir texte anglais greet.
+
+Remarques :
+• Réponse : ne s’exécute vraiment qu’au premier appel (1re option).`,
+  2292: `Que fait memoize du QCM ?
+
+Débutant :
+• dict cache mémorise n → f(n) ; hits suivants lisent cache[n].
+
+Intermédiaire :
+• Équivalent conceptuel à functools.lru_cache simplifié.
+
+Expert :
+• Attention aux arguments non hashables si on généralise.
+
+Concepts clés :
+• Mémoïsation, pureté approximative des f.
+
+Distinctions clés :
+• Pas limitation à un seul appel ni typage.
+
+Fonctionnement :
+• wrapper intercepte chaque appel.
+
+Exécution étape par étape :
+• if n not in cache: calcul puis stockage.
+
+Ordre des opérations :
+• Par appel.
+
+Cas d'utilisation courants :
+• Fibonacci, DP top-down.
+
+Cas limites :
+• Croissance mémoire du cache.
+
+Considérations de performance :
+• Gain énorme sur arbres récursifs naïfs.
+
+Exemples :
+• fib avec memoize vs sans.
+
+Remarques :
+• Réponse : met en cache les résultats (1re option).`,
+  2293: `(lambda x: x * 2).__name__
+
+Débutant :
+• Les lambdas ont le nom spécial "<lambda>" pour les traces.
+
+Intermédiaire :
+• Assigner à une variable ne change pas __name__.
+
+Expert :
+• def double pour un nom stable.
+
+Concepts clés :
+• Anonymat syntaxique vs objet nommé.
+
+Distinctions clés :
+• Pas "lambda" sans chevrons selon options.
+
+Fonctionnement :
+• Compilateur fixe __name__ à la création.
+
+Exécution étape par étape :
+• Accès attribut.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Callbacks courts.
+
+Cas limites :
+• Profiler confus avec plusieurs lambdas.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir 2286 pour def nommé.
+
+Remarques :
+• Réponse : "<lambda>" (1re option).`,
+  2294: `def f(): yield 1 — type(f())
+
+Débutant :
+• Un appel à une generator function renvoie un objet generator, pas la valeur yield.
+
+Intermédiaire :
+• type(f) reste function ; type(f()) est generator.
+
+Expert :
+• inspect.isgenerator, isgeneratorfunction.
+
+Concepts clés :
+• yield transforme la sémantique d’appel.
+
+Distinctions clés :
+• Pas function ni int.
+
+Fonctionnement :
+• Opcode pour construire générateur au call.
+
+Exécution étape par étape :
+• f() sans itération : aucun yield encore exécuté.
+
+Ordre des opérations :
+• Call puis type().
+
+Cas d'utilisation courants :
+• Pipelines paresseux.
+
+Cas limites :
+• Générateur async autre type.
+
+Considérations de performance :
+• Pas de liste matérialisée.
+
+Exemples :
+• next(f()) → 1.
+
+Remarques :
+• Réponse : <class 'generator'> (1re option).`,
+  2295: `Même f generator — type(f) sans appel
+
+Débutant :
+• f est toujours une fonction Python, même si elle contient yield.
+
+Intermédiaire :
+• inspect.isgeneratorfunction(f) True.
+
+Expert :
+• Le code object co_flags contient CO_GENERATOR.
+
+Concepts clés :
+• Objet fonction vs objet générateur produit.
+
+Distinctions clés :
+• Pas generator ni method ici.
+
+Fonctionnement :
+• type renvoie la métaclasse function.
+
+Exécution étape par étape :
+• Pas d’appel.
+
+Ordre des opérations :
+• N/A.
+
+Cas d'utilisation courants :
+• Routage générique sur callables.
+
+Cas limites :
+• Méthodes liées : types différents.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir 2294 pour contraste f().
+
+Remarques :
+• Réponse : <class 'function'> (1re option).`,
+  2296: `def f(*, x, y): return x + y — f(x=1, y=2)
+
+Débutant :
+• * nu force mots-clés pour x,y ; 1+2 = 3.
+
+Intermédiaire :
+• f(1,2) serait TypeError.
+
+Expert :
+• PEP 570 combinaisons avec / et *args nommés.
+
+Concepts clés :
+• Paramètres keyword-only.
+
+Distinctions clés :
+• Pas d’erreur avec les bons noms.
+
+Fonctionnement :
+• Binding par nom.
+
+Exécution étape par étape :
+• return évalue la somme.
+
+Ordre des opérations :
+• Appel valide.
+
+Cas d'utilisation courants :
+• APIs lisibles : timeout=, host=.
+
+Cas limites :
+• Oublier un keyword-only → TypeError.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir 2297.
+
+Remarques :
+• Réponse : 3.`,
+  2297: `Même signature — f(1, 2)
+
+Débutant :
+• Aucun paramètre positionnel n’accepte 1 et 2 ; TypeError.
+
+Intermédiaire :
+• Message du style « 0 positional arguments but 2 were given ».
+
+Expert :
+• Ajouter des params avant * ou utiliser *args pour accepter positionnels.
+
+Concepts clés :
+• Rejet des positionnels pour keyword-only.
+
+Distinctions clés :
+• Pas 3.
+
+Fonctionnement :
+• Phase de liaison des arguments échoue.
+
+Exécution étape par étape :
+• Exception avant entrée dans le corps.
+
+Ordre des opérations :
+• Construction de la frame abandonnée.
+
+Cas d'utilisation courants :
+• Forcer clarté à l’appel.
+
+Cas limites :
+• Messages varient légèrement selon versions.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Corrigé : f(x=1,y=2).
+
+Remarques :
+• Réponse : TypeError (1re option).`,
+  2298: `def f(a, b, /, c, *, d): return a+b+c+d — f(1, 2, 3, d=4)
+
+Débutant :
+• a,b position-only remplis ; c positionnel OK ; d mot-clé obligatoire → 1+2+3+4 = 10.
+
+Intermédiaire :
+• / et * segmentent les modes de passage.
+
+Expert :
+• Impossible de passer a,b par nom (voir 2300).
+
+Concepts clés :
+• PEP 570 positional-only et keyword-only combinés.
+
+Distinctions clés :
+• Pas d’erreur ici.
+
+Fonctionnement :
+• Liaison : 1→a, 2→b, 3→c, d=4.
+
+Exécution étape par étape :
+• Somme des quatre entiers.
+
+Ordre des opérations :
+• Appel valide typique.
+
+Cas d'utilisation courants :
+• Fonctions type C API.
+
+Cas limites :
+• Ordre strict des segments dans la signature.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir 2299 variante c=3.
+
+Remarques :
+• Réponse : 10.`,
+  2299: `Même f — f(1, 2, c=3, d=4)
+
+Débutant :
+• c entre / et * peut être mot-clé ; même somme 10.
+
+Intermédiaire :
+• Équivalent sémantique à tout positionnel sauf d.
+
+Expert :
+• Flexibilité utile pour lisibilité sur c seul.
+
+Concepts clés :
+• Paramètre « normal » hybride.
+
+Distinctions clés :
+• Toujours pas d’erreur.
+
+Fonctionnement :
+• a=1,b=2,c=3,d=4.
+
+Exécution étape par étape :
+• return 10.
+
+Ordre des opérations :
+• Valide.
+
+Cas d'utilisation courants :
+• APIs avec premiers args positionnels forcés puis options nommées.
+
+Cas limites :
+• Trop de combinaisons peuvent confondre l’utilisateur.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Voir 2298.
+
+Remarques :
+• Réponse : 10.`,
+  2300: `f(a, b, /, c, *, d) — f(a=1, b=2, c=3, d=4)
+
+Débutant :
+• a et b sont avant / : interdits comme mots-clés → TypeError.
+
+Intermédiaire :
+• Message mentionne positional-only arguments passed as keyword.
+
+Expert :
+• Renommer params position-only sans casser appels keyword sur a,b.
+
+Concepts clés :
+• / fixe le mode positionnel exclusif.
+
+Distinctions clés :
+• c et d en keyword OK, mais pas a,b ici.
+
+Fonctionnement :
+• Échec à la préparation de l’appel.
+
+Exécution étape par étape :
+• Exception immédiate.
+
+Ordre des opérations :
+• Aucune entrée dans f.
+
+Cas d'utilisation courants :
+• builtins, signatures stables.
+
+Cas limites :
+• mélange partiel encore invalide pour a,b.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Corrigé : f(1,2,c=3,d=4).
+
+Remarques :
+• Réponse : TypeError (1re option).`,
   2301: `Le @dataclass decorator auto-generates an __init__ méthode based on the annotated fields. Quand vous call Point(1, 2), il crée an instance avec x=1 and y=2.
 
 Concepts clés :

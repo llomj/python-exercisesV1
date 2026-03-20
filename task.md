@@ -299,10 +299,10 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
 - **Done:** **Level 7 FR 2101–2150** — `level7.ts` Q1–50 (`def`, `return`, defaults, `*args`/`**kwargs`, lambdas, return types). Fragments: `scripts/fr-l7-frags/fr-l7-2101-2125.mjs`, `fr-l7-2126-2150.mjs`, agrégateur `fr-l7-2101-2150.mjs`. Patch: `scripts/patch-fr-l7-2101-2150.mjs` (START `` 2101: `Le mot-clé class`` → END `` 2151: `La méthode __str__``). Build OK (`vite build` + `inject-precache.js`).
 - **Done:** **Level 7 FR 2151–2200** — `level7.ts` Q51–100 (portée, `global`, fermetures, récursion, `map`/`filter`/`reduce`, introspection, règles d’appel, `/` et `*`). Fragments: `fr-l7-2151-2175.mjs`, `fr-l7-2176-2200.mjs`, agrégateur `fr-l7-2151-2200.mjs`. Patch: `patch-fr-l7-2151-2200.mjs` (START `` 2151: `La méthode __str__`` → END `` 2201: `La méthode __eq__``). Build OK.
 - **Done:** **Level 7 FR 2201–2250** — `level7_intermediate_a.ts` (50 questions : fermetures, nonlocal/global, lambdas et boucles, composition, first-class, défauts mutables). Fragments: `fr-l7-2201-2225.mjs`, `fr-l7-2226-2250.mjs`, agrégateur `fr-l7-2201-2250.mjs`. Patch: `patch-fr-l7-2201-2250.mjs` avec **END = ligne `2251:`** (pas `2301:` — sinon suppression accidentelle des IDs 2251–2300 ; corrigé dans le script). Bloc legacy 2251–2300 restauré depuis git après première passe. Build OK.
-- **Next:** **Level 7 FR 2251–2300** — `level7_intermediate_b.ts` (50 questions). Patch indicatif : START `` 2251: `__getattr__`` → END `` 2301: `Le @dataclass`` (valider les lignes exactes).
+- **Done:** **Level 7 FR 2251–2300** — `level7_intermediate_b.ts` (50 questions : générateurs, yield/yield from, genexprs, LEGB, global/nonlocal, closures, introspection, décorateurs once/memoize, `type(f)` vs `type(f())`, `*` et `/`). Fragments: `fr-l7-2251-2275.mjs`, `fr-l7-2276-2300.mjs`, agrégateur `fr-l7-2251-2300.mjs`. Patch: `patch-fr-l7-2251-2300.mjs` (START `` 2251: `__getattr__`` → END `` 2301: `Le @dataclass`` — remplace l’ancien bloc mal aligné). Build OK.
 
 ### Immediate next batches
-1. **Level 7 FR 2251–2300** puis 2301–2350 (`level7_expert_a.ts`), etc., selon `questionsBank` niveau 7.
+1. **Level 7 FR 2301–2350** (`level7_expert_a.ts` Q1–50), etc., selon `questionsBank` niveau 7.
 2. Optional: audit `301-600` for any regression or glossary drift.
 
 ### Remaining range
@@ -333,4 +333,4 @@ For each batch:
 
 ## Next Action (when resuming)
 
-Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2: **601–900 done**. Levels 3–5: **901–1800 done**. **Level 6 FR : 1801–2100 done**. **Level 7 FR : 2101–2250 done** ; reprendre **2251+**.
+Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2: **601–900 done**. Levels 3–5: **901–1800 done**. **Level 6 FR : 1801–2100 done**. **Level 7 FR : 2101–2300 done** ; reprendre **2301+** (`level7_expert_a.ts`).
