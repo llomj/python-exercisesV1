@@ -124997,1545 +124997,2006 @@ Exemples :
 
 Remarques :
 • Réponse : tous les objets (héritage object.__str__) — 1re option.`,
-  2951: `LBYL stands for "Look Before You Leap." It is a coding style where you check preconditions before performing an operation, rather than catching exceptions après le fact. While valid, LBYL is generally considered less Pythonic than EAFP.
+  2951: `"x" dans B.__dict__ — B(A), x sur A seulement
+
+Débutant :
+• False : x vit dans A.__dict__ ; B hérite par MRO sans copier la clé.
+
+Intermédiaire :
+• "x" in B.__dict__ teste uniquement l'espace de noms propre de B.
+
+Expert :
+• B.x fonctionne quand même par recherche sur les classes du MRO.
 
 Concepts clés :
-• LBYL = check conditions before acting
-• Uses if/else instead of try/except
-• More common in other languages (Java, C++)
-• Can have race conditions (check-then-act problem)
+• Propriété de classe vs emplacement réel.
 
-Comment ça fonctionne :
-• Before performing an operation, check if it will succeed
-• Use conditional statements (if) to verify preconditions
-• Only proceed if the checks pass
-• Handle the "can't proceed" case in else
+Distinctions clés :
+• Diffère de B.x = 2 qui crée une entrée sur B.
 
-Exemple :
-# LBYL style
-if "key" in my_dict:
-    value = my_dict["key"]
-else:
-    value = "default"
+Fonctionnement :
+• pass dans B ne crée aucun attribut.
 
-# EAFP style (more Pythonic)
-try:
-    value = my_dict["key"]
-except KeyError:
-    value = "default"
+Exécution étape par étape :
+• Test in sur mapping de classe B.
 
-# LBYL with file operations
-import os
-if os.path.exists("config.json"):
-    with open("config.json") as f:
-        config = json.load(f)
-else:
-    config = default_config
+Ordre des opérations :
+• Définition A puis B puis expression.
 
-Problems with LBYL:
-• Race conditions: file could be deleted between check and open
-• Verbose: requires separate check for each possible failure
-• Slower quand les échecs sont rares (unnecessary checks on every call)
+Cas d'utilisation courants :
+• Introspection (qu'est-ce que cette classe définit elle-même ?).
 
-Usages courants :
-• Simple type checks before operations
-• UI input validation
-• Cases where failure is common (LBYL avoids exception overhead)
-• When the check is simple and atomic`,
-  2952: `PEP 8, le guide de style officiel de Python, spécifie que le code doit utiliser 4 spaces per niveau d'indentation. Les tabulations sont déconseillées and le mélange de tabulations et d'espaces is forbidden (Python 3 lève an error).
+Cas limites :
+• Descripteur sur métaclasse : autre histoire.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• "x" in A.__dict__ True.
+
+Remarques :
+• Réponse : False — 1re option.`,
+  2952: `B redéfinit x = 2 — "x" dans B.__dict__
+
+Débutant :
+• True : l'assignation sur B stocke x dans B.__dict__.
+
+Intermédiaire :
+• Masque A.x pour les lectures via B tout en laissant A.x sur A.
+
+Expert :
+• id(B.__dict__['x']) est la valeur 2 pour entier.
 
 Concepts clés :
-• 4 espaces par niveau d'indentation est la norme
-• Les tabulations ne doivent pas être utilisées pour l'indentation
-• Python 3 interdit le mélange tabulations et espaces
-• Les lignes de continuation doivent s'aligner avec le délimiteur ouvrant
+• Ombre (shadowing) au niveau classe.
 
-Comment ça fonctionne :
-• Chaque nouveau bloc (after if, for, def, class, etc.) indents de 4 espaces
-• Les blocs imbriqués s'indentent encore de 4 espaces
-• Les éditeurs doivent être configurés pour insérer des espaces quand Tab est pressé
+Distinctions clés :
+• Opposé de 2951 sans override.
 
-Exemple :
-def greet(name):
-    if name:
-        print(f"Hello, {name}")
-    else:
-        print("Hello, stranger")
+Fonctionnement :
+• Corps de classe exécute x = 2 dans le namespace B.
 
-Usages courants :
-• Tous les fichiers source Python doivent suivre cette convention
-• La plupart des éditeurs et IDE peuvent être configurés pour l'indentation à 4 espaces
-• L'indentation cohérente améliore la lisibilité pour les équipes`,
-  2953: `PEP 8 specifies that lines of code should be limited to 79 caractères maximum. Pour les docstrings et commentaires, la limite est encore plus stricte at 72 caractères.
+Exécution étape par étape :
+• Clé "x" présente dans B.__dict__.
 
-Concepts clés :
-• 79 caractères maximum pour les lignes de code
-• 72 caractères maximum for docstrings and comments
-• Les longues lignes peuvent être coupées avec un backslash ou des parenthèses
-• Certaines équipes permettent up to 99 characters avec accord d'équipe
+Ordre des opérations :
+• Définition A puis B avec x=2.
 
-Comment ça fonctionne :
-• Garder les lignes de code à 79 caractères
-• Utiliser la continuation de ligne implicite dans les parenthèses, crochets et accolades
-• Utiliser le backslash pour line continuation si nécessaire
-• Diviser les longues expressions sur plusieurs lignes
+Cas d'utilisation courants :
+• Defaults par sous-classe.
 
-Exemple :
-# Good - within 79 chars
-result = (first_value
-          + second_value
-          - third_value)
+Cas limites :
+• Ordre de résolution si descripteur data sur classe.
 
-# Good - using backslash
-total = first_variable + \\
-        second_variable
+Considérations de performance :
+• N/A.
 
-Usages courants :
-• Assure que le code est lisible on standard terminals
-• Facilite les comparaisons côte à côte comparisons easier
-• Évite le défilement horizontal in editors`,
-  2954: `PEP 8 specifies that function names should use snake_case: lowercase words separated by underscores. This improves readability and is la convention universellement acceptée en Python.
+Exemples :
+• A.__dict__["x"] reste 1.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2953: `Méthode f héritée — "f" dans B.__dict__
+
+Débutant :
+• False : f est dans A.__dict__ ; B n'a pas de binding propre.
+
+Intermédiaire :
+• B().f() résout via MRO jusqu'à A.
+
+Expert :
+• Seul un def f dans B mettrait "f" dans B.__dict__.
 
 Concepts clés :
-• Les noms de fonctions utilisent des minuscules letters
-• Words are separated by underscores
-• This also applies to method names and variable names
-• Consistency with this convention is important
+• Fonctions sont des attributs de classe comme les autres.
 
-Comment ça fonctionne :
-• my_function() not myFunction() or MyFunction()
-• calculate_total() not calculateTotal()
-• get_user_name() not getUserName()
+Distinctions clés :
+• Pas d'erreur sur l'appel malgré False.
 
-Exemple :
-def calculate_average(numbers):
-    total = sum(numbers)
-    return total / len(numbers)
+Fonctionnement :
+• pass laisse B.__dict__ vide.
 
-def get_user_input():
-    return input("Enter value: ")
+Exécution étape par étape :
+• Test clé "f" sur dict de la classe.
 
-Usages courants :
-• All function definitions en Python
-• Method names in classes
-• Variable names throughout Python code`,
-  2955: `PEP 8 specifies that class names should use the CamelCase convention, also known as CapitalizedWords or PascalCase. Each word in the name starts with a capital letter, with no underscores.
+Ordre des opérations :
+• Définitions puis "f" in B.__dict__.
 
-Concepts clés :
-• Class names use CamelCase (CapitalizedWords)
-• Each word starts with an uppercase letter
-• No underscores between words
-• Exception: some built-in types use lowercase (int, str, list)
+Cas d'utilisation courants :
+• Audits de surcharge réelle.
 
-Comment ça fonctionne :
-• MyClass not my_class or MY_CLASS
-• UserAccount not user_account
-• HTTPConnection (acronyms can be all caps)
+Cas limites :
+• Méthode sur métaclasse : rare.
 
-Exemple :
-class StudentRecord:
-    pass
+Considérations de performance :
+• N/A.
 
-class DatabaseConnection:
-    pass
+Exemples :
+• "f" in A.__dict__ True.
 
-class HTTPResponseHandler:
-    pass
+Remarques :
+• Réponse : False — 1re option.`,
+  2954: `self.x dans __init__ de A — B() et b.__dict__
 
-Usages courants :
-• All user-defined class definitions
-• Exception classes (also CamelCase, typically ending in Error)
-• Type aliases and abstract base classes`,
-  2956: `PEP 8 specifies that constants should be written in all capital letters with underscores separating words. This convention makes constants visually distinct from variables.
+Débutant :
+• True : self.x = 1 écrit sur l'instance, pas sur la classe.
+
+Intermédiaire :
+• B hérite __init__ ; même code s'exécute avec self = b.
+
+Expert :
+• Attribut d'instance indépendant de __slots__ ici.
 
 Concepts clés :
-• Constants use UPPER_CASE_WITH_UNDERSCORES
-• All letters are capitalized
-• Words separated by underscores
-• Constants are typically defined at the module level
+• Instance dict vs class dict.
 
-Comment ça fonctionne :
-• MAX_SIZE not max_size or MaxSize
-• PI = 3.14159 not pi = 3.14159
-• DEFAULT_TIMEOUT = 30
+Distinctions clés :
+• Pas "x" dans B.__dict__ (classe).
 
-Exemple :
-MAX_RETRIES = 3
-DATABASE_URL = "localhost:5432"
-PI = 3.14159265
-DEFAULT_BUFFER_SIZE = 4096
+Fonctionnement :
+• B() appelle A.__init__ hérité.
 
-Usages courants :
-• Configuration values at module level
-• Mathematical constants
-• Default values that should not change
-• Environment-related constants`,
-  2957: `PEP 8 specifies that module names (Python file names) should be short, all-lowercase, and may use underscores for readability. Package names should also be short and all-lowercase, preferably without underscores.
+Exécution étape par étape :
+• b.__dict__ == {"x": 1}.
 
-Concepts clés :
-• Module names are short and all-lowercase
-• Underscores peut être utilisé if it improves readability
-• Package names prefer no underscores
-• Keep names concise and descriptive
+Ordre des opérations :
+• Instanciation puis test in.
 
-Comment ça fonctionne :
-• import mymodule, not import MyModule
-• import my_utils, not import myUtils
-• Packages: import mypackage, not import my_package
+Cas d'utilisation courants :
+• Où vit l'état mutable.
 
-Exemple :
-# Good module names:
-import os
-import sys
-import json
-import my_utils
-import database_helpers
+Cas limites :
+• __slots__ sans __dict__ : pas de dict libre.
 
-# Bad module names:
-# import MyModule
-# import DATABASE_HELPERS
-# import myComplexModuleName
+Considérations de performance :
+• dict par instance coûte mémoire.
 
-Usages courants :
-• Naming Python source files
-• Naming Python packages (directories with __init__.py)
-• Organizing project structure`,
-  2958: `PEP 8 requires spaces around the = sign in variable assignments. This improves readability by visually separating the variable name de sa value.
+Exemples :
+• hasattr(b, "x") True.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2955: `A.__subclasses__() avec B(A)
+
+Débutant :
+• Liste contenant la classe B (repr [<class 'B'>]).
+
+Intermédiaire :
+• Uniquement sous-classes directes ; pas les petits-enfants.
+
+Expert :
+• Faibles références : classes déchargées disparaissent.
 
 Concepts clés :
-• x = 1 is correct (spaces around =)
-• x=1 is incorrect (no spaces around =)
-• This applies to all assignment operators (=, +=, -=, etc.)
-• Exception: keyword arguments in function calls (see next rule)
+• Registre runtime des enfants immédiats.
 
-Comment ça fonctionne :
-• Always put one space before and after = in assignments
-• Same applies to augmented assignments: +=, -=, *=, /=
-• Aligning assignments is discouraged
+Distinctions clés :
+• Pas [] ni [A,B].
 
-Exemple :
-# Good
-x = 1
-name = "Alice"
-total += 10
+Fonctionnement :
+• Enregistrement à la fin du corps class B.
 
-# Bad
-x=1
-name="Alice"
-total+=10
+Exécution étape par étape :
+• Appel méthode sur A.
 
-Usages courants :
-• All variable assignments
-• Augmented assignments (+=, -=, *=, etc.)
-• Module-level constant definitions`,
-  2959: `PEP 8 specifies that when using = for keyword arguments or default parameter values, there should be no spaces around it. C'est the opposite of the assignment rule.
+Ordre des opérations :
+• Après définition B.
 
-Concepts clés :
-• func(x=1) is correct (no spaces)
-• func(x = 1) is incorrect (has spaces)
-• Same rule applies to default parameters in function definitions
-• This helps distinguish keyword arguments from assignments
+Cas d'utilisation courants :
+• Plugins, discovery.
 
-Comment ça fonctionne :
-• In function calls: func(key=value)
-• In function definitions: def func(param=default)
-• No spaces on either side of =
+Cas limites :
+• Import order : classe pas encore définie absente.
 
-Exemple :
-# Good
-print("hello", end="")
-def greet(name="World"):
-    pass
-result = my_func(timeout=30, retries=3)
+Considérations de performance :
+• Coût modéré si beaucoup d'enfants.
 
-# Bad
-print("hello", end = "")
-def greet(name = "World"):
-    pass
+Exemples :
+• Avec C(A) la liste a deux entrées.
 
-Usages courants :
-• Keyword arguments in function calls
-• Default parameter values in function definitions
-• Named arguments to built-in functions`,
-  2960: `PEP 8 specifies that top-level function and class definitions should be separated by two blank lines. This provides clear visual separation between major code blocks.
+Remarques :
+• Réponse : [<class 'B'>] — 1re option.`,
+  2956: `len(A.__subclasses__()) avec B et C directs
+
+Débutant :
+• 2 : B et C tous deux enfants directs de A.
+
+Intermédiaire :
+• D(B) ne compte pas dans len pour A.
+
+Expert :
+• set des noms possible pour vérifier.
 
 Concepts clés :
-• 2 blank lines between top-level functions
-• 2 blank lines between top-level classes
-• 2 blank lines between a class and a top-level function
-• This applies to module-level definitions
+• Comptage local dans le graphe d'héritage.
 
-Comment ça fonctionne :
-• After imports, 2 blank lines before first function/class
-• Between each top-level function, 2 blank lines
-• Between each top-level class, 2 blank lines
+Distinctions clés :
+• Pas 1 ni 3 pour ce schéma.
 
-Exemple :
-import os
+Fonctionnement :
+• Deux enregistrements séparés sur A.
 
+Exécution étape par étape :
+• len sur liste retournée.
 
-def first_function():
-    pass
+Ordre des opérations :
+• Définir A,B,C puis len.
 
+Cas d'utilisation courants :
+• Métriques de variantes.
 
-def second_function():
-    pass
+Cas limites :
+• Même classe redéfinie : rare en pratique.
 
+Considérations de performance :
+• N/A.
 
-class MyClass:
-    pass
+Exemples :
+• B.__subclasses__() pour D seul.
 
-Usages courants :
-• Organizing module-level code
-• Separating functions in a script
-• Separating classes in a module`,
-  2961: `PEP 8 specifies that method definitions inside a class should be separated by a single blank line. C'est less than the 2-line separation utilisé pour top-level definitions.
+Remarques :
+• Réponse : 2 — 1re option.`,
+  2957: `__slots__ parent ("x") et enfant ("y") — (b.x, b.y)
 
-Concepts clés :
-• 1 blank line between methods in a class
-• C'est different from top-level (which uses 2 blank lines)
-• Extra blank lines peut être utilisé sparingly to separate logical sections
-• The first method après le class header needs no blank line
+Débutant :
+• (1, 2) : B combine slots hérités et nouveaux.
 
-Comment ça fonctionne :
-• Each method definition is preceded by 1 blank line
-• This keeps the class body compact but readable
-• Nested classes or functions within a class also use 1 blank line
+Intermédiaire :
+• Ne pas redéclarer "x" dans __slots__ de B ; seulement les nouveaux noms.
 
-Exemple :
-class MyClass:
-    def method_one(self):
-        pass
-
-    def method_two(self):
-        pass
-
-    def method_three(self):
-        pass
-
-Usages courants :
-• All class definitions with multiple methods
-• Keeping class bodies organized and readable
-• Consistent formatting across Python projects`,
-  2962: `PEP 8 specifies that imports should be on separate lines and placed at the top of the file, after any module comments and docstrings but before module globals and constants.
+Expert :
+• Mémoire compacte ; pas d'attributs arbitraires sans __dict__.
 
 Concepts clés :
-• Each import on its own line
-• Placed at the top of the file
-• After module docstring, before globals
-• Exception: from X import a, b, c is acceptable on one line
+• Chaînage de slots sur hiérarchie.
 
-Comment ça fonctionne :
-• import os (one import per line)
-• import sys (separate line)
-• NOT: import os, sys (multiple on one line)
-• from typing import List, Dict is acceptable
+Distinctions clés :
+• Pas Error si usage correct.
 
-Exemple :
-# Good
-import os
-import sys
-from typing import List, Dict
+Fonctionnement :
+• Descripteurs internes pour chaque slot.
 
-# Bad
-import os, sys
-import os; import sys
+Exécution étape par étape :
+• Assignations valident puis lecture tuple.
 
-Usages courants :
-• Every Python source file
-• Keeping dependencies clear and organized
-• Making it easy to see what a module depends on`,
-  2963: `PEP 8 specifies a strict import ordering: standard library imports first, then third-party package imports, then local application imports. Each group should be separated by a blank line.
+Ordre des opérations :
+• Création B puis x,y.
 
-Concepts clés :
-• Group 1: Standard library imports (os, sys, json, etc.)
-• Group 2: Third-party imports (requests, numpy, flask, etc.)
-• Group 3: Local application/library imports
-• Blank line between each group
+Cas d'utilisation courants :
+• Objets légers nombreux.
 
-Comment ça fonctionne :
-• Standard library modules come first
-• Then packages installed via pip
-• Then your own project modules
-• Each group separated by a blank line
+Cas limites :
+• Oublier slot parent dans scénarios avancés : TypeError.
 
-Exemple :
-import os
-import sys
-from collections import defaultdict
+Considérations de performance :
+• Moins de RAM qu'instance dict.
 
-import requests
-import numpy as np
+Exemples :
+• b.z = 3 échouerait sans __dict__.
 
-from myproject.utils import helper
-from myproject.models import User
+Remarques :
+• Réponse : (1, 2) — 1re option.`,
+  2958: `A avec slots, B sans __slots__ — b.x et b.z
 
-Usages courants :
-• Every Python module that has imports
-• Tools like isort can automatically sort imports
-• Keeps dependencies organized and clear`,
-  2964: `PEP 8 specifies that comparisons to singletons like None should always use 'is' or 'is not', never the equality operators == or !=. C'est because None is a singleton object and identity comparison is more appropriate and reliable.
+Débutant :
+• (1, 3) : B réintroduit __dict__ ; z part dans le dict, x reste slot hérité.
+
+Intermédiaire :
+• Pattern mixte slot + dict.
+
+Expert :
+• hasattr(b, "__dict__") True.
 
 Concepts clés :
-• Use: if x is None or if x is not None
-• Never: if x == None or if x != None
-• None is a singleton (only one instance exists)
-• 'is' checks identity, '==' checks equality (can be overridden)
+• Enfant sans __slots__ n'est pas entièrement « compact ».
 
-Comment ça fonctionne :
-• 'is' compares object identity (memory address)
-• '==' calls __eq__ which can be customized
-• A class could override __eq__ to return True for None comparison
-• 'is' is always reliable for None checks
+Distinctions clés :
+• Pas Error pour ce snippet.
 
-Exemple :
-# Good
-if result is None:
-    print("No result")
-if value is not None:
-    process(value)
+Fonctionnement :
+• Slot x depuis A ; z stocké dans mapping instance.
 
-# Bad
-if result == None:
-    print("No result")
+Exécution étape par étape :
+• Deux chemins de stockage coexistent.
 
-Usages courants :
-• Checking function return values
-• Optional parameter handling
-• Sentinel value checking`,
-  2965: `PEP 8 specifies that boolean checks should use the implicit truthiness of values rather than explicit comparison to True or False. Python's truthiness system makes this both more readable and more Pythonic.
+Ordre des opérations :
+• B() puis assignations.
 
-Concepts clés :
-• Use: if x: (not if x == True:)
-• Use: if not x: (not if x == False:)
-• Python's truthiness handles empty collections, zero, None, etc.
-• Direct boolean comparison is rarely needed
+Cas d'utilisation courants :
+• Extension progressive de types slottés.
 
-Comment ça fonctionne :
-• if x: checks if x is truthy (non-zero, non-empty, not None)
-• if not x: checks if x is falsy
-• if x == True: only matches exactly True, not other truthy values
-• if x is True: even stricter, identity check
+Cas limites :
+• Ordre __slots__ = () explicite sur enfant : autre comportement.
 
-Exemple :
-# Good
-if my_list:
-    process(my_list)
-if not finished:
-    continue_work()
+Considérations de performance :
+• Dict réintroduit surcoût partiel.
 
-# Bad
-if my_list == True:
-    process(my_list)
-if finished == False:
-    continue_work()
+Exemples :
+• Vérifier "z" in b.__dict__.
 
-Usages courants :
-• Checking if collections are non-empty
-• Checking boolean flags
-• Conditional logic throughout Python code`,
-  2966: `A docstring (documentation string) is a string literal that occurs as the first statement in a module, function, class, or method body. It becomes the __doc__ attribute of that object and est utilisé for documentation.
+Remarques :
+• Réponse : (1, 3) — 1re option.`,
+  2959: `_x dans A.__init__ — B().get_x()
+
+Débutant :
+• 1 : un seul underscore = convention, pas enforcement.
+
+Intermédiaire :
+• Sous-classe lit self._x normal.
+
+Expert :
+• from m import * masque souvent les _ du module.
 
 Concepts clés :
-• First statement in module, class, function, or method
-• Written using triple quotes (single or double)
-• Stored as the __doc__ attribute
-• Accessible via help() function
+• « Privé » social, pas légal.
 
-Comment ça fonctionne :
-• Placed immediately après le def or class statement
-• Triple-quoted strings allow multi-line documentation
-• PEP 257 provides docstring conventions
-• Not le même que comments (#)
+Distinctions clés :
+• Pas Error.
 
-Exemple :
-def calculate_area(radius):
-    """Calculate the area of a circle given its radius.
+Fonctionnement :
+• Même attribut instance accessible.
 
-    Args:
-        radius: The radius of the circle.
+Exécution étape par étape :
+• get_x retourne valeur stockée.
 
-    Retourne :         The area as a float.
-    """
-    return 3.14159 * radius ** 2
+Ordre des opérations :
+• Construction puis appel.
 
-print(calculate_area.__doc__)
+Cas d'utilisation courants :
+• API interne documentée.
 
-Usages courants :
-• Documenting functions, classes, and modules
-• Generated API documentation
-• Interactive help via help() and __doc__`,
-  2967: `PEP 8 specifies that trailing whitespace (spaces or tabs at the end of a line) should be avoided. Trailing whitespace is invisible, can cause unnecessary diffs in version control, and serves no purpose.
+Cas limites :
+• Accès depuis dehors toujours possible.
 
-Concepts clés :
-• No spaces or tabs après le last character on a line
-• Most editors can be configured to strip trailing whitespace
-• Trailing whitespace causes noisy git diffs
-• Some editors highlight trailing whitespace as a warning
+Considérations de performance :
+• N/A.
 
-Comment ça fonctionne :
-• Configure your editor to remove trailing whitespace on save
-• Run linting tools (flake8, pylint) that detect trailing whitespace
-• Pre-commit hooks can automatically strip trailing whitespace
+Exemples :
+• Contraster avec __x manglé.
 
-Exemple :
-# Bad (trailing spaces shown as dots)
-x = 1····
-name = "Alice"··
+Remarques :
+• Réponse : 1 — 1re option.`,
+  2960: `__x dans A, get_x dans B utilise self.__x
 
-# Good (no trailing whitespace)
-x = 1
-name = "Alice"
+Débutant :
+• AttributeError : mangling utilise le nom de la classe courante du code.
 
-Usages courants :
-• Tous les fichiers source Python
-• Pre-commit hooks to enforce clean whitespace
-• Editor settings for automatic cleanup`,
-  2968: `Quand vous define a function with 'async def', calling it does not execute the function body immediately. Instead, it renvoie a coroutine object that must be awaited or run in an event loop to get the actual result.
+Intermédiaire :
+• A stocke _A__x ; B.get_x cherche _B__x.
+
+Expert :
+• Accès parent explicite : self._A__x.
 
 Concepts clés :
-• async def crée un coroutine function
-• Calling it renvoie a coroutine object
-• The body does not execute until awaited
-• You need await or asyncio.run() to get le résultat
+• Anti-collision sous-classes, pas secret cryptographique.
 
-Comment ça fonctionne :
-• async def f(): return 1 defines a coroutine function
-• f() crée un coroutine object (does NOT return 1)
-• await f() or asyncio.run(f()) actually exécute le body
-• The coroutine object is like a suspended computation
+Distinctions clés :
+• Pas 1.
 
-Exemple :
-import asyncio
+Fonctionnement :
+• Compilation réécrit les identifiants __nom.
 
-async def f():
-    return 1
+Exécution étape par étape :
+• Lecture attribut manquant sur b.
 
-coro = f()       # Creates coroutine, does NOT return 1
-print(type(coro))  # <class 'coroutine'>
-result = asyncio.run(f())  # Actually runs it, renvoie 1
+Ordre des opérations :
+• B() puis get_x().
 
-Usages courants :
-• All async function calls create coroutine objects
-• Must be scheduled in an event loop to execute
-• Foundation of Python's async programming model`,
-  2969: `Quand vous call an async function, it renvoie a coroutine object. The type of this object is 'coroutine', not the type of the return value.
+Cas d'utilisation courants :
+• Éviter écrasement accidentel en hiérarchie.
 
-Concepts clés :
-• type(f()) where f is async renvoie <class 'coroutine'>
-• The coroutine has not been executed yet
-• It is not an int, even though return 1 is in the body
-• Coroutines are distinct from generators despite similarities
+Cas limites :
+• Nommage __ avec deux underscores finaux : dunder, pas mangling.
 
-Comment ça fonctionne :
-• async def f(): return 1 crée un coroutine function
-• f() produit un coroutine object
-• type(f()) shows <class 'coroutine'>
-• Only after await/run does the return value (1) become available
+Considérations de performance :
+• N/A.
 
-Exemple :
-import asyncio
+Exemples :
+• Voir ID 2961.
 
-async def f():
-    return 1
+Remarques :
+• Réponse : AttributeError — 1re option.`,
+  2961: `return self._A__x dans B.get_x
 
-coro = f()
-print(type(coro))  # <class 'coroutine'>
-result = asyncio.run(f())
-print(type(result))  # <class 'int'>
+Débutant :
+• 1 : nom manglé explicite correspond au stockage de A.__init__.
 
-Usages courants :
-• Understanding async function behavior
-• Debugging async code
-• Distinguishing coroutines from regular return values`,
-  2970: `Coroutines cannot be executed by simply calling them. You must either use asyncio.run() to start the event loop and run the coroutine, or use 'await' inside another async function.
+Intermédiaire :
+• Contourne la règle de mangling local à B.
+
+Expert :
+• Fragile si renommage de classe A.
 
 Concepts clés :
-• asyncio.run(coro) starts an event loop and runs the coroutine
-• await coro runs it inside another async function
-• Simply calling an async function only creates the coroutine
-• The event loop manages coroutine execution
+• Transparence du vrai nom interne.
 
-Comment ça fonctionne :
-• asyncio.run() is the main entry point for async programs
-• It creates an event loop, runs the coroutine, and closes the loop
-• await pauses the current coroutine until the awaited one completes
-• You cannot use await at the top level (except en Python 3.10+ REPL)
+Distinctions clés :
+• Pas AttributeError ici.
 
-Exemple :
-import asyncio
+Fonctionnement :
+• Lecture attribut existant sur instance.
 
-async def greet():
-    return "Hello"
+Exécution étape par étape :
+• Retour entier 1.
 
-# Method 1: asyncio.run()
-result = asyncio.run(greet())
+Ordre des opérations :
+• Même hiérarchie que 2960 avec accès corrigé.
 
-# Method 2: await inside async function
-async def main():
-    result = await greet()
-    print(result)
+Cas d'utilisation courants :
+• Tests, hacks contrôlés.
 
-asyncio.run(main())
+Cas limites :
+• Préférer API protégée ou property.
 
-Usages courants :
-• Starting async applications
-• Running coroutines from synchronous code
-• Chaining async operations with await`,
-  2971: `asyncio.run() is the primary way to run an async program from synchronous code. It crée un new event loop, runs the given coroutine until it completes, and then closes the event loop.
+Considérations de performance :
+• N/A.
 
-Concepts clés :
-• Creates a new event loop
-• Runs the coroutine to completion
-• Résultat : the coroutine's result
-• Closes the event loop when done
-• Should only be called once (typically in main)
+Exemples :
+• getattr(self, "_A__x") équivalent.
 
-Comment ça fonctionne :
-• asyncio.run(main()) starts the async program
-• It manages the event loop lifecycle automatically
-• The coroutine runs until it renvoie or raises
-• Any pending tasks are cancelled on completion
+Remarques :
+• Réponse : 1 — 1re option.`,
+  2962: `Forme du name mangling __attr
 
-Exemple :
-import asyncio
+Débutant :
+• _ClassName__attr avec ClassName = classe définissant l'identifiant.
 
-async def fetch_data():
-    await asyncio.sleep(1)
-    return {"status": "ok"}
+Intermédiaire :
+• S'applique aux noms avec au moins deux _ de tête et au plus un _ de queue.
 
-result = asyncio.run(fetch_data())
-print(result)  # {"status": "ok"}
-
-Usages courants :
-• Entry point for async applications
-• Running async code from synchronous scripts
-• Testing async functions`,
-  2972: `Le 'await' keyword can only be used dans fonctions defined avec 'async def'. Using it à l’extérieur de an async fonction lève a SyntaxError.
+Expert :
+• Compilation, pas runtime magic ad hoc.
 
 Concepts clés :
-• await is only valid dans async def fonctions
-• Using await à l’extérieur de async def causes SyntaxError
-• await pauses the coroutine until the awaited result is ready
-• Python 3.10+ REPL allows top-level await as a special case
+• Préfixe classe pour dédoublonner.
 
-Comment ça fonctionne :
-• async def my_func(): result = await something()
-• await suspends the coroutine, letting other tasks run
-• When the awaited coroutine completes, execution resumes
-• The event loop manages the scheduling
+Distinctions clés :
+• Pas __ClassName_attr ni autres formes.
 
-Exemple :
-# Valid: await dans async fonction
-async def main():
-    result = await some_coroutine()
-    renvoyer result
+Fonctionnement :
+• Bytecode réécrit les accès.
 
-# Invalid: SyntaxError
-# result = await some_coroutine()  # Not dans async def!
+Exécution étape par étape :
+• Stockage sous clé manglée dans __dict__ ou slots.
 
-Usages courants :
-• Calling other async fonctions
-• Waiting for I/O operations
-• Chaining asynchronous operations`,
-  2973: `asyncio.run() runs the given coroutine to completion and renvoie whatever the coroutine returns. In this case, f() renvoie 42, so asyncio.run(f()) evaluates to 42.
+Ordre des opérations :
+• Assignation self.__bar dans corps de classe.
 
-Concepts clés :
-• asyncio.run() exécute le coroutine fully
-• The return value of the coroutine becomes the return value of asyncio.run()
-• This bridges async and sync worlds
+Cas d'utilisation courants :
+• Attributs « privés » légers.
 
-Comment ça fonctionne :
-• async def f(): return 42 defines a coroutine that renvoie 42
-• f() creates the coroutine object
-• asyncio.run(f()) runs it and renvoie 42
-• The integer 42 is the final result
+Cas limites :
+• Sous-classes avec même __nom : noms manglés différents.
 
-Exemple :
-import asyncio
+Considérations de performance :
+• N/A.
 
-async def f():
-    return 42
+Exemples :
+• _MyClass__secret.
 
-result = asyncio.run(f())
-print(result)  # 42
-print(type(result))  # <class 'int'>
+Remarques :
+• Réponse : _ClassName__attr — 1re option.`,
+  2963: `Signification de _attr seul underscore
 
-Usages courants :
-• Getting results from async functions in synchronous code
-• Testing async functions
-• Running the main async entry point`,
-  2974: `asyncio.sleep() is a coroutine that suspends the current task for a given number of seconds without blocking the event loop. Other tasks can run during the sleep period, making it fundamentally different from time.sleep().
+Débutant :
+• Interne par convention ; toujours accessible.
+
+Intermédiaire :
+• PEP 8 ; linters peuvent avertir.
+
+Expert :
+• import * omet _ du module.
 
 Concepts clés :
-• asyncio.sleep() is a coroutine (must be awaited)
-• It is non-blocking: other tasks can run during the wait
-• time.sleep() blocks the entire thread
-• asyncio.sleep() cooperatively yields control
+• Signal aux développeurs.
 
-Comment ça fonctionne :
-• await asyncio.sleep(1) pauses the current coroutine for 1 second
-• The event loop can run other coroutines during this time
-• After 1 second, the coroutine resumes
-• The event loop manages the timing
+Distinctions clés :
+• Pas vrai private ni mangling.
 
-Exemple :
-import asyncio
+Fonctionnement :
+• Aucune transformation de nom.
 
-async def task(name, delay):
-    print(f"{name} starting")
-    await asyncio.sleep(delay)
-    print(f"{name} done after {delay}s")
+Exécution étape par étape :
+• Lecture attribut directe.
 
-async def main():
-    await asyncio.gather(
-        task("A", 2),
-        task("B", 1)
-    )
-# B finishes first despite starting second
+Ordre des opérations :
+• Création instance avec _secret.
 
-Usages courants :
-• Simulating delays in async code
-• Rate limiting async operations
-• Testing concurrent behavior`,
-  2975: `time.sleep() and asyncio.sleep() both pause execution for a specified duration, but they work fundamentally differently. time.sleep() blocks the entire thread, preventing any other code from running. asyncio.sleep() is cooperative and allows the event loop to run other tasks during the wait.
+Cas d'utilisation courants :
+• Détails d'implémentation.
 
-Concepts clés :
-• time.sleep(n) blocks the thread for n seconds
-• asyncio.sleep(n) yields control to the event loop for n seconds
-• Using time.sleep inside async code blocks the event loop
-• asyncio.sleep enables true concurrency
+Cas limites :
+• API publique ne doit pas casser _ clients externes.
 
-Comment ça fonctionne :
-• time.sleep: thread is completely frozen, nothing else runs
-• asyncio.sleep: current coroutine is suspended, event loop runs others
-• Never use time.sleep() in async code (it blocks everything)
-• asyncio.sleep() enables concurrent task execution
+Considérations de performance :
+• N/A.
 
-Exemple :
-import asyncio, time
+Exemples :
+• c._secret fonctionne.
 
-async def bad_example():
-    time.sleep(5)  # Blocks everything for 5 seconds!
+Remarques :
+• Réponse : privé par convention — 1re option.`,
+  2964: `Préfixe __attr (deux underscores) sans dunder
 
-async def good_example():
-    await asyncio.sleep(5)  # Other tasks can run during this
+Débutant :
+• Déclenche le name mangling.
 
-Usages courants :
-• asyncio.sleep for delays in async code
-• time.sleep only in synchronous code or threads
-• Understanding blocking vs non-blocking behavior`,
-  2976: `asyncio.gather() schedules multiple coroutines to run concurrently and waits for all of them to complete. It renvoie a list of results in le même order as the coroutines were passed.
+Intermédiaire :
+• Pas confidentialité absolue.
+
+Expert :
+• Subclasses voient un nom différent pour « le même » identifiant source.
 
 Concepts clés :
-• Runs multiple coroutines concurrently (not in parallel)
-• Résultat : results as a list, preserving input order
-• All coroutines share le même event loop
-• If one lève an exception, others may still complete
+• Prévention collisions.
 
-Comment ça fonctionne :
-• asyncio.gather(coro1(), coro2(), coro3()) starts all three
-• The event loop switches between them at await points
-• Results sont collectés in l'originale order
-• Total time is roughly the longest single coroutine, not the sum
+Distinctions clés :
+• Pas syntax error ni suppression d'attribut auto.
 
-Exemple :
-import asyncio
+Fonctionnement :
+• Rewrite vers _Cls__attr.
 
-async def fetch(url, delay):
-    await asyncio.sleep(delay)
-    return f"Résultat from {url}"
+Exécution étape par étape :
+• Accès direct __ depuis dehors échoue souvent.
 
-async def main():
-    results = await asyncio.gather(
-        fetch("api/a", 2),
-        fetch("api/b", 1),
-        fetch("api/c", 3)
-    )
-    print(results)
-    # Takes ~3 seconds total, not 6
+Ordre des opérations :
+• Définition classe puis instanciation.
 
-asyncio.run(main())
+Cas d'utilisation courants :
+• Champs internes sensibles aux collisions.
 
-Usages courants :
-• Fetching multiple URLs concurrently
-• Running independent async operations in parallel
-• Batch processing with async I/O`,
-  2977: `'async for' est utilisé pour iterate over asynchronous iterators — objects that implement __aiter__ and __anext__ methods. Each iteration can involve awaiting an asynchronous operation, such as reading from a network stream.
+Cas limites :
+• __init__ est dunder : exempt.
 
-Concepts clés :
-• async for fonctionne avec asynchronous iterators
-• Each iteration step can be an async operation
-• The iterator implements __aiter__ and __anext__
-• Used when data arrives asynchronously (streams, websockets)
+Considérations de performance :
+• N/A.
 
-Comment ça fonctionne :
-• async for item in async_iterable: processes items as they arrive
-• Each call to __anext__ is awaited
-• StopAsyncIteration signals the end
-• Can only be used inside async functions
+Exemples :
+• p._Parent__val.
 
-Exemple :
-async def async_range(n):
-    for i in range(n):
-        await asyncio.sleep(0.1)
-        yield i
+Remarques :
+• Réponse : name mangling — 1re option.`,
+  2965: `__init__ sujet au mangling ?
 
-async def main():
-    async for num in async_range(5):
-        print(num)
+Débutant :
+• Non : les dunders deux côtés sont réservés ; pas manglés.
 
-Usages courants :
-• Reading from async streams (websockets, databases)
-• Processing paginated API responses
-• Consuming async generators`,
-  2978: `'async with' is the asynchronous version de l'instruction 'with'. Il fonctionne avec des context managers that implement __aenter__ and __aexit__ coroutine methods. C'est essential for resources that require async setup or teardown.
+Intermédiaire :
+• Seuls __spam sans __spam__ à la fin manglent (règle PEP).
+
+Expert :
+• Permet protocole spécial cohérent.
 
 Concepts clés :
-• Works with objects implementing __aenter__ and __aexit__
-• Both __aenter__ and __aexit__ are coroutines (awaited)
-• Used for async resource management
-• Can only be used inside async functions
+• Méthodes magiques stables.
 
-Comment ça fonctionne :
-• async with resource as r: acquires the resource asynchronously
-• __aenter__ is awaited on entry
-• __aexit__ is awaited on exit (even if exception occurs)
-• Ensures proper cleanup of async resources
+Distinctions clés :
+• __bar seul dans classe : manglé ; __repr__ : non.
 
-Exemple :
-import aiohttp
+Fonctionnement :
+• Parseur distingue motifs.
 
-async def fetch(url):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            return await response.text()
+Exécution étape par étape :
+• Appels spéciaux utilisent noms connus.
 
-Usages courants :
-• Async HTTP sessions (aiohttp)
-• Async database connections
-• Async file operations (aiofiles)
-• Async locks and semaphores`,
-  2979: `Le event loop is the central component of asyncio. It manages the execution of coroutines, handles I/O events, runs callbacks, and schedules tasks. Think of it as a dispatcher that keeps track of all pending operations and runs them when they are ready.
+Ordre des opérations :
+• Définition Foo avec __init__ et __bar.
 
-Concepts clés :
-• One event loop per thread (typically one per program)
-• Manages all coroutines, tasks, and callbacks
-• Runs until all tasks are complete
-• asyncio.run() creates and manages the event loop automatically
+Cas d'utilisation courants :
+• Implémenter protocoles Python.
 
-Comment ça fonctionne :
-• The event loop maintains a queue of ready tasks
-• It runs each task until it hits an await point
-• Then it moves to the next ready task
-• When an awaited operation completes, the task is re-queued
-• Cela permet cooperative multitasking
+Cas limites :
+• Très rares conflits si noms bizarres.
 
-Exemple :
-import asyncio
+Considérations de performance :
+• N/A.
 
-async def say(msg, delay):
-    await asyncio.sleep(delay)
-    print(msg)
+Exemples :
+• type(obj).__init__.
 
-async def main():
-    await asyncio.gather(
-        say("Hello", 1),
-        say("World", 2)
-    )
+Remarques :
+• Réponse : non, jamais manglés — 1re option.`,
+  2966: `Compteur class_id dans __init__ — (a1.id, a2.id)
 
-asyncio.run(main())  # Event loop runs both tasks
+Débutant :
+• (1, 2) : attribut de classe partagé incrémenté à chaque instance.
 
-Usages courants :
-• Running async applications
-• Managing concurrent I/O operations
-• Scheduling callbacks and timers`,
-  2980: `asyncio.create_task() takes a coroutine and wraps it in a Task object, scheduling it to run concurrently in the current event loop. Unlike await, which waits for a coroutine to finish, create_task starts it running in the background.
+Intermédiaire :
+• A.class_id += 1 avant self.id = A.class_id.
+
+Expert :
+• Threads : besoin locks si compteur global critique.
 
 Concepts clés :
-• Wraps a coroutine in a Task object
-• Schedules it for concurrent execution
-• Résultat : immediately (does not wait for completion)
-• The task runs in the background on the event loop
+• État partagé vs état instance.
 
-Comment ça fonctionne :
-• task = asyncio.create_task(some_coro())
-• The coroutine starts running at the next await point
-• You can await the task later to get its result
-• Multiple tasks run concurrently on le même event loop
+Distinctions clés :
+• Pas (0,1) ni (1,1).
 
-Exemple :
-import asyncio
+Fonctionnement :
+• Premier objet voit 1, second 2.
 
-async def background_work():
-    await asyncio.sleep(2)
-    return "done"
+Exécution étape par étape :
+• Deux appels __init__ séquentiels.
 
-async def main():
-    task = asyncio.create_task(background_work())
-    print("Task started, doing other work...")
-    await asyncio.sleep(1)
-    result = await task  # Wait for task to finish
-    print(result)  # "done"
+Ordre des opérations :
+• a1 puis a2.
 
-asyncio.run(main())
+Cas d'utilisation courants :
+• IDs séquentiels simples.
 
-Usages courants :
-• Running background operations
-• Fire-and-forget tasks
-• Building concurrent workflows`,
-  2981: `You can combine synchronous and asynchronous code en Python, but care must be taken. Synchronous blocking calls (like time.sleep, file I/O, or network calls) inside async functions will block the entire event loop, preventing other tasks from running.
+Cas limites :
+• Sous-classe partage souvent le même class_id si non redéfini.
 
-Concepts clés :
-• Sync code can call async code via asyncio.run()
-• Async code can call sync code, but blocking calls freeze the event loop
-• Use loop.run_in_executor() for blocking operations in async code
-• Libraries like asyncio provide async versions of blocking operations
+Considérations de performance :
+• Incrément entier rapide.
 
-Comment ça fonctionne :
-• Calling sync functions in async code blocks the loop
-• asyncio.to_thread() (Python 3.9+) runs sync code in a thread
-• loop.run_in_executor() runs blocking code in a thread pool
-• Async libraries (aiohttp, aiofiles) provide non-blocking alternatives
+Exemples :
+• a3.id == 3.
 
-Exemple :
-import asyncio
+Remarques :
+• Réponse : (1, 2) — 1re option.`,
+  2967: `__init_subclass__ pose cls.parent_name — B(A)
 
-async def main():
-    # Bad: blocks the event loop
-    # time.sleep(5)
+Débutant :
+• "A" : hook reçoit la sous-classe B comme cls.
 
-    # Good: run blocking code in a thread
-    await asyncio.to_thread(time.sleep, 5)
+Intermédiaire :
+• super().__init_subclass__ pour chaîner.
 
-    # Good: use async version
-    await asyncio.sleep(5)
-
-Usages courants :
-• Integrating legacy sync libraries with async code
-• Running CPU-bound work in executor threads
-• Gradual migration from sync to async`,
-  2982: `async/await solves the problem of efficiently handling many I/O-bound operations concurrently without needing to create threads. It is ideal for applications that spend most of their time waiting for external resources (network, disk, database).
+Expert :
+• Exécuté à la définition de classe, pas à l'instanciation.
 
 Concepts clés :
-• Designed for I/O-bound concurrency (not CPU-bound)
-• Single-threaded cooperative multitasking
-• No thread creation overhead or synchronization issues
-• Scales to thousands of concurrent connections
+• Meta-légère sans métaclasse custom.
 
-Comment ça fonctionne :
-• Instead of one thread per connection, one event loop handles all
-• When a task waits for I/O, others can run
-• No context switching overhead of OS threads
-• No need for locks or thread synchronization
+Distinctions clés :
+• Pas "B" ni erreur.
 
-Exemple :
-import asyncio
-import aiohttp
+Fonctionnement :
+• cls.parent_name = "A" sur B.
 
-async def fetch_all(urls):
-    async with aiohttp.ClientSession() as session:
-        tasks = [session.get(url) for url in urls]
-        responses = await asyncio.gather(*tasks)
-        return [await r.text() for r in responses]
+Exécution étape par étape :
+• Fin du corps class B déclenche hook.
 
-# Can handle thousands of URLs concurrently
-# with minimal resource usage
+Ordre des opérations :
+• class B(A): pass puis lecture B.parent_name.
 
-Usages courants :
-• Web servers handling many concurrent requests
-• Web scraping multiple URLs simultaneously
-• Chat applications and real-time systems
-• Microservices communicating over network`,
-  2983: `Python's tuple unpacking allows you to swap two variables in a single statement without a temporary variable. The expression a, b = b, a evaluates the right side first (creating a tuple), then unpacks it into the left side.
+Cas d'utilisation courants :
+• Registres, métadonnées.
 
-Concepts clés :
-• a, b = b, a swaps values in one line
-• The right side is evaluated completely before assignment
-• No temporary variable needed
-• Works with any number of variables
+Cas limites :
+• kwargs classe invalides : TypeError.
 
-Comment ça fonctionne :
-• Python evaluates b, a creating a tuple (b_val, a_val)
-• Then unpacks it into a, b
-• a gets b's original value, b gets a's original value
-• C'est safe because the right side is fully evaluated first
+Considérations de performance :
+• Une fois par sous-classe.
 
-Exemple :
-a = 1
-b = 2
-a, b = b, a
-print(a, b)  # 2 1
+Exemples :
+• Plugin.register dans hook.
 
-# Also fonctionne avec more variables:
-x, y, z = z, x, y
+Remarques :
+• Réponse : "A" — 1re option.`,
+  2968: `Positive(int) __new__ — Positive(5) + 3
 
-Usages courants :
-• Swapping variables in algorithms (sorting, etc.)
-• Rotating values
-• Clean, readable variable exchanges`,
-  2984: `Dans Python, empty collections (listes, dicts, sets, strings, tuples) are falsy. The Pythonic way to check for emptiness is to use the implicit boolean valeur: 'if not my_list:' rather than explicitly checking the length.
+Débutant :
+• 8 : sous-type int ; + délégué au comportement int, résultat int (affiche 8).
+
+Intermédiaire :
+• __new__ valide puis super().__new__(cls, val).
+
+Expert :
+• type(Positive(5)+3) souvent int pur selon opérandes.
 
 Concepts clés :
-• Empty collections are falsy: [], {}, set(), "", ()
-• Non-empty collections are truthy
-• 'if not my_list:' is preferred over 'if len(my_list) == 0:'
-• This also works for strings, dicts, sets, tuples
+• Immuables : construction en __new__.
 
-Comment ça fonctionne :
-• Python appelle __bool__ (or __len__) on the objet
-• Empty containers renvoyer False / 0
-• Non-empty containers renvoyer True / non-zero
-• 'not' inverts the boolean valeur
+Distinctions clés :
+• Pas Error pour 5+3.
 
-Exemple :
-my_list = []
-if not my_list:
-    print("List is empty")  # This runs
+Fonctionnement :
+• 5 + 3 arithmétique standard.
 
-my_dict = {"a": 1}
-if my_dict:
-    print("Dict has items")  # This runs
+Exécution étape par étape :
+• Création Positive(5) OK puis addition.
 
-Usages courants :
-• Checking if a fonction returned an empty result
-• Validating input data
-• Guard clauses in fonctions`,
-  2985: `Le str.join() méthode is the Pythonic way to concatenate a sequence of strings. Using += in a loop crée un new string objet each time, which is O(n^2) for n concatenations. join() is O(n) car it pre-allocates the final string.
+Ordre des opérations :
+• Appel constructeur puis +.
 
-Concepts clés :
-• "".join(parts) concatenates all strings in parts
-• The separator goes avant .join()
-• Much faster than repeated += (O(n) vs O(n^2))
-• Works avec any iterable of strings
+Cas d'utilisation courants :
+• Types domaine contraints.
 
-Comment ça fonctionne :
-• separator.join(iterable) joins all elements avec separator
-• "".join(["a","b","c"]) produces "abc"
-• ", ".join(["a","b","c"]) produces "a, b, c"
-• Pre-allocates memory for the final string
+Cas limites :
+• Surcharger __add__ pour garder Positive.
 
-Exemple :
-parts = ["Hello", " ", "World", "!"]
-result = "".join(parts)  # "Hello World!"
+Considérations de performance :
+• N/A.
 
-words = ["Python", "is", "great"]
-sentence = " ".join(words)  # "Python is great"
+Exemples :
+• Positive(0)*2 → 0.
 
-# Bad (slow for large listes):
-# s = ""
-# for part in parts: s += part
+Remarques :
+• Réponse : 8 — 1re option.`,
+  2969: `Positive(-1)
 
-Usages courants :
-• Building strings from listes of words
-• CSV row construction
-• Path building avec os.path.join()`,
-  2986: `isinstance() is the Pythonic way to check types because it respects inheritance. type(x) == int only matches exactly int, not subclasses. isinstance() also accepts a tuple of types for checking multiple types at once.
+Débutant :
+• ValueError : garde dans __new__ avant création.
+
+Intermédiaire :
+• Aucun objet Positive n'existe après échec.
+
+Expert :
+• Message personnalisable.
 
 Concepts clés :
-• isinstance(x, int) checks if x is an int or a subclass of int
-• type(x) == int only matches exactly int
-• isinstance respects inheritance hierarchy
-• Can check multiple types: isinstance(x, (int, float))
+• Validation à la naissance.
 
-Comment ça fonctionne :
-• isinstance(x, int) renvoie True if x is int or a subclass
-• type(x) == int renvoie True uniquement si x is exactly int
-• bool is a subclass of int: isinstance(True, int) is True
-• type(True) == int is False (type is bool, not int)
+Distinctions clés :
+• Pas -1 ni None silencieux.
 
-Exemple :
-x = 42
-isinstance(x, int)   # True
-type(x) == int        # True
+Fonctionnement :
+• if val < 0: raise.
 
-y = True
-isinstance(y, int)    # True (bool is subclass of int)
-type(y) == int        # False (type is bool)
+Exécution étape par étape :
+• Exception propage.
 
-isinstance(x, (int, float))  # Check multiple types
+Ordre des opérations :
+• Appel Positive(-1).
 
-Usages courants :
-• Input validation
-• Type checking in functions
-• Duck typing exceptions where type matters`,
-  2987: `Le Pythonic way to check for None is using 'is None' (identity comparison) rather than '== None' (equality comparison). None is a singleton objet, meaning there is only one instance of it in memory.
+Cas d'utilisation courants :
+• Invariants forts sur valeurs.
 
-Concepts clés :
-• None is a singleton — only one None objet exists
-• 'is' checks objet identity (same objet in memory)
-• '==' checks equality (can be overridden by __eq__)
-• 'is None' is safer and faster than '== None'
+Cas limites :
+• None ou non-numérique : autres erreurs.
 
-Comment ça fonctionne :
-• x is None checks if x points to the exact None objet
-• x == None calls x.__eq__(None), which can be customized
-• A classe could override __eq__ to renvoyer True for None incorrectly
-• 'is None' cannot be fooled by custom __eq__
+Considérations de performance :
+• N/A.
 
-Exemple :
-result = some_function()
+Exemples :
+• try/except ValueError.
 
-# Good
-if result is None:
-    print("No result")
+Remarques :
+• Réponse : ValueError — 1re option.`,
+  2970: `Percentage(float) __repr__ f"{self:.1%}" — repr(Percentage(0.75))
 
-# Bad
-if result == None:
-    print("No result")
+Débutant :
+• "75.0%" : spécificateur % multiplie par 100 et ajoute le signe.
 
-# Also bad — catches other falsy valeurs too
-if not result:
-    print("This catches 0, '', [], False AND None!")
+Intermédiaire :
+• .1 = une décimale.
 
-Usages courants :
-• Checking fonction renvoyer valeurs
-• Default parameter handling
-• Optional valeur checking`,
-  2988: `List comprehensions are generally considered more Pythonic than map() with lambda functions. They are more readable, often faster, and can include filtering. map() is acceptable when using a named function.
+Expert :
+• self est le float 0.75.
 
 Concepts clés :
-• List comprehensions are preferred for simple transformations
-• map() with a named function is acceptable
-• map() with lambda is less readable than a comprehension
-• List comprehensions can also filter with 'if'
+• Représentation domaine lisible.
 
-Comment ça fonctionne :
-• [x*2 for x in lst] crée un new list with doubled values
-• list(map(lambda x: x*2, lst)) does le même but is less clear
-• Comprehensions are often faster due to optimization
-• map() renvoie a lazy iterator (needs list() to materialize)
+Distinctions clés :
+• Pas "0.75" brut ni erreur.
 
-Exemple :
-numbers = [1, 2, 3, 4, 5]
+Fonctionnement :
+• __repr__ sur sous-classe float.
 
-# Pythonic
-doubled = [x * 2 for x in numbers]
+Exécution étape par étape :
+• Format applique locale/arrondi d'affichage.
 
-# Less Pythonic
-doubled = list(map(lambda x: x * 2, numbers))
+Ordre des opérations :
+• Percentage(0.75) puis repr.
 
-# map() with named function is OK
-doubled = list(map(str, numbers))  # Acceptable
+Cas d'utilisation courants :
+• Stats, UI texte.
 
-Usages courants :
-• Transforming lists of data
-• Creating new lists from existing ones
-• Filtering and transforming in one step`,
-  2989: `Python's tuple unpacking in for loops lets you directly assign key-value pairs from dict.items() to separate variables. C'est more Pythonic and readable than manually accessing values by key.
+Cas limites :
+• NaN/inf : représentations spéciales.
 
-Concepts clés :
-• dict.items() renvoie (key, value) tuples
-• Tuple unpacking assigns both at once: for k, v in d.items()
-• More readable than for k in d: v = d[k]
-• Also fonctionne avec enumerate(), zip(), and other tuple-producing iterables
+Considérations de performance :
+• N/A.
 
-Comment ça fonctionne :
-• d.items() yields (key, value) pairs
-• for k, v in d.items(): unpacks each pair
-• k gets the key, v gets the value
-• No need to access d[k] separately
+Exemples :
+• Percentage(0.5) → "50.0%".
 
-Exemple :
-scores = {"Alice": 95, "Bob": 87, "Carol": 92}
+Remarques :
+• Réponse : "75.0%" — 1re option.`,
+  2971: `Template Method — que définit la classe de base ?
 
-# Pythonic
-for name, score in scores.items():
-    print(f"{name}: {score}")
+Débutant :
+• Squelette d'algorithme avec étapes surchargeables.
 
-# Less Pythonic
-for name in scores:
-    score = scores[name]
-    print(f"{name}: {score}")
+Intermédiaire :
+• Héritage + override ciblé.
 
-Usages courants :
-• Iterating over dictionaries
-• Processing structured data
-• Unpacking any iterable of tuples`,
-  2990: `enumerate() is the Pythonic way to loop over a sequence while tracking the index. It renvoie (index, value) pairs, which can be unpacked directly in the for loop.
+Expert :
+• Diffère Strategy (composition).
 
 Concepts clés :
-• enumerate(iterable) yields (index, value) pairs
-• More readable than range(len(lst)) with manual indexing
-• Supports a start parameter: enumerate(lst, start=1)
-• Works with any iterable, not just lists
+• Ordre fixe, détails variables.
 
-Comment ça fonctionne :
-• for i, x in enumerate(lst): unpacks index and value
-• Default start index is 0
-• enumerate(lst, 1) starts counting from 1
-• Résultat : an enumerate object (lazy iteration)
+Distinctions clés :
+• Pas singleton ni liste d'attributs obligatoires seule.
 
-Exemple :
-fruits = ["apple", "banana", "cherry"]
+Fonctionnement :
+• Méthode template appelle hooks.
 
-# Pythonic
-for i, fruit in enumerate(fruits):
-    print(f"{i}: {fruit}")
+Exécution étape par étape :
+• dispatch dynamique sur self.
 
-# With start parameter
-for i, fruit in enumerate(fruits, 1):
-    print(f"{i}. {fruit}")
+Ordre des opérations :
+• generate() typique.
 
-# Less Pythonic
-for i in range(len(fruits)):
-    print(f"{i}: {fruits[i]}")
+Cas d'utilisation courants :
+• Rapports, pipelines.
 
-Usages courants :
-• Numbering items in output
-• Tracking position while iterating
-• Building indexed data structures`,
-  2991: `zip() is the Pythonic way to iterate over two or more sequences in parallel. It pairs corresponding elements from each iterable and stops at the shortest one.
+Cas limites :
+• Trop de hooks = hiérarchie lourde.
 
-Concepts clés :
-• zip(a, b) pairs elements: (a[0],b[0]), (a[1],b[1]), ...
-• Stops at the shortest iterable
-• zip_longest (from itertools) pads shorter iterables
-• Can zip more than two iterables
+Considérations de performance :
+• N/A.
 
-Comment ça fonctionne :
-• zip(xs, ys) creates an iterator of tuples
-• for a, b in zip(xs, ys): unpacks each pair
-• If lengths differ, zip stops at the shorter one
-• itertools.zip_longest fills missing values with a default
+Exemples :
+• Report.generate banque.
 
-Exemple :
-names = ["Alice", "Bob", "Carol"]
-scores = [95, 87, 92]
+Remarques :
+• Réponse : squelette d'algorithme — 1re option.`,
+  2972: `Quelle méthode est le template method ?
 
-# Pythonic
-for name, score in zip(names, scores):
-    print(f"{name}: {score}")
+Débutant :
+• generate() orchestre header/body/footer.
 
-# Less Pythonic
-for i in range(len(names)):
-    print(f"{names[i]}: {scores[i]}")
+Intermédiaire :
+• Les autres sont les étapes.
 
-Usages courants :
-• Pairing related data from separate lists
-• Building dictionaries: dict(zip(keys, values))
-• Processing parallel sequences`,
-  2992: `L'instruction 'with' est la façon pythonique de gérer les ressources comme les fichiers. Elle garantit un nettoyage correct (closing the file) even if an exception occurs, making it safer and more readable than manual open/close.
+Expert :
+• Souvent non overridée elle-même.
 
 Concepts clés :
-• with open(filename) as f: ensures the file is closed
-• Works even if an exception occurs inside the block
-• No need to explicitly call f.close()
-• Uses the context manager protocol (__enter__/__exit__)
+• Séparation orchestration / travail.
 
-Comment ça fonctionne :
-• with calls __enter__ to open the file
-• The file object is bound to the 'as' variable
-• When the block exits (normally or via exception), __exit__ closes the file
-• C'est equivalent to try/finally but cleaner
+Distinctions clés :
+• Pas header seul.
 
-Exemple :
-# Pythonic
-with open("data.txt") as f:
-    content = f.read()
-# File is automatically closed here
+Fonctionnement :
+• Chaîne de concaténation dans generate.
 
-# Less Pythonic (manual close)
-f = open("data.txt")
-try:
-    content = f.read()
-finally:
-    f.close()
+Exécution étape par étape :
+• Appels résolus sur sous-classe pour body.
 
-Usages courants :
-• File reading and writing
-• Database connections
-• Network sockets
-• Lock acquisition and release`,
-  2993: `f-strings (formatted string literals), introduced en Python 3.6, are the preferred way to embed expressions in strings. They are more readable, concise, and faster than the older .format() method and % formatting.
+Ordre des opérations :
+• Lecture classe Report.
 
-Concepts clés :
-• f-strings: f"Hello, {name}!" — preferred since Python 3.6
-• .format(): "Hello, {}!".format(name) — older but still valid
-• % formatting: "Hello, %s!" % name — oldest style
-• f-strings are fastest and most readable
+Cas d'utilisation courants :
+• Frameworks avec hooks.
 
-Comment ça fonctionne :
-• f-strings evaluate expressions inside {} at runtime
-• Can include any valid Python expression
-• Support format specifiers: f"{value:.2f}"
-• Are compiled to efficient string concatenation
+Cas limites :
+• Oublier override : comportement par défaut.
 
-Exemple :
-name = "Alice"
-age = 30
+Considérations de performance :
+• N/A.
 
-# f-string (preferred)
-msg = f"{name} is {age} years old"
+Exemples :
+• Voir banque generate.
 
-# .format() (older)
-msg = "{} is {} years old".format(name, age)
+Remarques :
+• Réponse : generate() — 1re option.`,
+  2973: `Strategy pattern — technique principale
 
-# % formatting (oldest)
-msg = "%s is %d years old" % (name, age)
+Débutant :
+• Composition : le contexte a une stratégie injectée.
 
-Usages courants :
-• All string formatting in modern Python
-• Debug printing: f"{variable=}" (Python 3.8+)
-• Building messages, logs, and output`,
-  2994: `collections.defaultdict automatically fournit un default value pour les clés manquantes, eliminating the need to check if a key exists before using it. This makes code cleaner and less error-prone.
+Intermédiaire :
+• Évite hiérarchies profondes d'algorithmes.
+
+Expert :
+• Swappable à l'exécution.
 
 Concepts clés :
-• defaultdict(factory) creates missing keys with factory()
-• No need for 'if key not in d:' checks
-• Common factories: int (0), list ([]), set (set())
-• Subclass of dict — works everywhere dict works
+• has-a behavior.
 
-Comment ça fonctionne :
-• defaultdict(int) creates 0 pour les clés manquantes
-• defaultdict(list) creates [] pour les clés manquantes
-• Accessing a missing key déclenche le factory
-• Simplifies counting, grouping, and accumulating patterns
+Distinctions clés :
+• Pas deep inheritance comme outil principal.
 
-Exemple :
-from collections import defaultdict
+Fonctionnement :
+• self.strategy(data).
 
-# Without defaultdict (manual checking)
-counts = {}
-for word in words:
-    if word not in counts:
-        counts[word] = 0
-    counts[word] += 1
+Exécution étape par étape :
+• Délégation simple.
 
-# With defaultdict (cleaner)
-counts = defaultdict(int)
-for word in words:
-    counts[word] += 1
+Ordre des opérations :
+• __init__(strategy) puis sort.
 
-# Grouping with defaultdict
-groups = defaultdict(list)
-for name, dept in employees:
-    groups[dept].append(name)
+Cas d'utilisation courants :
+• Tri, paiements, validation.
 
-Usages courants :
-• Counting occurrences
-• Grouping items by key
-• Building adjacency lists for graphs`,
-  2995: `"Flat is better than nested" is a principle from the Zen of Python (PEP 20) that encourages writing code with minimal nesting. Deeply nested code (many levels of if/for/try) is harder to read, understand, and maintain.
+Cas limites :
+• Stratégie None : erreur à l'appel.
 
-Concepts clés :
-• Deep nesting makes code harder to follow
-• Early renvoie reduce nesting levels
-• Guard clauses handle edge cases first
-• Flat code flows linearly and is easier to read
+Considérations de performance :
+• Indirection négligeable souvent.
 
-Comment ça fonctionne :
-• Instead of nesting conditions, return early for edge cases
-• Instead of nested loops, use helper functions
-• Instead of deep data structures, prefer flat ones
-• Extract nested logic into well-named functions
+Exemples :
+• Sorter(sorted).
 
-Exemple :
-# Nested (hard to read)
-def process(data):
-    if data:
-        if data.is_valid():
-            if data.has_permission():
-                return data.execute()
-            else:
-                return "No permission"
-        else:
-            return "Invalid"
-    else:
-        return "No data"
+Remarques :
+• Réponse : composition — 1re option.`,
+  2974: `Sorter(sorted).sort([3,1,2])
 
-# Flat (easier to read)
-def process(data):
-    if not data:
-        return "No data"
-    if not data.is_valid():
-        return "Invalid"
-    if not data.has_permission():
-        return "No permission"
-    return data.execute()
+Débutant :
+• [1, 2, 3] : stratégie = built-in sorted.
 
-Usages courants :
-• Refactoring deeply nested conditionals
-• Simplifying complex functions
-• Making code more maintainable`,
-  2996: `"Explicit is better than implicit" is a core principle from the Zen of Python (PEP 20). It means code should clearly and obviously express what it does, rather than relying on hidden behavior, conventions, or magic that the reader must already know about.
+Intermédiaire :
+• Même pattern avec lambda reverse pour [3,2,1].
+
+Expert :
+• strategy callable quelconque compatible.
 
 Concepts clés :
-• Make behavior visible and obvious in code
-• Don't rely on side effects or hidden state
-• Name things clearly and descriptively
-• Prefer clarity over cleverness
+• Délégation runtime.
 
-Comment ça fonctionne :
-• Use descriptive variable names, not single letters
-• Pass arguments explicitly rather than relying on globals
-• Import specific names rather than using wildcard imports
-• Make dependencies and data flow visible
+Distinctions clés :
+• Pas liste inchangée.
 
-Exemple :
-# Implicit (unclear)
-from utils import *
-x = f(d)
+Fonctionnement :
+• self.strategy(data) renvoie nouvelle liste triée.
 
-# Explicit (clear)
-from utils import process_data
-result = process_data(user_input)
+Exécution étape par étape :
+• sorted crée liste ordonnée.
 
-# Implicit
-class Config:
-    def __init__(self): self._load()  # Hidden side effect
+Ordre des opérations :
+• Instanciation puis sort.
 
-# Explicit
-config = Config()
-config.load_from_file("settings.ini")
+Cas d'utilisation courants :
+• Tests avec faux tri.
 
-Usages courants :
-• Choosing clear names over abbreviations
-• Avoiding wildcard imports (from x import *)
-• Making side effects visible in function signatures`,
-  2997: `This famous quote comes from The Zen of Python (PEP 20), a collection of 19 guiding principles for writing Python code. It was written by Tim Peters and can be viewed by typing 'import this' in a Python interpreter.
+Cas limites :
+• Stratégie qui mute data : surprise.
 
-Concepts clés :
-• Part of The Zen of Python (PEP 20)
-• Written by Tim Peters
-• Accessed by running 'import this'
-• Contrasts with Perl's motto "There's more than one way to do it"
+Considérations de performance :
+• sorted O(n log n).
 
-Comment ça fonctionne :
-• Python's design philosophy favors one clear way to accomplish tasks
-• This guides language design decisions
-• The standard library follows this principle
-• It helps maintain consistency across Python codebases
+Exemples :
+• stratégie custom stable.
 
-Exemple :
->>> import this
-The Zen of Python, by Tim Peters
+Remarques :
+• Réponse : [1, 2, 3] — 1re option.`,
+  2975: `Factory Method pattern fournit quoi ?
 
-Beautiful is better than ugly.
-Explicit is better than implicit.
-Simple is better than complex.
-...
-There should be one-- and preferably only one --obvious way to do it.
-...
+Débutant :
+• Une méthode qui crée et retourne des objets (souvent cls(...)).
 
-Usages courants :
-• Guiding Python language design
-• Informing coding style decisions
-• Resolving debates about "the right way" to code
-• Teaching Python philosophy to newcomers`,
-  2998: `'import this' est un œuf de Pâques (Easter egg) en Python qui affiche Le Zen de Python (PEP 20), une collection de 19 aphorismes qui capturent la philosophie de conception de Python. Il a été écrit par Tim Peters, contributeur de longue date à Python.
+Intermédiaire :
+• Sous-classes changent le type instancié via cls.
+
+Expert :
+• Souvent @classmethod create.
 
 Concepts clés :
-• Le Zen de Python contient 19 principes directeurs
-• Écrit par Tim Peters
-• PEP 20 est sa désignation officielle
-• C'est un œuf de Pâques intégré à toute installation Python
+• Découplage construction / usage.
 
-Comment ça fonctionne :
-• Le module 'this' contient une version encodée du texte
-• L'importer déclenche l'affichage
-• L'encodage lui-même est un puzzle amusant (ROT13)
-• Les principes guident la philosophie de conception de Python
+Distinctions clés :
+• Pas cache thread lock par défaut.
 
-Les 19 principes incluent :
-• Beautiful is better than ugly (Le beau vaut mieux que le laid)
-• Explicit is better than implicit (L'explicite vaut mieux que l'implicite)
-• Simple is better than complex (Le simple vaut mieux que le complexe)
-• Complex is better than complicated (Le complexe vaut mieux que le compliqué)
-• Flat is better than nested (Le plat vaut mieux que l'imbriqué)
-• Sparse is better than dense (Le clairsemé vaut mieux que le dense)
-• Readability counts (La lisibilité compte)
-• Special cases aren't special enough to break the rules (Les cas spéciaux ne justifient pas de transgresser les règles)
-• Although practicality beats purity (Bien que le pragmatisme prime sur la pureté)
-• Errors should never pass silently (Les erreurs ne doivent jamais passer en silence)
-• Unless explicitly silenced (Sauf si explicitement réduites au silence)
-• In the face of ambiguity, refuse the temptation to guess (Face à l'ambiguïté, refusez la tentation de deviner)
-• There should be one obvious way to do it (Il devrait exister une seule façon évidente de le faire)
-• Now is better than never (Mieux vaut maintenant que jamais)
-• Although never is often better than right now (Bien que jamais ne soit souvent mieux que tout de suite)
-• If the implementation is hard to explain, it's a bad idea (Si l'implémentation est difficile à expliquer, c'est une mauvaise idée)
-• If the implementation is easy to explain, it may be a good idea (Si l'implémentation est facile à expliquer, c'est peut-être une bonne idée)
-• Namespaces are one honking great idea (Les espaces de noms sont une idée brillante)
+Fonctionnement :
+• return cls(sound) typique.
 
-Usages courants :
-• Enseigner la philosophie Python
-• Guider les décisions de conception
-• Œuf de Pâques amusant à montrer aux débutants`,
-  2999: `EAFP (Easier to Ask Forgiveness than Permission – Il est plus facile de demander pardon que la permission) est un style de codage Python qui privilégie d'essayer une opération et de gérer les exceptions si elle échoue, plutôt que de vérifier les préconditions avant de tenter l'opération. Cela contraste avec LBYL (Look Before You Leap – Réfléchir avant d'agir).
+Exécution étape par étape :
+• Dog.create délègue à constructeur Dog.
 
-Concepts clés :
-• EAFP : essayer l'opération, gérer l'échec avec except
-• LBYL : vérifier les conditions avant de tenter l'opération
-• EAFP est considéré comme plus pythonique
-• Fonctionne bien avec le système de gestion des exceptions de Python
+Ordre des opérations :
+• Appel de classe puis __init__.
 
-Comment ça fonctionne :
-• Au lieu de vérifier si une clé existe, y accéder directement et attraper KeyError
-• Au lieu de vérifier si un fichier existe, l'ouvrir directement et attraper FileNotFoundError
-• try/except est souvent plus rapide quand les échecs sont rares
-• Évite les conditions de concurrence (l'état peut changer entre la vérification et l'utilisation)
+Cas d'utilisation courants :
+• Parseurs, connexions.
 
-Exemple :
-# EAFP (pythonique)
-try:
-    value = my_dict[key]
-except KeyError:
-    value = default
+Cas limites :
+• __init__ signature incompatible : erreur.
 
-# LBYL (moins pythonique)
-if key in my_dict:
-    value = my_dict[key]
-else:
-    value = default
+Considérations de performance :
+• N/A.
 
-# EAFP avec fichiers
-try:
-    with open("config.txt") as f:
-        config = f.read()
-except FileNotFoundError:
-    config = default_config
+Exemples :
+• Animal.create banque.
 
-Usages courants :
-• Accès aux dictionnaires
-• Opérations sur fichiers
-• Conversions de type (int(), float())
-• Accès aux attributs des objets`,
-  3000: `DRY (Don't Repeat Yourself – Ne vous répétez pas) est un principe fondamental du génie logiciel selon lequel chaque élément de connaissance ou de logique doit avoir une représentation unique et non ambiguë dans un système. Le code dupliqué est plus difficile à maintenir et plus sujet aux bugs.
+Remarques :
+• Réponse : méthode de création d'objets — 1re option.`,
+  2976: `Dog.create("woof").sound — classmethod Animal.create
+
+Débutant :
+• "woof" : cls est Dog dans Dog.create ; cls(sound) instancie Dog.
+
+Intermédiaire :
+• __init__ de Dog pose self.sound.
+
+Expert :
+• Cat.create utiliserait Cat si défini pareil.
 
 Concepts clés :
-• Chaque élément de logique doit exister en un seul endroit
-• Le code dupliqué signifie des bugs dupliqués
-• Les modifications doivent être faites à un seul endroit
-• DRY s'applique au code, aux données, à la documentation et à la configuration
+• Liaison tardive du type concret.
 
-Comment ça fonctionne :
-• Si vous vous retrouvez à copier-coller du code, extrayez-le dans une fonction
-• Si plusieurs classes partagent un comportement, utilisez l'héritage ou la composition
-• Si la configuration est répétée, centralisez-la
-• Les constantes doivent être définies une fois et référencées partout
+Distinctions clés :
+• Pas Error ni "bark".
 
-Exemple :
-# WET (Write Everything Twice - Mauvais)
-def calculate_circle_area(r):
-    return 3.14159 * r * r
+Fonctionnement :
+• Chaîne create → __new__/__init__.
 
-def calculate_cylinder_volume(r, h):
-    return 3.14159 * r * r * h
+Exécution étape par étape :
+• Retour instance puis attribut sound.
 
-# DRY - Bon
-PI = 3.14159
+Ordre des opérations :
+• Définitions classes puis appel.
 
-def circle_area(r):
-    return PI * r ** 2
+Cas d'utilisation courants :
+• Named constructors.
 
-def cylinder_volume(r, h):
-    return circle_area(r) * h
+Cas limites :
+• create oublié en sous-classe : héritage Animal.create.
 
-Usages courants :
-• Extraire la logique commune dans des fonctions
-• Créer des modules utilitaires réutilisables
-• Définir les constantes en un seul endroit
-  • Utiliser des classes de base pour le comportement partagé`,
+Considérations de performance :
+• N/A.
+
+Exemples :
+• type(Dog.create("x")) is Dog.
+
+Remarques :
+• Réponse : "woof" — 1re option.`,
+  2977: `Observer pattern — l'objet maintient quoi ?
+
+Débutant :
+• Liste d'observateurs / handlers notifiés lors des changements.
+
+Intermédiaire :
+• Un-à-plusieurs découplé.
+
+Expert :
+• subscribe / notify typiques.
+
+Concepts clés :
+• Événements internes.
+
+Distinctions clés :
+• Pas singleton global ni squelette fixe seul.
+
+Fonctionnement :
+• Itération sur handlers au fire.
+
+Exécution étape par étape :
+• fire(data) appelle chaque callable.
+
+Ordre des opérations :
+• subscribe puis fire.
+
+Cas d'utilisation courants :
+• GUI, pub/sub léger.
+
+Cas limites :
+• Handler qui lève : interrompre ou isoler try.
+
+Considérations de performance :
+• O(n) handlers.
+
+Exemples :
+• Event banque.
+
+Remarques :
+• Réponse : liste de dépendants notifiés — 1re option.`,
+  2978: `Event subscribe + fire("hello") — results
+
+Débutant :
+• ["hello"] : un handler append une fois.
+
+Intermédiaire :
+• Deux handlers pourraient doubler les effets.
+
+Expert :
+• Ordre = ordre d'abonnement.
+
+Concepts clés :
+• Callbacks en liste.
+
+Distinctions clés :
+• Pas [] ni erreur.
+
+Fonctionnement :
+• lambda d append.
+
+Exécution étape par étape :
+• fire itère une fois.
+
+Ordre des opérations :
+• Event() puis subscribe puis fire.
+
+Cas d'utilisation courants :
+• Bus d'événements minimal.
+
+Cas limites :
+• fire avant subscribe : liste vide.
+
+Considérations de performance :
+• N/A petit n.
+
+Exemples :
+• Deux lambdas → deux entrées.
+
+Remarques :
+• Réponse : ["hello"] — 1re option.`,
+  2979: `Principe de substitution de Liskov (LSP)
+
+Débutant :
+• Les sous-classes doivent être utilisables partout où la base l'est sans casser le programme.
+
+Intermédiaire :
+• Contrat et invariants respectés.
+
+Expert :
+• Carré/Rectangle classique.
+
+Concepts clés :
+• Remplaçabilité sémantique.
+
+Distinctions clés :
+• Pas SRP ni DIP ici.
+
+Fonctionnement :
+• isinstance + comportement attendu.
+
+Exécution étape par étape :
+• Fonctions polymorphes supposent garanties parent.
+
+Ordre des opérations :
+• Passage sous-type où type annoté parent.
+
+Cas d'utilisation courants :
+• API publiques orientées héritage.
+
+Cas limites :
+• Préconditions renforcies en enfant : violation.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• test_rect(r) banque.
+
+Remarques :
+• Réponse : substituabilité des sous-classes — 1re option.`,
+  2980: `Square(Rectangle) — violation LSP potentielle ?
+
+Débutant :
+• Oui si w et h peuvent être fixés indépendamment alors que le carré impose égalité.
+
+Intermédiaire :
+• Invariant w==h vs rectangle général.
+
+Expert :
+• setters séparés cassent l'attente client.
+
+Concepts clés :
+• Modèle is-a trompeur.
+
+Distinctions clés :
+• Pas « toujours OK ».
+
+Fonctionnement :
+• Assertions sur aire peuvent échouer.
+
+Exécution étape par étape :
+• Mutation état incohérent.
+
+Ordre des opérations :
+• Utiliser Rectangle attendu avec Square réel.
+
+Cas d'utilisation courants :
+• Leçon SOLID.
+
+Cas limites :
+• API carré qui interdit split w/h : mieux.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• r.w=4 r.h=5 sur Square.
+
+Remarques :
+• Réponse : oui si w et h indépendants — 1re option.`,
+  2981: `Open/Closed Principle
+
+Débutant :
+• Ouvert à l'extension, fermé à la modification du code existant.
+
+Intermédiaire :
+• Nouvelles sous-classes / plugins plutôt que patch central.
+
+Expert :
+• OCP avec ABC + nouvelles implémentations.
+
+Concepts clés :
+• Éviter casser clients en ajoutant features.
+
+Distinctions clés :
+• Pas l'inverse ouvert/fermé.
+
+Fonctionnement :
+• Shape.area avec Circle/Square nouveaux.
+
+Exécution étape par étape :
+• Ajout fichier sans éditer ancien.
+
+Ordre des opérations :
+• Concevoir points d'extension.
+
+Cas d'utilisation courants :
+• Frameworks extensibles.
+
+Cas limites :
+• Trop d'abstraction prématurée.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Nouvelle forme sans toucher calculateur générique.
+
+Remarques :
+• Réponse : ouvert extension / fermé modification — 1re option.`,
+  2982: `Single Responsibility Principle — raisons de changer
+
+Débutant :
+• Une seule raison principale de changer par classe.
+
+Intermédiaire :
+• « Raison » liée à un acteur ou responsabilité métier.
+
+Expert :
+• Split ReportCalculator / Formatter / Saver.
+
+Concepts clés :
+• Cohésion forte.
+
+Distinctions clés :
+• Pas « autant que nécessaire » sans limite.
+
+Fonctionnement :
+• Changement format n'oblige pas toucher calcul.
+
+Exécution étape par étape :
+• Identifier sources de changement.
+
+Ordre des opérations :
+• Refactor si multiples axes mélangés.
+
+Cas d'utilisation courants :
+• Services maintenables.
+
+Cas limites :
+• Microlasses excessives.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Report monolithique vs découpé.
+
+Remarques :
+• Réponse : une — 1re option.`,
+  2983: `Interface Segregation Principle
+
+Débutant :
+• Préférer plusieurs petites interfaces plutôt qu'une énorme.
+
+Intermédiaire :
+• Robot n'implémente pas eat/sleep.
+
+Expert :
+• ABC séparés Workable / Eatable.
+
+Concepts clés :
+• Pas forcer méthodes inutiles.
+
+Distinctions clés :
+• Pas une seule grosse interface obligatoire.
+
+Fonctionnement :
+• Clients dépendent du minimum.
+
+Exécution étape par étape :
+• isinstance/typing sur rôle précis.
+
+Ordre des opérations :
+• Découper contrats.
+
+Cas d'utilisation courants :
+• Plugins, microservices.
+
+Cas limites :
+• Explosion d'interfaces : équilibre.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Human vs Robot banque.
+
+Remarques :
+• Réponse : beaucoup de petites interfaces ciblées — 1re option.`,
+  2984: `Dependency Inversion Principle
+
+Débutant :
+• Dépendre d'abstractions, pas d'implémentations concrètes directes.
+
+Intermédiaire :
+• Haut niveau ne doit pas importer MySQL en dur si Postgres possible.
+
+Expert :
+• Injection Database ABC.
+
+Concepts clés :
+• Flexibilité et tests.
+
+Distinctions clés :
+• Pas dépendre uniquement des classes feuilles.
+
+Fonctionnement :
+• App.__init__(db: Database).
+
+Exécution étape par étape :
+• save dispatch sur interface.
+
+Ordre des opérations :
+• Câblage DI au bord de l'app.
+
+Cas d'utilisation courants :
+• mocks, swap backends.
+
+Cas limites :
+• Abstraction fuyante (leaky).
+
+Considérations de performance :
+• Indirection minime.
+
+Exemples :
+• App/Database banque.
+
+Remarques :
+• Réponse : abstractions — 1re option.`,
+  2985: `class Plugin(ABC) avec execute abstrait — quel principe ?
+
+Débutant :
+• Inversion des dépendances : le code haut niveau parle Plugin, pas LogPlugin seul.
+
+Intermédiaire :
+• Extension par nouvelles sous-classes.
+
+Expert :
+• Couplage réduit.
+
+Concepts clés :
+• Port/adapter mental.
+
+Distinctions clés :
+• Pas DRY/YAGNI ici.
+
+Fonctionnement :
+• run_plugin(p: Plugin).
+
+Exécution étape par étape :
+• polymorphisme sur execute.
+
+Ordre des opérations :
+• Définir interface puis impls.
+
+Cas d'utilisation courants :
+• Systèmes plugins.
+
+Cas limites :
+• Trop d'ABC pour 2 lignes : overkill.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• LogPlugin / AuthPlugin.
+
+Remarques :
+• Réponse : inversion des dépendances — 1re option.`,
+  2986: `Singleton __new__ — s1 is s2
+
+Débutant :
+• True : même instance réutilisée.
+
+Intermédiaire :
+• _instance sur la classe.
+
+Expert :
+• Sous-classes : souvent un dict par cls si besoin.
+
+Concepts clés :
+• Identité unique.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• if not cls._instance: créer.
+
+Exécution étape par étape :
+• Deuxième appel retourne premier objet.
+
+Ordre des opérations :
+• s1 = Singleton() puis s2.
+
+Cas d'utilisation courants :
+• Config globale (avec prudence).
+
+Cas limites :
+• Tests : reset difficile.
+
+Considérations de performance :
+• Un seul objet.
+
+Exemples :
+• id(s1)==id(s2).
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2987: `Meta.__call__ sur Foo(metaclass=Meta) — Foo()
+
+Débutant :
+• Affiche Creating Foo puis retourne une instance Foo normalement.
+
+Intermédiaire :
+• super().__call__ délègue à type.__call__.
+
+Expert :
+• Point d'accroche création + __init__.
+
+Concepts clés :
+• Classe est callable via métaclasse.
+
+Distinctions clés :
+• Pas silence ni None seul.
+
+Fonctionnement :
+• print puis construction standard.
+
+Exécution étape par étape :
+• Meta.__call__(Foo, *a, **kw).
+
+Ordre des opérations :
+• Foo() déclenche méta.
+
+Cas d'utilisation courants :
+• Registres, compteurs, logs.
+
+Cas limites :
+• Oublier return super : None cassé.
+
+Considérations de performance :
+• print coûte I/O.
+
+Exemples :
+• Compteur d'instances.
+
+Remarques :
+• Réponse : message + instance — 1re option.`,
+  2988: `Quand préférer la composition à l'héritage ?
+
+Débutant :
+• Combiner des comportements de sources sans relation is-a claire.
+
+Intermédiaire :
+• Voiture a un moteur plutôt qu'hériter de moteur.
+
+Expert :
+• Réduit hiérarchies fragiles profondes.
+
+Concepts clés :
+• has-a flexible.
+
+Distinctions clés :
+• Pas quand is-a naturel et stable.
+
+Fonctionnement :
+• Délégation self.engine.start().
+
+Exécution étape par étape :
+• Swap composant runtime.
+
+Ordre des opérations :
+• Concevoir API puis choisir composition.
+
+Cas d'utilisation courants :
+• Policies interchangeables sans MRO.
+
+Cas limites :
+• Boilerplate délégation.
+
+Considérations de performance :
+• Une indirection.
+
+Exemples :
+• Car/Engine/GPS banque.
+
+Remarques :
+• Réponse : comportements de sources non liées — 1re option.`,
+  2989: `À quoi servent les mixins ?
+
+Débutant :
+• Ajouter des méthodes réutilisables sans hiérarchie profonde dédiée.
+
+Intermédiaire :
+• Héritage multiple ciblé de petites briques.
+
+Expert :
+• Souvent non instanciés seuls.
+
+Concepts clés :
+• orthogonalité.
+
+Distinctions clés :
+• Pas remplacer toutes les bases.
+
+Fonctionnement :
+• class User(JsonMixin, LogMixin).
+
+Exécution étape par étape :
+• MRO fusionne méthodes.
+
+Ordre des opérations :
+• Lister mixins avant base concrète selon besoin.
+
+Cas d'utilisation courants :
+• Django CBV, sérialisation.
+
+Cas limites :
+• Diamant : ordonner MRO avec soin.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• to_json + log banque.
+
+Remarques :
+• Réponse : méthodes réutilisables sans grosse hiérarchie — 1re option.`,
+  2990: `Résolution du diamant en Python
+
+Débutant :
+• Linéarisation C3 pour l'ordre de résolution des méthodes (MRO).
+
+Intermédiaire :
+• Chaque classe une fois ; respect ordre déclaration parents.
+
+Expert :
+• super() suit le MRO, pas le parent syntaxique seul.
+
+Concepts clés :
+• Cohérence appels coopératifs.
+
+Distinctions clés :
+• Pas choix aléatoire ni erreur systématique.
+
+Fonctionnement :
+• D(B,C) → D,B,C,A,object exemple banque.
+
+Exécution étape par étape :
+• D().method trouve B.method d'abord.
+
+Ordre des opérations :
+• Calcul MRO à la définition classe.
+
+Cas d'utilisation courants :
+• MI propre avec super chaîné.
+
+Cas limites :
+• C3 peut échouer : TypeError hiérarchie illégale.
+
+Considérations de performance :
+• MRO calculé une fois.
+
+Exemples :
+• print(D.__mro__).
+
+Remarques :
+• Réponse : C3 / MRO — 1re option.`,
+  2991: `Hiérarchie exceptions — parent de ValueError etc.
+
+Débutant :
+• Exception (sous BaseException).
+
+Intermédiaire :
+• SystemExit et KeyboardInterrupt sautent Exception.
+
+Expert :
+• except Exception attrape la plupart des erreurs « normales ».
+
+Concepts clés :
+• Deux niveaux racine utile.
+
+Distinctions clés :
+• Pas BaseException comme parent direct de ValueError dans les choix banque (Exception listé).
+
+Fonctionnement :
+• issubclass(ValueError, Exception) True.
+
+Exécution étape par étape :
+• raise ValueError attrapé par except Exception.
+
+Ordre des opérations :
+• Concevoir except précis vs large.
+
+Cas d'utilisation courants :
+• Handlers graduels.
+
+Cas limites :
+• Attraper trop large masque bugs.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• KeyError, TypeError même branche.
+
+Remarques :
+• Réponse : ValueError, TypeError, KeyError, etc. sous Exception — 1re option.`,
+  2992: `class CustomError(Exception): pass puis raise
+
+Débutant :
+• Oui : lève CustomError ; __init__ hérité gère le message.
+
+Intermédiaire :
+• except CustomError fonctionne.
+
+Expert :
+• Peut enrichir __init__ plus tard.
+
+Concepts clés :
+• Exceptions utilisateur triviales.
+
+Distinctions clés :
+• Pas besoin __init__ custom obligatoire.
+
+Fonctionnement :
+• mécanisme Exception standard.
+
+Exécution étape par étape :
+• propagation try/except.
+
+Ordre des opérations :
+• raise avec str.
+
+Cas d'utilisation courants :
+• Erreurs domaine.
+
+Cas limites :
+• Hériter BaseException direct : rare sauf besoin spécial.
+
+Considérations de performance :
+• Coût exception si flux contrôle abusif.
+
+Exemples :
+• e.args.
+
+Remarques :
+• Réponse : oui, lève CustomError — 1re option.`,
+  2993: `CustomError(msg, code) avec super().__init__(msg) — e.code
+
+Débutant :
+• 404 : attribut instance supplémentaire.
+
+Intermédiaire :
+• str(e) reste msg via args.
+
+Expert :
+• __reduce__ si pickle besoin champs extra.
+
+Concepts clés :
+• Enrichir l'exception.
+
+Distinctions clés :
+• Pas "fail" dans code.
+
+Fonctionnement :
+• self.code = code après super.
+
+Exécution étape par étape :
+• Construction puis accès .code.
+
+Ordre des opérations :
+• CustomError("fail", 404).
+
+Cas d'utilisation courants :
+• HTTP status, codes DB.
+
+Cas limites :
+• Oublier super : args cassés.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• e.args[0] message.
+
+Remarques :
+• Réponse : 404 — 1re option.`,
+  2994: `issubclass(DBError, AppError)
+
+Débutant :
+• True : DBError hérite directement de AppError.
+
+Intermédiaire :
+• except AppError attrape DBError.
+
+Expert :
+• Transitive vers Exception.
+
+Concepts clés :
+• Hiérarchie erreurs applicatives.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• Graphe de classes.
+
+Exécution étape par étape :
+• Vérification MRO.
+
+Ordre des opérations :
+• Définitions trois classes.
+
+Cas d'utilisation courants :
+• Couches API.
+
+Cas limites :
+• Cycles impossibles.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• raise DBError dans except AppError.
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2995: `except AppError avec raise DBError — result
+
+Débutant :
+• "caught" : DBError est sous-classe d'AppError.
+
+Intermédiaire :
+• Matching par famille.
+
+Expert :
+• Ordre des except du plus spécifique au large.
+
+Concepts clés :
+• Polymorphisme exceptions.
+
+Distinctions clés :
+• Pas « non attrapé ».
+
+Fonctionnement :
+• isinstance(raised, AppError).
+
+Exécution étape par étape :
+• Branche except exécutée.
+
+Ordre des opérations :
+• try puis raise DBError().
+
+Cas d'utilisation courants :
+• Handler unique app errors.
+
+Cas limites :
+• Masquer trop : logger puis re-raise parfois mieux.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• AuthError idem.
+
+Remarques :
+• Réponse : "caught" — 1re option.`,
+  2996: `except (TypeError, ValueError) avec raise ValueError
+
+Débutant :
+• "caught" : ValueError dans le tuple.
+
+Intermédiaire :
+• KeyError ne serait pas attrapé.
+
+Expert :
+• as e optionnel pour inspecter.
+
+Concepts clés :
+• Union de types dans except.
+
+Distinctions clés :
+• Pas erreur non match.
+
+Fonctionnement :
+• test membership tuple classes.
+
+Exécution étape par étape :
+• assign result.
+
+Ordre des opérations :
+• try body puis clause.
+
+Cas d'utilisation courants :
+• Entrées utilisateur multiples échecs.
+
+Cas limites :
+• Tuple vide : syntaxe interdite.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• except (OSError, IOError) historique.
+
+Remarques :
+• Réponse : "caught" — 1re option.`,
+  2997: `issubclass(ValueError, Exception)
+
+Débutant :
+• True : chaîne ValueError → Exception → BaseException.
+
+Intermédiaire :
+• Donc except Exception l'attrape.
+
+Expert :
+• isinstance(ve, Exception) aussi True pour instance ve.
+
+Concepts clés :
+• Vérification hiérarchie.
+
+Distinctions clés :
+• Pas False.
+
+Fonctionnement :
+• MRO de ValueError contient Exception.
+
+Exécution étape par étape :
+• bool retourné.
+
+Ordre des opérations :
+• Appel builtin issubclass.
+
+Cas d'utilisation courants :
+• Méta-tests frameworks.
+
+Cas limites :
+• Premier arg doit être classe, pas instance.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• issubclass(TypeError, Exception).
+
+Remarques :
+• Réponse : True — 1re option.`,
+  2998: `issubclass(KeyboardInterrupt, Exception)
+
+Débutant :
+• False : hérite directement de BaseException.
+
+Intermédiaire :
+• Donc except Exception ne prend pas Ctrl+C.
+
+Expert :
+• Boucle infinie avec except Exception : interruption utilisateur reste possible.
+
+Concepts clés :
+• Séparation erreurs vs événements système.
+
+Distinctions clés :
+• Pas True.
+
+Fonctionnement :
+• MRO sans Exception.
+
+Exécution étape par étape :
+• issubclass retourne faux.
+
+Ordre des opérations :
+• Import implicit builtins.
+
+Cas d'utilisation courants :
+• Handlers robustes.
+
+Cas limites :
+• except BaseException : tout prendre (dangereux).
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• Comparer SystemExit.
+
+Remarques :
+• Réponse : False — 1re option.`,
+  2999: `issubclass(SystemExit, Exception)
+
+Débutant :
+• False : sys.exit lève sous BaseException direct.
+
+Intermédiaire :
+• Permet quitter même dans except Exception large.
+
+Expert :
+• Code 0 sortie propre.
+
+Concepts clés :
+• Flux de contrôle vs bug.
+
+Distinctions clés :
+• Pas True.
+
+Fonctionnement :
+• MRO SystemExit, BaseException, object.
+
+Exécution étape par étape :
+• issubclass faux.
+
+Ordre des opérations :
+• Vérification après import sys conceptuel.
+
+Cas d'utilisation courants :
+• CLI exit.
+
+Cas limites :
+• Capturer SystemExit volontairement : rare.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• try: sys.exit(0) except Exception: ne bloque pas.
+
+Remarques :
+• Réponse : False — 1re option.`,
+  3000: `Pourquoi KeyboardInterrupt et SystemExit hors de Exception ?
+
+Débutant :
+• Pour qu'un except Exception générique n'avale pas l'arrêt utilisateur ni la sortie du programme.
+
+Intermédiaire :
+• Ce sont des événements de contrôle, pas des bugs typiques.
+
+Expert :
+• BaseException reste le vrai parent commun si besoin absolu.
+
+Concepts clés :
+• Sécurité d'exécution interactive.
+
+Distinctions clés :
+• Pas raison performance Python 2 seul.
+
+Fonctionnement :
+• Filtrage dans mécanisme matching except.
+
+Exécution étape par étape :
+• Interpréteur propage jusqu'à fin si non attrapé au bon niveau.
+
+Ordre des opérations :
+• Écrire except précis pour erreurs métier.
+
+Cas d'utilisation courants :
+• Serveurs, REPL, scripts longs.
+
+Cas limites :
+• except BaseException : cleanup critique seulement.
+
+Considérations de performance :
+• N/A.
+
+Exemples :
+• while True: pass sous except Exception.
+
+Remarques :
+• Réponse : éviter que except Exception les bloque — 1re option.`,
   402: `"  hello  ".lstrip() renvoie "hello  " : lstrip retire les blancs de gauche seulement.
 
 Débutant :
