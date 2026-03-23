@@ -412,6 +412,13 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
 - **Build verification:** `npm run build` (vite build + `scripts/inject-precache.js`) passed.
 - **Next:** run a broader French-English contamination scan to remove any remaining English prose inside French `Expert` blocks (target: IDs 1201–3300), then re-audit structure/heading parity.
 
+### 2026-03-23 (continued) — French micro-prose cleanup
+
+- **Completed:** removed remaining English micro-prose fragments inside French detailed explanations:
+  - **3224:** `assertRaises vs pytest.raises` (translated to French wording).
+  - **3295:** `Early return`, `nested vs guard clauses`, `validation pipelines`, and `pattern matching` fragments (translated to French wording).
+- **Verification:** `npm run build` passed; targeted `rg` checks confirm the old English fragments no longer exist.
+
 ## Verification Workflow
 
 For each batch:

@@ -136453,7 +136453,7 @@ Concepts clés :
 • Tests d’erreurs attendues.
 
 Distinctions clés :
-• assertRaises vs pytest.raises.
+• assertRaises par rapport à pytest.raises.
 
 Fonctionnement :
 • Exécute et capture type attendu.
@@ -139302,7 +139302,7 @@ Débutant :
 • Préférer des structures peu profondes et des retours anticipés plutôt que if dans if dans if.
 
 Intermédiaire :
-• Early return réduit indentation.
+• Un retour anticipé réduit l’indentation.
 
 Expert :
 • Refactor en fonctions nommées pour aplatir.
@@ -139311,7 +139311,7 @@ Concepts clés :
 • Lisibilité et maintenance.
 
 Distinctions clés :
-• nested vs guard clauses.
+• imbrication vs clauses de garde.
 
 Fonctionnement :
 • N/A.
@@ -139323,10 +139323,10 @@ Ordre des opérations :
 • N/A.
 
 Cas d'utilisation courants :
-• validation pipelines.
+• pipelines de validation.
 
 Cas limites :
-• parfois pattern matching clarifie au lieu d’aplatir aveuglément.
+• parfois le filtrage par motifs clarifie au lieu d’aplatir aveuglément.
 
 Considérations de performance :
 • N/A.
@@ -139335,7 +139335,7 @@ Exemples :
 • if not ok: return au lieu d’énorme else.
 
 Remarques :
-• Réponse : éviter imbrication profonde ; structures plates et early returns — 1re option.`,
+• Réponse : éviter imbrication profonde ; structures plates et retours précoces — 1re option.`,
   3296: `« Explicit is better than implicit » (Zen) signifie ?
 
 Débutant :
