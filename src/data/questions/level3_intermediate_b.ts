@@ -101,10 +101,10 @@ Performance Considerations:
 • Truth tables for verification.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Truth tables for verification.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Truth tables for verification.`
   }),
   // 53. not has highest precedence among boolean operators
   (_i: number) => ({
@@ -151,10 +151,10 @@ Performance Considerations:
 • Style guides suggest spacing and parens.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Style guides suggest spacing and parens.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Style guides suggest spacing and parens.`
   }),
   // 54. not with parentheses
   (_i: number) => ({
@@ -197,13 +197,13 @@ Edge Cases:
 • Truth tables.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Truth tables.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Truth tables.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Truth tables.`
   }),
   // 55. not False evaluates before and
   (_i: number) => ({
@@ -245,13 +245,13 @@ Edge Cases:
 • Readability in compound guards.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Readability in compound guards.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Readability in compound guards.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Readability in compound guards.`
   }),
   // 56. All three operators: not, and, or
   (_i: number) => ({
@@ -297,10 +297,10 @@ Performance Considerations:
 • Unit-test each subexpression.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Unit-test each subexpression.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Unit-test each subexpression.`
   }),
   // 57. Comparison combined with logical and
   (_i: number) => ({
@@ -346,10 +346,10 @@ Performance Considerations:
 • Mind short-circuit: and stops at first false.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Mind short-circuit: and stops at first false.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Mind short-circuit: and stops at first false.`
   }),
   // 58. or short-circuits on first True comparison
   (_i: number) => ({
@@ -395,10 +395,10 @@ Performance Considerations:
 • Logically related inequalities may deserve named variables.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Logically related inequalities may deserve named variables.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Logically related inequalities may deserve named variables.`
   }),
   // 59. not with comparison
   (_i: number) => ({
@@ -444,10 +444,10 @@ Performance Considerations:
 • Do not guess precedence — check docs.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Do not guess precedence — check docs.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Do not guess precedence — check docs.`
   }),
   // 60. Four-way chained comparison
   (_i: number) => ({
@@ -491,13 +491,13 @@ Edge Cases:
 • Floats: use isclose at endpoints.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Floats: use isclose at endpoints.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Floats: use isclose at endpoints.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Floats: use isclose at endpoints.`
   }),
   // 61. Mixed chained comparison (< and >)
   (_i: number) => ({
@@ -543,10 +543,10 @@ Performance Considerations:
 • Explain with number line sketches.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Explain with number line sketches.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Explain with number line sketches.`
   }),
   // 62. Chained comparison where second part is False
   (_i: number) => ({
@@ -589,13 +589,13 @@ Edge Cases:
 • Chained ops still pairwise.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Chained ops still pairwise.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Chained ops still pairwise.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Chained ops still pairwise.`
   }),
   // 63. String chained comparison (lexicographic)
   (_i: number) => ({
@@ -641,10 +641,10 @@ Performance Considerations:
 • Use locale-aware sort for user-visible strings.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Use locale-aware sort for user-visible strings.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Use locale-aware sort for user-visible strings.`
   }),
   // 64. Chained comparison with negative number
   (_i: number) => ({
@@ -687,13 +687,13 @@ Edge Cases:
 • Explain carefully in teaching.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Explain carefully in teaching.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Explain carefully in teaching.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Explain carefully in teaching.`
   }),
   // 65. Chained comparison with ==
   (_i: number) => ({
@@ -736,13 +736,13 @@ Edge Cases:
 • Prefer named subexpressions if confusing.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Prefer named subexpressions if confusing.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Prefer named subexpressions if confusing.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Prefer named subexpressions if confusing.`
   }),
   // 66. Range check via chaining
   (_i: number) => ({
@@ -788,10 +788,10 @@ Performance Considerations:
 • Floats: isclose at edges.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Floats: isclose at edges.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Floats: isclose at edges.`
   }),
   // 67. Range check that fails
   (_i: number) => ({
@@ -834,13 +834,13 @@ Edge Cases:
 • Separate checks for clearer errors.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Separate checks for clearer errors.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Separate checks for clearer errors.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Separate checks for clearer errors.`
   }),
   // 68. Truthy check before method call
   (_i: number) => ({
@@ -887,10 +887,10 @@ Performance Considerations:
 • Mixing return types str vs bool — mind API consistency.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Mixing return types str vs bool — mind API consistency.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Mixing return types str vs bool — mind API consistency.`
   }),
   // 69. Short-circuit returns falsy value
   (_i: number) => ({
@@ -936,10 +936,10 @@ Performance Considerations:
 • Prefer explicit booleans in APIs.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Prefer explicit booleans in APIs.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Prefer explicit booleans in APIs.`
   }),
   // 70. None short-circuits before attribute access
   (_i: number) => ({
@@ -988,10 +988,10 @@ Performance Considerations:
 • if x is not None: x.strip() clearer.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• if x is not None: x.strip() clearer.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• if x is not None: x.strip() clearer.`
   }),
   // 71. dict.get() returns None (falsy), or-fallback triggers
   (_i: number) => ({
@@ -1036,10 +1036,10 @@ Performance Considerations:
 • defaultdict alternative.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• defaultdict alternative.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• defaultdict alternative.`
   }),
   // 72. dict.get() returns truthy value, or-fallback skipped
   (_i: number) => ({
@@ -1081,13 +1081,13 @@ Edge Cases:
 • Explicit branching for 0 vs missing.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Explicit branching for 0 vs missing.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Explicit branching for 0 vs missing.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Explicit branching for 0 vs missing.`
   }),
   // 73. The 0-is-falsy bug pattern with or
   (_i: number) => ({
@@ -1134,10 +1134,10 @@ Performance Considerations:
 • Document API: falsy vs missing.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Document API: falsy vs missing.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Document API: falsy vs missing.`
   }),
   // 74. Correct default with .get() second parameter
   (_i: number) => ({
@@ -1187,10 +1187,10 @@ Performance Considerations:
 • collections.ChainMap patterns differ.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• collections.ChainMap patterns differ.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• collections.ChainMap patterns differ.`
   }),
   // 75. any() with generator expression
   (_i: number) => ({
@@ -1235,13 +1235,13 @@ Edge Cases:
 • Unicode digit categories.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Unicode digit categories.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Unicode digit categories.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Unicode digit categories.`
   }),
   // 76. all() returns True when all elements match
   (_i: number) => ({
@@ -1288,10 +1288,10 @@ Performance Considerations:
 • Normalize unicode for locale policies.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Normalize unicode for locale policies.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Normalize unicode for locale policies.`
   }),
   // 77. all() returns False when one element fails
   (_i: number) => ({
@@ -1334,16 +1334,16 @@ Common Use Cases:
 • regex ^[A-Za-z]+$ with ASCII flag.
 
 Edge Cases:
-• — (Editorial: expand this slot if needed.)
+• regex ^[A-Za-z]+$ with ASCII flag.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• regex ^[A-Za-z]+$ with ASCII flag.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• regex ^[A-Za-z]+$ with ASCII flag.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• regex ^[A-Za-z]+$ with ASCII flag.`
   }),
   // 78. Counting with generator expression
   (_i: number) => ({
@@ -1392,10 +1392,10 @@ Performance Considerations:
 • NumPy count_nonzero.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• NumPy count_nonzero.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• NumPy count_nonzero.`
   }),
   // 79. List comprehension with filter
   (_i: number) => ({
@@ -1442,13 +1442,13 @@ Edge Cases:
 • Generator for memory efficiency on large inputs.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Generator for memory efficiency on large inputs.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Generator for memory efficiency on large inputs.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Generator for memory efficiency on large inputs.`
   }),
   // 80. any() with startswith
   (_i: number) => ({
@@ -1493,13 +1493,13 @@ Edge Cases:
 • tuple of prefixes in startswith.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• tuple of prefixes in startswith.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• tuple of prefixes in startswith.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• tuple of prefixes in startswith.`
   }),
   // 81. all() fails on one short string
   (_i: number) => ({
@@ -1542,13 +1542,13 @@ Edge Cases:
 • Report which word failed with enumerate.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Report which word failed with enumerate.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Report which word failed with enumerate.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Report which word failed with enumerate.`
   }),
   // 82. max() with key function
   (_i: number) => ({
@@ -1594,13 +1594,13 @@ Edge Cases:
 • numpy.argmax for vectors.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• numpy.argmax for vectors.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• numpy.argmax for vectors.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• numpy.argmax for vectors.`
   }),
   // 83. min() with negation key finds the maximum
   (_i: number) => ({
@@ -1644,13 +1644,13 @@ Edge Cases:
 • key abs for magnitude sometimes.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• key abs for magnitude sometimes.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• key abs for magnitude sometimes.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• key abs for magnitude sometimes.`
   }),
   // 84. Sorting booleans
   (_i: number) => ({
@@ -1694,13 +1694,13 @@ Edge Cases:
 • Don't rely on bool sort in APIs — be explicit.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Don't rely on bool sort in APIs — be explicit.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Don't rely on bool sort in APIs — be explicit.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Don't rely on bool sort in APIs — be explicit.`
   }),
   // 85. List comparison element-by-element
   (_i: number) => ({
@@ -1751,10 +1751,10 @@ Performance Considerations:
 • Document ordering for UI sort keys.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Document ordering for UI sort keys.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Document ordering for UI sort keys.`
   }),
   // 86. Lambda with conditional expression
   (_i: number) => ({
@@ -1800,10 +1800,10 @@ Performance Considerations:
 • assigning lambda to name discouraged by PEP8 but common in pandas.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• assigning lambda to name discouraged by PEP8 but common in pandas.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• assigning lambda to name discouraged by PEP8 but common in pandas.`
   }),
   // 87. Lambda conditional — odd case
   (_i: number) => ({
@@ -1843,16 +1843,16 @@ Common Use Cases:
 • lambda debugging harder than def.
 
 Edge Cases:
-• — (Editorial: expand this slot if needed.)
+• lambda debugging harder than def.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• lambda debugging harder than def.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• lambda debugging harder than def.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• lambda debugging harder than def.`
   }),
   // 88. Nested ternary — middle branch
   (_i: number) => ({
@@ -1897,13 +1897,13 @@ Edge Cases:
 • dict or bisect for many labels.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• dict or bisect for many labels.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• dict or bisect for many labels.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• dict or bisect for many labels.`
   }),
   // 89. Nested ternary — last branch
   (_i: number) => ({
@@ -1947,13 +1947,13 @@ Edge Cases:
 • elif chain for teaching.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• elif chain for teaching.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• elif chain for teaching.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• elif chain for teaching.`
   }),
   // 90. List comprehension with compound condition
   (_i: number) => ({
@@ -2002,13 +2002,13 @@ Edge Cases:
 • Keep readable — sometimes split conditions.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Keep readable — sometimes split conditions.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Keep readable — sometimes split conditions.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Keep readable — sometimes split conditions.`
   }),
   // 91. Counting multiples with comprehension
   (_i: number) => ({
@@ -2051,13 +2051,13 @@ Edge Cases:
 • Use arithmetic count formula when possible.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Use arithmetic count formula when possible.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Use arithmetic count formula when possible.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Use arithmetic count formula when possible.`
   }),
   // 92. next() with generator expression
   (_i: number) => ({
@@ -2105,13 +2105,13 @@ Edge Cases:
 • for-loop explicit for debugging.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• for-loop explicit for debugging.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• for-loop explicit for debugging.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• for-loop explicit for debugging.`
   }),
   // 93. NaN is truthy
   (_i: number) => ({
@@ -2156,16 +2156,16 @@ Common Use Cases:
 • pandas isna.
 
 Edge Cases:
-• — (Editorial: expand this slot if needed.)
+• pandas isna.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• pandas isna.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• pandas isna.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• pandas isna.`
   }),
   // 94. Infinity is truthy
   (_i: number) => ({
@@ -2204,19 +2204,19 @@ Order of Operations:
 • Consistent curriculum.
 
 Common Use Cases:
-• — (Editorial: expand this slot if needed.)
+• Consistent curriculum.
 
 Edge Cases:
-• — (Editorial: expand this slot if needed.)
+• Consistent curriculum.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Consistent curriculum.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Consistent curriculum.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Consistent curriculum.`
   }),
   // 95. True == 1
   (_i: number) => ({
@@ -2257,19 +2257,19 @@ Order of Operations:
 • Identity vs equality separate topic.
 
 Common Use Cases:
-• — (Editorial: expand this slot if needed.)
+• Identity vs equality separate topic.
 
 Edge Cases:
-• — (Editorial: expand this slot if needed.)
+• Identity vs equality separate topic.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Identity vs equality separate topic.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Identity vs equality separate topic.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Identity vs equality separate topic.`
   }),
   // 96. False == 0
   (_i: number) => ({
@@ -2307,22 +2307,22 @@ Step-by-Step Execution:
 Explicit key types.
 
 Order of Operations:
-• — (Editorial: expand this slot if needed.)
+• Trivial.
 
 Common Use Cases:
-• — (Editorial: expand this slot if needed.)
+• Trivial.
 
 Edge Cases:
-• — (Editorial: expand this slot if needed.)
+• Trivial.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Trivial.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Trivial.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Trivial.`
   }),
   // 97. True + 1 arithmetic
   (_i: number) => ({
@@ -2362,19 +2362,19 @@ Order of Operations:
 • int(True)+1
 
 Common Use Cases:
-• — (Editorial: expand this slot if needed.)
+• int(True)+1
 
 Edge Cases:
-• — (Editorial: expand this slot if needed.)
+• int(True)+1
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• int(True)+1
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• int(True)+1
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• int(True)+1`
   }),
   // 98. False + 0 arithmetic
   (_i: number) => ({
@@ -2409,22 +2409,22 @@ Step-by-Step Execution:
 sum(bool_list) counting pattern.
 
 Order of Operations:
-• — (Editorial: expand this slot if needed.)
+• Trivial.
 
 Common Use Cases:
-• — (Editorial: expand this slot if needed.)
+• Trivial.
 
 Edge Cases:
-• — (Editorial: expand this slot if needed.)
+• Trivial.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Trivial.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Trivial.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Trivial.`
   }),
   // 99. Equal keys in dict: first key kept, last value wins
   (_i: number) => ({
@@ -2465,16 +2465,16 @@ Common Use Cases:
 • str keys for JSON-like maps.
 
 Edge Cases:
-• — (Editorial: expand this slot if needed.)
+• str keys for JSON-like maps.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• str keys for JSON-like maps.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• str keys for JSON-like maps.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• str keys for JSON-like maps.`
   }),
   // 100. False == 0 == 0.0 in list.count()
   (_i: number) => ({
@@ -2525,9 +2525,9 @@ Performance Considerations:
 • Document analytics definitions.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Document analytics definitions.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Document analytics definitions.`
   }),
 ];

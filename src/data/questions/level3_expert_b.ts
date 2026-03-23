@@ -521,7 +521,7 @@ Examples:
 • Combine with any() on children for meaningful emptiness.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Combine with any() on children for meaningful emptiness.`
   }),
   // 61. bool((0,)) → True (non-empty tuple)
   (_i: number) => ({
@@ -577,7 +577,7 @@ Examples:
 • NamedTuple for clarity in APIs.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• NamedTuple for clarity in APIs.`
   }),
   // 62. bool({0: 0}) → True (non-empty dict)
   (_i: number) => ({
@@ -627,7 +627,7 @@ Examples:
 • Use .get and 'in' for presence, not truth of dict.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Use .get and 'in' for presence, not truth of dict.`
   }),
   // 63. bool(frozenset()) → False
   (_i: number) => ({
@@ -679,10 +679,10 @@ Performance Considerations:
 • Empty frozenset is a singleton-like useful sentinel container.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Empty frozenset is a singleton-like useful sentinel container.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Empty frozenset is a singleton-like useful sentinel container.`
   }),
   // 64. bool(frozenset({0})) → True
   (_i: number) => ({
@@ -729,10 +729,10 @@ Performance Considerations:
 • Prefer str tags if collisions confuse readers.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Prefer str tags if collisions confuse readers.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Prefer str tags if collisions confuse readers.`
   }),
   // 65. bool(bytearray()) → False
   (_i: number) => ({
@@ -779,10 +779,10 @@ Performance Considerations:
 • memoryview truthiness follows underlying length.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• memoryview truthiness follows underlying length.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• memoryview truthiness follows underlying length.`
   }),
   // 66. bool(bytearray(b"\x00")) → True
   (_i: number) => ({
@@ -829,10 +829,10 @@ Performance Considerations:
 • Distinguish empty buffer from buffer of zeros.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Distinguish empty buffer from buffer of zeros.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Distinguish empty buffer from buffer of zeros.`
   }),
   // 67. bool(range(0)) → False
   (_i: number) => ({
@@ -884,10 +884,10 @@ Performance Considerations:
 • Huge stop values still cheap for truth test.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Huge stop values still cheap for truth test.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Huge stop values still cheap for truth test.`
   }),
   // 68. bool(range(1)) → True
   (_i: number) => ({
@@ -934,10 +934,10 @@ Performance Considerations:
 • Avoid materializing range as list for truthiness.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Avoid materializing range as list for truthiness.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Avoid materializing range as list for truthiness.`
   }),
   // 69. bool(object()) → True
   (_i: number) => ({
@@ -990,10 +990,10 @@ Performance Considerations:
 • Enum or None often clearer for public APIs.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Enum or None often clearer for public APIs.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Enum or None often clearer for public APIs.`
   }),
   // 70. None or 0 or "" or [] or "found!" → "found!"
   (_i: number) => ({
@@ -1050,7 +1050,7 @@ Examples:
 • Beware skipping valid numeric 0 with or — use explicit None tests.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Beware skipping valid numeric 0 with or — use explicit None tests.`
   }),
   // 71. True + True + True → 3
   (_i: number) => ({
@@ -1105,7 +1105,7 @@ Examples:
 • Prefer explicit int(x) in APIs returning counts.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Prefer explicit int(x) in APIs returning counts.`
   }),
   // 72. True * 10 → 10
   (_i: number) => ({
@@ -1155,7 +1155,7 @@ Examples:
 • Use int(flag) when you mean 0/1.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Use int(flag) when you mean 0/1.`
   }),
   // 73. False ** 0 → 1
   (_i: number) => ({
@@ -1210,7 +1210,7 @@ Examples:
 • Use pow with three arguments for modular exponentiation in crypto.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Use pow with three arguments for modular exponentiation in crypto.`
   }),
   // 74. True == 1 → True
   (_i: number) => ({
@@ -1263,10 +1263,10 @@ Performance Considerations:
 • Use is True only when singleton semantics matter.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Use is True only when singleton semantics matter.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Use is True only when singleton semantics matter.`
   }),
   // 75. True is 1 → False
   (_i: number) => ({
@@ -1320,10 +1320,10 @@ Performance Considerations:
 • Never write True is 1 in production style guides.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Never write True is 1 in production style guides.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Never write True is 1 in production style guides.`
   }),
   // 76. False == 0 → True
   (_i: number) => ({
@@ -1370,10 +1370,10 @@ Performance Considerations:
 • Use explicit key types to avoid surprise merges.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Use explicit key types to avoid surprise merges.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Use explicit key types to avoid surprise merges.`
   }),
   // 77. False == 0.0 → True
   (_i: number) => ({
@@ -1420,10 +1420,10 @@ Performance Considerations:
 • Dict keys 0 and 0.0 collide.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Dict keys 0 and 0.0 collide.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Dict keys 0 and 0.0 collide.`
   }),
   // 78. False == "" → False
   (_i: number) => ({
@@ -1471,10 +1471,10 @@ Performance Considerations:
 • Validate user input with explicit rules.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Validate user input with explicit rules.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Validate user input with explicit rules.`
   }),
   // 79. {True: "a", 1: "b"} → {True: "b"}
   (_i: number) => ({
@@ -1530,7 +1530,7 @@ Examples:
 • Prefer Enum or str keys in public schemas.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Prefer Enum or str keys in public schemas.`
   }),
   // 80. {0: "a", False: "b"} → {0: "b"}
   (_i: number) => ({
@@ -1582,10 +1582,10 @@ Performance Considerations:
 • Explicit string keys for human-readable maps.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Explicit string keys for human-readable maps.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Explicit string keys for human-readable maps.`
   }),
   // 81. [True, 1, 1.0].count(True) → 3
   (_i: number) => ({
@@ -1638,10 +1638,10 @@ Performance Considerations:
 • Document what 'sameness' means in analytics.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Document what 'sameness' means in analytics.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Document what 'sameness' means in analytics.`
   }),
   // 82. {True, 1, 1.0} → {True}
   (_i: number) => ({
@@ -1695,10 +1695,10 @@ Performance Considerations:
 • frozenset for dict keys with similar caution.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• frozenset for dict keys with similar caution.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• frozenset for dict keys with similar caution.`
   }),
   // 83. sorted([None, 1]) → TypeError
   (_i: number) => ({
@@ -1750,10 +1750,10 @@ Performance Considerations:
 • numpy sorts may coerce — different ecosystem.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• numpy sorts may coerce — different ecosystem.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• numpy sorts may coerce — different ecosystem.`
   }),
   // 84. None < 0 → TypeError
   (_i: number) => ({
@@ -1808,7 +1808,7 @@ Examples:
 • Optional[int] typing reflects possibility of None.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Optional[int] typing reflects possibility of None.`
   }),
   // 85. None == 0 → False
   (_i: number) => ({
@@ -1863,10 +1863,10 @@ Performance Considerations:
 • Database NULL is tri-state — do not mirror Python None blindly.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Database NULL is tri-state — do not mirror Python None blindly.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Database NULL is tri-state — do not mirror Python None blindly.`
   }),
   // 86. x = []; y = x or [1,2] → y = [1, 2]
   (_i: number) => ({
@@ -1919,10 +1919,10 @@ Performance Considerations:
 • Do not use [] as default arg — use None pattern.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Do not use [] as default arg — use None pattern.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Do not use [] as default arg — use None pattern.`
   }),
   // 87. x = [3]; y = x or [1,2] → y = [3]
   (_i: number) => ({
@@ -1974,10 +1974,10 @@ Performance Considerations:
 • Clarify whether empty list should trigger default.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Clarify whether empty list should trigger default.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Clarify whether empty list should trigger default.`
   }),
   // 88. a = b = c = 0; a == b == c → True
   (_i: number) => ({
@@ -2031,10 +2031,10 @@ Performance Considerations:
 • Use math.isclose for floats.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Use math.isclose for floats.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Use math.isclose for floats.`
   }),
   // 89. 1 != 2 != 1 → True
   (_i: number) => ({
@@ -2087,10 +2087,10 @@ Performance Considerations:
 • Read language reference on chained comparisons.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Read language reference on chained comparisons.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Read language reference on chained comparisons.`
   }),
   // 90. {i: i**2 for i in range(5) if i%2} → {1: 1, 3: 9}
   (_i: number) => ({
@@ -2142,10 +2142,10 @@ Performance Considerations:
 • Walrus can name parity once in larger expressions.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Walrus can name parity once in larger expressions.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Walrus can name parity once in larger expressions.`
   }),
   // 91. all(map(str.isdigit, "12345")) → True
   (_i: number) => ({
@@ -2197,10 +2197,10 @@ Performance Considerations:
 • regex ^\d+$ for whole-string match.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• regex ^\d+$ for whole-string match.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• regex ^\d+$ for whole-string match.`
   }),
   // 92. any(map(str.isdigit, "abc1")) → True
   (_i: number) => ({
@@ -2253,10 +2253,10 @@ Performance Considerations:
 • Use regex for category rules beyond one digit.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Use regex for category rules beyond one digit.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Use regex for category rules beyond one digit.`
   }),
   // 93. all(map(str.isdigit, "abc")) → False
   (_i: number) => ({
@@ -2308,10 +2308,10 @@ Performance Considerations:
 • Unicode digits may need normalization.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Unicode digits may need normalization.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Unicode digits may need normalization.`
   }),
   // 94. [x if x > 0 else -x for x in [-1, 2, -3]] → [1, 2, 3]
   (_i: number) => ({
@@ -2363,10 +2363,10 @@ Performance Considerations:
 • Walrus if computing expensive transform once.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Walrus if computing expensive transform once.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Walrus if computing expensive transform once.`
   }),
   // 95. next((x for x in [5,3,8,1] if x > 6), None) → 8
   (_i: number) => ({
@@ -2420,10 +2420,10 @@ Performance Considerations:
 • Explicit for-loop often clearer for debugging.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Explicit for-loop often clearer for debugging.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Explicit for-loop often clearer for debugging.`
   }),
   // 96. next((x for x in [5,3,1] if x > 6), None) → None
   (_i: number) => ({
@@ -2476,10 +2476,10 @@ Performance Considerations:
 • Use a sentinel other than None if None is valid data.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Use a sentinel other than None if None is valid data.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Use a sentinel other than None if None is valid data.`
   }),
   // 97. all(isinstance(x, int) for x in [1, True, 3]) → True
   (_i: number) => ({
@@ -2532,10 +2532,10 @@ Performance Considerations:
 • Protocol and ABC checks for duck typing.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Protocol and ABC checks for duck typing.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Protocol and ABC checks for duck typing.`
   }),
   // 98. any(x is None for x in [1, None, 3]) → True
   (_i: number) => ({
@@ -2589,10 +2589,10 @@ Performance Considerations:
 • pandas isna for tabular None/NaN.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• pandas isna for tabular None/NaN.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• pandas isna for tabular None/NaN.`
   }),
   // 99. sum(x > 0 for x in [-1, 2, -3, 4]) → 2
   (_i: number) => ({
@@ -2645,10 +2645,10 @@ Performance Considerations:
 • numpy.count_nonzero for large arrays.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• numpy.count_nonzero for large arrays.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• numpy.count_nonzero for large arrays.`
   }),
   // 100. max(range(10), key=lambda x: -(x-5)**2) → 5
   (_i: number) => ({
@@ -2708,9 +2708,9 @@ Performance Considerations:
 • Prefer readable names for key functions in production.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Prefer readable names for key functions in production.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Prefer readable names for key functions in production.`
   }),
 ];

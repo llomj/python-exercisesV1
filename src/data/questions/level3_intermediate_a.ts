@@ -56,7 +56,7 @@ Examples:
 • Combine with all for invariants.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Combine with all for invariants.`
   }),
   (_i: number) => ({
     q: `What is any([False, False, False])?`,
@@ -103,10 +103,10 @@ Performance Considerations:
 • map with any for vectorized checks.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• map with any for vectorized checks.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• map with any for vectorized checks.`
   }),
   (_i: number) => ({
     q: `What is all([True, True, True])?`,
@@ -153,10 +153,10 @@ Performance Considerations:
 • numpy.all for arrays.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• numpy.all for arrays.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• numpy.all for arrays.`
   }),
   (_i: number) => ({
     q: `What is all([True, False, True])?`,
@@ -203,10 +203,10 @@ Performance Considerations:
 • Use explicit loops when reporting which index failed.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Use explicit loops when reporting which index failed.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Use explicit loops when reporting which index failed.`
   }),
   (_i: number) => ({
     q: `What is any([])?`,
@@ -252,10 +252,10 @@ Performance Considerations:
 • Document API behavior on empty input.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Document API behavior on empty input.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Document API behavior on empty input.`
   }),
   (_i: number) => ({
     q: `What is all([])?`,
@@ -303,10 +303,10 @@ Performance Considerations:
 • Business may require nonempty lists — validate separately.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Business may require nonempty lists — validate separately.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Business may require nonempty lists — validate separately.`
   }),
   (_i: number) => ({
     q: `What is any([0, 0, 0])?`,
@@ -353,10 +353,10 @@ Performance Considerations:
 • numpy.any for ndarray.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• numpy.any for ndarray.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• numpy.any for ndarray.`
   }),
   (_i: number) => ({
     q: `What is any([0, 1, 0])?`,
@@ -403,10 +403,10 @@ Performance Considerations:
 • any for custom predicates.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• any for custom predicates.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• any for custom predicates.`
   }),
   (_i: number) => ({
     q: `What is all([1, 2, 3])?`,
@@ -453,10 +453,10 @@ Performance Considerations:
 • None in list raises TypeError in comparisons — separate issue.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• None in list raises TypeError in comparisons — separate issue.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• None in list raises TypeError in comparisons — separate issue.`
   }),
   (_i: number) => ({
     q: `What is all([1, 0, 3])?`,
@@ -500,13 +500,13 @@ Edge Cases:
 • Combine with enumerate to report index.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Combine with enumerate to report index.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Combine with enumerate to report index.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Combine with enumerate to report index.`
   }),
   (_i: number) => ({
     q: `What is any(x > 3 for x in [1, 2, 5])?`,
@@ -553,10 +553,10 @@ Performance Considerations:
 • For huge streams, generators avoid materializing lists.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• For huge streams, generators avoid materializing lists.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• For huge streams, generators avoid materializing lists.`
   }),
   (_i: number) => ({
     q: `What is all(x > 0 for x in [1, 2, 3])?`,
@@ -603,10 +603,10 @@ Performance Considerations:
 • numpy: (arr>0).all()
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• numpy: (arr>0).all()
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• numpy: (arr>0).all()`
   }),
   (_i: number) => ({
     q: `What is all(x > 0 for x in [1, -2, 3])?`,
@@ -653,10 +653,10 @@ Performance Considerations:
 • math.copysign for sign extraction instead of truth hacks.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• math.copysign for sign extraction instead of truth hacks.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• math.copysign for sign extraction instead of truth hacks.`
   }),
   (_i: number) => ({
     q: `What is any(c.isupper() for c in "Hello")?`,
@@ -703,10 +703,10 @@ Performance Considerations:
 • Normalize unicode before policy checks.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Normalize unicode before policy checks.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Normalize unicode before policy checks.`
   }),
   (_i: number) => ({
     q: `What is all(c.islower() for c in "hello")?`,
@@ -755,10 +755,10 @@ Performance Considerations:
 • casefold for case-insensitive equality.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• casefold for case-insensitive equality.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• casefold for case-insensitive equality.`
   }),
   (_i: number) => ({
     q: `What is all(c.islower() for c in "Hello")?`,
@@ -804,10 +804,10 @@ Performance Considerations:
 • Turkish dotted capital I edge cases in unicode.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Turkish dotted capital I edge cases in unicode.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Turkish dotted capital I edge cases in unicode.`
   }),
   (_i: number) => ({
     q: `What is any(isinstance(x, str) for x in [1, "a", 3])?`,
@@ -851,13 +851,13 @@ Edge Cases:
 • TypedDict for structured rows.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• TypedDict for structured rows.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• TypedDict for structured rows.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• TypedDict for structured rows.`
   }),
   (_i: number) => ({
     q: `What is all(isinstance(x, int) for x in [1, 2, 3])?`,
@@ -904,10 +904,10 @@ Performance Considerations:
 • collections.abc.Integral for broader numeric acceptance.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• collections.abc.Integral for broader numeric acceptance.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• collections.abc.Integral for broader numeric acceptance.`
   }),
   (_i: number) => ({
     q: `What is any([None, 0, "", [], False])?`,
@@ -956,10 +956,10 @@ Performance Considerations:
 • Explicit None vs empty distinction elsewhere.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Explicit None vs empty distinction elsewhere.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Explicit None vs empty distinction elsewhere.`
   }),
   (_i: number) => ({
     q: `What is all([1, "hello", [1], True])?`,
@@ -1006,10 +1006,10 @@ Performance Considerations:
 • Watch short-circuit on empty subcontainers if testing elements.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Watch short-circuit on empty subcontainers if testing elements.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Watch short-circuit on empty subcontainers if testing elements.`
   }),
 
   // 21-35: Nested conditionals and guard clauses
@@ -1059,10 +1059,10 @@ Performance Considerations:
 • PEP 8 line wrapping for long ternaries.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• PEP 8 line wrapping for long ternaries.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• PEP 8 line wrapping for long ternaries.`
   }),
   (_i: number) => ({
     q: `x = 7\nWhat is "big" if x > 10 else ("mid" if x > 5 else "small")?`,
@@ -1109,10 +1109,10 @@ Performance Considerations:
 • Unit-test boundaries inclusive/exclusive.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Unit-test boundaries inclusive/exclusive.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Unit-test boundaries inclusive/exclusive.`
   }),
   (_i: number) => ({
     q: `x = 3\nWhat is "big" if x > 10 else ("mid" if x > 5 else "small")?`,
@@ -1160,10 +1160,10 @@ Performance Considerations:
 • Document inclusive/exclusive rules in specs.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Document inclusive/exclusive rules in specs.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Document inclusive/exclusive rules in specs.`
   }),
   (_i: number) => ({
     q: `What does a guard clause do in a function?`,
@@ -1224,10 +1224,10 @@ Performance Considerations:
 • Assertions only for internal invariants, not user input.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Assertions only for internal invariants, not user input.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Assertions only for internal invariants, not user input.`
   }),
   (_i: number) => ({
     q: `x = 5; y = 10\nWhat is "both" if x > 0 and y > 0 else "not both"?`,
@@ -1274,10 +1274,10 @@ Performance Considerations:
 • De Morgan: not (A and B) == (not A) or (not B).
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• De Morgan: not (A and B) == (not A) or (not B).
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• De Morgan: not (A and B) == (not A) or (not B).`
   }),
   (_i: number) => ({
     q: `x = -1; y = 10\nWhat is "both" if x > 0 and y > 0 else "not both"?`,
@@ -1324,10 +1324,10 @@ Performance Considerations:
 • Document short-circuit in code reviews.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Document short-circuit in code reviews.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Document short-circuit in code reviews.`
   }),
   (_i: number) => ({
     q: `x = 0\nWhat is "pos" if x > 0 else ("neg" if x < 0 else "zero")?`,
@@ -1376,10 +1376,10 @@ Performance Considerations:
 • elif chain often clearer.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• elif chain often clearer.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• elif chain often clearer.`
   }),
   (_i: number) => ({
     q: `x = None\nWhat is x if x is not None else "default"?`,
@@ -1430,10 +1430,10 @@ Performance Considerations:
 • typing.Optional patterns.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• typing.Optional patterns.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• typing.Optional patterns.`
   }),
   (_i: number) => ({
     q: `x = 42\nWhat is x if x is not None else "default"?`,
@@ -1480,10 +1480,10 @@ Performance Considerations:
 • SQLAlchemy distinguishes unloaded vs None — ORM nuance.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• SQLAlchemy distinguishes unloaded vs None — ORM nuance.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• SQLAlchemy distinguishes unloaded vs None — ORM nuance.`
   }),
   (_i: number) => ({
     q: `What is [x for x in range(10) if x % 2 == 0 if x % 3 == 0]?`,
@@ -1528,13 +1528,13 @@ Edge Cases:
 • Keep comprehension readable — sometimes explicit loop wins.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Keep comprehension readable — sometimes explicit loop wins.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Keep comprehension readable — sometimes explicit loop wins.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Keep comprehension readable — sometimes explicit loop wins.`
   }),
   (_i: number) => ({
     q: `What is bool([False])?`,
@@ -1586,7 +1586,7 @@ Examples:
 • Use any/not any on elements when needed.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Use any/not any on elements when needed.`
   }),
   (_i: number) => ({
     q: `What is bool("False")?`,
@@ -1634,10 +1634,10 @@ Performance Considerations:
 • Validate enumerations explicitly.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Validate enumerations explicitly.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Validate enumerations explicitly.`
   }),
   (_i: number) => ({
     q: `What is bool(" ")?`,
@@ -1684,10 +1684,10 @@ Performance Considerations:
 • Usernames may disallow whitespace-only.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Usernames may disallow whitespace-only.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Usernames may disallow whitespace-only.`
   }),
   (_i: number) => ({
     q: `What is bool(0.0)?`,
@@ -1732,13 +1732,13 @@ Edge Cases:
 • Decimal(0) also falsy.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Decimal(0) also falsy.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Decimal(0) also falsy.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Decimal(0) also falsy.`
   }),
   (_i: number) => ({
     q: `What is bool(0j)?`,
@@ -1786,10 +1786,10 @@ Performance Considerations:
 • numpy complex may differ slightly — ecosystem note.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• numpy complex may differ slightly — ecosystem note.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• numpy complex may differ slightly — ecosystem note.`
   }),
 
   // 36-50: Advanced short-circuit and operator behavior
@@ -1834,13 +1834,13 @@ Edge Cases:
 • API docs should state falsy vs None semantics.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• API docs should state falsy vs None semantics.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• API docs should state falsy vs None semantics.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• API docs should state falsy vs None semantics.`
   }),
   (_i: number) => ({
     q: `What is "value" or "default"?`,
@@ -1883,13 +1883,13 @@ Edge Cases:
 • Keyword-argument defaults differ pattern.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Keyword-argument defaults differ pattern.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Keyword-argument defaults differ pattern.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Keyword-argument defaults differ pattern.`
   }),
   (_i: number) => ({
     q: `What is "" or "fallback"?`,
@@ -1932,13 +1932,13 @@ Edge Cases:
 • i18n: distinguish missing key vs empty translation.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• i18n: distinguish missing key vs empty translation.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• i18n: distinguish missing key vs empty translation.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• i18n: distinguish missing key vs empty translation.`
   }),
   (_i: number) => ({
     q: `What is 0 or None or "" or "found"?`,
@@ -1985,10 +1985,10 @@ Performance Considerations:
 • Document intentional falsy handling.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Document intentional falsy handling.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Document intentional falsy handling.`
   }),
   (_i: number) => ({
     q: `What is 1 and 2 and 3?`,
@@ -2035,10 +2035,10 @@ Performance Considerations:
 • Avoid clever and-chains in production.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Avoid clever and-chains in production.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Avoid clever and-chains in production.`
   }),
   (_i: number) => ({
     q: `What is 1 and 0 and 3?`,
@@ -2085,10 +2085,10 @@ Performance Considerations:
 • Explicit if clearer.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Explicit if clearer.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Explicit if clearer.`
   }),
   (_i: number) => ({
     q: `What is "" or [] or {} or "yes"?`,
@@ -2138,10 +2138,10 @@ Performance Considerations:
 • config.get with defaults.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• config.get with defaults.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• config.get with defaults.`
   }),
   (_i: number) => ({
     q: `What is [] and "hello"?`,
@@ -2187,10 +2187,10 @@ Performance Considerations:
 • Similar to expert patterns.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Similar to expert patterns.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Similar to expert patterns.`
   }),
   (_i: number) => ({
     q: `What is [1] and "hello"?`,
@@ -2232,13 +2232,13 @@ Edge Cases:
 • Readability over cleverness.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Readability over cleverness.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Readability over cleverness.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Readability over cleverness.`
   }),
   (_i: number) => ({
     q: `What is not 0?`,
@@ -2285,10 +2285,10 @@ Performance Considerations:
 • Explicit n==0 when False and 0 both possible.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Explicit n==0 when False and 0 both possible.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Explicit n==0 when False and 0 both possible.`
   }),
   (_i: number) => ({
     q: `What is not ""?`,
@@ -2337,7 +2337,7 @@ Examples:
 • len(s)==0 explicit alternative.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• len(s)==0 explicit alternative.`
   }),
   (_i: number) => ({
     q: `What is not "hello"?`,
@@ -2377,16 +2377,16 @@ Common Use Cases:
 • Double negatives harm readability.
 
 Edge Cases:
-• — (Editorial: expand this slot if needed.)
+• Double negatives harm readability.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• Double negatives harm readability.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Double negatives harm readability.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Double negatives harm readability.`
   }),
   (_i: number) => ({
     q: `What is not []?`,
@@ -2437,10 +2437,10 @@ Performance Considerations:
 • len(items)==0 explicit.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• len(items)==0 explicit.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• len(items)==0 explicit.`
   }),
   (_i: number) => ({
     q: `What is not not True?`,
@@ -2490,13 +2490,13 @@ Edge Cases:
 • PEP 8 readability.
 
 Performance Considerations:
-• — (Editorial: expand this slot if needed.)
+• PEP 8 readability.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• PEP 8 readability.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• PEP 8 readability.`
   }),
   (_i: number) => ({
     q: `What is not not []?`,
@@ -2549,9 +2549,9 @@ Performance Considerations:
 • Keep control flow readable.
 
 Examples:
-• — (Editorial: expand this slot if needed.)
+• Keep control flow readable.
 
 Notes:
-• — (Editorial: expand this slot if needed.)`
+• Keep control flow readable.`
   }),
 ];
