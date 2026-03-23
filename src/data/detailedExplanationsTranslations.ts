@@ -23020,47 +23020,57 @@ Exemples :
 
 Remarques :
 • Spécifiez l'encodage explicitement en prod.`,
-  513: `"hello".encode("utf-8") vaut b"hello" : str → bytes en UTF-8 (ici ASCII pur).
+  513: `"hello".encode("utf-8") produit b"hello" : la méthode str.encode convertit du texte Unicode en séquence d'octets selon le codec nommé (ici UTF-8). Comme tous les caractères de "hello" sont ASCII, chaque lettre devient un octet identique au code ASCII.
 
 Débutant :
-• encode choisit comment sérialiser le texte.
+• encode("utf-8") renvoie un objet bytes, pas une str.
+• Pour "hello", le résultat s'affiche souvent b'hello' — cinq octets 104, 101, 108, 108, 111.
 
 Intermédiaire :
-• UTF-8 variable : caractères non ASCII → plusieurs octets.
+• UTF-8 encode les points de code U+0000…U+007F sur un octet (compatible ASCII) ; au-delà, plusieurs octets par caractère.
+• bytes(str) est interdit en Python 3 : on ne convertit pas ainsi une str en bytes ; il faut .encode() avec un encodage explicite ou implicite.
 
 Expert :
-• normalize Unicode avant encodage sensible.
+• Pour du texte sensible (identifiants canoniques, signatures), on peut normaliser en NFC/NFD avant encodage — les séquences d'octets peuvent différer sinon.
 
 Concepts clés :
-• str → bytes.
+• str.encode(codec) sérialise une chaîne Unicode en bytes selon les règles du codec (ici UTF-8).
+• decode sur bytes est l'opération inverse pour retrouver une str.
 
 Distinctions clés :
-• encode vs bytes(str) interdit.
+• encode vs littéral b"hello" : le littéral est statique ; encode calcule les octets à l'exécution à partir d'une str quelconque.
+• UTF-8 vs ASCII : pour "hello", le résultat coïncide ; pour "café", UTF-8 produit plusieurs octets alors que ASCII échouerait sur "é".
 
 Fonctionnement :
-• Codec transforme points de code.
+• Le codec regarde chaque caractère de la str et émet la séquence d'octets UTF-8 correspondante.
+• Le résultat est un bytes immuable pointant vers un tampon de longueur adaptée.
 
 Exécution étape par étape :
-1. str "hello".
-2. UTF-8 bytes identiques ASCII.
+1. La str "hello" est évaluée.
+2. La méthode encode est appelée avec l'argument "utf-8".
+3. Chaque lettre h,e,l,l,o est encodée en un octet (identique ASCII).
+4. L'objet bytes final est renvoyé (ex. b'hello').
 
 Ordre des opérations :
-• Appel .encode.
+• Accès à la méthode sur la str, évaluation de l'argument "utf-8", puis exécution de encode — pas d'autres opérateurs ici.
 
 Cas d'utilisation courants :
-• Écrire sockets, fichiers binaires.
+• Écrire du texte dans des flux binaires (sockets, fichiers ouverts en mode "wb"), APIs crypto, ou hachages qui attendent des bytes.
 
 Cas limites :
-• Caractère non représentable dans codec → erreur.
+• Caractère non représentable dans le codec choisi : UnicodeEncodeError (ex. "café".encode("ascii")).
+• Paramètre errors="replace"/"ignore" modifie le comportement strict par défaut.
 
 Considérations de performance :
-• O(n).
+• Linéaire en nombre de caractères ; chemin rapide pour l'ASCII pur dans CPython.
+• Éviter de réencoder la même grande chaîne en boucle si le résultat peut être mis en cache.
 
 Exemples :
-• "é".encode("utf-8")
+• "café".encode("utf-8")  # b'caf\\xc3\\xa9'
+• "".encode("utf-8")    # b''
 
 Remarques :
-• errors= pour politiques souples.`,
+• Dans les bibliothèques, préférez un encodage explicite ("utf-8") plutôt que de dépendre du défaut ambiant ; documentez errors= pour les entrées utilisateur.`,
   514: `b"hello".upper() vaut b"HELLO" : méthodes de casse existent sur bytes (ASCII letters seulement).
 
 Débutant :
@@ -23723,47 +23733,55 @@ Exemples :
 
 Remarques :
 • chr pour inverse.`,
-  530: `ord("a") vaut 97 : minuscule latine.
+  530: `ord("a") vaut 97 : c'est le point de code Unicode (et la valeur ASCII) de la lettre minuscule latine « a ». C'est le nombre entier unique qui représente ce caractère dans la table Unicode.
 
 Débutant :
-• différent de A majuscule.
+• ord prend une chaîne d'exactement un caractère et renvoie un int.
+• "a" n'est pas le nombre 0 ni la lettre majuscule "A" : ce sont d'autres points de code.
 
 Intermédiaire :
-• écart 32 entre majuscule et minuscule ASCII.
+• En ASCII, les minuscules a–z occupent 97–122 ; les majuscules A–Z occupent 65–90 ; l'écart entre une lettre et sa casse opposée est souvent 32 pour le bloc latin ASCII.
+• chr(ord("a")) renvoie à nouveau "a" (inverse de ord).
 
 Expert :
-• .lower() préférable que maths manuelles.
+• Pour du texte Unicode hors ASCII basique, le passage +32 pour passer de majuscule à minuscule n'est pas fiable : utilisez str.lower(), str.casefold() ou unicodedata.
 
 Concepts clés :
-• table ASCII/Unicode basique.
+• ord() expose le point de code numérique d'un caractère ; chr() fait l'inverse.
+• Ce point de code est indépendant de l'encodage UTF-8 utilisé pour stocker la chaîne en mémoire.
 
 Distinctions clés :
-• 97 vs 65.
+• ord("a") (97) vs ord("A") (65) : même lettre conceptuelle en casse différente, codes différents.
+• ord("a") vs la valeur entière 0 : le caractère "a" n'a rien à voir avec le nombre zéro.
 
 Fonctionnement :
-• même mécanisme ord.
+• Python lit le seul caractère de la str et renvoie son code scalaire Unicode sous forme d'int.
 
 Exécution étape par étape :
-1. "a".
-2. 97.
+1. Le littéral "a" est construit (un caractère, U+0061).
+2. La fonction intégrée ord reçoit cette chaîne.
+3. La valeur 97 est renvoyée.
 
 Ordre des opérations :
-• ord.
+• Évaluation du littéral, puis appel ord(...) — une seule expression simple.
 
 Cas d'utilisation courants :
-• puzzles, César.
+• Exercices sur l'ASCII, chiffrement de César pédagogique, ou conversion manuelle entre chiffres caractères et valeurs (ord("0") pour 48, etc.).
 
 Cas limites :
-• lettres hors latin : autres codes.
+• ord("") lève TypeError ; une chaîne de plus d'un caractère lève aussi TypeError.
+• Caractères avec accents ou emoji : codes grands ; ne pas supposer deux chiffres décimaux.
 
 Considérations de performance :
-• O(1).
+• Coût négligeable ; pas de boucle sur la longueur pour un seul caractère.
 
 Exemples :
-• ord("0")
+• ord("A")   # 65
+• ord("0")   # 48 (le caractère chiffre zéro)
+• chr(97)    # "a"
 
 Remarques :
-• pas supposer continuité alphabets.`,
+• En production, pour la casse ou la normalisation de texte utilisateur, préférez les méthodes de chaîne aux arithmétiques +32 sur les codes.`,
   531: `ord("0") vaut 48 : chiffre zéro ASCII, pas la valeur entière 0.
 
 Débutant :
@@ -26355,47 +26373,60 @@ Exemples :
 
 Remarques :
 • strip sign explicitement.`,
-  594: `"abc123".isalnum() vaut True : lettres et chiffres seulement, sans espace ni ponctuation.
+  594: `"abc123".isalnum() vaut True : chaque caractère est soit une lettre Unicode, soit un chiffre décimal ; la chaîne n'est pas vide.
 
 Débutant :
-• alphanumérique.
+• isalnum() renvoie True si la chaîne est non vide et si tout caractère est « alphanumérique » (lettre ou chiffre).
+• Ici "a", "b", "c" sont des lettres et "1", "2", "3" des chiffres — tout passe.
 
 Intermédiaire :
-• underscore _ n'est pas alnum.
+• Ce n'est pas « lettres obligatoires + chiffres obligatoires » : "abc" seul ou "123" seul renvoie aussi True tant que tous les caractères sont des lettres ou des chiffres.
+• Le soulignement "_" n'est pas alphanumérique : "a_b".isalnum() est False.
 
 Expert :
-• Unicode lettres comptent.
+• La classification s'appuie sur les propriétés Unicode (catégories de caractères), pas sur l'ASCII seul : une lettre accentuée compte comme lettre.
 
 Concepts clés :
-• isalnum.
+• str.isalnum() est un test prédéfini « tous les caractères sont lettres ou chiffres décimaux ».
+• Le résultat est un booléen immédiat, sans levée d'exception pour une chaîne str normale.
 
 Distinctions clés :
-• isalnum vs isidentifier.
+• isalnum() vs isalpha() : "123".isalnum() est True alors que isalpha() est False (pas de lettres).
+• isalnum() vs isdigit() : "abc".isalnum() est True alors que isdigit() est False (pas de chiffres seuls).
+• isalnum() vs isidentifier() : "2b" peut passer isalnum mais échouer comme identificateur ; "for".isidentifier() peut être True alors que iskeyword("for") aussi — règles différentes.
 
 Fonctionnement :
-• chaque char letter or digit.
+• L'implémentation parcourt la chaîne et vérifie, pour chaque point de code, s'il est une lettre ou un chiffre décimal selon Unicode.
+• Au premier caractère hors ces catégories (espace, ponctuation, "_", etc.), le parcours s'arrête et renvoie False.
 
 Exécution étape par étape :
-1. a,b,c,1,2,3.
-2. True.
+1. La chaîne littérale "abc123" est construite.
+2. La méthode .isalnum() est résolue sur cet objet str.
+3. Chaque caractère est classé : a, b, c (lettres) ; 1, 2, 3 (chiffres).
+4. Tous valides → le résultat booléen est True.
 
 Ordre des opérations :
-• isalnum.
+• Évaluation du littéral str, puis appel de méthode unaire .isalnum() — pas d'autres opérateurs dans cette expression.
 
 Cas d'utilisation courants :
-• mots de passe simples, tokens.
+• Filtrage grossier des entrées « identifiant simple » (lettres et chiffres uniquement) avant une validation plus stricte (regex, schéma).
+• Contrôle rapide dans un script interactif ou une API légère.
 
 Cas limites :
-• "" False.
+• Chaîne vide : "".isalnum() → False (contrairement à une idée de « triviallement vrai »).
+• Chaînes avec espaces invisibles (espaces insécables, etc.) : souvent False — normaliser avant test si le métier l'exige.
 
 Considérations de performance :
-• O(n).
+• Complexité linéaire O(n) ; sortie anticipée au premier caractère invalide.
+• Pour des millions de caractères, éviter d'appeler isalnum() en boucle inutilement sur la même chaîne immuable.
 
 Exemples :
-• "café2".isalnum()
+• "café2".isalnum()   # True si « é » est une lettre (cas courant)
+• "12.3".isalnum()    # False à cause du point
+• "abc_123".isalnum() # False à cause du soulignement
 
 Remarques :
-• pas d'espaces.`,
+• Pour des mots de passe ou des jetons de sécurité, isalnum() seul est insuffisant : imposer longueur, diversité et stockage sécurisé (hachage, etc.).`,
   595: `"abc 123".isalnum() vaut False : espace interdit.
 
 Débutant :

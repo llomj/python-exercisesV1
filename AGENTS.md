@@ -61,6 +61,27 @@
 - **Header styling parity**: In French mode, the in-depth section headers (Concepts clés, Distinctions clés, Fonctionnement, Exécution étape par étape, Ordre des opérations, Cas d'utilisation courants, Cas limites, Considérations de performance, Exemples, Remarques) must use the **same syntax/theme highlighting** as the English headers (Key Concepts, How It Works, Step-by-Step Execution, etc.)—e.g. the same accent class (e.g. `text-indigo-400`, uppercase, tracking) in `QuizView.tsx`. Keep both English and French heading patterns in the `headingPatterns` array so styling is language-agnostic.
 - **Learning Focus**: Each section should teach the concept, not just restate the code. Use concrete mini-scenarios, comparisons, and short code examples inside `Examples:` rather than long theory dumps. Explanations must be in-depth in both English and French to help the user learn Python.
 
+### 6b-1. In-depth 10-section rollout — progress tracker (CRITICAL)
+
+**Agents must update this table after each completed batch** (English bank `de` fields and French `detailedExplanationsTranslations.ts`). The learning app requires **all 10 sections to be unique and question-specific** in **both** languages — not the duplicated generic block (`Key Concepts:` + “See the key concepts and explanation above…”).
+
+| Area | Scope | Status | Notes |
+|------|-------|--------|-------|
+| **Audit (EN)** | All `src/data/questions/*.ts` | Run `python3 scripts/audit_generic_in_depth_blocks.py` | **Target: 0** generic duplicate markers remaining |
+| **EN — Level 1 Expert A** | `level1_expert_a.ts` IDs **501–550** | **DONE** | `scripts/fix_level1_expert_a_generic_blocks.py` |
+| **EN — Level 1 Expert B** | `level1_expert_b.ts` IDs **551–600** | **DONE** | ID **594** fixed manually; **49** others via `scripts/fix_level1_expert_b_generic_blocks.py` |
+| **EN — Level 1 patterns** | `level1.ts` (IDs **301–400** area in bank slice) | **DONE** | `scripts/fix_level1_patterns_generic_blocks.py` — duplicate generic tails removed; **no** double `Key Distinctions:` (tail includes heading); escape `\\x` in TS strings when writing about bytes literals |
+| **EN — Level 1 intermediate A** | `level1_intermediate_a.ts` | **DONE** | `scripts/fix_level1_intermediate_a_generic_blocks.py` (50) |
+| **EN — Level 1 intermediate B** | `level1_intermediate_b.ts` | **DONE** | `scripts/fix_level1_intermediate_b_generic_blocks.py` (50); escape `\\\\x` etc. in TS when mentioning escape syntax |
+| **EN — Level 1 (all pattern files)** | `level1.ts`, `level1_intermediate_*.ts`, Expert A/B | **DONE** | — |
+| **EN — Level 2 patterns** | `level2.ts` | **DONE** | `scripts/fix_level2_patterns_generic_blocks.py` (100); **BLOCK_END** uses Level 2 Notes line (“Follow PEMDAS…”), not the Level 1 `isinstance` Notes |
+| **EN — Level 2 remaining** | `level2_expert_*.ts`, `level2_intermediate_*.ts` | **NOT DONE** | 50 + 50 + 50 + 50 = **200** markers |
+| **EN — Levels 3–10** | `level3.ts` … `level10*.ts` | **NOT DONE** | Confirm **BLOCK_END** text per file before batch scripts |
+| **FR — Level 1** | `detailedExplanationsTranslations.ts` IDs **301–600** | **IN PROGRESS** | Full **Concepts clés … Remarques** parity per ID; **513, 530, 594** expanded; **551–600** next for parity with completed EN Expert B |
+| **FR — other levels** | IDs **1–300**, **601–3300** | **NOT DONE** | Mirror EN depth as EN batches ship |
+
+**Last updated:** 2026-03-23 — **Level 1** EN complete; **`level2.ts`** EN generic tails replaced (**100**); **~2590** generic EN markers remain project-wide (run `scripts/audit_generic_in_depth_blocks.py` for current count).
+
 ## 7. Monetisation Goal
 - **Goal**: Monetise this app later. Quality must be top-notch.
 

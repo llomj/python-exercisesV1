@@ -50,6 +50,36 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
 - **451–600 (2026-03-19 suite):** Rebuilt French detailed text to match `QUESTIONS_BANK` Level 1. Scripts: `scripts/patch-fr-l1-451-500.mjs` + fragments `scripts/fr-l1-frags/fr-451-460.mjs` … `fr-491-500.mjs` ; `scripts/patch-fr-l1-501-600.mjs` + `fr-501-520.mjs` … `fr-581-600.mjs`. **Level 1 FR map 451–600 is aligned** (verify spot-checks: 451 string `+=`, 500 `type is str`, 511 `bytearray`, 551 `id(42)`, 600 `complex`).
 - **Still to audit (optional):** IDs **301–420** were fixed in earlier sessions (incl. 321–337, 422–450); re-spot-check **401–420** vs bank if any duplicate blocks remain elsewhere in the file.
 
+### 2026-03-23 — generic EN `de` boilerplate + FR depth (spot IDs + Level 1 Expert A)
+
+- **Audit:** Run `python3 scripts/audit_generic_in_depth_blocks.py` — counts the duplicate block (`Key Concepts:` + “See the key concepts and explanation above…”) across `src/data/questions/*.ts`. Thousands of occurrences remain outside the batches below.
+- **English — Level 1 Expert A (IDs 501–550):** Replaced all 50 duplicated generic tails in `src/data/questions/level1_expert_a.ts` via `scripts/fix_level1_expert_a_generic_blocks.py` with per-question Key Distinctions … Notes. Do not use backticks inside `de` template literals (breaks esbuild); use straight quotes.
+- **English — single ID 594:** Replaced generic tail for `"abc123".isalnum()` in `src/data/questions/level1_expert_b.ts`.
+- **French — `detailedExplanationsTranslations.ts`:** Expanded full 10-section depth for IDs **513**, **530**, **594** (were terse / placeholder-like).
+- **Next:** Apply the same EN replacement pattern to `level1_expert_b.ts` (49 remaining generic blocks after 594), then `level1.ts` / `level1_intermediate_*.ts` / other levels; expand FR for every ID to match EN.
+
+### 2026-03-23 (continued) — Level 1 Expert B EN complete + AGENTS.md tracker
+
+- **English — Level 1 Expert B (IDs 551–600):** All generic duplicate tails removed. **594** was already non-generic; **49** replacements applied via `scripts/fix_level1_expert_b_generic_blocks.py`.
+- **Audit:** Total generic markers reduced (e.g. ~2931 → ~2882); `level1_expert_b.ts` has **0** markers.
+- **AGENTS.md:** Added **§6b-1 In-depth 10-section rollout — progress tracker** — agents must update after each batch (EN + FR).
+- **Next EN:** `level1.ts` (92), `level1_intermediate_a.ts` (50), `level1_intermediate_b.ts` (50). **Next FR:** Level 1 IDs **551–600** full parity, then remaining **301–600** as needed.
+
+### 2026-03-23 (continued) — Level 1 `level1.ts` + intermediate A EN
+
+- **English — `level1.ts`:** Patched **92** generic blocks via `scripts/fix_level1_patterns_generic_blocks.py`. Fixed **duplicate `Key Distinctions:`** (replacement must be `tail` only — tail already includes the heading). Fixed TS template **`\x` escape** in bytes edge-case text (`\\x` in source). Verified `npm run build`.
+- **English — `level1_intermediate_a.ts`:** Patched **50** blocks via `scripts/fix_level1_intermediate_a_generic_blocks.py` (positional `TAILS`, `Key Distinctions:\\n` + body). Build OK.
+- **Audit:** Project total generic markers **~2740** after the above (47 files still carrying markers).
+- **English — `level1_intermediate_b.ts`:** Patched **50** blocks via `scripts/fix_level1_intermediate_b_generic_blocks.py`. Fixed **\\x / \\u / \\U** mention in TS `de` strings (double backslashes for valid template literals). Build OK.
+- **Level 1 EN bank:** All `level1*.ts` question files in this repo **0** generic duplicate markers (run audit).
+- **Next EN:** `level2.ts` and related `level2_*.ts` (or next level per planning). **Next FR:** continue **301–600** parity.
+
+### 2026-03-23 (continued) — Level 2 `level2.ts` EN
+
+- **English — `level2.ts`:** Replaced **100** generic duplicate tails via `scripts/fix_level2_patterns_generic_blocks.py`. **BLOCK_END** must match this file’s Notes line (“Follow PEMDAS; use parentheses…”), not the Level 1 `isinstance` boilerplate — otherwise the script cannot find blocks. **`npm run build`** OK.
+- **Audit:** Project total **~2590** generic markers; `level2.ts` has **0** duplicate markers.
+- **Next EN:** `level2_expert_a.ts`, `level2_expert_b.ts`, `level2_intermediate_a.ts`, `level2_intermediate_b.ts` (**200** total), then Level 3 — **verify BLOCK_END** per target file before writing fix scripts.
+
 ### Confirmed completed before this tracker
 - IDs `402-411` completed with full in-depth French structure.
 - Prior batches had been advanced through `421`.
