@@ -30,7 +30,7 @@ Example:
 This is a powerful technique for in-place list modification without creating a new list object.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • a[1:3] selects elements at index 1 and 2 • Assigning a list to a slice replaces that segment • The replacement list can be shorter or longer than the slice • The list grows or shrinks accordingly How it works: • Before: [1, 2, 3, 4, 5] • a[1:3] = [10, 20, 30] removes indices 1–2 and inserts 10, 20, 30 • After: [1, 10, 20, 30, 4, 5] Example: >>> a = [1, 2, 3, 4, 5] >>> a[1:3] = [10, 20, 30] >>> a [1, 10, 20, 30, 4, 5] This is a powerful technique for in-place list modification without creating a new list object.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -100,7 +100,7 @@ Example:
 If you tried a[::2] = [10, 20] it would raise ValueError because the slice selects 3 positions but only 2 values are provided.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • a[::2] selects every other element: indices 0, 2, 4 • The replacement [10, 20, 30] has 3 elements, matching the 3 selected positions • If lengths don't match, Python raises ValueError • Each selected position is replaced individually How it works: • a[::2] picks indices 0, 2, 4 → elements 1, 3, 5 • Replace: index 0 ← 10, index 2 ← 20, index 4 ← 30 • Elements at indices 1 and 3 are untouched • Result: [10, 2, 20, 4, 30] Example: >>> a = [1, 2, 3, 4, 5] >>> a[::2] = [10, 20, 30] >>> a [10, 2, 20, 4, 30] If you tried a[::2] = [10, 20] it would raise ValueError because the slice selects 3 positions but only 2 values are provided.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -169,7 +169,7 @@ Example:
 This pattern is useful for deleting a range without creating a new list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • a[1:4] targets indices 1, 2, 3 (elements 2, 3, 4) • Assigning [] replaces that segment with nothing • The list shrinks — elements are removed, not replaced • This modifies the list in place How it works: • Before: [1, 2, 3, 4, 5] • a[1:4] = [] removes elements at indices 1, 2, 3 • After: [1, 5] Example: >>> a = [1, 2, 3, 4, 5] >>> a[1:4] = [] >>> a [1, 5] This pattern is useful for deleting a range without creating a new list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -219,7 +219,7 @@ Notes:
     de: `del with an extended slice removes all elements at the selected indices. a[::2] selects indices 0, 2, and 4. Before: [1, 2, 3, 4, 5]. del a[::2] removes indices 0, 2, 4 (elements 1, 3, 5). After: [2, 4]. Note: you cannot use "a[::2] = []" for this because extended slice assignment requires matching lengths. You must use del instead.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• You must use del instead.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -288,7 +288,7 @@ Example:
 This is the slice-based idiom for extend(). Similarly, a[:0] = [...] prepends.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Similarly, a[:0] = [...] prepends.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -357,7 +357,7 @@ Example:
 This is equivalent to: for x in reversed([10, 20]): a.insert(0, x)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • a[0:0] selects nothing — start and stop are both 0 • Assigning a list to an empty slice inserts without removing • This is the slice idiom for prepending elements • The original elements shift right How it works: • a[0:0] = [10, 20] inserts 10, 20 before index 0 • Original elements [1, 2, 3] move to the right • Result: [10, 20, 1, 2, 3] Example: >>> a = [1, 2, 3] >>> a[0:0] = [10, 20] >>> a [10, 20, 1, 2, 3] This is equivalent to: for x in reversed([10, 20]): a.insert(0, x)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -427,7 +427,7 @@ Example:
 Unlike insert(), slice assignment can insert multiple elements at once: a[1:1] = [10, 20, 30].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • a[start:start] is always an empty slice at position start • Assigning to it inserts elements at that position • No existing elements are removed • Equivalent to a.insert(1, 10) for a single element How it works: • a[1:1] selects nothing at index 1 • [10] is inserted before the element currently at index 1 • Elements at index 1 onwards shift right • Result: [1, 10, 2, 3] Example: >>> a = [1, 2, 3] >>> a[1:1] = [10] >>> a [1, 10, 2, 3] Unlike insert(), slice assignment can insert multiple elements at once: a[1:1] = [10, 20, 30].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -495,7 +495,7 @@ Example:
 Slice objects are useful when you need to pass slicing parameters as arguments or store them for reuse.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • slice(start, stop) creates a reusable slice object • slice(1, 4) is equivalent to [1:4] • slice objects can be stored in variables and reused • They accept start, stop, and optional step arguments How it works: • slice(1, 4) → selects indices 1, 2, 3 • [1, 2, 3, 4, 5][slice(1, 4)] → [2, 3, 4] • Same as [1, 2, 3, 4, 5][1:4] Example: >>> s = slice(1, 4) >>> [1, 2, 3, 4, 5][s] [2, 3, 4] Slice objects are useful when you need to pass slicing parameters as arguments or store them for reuse.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -563,7 +563,7 @@ Example:
 slice objects also have .start, .stop, and .step attributes for introspection.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • slice(0, 10, 2) = start at 0, stop before 10, step by 2 • Equivalent to [0:10:2] • Selects indices: 0, 2, 4, 6, 8 How it works: • The list is [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] • slice(0, 10, 2) picks every other element starting from index 0 • Indices selected: 0, 2, 4, 6, 8 • Elements: [0, 2, 4, 6, 8] Example: >>> s = slice(0, 10, 2) >>> list(range(10))[s] [0, 2, 4, 6, 8] slice objects also have .start, .stop, and .step attributes for introspection.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -632,7 +632,7 @@ Example:
 This is widely used in interview problems for palindrome checks: s == s[::-1].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • [::-1] means: start at end, go to beginning, step -1 • Works on strings, lists, tuples — any sequence • Creates a new object (does not modify in place) • For strings, this is the most common reversal technique How it works: • "hello"[::-1] iterates from the last character backwards • h(0) e(1) l(2) l(3) o(4) → o(4) l(3) l(2) e(1) h(0) • Result: "olleh" Example: >>> "hello"[::-1] 'olleh' >>> [1, 2, 3][::-1] [3, 2, 1] This is widely used in interview problems for palindrome checks: s == s[::-1].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -705,7 +705,7 @@ True
 Other ways to create shallow copies: list(a), a.copy(), copy.copy(a).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • a[:] copies all elements into a new list • b is a new list object, not the same object as a • 'is' checks object identity (same memory address) • '==' checks equality (same values) • b == a would be True, but b is a is False How it works: • a = [1, 2, 3] creates a list object • b = a[:] creates a different list object with same values • b is a → False (different objects) • b == a → True (equal values) Example: >>> a = [1, 2, 3] >>> b = a[:] >>> b is a False >>> b == a True Other ways to create shallow copies: list(a), a.copy(), copy.copy(a).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -773,7 +773,7 @@ False
 Note: for small integers and interned strings, id() can sometimes be equal due to caching, but lists are never cached.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • id() returns the unique identifier of an object • Two different objects always have different ids (while both alive) • a[:] creates a new list → different id from a • This confirms a[:] is a true copy, not an alias How it works: • a has some id, say 140234567890 • a[:] creates new list with different id, say 140234567960 • id(a) == id(a[:]) → False Example: >>> a = [1, 2, 3] >>> id(a) == id(a[:]) False Note: for small integers and interned strings, id() can sometimes be equal due to caching, but lists are never cached.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -843,7 +843,7 @@ Example:
 Unlike lists, you cannot do t[0:1] = (99,) — that would raise TypeError.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Tuples support all slice operations: [start:stop:step] • [::-1] reverses the tuple • The result is always a tuple (not a list) • Tuples cannot be modified via slice assignment (immutable) How it works: • (1, 2, 3)[::-1] reverses: 3, 2, 1 • Returns a new tuple (3, 2, 1) • The original tuple is unchanged (it's immutable) Example: >>> (1, 2, 3)[::-1] (3, 2, 1) >>> t = (10, 20, 30, 40) >>> t[1:3] (20, 30) Unlike lists, you cannot do t[0:1] = (99,) — that would raise TypeError.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -911,7 +911,7 @@ Example:
 [1::2] would give the other half: characters at indices 1, 3, 5 → "yhn".
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • Works on any sequence type How it works: • "python" has indices: p(0) y(1) t(2) h(3) o(4) n(5) • [::2] selects indices 0, 2, 4 → 'p', 't', 'o' • Result: "pto" Example: >>> "python"[::2] 'pto' >>> "python"[1::2] 'yhn' [1::2] would give the other half: characters at indices 1, 3, 5 → "yhn".
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -979,7 +979,7 @@ Example:
 Common mistake: [2:7:-1] would return [] because you can't go backward from 2 to 7 with step -1.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • [7:2:-1] means start=7, stop=2, step=-1 • Goes from index 7 down to index 3 (stop 2 is excluded) • With negative step, start > stop or you get an empty result • The stop index is always excluded, even with negative step How it works: • list(range(10)) = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] • [7:2:-1] collects: index 7→7, 6→6, 5→5, 4→4, 3→3 • Stops before index 2 • Result: [7, 6, 5, 4, 3] Example: >>> list(range(10))[7:2:-1] [7, 6, 5, 4, 3] Common mistake: [2:7:-1] would return [] because you can't go backward from 2 to 7 with step -1.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1055,7 +1055,7 @@ True
 Use copy.deepcopy() to avoid this — it recursively copies all nested objects.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Shallow copy copies the outer container only • Inner objects are shared between original and copy • Mutating a shared inner object affects both • This applies to [:], list(), .copy(), and copy.copy() How it works: • a = [[1, 2], [3, 4]] — two inner lists • b = a[:] — new outer list, but b[0] is a[0] (same object) • b[0].append(5) — mutates the shared inner list • a[0] is also [1, 2, 5] because it's the same object • a → [[1, 2, 5], [3, 4]] Example: >>> a = [[1, 2], [3, 4]] >>> b = a[:] >>> b[0] is a[0] True >>> b[0].append(5) >>> a [[1, 2, 5], [3, 4]] Use copy.deepcopy() to avoid this — it recursively copies all nested objects.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1127,7 +1127,7 @@ True
 All shallow copy methods ([:], list(), .copy(), copy.copy()) behave identically.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • list(a) = shallow copy (same as a[:] or a.copy()) • Only the top-level list is new • Inner lists are shared references • 'is' returns True because they are literally the same object How it works: • a = [[1, 2], [3, 4]] • b = list(a) — new outer list • b[0] points to the exact same [1, 2] object as a[0] • b[0] is a[0] → True Example: >>> a = [[1, 2], [3, 4]] >>> b = list(a) >>> b is a # outer list is different False >>> b[0] is a[0] # inner lists are shared True All shallow copy methods ([:], list(), .copy(), copy.copy()) behave identically.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1199,7 +1199,7 @@ Example:
 This demonstrates why shallow copies can be dangerous with nested mutable objects.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • copy.copy(a) = shallow copy (identical to a[:] for lists) • Inner list [1] is shared between a and b • Mutating b[0] also mutates a[0] • copy.deepcopy() would prevent this How it works: • a = [[1]] — list containing one inner list • b = copy.copy(a) — new outer list, shared inner list • b[0].append(2) — mutates the shared inner list [1] → [1, 2] • a[0] is the same object, so a becomes [[1, 2]] Example: >>> import copy >>> a = [[1]] >>> b = copy.copy(a) >>> b[0].append(2) >>> a [[1, 2]] This demonstrates why shallow copies can be dangerous with nested mutable objects.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1274,7 +1274,7 @@ False
 deepcopy handles circular references and complex object graphs correctly.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • deepcopy() copies the outer container AND all inner objects • No references are shared between original and deep copy • Mutating the deep copy never affects the original • Works for arbitrarily nested structures How it works: • a = [[1]] — list with inner list [1] • b = copy.deepcopy(a) — new outer list AND new inner list [1] • b[0].append(2) — mutates b's inner list to [1, 2] • a[0] is a different object — still [1] • a remains [[1]] Example: >>> import copy >>> a = [[1]] >>> b = copy.deepcopy(a) >>> b[0] is a[0] False >>> b[0].append(2) >>> a [[1]] deepcopy handles circular references and complex object graphs correctly.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1348,7 +1348,7 @@ True
 This is a subtle difference from a = a + [4], which creates a new list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • For lists, a += [4] is equivalent to a.extend([4]) • It mutates the existing list object in place • b = a makes b an alias — same object • Both a and b see the mutation How it works: • a = [1, 2, 3] creates list object • b = a — b points to same object • a += [4] — calls list.__iadd__([4]), mutates in place • The object is now [1, 2, 3, 4] • b still points to this same object → [1, 2, 3, 4] Example: >>> a = [1, 2, 3] >>> b = a >>> a += [4] >>> b [1, 2, 3, 4] >>> a is b True This is a subtle difference from a = a + [4], which creates a new list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1422,7 +1422,7 @@ Example:
 This is the key mutable vs immutable += difference. Lists mutate; tuples create new objects.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Lists mutate; tuples create new objects.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1495,7 +1495,7 @@ False
 Compare: a += [4] would give b = [1, 2, 3, 4] because += mutates in place for lists.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • a + [4] uses __add__, which always returns a new list • a is rebound to the new list • b still references the old list • This is the safe pattern when you don't want aliases to see changes How it works: • a = [1, 2, 3] — list object created • b = a — b is an alias • a = a + [4] — creates new list [1, 2, 3, 4], rebinds a • b still points to old object [1, 2, 3] Example: >>> a = [1, 2, 3] >>> b = a >>> a = a + [4] >>> b [1, 2, 3] >>> a is b False Compare: a += [4] would give b = [1, 2, 3, 4] because += mutates in place for lists.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1567,7 +1567,7 @@ False
 Compare with [[0]*3]*3 which shares all inner lists.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • [[0]*3 for _ in range(3)] creates 3 independent [0,0,0] lists • Each iteration of the comprehension creates a new [0]*3 • Modifying a[0] does not affect a[1] or a[2] • This is the correct way to create a 2D matrix How it works: • Comprehension runs 3 times, each creating a new [0, 0, 0] • a = [[0,0,0], [0,0,0], [0,0,0]] — three different objects • a[0][0] = 1 — only modifies a[0] • Result: [[1,0,0], [0,0,0], [0,0,0]] Example: >>> a = [[0]*3 for _ in range(3)] >>> a[0] is a[1] False >>> a[0][0] = 1 >>> a [[1, 0, 0], [0, 0, 0], [0, 0, 0]] Compare with [[0]*3]*3 which shares all inner lists.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1640,7 +1640,7 @@ True
 Fix: use [[0]*3 for _ in range(3)] to create independent lists.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • [x]*3 creates [x, x, x] where all three are the SAME object • When x is a mutable list, all three entries share it • Modifying any one modifies all • This is one of Python's most notorious gotchas How it works: • [0]*3 creates [0, 0, 0] — one list object • [[0,0,0]]*3 creates [ref, ref, ref] — three references to that ONE list • a[0] is a[1] is a[2] → True • a[0][0] = 1 modifies the shared list → [1, 0, 0] • All three entries show [1, 0, 0] Example: >>> a = [[0]*3]*3 >>> a[0] is a[1] True >>> a[0][0] = 1 >>> a [[1, 0, 0], [1, 0, 0], [1, 0, 0]] Fix: use [[0]*3 for _ in range(3)] to create independent lists.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1712,7 +1712,7 @@ True
 Fix: [[] for _ in range(3)] creates three independent empty lists.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • [[]] is a list containing one empty list • [[]]*3 repeats that reference three times • All three entries point to the same inner list object • Appending to any one entry appends to all How it works: • [[]] creates [ref_to_empty_list] • *3 creates [ref, ref, ref] — same empty list object • a[0].append(1) → the shared list becomes [1] • a → [[1], [1], [1]] Example: >>> a = [[]]*3 >>> a[0] is a[1] is a[2] True >>> a[0].append(1) >>> a [[1], [1], [1]] Fix: [[] for _ in range(3)] creates three independent empty lists.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1782,7 +1782,7 @@ Example:
 The * gotcha only matters for mutable inner objects (lists, dicts, sets). Immutable objects are safe.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Immutable objects are safe.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1853,7 +1853,7 @@ Example:
 Shallow copy is only "dangerous" when the list contains mutable objects (other lists, dicts, etc.).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • a.copy() creates a new list with the same elements • For flat lists of immutables, shallow = fully independent • Changes to a (append, remove, etc.) don't affect b • The inner elements are immutable so sharing them is safe How it works: • a = [1, 2, 3] • b = a.copy() — new list [1, 2, 3] • a.append(4) — only modifies a • b is unaffected → [1, 2, 3] Example: >>> a = [1, 2, 3] >>> b = a.copy() >>> a.append(4) >>> b [1, 2, 3] Shallow copy is only "dangerous" when the list contains mutable objects (other lists, dicts, etc.).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1924,7 +1924,7 @@ Example:
 Sets never have the shallow-copy gotcha because their elements must be hashable (immutable).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • set.copy() creates a new set with the same elements • Sets only hold immutable items, so no nested-mutation issues • Adding to the original doesn't affect the copy • Equivalent to set(a) or {*a} How it works: • a = {1, 2, 3} • b = a.copy() — new set {1, 2, 3} • a.add(4) — only modifies a • b → {1, 2, 3} Example: >>> a = {1, 2, 3} >>> b = a.copy() >>> a.add(4) >>> b {1, 2, 3} Sets never have the shallow-copy gotcha because their elements must be hashable (immutable).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1995,7 +1995,7 @@ Example:
 The top-level structure is independent. The gotcha only appears with mutable values.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The gotcha only appears with mutable values.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2069,7 +2069,7 @@ True
 The shallow copy gotcha applies universally: lists, dicts, sets — any container with mutable inner objects.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • b = a.copy() — new dict, but values are shared • a["x"] and b["x"] point to the same list [1] • Mutating that list (append) is visible through both dicts • Use copy.deepcopy(a) for full independence How it works: • a = {"x": [1]} — value is a list • b = a.copy() — b["x"] is the same list object as a["x"] • a["x"].append(2) — mutates the shared list to [1, 2] • b["x"] → [1, 2] (same object) • b → {"x": [1, 2]} Example: >>> a = {"x": [1]} >>> b = a.copy() >>> a["x"] is b["x"] True >>> a["x"].append(2) >>> b {'x': [1, 2]} The shallow copy gotcha applies universally: lists, dicts, sets — any container with mutable inner objects.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2142,7 +2142,7 @@ Example:
 Lists are efficient stacks because both append and pop at the end are amortized O(1).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • append(x) adds to the end — O(1) • pop() removes and returns the last element — O(1) • Together they implement a stack • LIFO: the last element added is the first removed How it works: • stack = [] — empty stack • stack.append(1) → [1] • stack.append(2) → [1, 2] • stack.pop() → returns 2, stack becomes [1] Example: >>> stack = [] >>> stack.append(1) >>> stack.append(2) >>> stack.pop() 2 Lists are efficient stacks because both append and pop at the end are amortized O(1).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2213,7 +2213,7 @@ Example:
 pop() is O(1) at the end but O(n) at the beginning because elements must shift.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • pop() with no arguments removes the last element • It both removes the element AND returns its value • The list is modified in place • pop(i) removes at index i, but pop() at the end is O(1) How it works: • stack = [1, 2, 3] • stack.pop() → removes 3 and returns it • stack → [1, 2] Example: >>> stack = [1, 2, 3] >>> val = stack.pop() >>> val 3 >>> stack [1, 2] pop() is O(1) at the end but O(n) at the beginning because elements must shift.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2283,7 +2283,7 @@ deque([2, 3])
 For FIFO queues, always use deque over list for O(1) performance at both ends.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • deque = double-ended queue • popleft() removes and returns the leftmost element — O(1) • list.pop(0) does the same but is O(n) due to shifting • deque is the proper data structure for queues in Python How it works: • q = deque([1, 2, 3]) • q.popleft() → returns 1, q becomes deque([2, 3]) Example: >>> from collections import deque >>> q = deque([1, 2, 3]) >>> q.popleft() 1 >>> q deque([2, 3]) For FIFO queues, always use deque over list for O(1) performance at both ends.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2353,7 +2353,7 @@ Example:
 deque supports both appendleft/popleft (left end) and append/pop (right end), all in O(1).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • appendleft(x) adds to the left — O(1) • append(x) adds to the right — O(1) • list.insert(0, x) would be O(n) for the same operation • deque is doubly-linked, so both ends are fast How it works: • q = deque([1, 2, 3]) • q.appendleft(0) → deque([0, 1, 2, 3]) • list(q) → [0, 1, 2, 3] Example: >>> from collections import deque >>> q = deque([1, 2, 3]) >>> q.appendleft(0) >>> list(q) [0, 1, 2, 3] deque supports both appendleft/popleft (left end) and append/pop (right end), all in O(1).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2426,7 +2426,7 @@ Example:
 This is commonly used for "last N items" buffers or moving averages.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • maxlen=3 limits the deque to at most 3 elements • Adding to the right drops from the left (and vice versa) • Useful for fixed-size sliding windows • Once set, maxlen cannot be changed How it works: • q = deque(maxlen=3) — empty, max 3 elements • q.extend([1, 2, 3, 4]) adds 1, 2, 3, 4 one by one • After 1: deque([1]) • After 2: deque([1, 2]) • After 3: deque([1, 2, 3]) — full • After 4: deque([2, 3, 4]) — 1 dropped from left Example: >>> from collections import deque >>> q = deque(maxlen=3) >>> q.extend([1, 2, 3, 4]) >>> list(q) [2, 3, 4] This is commonly used for "last N items" buffers or moving averages.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2498,7 +2498,7 @@ Example:
 Warning: pop(0) is O(n) for lists, making this O(n²). Use deque.popleft() for O(1) front removal.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Use deque.popleft() for O(1) front removal.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2567,7 +2567,7 @@ Example:
 This is a common pattern for removing a contiguous block of elements without creating a new list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • a[2:4] selects elements at index 2 and 3 → values 3, 4 • Assigning [] removes them • Equivalent to del a[2:4] • The list shrinks in place How it works: • Before: [1, 2, 3, 4, 5] • a[2:4] = [] removes indices 2, 3 (elements 3, 4) • After: [1, 2, 5] Example: >>> a = [1, 2, 3, 4, 5] >>> a[2:4] = [] >>> a [1, 2, 5] This is a common pattern for removing a contiguous block of elements without creating a new list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2638,7 +2638,7 @@ Example:
 Safe alternatives: iterate over a copy (a[:]) or use list comprehension to filter.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• a.remove(x) >>> a [1, 3, 5] # Looks correct by luck, but with [1,2,3,4] you'd get [1,3,4] Safe alternatives: iterate over a copy (a[:]) or use list comprehension to filter.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2712,7 +2712,7 @@ Example:
 For in-place modification: a[:] = [x for x in a if x != 2] modifies a while keeping the same object.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • [x for x in a if condition] creates a new filtered list • Original list a is not modified • Much safer than removing during iteration • Also more readable and efficient How it works: • Iterates over a = [1, 2, 3, 4] • x=1: 1 != 2 → True → include • x=2: 2 != 2 → False → exclude • x=3: 3 != 2 → True → include • x=4: 4 != 2 → True → include • b = [1, 3, 4] Example: >>> a = [1, 2, 3, 4] >>> b = [x for x in a if x != 2] >>> b [1, 3, 4] >>> a [1, 2, 3, 4] For in-place modification: a[:] = [x for x in a if x != 2] modifies a while keeping the same object.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2782,7 +2782,7 @@ Example:
 Performance: insert(0, x) is O(n) because every element must shift. Use deque.appendleft() for O(1) front insertion.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Use deque.appendleft() for O(1) front insertion.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2848,7 +2848,7 @@ Example:
 If you need to preserve original order while deduplicating, use dict.fromkeys(): list(dict.fromkeys([3, 1, 4, 1, 5])) → [3, 1, 4, 5].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • set() removes duplicates: {3, 1, 4, 1, 5} → {1, 3, 4, 5} • sorted() returns a new sorted list from any iterable • sorted(set(...)) is a common Python idiom • Original order is lost (sorted by value) How it works: • set([3, 1, 4, 1, 5]) → {1, 3, 4, 5} (duplicate 1 removed) • sorted({1, 3, 4, 5}) → [1, 3, 4, 5] Example: >>> sorted(set([3, 1, 4, 1, 5])) [1, 3, 4, 5] If you need to preserve original order while deduplicating, use dict.fromkeys(): list(dict.fromkeys([3, 1, 4, 1, 5])) → [3, 1, 4, 5].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2917,7 +2917,7 @@ True
 Choose reversed() when you only need to iterate once; use [::-1] when you need a concrete reversed list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • reversed(a) returns a reverse iterator (lazy, O(1) memory) • a[::-1] creates a new reversed list (eager, O(n) memory) • When compared as lists, they are equal • reversed() is more memory-efficient for large sequences How it works: • a = [1, 2, 3] • list(reversed(a)) → [3, 2, 1] • a[::-1] → [3, 2, 1] • [3, 2, 1] == [3, 2, 1] → True Example: >>> a = [1, 2, 3] >>> list(reversed(a)) == a[::-1] True Choose reversed() when you only need to iterate once; use [::-1] when you need a concrete reversed list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2987,7 +2987,7 @@ Example:
 Common mistake: b = a.reverse() — b is None, not [3, 2, 1]. Use b = a[::-1] or b = list(reversed(a)) to get a reversed copy.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Use b = a[::-1] or b = list(reversed(a)) to get a reversed copy.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3058,7 +3058,7 @@ True
 This convention was a deliberate design choice by Guido van Rossum to make mutation explicit and prevent silent errors.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • .reverse() returns None — Python convention for in-place methods • .sort() also returns None • .append(), .extend(), .insert() all return None • This prevents chaining like a.reverse().sort() (it would fail) How it works: • a.reverse() reverses a in place and returns None • None is None → True • a is now [3, 2, 1], but the return value is None Example: >>> a = [1, 2, 3] >>> result = a.reverse() >>> result is None True >>> a [3, 2, 1] This convention was a deliberate design choice by Guido van Rossum to make mutation explicit and prevent silent errors.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3127,7 +3127,7 @@ Example:
 Compare: a.append(range(5)) would give [range(0, 5)] — the range object itself as a single element.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• How it works: • a = [] • a.extend(range(5)) → iterates range(5): 0, 1, 2, 3, 4 • Each value is appended: a → [0, 1, 2, 3, 4] Example: >>> a = [] >>> a.extend(range(5)) >>> a [0, 1, 2, 3, 4] Compare: a.append(range(5)) would give [range(0, 5)] — the range object itself as a single element.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3196,7 +3196,7 @@ Example:
 The step value determines the gap between selected indices.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (until out of range) • Works on any sequence (list, string, tuple) How it works: • list(range(10)) = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] • [::3] selects indices 0, 3, 6, 9 • Elements: 0, 3, 6, 9 • Result: [0, 3, 6, 9] Example: >>> list(range(10))[::3] [0, 3, 6, 9] >>> "abcdefghij"[::3] 'adgj' The step value determines the gap between selected indices.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3266,7 +3266,7 @@ Example:
 To count both lists and tuples: isinstance(x, (list, tuple)) with a tuple of types.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • isinstance(x, list) checks if x is a list instance • sum(1 for ...) counts how many items satisfy the condition • Only [2, 3] is a list — 1 is an int, (4, 5) is a tuple • isinstance checks the exact type (or subclass) How it works: • a = [1, [2, 3], (4, 5)] • x=1: isinstance(1, list) → False • x=[2,3]: isinstance([2,3], list) → True → contributes 1 • x=(4,5): isinstance((4,5), list) → False • sum of [1] = 1 Example: >>> a = [1, [2, 3], (4, 5)] >>> sum(1 for x in a if isinstance(x, list)) 1 To count both lists and tuples: isinstance(x, (list, tuple)) with a tuple of types.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3340,7 +3340,7 @@ Example:
 For deeper nesting, use itertools.chain.from_iterable() or recursive flattening.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • The outer for iterates over sublists • The inner for iterates over elements in each sublist • Read left-to-right: outer loop first, then inner loop • This is the idiomatic way to flatten one level of nesting How it works: • sublist = [1, 2] → x = 1, x = 2 • sublist = [3, 4] → x = 3, x = 4 • sublist = [5] → x = 5 • Result: [1, 2, 3, 4, 5] Equivalent nested loop: result = [] for sublist in [[1,2],[3,4],[5]]: for x in sublist: result.append(x) Example: >>> [x for sublist in [[1,2],[3,4],[5]] for x in sublist] [1, 2, 3, 4, 5] For deeper nesting, use itertools.chain.from_iterable() or recursive flattening.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3414,7 +3414,7 @@ True
 This can be surprising: if you want to exclude booleans, check type(x) is int (exact type check) instead of isinstance.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • bool inherits from int: class bool(int) • isinstance(True, int) → True • isinstance(False, int) → True • True == 1 and False == 0 in numeric contexts • This is by design — booleans were added to Python 2.3 as a subclass of int How it works: • all() checks if every element satisfies the condition • x=1: isinstance(1, int) → True • x=True: isinstance(True, int) → True (bool is subclass of int) • x=3: isinstance(3, int) → True • all([True, True, True]) → True Example: >>> isinstance(True, int) True >>> isinstance(True, bool) True >>> issubclass(bool, int) True This can be surprising: if you want to exclude booleans, check type(x) is int (exact type check) instead of isinstance.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3488,7 +3488,7 @@ True
 Compare: a = [4, 5, 6] would rebind a to a new object — b would still be [1, 2, 3]. The [:] is critical for in-place modification.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The [:] is critical for in-place modification.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

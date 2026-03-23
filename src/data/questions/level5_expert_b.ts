@@ -36,7 +36,7 @@ Common uses:
 Example: p.x returns 1 because 'x' is the first field of the namedtuple, mapped to index 0.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • namedtuple("Point", ["x", "y"]) creates a new class with fields x and y • Point(1, 2) creates an instance with x=1, y=2 • p.x accesses the first field by name → 1 • Fields are defined by the second argument (list of strings or space-separated string) How it works: • namedtuple dynamically creates a class that extends tuple • Each field name becomes a property that maps to a positional index • p.x is equivalent to p[0] • The instance is still immutable like a regular tuple Example: from collections import namedtuple Point = namedtuple("Point", ["x", "y"]) p = Point(1, 2) p.x # 1 p.y # 2 Common uses: • Lightweight data classes without defining a full class • Readable alternative to plain tuples • Database rows, CSV records, coordinate systems Example: p.x returns 1 because 'x' is the first field of the namedtuple, mapped to index 0.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -107,7 +107,7 @@ x, y = p   # unpacking works
 Example: p[0] returns 3 because namedtuples are tuples, and index 0 holds the first field value.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • namedtuple("Point", "x y") — fields can be a space-separated string • p[0] returns 3, same as p.x • p[1] returns 4, same as p.y • Indexing works because namedtuple IS a tuple How it works: • namedtuple creates a subclass of tuple • isinstance(p, tuple) is True • All tuple operations work: indexing, slicing, iteration, unpacking • Named access (p.x) is an addition, not a replacement Example: Point = namedtuple("Point", "x y") p = Point(3, 4) p[0] # 3 (same as p.x) p[1] # 4 (same as p.y) p[::-1] # (4, 3) — slicing works too x, y = p # unpacking works Example: p[0] returns 3 because namedtuples are tuples, and index 0 holds the first field value.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -181,7 +181,7 @@ Common uses:
 Example: p._asdict() returns {'x': 1, 'y': 2} — a dictionary mapping each field name to its value.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • p._asdict() returns {"x": 1, "y": 2} • In Python 3.8+, it returns a regular dict (previously OrderedDict) • Keys are the field names, values are the field values • The underscore prefix prevents conflicts with user-defined field names How it works: • _asdict() iterates over field names and values • Creates a dict with field_name: value pairs • Result is a regular dict in modern Python • Useful for serialization (JSON, etc.) Example: Point = namedtuple("Point", "x y") p = Point(1, 2) p._asdict() # {'x': 1, 'y': 2} dict(p._asdict()) # same result Common uses: • Converting namedtuples to JSON-serializable dicts • Inspecting field names and values together • Passing namedtuple data to functions expecting dicts Example: p._asdict() returns {'x': 1, 'y': 2} — a dictionary mapping each field name to its value.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -252,7 +252,7 @@ hash(p)               # works (tuples are hashable)
 Example: isinstance(p, tuple) returns True because namedtuple creates a subclass of tuple.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • isinstance(p, tuple) → True • namedtuple classes are subclasses of tuple • This means p works everywhere a tuple is accepted • issubclass(Point, tuple) is also True How it works: • namedtuple("Point", "x y") generates a new class • This class inherits from tuple • Point.__bases__ is (tuple,) • All tuple methods work: len(), indexing, iteration, hashing Example: Point = namedtuple("Point", "x y") p = Point(1, 2) isinstance(p, tuple) # True type(p) # <class '__main__.Point'> len(p) # 2 (tuple behavior) hash(p) # works (tuples are hashable) Example: isinstance(p, tuple) returns True because namedtuple creates a subclass of tuple.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -322,7 +322,7 @@ c["z"]  # 0 (missing keys return 0, not KeyError!)
 Example: c["a"] returns 5 because the letter 'a' appears 5 times in "abracadabra".
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("abracadabra") counts each character • "a" appears at positions 0, 3, 5, 7, 10 → count is 5 • Counter works with any iterable (strings, lists, etc.) • Accessing a key returns its count (0 for missing keys, no KeyError) How it works: • Counter iterates through the string • For each character, increments its count • Result: Counter({'a': 5, 'b': 2, 'r': 2, 'c': 1, 'd': 1}) • c["a"] returns 5 Example: Counter("abracadabra") # Counter({'a': 5, 'b': 2, 'r': 2, 'c': 1, 'd': 1}) c["a"] # 5 c["b"] # 2 c["z"] # 0 (missing keys return 0, not KeyError!) Example: c["a"] returns 5 because the letter 'a' appears 5 times in "abracadabra".
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -391,7 +391,7 @@ c.most_common()     # all elements sorted by count
 Example: [(3, 3)] means element 3 appears 3 times, and it's the most common.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter([1, 1, 2, 3, 3, 3]) → Counter({3: 3, 1: 2, 2: 1}) • most_common(1) returns [(3, 3)] — element 3 appears 3 times • The result is a list of (element, count) tuples • The first 3 is the element, the second 3 is the count How it works: • Counter counts occurrences: 1→2, 2→1, 3→3 • most_common(1) sorts by count descending • Returns the top 1 as a list of tuples • Format: [(element, count)] Example: c = Counter([1, 1, 2, 3, 3, 3]) c.most_common(1) # [(3, 3)] — 3 appears 3 times c.most_common(2) # [(3, 3), (1, 2)] c.most_common() # all elements sorted by count Example: [(3, 3)] means element 3 appears 3 times, and it's the most common.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -459,7 +459,7 @@ Counter("hello").most_common()   # [('l', 2), ('h', 1), ('e', 1), ('o', 1)]
 Example: [('l', 2), ('h', 1)] — 'l' is most common (2), 'h' is next (first among count-1 elements).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("hello") → Counter({'l': 2, 'h': 1, 'e': 1, 'o': 1}) • 'l' appears 2 times — the most common • Among elements with count 1, insertion order determines ranking • 'h' was encountered first, so it ranks second • most_common(2) → [('l', 2), ('h', 1)] How it works: • "hello" → h:1, e:1, l:2, o:1 • Sort by count descending: l(2), then h(1), e(1), o(1) in insertion order • Take first 2: [('l', 2), ('h', 1)] • Ties use the order elements were first seen Example: Counter("hello").most_common(2) # [('l', 2), ('h', 1)] Counter("hello").most_common() # [('l', 2), ('h', 1), ('e', 1), ('o', 1)] Example: [('l', 2), ('h', 1)] — 'l' is most common (2), 'h' is next (first among count-1 elements).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -531,7 +531,7 @@ Counter also supports -, &, |:
 Example: Counter("abc") + Counter("bcd") sums counts: 'b' and 'c' each appear once in both, so they become 2.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("abc") → Counter({'a': 1, 'b': 1, 'c': 1}) • Counter("bcd") → Counter({'b': 1, 'c': 1, 'd': 1}) • Adding them: counts for shared keys are summed • Result: Counter({'b': 2, 'c': 2, 'a': 1, 'd': 1}) How it works: • + operator adds corresponding counts • a: 1+0=1, b: 1+1=2, c: 1+1=2, d: 0+1=1 • Non-overlapping keys get their original count • Result only includes positive counts Example: Counter("abc") + Counter("bcd") # Counter({'b': 2, 'c': 2, 'a': 1, 'd': 1}) Counter also supports -, &, |: • - subtracts counts (drops zero/negative) • & takes minimum of counts • | takes maximum of counts Example: Counter("abc") + Counter("bcd") sums counts: 'b' and 'c' each appear once in both, so they become 2.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -601,7 +601,7 @@ list(Counter(x=0, y=1).elements())
 Example: list(Counter(a=2, b=3).elements()) produces ["a", "a", "b", "b", "b"] by repeating each element by its count.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter(a=2, b=3) → Counter with a:2, b:3 • elements() yields 'a' twice, then 'b' three times • list() materializes the iterator → ["a", "a", "b", "b", "b"] • Elements with count ≤ 0 are excluded • Order follows insertion order How it works: • elements() iterates over each key • For each key, yields it count times • Counter(a=2, b=3).elements() → a, a, b, b, b • Wrapping in list() gives the full sequence Example: list(Counter(a=2, b=3).elements()) # ['a', 'a', 'b', 'b', 'b'] list(Counter(x=0, y=1).elements()) # ['y'] — x has count 0, excluded Example: list(Counter(a=2, b=3).elements()) produces ["a", "a", "b", "b", "b"] by repeating each element by its count.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -675,7 +675,7 @@ Common pitfall:
 Example: c[4] returns 0 because Counter's __missing__ method returns 0 for uncounted elements.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter is a dict subclass with a special __missing__ method • c[4] → 0 because 4 was never counted • Regular dict would raise KeyError for a missing key • This makes Counter safe to query without checking existence How it works: • Counter overrides __missing__ to return 0 • When you access c[4], Python calls __missing__(4) • __missing__ returns 0 instead of raising KeyError • The key is NOT added to the Counter (unlike defaultdict) Example: c = Counter([1, 2, 2, 3, 3, 3]) c[3] # 3 (exists) c[4] # 0 (missing → 0, no error) c[999] # 0 (missing → 0) 4 in c # False (key not in Counter) Common pitfall: • c[4] returns 0 but does NOT add 4 to the Counter • 4 in c is still False after accessing c[4] Example: c[4] returns 0 because Counter's __missing__ method returns 0 for uncounted elements.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -747,7 +747,7 @@ c.subtract(Counter("ab"))  # Counter({'a': 1, 'b': 0}) — keeps zero
 Example: Counter({"a": 1}) because 'a' had 2-1=1 (kept), 'b' had 1-1=0 (dropped).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("aab") → Counter({'a': 2, 'b': 1}) • Counter("ab") → Counter({'a': 1, 'b': 1}) • Subtraction: a: 2-1=1, b: 1-1=0 • Zero and negative counts are dropped from result • Result: Counter({'a': 1}) How it works: • - operator subtracts corresponding counts • Only positive results are kept • b had count 0 after subtraction → excluded • This is "multiset subtraction" — removes elements Example: Counter("aab") - Counter("ab") # Counter({'a': 1}) Counter("ab") - Counter("aab") # Counter() — empty, all results ≤ 0 If you need to keep zero/negative counts, use subtract(): c = Counter("aab") c.subtract(Counter("ab")) # Counter({'a': 1, 'b': 0}) — keeps zero Example: Counter({"a": 1}) because 'a' had 2-1=1 (kept), 'b' had 1-1=0 (dropped).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -820,7 +820,7 @@ OrderedDict still differs in:
 Example: Yes — since Python 3.7, dict insertion order is part of the language specification.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Before 3.7: dict order was implementation-dependent • CPython 3.6: dict was ordered as an implementation detail • Python 3.7+: insertion order is guaranteed by the language spec • collections.OrderedDict is now mostly redundant for ordering How it works: • Python 3.7+ dicts use a compact representation • Keys are stored in insertion order internally • Iteration, keys(), values(), items() all follow insertion order • This is a language guarantee, not just an implementation detail Example: d = {"c": 3, "a": 1, "b": 2} list(d.keys()) # ['c', 'a', 'b'] — insertion order list(d.values()) # [3, 1, 2] OrderedDict still differs in: • == comparison is order-sensitive for OrderedDict • OrderedDict has move_to_end() method • reversed() worked on OrderedDict before 3.8 Example: Yes — since Python 3.7, dict insertion order is part of the language specification.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -894,7 +894,7 @@ Common uses:
 Example: d["x"] is 1 because defaultdict(int) auto-creates d["x"]=0, then += 1 makes it 1.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • defaultdict(int) uses int() as the default factory • int() returns 0, so missing keys start at 0 • d["x"] += 1 first creates d["x"] = 0, then adds 1 • Result: d["x"] is 1 How it works: • When accessing a missing key, defaultdict calls the factory • int() → 0, so d["x"] is created with value 0 • Then += 1 increments it to 1 • Unlike Counter, defaultdict actually inserts the key Example: d = defaultdict(int) d["x"] += 1 # d["x"] = 0 + 1 = 1 d["y"] += 5 # d["y"] = 0 + 5 = 5 d["z"] # 0 (auto-created but not incremented) Common uses: • Counting: defaultdict(int) as a manual counter • Grouping: defaultdict(list) for grouping items • Accumulating: defaultdict(set) for collecting unique items Example: d["x"] is 1 because defaultdict(int) auto-creates d["x"]=0, then += 1 makes it 1.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -969,7 +969,7 @@ d["a"].append(1)
 Example: d["a"] is [1] because defaultdict(list) auto-creates an empty list, and append(1) adds 1 to it.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • defaultdict(list) → missing keys auto-create as [] • d["a"].append(1) → first creates d["a"] = [], then appends 1 • Result: d["a"] is [1] • No need to check if key exists before appending How it works: • Accessing d["a"] triggers the default factory (list) • list() returns [] — an empty list • .append(1) is called on that empty list • d["a"] now holds [1] Example: d = defaultdict(list) d["a"].append(1) # d["a"] = [1] d["a"].append(2) # d["a"] = [1, 2] d["b"].append(10) # d["b"] = [10] Without defaultdict (verbose): d = {} if "a" not in d: d["a"] = [] d["a"].append(1) Example: d["a"] is [1] because defaultdict(list) auto-creates an empty list, and append(1) adds 1 to it.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1048,7 +1048,7 @@ Key difference from Counter:
 Example: d["missing"] returns 0 because defaultdict(int) calls int() → 0 for missing keys.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • defaultdict(int) uses int() as factory → returns 0 • d["missing"] → creates the key with value 0 and returns 0 • This is different from a regular dict (which raises KeyError) • The key IS added to the dict after access How it works: • d["missing"] triggers __missing__ method • __missing__ calls the factory function: int() → 0 • Stores d["missing"] = 0 • Returns 0 • The key now exists in d Example: d = defaultdict(int) d["missing"] # 0 (auto-created) "missing" in d # True (key was added!) d2 = defaultdict(str) d2["x"] # "" (str() returns empty string) d3 = defaultdict(bool) d3["x"] # False (bool() returns False) Key difference from Counter: • Counter: c[key] returns 0 but does NOT add the key • defaultdict: d[key] returns default AND adds the key Example: d["missing"] returns 0 because defaultdict(int) calls int() → 0 for missing keys.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1119,7 +1119,7 @@ list(chain.from_iterable([[1, 2], [3, 4]]))  # [1, 2, 3, 4]
 Example: list(chain([1, 2], [3, 4])) returns [1, 2, 3, 4] — elements from both lists in order.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • chain([1, 2], [3, 4]) → yields 1, 2, 3, 4 • It "flattens" multiple iterables into one sequence • Does not nest them — just concatenates • Works lazily (returns an iterator, not a list) How it works: • chain iterates through the first iterable completely • Then moves to the next iterable, and so on • Yields elements one by one from each iterable in order • Equivalent to: [x for it in iterables for x in it] Example: list(chain([1, 2], [3, 4])) # [1, 2, 3, 4] list(chain("ab", "cd", "ef")) # ['a', 'b', 'c', 'd', 'e', 'f'] list(chain(range(3), range(3))) # [0, 1, 2, 0, 1, 2] Use chain.from_iterable for a list of iterables: list(chain.from_iterable([[1, 2], [3, 4]])) # [1, 2, 3, 4] Example: list(chain([1, 2], [3, 4])) returns [1, 2, 3, 4] — elements from both lists in order.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1189,7 +1189,7 @@ If you want to keep strings intact, don't use chain:
 Example: list(chain("ab", "cd")) returns ['a', 'b', 'c', 'd'] because strings are iterated character by character.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • "ab" is iterable → yields 'a', 'b' • "cd" is iterable → yields 'c', 'd' • chain("ab", "cd") → 'a', 'b', 'c', 'd' • Strings are not treated as atomic elements How it works: • chain treats each argument as an iterable • Strings iterate character by character • So chain("ab", "cd") chains individual characters • Result: ['a', 'b', 'c', 'd'] Example: list(chain("ab", "cd")) # ['a', 'b', 'c', 'd'] list(chain("hello")) # ['h', 'e', 'l', 'l', 'o'] If you want to keep strings intact, don't use chain: ["ab"] + ["cd"] # ['ab', 'cd'] Example: list(chain("ab", "cd")) returns ['a', 'b', 'c', 'd'] because strings are iterated character by character.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1261,7 +1261,7 @@ list(islice(repeat(0), 5))  # [0, 0, 0, 0, 0]
 Example: list(repeat(5, 3)) returns [5, 5, 5] — the value 5 repeated 3 times.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• # Without count — infinite (use islice to limit): from itertools import islice list(islice(repeat(0), 5)) # [0, 0, 0, 0, 0] Example: list(repeat(5, 3)) returns [5, 5, 5] — the value 5 repeated 3 times.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1337,7 +1337,7 @@ Common use: often paired with zip() or islice() to limit the infinite sequence.
 Example: [next(c) for _ in range(3)] returns [10, 11, 12] — three consecutive values starting from 10.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Example: [next(c) for _ in range(3)] returns [10, 11, 12] — three consecutive values starting from 10.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1414,7 +1414,7 @@ Common uses:
 Example: cycle([1, 2, 3]) cycles through 1→2→3→1→2→3→1... Taking 7 values wraps around twice plus one.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Taking 7 values wraps around twice plus one.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1487,7 +1487,7 @@ Signatures:
 Example: list(islice(range(100), 5)) returns [0, 1, 2, 3, 4] — the first 5 elements of range(100).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Signatures: • islice(iterable, stop) • islice(iterable, start, stop) • islice(iterable, start, stop, step) Example: list(islice(range(100), 5)) returns [0, 1, 2, 3, 4] — the first 5 elements of range(100).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1560,7 +1560,7 @@ Key difference from list slicing:
 Example: list(islice(range(100), 2, 7)) returns [2, 3, 4, 5, 6] — from index 2 up to (not including) 7.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • islice(range(100), 2, 7) → elements at indices 2, 3, 4, 5, 6 • Equivalent to list(range(100))[2:7] • start=2 means skip the first 2 elements • stop=7 means stop before index 7 • Result: [2, 3, 4, 5, 6] How it works: • islice skips the first 2 elements (indices 0 and 1) • Then yields elements at indices 2 through 6 • Stops before index 7 • 7 - 2 = 5 elements returned Example: list(islice(range(100), 2, 7)) # [2, 3, 4, 5, 6] list(islice(range(100), 0, 10, 2)) # [0, 2, 4, 6, 8] — with step Key difference from list slicing: • islice works on any iterator, not just sequences • islice does NOT support negative indices • islice is lazy — doesn't build the full sequence Example: list(islice(range(100), 2, 7)) returns [2, 3, 4, 5, 6] — from index 2 up to (not including) 7.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1634,7 +1634,7 @@ list(product([0, 1], repeat=3))
 Example: product([1,2], [3,4]) yields all 4 pairs: (1,3), (1,4), (2,3), (2,4).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • product([1, 2], [3, 4]) → (1,3), (1,4), (2,3), (2,4) • Equivalent to nested for loops • Order: first iterable varies slowest, last varies fastest • Returns tuples of one element from each input How it works: • For each element in [1, 2]: • For each element in [3, 4]: • Yield the pair • 1 pairs with 3 and 4, then 2 pairs with 3 and 4 • Result: [(1,3), (1,4), (2,3), (2,4)] Example: list(product([1, 2], [3, 4])) # [(1, 3), (1, 4), (2, 3), (2, 4)] list(product("AB", "12")) # [('A','1'), ('A','2'), ('B','1'), ('B','2')] list(product([0, 1], repeat=3)) # All 3-bit binary: [(0,0,0), (0,0,1), ..., (1,1,1)] Example: product([1,2], [3,4]) yields all 4 pairs: (1,3), (1,4), (2,3), (2,4).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1708,7 +1708,7 @@ Key difference from combinations:
 Example: 6 permutations because from 3 elements taken 2 at a time, order matters: P(3,2) = 6.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• = 6 How it works: • Take each element as first: 1, 2, 3 • For each first element, pair with remaining elements • 1→(1,2),(1,3); 2→(2,1),(2,3); 3→(3,1),(3,2) • Total: 6 permutations Example: list(permutations([1, 2, 3], 2)) # [(1,2), (1,3), (2,1), (2,3), (3,1), (3,2)] list(permutations("AB")) # [('A','B'), ('B','A')] Key difference from combinations: • permutations: order matters → (1,2) ≠ (2,1) • combinations: order doesn't matter → only (1,2) Example: 6 permutations because from 3 elements taken 2 at a time, order matters: P(3,2) = 6.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1782,7 +1782,7 @@ Key difference from permutations:
 Example: 3 combinations because C(3,2) = 3 — only unique subsets, not orderings.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• × 1!) = 3 How it works: • Select 2 elements from [1, 2, 3] without regard to order • (1,2), (1,3), (2,3) — each subset appears once • Elements within each tuple follow the input order • No element is repeated within a combination Example: list(combinations([1, 2, 3], 2)) # [(1, 2), (1, 3), (2, 3)] list(combinations("ABCD", 3)) # [('A','B','C'), ('A','B','D'), ('A','C','D'), ('B','C','D')] Key difference from permutations: • combinations: 3 results (order doesn't matter) • permutations: 6 results (order matters) Example: 3 combinations because C(3,2) = 3 — only unique subsets, not orderings.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1855,7 +1855,7 @@ len(list(permutations([1, 2])))         # 2 (2!)
 Example: len is 6 because 3! = 6 — there are 6 ways to arrange 3 distinct elements.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• = 6 — there are 6 ways to arrange 3 distinct elements.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1928,7 +1928,7 @@ len(list(combinations([1, 2, 3, 4], 1)))  # 4 (C(4,1))
 Example: C(4, 2) = 6. Six unique pairs can be formed from four elements.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Six unique pairs can be formed from four elements.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2004,7 +2004,7 @@ list(accumulate([3, 1, 4, 1, 5], max))
 Example: [1, 3, 6, 10] — each element is the cumulative sum up to that point.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • accumulate([1, 2, 3, 4]) → running sums • Step 1: 1 • Step 2: 1 + 2 = 3 • Step 3: 3 + 3 = 6 • Step 4: 6 + 4 = 10 • Result: [1, 3, 6, 10] How it works: • First element is yielded as-is • Each subsequent element is combined with the running total • Default function is operator.add (addition) • Can use any binary function Example: list(accumulate([1, 2, 3, 4])) # [1, 3, 6, 10] import operator list(accumulate([1, 2, 3, 4], operator.mul)) # [1, 2, 6, 24] — running product list(accumulate([3, 1, 4, 1, 5], max)) # [3, 3, 4, 4, 5] — running maximum Example: [1, 3, 6, 10] — each element is the cumulative sum up to that point.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2080,7 +2080,7 @@ Sort first: groupby(sorted("ABAB")) for full grouping.
 Example: Three groups of consecutive characters: 3 A's, 2 B's, 1 C.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Example: Three groups of consecutive characters: 3 A's, 2 B's, 1 C.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2154,7 +2154,7 @@ list(starmap(lambda a, b: a + b, [(1, 2), (3, 4)]))  # [3, 7]
 Example: starmap applies pow to unpacked tuples: pow(2,3)=8, pow(3,2)=9 → [8, 9].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • starmap(pow, [(2, 3), (3, 2)]) calls pow(*args) for each tuple • pow(2, 3) = 2³ = 8 • pow(3, 2) = 3² = 9 • Result: [8, 9] • "star" refers to the * unpacking operator How it works: • For each tuple in the iterable: • Unpack the tuple as function arguments • pow(2, 3) → 8 • pow(3, 2) → 9 • Yields each result Difference from map: • map(func, iterable) → func(item) • starmap(func, iterable) → func(*item) Example: list(starmap(pow, [(2, 3), (3, 2)])) # [8, 9] list(starmap(max, [(1, 5), (3, 2)])) # [5, 3] list(starmap(lambda a, b: a + b, [(1, 2), (3, 4)])) # [3, 7] Example: starmap applies pow to unpacked tuples: pow(2,3)=8, pow(3,2)=9 → [8, 9].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2228,7 +2228,7 @@ This is a classic Python curiosity — lists are reference-based.
 Example: len(a) is 1 because append added exactly one element (a reference to a itself).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Example: len(a) is 1 because append added exactly one element (a reference to a itself).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2300,7 +2300,7 @@ This demonstrates Python's reference semantics — variables and list elements h
 Example: a[0] is a returns True because a[0] is a reference back to the same list object.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Example: a[0] is a returns True because a[0] is a reference back to the same list object.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2374,7 +2374,7 @@ len(MyList())  # 42
 Example: [1, 2, 3].__len__() returns 3 — it's the direct call to the method len() uses.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • len(obj) actually calls obj.__len__() • [1, 2, 3].__len__() → 3 • This is Python's "data model" — operators and built-ins use dunder methods • You can define __len__ in your own classes to support len() How it works: • len([1, 2, 3]) is equivalent to [1, 2, 3].__len__() • The list class defines __len__ to return the number of elements • Python calls __len__ behind the scenes • Calling it directly also works Example: [1, 2, 3].__len__() # 3 "hello".__len__() # 5 len([1, 2, 3]) # 3 (same result) Custom class: class MyList: def __len__(self): return 42 len(MyList()) # 42 Example: [1, 2, 3].__len__() returns 3 — it's the direct call to the method len() uses.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2443,7 +2443,7 @@ Example:
 Example: [1, 2, 3].__contains__(2) returns True — 2 is found in the list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Yes → return True • If no __contains__, Python falls back to __iter__ Example: [1, 2, 3].__contains__(2) # True [1, 2, 3].__contains__(5) # False 2 in [1, 2, 3] # True (same thing) "h" in "hello" # True (str.__contains__) Example: [1, 2, 3].__contains__(2) returns True — 2 is found in the list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2517,7 +2517,7 @@ MyObj()[5]  # 10
 Example: [1, 2, 3].__getitem__(0) returns 1 — same as [1, 2, 3][0].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • obj[key] calls obj.__getitem__(key) • [1, 2, 3].__getitem__(0) → 1 (first element) • This powers all indexing and slicing in Python • Define __getitem__ in your classes to support bracket notation How it works: • [1, 2, 3][0] is equivalent to [1, 2, 3].__getitem__(0) • The list implementation returns the element at index 0 • Also handles negative indices: __getitem__(-1) → 3 • Slicing: __getitem__(slice(0, 2)) → [1, 2] Example: [1, 2, 3].__getitem__(0) # 1 [1, 2, 3].__getitem__(-1) # 3 [1, 2, 3][0] # 1 (same thing) Custom class: class MyObj: def __getitem__(self, key): return key * 2 MyObj()[5] # 10 Example: [1, 2, 3].__getitem__(0) returns 1 — same as [1, 2, 3][0].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2590,7 +2590,7 @@ reversed() vs [::-1]:
 Example: type is list_reverseiterator — a specialized iterator, not a list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • [1, 2, 3].__reversed__() returns a list_reverseiterator • reversed([1, 2, 3]) also calls __reversed__ internally • The result is lazy — it doesn't create a reversed list in memory • Use list() to materialize: list(reversed([1, 2, 3])) → [3, 2, 1] How it works: • __reversed__ creates an iterator that traverses the list backwards • The iterator yields elements on demand (lazy evaluation) • type() shows <class 'list_reverseiterator'> • This is memory-efficient — no new list is created Example: r = [1, 2, 3].__reversed__() type(r) # <class 'list_reverseiterator'> list(r) # [3, 2, 1] next(r) # 3 (first element from reverse) reversed() vs [::-1]: • reversed() → lazy iterator (memory-efficient) • [::-1] → creates a new reversed list (uses memory) Example: type is list_reverseiterator — a specialized iterator, not a list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2662,7 +2662,7 @@ Unbound vs bound method:
 Example: list.__add__([1, 2], [3, 4]) returns [1, 2, 3, 4] — same as [1, 2] + [3, 4].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • [1, 2] + [3, 4] calls [1, 2].__add__([3, 4]) • Calling list.__add__([1, 2], [3, 4]) is the unbound method form • First argument is self (the left list), second is the other list • Result: [1, 2, 3, 4] — a new concatenated list How it works: • list.__add__(a, b) is equivalent to a + b for lists • Creates a new list containing elements of both • Original lists are not modified • Only works with list + list (not list + tuple) Example: list.__add__([1, 2], [3, 4]) # [1, 2, 3, 4] [1, 2].__add__([3, 4]) # [1, 2, 3, 4] [1, 2] + [3, 4] # [1, 2, 3, 4] (same) Unbound vs bound method: • list.__add__(a, b) — unbound (class method with explicit self) • a.__add__(b) — bound (instance method) Example: list.__add__([1, 2], [3, 4]) returns [1, 2, 3, 4] — same as [1, 2] + [3, 4].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2737,7 +2737,7 @@ a              # [1, 2, 3] — still intact
 Example: a *= 0 empties the list in place. a is now [].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• a is now [].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2810,7 +2810,7 @@ Key distinction:
 Example: a is still [1, 2, 3] because * creates a new list; the original is untouched.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • a * 0 creates a new empty list, assigned to b • a is NOT modified — still [1, 2, 3] • * creates a copy; *= modifies in place • b is [] (a new, separate object) How it works: • a * 0 calls a.__mul__(0) • __mul__ returns a new list (does not modify a) • b gets the new empty list • a retains its original contents Example: a = [1, 2, 3] b = a * 0 a # [1, 2, 3] — unchanged b # [] — new empty list Key distinction: • a * 0 → new list, a unchanged (uses __mul__) • a *= 0 → a modified in place (uses __imul__) Example: a is still [1, 2, 3] because * creates a new list; the original is untouched.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2884,7 +2884,7 @@ Common use:
 Example: "".join(["a", "b", "c"]) returns "abc" — elements joined with no separator.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • "".join(["a", "b", "c"]) → "abc" • The separator is "" (empty string) → no separator between elements • join() only works with strings — all elements must be str • It's the most efficient way to concatenate strings in Python How it works: • "" is the separator (empty = no gap between elements) • join iterates through ["a", "b", "c"] • Concatenates: "a" + "" + "b" + "" + "c" = "abc" • Returns a single string Example: "".join(["a", "b", "c"]) # "abc" " ".join(["a", "b", "c"]) # "a b c" "-".join(["a", "b", "c"]) # "a-b-c" "".join(["hello"]) # "hello" Common use: • Building strings from character lists • Much faster than repeated + concatenation • join() with non-strings raises TypeError Example: "".join(["a", "b", "c"]) returns "abc" — elements joined with no separator.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2957,7 +2957,7 @@ Without map(str, ...), join would fail:
 Example: ",".join(map(str, [1, 2, 3])) returns "1,2,3" — integers converted to strings, then joined.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • map(str, [1, 2, 3]) → "1", "2", "3" (lazy iterator) • ",".join(...) joins with comma separator • Result: "1,2,3" • join() requires all elements to be strings — map(str, ...) handles conversion How it works: • map(str, [1, 2, 3]) applies str() to each element • str(1) = "1", str(2) = "2", str(3) = "3" • join concatenates with "," between each • "1" + "," + "2" + "," + "3" = "1,2,3" Example: ",".join(map(str, [1, 2, 3])) # "1,2,3" " ".join(map(str, [1, 2, 3])) # "1 2 3" Alternative with list comprehension: ",".join([str(x) for x in [1, 2, 3]]) # "1,2,3" Without map(str, ...), join would fail: ",".join([1, 2, 3]) # TypeError: sequence item 0: expected str instance, int found Example: ",".join(map(str, [1, 2, 3])) returns "1,2,3" — integers converted to strings, then joined.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3032,7 +3032,7 @@ a = [[] for _ in range(3)]  # three independent lists
 Example: [None] * 5 creates a list of five None values — a common initialization pattern.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Safe alternative: a = [[] for _ in range(3)] # three independent lists Example: [None] * 5 creates a list of five None values — a common initialization pattern.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3106,7 +3106,7 @@ sorted([3, 1, None, 2], key=lambda x: (x is None, x or 0))
 Example: TypeError because Python 3 cannot compare int and NoneType with < operator.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • sorted() uses < comparisons to order elements • int < None is not defined in Python 3 • TypeError: '<' not supported between instances of 'NoneType' and 'int' • Python 2 allowed mixed-type comparisons; Python 3 does not How it works: • sorted() tries to compare elements pairwise • When comparing 1 and None: 1 < None → TypeError • Python 3 enforces strict type checking for comparisons • No implicit ordering between different types Example: sorted([3, 1, None, 2]) # TypeError: '<' not supported between instances of 'NoneType' and 'int' sorted([3, 1, 2]) # [1, 2, 3] — works fine sorted(["b", "a", "c"]) # ['a', 'b', 'c'] — same type works Workaround: sorted([3, 1, None, 2], key=lambda x: (x is None, x or 0)) # [1, 2, 3, None] Example: TypeError because Python 3 cannot compare int and NoneType with < operator.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3180,7 +3180,7 @@ from lists always create new objects.
 Example: a is b returns False because tuple() creates a new tuple object each call — equal but not identical.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Example: a is b returns False because tuple() creates a new tuple object each call — equal but not identical.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3255,7 +3255,7 @@ type(c)     # <class 'int'>
 Example: type(a) is <class 'tuple'> because commas create tuples — parentheses are optional.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Just grouping — c is int 1 type(c) # <class 'int'> Example: type(a) is <class 'tuple'> because commas create tuples — parentheses are optional.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3327,7 +3327,7 @@ first, *rest = [1, 2, 3, 4]  # first=1, rest=[2, 3, 4]
 Example: *a, = [1, 2, 3] assigns a = [1, 2, 3]. Starred unpacking always produces a list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Starred unpacking always produces a list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3401,7 +3401,7 @@ This is PEP 448 (Python 3.5+) generalized unpacking.
 Example: [*a, 4] unpacks a's elements into a new list and adds 4 at the end → [1, 2, 3, 4].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Example: [*a, 4] unpacks a's elements into a new list and adds 4 at the end → [1, 2, 3, 4].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3472,7 +3472,7 @@ Note: {} without * creates a dict, not a set. Use set() for empty sets.
 Example: {*[1, 2], *[2, 3]} unpacks into a set → {1, 2, 3}. The duplicate 2 is removed.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The duplicate 2 is removed.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3546,7 +3546,7 @@ Without trailing comma:
 Example: (*range(5),) creates tuple (0, 1, 2, 3, 4) by unpacking range into a tuple literal.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • (*range(5),) unpacks range(5) into a tuple • range(5) generates 0, 1, 2, 3, 4 • * spreads these into the tuple literal • The trailing comma is critical — without it, it would be grouping, not a tuple • Result: (0, 1, 2, 3, 4) How it works: • The outer () with trailing , creates a tuple • *range(5) unpacks the range into individual elements • Elements 0, 1, 2, 3, 4 are placed into the tuple • This is equivalent to tuple(range(5)) Example: (*range(5),) # (0, 1, 2, 3, 4) tuple(range(5)) # (0, 1, 2, 3, 4) — equivalent (*"hello",) # ('h', 'e', 'l', 'l', 'o') (*[1, 2], *[3, 4],) # (1, 2, 3, 4) — multiple unpacks Without trailing comma: (*range(5)) # SyntaxError — not a valid expression Example: (*range(5),) creates tuple (0, 1, 2, 3, 4) by unpacking range into a tuple literal.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3626,7 +3626,7 @@ except ValueError:
 Example: ValueError is raised because 4 is not in [1, 2, 3]. Use 'in' to check first.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Use 'in' to check first.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

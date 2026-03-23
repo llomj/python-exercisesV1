@@ -32,7 +32,7 @@ Common uses:
 • Set operations: union, intersection, difference
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Sets automatically enforce uniqueness Examples: • {1, 2, 3} → set with 3 elements • {"a", "b"} → set of strings • {1, "a", True} → mixed-type set Common uses: • Removing duplicates from data • Fast membership testing (O(1) average) • Set operations: union, intersection, difference
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -102,7 +102,7 @@ Common uses:
 • Counting unique elements: len(set(data))
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Adds 3 → {1, 2, 3} Examples: • set([1, 1, 1]) → {1} • set("hello") → {'h', 'e', 'l', 'o'} • set((1, 2, 2)) → {1, 2} Common uses: • Deduplicating lists: unique = list(set(my_list)) • Counting unique elements: len(set(data))
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -172,7 +172,7 @@ Edge case:
 • {} → dict (empty dict — no elements to disambiguate)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• len(set()) returns 0 Examples: • set() → set() (empty set, displayed as set()) • {} → {} (empty dict!) • type(set()) → <class 'set'> • type({}) → <class 'dict'> Edge case: • {1} → set (one-element set) • {} → dict (empty dict — no elements to disambiguate)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -241,7 +241,7 @@ Examples:
 Common mistake: Assuming {} creates an empty set. Always use set() for that purpose.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Always use set() for that purpose.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -309,7 +309,7 @@ Common uses:
 • Counting unique items: unique_count = len(set(items))
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• len() counts 3 unique elements Examples: • len({1, 1, 1, 1}) → 1 • len({1, 2, 3}) → 3 • len(set([1, 2, 2, 3, 3, 3])) → 3 Common uses: • Counting unique items: unique_count = len(set(items))
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -381,7 +381,7 @@ Related operators:
 • ^ symmetric difference — in one but not both
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: {1, 2, 3, 4, 5} Examples: • {1, 2} | {3, 4} → {1, 2, 3, 4} • {1, 2} | {2, 3} → {1, 2, 3} • {1} | set() → {1} Related operators: • | union — all from both • & intersection — common to both • - difference — in left but not right • ^ symmetric difference — in one but not both
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -451,7 +451,7 @@ Common uses:
 • Checking overlap between datasets
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: {2, 3} Examples: • {1, 2, 3} & {3, 4, 5} → {3} • {1, 2} & {3, 4} → set() (no common elements) • {"a", "b"} & {"b", "c"} → {"b"} Common uses: • Finding shared elements between collections • Checking overlap between datasets
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -520,7 +520,7 @@ Examples:
 Note: Set difference is not symmetric. {2, 3, 4} - {1, 2, 3} → {4}.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• {2, 3, 4} - {1, 2, 3} → {4}.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -589,7 +589,7 @@ Examples:
 Note: Symmetric difference is equivalent to (A | B) - (A & B), or (A - B) | (B - A).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: {1, 4} Examples: • {1, 2} ^ {2, 3} → {1, 3} • {1, 2} ^ {1, 2} → set() (all shared) • {1, 2} ^ {3, 4} → {1, 2, 3, 4} (none shared) Note: Symmetric difference is equivalent to (A | B) - (A & B), or (A - B) | (B - A).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -654,7 +654,7 @@ Examples:
 • set().issubset({1, 2}) → True (empty set is subset of everything)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• All elements are present → True Examples: • {1}.issubset({1, 2, 3}) → True • {1, 2, 3}.issubset({1, 2, 3}) → True (every set is a subset of itself) • {1, 4}.issubset({1, 2, 3}) → False (4 not in the superset) • set().issubset({1, 2}) → True (empty set is subset of everything)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -719,7 +719,7 @@ Examples:
 • {1, 2}.issuperset({1, 2, 3}) → False (missing 3)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• All elements accounted for → True Examples: • {1, 2, 3}.issuperset({1, 2, 3}) → True • {1, 2, 3}.issuperset(set()) → True • {1, 2}.issuperset({1, 2, 3}) → False (missing 3)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -783,7 +783,7 @@ Examples:
 • {"a"}.isdisjoint({1, 2}) → True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• No common elements found → True Examples: • {1, 2}.isdisjoint({2, 3}) → False (2 in common) • set().isdisjoint(set()) → True (no elements at all) • {"a"}.isdisjoint({1, 2}) → True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -848,7 +848,7 @@ Examples:
 Note: isdisjoint short-circuits — it stops as soon as it finds one common element.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common element exists → False Examples: • {1, 2, 3}.isdisjoint({3, 4, 5}) → False (3 in common) • {"a", "b"}.isdisjoint({"b", "c"}) → False ("b" in common) Note: isdisjoint short-circuits — it stops as soon as it finds one common element.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -914,7 +914,7 @@ Examples:
 Note: Unlike append() for lists, add() is the method name for sets. Sets don't have append() because they are unordered.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Sets don't have append() because they are unordered.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -982,7 +982,7 @@ Compare with remove():
 • remove() → raises KeyError if missing
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• s is now {1, 3} Examples: • s = {1, 2, 3}; s.discard(3) → s is {1, 2} • s = {1, 2}; s.discard(5) → s is still {1, 2} (no error) Compare with remove(): • discard() → no error if missing • remove() → raises KeyError if missing
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1049,7 +1049,7 @@ Common pattern:
 • Use remove() when missing element indicates a bug
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common pattern: • Use discard() when you don't know if the element exists • Use remove() when missing element indicates a bug
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1116,7 +1116,7 @@ When to use which:
 • discard() when element may or may not exist
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Python raises KeyError: 5 Compare discard() vs remove(): • discard(missing) → silently does nothing • remove(missing) → raises KeyError When to use which: • remove() when the element should exist (bug if missing) • discard() when element may or may not exist
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1186,7 +1186,7 @@ Common uses:
 • Ensuring set data isn't accidentally modified
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common uses: • As dictionary keys (regular sets can't be keys) • As elements of other sets • Ensuring set data isn't accidentally modified
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1254,7 +1254,7 @@ What IS hashable:
 Workaround: Convert the list to a tuple → {(1, 2)} works fine.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• TypeError is raised What IS hashable: • int, float, str, bool → hashable ✅ • tuple (if all elements are hashable) → hashable ✅ • frozenset → hashable ✅ • list, dict, set → NOT hashable ❌ Workaround: Convert the list to a tuple → {(1, 2)} works fine.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1322,7 +1322,7 @@ Common uses:
 • Using tuple pairs as dict keys or set members
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• {(1, 2), (3, 4)} → set of two tuples Examples: • {(1, 2), (3, 4)} → valid ✅ • {("a", "b")} → valid ✅ • {(1, [2])} → TypeError ❌ (list inside tuple makes it unhashable) Common uses: • Storing coordinate pairs: {(0, 0), (1, 1)} • Using tuple pairs as dict keys or set members
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1389,7 +1389,7 @@ Method vs operator:
 • | requires both sides to be sets
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: {1, 2, 3, 4, 5} Method vs operator: • {1, 2}.union({3}) — method form • {1, 2} | {3} — operator form • union() can accept any iterable: {1}.union([2, 3]) • | requires both sides to be sets
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1455,7 +1455,7 @@ Example: intersection() can take multiple arguments:
 • {1, 2, 3}.intersection({2, 3}, {3, 4}) → {3}
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: {2, 3} Method vs operator: • {1, 2, 3}.intersection({2, 3, 4}) — method, accepts any iterable • {1, 2, 3} & {2, 3, 4} — operator, both must be sets Example: intersection() can take multiple arguments: • {1, 2, 3}.intersection({2, 3}, {3, 4}) → {3}
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1521,7 +1521,7 @@ Examples:
 • {1, 2, 3}.difference({4, 5}) → {1, 2, 3}
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: {1} Examples: • {1, 2, 3}.difference({1, 2, 3}) → set() • {1, 2, 3}.difference(set()) → {1, 2, 3} • {1, 2, 3}.difference({4, 5}) → {1, 2, 3}
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1589,7 +1589,7 @@ Examples:
 Note: Sets are unordered, so you can't rely on their iteration order. sorted() is the standard way to get an ordered sequence from a set.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• sorted() is the standard way to get an ordered sequence from a set.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1659,7 +1659,7 @@ Common uses:
 • Checking for all unique: len(set(s)) == len(s)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Length is 4 Examples: • len(set("aaa")) → 1 • len(set("abc")) → 3 • len(set("mississippi")) → 4 (m, i, s, p) Common uses: • Counting unique characters: unique = len(set(text)) • Checking for all unique: len(set(s)) == len(s)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1727,7 +1727,7 @@ Examples:
 Note: The key function is called once per element, and the results are used for comparison.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: ["apple", "banana", "cherry"] Examples: • sorted(["hi", "a", "hey"], key=len) → ["a", "hi", "hey"] • sorted(["xyz", "ab"], key=len) → ["ab", "xyz"] Note: The key function is called once per element, and the results are used for comparison.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1793,7 +1793,7 @@ Examples:
 Note: Without key=str.lower, uppercase letters sort before lowercase ('A' < 'a' in ASCII/Unicode).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Return original elements in that order: ["apple", "Banana", "Cherry"] Examples: • sorted(["B", "a", "C"], key=str.lower) → ["a", "B", "C"] • sorted(["Z", "a"], key=str.lower) → ["a", "Z"] Note: Without key=str.lower, uppercase letters sort before lowercase ('A' < 'a' in ASCII/Unicode).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1862,7 +1862,7 @@ Common uses:
 • Custom ordering of complex data structures
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Return tuples in sorted order: [(2,"a"), (1,"b"), (3,"c")] Examples: • sorted([(5,1),(3,2)], key=lambda x: x[0]) → [(3,2),(5,1)] • sorted([(1,3),(1,1)], key=lambda x: x[1]) → [(1,1),(1,3)] Common uses: • Sorting records by a specific field • Custom ordering of complex data structures
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1927,7 +1927,7 @@ Examples:
 Note: The original values (including signs) are preserved in the output — only the comparison uses absolute values.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Return original values in that order: [-1, 2, 3, -4] Examples: • sorted([-5, 1, -3], key=abs) → [1, -3, -5] • min([3, -1, -2], key=abs) → -1 (smallest absolute value) Note: The original values (including signs) are preserved in the output — only the comparison uses absolute values.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1989,7 +1989,7 @@ How it works:
 Note: The original capitalization is preserved in the output — str.lower is only used for comparison. If the words were in reverse order in the input, they would be swapped.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• If the words were in reverse order in the input, they would be swapped.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2056,7 +2056,7 @@ Alternative approaches:
 Note: This negation trick only works with numeric keys. For strings, use reverse=True.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• For strings, use reverse=True.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2121,7 +2121,7 @@ Examples:
 This is called lexicographic ordering — the same way words are sorted in a dictionary.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Final order: [(1, 1), (1, 3), (2, 2)] Examples: • sorted([(2, 1), (1, 2)]) → [(1, 2), (2, 1)] • sorted([(1, "b"), (1, "a")]) → [(1, "a"), (1, "b")] This is called lexicographic ordering — the same way words are sorted in a dictionary.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2190,7 +2190,7 @@ Common uses:
 • Preserving input order for equal elements
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Stable sort: equal elements keep their original order • Python uses Timsort (a hybrid merge sort / insertion sort) • This guarantee applies to both sorted() and list.sort() • Stability is guaranteed by the language specification Why stability matters: • When sorting by key, elements with the same key stay in their original order • You can sort by multiple criteria by sorting multiple times Example of stability: • data = [("Alice", 3), ("Bob", 1), ("Charlie", 3)] • sorted(data, key=lambda x: x[1]) • Result: [("Bob", 1), ("Alice", 3), ("Charlie", 3)] • Alice and Charlie both have key 3 — Alice stays before Charlie (original order) Common uses: • Multi-level sorting: sort by secondary key first, then primary key • Preserving input order for equal elements
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2257,7 +2257,7 @@ Examples:
 Edge case: bool is a subclass of int, so True + True = 2 and False * 10 = 0.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: [False, True, True] Examples: • sorted([True, False]) → [False, True] • sorted([1, True, 0, False]) → [0, False, 1, True] (stable sort: 0 before False if 0 came first) • min([True, False]) → False Edge case: bool is a subclass of int, so True + True = 2 and False * 10 = 0.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2322,7 +2322,7 @@ How it works:
 This is a powerful demonstration of Python's stable sort guarantee.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: ["A", "a", "b", "B"] This is a powerful demonstration of Python's stable sort guarantee.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2388,7 +2388,7 @@ Examples:
 Note: min() returns the original element, not the key. min(["apple", "banana"], key=len) returns "apple", not 5.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• min(["apple", "banana"], key=len) returns "apple", not 5.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2453,7 +2453,7 @@ Examples:
 Note: Like min(), max() returns the original element, not the computed key value.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Return corresponding element: "hello" Examples: • max(["a", "bb", "ccc"], key=len) → "ccc" • max(["Python", "is", "great"], key=len) → "Python" Note: Like min(), max() returns the original element, not the computed key value.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2518,7 +2518,7 @@ How it works:
 This technique is useful for grouping numbers by divisibility — all multiples of 3 come first, then remainder 1, then remainder 2.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: [3, 1, 4, 2, 5] This technique is useful for grouping numbers by divisibility — all multiples of 3 come first, then remainder 1, then remainder 2.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2581,7 +2581,7 @@ How it works:
 This is equivalent to sorted("python", reverse=True) for single characters.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Map back: y, t, p, o, n, h This is equivalent to sorted("python", reverse=True) for single characters.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2647,7 +2647,7 @@ Alternative approaches:
 Note: reversed() returns an iterator, so you need list() to see all elements.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• list() materializes the iterator into [3, 2, 1] Alternative approaches: • sorted([3, 1, 2], reverse=True) → [3, 2, 1] (simpler) • [3, 1, 2].sort(); reverse() (in-place, two steps) • sorted([3, 1, 2])[::-1] → [3, 2, 1] (slicing) Note: reversed() returns an iterator, so you need list() to see all elements.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2716,7 +2716,7 @@ Common uses:
 • Creating dictionaries: dict(zip(keys, values))
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• list() converts the zip iterator to a list Examples: • list(zip([1, 2], [3, 4])) → [(1, 3), (2, 4)] • list(zip("ab", "cd")) → [("a", "c"), ("b", "d")] Common uses: • Iterating over parallel sequences: for a, b in zip(names, scores) • Creating dictionaries: dict(zip(keys, values))
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2783,7 +2783,7 @@ Alternative: Use itertools.zip_longest() to pad shorter iterables with a fill va
 • list(zip_longest([1, 2], [3, 4, 5], fillvalue=None)) → [(1, 3), (2, 4), (None, 5)]
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• 5 from [3, 4, 5] is never used Examples: • list(zip([1], [2, 3, 4])) → [(1, 2)] • list(zip([], [1, 2])) → [] Alternative: Use itertools.zip_longest() to pad shorter iterables with a fill value: • list(zip_longest([1, 2], [3, 4, 5], fillvalue=None)) → [(1, 3), (2, 4), (None, 5)]
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2851,7 +2851,7 @@ Common uses:
 • Creating lookups from column headers and values
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Creates: {"a": 0, "b": 1, "c": 2} Examples: • dict(zip(["x", "y"], [10, 20])) → {"x": 10, "y": 20} • dict(zip("ab", "cd")) → {"a": "c", "b": "d"} Common uses: • Mapping parallel lists into a dictionary • Creating lookups from column headers and values
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2921,7 +2921,7 @@ Common uses:
 • Separating paired data: names, scores = zip(*student_data)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: [(1, 2, 3), (4, 5, 6)] This is matrix transposition: • Input rows: (1,4), (2,5), (3,6) • Output rows: (1,2,3), (4,5,6) Common uses: • Transposing data (rows ↔ columns) • Separating paired data: names, scores = zip(*student_data)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2989,7 +2989,7 @@ Common uses:
 • Combining data from multiple sources
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• List comprehension collects results: [11, 22, 33] Examples: • [a * b for a, b in zip([2, 3], [4, 5])] → [8, 15] • [a - b for a, b in zip([10, 20], [1, 2])] → [9, 18] Common uses: • Element-wise arithmetic on parallel lists • Combining data from multiple sources
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3058,7 +3058,7 @@ List comprehension equivalent:
 • [len(s) for s in ["hi", "hello", "hey"]] → [2, 5, 3]
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• list() collects results: [2, 5, 3] Examples: • list(map(str, [1, 2, 3])) → ["1", "2", "3"] • list(map(int, ["1", "2"])) → [1, 2] • list(map(abs, [-1, -2, 3])) → [1, 2, 3] List comprehension equivalent: • [len(s) for s in ["hi", "hello", "hey"]] → [2, 5, 3]
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3127,7 +3127,7 @@ Examples:
 Note: filter(None, ...) is equivalent to [x for x in iterable if x].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: [1, "a", True] Examples: • list(filter(None, [0, False, 1, 2])) → [1, 2] • list(filter(None, ["", "hello", None])) → ["hello"] Note: filter(None, ...) is equivalent to [x for x in iterable if x].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3197,7 +3197,7 @@ List comprehension equivalent:
 • [x + y for x, y in zip([1, 2], [3, 4])]
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: [4, 6] Examples: • list(map(lambda x, y: x * y, [2, 3], [4, 5])) → [8, 15] • list(map(pow, [2, 3], [3, 2])) → [8, 9] Like zip, map with multiple iterables stops at the shortest: • list(map(lambda x, y: x + y, [1], [2, 3])) → [3] List comprehension equivalent: • [x + y for x, y in zip([1, 2], [3, 4])]
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3265,7 +3265,7 @@ Generator equivalent (more Pythonic):
 Note: any() short-circuits — it stops checking as soon as it finds a truthy value.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Finds True → immediately returns True (short-circuits) Examples: • any(map(lambda x: x < 0, [1, 2, 3])) → False • all(map(lambda x: x > 0, [1, 2, 3])) → True Generator equivalent (more Pythonic): • any(x > 3 for x in [1, 2, 3, 4]) → True Note: any() short-circuits — it stops checking as soon as it finds a truthy value.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3337,7 +3337,7 @@ Generator equivalent:
 • sum(int(c) for c in "12345") → 15
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• sum() → 1 + 2 + 3 + 4 + 5 = 15 Examples: • sum(map(int, "999")) → 27 • sum(map(int, "100")) → 1 • sum(map(int, str(12345))) → 15 (convert number to string first) Common uses: • Digital root calculations • Digit sum validation (credit card checksums, etc.) • Mathematical puzzles involving digit manipulation Generator equivalent: • sum(int(c) for c in "12345") → 15
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
