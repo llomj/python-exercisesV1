@@ -81833,6 +81833,10 @@ Ordre des opérations :
 Cas d'utilisation courants :
 • if x is None.
 
+Cas limites :
+• Si deux références ne pointent pas vers exactement le même objet, l'identité (is) peut devenir False plutôt que refléter l'égalité de contenu.
+• Pour comparer le contenu, préférez == à is.
+
 Considérations de performance :
 • N/A.
 
@@ -81950,6 +81954,10 @@ Ordre des opérations :
 Cas d'utilisation courants :
 • Éviter erreurs de débutant.
 
+Cas limites :
+• L'opérateur + n'est pas défini pour deux dictionnaires : Python lève un TypeError.
+• Pour fusionner des dictionnaires, utilisez plutôt |, ** (unpacking) ou update().
+
 Considérations de performance :
 • N/A.
 
@@ -81986,6 +81994,10 @@ Ordre des opérations :
 
 Cas d'utilisation courants :
 • Signal pédagogique.
+
+Cas limites :
+• L'opérateur * n'est pas défini pour les dictionnaires : Python lève un TypeError.
+• Pour copier ou combiner, utilisez dict.copy() ou fusionnez avec | / {**...}.
 
 Considérations de performance :
 • N/A.
@@ -82581,6 +82593,9 @@ Exécution étape par étape :
 Ordre des opérations :
 • min builtin.
 
+Cas d'utilisation courants :
+• Trouver la clé minimale d'un dictionnaire (min(d)) quand l'ordre naturel des clés a du sens.
+
 Cas limites :
 • Vide → ValueError.
 
@@ -82617,6 +82632,9 @@ Exécution étape par étape :
 
 Ordre des opérations :
 • values() puis max.
+
+Cas d'utilisation courants :
+• Repérer rapidement la valeur maximale via max(d.values()) (plus grande mesure/score parmi les valeurs).
 
 Cas limites :
 • Valeurs vides → ValueError.
@@ -82698,6 +82716,10 @@ Ordre des opérations :
 Cas d'utilisation courants :
 • Valider qu’aucun compteur n’est à zéro si interdit.
 
+Cas limites :
+• all(d.values()) renvoie False dès qu'une valeur est falsy (par exemple 0).
+• Le résultat dépend uniquement de la truthiness des valeurs, pas des clés.
+
 Considérations de performance :
 • Court-circuit.
 
@@ -82731,6 +82753,9 @@ Exécution étape par étape :
 
 Ordre des opérations :
 • Itération values.
+
+Cas d'utilisation courants :
+• Vérifier efficacement s'il existe au moins une valeur truthy parmi les valeurs avec any(d.values()).
 
 Cas limites :
 • any([]) False.
@@ -82772,6 +82797,10 @@ Ordre des opérations :
 Cas d'utilisation courants :
 • Fallbacks quand seules les valeurs « vraies » comptent.
 
+Cas limites :
+• or court-circuite : si get('a') est truthy, get('c') n'est évalué qu'en cas où la première valeur serait falsy.
+• get(...) renvoie None si la clé manque ; None est falsy et déclenche alors l'expression suivante.
+
 Considérations de performance :
 • Évite second lookup.
 
@@ -82805,6 +82834,9 @@ Exécution étape par étape :
 
 Ordre des opérations :
 • Dict puis [].
+
+Cas d'utilisation courants :
+• Indexer des données par des clés entières (IDs) et accéder directement via d[1].
 
 Cas limites :
 • Clé absente → KeyError.
@@ -82843,6 +82875,9 @@ Exécution étape par étape :
 Ordre des opérations :
 • Création dict puis accès.
 
+Cas d'utilisation courants :
+• Utiliser des clés composites (paires/coordonnées) sous forme de tuples pour des recherches multi-dimensionnelles.
+
 Cas limites :
 • Tuple contenant liste → impossible comme clé.
 
@@ -82880,6 +82915,13 @@ Exécution étape par étape :
 Ordre des opérations :
 • Littéral invalide.
 
+Cas d'utilisation courants :
+• Quand vos données commencent comme des listes mutables, préférez convertir en tuples pour les utiliser comme clés de dictionnaire.
+
+Cas limites :
+• Les clés de dictionnaires doivent être hashables : une liste est mutable et provoque un TypeError.
+• Convertissez une liste en tuple (tuple([...])) si vous avez besoin d'une clé basée sur ce contenu.
+
 Considérations de performance :
 • N/A.
 
@@ -82914,6 +82956,13 @@ Exécution étape par étape :
 Ordre des opérations :
 • Construction.
 
+Cas d'utilisation courants :
+• Si vous souhaitez utiliser une structure de type dictionnaire comme clé, convertissez-la en représentation immuable (ex. tuple(d.items())).
+
+Cas limites :
+• Un dictionnaire est mutable et n'est donc pas hashable : l'utiliser comme clé lève un TypeError.
+• Utilisez une représentation immuable (p.ex. tuple(d.items())) pour fabriquer une clé hashable.
+
 Considérations de performance :
 • N/A.
 
@@ -82947,6 +82996,9 @@ Exécution étape par étape :
 
 Ordre des opérations :
 • [] avec argument None.
+
+Cas d'utilisation courants :
+• Assigner des valeurs en associant None, True et False à des clés de dictionnaire (toutes hashables).
 
 Cas limites :
 • Mélange bool et int clés.
@@ -82985,6 +83037,9 @@ Exécution étape par étape :
 Ordre des opérations :
 • Construction gauche-droite du littéral.
 
+Cas d'utilisation courants :
+• Comprendre qu'un int et un float peuvent se confondre comme la même clé (collision de hash) : 1 et 1.0.
+
 Cas limites :
 • Decimal, Fraction autres règles.
 
@@ -83021,6 +83076,9 @@ Exécution étape par étape :
 
 Ordre des opérations :
 • De gauche à droite.
+
+Cas d'utilisation courants :
+• Prévoir les collisions : lors d'affectations successives, la dernière valeur écrase la précédente quand 1 et 1.0 se confondent.
 
 Cas limites :
 • NaN spécial.
@@ -83059,6 +83117,9 @@ Exécution étape par étape :
 Ordre des opérations :
 • Séquence de statements.
 
+Cas d'utilisation courants :
+• Diagnostiquer l'effet d'écrasement quand vous affectez d[1] puis d[1.0] : la valeur finale correspond au dernier assigné.
+
 Cas limites :
 • Types non numériques autres.
 
@@ -83096,6 +83157,9 @@ Exécution étape par étape :
 Ordre des opérations :
 • Appel méthode.
 
+Cas d'utilisation courants :
+• Retirer une paire clé-valeur tout en récupérant la valeur, via pop(key, default).
+
 Cas limites :
 • Si valeur était réellement la chaîne 'default', on la retournerait quand même.
 
@@ -83132,6 +83196,9 @@ Exécution étape par étape :
 
 Ordre des opérations :
 • 'default' évalué avant l’appel.
+
+Cas d'utilisation courants :
+• Supprimer de manière sûre : pop(key, default) renvoie le défaut si la clé n'existe pas, sans lever d'erreur.
 
 Cas limites :
 • default None possible.
@@ -115718,6 +115785,12 @@ Distinctions clés :
 
 Fonctionnement :
 • Évalue d'abord super().method() puis addition.
+
+Exécution étape par étape :
+1. L'enfant appelle la méthode du parent via super().
+2. super().method() renvoie 1, puis la méthode de l'enfant calcule 1 + 1.
+3. Le comportement est étendu (on modifie le résultat), pas complètement remplacé.
+4. On obtient donc Child().method() = 2.
 
 Ordre des opérations :
 • Appel fonction avant +.

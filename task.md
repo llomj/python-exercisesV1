@@ -403,6 +403,15 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
 - No placeholder lines (e.g., "see above", generic fallback text).
 - Keep explanations pedagogical: concrete examples, edge cases, and execution logic.
 
+### 2026-03-23 (continued) — French Expert residual heading fixes
+
+- **Completed:** inserted missing French Expert-tier 10-section headings/bullets in `src/data/detailedExplanationsTranslations.ts` for:
+  - **1866–1900:** missing `Cas d'utilisation courants :` and/or `Cas limites :` in the Expert segment (19 IDs total across this subrange).
+  - **2714:** missing `Exécution étape par étape :` in the Expert segment.
+- **Script used:** `scripts/fix_fr_missing_expert_sections_19_ids.py`
+- **Build verification:** `npm run build` (vite build + `scripts/inject-precache.js`) passed.
+- **Next:** run a broader French-English contamination scan to remove any remaining English prose inside French `Expert` blocks (target: IDs 1201–3300), then re-audit structure/heading parity.
+
 ## Verification Workflow
 
 For each batch:
