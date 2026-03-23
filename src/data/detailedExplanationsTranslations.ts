@@ -140226,6 +140226,100 @@ Remarques :
  * Retourne French detailed explanation if available and language is French, else English.
  */
 
+const EN_CANONICAL_HEADINGS = [
+  'Key Concepts:',
+  'Key Distinctions:',
+  'How It Works:',
+  'Step-by-Step Execution:',
+  'Order of Operations:',
+  'Common Use Cases:',
+  'Edge Cases:',
+  'Performance Considerations:',
+  'Examples:',
+  'Notes:',
+] as const;
+
+const compactEnglishSection = (sectionText: string, isStepSection: boolean): string => {
+  const sanitized = sectionText.replace(/\r/g, '').trim();
+  if (!sanitized) {
+    return '• N/A.';
+  }
+
+  // If section accidentally embeds another heading inline, keep only the part before that heading.
+  const embeddedHeadingRe = /(?:key concepts:|key distinctions:|how it works:|step-by-step execution:|order of operations:|common use cases:|edge cases:|performance considerations:|examples:|notes:)/i;
+  const embeddedMatch = sanitized.match(embeddedHeadingRe);
+  const trimmedToFirstHeading =
+    embeddedMatch && embeddedMatch.index !== undefined && embeddedMatch.index > 0
+      ? sanitized.slice(0, embeddedMatch.index).trim()
+      : sanitized;
+
+  if (isStepSection) {
+    const stepMatches = trimmedToFirstHeading.match(/\d+\.\s[^\n•]+/g);
+    if (stepMatches && stepMatches.length > 0) {
+      return stepMatches.slice(0, 3).map((s) => s.trim()).join('\n');
+    }
+  }
+
+  const bulletParts = trimmedToFirstHeading
+    .split('•')
+    .map((p) => p.replace(/\s+/g, ' ').trim())
+    .filter(Boolean);
+
+  if (bulletParts.length > 0) {
+    return bulletParts.slice(0, 2).map((p) => `• ${p}`).join('\n');
+  }
+
+  const lines = trimmedToFirstHeading
+    .split('\n')
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .slice(0, 2);
+
+  if (lines.length > 0) {
+    return lines.map((l) => `• ${l}`).join('\n');
+  }
+
+  return '• N/A.';
+};
+
+const normalizeNoisyEnglishDetailedExplanation = (englishText: string): string => {
+  const lower = englishText.toLowerCase();
+  const headingKeys = EN_CANONICAL_HEADINGS.map((h) => h.toLowerCase());
+
+  // Only normalize when text is clearly over-expanded/noisy.
+  const bulletCount = (englishText.match(/•/g) || []).length;
+  if (bulletCount < 40) {
+    return englishText;
+  }
+
+  const positions: number[] = [];
+  let searchFrom = 0;
+  for (const key of headingKeys) {
+    const idx = lower.indexOf(key, searchFrom);
+    if (idx === -1) {
+      return englishText;
+    }
+    positions.push(idx);
+    searchFrom = idx + key.length;
+  }
+
+  const prefix = englishText.slice(0, positions[0]).trim();
+  const sections: string[] = [];
+
+  for (let i = 0; i < EN_CANONICAL_HEADINGS.length; i++) {
+    const start = positions[i] + EN_CANONICAL_HEADINGS[i].length;
+    const end = i + 1 < positions.length ? positions[i + 1] : englishText.length;
+    const rawSectionText = englishText.slice(start, end);
+    const compacted = compactEnglishSection(
+      rawSectionText,
+      EN_CANONICAL_HEADINGS[i] === 'Step-by-Step Execution:'
+    );
+    sections.push(`${EN_CANONICAL_HEADINGS[i]}\n${compacted}`);
+  }
+
+  return `${prefix}\n\n${sections.join('\n\n')}`.trim();
+};
+
 export const getTranslatedDetailedExplanation = (
   questionId: number,
   englishText: string,
@@ -140234,10 +140328,20 @@ export const getTranslatedDetailedExplanation = (
   if (language === 'fr' && DETAILED_EXPLANATIONS_FR[questionId]) {
     return DETAILED_EXPLANATIONS_FR[questionId];
   }
+
   // Level 0: English needs the 10-section in-depth block too.
-  if (language !== 'fr' && !englishText.includes('Key Concepts') && LEVEL0_DETAILED_EN_INDEPTH_APPEND[questionId]) {
-    return `${englishText}\n\n${LEVEL0_DETAILED_EN_INDEPTH_APPEND[questionId]}`;
+  let finalEnglishText = englishText;
+  if (
+    language !== 'fr' &&
+    !englishText.includes('Key Concepts') &&
+    LEVEL0_DETAILED_EN_INDEPTH_APPEND[questionId]
+  ) {
+    finalEnglishText = `${englishText}\n\n${LEVEL0_DETAILED_EN_INDEPTH_APPEND[questionId]}`;
   }
 
-  return englishText;
+  if (language !== 'fr') {
+    finalEnglishText = normalizeNoisyEnglishDetailedExplanation(finalEnglishText);
+  }
+
+  return finalEnglishText;
 };

@@ -435,6 +435,16 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
   - **3237:** `doctest vs unittest/pytest.` -> `doctest par rapport à unittest/pytest.`
 - **Verification:** `npm run build` passed; targeted checks confirm old fragments are gone.
 
+### 2026-03-23 (continued) — English in-depth dedupe normalization (display-side)
+
+- **Completed:** added English display-side normalization in `getTranslatedDetailedExplanation` (`src/data/detailedExplanationsTranslations.ts`) to handle over-expanded duplicated in-depth blocks.
+- **Approach:** for noisy English explanations (high bullet count + full 10-section headings), reconstruct one clean 10-section block and compact each section to concise bullets/steps.
+- **Result (spot-check):**
+  - `2940`: bullets `335 -> 20`, `Key concepts` occurrences `24 -> 1`.
+  - `3298`: bullets `303 -> 14`, `Key concepts` occurrences `11 -> 1`.
+  - Non-noisy entries remain unchanged (e.g. `594`, `1201`).
+- **Verification:** `npm run build` passed; browser smoke check passed.
+
 ## Verification Workflow
 
 For each batch:
