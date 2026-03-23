@@ -15,42 +15,43 @@ Key Concepts:
 • This mirrors how linked lists work — each node holds data and a pointer to the next node.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: This simulates a singly linked list using a dictionary.
+• The contrast that matters for correctness is summarized by: Each key maps to a (value, next_index) tuple, with -1 as the sentinel.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: This simulates a singly linked list using a dictionary.
+• The outcome you observe follows from: This mirrors how linked lists work — each node holds data and a pointer to the next node.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: This simulates a singly linked list using a dictionary.
+2. Resolve the subparts implied by: Each key maps to a (value, next_index) tuple, with -1 as the sentinel.
+3. Apply the core semantics highlighted in: Starting at cur=0: nodes[0]=(10,1) → append 10, cur=1.
+4. Confirm the final result aligns with: This mirrors how linked lists work — each node holds data and a pointer to the next node.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: Each key maps to a (value, next_index) tuple, with -1 as the sentinel.
+2. Apply the construct’s main rule next, matching: This simulates a singly linked list using a dictionary.
+3. Produce any intermediate values that This mirrors how linked lists work — each node holds data and a pointer to the next node. relies on
+4. Finish by returning/assembling the final output named by: This mirrors how linked lists work — each node holds data and a pointer to the next node.
+5. Use the result only after the full construct has completed, per: This simulates a singly linked list using a dictionary.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: This simulates a singly linked list using a dictionary.
+• Debugging when the observed value should match the expectation in: This mirrors how linked lists work — each node holds data and a pointer to the next node.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: Each key maps to a (value, next_index) tuple, with -1 as the sentinel., the behavior can change.
+• When the construct’s assumptions differ, the rule in: Starting at cur=0: nodes[0]=(10,1) → append 10, cur=1. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This mirrors how linked lists work — each node holds data and a pointer to the next node..
+• When performance matters, prefer the simplest pattern that still implements: This simulates a singly linked list using a dictionary..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: This simulates a singly linked list using a dictionary..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: Each key maps to a (value, next_index) tuple, with -1 as the sentinel. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q54: Iterator protocol with next() and StopIteration
   (_i: number) => ({
@@ -64,42 +65,43 @@ Key Concepts:
 • This while-True-try-next pattern is exactly what a for loop does internally.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: This manually implements Python's iteration protocol.
+• The contrast that matters for correctness is summarized by: iter() creates an iterator, next() retrieves elements one at a time: first 10 (total=10), then 20 (total=30).
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: This manually implements Python's iteration protocol.
+• The outcome you observe follows from: This while-True-try-next pattern is exactly what a for loop does internally.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: This manually implements Python's iteration protocol.
+2. Resolve the subparts implied by: iter() creates an iterator, next() retrieves elements one at a time: first 10 (total=10), then 20 (total=30).
+3. Apply the core semantics highlighted in: The third next() call raises StopIteration because the iterator is exhausted, which the except clause catches to break.
+4. Confirm the final result aligns with: This while-True-try-next pattern is exactly what a for loop does internally.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: iter() creates an iterator, next() retrieves elements one at a time: first 10 (total=10), then 20 (total=30).
+2. Apply the construct’s main rule next, matching: This manually implements Python's iteration protocol.
+3. Produce any intermediate values that This while-True-try-next pattern is exactly what a for loop does internally. relies on
+4. Finish by returning/assembling the final output named by: This while-True-try-next pattern is exactly what a for loop does internally.
+5. Use the result only after the full construct has completed, per: This manually implements Python's iteration protocol.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: This manually implements Python's iteration protocol.
+• Debugging when the observed value should match the expectation in: This while-True-try-next pattern is exactly what a for loop does internally.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: iter() creates an iterator, next() retrieves elements one at a time: first 10 (total=10), then 20 (total=30)., the behavior can change.
+• When the construct’s assumptions differ, the rule in: The third next() call raises StopIteration because the iterator is exhausted, which the except clause catches to break. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This while-True-try-next pattern is exactly what a for loop does internally..
+• When performance matters, prefer the simplest pattern that still implements: This manually implements Python's iteration protocol..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: This manually implements Python's iteration protocol..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: iter() creates an iterator, next() retrieves elements one at a time: first 10 (total=10), then 20 (total=30). explicit (and test it with inputs like those in this prompt).`
   }),
   // Q55: Left-to-right expression evaluator
   (_i: number) => ({
@@ -113,42 +115,43 @@ Key Concepts:
 • Left-to-right evaluation ignores precedence rules.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: This evaluates a simple expression left-to-right without operator precedence.
+• The contrast that matters for correctness is summarized by: i=0, result=3.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: This evaluates a simple expression left-to-right without operator precedence.
+• The outcome you observe follows from: Left-to-right evaluation ignores precedence rules.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: This evaluates a simple expression left-to-right without operator precedence.
+2. Resolve the subparts implied by: i=0, result=3.
+3. Apply the core semantics highlighted in: First pass: op='+', val=4, result=3+4=7, i=2.
+4. Confirm the final result aligns with: Left-to-right evaluation ignores precedence rules.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: i=0, result=3.
+2. Apply the construct’s main rule next, matching: This evaluates a simple expression left-to-right without operator precedence.
+3. Produce any intermediate values that Left-to-right evaluation ignores precedence rules. relies on
+4. Finish by returning/assembling the final output named by: Left-to-right evaluation ignores precedence rules.
+5. Use the result only after the full construct has completed, per: This evaluates a simple expression left-to-right without operator precedence.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: This evaluates a simple expression left-to-right without operator precedence.
+• Debugging when the observed value should match the expectation in: Left-to-right evaluation ignores precedence rules.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: i=0, result=3., the behavior can change.
+• When the construct’s assumptions differ, the rule in: First pass: op='+', val=4, result=3+4=7, i=2. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: Left-to-right evaluation ignores precedence rules..
+• When performance matters, prefer the simplest pattern that still implements: This evaluates a simple expression left-to-right without operator precedence..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: This evaluates a simple expression left-to-right without operator precedence..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: i=0, result=3. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q56: String reversal with while loop
   (_i: number) => ({
@@ -162,42 +165,43 @@ Key Concepts:
 • The Pythonic equivalent is s[::-1], but this while loop version demonstrates the manual reversal algorithm used in many languages.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: This reverses a string by iterating backwards from the last index.
+• The contrast that matters for correctness is summarized by: i starts at len(s)-1=4.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: This reverses a string by iterating backwards from the last index.
+• The outcome you observe follows from: The Pythonic equivalent is s[::-1], but this while loop version demonstrates the manual reversal algorithm used in many languages.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: This reverses a string by iterating backwards from the last index.
+2. Resolve the subparts implied by: i starts at len(s)-1=4.
+3. Apply the core semantics highlighted in: Each step appends s[i] and decrements i: s[4]='e', s[3]='d', s[2]='c', s[1]='b', s[0]='a'.
+4. Confirm the final result aligns with: The Pythonic equivalent is s[::-1], but this while loop version demonstrates the manual reversal algorithm used in many languages.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: i starts at len(s)-1=4.
+2. Apply the construct’s main rule next, matching: This reverses a string by iterating backwards from the last index.
+3. Produce any intermediate values that The Pythonic equivalent is s[::-1], but this while loop version demonstrates the manual reversal algorithm used in many languages. relies on
+4. Finish by returning/assembling the final output named by: The Pythonic equivalent is s[::-1], but this while loop version demonstrates the manual reversal algorithm used in many languages.
+5. Use the result only after the full construct has completed, per: This reverses a string by iterating backwards from the last index.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: This reverses a string by iterating backwards from the last index.
+• Debugging when the observed value should match the expectation in: The Pythonic equivalent is s[::-1], but this while loop version demonstrates the manual reversal algorithm used in many languages.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: i starts at len(s)-1=4., the behavior can change.
+• When the construct’s assumptions differ, the rule in: Each step appends s[i] and decrements i: s[4]='e', s[3]='d', s[2]='c', s[1]='b', s[0]='a'. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: The Pythonic equivalent is s[::-1], but this while loop version demonstrates the manual reversal algorithm used in many languages..
+• When performance matters, prefer the simplest pattern that still implements: This reverses a string by iterating backwards from the last index..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: This reverses a string by iterating backwards from the last index..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: i starts at len(s)-1=4. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q57: Common prefix between two strings
   (_i: number) => ({
@@ -211,42 +215,43 @@ Key Concepts:
 • This algorithm is used in autocomplete and trie data structures.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: This finds the length of the common prefix by advancing while characters match.
+• The contrast that matters for correctness is summarized by: i=0: 'p'=='p' ✓.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: This finds the length of the common prefix by advancing while characters match.
+• The outcome you observe follows from: This algorithm is used in autocomplete and trie data structures.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: This finds the length of the common prefix by advancing while characters match.
+2. Resolve the subparts implied by: i=0: 'p'=='p' ✓.
+3. Apply the core semantics highlighted in: i=1: 'r'=='r' ✓.
+4. Confirm the final result aligns with: This algorithm is used in autocomplete and trie data structures.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: i=0: 'p'=='p' ✓.
+2. Apply the construct’s main rule next, matching: This finds the length of the common prefix by advancing while characters match.
+3. Produce any intermediate values that This algorithm is used in autocomplete and trie data structures. relies on
+4. Finish by returning/assembling the final output named by: This algorithm is used in autocomplete and trie data structures.
+5. Use the result only after the full construct has completed, per: This finds the length of the common prefix by advancing while characters match.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: This finds the length of the common prefix by advancing while characters match.
+• Debugging when the observed value should match the expectation in: This algorithm is used in autocomplete and trie data structures.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: i=0: 'p'=='p' ✓., the behavior can change.
+• When the construct’s assumptions differ, the rule in: i=1: 'r'=='r' ✓. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This algorithm is used in autocomplete and trie data structures..
+• When performance matters, prefer the simplest pattern that still implements: This finds the length of the common prefix by advancing while characters match..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: This finds the length of the common prefix by advancing while characters match..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: i=0: 'p'=='p' ✓. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q58: Zigzag countdown with alternating steps
   (_i: number) => ({
@@ -260,42 +265,43 @@ Key Concepts:
 • The alternating step sizes create an asymmetric countdown pattern.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: The flag 'up' alternates each iteration, switching between subtracting 3 and 1.
+• The contrast that matters for correctness is summarized by: Trace: n=10,up=T→n=7,c=1.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: The flag 'up' alternates each iteration, switching between subtracting 3 and 1.
+• The outcome you observe follows from: The alternating step sizes create an asymmetric countdown pattern.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: The flag 'up' alternates each iteration, switching between subtracting 3 and 1.
+2. Resolve the subparts implied by: Trace: n=10,up=T→n=7,c=1.
+3. Apply the core semantics highlighted in: n=7,up=F→n=6,c=2.
+4. Confirm the final result aligns with: The alternating step sizes create an asymmetric countdown pattern.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: Trace: n=10,up=T→n=7,c=1.
+2. Apply the construct’s main rule next, matching: The flag 'up' alternates each iteration, switching between subtracting 3 and 1.
+3. Produce any intermediate values that The alternating step sizes create an asymmetric countdown pattern. relies on
+4. Finish by returning/assembling the final output named by: The alternating step sizes create an asymmetric countdown pattern.
+5. Use the result only after the full construct has completed, per: The flag 'up' alternates each iteration, switching between subtracting 3 and 1.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: The flag 'up' alternates each iteration, switching between subtracting 3 and 1.
+• Debugging when the observed value should match the expectation in: The alternating step sizes create an asymmetric countdown pattern.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: Trace: n=10,up=T→n=7,c=1., the behavior can change.
+• When the construct’s assumptions differ, the rule in: n=7,up=F→n=6,c=2. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: The alternating step sizes create an asymmetric countdown pattern..
+• When performance matters, prefer the simplest pattern that still implements: The flag 'up' alternates each iteration, switching between subtracting 3 and 1..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: The flag 'up' alternates each iteration, switching between subtracting 3 and 1..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: Trace: n=10,up=T→n=7,c=1. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q59: Early exit with break on condition
   (_i: number) => ({
@@ -309,42 +315,43 @@ Key Concepts:
 • Note that i is NOT incremented before break, so it points exactly at the found element.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: This searches for the first element less than 3.
+• The contrast that matters for correctness is summarized by: i=0: nums[0]=4, 4<3?
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: This searches for the first element less than 3.
+• The outcome you observe follows from: Note that i is NOT incremented before break, so it points exactly at the found element.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: This searches for the first element less than 3.
+2. Resolve the subparts implied by: i=0: nums[0]=4, 4<3?
+3. Apply the core semantics highlighted in: No, i=1.
+4. Confirm the final result aligns with: Note that i is NOT incremented before break, so it points exactly at the found element.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: i=0: nums[0]=4, 4<3?
+2. Apply the construct’s main rule next, matching: This searches for the first element less than 3.
+3. Produce any intermediate values that Note that i is NOT incremented before break, so it points exactly at the found element. relies on
+4. Finish by returning/assembling the final output named by: Note that i is NOT incremented before break, so it points exactly at the found element.
+5. Use the result only after the full construct has completed, per: This searches for the first element less than 3.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: This searches for the first element less than 3.
+• Debugging when the observed value should match the expectation in: Note that i is NOT incremented before break, so it points exactly at the found element.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: i=0: nums[0]=4, 4<3?, the behavior can change.
+• When the construct’s assumptions differ, the rule in: No, i=1. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: Note that i is NOT incremented before break, so it points exactly at the found element..
+• When performance matters, prefer the simplest pattern that still implements: This searches for the first element less than 3..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: This searches for the first element less than 3..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: i=0: nums[0]=4, 4<3? explicit (and test it with inputs like those in this prompt).`
   }),
   // Q60: Countdown with step size > 1
   (_i: number) => ({
@@ -358,42 +365,43 @@ Key Concepts:
 • The step of 7 creates a non-uniform countdown.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: Each iteration appends n then subtracts 7.
+• The contrast that matters for correctness is summarized by: n=20: append 20, n=13.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: Each iteration appends n then subtracts 7.
+• The outcome you observe follows from: The step of 7 creates a non-uniform countdown.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: Each iteration appends n then subtracts 7.
+2. Resolve the subparts implied by: n=20: append 20, n=13.
+3. Apply the core semantics highlighted in: n=13: append 13, n=6.
+4. Confirm the final result aligns with: The step of 7 creates a non-uniform countdown.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: n=20: append 20, n=13.
+2. Apply the construct’s main rule next, matching: Each iteration appends n then subtracts 7.
+3. Produce any intermediate values that The step of 7 creates a non-uniform countdown. relies on
+4. Finish by returning/assembling the final output named by: The step of 7 creates a non-uniform countdown.
+5. Use the result only after the full construct has completed, per: Each iteration appends n then subtracts 7.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: Each iteration appends n then subtracts 7.
+• Debugging when the observed value should match the expectation in: The step of 7 creates a non-uniform countdown.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: n=20: append 20, n=13., the behavior can change.
+• When the construct’s assumptions differ, the rule in: n=13: append 13, n=6. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: The step of 7 creates a non-uniform countdown..
+• When performance matters, prefer the simplest pattern that still implements: Each iteration appends n then subtracts 7..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: Each iteration appends n then subtracts 7..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: n=20: append 20, n=13. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q61: Dynamic shrinking limit
   (_i: number) => ({
@@ -407,42 +415,43 @@ Key Concepts:
 • The loop ends sooner than a fixed-limit loop because the boundary shrinks as x grows — they meet in the middle.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: Both the variable and the loop bound change each iteration, creating a converging condition.
+• The contrast that matters for correctness is summarized by: x=0,limit=10: 0<10 → x=3,limit=9.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: Both the variable and the loop bound change each iteration, creating a converging condition.
+• The outcome you observe follows from: The loop ends sooner than a fixed-limit loop because the boundary shrinks as x grows — they meet in the middle.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: Both the variable and the loop bound change each iteration, creating a converging condition.
+2. Resolve the subparts implied by: x=0,limit=10: 0<10 → x=3,limit=9.
+3. Apply the core semantics highlighted in: x=3,limit=9: 3<9 → x=6,limit=8.
+4. Confirm the final result aligns with: The loop ends sooner than a fixed-limit loop because the boundary shrinks as x grows — they meet in the middle.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: x=0,limit=10: 0<10 → x=3,limit=9.
+2. Apply the construct’s main rule next, matching: Both the variable and the loop bound change each iteration, creating a converging condition.
+3. Produce any intermediate values that The loop ends sooner than a fixed-limit loop because the boundary shrinks as x grows — they meet in the middle. relies on
+4. Finish by returning/assembling the final output named by: The loop ends sooner than a fixed-limit loop because the boundary shrinks as x grows — they meet in the middle.
+5. Use the result only after the full construct has completed, per: Both the variable and the loop bound change each iteration, creating a converging condition.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: Both the variable and the loop bound change each iteration, creating a converging condition.
+• Debugging when the observed value should match the expectation in: The loop ends sooner than a fixed-limit loop because the boundary shrinks as x grows — they meet in the middle.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: x=0,limit=10: 0<10 → x=3,limit=9., the behavior can change.
+• When the construct’s assumptions differ, the rule in: x=3,limit=9: 3<9 → x=6,limit=8. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: The loop ends sooner than a fixed-limit loop because the boundary shrinks as x grows — they meet in the middle..
+• When performance matters, prefer the simplest pattern that still implements: Both the variable and the loop bound change each iteration, creating a converging condition..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: Both the variable and the loop bound change each iteration, creating a converging condition..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: x=0,limit=10: 0<10 → x=3,limit=9. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q62: Round-robin task scheduling
   (_i: number) => ({
@@ -456,42 +465,43 @@ Key Concepts:
 • This round-robin pattern is fundamental in OS scheduling, load balancing, and circular buffers.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: The modulo operator i%len(tasks) cycles through indices 0,1,2,0,1,2,0 as i increments from 0 to 6.
+• The contrast that matters for correctness is summarized by: This produces tasks[0]='A', tasks[1]='B', tasks[2]='C', tasks[0]='A', tasks[1]='B', tasks[2]='C', tasks[0]='A'.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: The modulo operator i%len(tasks) cycles through indices 0,1,2,0,1,2,0 as i increments from 0 to 6.
+• The outcome you observe follows from: This round-robin pattern is fundamental in OS scheduling, load balancing, and circular buffers.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: The modulo operator i%len(tasks) cycles through indices 0,1,2,0,1,2,0 as i increments from 0 to 6.
+2. Resolve the subparts implied by: This produces tasks[0]='A', tasks[1]='B', tasks[2]='C', tasks[0]='A', tasks[1]='B', tasks[2]='C', tasks[0]='A'.
+3. Apply the core semantics highlighted in: Result = "ABCABCA".
+4. Confirm the final result aligns with: This round-robin pattern is fundamental in OS scheduling, load balancing, and circular buffers.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: This produces tasks[0]='A', tasks[1]='B', tasks[2]='C', tasks[0]='A', tasks[1]='B', tasks[2]='C', tasks[0]='A'.
+2. Apply the construct’s main rule next, matching: The modulo operator i%len(tasks) cycles through indices 0,1,2,0,1,2,0 as i increments from 0 to 6.
+3. Produce any intermediate values that This round-robin pattern is fundamental in OS scheduling, load balancing, and circular buffers. relies on
+4. Finish by returning/assembling the final output named by: This round-robin pattern is fundamental in OS scheduling, load balancing, and circular buffers.
+5. Use the result only after the full construct has completed, per: The modulo operator i%len(tasks) cycles through indices 0,1,2,0,1,2,0 as i increments from 0 to 6.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: The modulo operator i%len(tasks) cycles through indices 0,1,2,0,1,2,0 as i increments from 0 to 6.
+• Debugging when the observed value should match the expectation in: This round-robin pattern is fundamental in OS scheduling, load balancing, and circular buffers.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: This produces tasks[0]='A', tasks[1]='B', tasks[2]='C', tasks[0]='A', tasks[1]='B', tasks[2]='C', tasks[0]='A'., the behavior can change.
+• When the construct’s assumptions differ, the rule in: Result = "ABCABCA". is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This round-robin pattern is fundamental in OS scheduling, load balancing, and circular buffers..
+• When performance matters, prefer the simplest pattern that still implements: The modulo operator i%len(tasks) cycles through indices 0,1,2,0,1,2,0 as i increments from 0 to 6..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: The modulo operator i%len(tasks) cycles through indices 0,1,2,0,1,2,0 as i increments from 0 to 6..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: This produces tasks[0]='A', tasks[1]='B', tasks[2]='C', tasks[0]='A', tasks[1]='B', tasks[2]='C', tasks[0]='A'. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q63: Maximum parenthesis nesting depth
   (_i: number) => ({
@@ -505,42 +515,43 @@ Key Concepts:
 • This algorithm is used in expression parsers and syntax validators to detect nesting levels.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: This tracks parenthesis nesting depth.
+• The contrast that matters for correctness is summarized by: '(' increments depth and updates max_d if deeper.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: This tracks parenthesis nesting depth.
+• The outcome you observe follows from: This algorithm is used in expression parsers and syntax validators to detect nesting levels.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: This tracks parenthesis nesting depth.
+2. Resolve the subparts implied by: '(' increments depth and updates max_d if deeper.
+3. Apply the core semantics highlighted in: ')' decrements depth.
+4. Confirm the final result aligns with: This algorithm is used in expression parsers and syntax validators to detect nesting levels.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: '(' increments depth and updates max_d if deeper.
+2. Apply the construct’s main rule next, matching: This tracks parenthesis nesting depth.
+3. Produce any intermediate values that This algorithm is used in expression parsers and syntax validators to detect nesting levels. relies on
+4. Finish by returning/assembling the final output named by: This algorithm is used in expression parsers and syntax validators to detect nesting levels.
+5. Use the result only after the full construct has completed, per: This tracks parenthesis nesting depth.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: This tracks parenthesis nesting depth.
+• Debugging when the observed value should match the expectation in: This algorithm is used in expression parsers and syntax validators to detect nesting levels.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: '(' increments depth and updates max_d if deeper., the behavior can change.
+• When the construct’s assumptions differ, the rule in: ')' decrements depth. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This algorithm is used in expression parsers and syntax validators to detect nesting levels..
+• When performance matters, prefer the simplest pattern that still implements: This tracks parenthesis nesting depth..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: This tracks parenthesis nesting depth..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: '(' increments depth and updates max_d if deeper. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q64: Look-and-say sequence step
   (_i: number) => ({
@@ -554,42 +565,43 @@ Key Concepts:
 • This is Conway's famous sequence.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: The look-and-say sequence describes each run of identical digits.
+• The contrast that matters for correctness is summarized by: For "1211": i=0, ch='1', count=1 (next char '2'≠'1') → "11", i=1.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: The look-and-say sequence describes each run of identical digits.
+• The outcome you observe follows from: This is Conway's famous sequence.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: The look-and-say sequence describes each run of identical digits.
+2. Resolve the subparts implied by: For "1211": i=0, ch='1', count=1 (next char '2'≠'1') → "11", i=1.
+3. Apply the core semantics highlighted in: i=1, ch='2', count=1 (next '1'≠'2') → "1112", i=2.
+4. Confirm the final result aligns with: This is Conway's famous sequence.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: For "1211": i=0, ch='1', count=1 (next char '2'≠'1') → "11", i=1.
+2. Apply the construct’s main rule next, matching: The look-and-say sequence describes each run of identical digits.
+3. Produce any intermediate values that This is Conway's famous sequence. relies on
+4. Finish by returning/assembling the final output named by: This is Conway's famous sequence.
+5. Use the result only after the full construct has completed, per: The look-and-say sequence describes each run of identical digits.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: The look-and-say sequence describes each run of identical digits.
+• Debugging when the observed value should match the expectation in: This is Conway's famous sequence.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: For "1211": i=0, ch='1', count=1 (next char '2'≠'1') → "11", i=1., the behavior can change.
+• When the construct’s assumptions differ, the rule in: i=1, ch='2', count=1 (next '1'≠'2') → "1112", i=2. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This is Conway's famous sequence..
+• When performance matters, prefer the simplest pattern that still implements: The look-and-say sequence describes each run of identical digits..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: The look-and-say sequence describes each run of identical digits..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: For "1211": i=0, ch='1', count=1 (next char '2'≠'1') → "11", i=1. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q65: Complex boolean condition with halving
   (_i: number) => ({
@@ -603,42 +615,43 @@ Key Concepts:
 • Once x drops to 12 and y rises to 15, x<=y triggers the exit.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: The condition not(x<=y or x<10) continues while NEITHER x<=y NOR x<10.
+• The contrast that matters for correctness is summarized by: x=100,y=0: 100<=0?
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: The condition not(x<=y or x<10) continues while NEITHER x<=y NOR x<10.
+• The outcome you observe follows from: Once x drops to 12 and y rises to 15, x<=y triggers the exit.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: The condition not(x<=y or x<10) continues while NEITHER x<=y NOR x<10.
+2. Resolve the subparts implied by: x=100,y=0: 100<=0?
+3. Apply the core semantics highlighted in: F, 100<10?
+4. Confirm the final result aligns with: Once x drops to 12 and y rises to 15, x<=y triggers the exit.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: x=100,y=0: 100<=0?
+2. Apply the construct’s main rule next, matching: The condition not(x<=y or x<10) continues while NEITHER x<=y NOR x<10.
+3. Produce any intermediate values that Once x drops to 12 and y rises to 15, x<=y triggers the exit. relies on
+4. Finish by returning/assembling the final output named by: Once x drops to 12 and y rises to 15, x<=y triggers the exit.
+5. Use the result only after the full construct has completed, per: The condition not(x<=y or x<10) continues while NEITHER x<=y NOR x<10.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: The condition not(x<=y or x<10) continues while NEITHER x<=y NOR x<10.
+• Debugging when the observed value should match the expectation in: Once x drops to 12 and y rises to 15, x<=y triggers the exit.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: x=100,y=0: 100<=0?, the behavior can change.
+• When the construct’s assumptions differ, the rule in: F, 100<10? is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: Once x drops to 12 and y rises to 15, x<=y triggers the exit..
+• When performance matters, prefer the simplest pattern that still implements: The condition not(x<=y or x<10) continues while NEITHER x<=y NOR x<10..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: The condition not(x<=y or x<10) continues while NEITHER x<=y NOR x<10..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: x=100,y=0: 100<=0? explicit (and test it with inputs like those in this prompt).`
   }),
   // Q66: Power of 2 check via repeated halving
   (_i: number) => ({
@@ -652,42 +665,43 @@ Key Concepts:
 • The bitwise alternative is n & (n-1) == 0.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: This checks if a number is a power of 2 by repeatedly dividing by 2.
+• The contrast that matters for correctness is summarized by: If n reaches exactly 1, it was a power of 2.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: This checks if a number is a power of 2 by repeatedly dividing by 2.
+• The outcome you observe follows from: The bitwise alternative is n & (n-1) == 0.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: This checks if a number is a power of 2 by repeatedly dividing by 2.
+2. Resolve the subparts implied by: If n reaches exactly 1, it was a power of 2.
+3. Apply the core semantics highlighted in: 64=2^6, so: 64→32→16→8→4→2→1.
+4. Confirm the final result aligns with: The bitwise alternative is n & (n-1) == 0.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: If n reaches exactly 1, it was a power of 2.
+2. Apply the construct’s main rule next, matching: This checks if a number is a power of 2 by repeatedly dividing by 2.
+3. Produce any intermediate values that The bitwise alternative is n & (n-1) == 0. relies on
+4. Finish by returning/assembling the final output named by: The bitwise alternative is n & (n-1) == 0.
+5. Use the result only after the full construct has completed, per: This checks if a number is a power of 2 by repeatedly dividing by 2.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: This checks if a number is a power of 2 by repeatedly dividing by 2.
+• Debugging when the observed value should match the expectation in: The bitwise alternative is n & (n-1) == 0.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: If n reaches exactly 1, it was a power of 2., the behavior can change.
+• When the construct’s assumptions differ, the rule in: 64=2^6, so: 64→32→16→8→4→2→1. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: The bitwise alternative is n & (n-1) == 0..
+• When performance matters, prefer the simplest pattern that still implements: This checks if a number is a power of 2 by repeatedly dividing by 2..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: This checks if a number is a power of 2 by repeatedly dividing by 2..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: If n reaches exactly 1, it was a power of 2. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q67: Counting set bits (popcount)
   (_i: number) => ({
@@ -701,42 +715,43 @@ Key Concepts:
 • This is the Brian Kernighan popcount algorithm's simpler variant; Python's bin(13).count('1') does the same.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: This counts set bits by examining the least significant bit and right-shifting.
+• The contrast that matters for correctness is summarized by: n=13 (binary 1101): n&1=1, count=1, n=6 (110).
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: This counts set bits by examining the least significant bit and right-shifting.
+• The outcome you observe follows from: This is the Brian Kernighan popcount algorithm's simpler variant; Python's bin(13).count('1') does the same.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: This counts set bits by examining the least significant bit and right-shifting.
+2. Resolve the subparts implied by: n=13 (binary 1101): n&1=1, count=1, n=6 (110).
+3. Apply the core semantics highlighted in: n&1=0, count=1, n=3 (11).
+4. Confirm the final result aligns with: This is the Brian Kernighan popcount algorithm's simpler variant; Python's bin(13).count('1') does the same.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: n=13 (binary 1101): n&1=1, count=1, n=6 (110).
+2. Apply the construct’s main rule next, matching: This counts set bits by examining the least significant bit and right-shifting.
+3. Produce any intermediate values that This is the Brian Kernighan popcount algorithm's simpler variant; Python's bin(13).count('1') does the same. relies on
+4. Finish by returning/assembling the final output named by: This is the Brian Kernighan popcount algorithm's simpler variant; Python's bin(13).count('1') does the same.
+5. Use the result only after the full construct has completed, per: This counts set bits by examining the least significant bit and right-shifting.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: This counts set bits by examining the least significant bit and right-shifting.
+• Debugging when the observed value should match the expectation in: This is the Brian Kernighan popcount algorithm's simpler variant; Python's bin(13).count('1') does the same.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: n=13 (binary 1101): n&1=1, count=1, n=6 (110)., the behavior can change.
+• When the construct’s assumptions differ, the rule in: n&1=0, count=1, n=3 (11). is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This is the Brian Kernighan popcount algorithm's simpler variant; Python's bin(13).count('1') does the same..
+• When performance matters, prefer the simplest pattern that still implements: This counts set bits by examining the least significant bit and right-shifting..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: This counts set bits by examining the least significant bit and right-shifting..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: n=13 (binary 1101): n&1=1, count=1, n=6 (110). explicit (and test it with inputs like those in this prompt).`
   }),
   // Q68: Manual whitespace stripping
   (_i: number) => ({
@@ -750,42 +765,43 @@ Key Concepts:
 • This two-pointer approach runs in O(n) and handles strings with only spaces (lo would exceed hi, yielding an empty slice).
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: This implements str.strip() manually with two while loops.
+• The contrast that matters for correctness is summarized by: The first loop advances lo past leading spaces: s[0]=' ', s[1]=' ', s[2]='h' → lo=2.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: This implements str.strip() manually with two while loops.
+• The outcome you observe follows from: This two-pointer approach runs in O(n) and handles strings with only spaces (lo would exceed hi, yielding an empty slice).
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: This implements str.strip() manually with two while loops.
+2. Resolve the subparts implied by: The first loop advances lo past leading spaces: s[0]=' ', s[1]=' ', s[2]='h' → lo=2.
+3. Apply the core semantics highlighted in: The second loop retreats hi from trailing spaces: s[8]=' ', s[7]=' ', s[6]='o' → hi=6.
+4. Confirm the final result aligns with: This two-pointer approach runs in O(n) and handles strings with only spaces (lo would exceed hi, yielding an empty slice).
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: The first loop advances lo past leading spaces: s[0]=' ', s[1]=' ', s[2]='h' → lo=2.
+2. Apply the construct’s main rule next, matching: This implements str.strip() manually with two while loops.
+3. Produce any intermediate values that This two-pointer approach runs in O(n) and handles strings with only spaces (lo would exceed hi, yielding an empty slice). relies on
+4. Finish by returning/assembling the final output named by: This two-pointer approach runs in O(n) and handles strings with only spaces (lo would exceed hi, yielding an empty slice).
+5. Use the result only after the full construct has completed, per: This implements str.strip() manually with two while loops.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: This implements str.strip() manually with two while loops.
+• Debugging when the observed value should match the expectation in: This two-pointer approach runs in O(n) and handles strings with only spaces (lo would exceed hi, yielding an empty slice).
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: The first loop advances lo past leading spaces: s[0]=' ', s[1]=' ', s[2]='h' → lo=2., the behavior can change.
+• When the construct’s assumptions differ, the rule in: The second loop retreats hi from trailing spaces: s[8]=' ', s[7]=' ', s[6]='o' → hi=6. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This two-pointer approach runs in O(n) and handles strings with only spaces (lo would exceed hi, yielding an empty slice)..
+• When performance matters, prefer the simplest pattern that still implements: This implements str.strip() manually with two while loops..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: This implements str.strip() manually with two while loops..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: The first loop advances lo past leading spaces: s[0]=' ', s[1]=' ', s[2]='h' → lo=2. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q69: Word wrap algorithm
   (_i: number) => ({
@@ -799,42 +815,43 @@ Key Concepts:
 • This greedy algorithm is simpler than Knuth's optimal line-breaking.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: This word-wrap greedily fits words onto lines up to a width limit.
+• The contrast that matters for correctness is summarized by: i=0: line="" → else: line="Hi".
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: This word-wrap greedily fits words onto lines up to a width limit.
+• The outcome you observe follows from: This greedy algorithm is simpler than Knuth's optimal line-breaking.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: This word-wrap greedily fits words onto lines up to a width limit.
+2. Resolve the subparts implied by: i=0: line="" → else: line="Hi".
+3. Apply the core semantics highlighted in: i=1: len("Hi")+1+5=8 ≤ 10 → elif: line="Hi there".
+4. Confirm the final result aligns with: This greedy algorithm is simpler than Knuth's optimal line-breaking.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: i=0: line="" → else: line="Hi".
+2. Apply the construct’s main rule next, matching: This word-wrap greedily fits words onto lines up to a width limit.
+3. Produce any intermediate values that This greedy algorithm is simpler than Knuth's optimal line-breaking. relies on
+4. Finish by returning/assembling the final output named by: This greedy algorithm is simpler than Knuth's optimal line-breaking.
+5. Use the result only after the full construct has completed, per: This word-wrap greedily fits words onto lines up to a width limit.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: This word-wrap greedily fits words onto lines up to a width limit.
+• Debugging when the observed value should match the expectation in: This greedy algorithm is simpler than Knuth's optimal line-breaking.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: i=0: line="" → else: line="Hi"., the behavior can change.
+• When the construct’s assumptions differ, the rule in: i=1: len("Hi")+1+5=8 ≤ 10 → elif: line="Hi there". is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This greedy algorithm is simpler than Knuth's optimal line-breaking..
+• When performance matters, prefer the simplest pattern that still implements: This word-wrap greedily fits words onto lines up to a width limit..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: This word-wrap greedily fits words onto lines up to a width limit..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: i=0: line="" → else: line="Hi". explicit (and test it with inputs like those in this prompt).`
   }),
   // Q70: XOR encryption of byte values
   (_i: number) => ({
@@ -848,42 +865,43 @@ Key Concepts:
 • The while loop applies the same key to each byte.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: XOR encryption flips bits where the key has 1s.
+• The contrast that matters for correctness is summarized by: 72 (01001000) ^ 42 (00101010) = 01100010 = 98.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: XOR encryption flips bits where the key has 1s.
+• The outcome you observe follows from: The while loop applies the same key to each byte.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: XOR encryption flips bits where the key has 1s.
+2. Resolve the subparts implied by: 72 (01001000) ^ 42 (00101010) = 01100010 = 98.
+3. Apply the core semantics highlighted in: 101 (01100101) ^ 42 (00101010) = 01001111 = 79.
+4. Confirm the final result aligns with: The while loop applies the same key to each byte.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: 72 (01001000) ^ 42 (00101010) = 01100010 = 98.
+2. Apply the construct’s main rule next, matching: XOR encryption flips bits where the key has 1s.
+3. Produce any intermediate values that The while loop applies the same key to each byte. relies on
+4. Finish by returning/assembling the final output named by: The while loop applies the same key to each byte.
+5. Use the result only after the full construct has completed, per: XOR encryption flips bits where the key has 1s.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: XOR encryption flips bits where the key has 1s.
+• Debugging when the observed value should match the expectation in: The while loop applies the same key to each byte.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: 72 (01001000) ^ 42 (00101010) = 01100010 = 98., the behavior can change.
+• When the construct’s assumptions differ, the rule in: 101 (01100101) ^ 42 (00101010) = 01001111 = 79. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: The while loop applies the same key to each byte..
+• When performance matters, prefer the simplest pattern that still implements: XOR encryption flips bits where the key has 1s..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: XOR encryption flips bits where the key has 1s..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: 72 (01001000) ^ 42 (00101010) = 01100010 = 98. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q71: Pop from list end while condition holds
   (_i: number) => ({
@@ -897,42 +915,43 @@ Key Concepts:
 • This pattern trims elements from the end based on a condition — useful for removing trailing values.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: The while condition checks two things: lst is non-empty (truthy) AND the last element exceeds 2.
+• The contrast that matters for correctness is summarized by: lst[-1]=5>2 → pop → [1,2,3,4].
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: The while condition checks two things: lst is non-empty (truthy) AND the last element exceeds 2.
+• The outcome you observe follows from: This pattern trims elements from the end based on a condition — useful for removing trailing values.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: The while condition checks two things: lst is non-empty (truthy) AND the last element exceeds 2.
+2. Resolve the subparts implied by: lst[-1]=5>2 → pop → [1,2,3,4].
+3. Apply the core semantics highlighted in: lst[-1]=4>2 → pop → [1,2,3].
+4. Confirm the final result aligns with: This pattern trims elements from the end based on a condition — useful for removing trailing values.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: lst[-1]=5>2 → pop → [1,2,3,4].
+2. Apply the construct’s main rule next, matching: The while condition checks two things: lst is non-empty (truthy) AND the last element exceeds 2.
+3. Produce any intermediate values that This pattern trims elements from the end based on a condition — useful for removing trailing values. relies on
+4. Finish by returning/assembling the final output named by: This pattern trims elements from the end based on a condition — useful for removing trailing values.
+5. Use the result only after the full construct has completed, per: The while condition checks two things: lst is non-empty (truthy) AND the last element exceeds 2.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: The while condition checks two things: lst is non-empty (truthy) AND the last element exceeds 2.
+• Debugging when the observed value should match the expectation in: This pattern trims elements from the end based on a condition — useful for removing trailing values.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: lst[-1]=5>2 → pop → [1,2,3,4]., the behavior can change.
+• When the construct’s assumptions differ, the rule in: lst[-1]=4>2 → pop → [1,2,3]. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This pattern trims elements from the end based on a condition — useful for removing trailing values..
+• When performance matters, prefer the simplest pattern that still implements: The while condition checks two things: lst is non-empty (truthy) AND the last element exceeds 2..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: The while condition checks two things: lst is non-empty (truthy) AND the last element exceeds 2..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: lst[-1]=5>2 → pop → [1,2,3,4]. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q72: Drain a dict with popitem
   (_i: number) => ({
@@ -946,42 +965,43 @@ Key Concepts:
 • This drain pattern is useful when processing and consuming dictionary entries one at a time.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: popitem() removes and returns an arbitrary (LIFO in Python 3.7+) key-value pair.
+• The contrast that matters for correctness is summarized by: The while loop continues as long as d is truthy (non-empty).
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: popitem() removes and returns an arbitrary (LIFO in Python 3.7+) key-value pair.
+• The outcome you observe follows from: This drain pattern is useful when processing and consuming dictionary entries one at a time.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: popitem() removes and returns an arbitrary (LIFO in Python 3.7+) key-value pair.
+2. Resolve the subparts implied by: The while loop continues as long as d is truthy (non-empty).
+3. Apply the core semantics highlighted in: All three values are summed: 1+2+3=6.
+4. Confirm the final result aligns with: This drain pattern is useful when processing and consuming dictionary entries one at a time.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: The while loop continues as long as d is truthy (non-empty).
+2. Apply the construct’s main rule next, matching: popitem() removes and returns an arbitrary (LIFO in Python 3.7+) key-value pair.
+3. Produce any intermediate values that This drain pattern is useful when processing and consuming dictionary entries one at a time. relies on
+4. Finish by returning/assembling the final output named by: This drain pattern is useful when processing and consuming dictionary entries one at a time.
+5. Use the result only after the full construct has completed, per: popitem() removes and returns an arbitrary (LIFO in Python 3.7+) key-value pair.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: popitem() removes and returns an arbitrary (LIFO in Python 3.7+) key-value pair.
+• Debugging when the observed value should match the expectation in: This drain pattern is useful when processing and consuming dictionary entries one at a time.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: The while loop continues as long as d is truthy (non-empty)., the behavior can change.
+• When the construct’s assumptions differ, the rule in: All three values are summed: 1+2+3=6. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This drain pattern is useful when processing and consuming dictionary entries one at a time..
+• When performance matters, prefer the simplest pattern that still implements: popitem() removes and returns an arbitrary (LIFO in Python 3.7+) key-value pair..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: popitem() removes and returns an arbitrary (LIFO in Python 3.7+) key-value pair..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: The while loop continues as long as d is truthy (non-empty). explicit (and test it with inputs like those in this prompt).`
   }),
   // Q73: Extract multi-digit numbers from string
   (_i: number) => ({
@@ -995,42 +1015,43 @@ Key Concepts:
 • This two-loop pattern is a basic tokenizer that handles multi-digit numbers correctly.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: The outer loop scans characters.
+• The contrast that matters for correctness is summarized by: When a digit is found, the inner while loop accumulates consecutive digits into a string, then converts to int.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: The outer loop scans characters.
+• The outcome you observe follows from: This two-loop pattern is a basic tokenizer that handles multi-digit numbers correctly.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: The outer loop scans characters.
+2. Resolve the subparts implied by: When a digit is found, the inner while loop accumulates consecutive digits into a string, then converts to int.
+3. Apply the core semantics highlighted in: At i=1: '2' is a digit, inner loop gets "2", i=2.
+4. Confirm the final result aligns with: This two-loop pattern is a basic tokenizer that handles multi-digit numbers correctly.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: When a digit is found, the inner while loop accumulates consecutive digits into a string, then converts to int.
+2. Apply the construct’s main rule next, matching: The outer loop scans characters.
+3. Produce any intermediate values that This two-loop pattern is a basic tokenizer that handles multi-digit numbers correctly. relies on
+4. Finish by returning/assembling the final output named by: This two-loop pattern is a basic tokenizer that handles multi-digit numbers correctly.
+5. Use the result only after the full construct has completed, per: The outer loop scans characters.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: The outer loop scans characters.
+• Debugging when the observed value should match the expectation in: This two-loop pattern is a basic tokenizer that handles multi-digit numbers correctly.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: When a digit is found, the inner while loop accumulates consecutive digits into a string, then converts to int., the behavior can change.
+• When the construct’s assumptions differ, the rule in: At i=1: '2' is a digit, inner loop gets "2", i=2. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This two-loop pattern is a basic tokenizer that handles multi-digit numbers correctly..
+• When performance matters, prefer the simplest pattern that still implements: The outer loop scans characters..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: The outer loop scans characters..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: When a digit is found, the inner while loop accumulates consecutive digits into a string, then converts to int. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q74: Triangle number sequence
   (_i: number) => ({
@@ -1044,42 +1065,43 @@ Key Concepts:
 • The sequence appears throughout combinatorics and Pascal's triangle.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: Triangle numbers are cumulative sums of 1+2+...+n.
+• The contrast that matters for correctness is summarized by: Each iteration adds n to a running total.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: Triangle numbers are cumulative sums of 1+2+...+n.
+• The outcome you observe follows from: The sequence appears throughout combinatorics and Pascal's triangle.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: Triangle numbers are cumulative sums of 1+2+...+n.
+2. Resolve the subparts implied by: Each iteration adds n to a running total.
+3. Apply the core semantics highlighted in: n=1: total=1.
+4. Confirm the final result aligns with: The sequence appears throughout combinatorics and Pascal's triangle.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: Each iteration adds n to a running total.
+2. Apply the construct’s main rule next, matching: Triangle numbers are cumulative sums of 1+2+...+n.
+3. Produce any intermediate values that The sequence appears throughout combinatorics and Pascal's triangle. relies on
+4. Finish by returning/assembling the final output named by: The sequence appears throughout combinatorics and Pascal's triangle.
+5. Use the result only after the full construct has completed, per: Triangle numbers are cumulative sums of 1+2+...+n.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: Triangle numbers are cumulative sums of 1+2+...+n.
+• Debugging when the observed value should match the expectation in: The sequence appears throughout combinatorics and Pascal's triangle.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: Each iteration adds n to a running total., the behavior can change.
+• When the construct’s assumptions differ, the rule in: n=1: total=1. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: The sequence appears throughout combinatorics and Pascal's triangle..
+• When performance matters, prefer the simplest pattern that still implements: Triangle numbers are cumulative sums of 1+2+...+n..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: Triangle numbers are cumulative sums of 1+2+...+n..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: Each iteration adds n to a running total. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q75: Convergence by incrementing and decrementing
   (_i: number) => ({
@@ -1093,42 +1115,43 @@ Key Concepts:
 • This pattern finds the midpoint of a range.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: Both variables converge toward the midpoint: a increases while b decreases.
+• The contrast that matters for correctness is summarized by: Trace: (1,10)→(2,9)→(3,8)→(4,7)→(5,6)→(6,5).
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: Both variables converge toward the midpoint: a increases while b decreases.
+• The outcome you observe follows from: This pattern finds the midpoint of a range.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: Both variables converge toward the midpoint: a increases while b decreases.
+2. Resolve the subparts implied by: Trace: (1,10)→(2,9)→(3,8)→(4,7)→(5,6)→(6,5).
+3. Apply the core semantics highlighted in: At (6,5), a<b is 6<5=False, so the loop exits.
+4. Confirm the final result aligns with: This pattern finds the midpoint of a range.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: Trace: (1,10)→(2,9)→(3,8)→(4,7)→(5,6)→(6,5).
+2. Apply the construct’s main rule next, matching: Both variables converge toward the midpoint: a increases while b decreases.
+3. Produce any intermediate values that This pattern finds the midpoint of a range. relies on
+4. Finish by returning/assembling the final output named by: This pattern finds the midpoint of a range.
+5. Use the result only after the full construct has completed, per: Both variables converge toward the midpoint: a increases while b decreases.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: Both variables converge toward the midpoint: a increases while b decreases.
+• Debugging when the observed value should match the expectation in: This pattern finds the midpoint of a range.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: Trace: (1,10)→(2,9)→(3,8)→(4,7)→(5,6)→(6,5)., the behavior can change.
+• When the construct’s assumptions differ, the rule in: At (6,5), a<b is 6<5=False, so the loop exits. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This pattern finds the midpoint of a range..
+• When performance matters, prefer the simplest pattern that still implements: Both variables converge toward the midpoint: a increases while b decreases..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: Both variables converge toward the midpoint: a increases while b decreases..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: Trace: (1,10)→(2,9)→(3,8)→(4,7)→(5,6)→(6,5). explicit (and test it with inputs like those in this prompt).`
   }),
   // Q76: Sliding window moving average
   (_i: number) => ({
@@ -1142,42 +1165,43 @@ Key Concepts:
 • Moving averages smooth out fluctuations and are widely used in time series analysis, stock charts, and signal processing.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: A sliding window of size 3 computes the average at each valid position.
+• The contrast that matters for correctness is summarized by: i=0: sum([10,20,30])/3=20.0.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: A sliding window of size 3 computes the average at each valid position.
+• The outcome you observe follows from: Moving averages smooth out fluctuations and are widely used in time series analysis, stock charts, and signal processing.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: A sliding window of size 3 computes the average at each valid position.
+2. Resolve the subparts implied by: i=0: sum([10,20,30])/3=20.0.
+3. Apply the core semantics highlighted in: i=1: sum([20,30,40])/3=30.0.
+4. Confirm the final result aligns with: Moving averages smooth out fluctuations and are widely used in time series analysis, stock charts, and signal processing.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: i=0: sum([10,20,30])/3=20.0.
+2. Apply the construct’s main rule next, matching: A sliding window of size 3 computes the average at each valid position.
+3. Produce any intermediate values that Moving averages smooth out fluctuations and are widely used in time series analysis, stock charts, and signal processing. relies on
+4. Finish by returning/assembling the final output named by: Moving averages smooth out fluctuations and are widely used in time series analysis, stock charts, and signal processing.
+5. Use the result only after the full construct has completed, per: A sliding window of size 3 computes the average at each valid position.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: A sliding window of size 3 computes the average at each valid position.
+• Debugging when the observed value should match the expectation in: Moving averages smooth out fluctuations and are widely used in time series analysis, stock charts, and signal processing.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: i=0: sum([10,20,30])/3=20.0., the behavior can change.
+• When the construct’s assumptions differ, the rule in: i=1: sum([20,30,40])/3=30.0. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: Moving averages smooth out fluctuations and are widely used in time series analysis, stock charts, and signal processing..
+• When performance matters, prefer the simplest pattern that still implements: A sliding window of size 3 computes the average at each valid position..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: A sliding window of size 3 computes the average at each valid position..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: i=0: sum([10,20,30])/3=20.0. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q77: Wrap-around indexing with modulo
   (_i: number) => ({
@@ -1191,42 +1215,43 @@ Key Concepts:
 • Wrap-around indexing is used in ring buffers, circular queues, and round-robin scheduling without needing to check bounds explicitly.
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: The modulo operator i%len(lst) wraps indices around when they exceed the list length.
+• The contrast that matters for correctness is summarized by: i=0: 0%3=0→10.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: The modulo operator i%len(lst) wraps indices around when they exceed the list length.
+• The outcome you observe follows from: Wrap-around indexing is used in ring buffers, circular queues, and round-robin scheduling without needing to check bounds explicitly.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: The modulo operator i%len(lst) wraps indices around when they exceed the list length.
+2. Resolve the subparts implied by: i=0: 0%3=0→10.
+3. Apply the core semantics highlighted in: i=1: 1%3=1→20.
+4. Confirm the final result aligns with: Wrap-around indexing is used in ring buffers, circular queues, and round-robin scheduling without needing to check bounds explicitly.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: i=0: 0%3=0→10.
+2. Apply the construct’s main rule next, matching: The modulo operator i%len(lst) wraps indices around when they exceed the list length.
+3. Produce any intermediate values that Wrap-around indexing is used in ring buffers, circular queues, and round-robin scheduling without needing to check bounds explicitly. relies on
+4. Finish by returning/assembling the final output named by: Wrap-around indexing is used in ring buffers, circular queues, and round-robin scheduling without needing to check bounds explicitly.
+5. Use the result only after the full construct has completed, per: The modulo operator i%len(lst) wraps indices around when they exceed the list length.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: The modulo operator i%len(lst) wraps indices around when they exceed the list length.
+• Debugging when the observed value should match the expectation in: Wrap-around indexing is used in ring buffers, circular queues, and round-robin scheduling without needing to check bounds explicitly.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: i=0: 0%3=0→10., the behavior can change.
+• When the construct’s assumptions differ, the rule in: i=1: 1%3=1→20. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: Wrap-around indexing is used in ring buffers, circular queues, and round-robin scheduling without needing to check bounds explicitly..
+• When performance matters, prefer the simplest pattern that still implements: The modulo operator i%len(lst) wraps indices around when they exceed the list length..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: The modulo operator i%len(lst) wraps indices around when they exceed the list length..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: i=0: 0%3=0→10. explicit (and test it with inputs like those in this prompt).`
   }),
   // Q78: Game loop with HP depletion
   (_i: number) => ({
@@ -1240,41 +1265,42 @@ Key Concepts:
 • This is why games often clamp HP to max(0, hp-damage).
 
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• This question’s focus is best captured by: The loop subtracts 20 HP each turn and checks the condition only at the top of the loop.
+• The contrast that matters for correctness is summarized by: hp=50: subtract 20→hp=30, turns=1.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Python follows the rule implied by: The loop subtracts 20 HP each turn and checks the condition only at the top of the loop.
+• The outcome you observe follows from: This is why games often clamp HP to max(0, hp-damage).
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Start from the construct described in: The loop subtracts 20 HP each turn and checks the condition only at the top of the loop.
+2. Resolve the subparts implied by: hp=50: subtract 20→hp=30, turns=1.
+3. Apply the core semantics highlighted in: hp=30→10, turns=2.
+4. Confirm the final result aligns with: This is why games often clamp HP to max(0, hp-damage).
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+1. Identify and evaluate the inner pieces first, as hinted by: hp=50: subtract 20→hp=30, turns=1.
+2. Apply the construct’s main rule next, matching: The loop subtracts 20 HP each turn and checks the condition only at the top of the loop.
+3. Produce any intermediate values that This is why games often clamp HP to max(0, hp-damage). relies on
+4. Finish by returning/assembling the final output named by: This is why games often clamp HP to max(0, hp-damage).
+5. Use the result only after the full construct has completed, per: The loop subtracts 20 HP each turn and checks the condition only at the top of the loop.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching this behavior using the mental model: The loop subtracts 20 HP each turn and checks the condition only at the top of the loop.
+• Debugging when the observed value should match the expectation in: This is why games often clamp HP to max(0, hp-damage).
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If inputs vary from the situation described in: hp=50: subtract 20→hp=30, turns=1., the behavior can change.
+• When the construct’s assumptions differ, the rule in: hp=30→10, turns=2. is what you must re-check.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• The work scales with the amount of data implied by: This is why games often clamp HP to max(0, hp-damage)..
+• When performance matters, prefer the simplest pattern that still implements: The loop subtracts 20 HP each turn and checks the condition only at the top of the loop..
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Try the same reasoning with a closely related input to verify the rule in: The loop subtracts 20 HP each turn and checks the condition only at the top of the loop..
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For maintainable code, make the intent behind: hp=50: subtract 20→hp=30, turns=1. explicit (and test it with inputs like those in this prompt).`
   }),
 ];
