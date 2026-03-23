@@ -33,7 +33,7 @@ Example:
 Decorators are fundamental to Python's design — built-ins like @property, @staticmethod, and @classmethod are all decorators.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return wrapper Decorators are fundamental to Python's design — built-ins like @property, @staticmethod, and @classmethod are all decorators.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -108,7 +108,7 @@ func = my_decorator(func)
 The @ syntax is preferred because it clearly shows the decorator is part of the function's definition.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • @decorator is applied at definition time, not at call time • It replaces the name with whatever the decorator returns • This is purely syntactic sugar — no new functionality, just cleaner syntax • PEP 318 introduced this syntax in Python 2.4 How it works: • @my_decorator is placed directly above def func(): • Python first creates the function object for func • Then passes it to my_decorator() • The return value replaces the name func Example: # These are equivalent: @my_decorator def func(): pass # Same as: def func(): pass func = my_decorator(func) The @ syntax is preferred because it clearly shows the decorator is part of the function's definition.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -178,7 +178,7 @@ Example:
 The *a syntax in wrapper(*a) allows the wrapper to accept any number of positional arguments and forward them to the original function.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • double_result takes function f and returns wrapper • wrapper calls f(*a) and multiplies the result by 2 • @double_result replaces add with wrapper • add(3, 4) now goes through wrapper How it works: • add = double_result(add) — add is now wrapper • Calling add(3, 4) calls wrapper(3, 4) • wrapper calls original f(3, 4) which returns 7 • wrapper returns 7 * 2 = 14 Example: >>> add(3, 4) 14 >>> add(1, 1) 4 The *a syntax in wrapper(*a) allows the wrapper to accept any number of positional arguments and forward them to the original function.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -246,7 +246,7 @@ Example:
 This pattern of transforming return values is common — decorators can modify inputs, outputs, or both.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • The decorator intercepts the return value of the original function • f() calls the original greet, getting "hello" • .upper() converts "hello" to "HELLO" • The wrapper returns the transformed result How it works: • greet = uppercase(greet) — greet is now wrapper • Calling greet() calls wrapper() • wrapper calls f() → "hello" • wrapper returns "hello".upper() → "HELLO" Example: >>> greet() 'HELLO' This pattern of transforming return values is common — decorators can modify inputs, outputs, or both.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -317,7 +317,7 @@ Calling add
 This is one of the most common decorator patterns — adding logging or tracing without modifying the original function.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def add(x, y): return x + y >>> add(3, 4) Calling add 7 This is one of the most common decorator patterns — adding logging or tracing without modifying the original function.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -388,7 +388,7 @@ Example:
 A decorator that doesn't call the original function would replace it entirely — this is uncommon and usually undesirable.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return 42 >>> slow_func() # prints timing info, still returns 42 42 A decorator that doesn't call the original function would replace it entirely — this is uncommon and usually undesirable.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -457,7 +457,7 @@ Example:
 This metadata loss is a common pitfall. Use @functools.wraps(f) on the wrapper to fix it.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Use @functools.wraps(f) on the wrapper to fix it.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -527,7 +527,7 @@ Example:
 Always use @functools.wraps when writing decorators — it's considered best practice.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • When dec returns w, it looks like f externally • f.__name__ returns "f" as expected Example: >>> f.__name__ 'f' >>> f.__wrapped__ # Access to original function <function f at 0x...> Always use @functools.wraps when writing decorators — it's considered best practice.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -607,7 +607,7 @@ Example:
 Without @wraps, hello.__name__ would be 'wrapper' and hello.__doc__ would be None.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• pass >>> hello.__name__ 'hello' >>> hello.__doc__ 'Say hello' Without @wraps, hello.__name__ would be 'wrapper' and hello.__doc__ would be None.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -680,7 +680,7 @@ Example:
 The order matters — reversing the decorators changes the wrapping order.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return "hello" # Equivalent to: greet = bold(italic(greet)) # If bold wraps in <b> and italic in <i>: # Result: "<b><i>hello</i></b>" The order matters — reversing the decorators changes the wrapping order.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -752,7 +752,7 @@ Example:
 Think of it like function composition: dec1(dec2(f)).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return "hello" >>> greet() 'HELLO!' Think of it like function composition: dec1(dec2(f)).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -824,7 +824,7 @@ Example:
 The list comprehension creates a new list with n copies of f(*a)'s result.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def say(): return "x" >>> say() ['x', 'x', 'x', 'x', 'x'] The list comprehension creates a new list with n copies of f(*a)'s result.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -897,7 +897,7 @@ Example:
 Without arguments, only 2 levels are needed (decorator + wrapper).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return "hi" >>> greet() # wrapper() runs ['hi', 'hi', 'hi'] Without arguments, only 2 levels are needed (decorator + wrapper).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -970,7 +970,7 @@ Example:
 This pattern is common in performance monitoring, benchmarking, and debugging slow functions. Production versions often use time.perf_counter() for higher precision.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Production versions often use time.perf_counter() for higher precision.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1049,7 +1049,7 @@ Example:
 Class-based decorators are useful when you need to maintain state between calls.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def hello(): return "hi" >>> hello() 'hi' >>> hello.count 1 Class-based decorators are useful when you need to maintain state between calls.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1121,7 +1121,7 @@ Example:
 This is a minimal class decorator — it passes through without modification. Add logic in __call__ for actual behavior.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Add logic in __call__ for actual behavior.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1193,7 +1193,7 @@ Example:
 This pattern is called a guard or validation decorator — it protects functions from invalid inputs.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• No → continue • w calls f(4) → 4 ** 0.5 → 2.0 • Returns 2.0 Example: >>> sqrt(4) 2.0 >>> sqrt(9) 3.0 >>> sqrt(0) 0.0 This pattern is called a guard or validation decorator — it protects functions from invalid inputs.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1263,7 +1263,7 @@ ValueError
 The decorator prevents invalid computation. Without it, x ** 0.5 with negative x raises ValueError in real math mode anyway, but the decorator provides a cleaner, explicit check.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Without it, x ** 0.5 with negative x raises ValueError in real math mode anyway, but the decorator provides a cleaner, explicit check.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1337,7 +1337,7 @@ MyClass()
 Class decorators are widely used: @dataclass, @functools.total_ordering, and many framework decorators (e.g., Flask's @app.route wraps classes too).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• pass >>> MyClass() MyClass() Class decorators are widely used: @dataclass, @functools.total_ordering, and many framework decorators (e.g., Flask's @app.route wraps classes too).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1411,7 +1411,7 @@ Example:
 Built-in decorators are implemented in C for performance and are part of Python's core language design.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def create(cls): return cls() >>> MyClass.util() 42 >>> MyClass.create() <MyClass object> Built-in decorators are implemented in C for performance and are part of Python's core language design.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1487,7 +1487,7 @@ Example:
 Note: accessing the count requires accessing the original f's attribute through the closure. A more robust version would set w.calls as well.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• A more robust version would set w.calls as well.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1561,7 +1561,7 @@ True
 The Singleton pattern is useful for database connections, configuration managers, and logging — cases where only one instance should exist.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• self.connection = "connected" >>> db1 = Database() >>> db2 = Database() >>> db1 is db2 True The Singleton pattern is useful for database connections, configuration managers, and logging — cases where only one instance should exist.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1633,7 +1633,7 @@ Example:
 Python's standard library provides @functools.lru_cache for production use, with LRU eviction and thread safety.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return fib(n-1) + fib(n-2) >>> fib(100) # Instant, without cache it would take forever 354224848179261915075 Python's standard library provides @functools.lru_cache for production use, with LRU eviction and thread safety.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1709,7 +1709,7 @@ Example:
 @property is essential for encapsulation — exposing computed values with a clean attribute-style interface.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• 78.53975 >>> c.area = 10 # AttributeError — read-only @property is essential for encapsulation — exposing computed values with a clean attribute-style interface.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1780,7 +1780,7 @@ Example:
 Without @property, you would need C().x() with parentheses. The decorator provides a cleaner API.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The decorator provides a cleaner API.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1852,7 +1852,7 @@ Example:
 Use @staticmethod for methods that don't need access to instance or class state but logically belong to the class.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • No self or cls parameter needed • Can be called on the class: C.f() • Can also be called on an instance: C().f() • Useful for utility functions that belong logically to the class How it works: • @staticmethod wraps f in a staticmethod descriptor • When called, Python doesn't pass self or cls • f() simply returns 1 • Works identically whether called on class or instance Example: >>> C.f() 1 >>> C().f() 1 >>> type(C.__dict__['f']) <class 'staticmethod'> Use @staticmethod for methods that don't need access to instance or class state but logically belong to the class.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1925,7 +1925,7 @@ Example:
 The key difference from @staticmethod: classmethod receives the class and can access class attributes, while staticmethod receives nothing extra.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• 'D' The key difference from @staticmethod: classmethod receives the class and can access class attributes, while staticmethod receives nothing extra.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2001,7 +2001,7 @@ Example:
 Use @classmethod when you need class-aware behavior; @staticmethod for utility functions.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return "Animal" >>> class Dog(Animal): pass >>> Dog.create() # cls is Dog → creates Dog instance >>> Dog.info() # Still returns "Animal" — no cls awareness Use @classmethod when you need class-aware behavior; @staticmethod for utility functions.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2073,7 +2073,7 @@ Example:
 This pattern is common in network programming, API calls, and any operation that may fail transiently. Production versions often add exponential backoff.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Production versions often add exponential backoff.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2144,7 +2144,7 @@ add((3, 4), {}) -> 7
 This pattern is invaluable during development. Production logging decorators typically use the logging module instead of print.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Production logging decorators typically use the logging module instead of print.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2215,7 +2215,7 @@ Example:
 While seemingly useless, identity decorators appear as: base cases in conditional decoration, optional feature flags (@debug_only that's a no-op in production), and as documentation markers.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def hello(): return "hi" >>> hello() 'hi' >>> hello.__name__ 'hello' While seemingly useless, identity decorators appear as: base cases in conditional decoration, optional feature flags (@debug_only that's a no-op in production), and as documentation markers.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2289,7 +2289,7 @@ TypeError: 'int' object is not callable
 This is legal but almost always a bug. Decorators should return callables unless they intentionally replace the name with a different value.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Decorators should return callables unless they intentionally replace the name with a different value.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2361,7 +2361,7 @@ TypeError: 'int' object is not callable
 This demonstrates that @ syntax is purely assignment — Python doesn't check that the result is callable. The error only surfaces when you try to use f as a function.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The error only surfaces when you try to use f as a function.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2434,7 +2434,7 @@ PermissionError
 This pattern is ubiquitous in web frameworks (Django's @login_required, Flask's @auth.login_required) for protecting routes and views.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return user["name"] >>> view_profile({"name": "Alice", "auth": True}) 'Alice' >>> view_profile({"name": "Bob"}) PermissionError This pattern is ubiquitous in web frameworks (Django's @login_required, Flask's @auth.login_required) for protecting routes and views.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2509,7 +2509,7 @@ Example:
 This is why @functools.wraps is important — it preserves the escape hatch to the original function.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def hello(): return "hi" >>> hello.__wrapped__ # Original function >>> original = hello.__wrapped__ This is why @functools.wraps is important — it preserves the escape hatch to the original function.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2581,7 +2581,7 @@ True
 The __wrapped__ attribute is also used by inspect.unwrap() to automatically peel off decorator layers.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • @wraps(f) sets w.__wrapped__ = f (the original) • After decoration, f is w but f.__wrapped__ is original f • The original function object is a valid function, not None • "is not None" evaluates to True How it works: • dec(f) creates w with @wraps(f) • @wraps sets w.__wrapped__ = f (original) • f = dec(f) — f is now w • f.__wrapped__ is the original function → not None → True Example: >>> f.__wrapped__ <function f at 0x...> >>> f.__wrapped__ is not None True >>> callable(f.__wrapped__) True The __wrapped__ attribute is also used by inspect.unwrap() to automatically peel off decorator layers.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2656,7 +2656,7 @@ Calling <lambda>
 Since lambdas are anonymous, f.__name__ would be "<lambda>" unless @wraps is used.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • @decorator is syntactic sugar for name = decorator(name) • lambda is an expression, not a statement • @ syntax requires a statement (def or class) • Manual decoration: f = decorator(lambda x: x) How it works: • @decorator / lambda x: x → SyntaxError • Instead: f = decorator(lambda x: x) works fine • The result is the same — lambda is passed to decorator • The decorator's return value is assigned to f Example: >>> double = lambda x: x * 2 >>> logged_double = log(double) # Manual decoration >>> logged_double(5) Calling <lambda> 10 # This would be a SyntaxError: # @log # lambda x: x * 2 Since lambdas are anonymous, f.__name__ would be "<lambda>" unless @wraps is used.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2724,7 +2724,7 @@ Example:
 Without the explicit w.__doc__ = "wrapped" line, f.__doc__ would be None (wrapper functions don't inherit the original's docstring unless @wraps is used). With @functools.wraps(f), __doc__ would be "original".
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• With @functools.wraps(f), __doc__ would be "original".
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2796,7 +2796,7 @@ decorating
 This is important: if you have side effects in a decorator (print, logging, registration), they happen at import/definition time, not at call time.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • @dec triggers dec(f) immediately when the def statement runs • print("decorating") executes during decoration, not during calls • The wrapper w is returned and replaces f • Calling f() later only runs w() — no print How it works: • Python encounters @dec / def f() • Creates function object for f • Calls dec(f) immediately • dec prints "decorating" and returns w • f = w (decoration complete) • Later: f() calls w() — no print Example: >>> # Just defining the decorated function prints: decorating >>> f() # No print — just returns 1 1 This is important: if you have side effects in a decorator (print, logging, registration), they happen at import/definition time, not at call time.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2871,7 +2871,7 @@ Example:
 This pattern is used for type coercion, default injection, argument validation, and normalization.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def add(x, y): return x + y >>> add(3, 4) # x becomes 6, y stays 4 10 This pattern is used for type coercion, default injection, argument validation, and normalization.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2948,7 +2948,7 @@ True
 @dataclass eliminates boilerplate for data-holding classes. It's one of the most impactful decorators in the standard library (added in Python 3.7).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• It's one of the most impactful decorators in the standard library (added in Python 3.7).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3023,7 +3023,7 @@ True                       # __eq__
 Use @dataclass(order=True) for comparison operators, @dataclass(frozen=True) for immutability and hashing.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• y: int >>> Point(1, 2) Point(x=1, y=2) # __repr__ >>> Point(1, 2) == Point(1, 2) True # __eq__ Use @dataclass(order=True) for comparison operators, @dataclass(frozen=True) for immutability and hashing.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3093,7 +3093,7 @@ True
 Class decorators are powerful for metaprogramming — adding methods, modifying behavior, or registering classes. This pattern is used in frameworks for auto-generating API endpoints, serialization methods, etc.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This pattern is used in frameworks for auto-generating API endpoints, serialization methods, etc.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3168,7 +3168,7 @@ Example:
 Class-based decorators excel at maintaining state. This is cleaner than function-based approaches that use mutable default arguments or function attributes.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is cleaner than function-based approaches that use mutable default arguments or function attributes.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3241,7 +3241,7 @@ Example:
 This pattern is essential for debugging recursive functions — you can see the call stack unfold. For production use, replace print with logging module calls.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• For production use, replace print with logging module calls.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3315,7 +3315,7 @@ Example:
 This is Python's way of enforcing interfaces and contracts in OOP.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def area(self): return 3.14 * self.r ** 2 >>> Circle() # Works — area is implemented This is Python's way of enforcing interfaces and contracts in OOP.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3394,7 +3394,7 @@ True
 Note: generated methods may be slightly slower than hand-written ones due to the delegation logic.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• True Note: generated methods may be slightly slower than hand-written ones due to the delegation logic.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3470,7 +3470,7 @@ Example:
 Closures are fundamental to how decorators work in Python.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def hello(): return "hi" >>> hello() # wrapper calls f (original hello) via closure 'hi' >>> hello.__closure__[0].cell_contents # The captured function Closures are fundamental to how decorators work in Python.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3547,7 +3547,7 @@ Releasing
 This is much more concise than writing a class with __enter__ and __exit__ methods.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• print(f"Using {r}") Acquiring Using resource Releasing This is much more concise than writing a class with __enter__ and __exit__ methods.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3625,7 +3625,7 @@ Example:
 The order matters: @dec2 @dec1 would give (["hi"]) instead. Think of it as mathematical composition: (dec1 . dec2)(f).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• dec2)(f).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

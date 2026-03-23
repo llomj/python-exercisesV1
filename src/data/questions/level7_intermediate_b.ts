@@ -26,7 +26,7 @@ Common uses:
 • Pipeline processing with chained generators
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: [1, 2, 3] Common uses: • Lazy sequences — produce values on demand • Memory-efficient iteration over large data • Pipeline processing with chained generators
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -91,7 +91,7 @@ next(g)  # 1  — first yield
 next(g)  # 2  — second yield
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• A subsequent next(g) would resume and hit "yield 2" Example: g = gen() next(g) # 1 — first yield next(g) # 2 — second yield
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -155,7 +155,7 @@ next(g)  # 1
 next(g)  # 2  — generator resumes from where it paused
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Generator is now paused after the second yield Example: g = gen() next(g) # 1 next(g) # 2 — generator resumes from where it paused
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -218,7 +218,7 @@ Tip: next(g, default) returns default instead of raising StopIteration:
 next(g, "done")  # "done" instead of exception
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Once exhausted, the generator cannot be restarted Tip: next(g, default) returns default instead of raising StopIteration: next(g, "done") # "done" instead of exception
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -283,7 +283,7 @@ Common uses:
 • Processing large datasets element by element
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• list() collects [0, 1, 4] Common uses: • Transforming sequences lazily • Processing large datasets element by element
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -349,7 +349,7 @@ yield vs return:
 • A function can yield multiple values across multiple calls
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• next(g) — resumes from pause point, runs until next yield or end yield vs return: • return exits the function permanently • yield pauses the function and can resume later • A function can yield multiple values across multiple calls
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -418,7 +418,7 @@ Common uses:
 • Simplifying recursive generators
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• list(gen()) collects all three → [1, 2, 3] Without yield from: def gen(): for item in [1, 2, 3]: yield item # same result Common uses: • Flattening nested generators • Delegating to sub-generators • Simplifying recursive generators
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -482,7 +482,7 @@ def gen(): yield from range(5)
 list(gen())  # [0, 1, 2, 3, 4]
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• list() collects all values → [0, 1, 2, 3, 4] Example: def gen(): yield from range(5) list(gen()) # [0, 1, 2, 3, 4]
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -545,7 +545,7 @@ def gen(): yield "abc"
 list(gen())  # ["abc"] — yields the whole string as one item
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• list() collects them → ["a", "b", "c"] Contrast with yield (no from): def gen(): yield "abc" list(gen()) # ["abc"] — yields the whole string as one item
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -609,7 +609,7 @@ sum([x**2 for x in range(4)])  # creates list first, then sums — same result b
 sum(x**2 for x in range(4))    # no intermediate list — more memory efficient
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• sum() accumulates: 0 + 1 + 4 + 9 = 14 Generator expression vs list comprehension: sum([x**2 for x in range(4)]) # creates list first, then sums — same result but uses more memory sum(x**2 for x in range(4)) # no intermediate list — more memory efficient
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -673,7 +673,7 @@ sum(x**2 for x in range(4))  # 14
 max(x**2 for x in range(4))  # 9
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• After consuming all values, returns 9 Similar patterns: min(x**2 for x in range(4)) # 0 sum(x**2 for x in range(4)) # 14 max(x**2 for x in range(4)) # 9
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -738,7 +738,7 @@ Short-circuit behavior:
 • Efficient for large iterables — no need to check everything
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• x=4: 4 > 3 → True → any() returns True (short-circuits) Short-circuit behavior: • any() stops iterating as soon as it finds True • Efficient for large iterables — no need to check everything
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -803,7 +803,7 @@ Contrast:
 all(x >= 0 for x in range(5))  # True — 0 >= 0 is True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Does not even check x=1, 2, 3, 4 Short-circuit behavior: • all() stops as soon as it finds a False value • For all(x > 0 for x in range(1, 5)), result would be True (starts at 1) Contrast: all(x >= 0 for x in range(5)) # True — 0 >= 0 is True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -867,7 +867,7 @@ Equivalent list comprehension:
 [x for x in range(10) if x % 2 == 0]  # same result but creates a list immediately
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: [0, 2, 4, 6, 8] Equivalent list comprehension: [x for x in range(10) if x % 2 == 0] # same result but creates a list immediately
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -931,7 +931,7 @@ type((x for x in range(3)))  # <class 'generator'>
 type(x for x in range(3))    # <class 'generator'> (parens from function call)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• No values have been computed yet — they are produced only when iterated Key distinction: type([x for x in range(3)]) # <class 'list'> type((x for x in range(3))) # <class 'generator'> type(x for x in range(3)) # <class 'generator'> (parens from function call)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -995,7 +995,7 @@ list(lst)  # [0, 1, 4]
 list(lst)  # [0, 1, 4] — lists can be iterated multiple times
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• b = list(g) — generator has nothing left → b = [] Contrast with lists: lst = [0, 1, 4] list(lst) # [0, 1, 4] list(lst) # [0, 1, 4] — lists can be iterated multiple times
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1062,7 +1062,7 @@ Common uses:
 • itertools.count(0) does the same thing
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• List comprehension collects [0, 1, 2, 3, 4] Common uses: • Infinite counters, ID generators • Lazy streams of data • itertools.count(0) does the same thing
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1128,7 +1128,7 @@ except StopIteration as e:
     print(e.value)  # "done"
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The StopIteration exception has .value = "done" Accessing the return value: try: next(g) # StopIteration except StopIteration as e: print(e.value) # "done"
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1194,7 +1194,7 @@ Result: [0, 1, 1, 2, 3, 5, 8]
 The tuple assignment a, b = b, a + b is crucial — it evaluates both right-hand values before assigning, so the old a is used in a + b.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• a=8, b=13 → yield 8 Result: [0, 1, 1, 2, 3, 5, 8] The tuple assignment a, b = b, a + b is crucial — it evaluates both right-hand values before assigning, so the old a is used in a + b.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1258,7 +1258,7 @@ import itertools
 list(itertools.chain(range(3), range(3)))  # [0, 1, 2, 0, 1, 2]
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: [0, 1, 2, 0, 1, 2] This is equivalent to: import itertools list(itertools.chain(range(3), range(3))) # [0, 1, 2, 0, 1, 2]
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1322,7 +1322,7 @@ Important distinction:
 • Modifying (assigning to) a global variable requires the global keyword
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns 1 Important distinction: • Reading a global variable works without any special keyword • Modifying (assigning to) a global variable requires the global keyword
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1387,7 +1387,7 @@ Why this happens:
 • To modify the global x, you need the global keyword
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Global x is still 1 Why this happens: • Python treats any assignment in a function as creating a local variable • The local x and global x are different objects in different namespaces • To modify the global x, you need the global keyword
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1452,7 +1452,7 @@ When to use global:
 • Acceptable for simple scripts or module-level configuration
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• After f() returns, global x is now 2 When to use global: • Rarely — global mutable state is generally discouraged • Prefer passing values as arguments and returning results • Acceptable for simple scripts or module-level configuration
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1517,7 +1517,7 @@ nonlocal vs global:
 • nonlocal: refers to the nearest enclosing function's variable (not global)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• f() returns x → 2 (modified by g) nonlocal vs global: • global: refers to module-level variable • nonlocal: refers to the nearest enclosing function's variable (not global)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1581,7 +1581,7 @@ Contrast with Q74:
 • Without nonlocal: g() has its own x → f() returns 1
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• f() returns x → 1 (f's x was never modified) Contrast with Q74: • With nonlocal x: g() modifies f()'s x → f() returns 2 • Without nonlocal: g() has its own x → f() returns 1
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1653,7 +1653,7 @@ def outer():
     inner()
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• If still not found: NameError Example: x = "global" # G scope def outer(): x = "enclosing" # E scope def inner(): x = "local" # L scope print(x) # "local" — L found first inner()
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1718,7 +1718,7 @@ This is called late binding:
 • This is why closures in loops can behave unexpectedly
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• f() is called — looks up x in global scope → 20 This is called late binding: • The function stores a reference to the name "x", not its value • Each time f() is called, it looks up the current value of x • This is why closures in loops can behave unexpectedly
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1784,7 +1784,7 @@ This is lexical scoping:
 • f()'s enclosing scope is the module, regardless of who calls it
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• g() returns f()'s result: 10 This is lexical scoping: • Python uses the scope where the function is written (defined), not where it is called • f()'s enclosing scope is the module, regardless of who calls it
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1854,7 +1854,7 @@ def remove():
 Important: Deleting global variables is rarely good practice. Prefer setting to None or restructuring code.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Prefer setting to None or restructuring code.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1922,7 +1922,7 @@ int.__module__     # "builtins"
 type.__module__    # "builtins"
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Other examples: print.__module__ # "builtins" int.__module__ # "builtins" type.__module__ # "builtins"
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1991,7 +1991,7 @@ def f():
     print(g.__code__.co_freevars)  # ('x', 'y')
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• g.__closure__[0].cell_contents → 1 (the value of x) Closure inspection: def f(): x = 1 y = 2 def g(): return x + y print(g.__closure__) # (<cell ...>, <cell ...>) print(g.__code__.co_freevars) # ('x', 'y')
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2055,7 +2055,7 @@ Testing for closures:
 • __closure__ is not None → function captures variables from enclosing scope
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• g.__closure__ is not None → True Testing for closures: • __closure__ is None → function has no free variables • __closure__ is not None → function captures variables from enclosing scope
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2121,7 +2121,7 @@ def f():
     def h(): return 42     # no capture → __closure__ is None
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• g.__closure__ → None Contrast: def f(): x = 1 def g(): return x # captures x → __closure__ is not None def h(): return 42 # no capture → __closure__ is None
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2188,7 +2188,7 @@ G: module has x = "global" (not reached)
 B: built-ins (not reached)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns "local" LEGB in action: L: g has no local x E: f has x = "local" ← found here G: module has x = "global" (not reached) B: built-ins (not reached)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2253,7 +2253,7 @@ Related attributes:
 • __closure__: tuple of cell objects containing the actual values
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• len(("x", "y")) → 2 Related attributes: • co_freevars: names of captured variables (free variables) • co_varnames: names of local variables and parameters • __closure__: tuple of cell objects containing the actual values
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2318,7 +2318,7 @@ Other function attributes:
 • __code__: code object with bytecode details
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• f.__name__ → "f" Other function attributes: • __name__: function name (string) • __doc__: docstring (or None) • __module__: module where function is defined • __defaults__: tuple of default argument values • __code__: code object with bytecode details
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2393,7 +2393,7 @@ def f(x):
     return x * 2
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• """ return x * 2
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2459,7 +2459,7 @@ Important notes:
 • Available since Python 3.0, widely adopted since 3.5+
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Values are the actual type objects (int, str, bool), not strings Important notes: • Annotations are not enforced at runtime — Python does not check types • They are metadata for tools like mypy, IDEs, and documentation • Available since Python 3.0, widely adopted since 3.5+
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2526,7 +2526,7 @@ This works because functions have a __dict__:
 f.__dict__  # {"custom_attr": 42}
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• f.custom_attr → 42 Practical uses: • Attaching metadata: f.version = "1.0" • Counting calls: f.call_count = 0 (incremented inside f) • Memoization caches: f.cache = {} This works because functions have a __dict__: f.__dict__ # {"custom_attr": 42}
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2599,7 +2599,7 @@ Common uses:
 • Plugin/extension systems
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (lambda a,b: a+b)(3, 2) → 3 + 2 → 5 Dispatch table pattern: operations = { "+": lambda a, b: a + b, "-": lambda a, b: a - b, "*": lambda a, b: a * b, "/": lambda a, b: a / b, } result = operations["*"](4, 3) # 12 Common uses: • Command pattern implementation • Replacing long if/elif chains • Plugin/extension systems
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2671,7 +2671,7 @@ Common uses:
 • Ensuring idempotent operations
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • called = [False] is a mutable container • The nested function can modify called[0] without nonlocal • Alternative: use nonlocal called (Python 3+) Common uses: • Initialization functions that should run exactly once • One-time setup or teardown • Ensuring idempotent operations
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2743,7 +2743,7 @@ from functools import lru_cache
 def fib(n): ...
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • cache = {} stores argument → result mappings • First call with n: computes f(n), stores in cache[n], returns it • Subsequent calls with same n: returns cache[n] directly (no recomputation) How it works: @memoize def fib(n): if n < 2: return n return fib(n-1) + fib(n-2) fib(10) # Computes once, caches intermediate results fib(10) # Returns cached result instantly Performance impact: • Without memoization: fib(30) makes ~2.7 million calls • With memoization: fib(30) makes only 31 calls Standard library equivalent: from functools import lru_cache @lru_cache(maxsize=None) def fib(n): ...
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2810,7 +2810,7 @@ square = lambda x: x ** 2
 square.__name__  # "<lambda>"
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Even when assigned to a variable, the __name__ stays "<lambda>": square = lambda x: x ** 2 square.__name__ # "<lambda>"
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2875,7 +2875,7 @@ Key distinction:
 • type(f()) → <class 'generator'> (calling f returns a generator)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• next(f()) would return 1 Key distinction: • type(f) → <class 'function'> (f itself is a function) • type(f()) → <class 'generator'> (calling f returns a generator)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2940,7 +2940,7 @@ inspect.isgeneratorfunction(f)  # True
 inspect.isgenerator(f())         # True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• type(f()) → <class 'generator'> Checking if a function is a generator function: import inspect inspect.isgeneratorfunction(f) # True inspect.isgenerator(f()) # True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3004,7 +3004,7 @@ Why keyword-only parameters?
 • Common in APIs: def connect(*, host, port, timeout=30)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • Improve readability at the call site • Prevent accidental positional argument ordering bugs • Common in APIs: def connect(*, host, port, timeout=30)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3071,7 +3071,7 @@ def f(a, b, *, x, y):
 f(1, 2, x=3, y=4)  # OK — a,b positional, x,y keyword-only
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• f(1, 2, x=3, y=4) # OK — a,b positional, x,y keyword-only
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3136,7 +3136,7 @@ Parameter order in Python:
 def f(positional_only, /, regular, *, keyword_only): ...
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• 1 + 2 + 3 + 4 = 10 Parameter order in Python: def f(positional_only, /, regular, *, keyword_only): ...
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3202,7 +3202,7 @@ f(1, 2, 3, d=4)     # c passed positionally
 f(1, 2, c=3, d=4)   # c passed as keyword
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• 1 + 2 + 3 + 4 = 10 Both calls are valid: f(1, 2, 3, d=4) # c passed positionally f(1, 2, c=3, d=4) # c passed as keyword
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3270,7 +3270,7 @@ Why positional-only?
 • Used in many built-in functions: len(obj) not len(obj=x)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • Allows renaming parameters without breaking callers • Prevents keyword argument conflicts with **kwargs • Used in many built-in functions: len(obj) not len(obj=x)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

@@ -32,7 +32,7 @@ Common uses:
 • Chaining operations across a sequence
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • reduce(function, iterable) applies function left-to-right • The function takes two arguments: accumulator and current element • First call uses the first two elements, then uses the result as the new accumulator • Imported from functools (not a built-in in Python 3) How it works step by step: • Step 1: a=1, b=2 → 1+2 = 3 • Step 2: a=3, b=3 → 3+3 = 6 • Step 3: a=6, b=4 → 6+4 = 10 • Final result: 10 Example: from functools import reduce reduce(lambda a, b: a + b, [1, 2, 3, 4]) # 10 reduce(lambda a, b: a + b, [5]) # 5 (single element) Common uses: • Summing sequences (though sum() is preferred for simple addition) • Aggregating values with custom logic • Chaining operations across a sequence
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -102,7 +102,7 @@ Common uses:
 • Chaining multiplicative operations
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • lambda a, b: a * b multiplies the accumulator by each element • Works left-to-right through the iterable • Equivalent to math.prod([1, 2, 3, 4]) in Python 3.8+ How it works step by step: • Step 1: a=1, b=2 → 1*2 = 2 • Step 2: a=2, b=3 → 2*3 = 6 • Step 3: a=6, b=4 → 6*4 = 24 • Final result: 24 Example: from functools import reduce reduce(lambda a, b: a * b, [1, 2, 3, 4]) # 24 reduce(lambda a, b: a * b, [2, 3, 5]) # 30 Common uses: • Computing factorials: reduce(lambda a,b: a*b, range(1, n+1)) • Product of numeric sequences • Chaining multiplicative operations
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -176,7 +176,7 @@ Common uses:
 • Ensuring type consistency when the result type differs from element type
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • reduce(function, iterable, initializer) starts accumulation from initializer • Without initializer, the first element is used as the initial accumulator • With initializer, it becomes the first accumulator value before any elements • Using an initializer also handles empty iterables safely How it works step by step: • Initial accumulator: 10 • Step 1: a=10, b=1 → 10+1 = 11 • Step 2: a=11, b=2 → 11+2 = 13 • Step 3: a=13, b=3 → 13+3 = 16 • Step 4: a=16, b=4 → 16+4 = 20 • Final result: 20 Example: from functools import reduce reduce(lambda a, b: a + b, [1, 2, 3, 4], 10) # 20 reduce(lambda a, b: a + b, [1, 2, 3, 4], 100) # 110 reduce(lambda a, b: a + b, [], 0) # 0 (safe with empty) Common uses: • Providing a default for empty iterables • Starting accumulation from a non-zero/non-default value • Ensuring type consistency when the result type differs from element type
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -247,7 +247,7 @@ Common uses:
 • Educational examples of fold operations
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • lambda a, b: max(a, b) returns the larger of two values • The accumulator always holds the largest value seen so far • Equivalent to the built-in max() for this use case How it works step by step: • Step 1: a=3, b=1 → max(3,1) = 3 • Step 2: a=3, b=4 → max(3,4) = 4 • Step 3: a=4, b=1 → max(4,1) = 4 • Step 4: a=4, b=5 → max(4,5) = 5 • Final result: 5 Example: from functools import reduce reduce(lambda a, b: max(a, b), [3, 1, 4, 1, 5]) # 5 reduce(lambda a, b: min(a, b), [3, 1, 4, 1, 5]) # 1 Common uses: • Demonstrating reduce logic (use built-in max() in practice) • Custom comparison aggregations • Educational examples of fold operations
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -316,7 +316,7 @@ Common uses:
 • Building strings from parts
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • String concatenation with + works element by element • reduce does not add any separator — the space is an explicit element in the list • For joining strings, str.join() is more idiomatic and efficient How it works step by step: • Step 1: a="hello", b=" " → "hello" + " " = "hello " • Step 2: a="hello ", b="world" → "hello " + "world" = "hello world" • Final result: "hello world" Example: from functools import reduce reduce(lambda a, b: a + b, ["hello", " ", "world"]) # "hello world" " ".join(["hello", "world"]) # "hello world" (preferred) Common uses: • String concatenation (though str.join() is preferred) • Demonstrating reduce with non-numeric types • Building strings from parts
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -388,7 +388,7 @@ Common uses:
 • Demonstrating conditional expressions in lambdas
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Yes → 8 • Final result: 8 Example: from functools import reduce reduce(lambda a, b: a if a > b else b, [3, 7, 2, 8, 1]) # 8 reduce(lambda a, b: a if a < b else b, [3, 7, 2, 8, 1]) # 1 Common uses: • Custom comparison operations in reduce • Finding extremes without built-in max/min • Demonstrating conditional expressions in lambdas
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -460,7 +460,7 @@ Common uses:
 • Flattening list of dicts into a single dict
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • {**a, **b} creates a new dict with all key-value pairs from a and b • If keys overlap, values from b (the later dict) take precedence • reduce applies this pairwise across the list of dicts How it works step by step: • Step 1: a={"a":1}, b={"b":2} → {**{"a":1}, **{"b":2}} = {"a":1, "b":2} • Step 2: a={"a":1, "b":2}, b={"c":3} → {"a":1, "b":2, "c":3} • Final result: {"a": 1, "b": 2, "c": 3} Example: from functools import reduce reduce(lambda a, b: {**a, **b}, [{"a":1}, {"b":2}, {"c":3}]) # {"a": 1, "b": 2, "c": 3} reduce(lambda a, b: {**a, **b}, [{"x":1}, {"x":2}]) # {"x": 2} — later value wins Common uses: • Merging configuration dictionaries • Combining partial data from multiple sources • Flattening list of dicts into a single dict
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -531,7 +531,7 @@ Common uses:
 • Building custom data structures with reduce
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • The initializer [] is the starting accumulator (an empty list) • a + [b] creates a new list by concatenating the accumulator with a single-element list • This is not the idiomatic way to copy a list, but demonstrates reduce's flexibility How it works step by step: • Initial accumulator: [] • Step 1: a=[], b=1 → [] + [1] = [1] • Step 2: a=[1], b=2 → [1] + [2] = [1, 2] • Step 3: a=[1, 2], b=3 → [1, 2] + [3] = [1, 2, 3] • Final result: [1, 2, 3] Example: from functools import reduce reduce(lambda a, b: a + [b], [1, 2, 3], []) # [1, 2, 3] reduce(lambda a, b: a + [b*2], [1, 2, 3], []) # [2, 4, 6] Common uses: • Demonstrating reduce with list building • Transforming and collecting results (though list comprehensions are preferred) • Building custom data structures with reduce
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -602,7 +602,7 @@ Common uses:
 • Ensuring consistent return type
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • 1 is the identity element for multiplication (x * 1 = x) • Starting with 1 ensures the product is computed correctly • Also safely handles empty iterables: reduce(lambda a,b: a*b, [], 1) returns 1 How it works step by step: • Initial accumulator: 1 • Step 1: a=1, b=2 → 1*2 = 2 • Step 2: a=2, b=3 → 2*3 = 6 • Step 3: a=6, b=4 → 6*4 = 24 • Final result: 24 Example: from functools import reduce reduce(lambda a, b: a * b, [2, 3, 4], 1) # 24 reduce(lambda a, b: a * b, [], 1) # 1 (empty → returns initializer) Common uses: • Safe product computation with identity initializer • Handling potentially empty iterables • Ensuring consistent return type
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -674,7 +674,7 @@ Common uses:
 • Avoiding TypeError on empty iterables
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (no initial value) Common uses: • Safe aggregation over potentially empty collections • Default values for missing data • Avoiding TypeError on empty iterables
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -746,7 +746,7 @@ Common uses:
 • Simplifying function signatures for APIs
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • partial(func, *args, **kwargs) returns a new callable • The positional args are prepended to the call • The new function only needs the remaining arguments • This is called partial application (from functional programming) How it works: • add = lambda a, b: a + b is a simple addition function • partial(add, 5) fixes the first argument a to 5 • add5(3) calls add(5, 3) → 5 + 3 = 8 Example: from functools import partial add = lambda a, b: a + b add5 = partial(add, 5) add5(3) # 8 add5(10) # 15 Common uses: • Creating specialized versions of general functions • Callback functions that need pre-set parameters • Simplifying function signatures for APIs
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -818,7 +818,7 @@ Common uses:
 • Generating families of related functions
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • pow(base, exp) computes base ** exp • partial(pow, 2) fixes base=2 • pow2(10) calls pow(2, 10) = 2**10 = 1024 • The first positional argument is fixed, the rest are passed through How it works: • partial(pow, 2) creates a new function where the first argument is always 2 • pow2(10) → pow(2, 10) → 2**10 → 1024 • pow2(8) would give pow(2, 8) → 256 Example: from functools import partial pow2 = partial(pow, 2) pow2(10) # 1024 (2**10) pow2(8) # 256 (2**8) pow2(0) # 1 (2**0) Common uses: • Creating power functions with fixed bases • Simplifying repeated calculations • Generating families of related functions
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -890,7 +890,7 @@ Common uses:
 • Simplifying repeated conversions
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • int(string, base=2) parses a binary string to an integer • partial(int, base=2) fixes the base keyword argument • "1010" in binary = 1*8 + 0*4 + 1*2 + 0*1 = 10 • Keyword arguments in partial are stored and applied at call time How it works: • partial(int, base=2) creates a new function that always passes base=2 • int_base2("1010") → int("1010", base=2) → 10 • The positional argument "1010" is passed as the first argument to int Example: from functools import partial int_base2 = partial(int, base=2) int_base2("1010") # 10 int_base2("1111") # 15 int_base2("100000") # 32 Common uses: • Creating base-specific integer parsers • Data format converters • Simplifying repeated conversions
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -962,7 +962,7 @@ Common uses:
 • Debug printing with context
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common uses: • Creating logging functions with fixed prefixes • Specialized output functions • Debug printing with context
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1033,7 +1033,7 @@ Common uses:
 • Data processing pipelines
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • sorted(iterable, key=len) sorts by string length • partial(sorted, key=len) pre-fills the key argument • f(list) → sorted(list, key=len) • Stable sort: equal-length items maintain their original order How it works: • "hi" has length 2, "hello" has length 5, "hey" has length 3 • Sorting by length (ascending): 2 < 3 < 5 • Result: ["hi", "hey", "hello"] Example: from functools import partial f = partial(sorted, key=len) f(["hi", "hello", "hey"]) # ["hi", "hey", "hello"] f(["a", "ccc", "bb"]) # ["a", "bb", "ccc"] Common uses: • Creating reusable sorting strategies • Parameterized sort functions • Data processing pipelines
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1106,7 +1106,7 @@ Common uses:
 • Custom comparison functions
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • max(key=abs) compares elements by their absolute values • abs(-10)=10, abs(5)=5, abs(-3)=3 • max returns the original element (not the key value) • -10 is returned because |-10|=10 is the largest absolute value How it works: • f(-10, 5, -3) → max(-10, 5, -3, key=abs) • Compares: abs(-10)=10, abs(5)=5, abs(-3)=3 • Largest absolute value is 10 (from -10) • Returns -10 (the original element, not 10) Example: from functools import partial f = partial(max, key=abs) f(-10, 5, -3) # -10 f(1, -2, 3) # 3 f(-5, 5) # -5 (or 5, depends on order — first max wins) Common uses: • Finding extremes by a derived property • Signal processing (peak detection by magnitude) • Custom comparison functions
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1182,7 +1182,7 @@ Common uses:
 • Simplifying function signatures in APIs and pipelines
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Partial application fixes some arguments of a function, producing a new function with fewer parameters • The original function is not modified • Both positional and keyword arguments can be pre-filled • The resulting object is a partial object (callable, with attributes func, args, keywords) How it works: • partial(func, *args, **kwargs) stores the function and the fixed arguments • When called, it combines the fixed args with any new args • New positional args are appended after fixed positional args • New keyword args are merged with (and can override) fixed keyword args Example: from functools import partial def power(base, exp): return base ** exp square = partial(power, exp=2) square(5) # 25 cube = partial(power, exp=3) cube(5) # 125 Common uses: • Creating specialized functions from general ones • Callback configuration in event-driven programming • Simplifying function signatures in APIs and pipelines
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1255,7 +1255,7 @@ Common uses:
 • Network protocol parsing
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • int(string, base=16) interprets the string as a hexadecimal number • "ff" in hex = 15*16 + 15 = 255 • f and F both represent 15 in hexadecimal • partial fixes the base so you only need to pass the hex string How it works: • partial(int, base=16) creates a new function with base=16 pre-filled • f("ff") → int("ff", base=16) → 255 • "f" = 15 in hex, so "ff" = 15*16 + 15 = 240 + 15 = 255 Example: from functools import partial f = partial(int, base=16) f("ff") # 255 f("a") # 10 f("10") # 16 f("1f") # 31 Common uses: • Parsing hexadecimal color codes • Reading hex-encoded data • Network protocol parsing
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1326,7 +1326,7 @@ Common uses:
 • Creating specialized functions from generic ones
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • partial(func, 1, 2) fixes the first two positional arguments • The resulting function only needs the remaining argument(s) • Positional arguments are applied in order: a=1, b=2, and c is left open How it works: • The lambda takes three arguments: a, b, c • partial(lambda, 1, 2) fixes a=1 and b=2 • f(3) → lambda(1, 2, 3) → 1 + 2 + 3 = 6 Example: from functools import partial f = partial(lambda a, b, c: a + b + c, 1, 2) f(3) # 6 f(10) # 13 f(0) # 3 Common uses: • Progressively applying arguments to functions • Building function pipelines • Creating specialized functions from generic ones
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1405,7 +1405,7 @@ Common uses:
 • Testing that partial objects wrap the expected function
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • f.func — the original function that was wrapped • f.args — the fixed positional arguments as a tuple • f.keywords — the fixed keyword arguments as a dict • These attributes allow inspection of what a partial object wraps How it works: • partial(pow, 2) creates a partial object • f.func → pow (the original function) • f.args → (2,) (the fixed positional arguments) • f.keywords → {} (no keyword arguments were fixed) Example: from functools import partial f = partial(pow, 2) f.func # <built-in function pow> f.func is pow # True f.args # (2,) f.keywords # {} g = partial(int, base=16) g.func # <class 'int'> g.args # () g.keywords # {'base': 16} Common uses: • Debugging and introspecting partial objects • Serialization of function configurations • Testing that partial objects wrap the expected function
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1480,7 +1480,7 @@ Common uses:
 • Caching expensive computations
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • lru_cache caches function return values based on arguments • LRU = Least Recently Used — evicts oldest entries when cache is full • Without caching, fib(10) would make 177 function calls; with caching, only 11 • @lru_cache with no parentheses uses default maxsize=128 How it works: • fib(10) calls fib(9) + fib(8) • fib(9) calls fib(8) + fib(7) — but fib(8) is cached after first computation • Each fib(n) is computed only once, then served from cache • The Fibonacci sequence: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 Example: from functools import lru_cache @lru_cache def fib(n): return n if n < 2 else fib(n-1) + fib(n-2) fib(10) # 55 fib(20) # 6765 fib(30) # 832040 Common uses: • Memoizing recursive functions • Dynamic programming with top-down approach • Caching expensive computations
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1557,7 +1557,7 @@ Common uses:
 • Any pure function called repeatedly with the same arguments
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• total: 15 calls # With cache: only 6 unique calls (fib(0) through fib(5)) Common uses: • Recursive algorithms with overlapping subproblems • Dynamic programming (top-down memoization) • Any pure function called repeatedly with the same arguments
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1633,7 +1633,7 @@ Common uses:
 • Balancing memory vs. recomputation cost
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• recomputation cost
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1709,7 +1709,7 @@ Common uses:
 • Debugging performance issues
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • hits — number of calls that found a cached result • misses — number of calls that had to compute the result • maxsize — maximum cache capacity • currsize — current number of entries in the cache How it works: • f(3) first call: miss (3 not in cache) → computes 9, stores it → misses=1 • f(3) second call: hit (3 found in cache) → returns 9 from cache → hits=1 • currsize=1 because only one unique argument (3) has been cached • maxsize=128 is the default Example: from functools import lru_cache @lru_cache def f(x): return x ** 2 f(3) # 9 (miss) f(3) # 9 (hit) f.cache_info() # CacheInfo(hits=1, misses=1, maxsize=128, currsize=1) f(4) # 16 (miss) f.cache_info() # CacheInfo(hits=1, misses=2, maxsize=128, currsize=2) Common uses: • Monitoring cache effectiveness • Tuning maxsize based on hit rates • Debugging performance issues
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1785,7 +1785,7 @@ Common uses:
 • Testing and debugging cached functions
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Calling cache_clear() empties the entire cache • All statistics (hits, misses, currsize) are reset to 0 • The function continues to work and cache new results • Useful when cached data becomes stale or memory needs to be freed How it works: • Before clear: cache may have many stored results • After cache_clear(): currsize=0, hits=0, misses=0 • Next function call will be a cache miss and recompute the result • The decorated function itself is not affected Example: from functools import lru_cache @lru_cache def f(x): return x ** 2 f(3); f(4); f(5) f.cache_info() # currsize=3 f.cache_clear() f.cache_info() # CacheInfo(hits=0, misses=0, maxsize=128, currsize=0) Common uses: • Invalidating stale cached data • Freeing memory in long-running processes • Testing and debugging cached functions
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1861,7 +1861,7 @@ Common uses:
 • Converting mutable inputs to immutable for caching
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • The cache is implemented as a dictionary mapping argument tuples to results • Dictionary keys must be hashable • Lists, dicts, and sets are not hashable → TypeError if passed to a cached function • Convert to tuples or frozensets before passing to cached functions How it works: • When you call f([1, 2, 3]), lru_cache tries to hash the arguments • Lists are unhashable → TypeError: unhashable type: 'list' • Workaround: use tuples instead of lists Example: from functools import lru_cache @lru_cache def f(x): return sum(x) f([1, 2, 3]) # TypeError: unhashable type: 'list' f((1, 2, 3)) # 6 — tuples are hashable f(frozenset({1,2})) # 3 — frozensets are hashable Common uses: • Understanding cache limitations • Designing cacheable function signatures • Converting mutable inputs to immutable for caching
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1937,7 +1937,7 @@ Common uses:
 • Lookup tables computed lazily
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • maxsize=None → cache grows indefinitely, no entries are ever evicted • More memory usage but guaranteed no recomputation • In Python 3.9+, @functools.cache is shorthand for @lru_cache(maxsize=None) • Without a maxsize limit, the "LRU" part is irrelevant — nothing is evicted How it works: • Every unique set of arguments is cached permanently • No eviction occurs regardless of how many entries exist • Faster than bounded cache (no LRU bookkeeping overhead) • Memory usage grows linearly with the number of unique argument sets Example: from functools import lru_cache @lru_cache(maxsize=None) def fib(n): return n if n < 2 else fib(n-1) + fib(n-2) fib(1000) # instant, all 1001 results cached fib.cache_info() # maxsize=None, currsize=1001 Common uses: • Functions with bounded input domains (all results fit in memory) • Recursive algorithms where you want all subproblems cached • Lookup tables computed lazily
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2013,7 +2013,7 @@ Common uses:
 • When readability of @cache is preferred over @lru_cache(maxsize=None)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • @cache is equivalent to @lru_cache(maxsize=None) • Provides unbounded memoization with no LRU eviction • Slightly faster than lru_cache because it skips LRU ordering overhead • Same interface: cache_info(), cache_clear() are available How it works: • Internally uses a simple dictionary (no LRU linked list) • Stores every unique call result permanently • Argument hashing and lookup is the same as lru_cache • Added for convenience and readability Example: from functools import cache @cache def factorial(n): return 1 if n < 2 else n * factorial(n - 1) factorial(10) # 3628800 factorial.cache_info() # CacheInfo(hits=0, misses=11, maxsize=None, currsize=11) Common uses: • Simple memoization without worrying about cache size • Pure functions called with many unique arguments • When readability of @cache is preferred over @lru_cache(maxsize=None)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2089,7 +2089,7 @@ Common uses:
 • Avoiding unexpected cache misses
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Cache keys are based on the argument values and their positions • f(1, 2) caches with key (1, 2), f(2, 1) caches with key (2, 1) • Even though 1+2 == 2+1, they are separate cache entries • Keyword vs positional also matters: f(1, y=2) and f(1, 2) are different keys How it works: • f(1, 2): key = (1, 2) → miss → computes 3, stores at key (1, 2) • f(2, 1): key = (2, 1) → miss → computes 3, stores at key (2, 1) • f(1, 2) again: key = (1, 2) → hit → returns cached 3 • currsize = 2 (two separate entries) Example: from functools import lru_cache @lru_cache def f(x, y): return x + y f(1, 2) # 3 (miss) f(2, 1) # 3 (miss — different key!) f(1, 2) # 3 (hit) f.cache_info() # hits=1, misses=2, currsize=2 Common uses: • Understanding cache key semantics • Designing functions for optimal cache usage • Avoiding unexpected cache misses
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2168,7 +2168,7 @@ Common uses:
 • Using weakref-based alternatives for methods
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common uses: • Caching expensive method computations (with caution) • Understanding method-level caching pitfalls • Using weakref-based alternatives for methods
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2253,7 +2253,7 @@ Common uses:
 • Extensible processing pipelines
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Dispatch is based on the type of the first argument • The @singledispatch decorator marks the default (fallback) implementation • @func.register(type) adds type-specific implementations • Similar to method overloading in other languages, but for functions How it works: • The base function (decorated with @singledispatch) handles the default case • Additional implementations are registered for specific types using @func.register • At call time, Python checks the type of the first argument and dispatches accordingly • If no registered type matches, the default implementation is used Example: from functools import singledispatch @singledispatch def process(x): return f"default: {x}" @process.register(int) def _(x): return f"integer: {x}" @process.register(str) def _(x): return f"string: {x}" process(42) # "integer: 42" process("hello") # "string: hello" process([1, 2]) # "default: [1, 2]" Common uses: • Type-based function overloading • Handling different types without if/elif chains • Extensible processing pipelines
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2334,7 +2334,7 @@ Common uses:
 • Extensible type dispatch systems
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • @singledispatch marks the default implementation (returns "other") • @f.register(int) registers a handler for int arguments • When f(42) is called, Python checks type(42) → int → dispatches to the int handler • The registered function name (_ here) doesn't matter — it's accessed through f How it works: • f(42) is called • singledispatch checks type of first argument: type(42) = int • int is registered → dispatches to the int handler • The int handler returns "int" Example: from functools import singledispatch @singledispatch def f(x): return "other" @f.register(int) def _(x): return "int" @f.register(str) def _(x): return "str" f(42) # "int" f("hello") # "str" f(3.14) # "other" (float not registered) Common uses: • Type-specific processing without isinstance checks • Clean separation of type-handling logic • Extensible type dispatch systems
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2412,7 +2412,7 @@ Common uses:
 • Ensuring all types are handled
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • The @singledispatch decorated function is the fallback for unregistered types • "hello" is a str, and str has no registered handler • The default implementation runs, returning "other" • MRO (Method Resolution Order) is used for subclass matching How it works: • f("hello") is called • singledispatch checks type("hello") = str • str is not registered → no match found • Falls back to the base @singledispatch function → returns "other" Example: from functools import singledispatch @singledispatch def f(x): return "other" @f.register(int) def _(x): return "int" f("hello") # "other" (str not registered) f([1, 2]) # "other" (list not registered) f(42) # "int" (int is registered) Common uses: • Providing sensible defaults for unhandled types • Graceful degradation in type dispatch • Ensuring all types are handled
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2496,7 +2496,7 @@ Common uses:
 • Sortable custom objects
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • You must define __eq__ and at least one of: __lt__, __le__, __gt__, __ge__ • total_ordering automatically generates the remaining comparison methods • Without it, you'd need to define all 4 ordering methods manually • The auto-generated methods are derived from the ones you provide How it works: • The decorator inspects which comparison methods are defined • It generates the missing ones using logical equivalences • For example, if you define __lt__: __le__ = __lt__ or __eq__, __gt__ = not __le__, __ge__ = not __lt__ • The generated methods may be slightly slower than hand-written ones Example: from functools import total_ordering @total_ordering class Student: def __init__(self, name, grade): self.name = name self.grade = grade def __eq__(self, other): return self.grade == other.grade def __lt__(self, other): return self.grade < other.grade s1 = Student("Alice", 90) s2 = Student("Bob", 85) s1 > s2 # True (auto-generated from __lt__ and __eq__) s1 >= s2 # True (auto-generated) Common uses: • Custom classes that need full comparison support • Reducing boilerplate in ordered types • Sortable custom objects
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2570,7 +2570,7 @@ Common uses:
 • Performance-critical code (C-implemented functions)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • operator.add(a, b) is equivalent to a + b • These are regular functions, unlike the + operator • Useful when you need to pass an operator as a function argument • Faster than lambda a, b: a + b because it's implemented in C How it works: • operator.add(3, 4) calls the __add__ method: 3 + 4 = 7 • No lambda needed — operator.add is already a callable • Works with any types that support + Example: from operator import add, sub, mul add(3, 4) # 7 sub(10, 3) # 7 mul(3, 4) # 12 from functools import reduce reduce(add, [1, 2, 3, 4]) # 10 (cleaner than lambda) Common uses: • Passing operators to higher-order functions like reduce, map • Cleaner alternative to lambdas for simple operations • Performance-critical code (C-implemented functions)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2644,7 +2644,7 @@ Common uses:
 • Cleaner than lambda a, b: a * b
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • operator.mul(a, b) is equivalent to a * b • Implemented in C for maximum performance • Commonly used with reduce for product calculations • Works with any types that support * (numbers, sequences) How it works: • mul(3, 4) → 3 * 4 → 12 • Can also do string/list repetition: mul("ab", 3) → "ababab" Example: from operator import mul mul(3, 4) # 12 mul(2.5, 4) # 10.0 mul("ab", 3) # "ababab" from functools import reduce reduce(mul, [1, 2, 3, 4]) # 24 (product) reduce(mul, range(1, 6)) # 120 (5!) Common uses: • Product calculations with reduce • Sequence repetition • Cleaner than lambda a, b: a * b
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2716,7 +2716,7 @@ Common uses:
 • Cleaner and faster than lambda for item access
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • itemgetter(index) returns a callable that does obj[index] • With a single argument, it returns the single item directly (not a tuple) • Works with any object supporting __getitem__ (lists, dicts, tuples) • Commonly used as a key function for sorting How it works: • itemgetter(1) creates a function equivalent to lambda obj: obj[1] • f([10, 20, 30]) → [10, 20, 30][1] → 20 • Returns the item directly (not wrapped in a tuple) Example: from operator import itemgetter f = itemgetter(1) f([10, 20, 30]) # 20 f("hello") # "e" f({"a": 1, 1: 99}) # 99 Common uses: • Key function for sorted(): sorted(data, key=itemgetter(1)) • Extracting fields from records • Cleaner and faster than lambda for item access
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2790,7 +2790,7 @@ Common uses:
 • Selecting columns from tabular data
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • itemgetter(i, j, ...) returns a tuple of items at those indices • Single argument → returns the item directly • Multiple arguments → returns a tuple of items • This distinction is important for unpacking and key functions How it works: • itemgetter(0, 2) creates a function that does (obj[0], obj[2]) • f([10, 20, 30]) → ([10,20,30][0], [10,20,30][2]) → (10, 30) • Returns a tuple, not a list Example: from operator import itemgetter f = itemgetter(0, 2) f([10, 20, 30]) # (10, 30) f("abcdef") # ("a", "c") g = itemgetter("name", "age") g({"name": "Alice", "age": 30, "city": "NYC"}) # ("Alice", 30) Common uses: • Extracting multiple fields from records • Multi-key sorting: sorted(data, key=itemgetter(1, 2)) • Selecting columns from tabular data
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2869,7 +2869,7 @@ Common uses:
 • Functional-style attribute access
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • attrgetter("attr") returns a function equivalent to lambda obj: obj.attr • Multiple arguments return a tuple: attrgetter("a", "b")(obj) → (obj.a, obj.b) • Supports dotted names: attrgetter("a.b") → obj.a.b (nested attribute access) • Commonly used as a key function for sorting objects by attribute How it works: • attrgetter("name") creates a callable that accesses the name attribute • When called on an object, it returns getattr(obj, "name") • Faster than equivalent lambdas because it's implemented in C Example: from operator import attrgetter class Student: def __init__(self, name, grade): self.name = name self.grade = grade students = [Student("Alice", 90), Student("Bob", 85)] sorted(students, key=attrgetter("grade")) # sorted by grade get_info = attrgetter("name", "grade") get_info(students[0]) # ("Alice", 90) Common uses: • Sorting objects by attribute • Extracting attributes from collections of objects • Functional-style attribute access
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2945,7 +2945,7 @@ Common uses:
 • Functional-style method invocation
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • methodcaller("method") returns a function equivalent to lambda obj: obj.method() • Can also pass arguments: methodcaller("method", arg1, arg2) • Useful as a key function or in map/filter operations • Implemented in C for performance How it works: • methodcaller("upper") creates a callable that calls .upper() • f("hello") → "hello".upper() → "HELLO" • The method is called with no additional arguments in this case Example: from operator import methodcaller f = methodcaller("upper") f("hello") # "HELLO" g = methodcaller("replace", "o", "0") g("hello world") # "hell0 w0rld" h = methodcaller("split", ",") h("a,b,c") # ["a", "b", "c"] Common uses: • Applying methods across collections: list(map(methodcaller("strip"), lines)) • Key functions for sorting: sorted(strings, key=methodcaller("lower")) • Functional-style method invocation
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3016,7 +3016,7 @@ Common uses:
 • Vector arithmetic and pairwise computations
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • map(func, iter1, iter2) calls func(a, b) for each pair (a, b) from the iterables • Stops at the shortest iterable (like zip) • pow(base, exp) computes base ** exp • This is element-wise application across parallel iterables How it works: • pow(2, 3) = 2**3 = 8 • pow(3, 2) = 3**2 = 9 • pow(4, 1) = 4**1 = 4 • Result: [8, 9, 4] Example: list(map(pow, [2, 3, 4], [3, 2, 1])) # [8, 9, 4] list(map(max, [1, 5, 3], [4, 2, 6])) # [4, 5, 6] list(map(lambda a, b: a+b, [1,2], [3,4])) # [4, 6] Common uses: • Element-wise operations on parallel sequences • Applying binary functions across two lists • Vector arithmetic and pairwise computations
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3090,7 +3090,7 @@ Common uses:
 • Converting with list() when a concrete list is needed
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • map() returns a map object, which is an iterator • Values are computed on demand (lazily), not all at once • Must be consumed (with list(), for loop, etc.) to see the values • In Python 2, map() returned a list directly (this changed in Python 3) How it works: • map(pow, [2,3,4], [3,2,1]) returns a map object • The computations happen only when the iterator is consumed • list(map(...)) forces all computations and collects results into a list • The map object can only be iterated once Example: result = map(pow, [2, 3, 4], [3, 2, 1]) type(result) # <class 'map'> list(result) # [8, 9, 4] list(result) # [] (iterator exhausted) next(map(pow, [2], [3])) # 8 (can use next() on iterators) Common uses: • Memory-efficient processing of large sequences • Lazy evaluation pipelines • Converting with list() when a concrete list is needed
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3165,7 +3165,7 @@ Common uses:
 • Database query results or CSV rows
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • starmap(func, iterable) where each element of iterable is unpacked with * • Equivalent to (func(*args) for args in iterable) • Useful when arguments are already grouped as tuples • The "star" in starmap refers to the * unpacking operator How it works: • starmap(pow, [(2,3), (3,2), (4,1)]) • Step 1: pow(*(2,3)) → pow(2, 3) = 8 • Step 2: pow(*(3,2)) → pow(3, 2) = 9 • Step 3: pow(*(4,1)) → pow(4, 1) = 4 • Result: [8, 9, 4] Example: from itertools import starmap list(starmap(pow, [(2,3), (3,2), (4,1)])) # [8, 9, 4] list(starmap(max, [(1,5), (3,2), (4,6)])) # [5, 3, 6] # Contrast with map: list(map(pow, [2,3,4], [3,2,1])) # [8, 9, 4] (same result) Common uses: • Processing pre-paired arguments • Working with zip() output: starmap(func, zip(a, b)) • Database query results or CSV rows
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3238,7 +3238,7 @@ Common uses:
 • Dynamic function replacement
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• creates a function object and binds the name f to it • f = None reassigns the name f to None • The original function object may still exist if other references point to it • Functions are first-class objects — they can be assigned, passed, and deleted How it works: • def f(x): return x * 2 creates a function object and assigns it to name f • f = None reassigns f to the None object • The function object has no more references (may be garbage collected) • f is now None, not a function Example: def f(x): return x * 2 print(f(5)) # 10 f = None print(f) # None # f(5) # TypeError: 'NoneType' is not callable Common uses: • Understanding that function names are just variables • Cleanup: setting callbacks to None to disable them • Dynamic function replacement
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3313,7 +3313,7 @@ Common uses:
 • Safe function replacement patterns
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • g = f makes g point to the same function object as f • del f removes the name f from the namespace, not the function object • The function object survives because g still references it • Python uses reference counting — objects are deleted only when no references remain How it works: • def f(x): return x * 2 creates a function object, f references it (refcount=1) • g = f makes g reference the same object (refcount=2) • del f removes the name f (refcount=1, g still holds a reference) • g(5) → calls the function object → 5 * 2 = 10 Example: def f(x): return x * 2 g = f del f g(5) # 10 (function still exists via g) # f(5) # NameError: name 'f' is not defined print(g.__name__) # "f" (original name is stored in __name__) Common uses: • Understanding Python's reference model • Function aliasing and renaming • Safe function replacement patterns
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3389,7 +3389,7 @@ Common uses:
 • Dynamic variable access (though generally discouraged)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Inside a function, locals() contains all local variables and their values • The returned dict is a snapshot — modifying it does NOT affect actual variables (in CPython) • At module level, locals() behaves the same as globals() • Parameters are included as local variables How it works: • Python maintains a local symbol table for each function call • locals() creates a dict from this table • The dict maps string names to current values • It includes function parameters, local assignments, and comprehension variables Example: def example(a, b): c = a + b d = "hello" print(locals()) example(1, 2) # {'a': 1, 'b': 2, 'c': 3, 'd': 'hello'} Common uses: • Debugging: inspecting variable state • String formatting: "%(name)s" % locals() • Logging and introspection • Dynamic variable access (though generally discouraged)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3469,7 +3469,7 @@ Common uses:
 • Serialization frameworks
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • globals() always refers to the module where the function is defined • Unlike locals(), modifying the globals() dict DOES affect global variables • Contains all module-level names: variables, functions, imports, classes • Always includes __name__, __doc__, __builtins__ How it works: • The global symbol table is maintained per module • globals() returns the actual dict object (not a copy) • globals()["x"] = 42 actually creates/modifies a global variable x • Functions defined in the module see the same globals() Example: x = 10 def f(): return globals()["x"] f() # 10 globals()["y"] = 20 print(y) # 20 (actually creates the variable) # Built-in keys always present: "__name__" in globals() # True "__builtins__" in globals() # True Common uses: • Accessing global variables dynamically by name • Plugin/extension loading • Debugging and introspection • Serialization frameworks
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3545,7 +3545,7 @@ Common uses:
 • Understanding Python internals
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • f.__code__ is the code object associated with function f • co_varnames is a tuple of all local variable names (arguments first, then other locals) • Arguments appear first in co_varnames, in order • Other useful code attributes: co_argcount, co_filename, co_firstlineno How it works: • def f(x): return x has one parameter x and no other local variables • f.__code__.co_varnames returns ("x",) • The tuple includes ALL local names, not just parameters • Parameters always come first in the tuple Example: def f(x): return x f.__code__.co_varnames # ("x",) def g(a, b): c = a + b return c g.__code__.co_varnames # ("a", "b", "c") Common uses: • Function introspection and metaprogramming • Debugging and analysis tools • Code documentation generators • Understanding Python internals
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3625,7 +3625,7 @@ Common uses:
 • Metaprogramming and decorators
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • co_argcount counts regular parameters (positional and keyword) • Parameters with default values are still counted • *args is NOT counted in co_argcount (it's in co_flags) • **kwargs is NOT counted either • Positional-only parameters (before /) ARE counted How it works: • def f(x, y, z=3): has three parameters: x, y, and z • z has a default value of 3, but it's still a regular parameter • co_argcount = 3 Example: def f(x, y, z=3): pass f.__code__.co_argcount # 3 def g(a): pass g.__code__.co_argcount # 1 def h(*args): pass h.__code__.co_argcount # 0 (*args not counted) def k(a, b, *args, **kwargs): pass k.__code__.co_argcount # 2 (only a and b) Common uses: • Inspecting function signatures programmatically • Framework code that adapts to function arity • Debugging parameter issues • Metaprogramming and decorators
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3703,7 +3703,7 @@ Common uses:
 • Code analysis and linting tools
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Example: def f(*args): pass f.__code__.co_varnames # ("args",) f.__code__.co_argcount # 0 (no regular positional params) def g(*items): pass g.__code__.co_varnames # ("items",) def h(x, *args, **kwargs): pass h.__code__.co_varnames # ("x", "args", "kwargs") Common uses: • Understanding how *args is represented internally • Function introspection tools • Metaprogramming and decorator construction • Code analysis and linting tools
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
