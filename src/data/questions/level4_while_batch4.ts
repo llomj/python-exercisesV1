@@ -12,7 +12,7 @@ export const level4WhileBatch4 = [
     de: `Python's tuple swap a, b = b, a+b evaluates the right side fully before assigning. This generates the Fibonacci sequence: starting from (0,1), each step sets a to the old b and b to the old a+b. After 5 iterations: (1,1)→(1,2)→(2,3)→(3,5)→(5,8). The variable a holds 5, which is the 5th Fibonacci number (0-indexed).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The variable a holds 5, which is the 5th Fibonacci number (0-indexed).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -61,7 +61,7 @@ Notes:
     de: `The continue statement skips the rest of the loop body. Here i increments first (1 through 10), then if i is divisible by 3, continue skips count += 1. Values skipped: 3, 6, 9 (three values). Out of 10 iterations, 7 reach count += 1. Note that i += 1 is placed before the continue check to avoid an infinite loop.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Note that i += 1 is placed before the continue check to avoid an infinite loop.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -110,7 +110,7 @@ Notes:
     de: `This implements atoi (ASCII to integer) using Horner's method. Each iteration multiplies the accumulator by 10 and adds the next digit: 0*10+3=3, 3*10+8=38, 38*10+5=385. This left-to-right processing avoids computing powers of 10 explicitly. It's the same algorithm Python's int() uses internally for decimal strings.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• It's the same algorithm Python's int() uses internally for decimal strings.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -159,7 +159,7 @@ Notes:
     de: `This converts an integer to its string representation by extracting digits via modulo and prepending each one. 407%10=7→"7", 40%10=0→"07", 4%10=4→"407". Prepending (str(n%10) + result) reverses the extraction order so digits appear correctly. The zero in 407 is preserved because str(0)="0". Equivalent to str(407).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Equivalent to str(407).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -208,7 +208,7 @@ Notes:
     de: `This finds the largest power of 2 that doesn't exceed n. The condition p*2 <= n checks whether doubling would still fit. Sequence: 1→2→4→8→16→32. At p=32, p*2=64 > 50, so the loop exits. This is useful in binary algorithms and memory allocation. Here floor(log₂(50))=5, and 2⁵=32.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Here floor(log₂(50))=5, and 2⁵=32.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -257,7 +257,7 @@ Notes:
     de: `The Dutch national flag algorithm uses three pointers: lo (boundary of 0s), mid (current), hi (boundary of 2s). When arr[mid]==0, swap to lo region and advance both; when 2, swap to hi region and shrink hi; when 1, just advance mid. After processing [2,0,1,2,0]: all 0s end up before 1s before 2s in O(n) time. This is the partition step used in 3-way quicksort.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is the partition step used in 3-way quicksort.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -306,7 +306,7 @@ Notes:
     de: `Augmented assignments modify a variable in place. x=2: x**=3 computes 2³=8. x%=5 computes 8%5=3 (remainder). x*=7 computes 3×7=21. Each operator (**=, %=, *=) combines an arithmetic operation with assignment. The evaluation order is strictly left-to-right, and changing the sequence changes the result entirely.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The evaluation order is strictly left-to-right, and changing the sequence changes the result entirely.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -355,7 +355,7 @@ Notes:
     de: `The Euclidean algorithm finds GCD by repeatedly replacing (x,y) with (y, x%y) until y=0. For 12,8: (12,8)→(8,4)→(4,0). GCD=4. The LCM formula is a*b//gcd(a,b) = 12*8//4 = 24. This works because LCM×GCD = a×b for any two positive integers. The while y: idiom leverages Python's truthiness — 0 is falsy, ending the loop.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The while y: idiom leverages Python's truthiness — 0 is falsy, ending the loop.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -404,7 +404,7 @@ Notes:
     de: `This counts digit occurrences using dict.get(key, default). Processing 112233 from right: 3(×1), 3(×2), 2(×1), 2(×2), 1(×1), 1(×2). Dict insertion order reflects processing order: {3:2, 2:2, 1:2}. The get(d, 0) pattern safely handles the first occurrence by defaulting to 0. Equivalent to collections.Counter(str(n)) but with int keys.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Equivalent to collections.Counter(str(n)) but with int keys.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -453,7 +453,7 @@ Notes:
     de: `Short-circuit evaluation means 'and' stops at the first False. The condition i < len(lst) is checked first — if False, lst[i] is never evaluated (preventing IndexError). The loop advances while elements are nonzero: lst[0]=1, lst[1]=2, lst[2]=3 all pass. At i=3, lst[3]=0 fails the !=0 check, so the loop exits with i=3. This is a safe sentinel-search pattern.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is a safe sentinel-search pattern.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -502,7 +502,7 @@ Notes:
     de: `Postfix (Reverse Polish) notation evaluates without parentheses using a stack. Numbers are pushed; operators pop two operands and push the result. Trace: push 3→[3], push 4→[3,4], '+'→pop 4 and 3, push 7→[7], push 2→[7,2], '*'→pop 2 and 7, push 14→[14]. Note b,a = pop(),pop() ensures correct operand order for non-commutative operations.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Note b,a = pop(),pop() ensures correct operand order for non-commutative operations.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -551,7 +551,7 @@ Notes:
     de: `This CSV parser scans character by character, splitting at commas. The key trick is i <= len(s) with an i == len(s) check to capture the last field after the final comma. At i=1 (comma): s[0:1]="a". At i=4 (comma): s[2:4]="bb". At i=8 (end): s[5:8]="ccc". Result: ["a","bb","ccc"], length 3. This is how str.split(",") works internally.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is how str.split(",") works internally.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -600,7 +600,7 @@ Notes:
     de: `This naive string search slides a window of length len(pat) across text, comparing at each position. At i=0: "abc"≠"cab". At i=1: "bca"≠"cab". At i=2: "cab"=="cab" → found=2, break. This O(n×m) algorithm is equivalent to text.find(pat). More efficient algorithms like KMP or Boyer-Moore avoid re-checking characters after partial matches.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• More efficient algorithms like KMP or Boyer-Moore avoid re-checking characters after partial matches.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -649,7 +649,7 @@ Notes:
     de: `De Morgan's law: not(A or B) ≡ (not A) and (not B). So not(x>=4 or x<=0) equals x<4 and x>0. The loop continues while x is in the open interval (0,4). Starting at x=1: increments to 2, 3, 4. At x=4: 4>=4 makes the 'or' True, so 'not' gives False and the loop exits. Understanding De Morgan's transforms helps simplify complex boolean conditions.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Understanding De Morgan's transforms helps simplify complex boolean conditions.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -698,7 +698,7 @@ Notes:
     de: `This searches for a contiguous subsequence using a sliding window. At i=0: [1,3,5]≠[3,5,3]. At i=1: [3,5,3]==[3,5,3] → match found, break with i=1. The condition i <= len(data)-len(target) ensures the window never exceeds list bounds. This is the list equivalent of str.find() and runs in O(n×m) time where n and m are the list and pattern lengths.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is the list equivalent of str.find() and runs in O(n×m) time where n and m are the list and pattern lengths.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -747,7 +747,7 @@ Notes:
     de: `Using multiple accumulators in a single pass computes several aggregates simultaneously. total sums all elements: 3+1+4+1+5=14. mx tracks the running maximum: starts at 3, updates to 4 at index 2, then to 5 at index 4. This single-pass approach is O(n) versus two separate traversals. Python's built-in equivalents are sum() and max().
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Python's built-in equivalents are sum() and max().
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -796,7 +796,7 @@ Notes:
     de: `This polynomial rolling hash multiplies by a prime (31) and adds each character's ordinal value, with modulo to prevent overflow. h=(0*31+97)%1000=97 for 'a'. h=(97*31+98)%1000=3105%1000=105 for 'b'. h=(105*31+99)%1000=3354%1000=354 for 'c'. The prime 31 is used by Java's String.hashCode(). Modulo keeps values bounded for hash table indexing.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Modulo keeps values bounded for hash table indexing.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -845,7 +845,7 @@ Notes:
     de: `This reverses a string by reading characters from the end using len(s)-1-i as the index. When i=0: s[4]='o', i=1: s[3]='l', i=2: s[2]='l', i=3: s[1]='e', i=4: s[0]='h'. Appending builds "olleh". The Pythonic equivalent is s[::-1]. String concatenation in a loop is O(n²) due to immutability; using a list with ''.join() is the O(n) alternative.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• String concatenation in a loop is O(n²) due to immutability; using a list with ''.join() is the O(n) alternative.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -894,7 +894,7 @@ Notes:
     de: `Hex conversion uses base-16 division: n%16 gives the hex digit (0-15 mapped to '0'-'f' via string indexing), and n//16 removes the last hex digit. For 255: 255%16=15→'f', n=15. 15%16=15→'f', n=0. Prepending builds "f"→"ff". Verify: 15×16+15=255=0xFF. This lookup-string approach avoids if-else chains for digit mapping. Equivalent to hex(255)[2:].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Equivalent to hex(255)[2:].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -943,7 +943,7 @@ Notes:
     de: `Nested while loops flatten a 2D list by iterating each row (outer) and each element within the row (inner). Row 0: append 1, 2. Row 1: append 3. Row 2: append 4, 5. Result: [1,2,3,4,5]. The inner counter j resets to 0 for each new row, and rows can have different lengths (jagged array). The Pythonic equivalent is [x for row in matrix for x in row].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The Pythonic equivalent is [x for row in matrix for x in row].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -992,7 +992,7 @@ Notes:
     de: `Python's chained comparison 1 <= x <= 5 is equivalent to (1 <= x) and (x <= 5). The loop doubles x each iteration: 1→2→4→8. At x=8: 1<=8 is True but 8<=5 is False, so the chain evaluates to False and the loop exits. Chained comparisons are more readable than explicit 'and' conjunctions and are a unique Python feature not available in most other languages.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Chained comparisons are more readable than explicit 'and' conjunctions and are a unique Python feature not available in most other languages.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1041,7 +1041,7 @@ Notes:
     de: `The greedy coin change algorithm always picks the largest coin that fits. For 67 cents: two 25s (count=2, left=17), one 10 (count=3, left=7), one 5 (count=4, left=2), two 1s (count=6, left=0). Total 6 coins. Greedy works optimally for US denominations but fails for arbitrary coin sets — e.g., coins=[1,3,4] with amount=6 needs dynamic programming.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Greedy works optimally for US denominations but fails for arbitrary coin sets — e.g., coins=[1,3,4] with amount=6 needs dynamic programming.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1090,7 +1090,7 @@ Notes:
     de: `This computes how many complete rows fit in a pyramid where row k has k items. The condition total+rows+1 <= 15 checks if the next row fits. Rows added: 1(total=1), 2(3), 3(6), 4(10), 5(15). Row 6 would need total=21 > 15, so the loop stops. The total after k rows is k(k+1)/2 — the kth triangular number. T(5)=15 fits exactly within the limit.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• T(5)=15 fits exactly within the limit.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1139,7 +1139,7 @@ Notes:
     de: `Generators produce values lazily via yield. Calling next(g) resumes execution until the next yield. After all yields are exhausted, next() raises StopIteration. The while True + try/except pattern manually consumes the generator: 1+2+3=6. This is exactly what a for loop does internally — for x in gen() is syntactic sugar for this try/except/StopIteration protocol.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is exactly what a for loop does internally — for x in gen() is syntactic sugar for this try/except/StopIteration protocol.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1188,7 +1188,7 @@ Notes:
     de: `This tracks parenthesis nesting by incrementing depth on '(' and decrementing on ')'. For "(()())": '('→1, '('→2, ')'→1, '('→2, ')'→1, ')'→0. max_d captures the peak depth of 2. This is used in expression parsers to determine nesting complexity. If depth ever goes negative, there's an unmatched closer; if it ends nonzero, there are unmatched openers.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• If depth ever goes negative, there's an unmatched closer; if it ends nonzero, there are unmatched openers.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1237,7 +1237,7 @@ Notes:
     de: `Round-robin scheduling gives each task one unit of work per round. Round 1: all three tasks run → [2,1,0], turns=3. Round 2: first two run → [1,0,0], turns=5. Round 3: only first runs → [0,0,0], turns=6. Total turns equals sum(tasks) = 3+2+1 = 6. The any() generator checks if work remains. This models CPU time-slicing in operating systems.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This models CPU time-slicing in operating systems.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

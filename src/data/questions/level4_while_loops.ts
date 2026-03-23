@@ -14,7 +14,7 @@ export const level4WhileLoopPatterns = [
     de: `Newton's method for integer square root repeatedly refines a guess using the formula (guess + n // guess) // 2. Starting with guess=36: (36+1)//2=18, then (18+2)//2=10, then (10+3)//2=6. At guess=6, 6*6=36 which is NOT >36, so the loop exits. This converges in O(log n) steps and is how math.isqrt works internally.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This converges in O(log n) steps and is how math.isqrt works internally.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -63,7 +63,7 @@ Notes:
     de: `The flag variable pattern uses a boolean to control loop termination. The loop checks two conditions: not found AND idx < len. Elements 4, 7, 2 fail the >8 test so idx increments. At idx=3, nums[3]=9 > 8, so found=True. Note: idx is NOT incremented in the True branch, so it stays at 3 — the index where the value was found.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Note: idx is NOT incremented in the True branch, so it stays at 3 — the index where the value was found.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -112,7 +112,7 @@ Notes:
     de: `Exponential backoff doubles the wait time each iteration: 1, 2, 4, 8, 16. The sum 1+2+4+8+16 = 31 (which equals 2^5 - 1). After adding 16, delay becomes 32 which exceeds 16, ending the loop. This pattern is used in network retries and rate limiting — each failed attempt waits exponentially longer before retrying.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This pattern is used in network retries and rate limiting — each failed attempt waits exponentially longer before retrying.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -161,7 +161,7 @@ Notes:
     de: `This extracts digits using modulo and integer division. n%10 gives the last digit, n//=10 removes it. Step by step: 9473%10=3 (total=3), 947%10=7 (total=10), 94%10=4 (total=14), 9%10=9 (total=23), 0>0 stops. This is the standard digit-processing pattern — works for any positive integer regardless of digit count.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is the standard digit-processing pattern — works for any positive integer regardless of digit count.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -210,7 +210,7 @@ Notes:
     de: `Repeated halving with integer division: 100→50→25→12→6→3→1. Each step divides by 2 (rounding down). After 6 steps n=1, and 1>1 is False so the loop exits. This computes floor(log₂(n)), which is fundamental to binary search complexity. For n=100, floor(log₂(100)) = 6.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• For n=100, floor(log₂(100)) = 6.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -259,7 +259,7 @@ Notes:
     de: `The walrus operator (:=) assigns data[idx] to val inside the while condition. Each iteration: val=1 (odd, continue), val=3 (odd), val=5 (odd), val=7 (odd), val=2 (even, 2%2==0, condition False, loop exits). val retains the value 2 — the first even number. Without :=, you'd need to assign val before and inside the loop.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Without :=, you'd need to assign val before and inside the loop.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -308,7 +308,7 @@ Notes:
     de: `Caesar cipher shifts each letter by a fixed amount. The formula (ord(ch)-97+shift)%26+97 normalizes to 0-25, adds the shift, wraps with modulo, then converts back. h(7)→k(10), e(4)→h(7), l(11)→o(14), l→o, o(14)→r(17). The %26 ensures wrapping: z+3 would become c. This is one of the oldest encryption algorithms.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is one of the oldest encryption algorithms.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -357,7 +357,7 @@ Notes:
     de: `Converting decimal to binary extracts bits via repeated %2 and //2. Crucially, each new digit is prepended (str(n%2) + bits) because we extract the least significant bit first. 13→1(rem), 6→0, 3→1, 1→1. Prepending builds "1"→"01"→"101"→"1101". Verify: 8+4+0+1=13. Equivalent to bin(13)[2:].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Equivalent to bin(13)[2:].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -406,7 +406,7 @@ Notes:
     de: `This uses Horner's method to convert binary to decimal by processing digits left-to-right. Each step: multiply accumulator by 2 and add the current bit. 0*2+1=1, 1*2+0=2, 2*2+1=5, 5*2+1=11. This avoids computing powers of 2 explicitly. Verify: 1*8 + 0*4 + 1*2 + 1*1 = 11. Equivalent to int("1011", 2).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Equivalent to int("1011", 2).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -455,7 +455,7 @@ Notes:
     de: `Run-length encoding compresses by replacing runs with char+count. The outer loop picks the current character, the inner loop counts how many consecutive copies exist while advancing i. 'aaa'→a3, 'bb'→b2, 'c'→c1. Note i is shared between loops — the inner loop advances i, so the outer loop resumes at the next different character.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Note i is shared between loops — the inner loop advances i, so the outer loop resumes at the next different character.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -504,7 +504,7 @@ Notes:
     de: `This bracket parser tracks nesting depth: '(' increments, ')' decrements. Walking through "(()()": depth goes 1→2→1→2→1. Final depth=1 means one unmatched opening bracket. If depth were 0, brackets would be balanced. If depth went negative at any point, there would be a closing bracket without a matching opener.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• If depth went negative at any point, there would be a closing bracket without a matching opener.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -553,7 +553,7 @@ Notes:
     de: `pop() removes the rightmost element and appendleft() inserts it at the left — a right rotation. Step 1: pop 5, prepend → [5,1,2,3,4]. Step 2: pop 4, prepend → [4,5,1,2,3]. This is equivalent to d.rotate(2). Deque operations are O(1) at both ends, unlike list.insert(0, x) which is O(n).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Deque operations are O(1) at both ends, unlike list.insert(0, x) which is O(n).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -602,7 +602,7 @@ Notes:
     de: `This is one step of insertion sort: inserting arr[1] into its correct position among sorted elements to the left. key=1, j=0: arr[0]=3 > 1, so shift 3 right (arr[1]=3), j=-1. Loop exits (j<0). arr[j+1]=arr[0]=key=1. Result: [1,3,4,1,5]. Only the first two elements are now sorted — full insertion sort repeats this for each position.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Only the first two elements are now sorted — full insertion sort repeats this for each position.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -651,7 +651,7 @@ Notes:
     de: `Selection sort's inner loop finds the index of the minimum element. Starting with min_idx=0 (value 5): i=1, 2<5 → min_idx=1. i=2, 8<2? No. i=3, 1<2 → min_idx=3. i=4, 9<1? No. The minimum value 1 is at index 3. Selection sort would then swap nums[0] with nums[3]. This linear scan is O(n).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This linear scan is O(n).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -700,7 +700,7 @@ Notes:
     de: `This implements the Collatz sequence with a safety limit. Since 256=2⁸, only the even branch fires: 256→128→64→32→16→8→4→2→1, taking exactly 8 steps. The max_iter=20 guard prevents infinite loops for sequences that might not converge (the Collatz conjecture is unproven). With x=1, the condition x!=1 becomes False and the loop exits cleanly.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• With x=1, the condition x!=1 becomes False and the loop exits cleanly.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -749,7 +749,7 @@ Notes:
     de: `This compression variant only includes the count when a run exceeds length 1 — the standard interview-style string compression. The inner while loop measures each run's length. For 'aa' (count=2): "a2". For 'b' (count=1): just "b" (no number). For 'ccc': "c3". For 'dd': "d2". If the compressed string is longer than the original, real implementations return the original.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• If the compressed string is longer than the original, real implementations return the original.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -798,7 +798,7 @@ Notes:
     de: `This removes consecutive duplicates by comparing each character with its predecessor. The first character always passes (i==0). After that, only characters different from the previous one are kept. 'aabbccaab' → a(keep), a(dup), b(keep), b(dup), c(keep), c(dup), a(keep), a(dup), b(keep) = "abcab". Note: non-consecutive duplicates like the second 'a' are preserved.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Note: non-consecutive duplicates like the second 'a' are preserved.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -847,7 +847,7 @@ Notes:
     de: `Trial division checks divisors up to √n. For n=29: d=2 (29%2≠0), d=3 (29%3≠0), d=4 (29%4≠0), d=5 (29%5≠0). At d=6, 36>29 so the loop exits without finding a factor. The d*d<=n optimization avoids computing sqrt — if n=a×b and a≤b, then a≤√n. This reduces the check from O(n) to O(√n) divisors.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This reduces the check from O(n) to O(√n) divisors.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -896,7 +896,7 @@ Notes:
     de: `The Sieve of Eratosthenes marks composite numbers as False. Starting from p=2, it marks multiples of each prime (starting at p²) as composite. p=2 marks 4,6,8,...,20. p=3 marks 9,12,15,18. p=4 is already False (skipped). p=5: 25>20, loop ends. The remaining True positions are primes: {2,3,5,7,11,13,17,19}. sum(sieve) counts True values = 8.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• sum(sieve) counts True values = 8.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -945,7 +945,7 @@ Notes:
     de: `This while loop manually replicates enumerate() by maintaining an index counter. Each iteration maps the integer index to the list element: {0:'a', 1:'b', 2:'c', 3:'d'}. Note the keys are integers, not the items themselves. The Pythonic equivalent is dict(enumerate(items)). While loops require explicit counter management unlike for+enumerate.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• While loops require explicit counter management unlike for+enumerate.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -994,7 +994,7 @@ Notes:
     de: `This is the manual iteration protocol that for loops use internally. iter() creates an iterator, next() retrieves elements one at a time. After exhausting all elements, next() raises StopIteration which is caught to break. 10+20+30=60. This while-True-try-next-except pattern is equivalent to 'for x in [10,20,30]: total += x' and reveals how Python iteration works under the hood.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This while-True-try-next-except pattern is equivalent to 'for x in [10,20,30]: total += x' and reveals how Python iteration works under the hood.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1043,7 +1043,7 @@ Notes:
     de: `Binary exponentiation computes base^exp % mod efficiently by squaring the base and halving the exponent. exp=5(odd): result=3%7=3, base=9%7=2, exp=2. exp=2(even): base=4%7=4, exp=1. exp=1(odd): result=(3*4)%7=12%7=5, base=16%7=2, exp=0. Verify: 3⁵=243, 243%7=5. This O(log n) algorithm is critical for cryptography (RSA).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This O(log n) algorithm is critical for cryptography (RSA).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1092,7 +1092,7 @@ Notes:
     de: `General base conversion uses the same %base and //base pattern as binary conversion but with an arbitrary base. 255%16=15 → digits[15]='F', n=255//16=15. 15%16=15 → 'F', n=15//16=0. Prepending builds "F"→"FF". Verify: 15×16+15=255=0xFF. This algorithm works for any base by changing the digits string and base value.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This algorithm works for any base by changing the digits string and base value.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1141,7 +1141,7 @@ Notes:
     de: `This simulates a stack-based command processor. Each string command is split into parts: cmd[0] is the operation, cmd[1] (if present) is the argument. The sequence: push 5 → [5], push 3 → [5,3], pop removes 3 → [5], push 7 → [5,7]. This pattern is used in interpreters, undo systems, and calculator implementations where commands arrive as text.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This pattern is used in interpreters, undo systems, and calculator implementations where commands arrive as text.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1190,7 +1190,7 @@ Notes:
     de: `A token scanner (lexer) groups characters into meaningful tokens. The inner while loop accumulates consecutive digits into multi-digit numbers. '3' is one digit→int(3). '+' is not a digit→kept as string. '4' and '2' are consecutive digits→grouped as "42"→int(42). Result has mixed types: [3, '+', 42]. This is the first stage of parsing mathematical expressions.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is the first stage of parsing mathematical expressions.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1239,7 +1239,7 @@ Notes:
     de: `The outer while loop controls rows (i=1,2,3) and the inner loop generates columns (j=1 to i). Row 1: 1×1=[1]. Row 2: 2×1=2, 2×2=4→[2,4]. Row 3: 3×1=3, 3×2=6, 3×3=9→[3,6,9]. Each row grows longer, forming a triangle. This is a partial multiplication table. Nested while loops require careful manual counter management (j is reset to 1 each outer iteration).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Nested while loops require careful manual counter management (j is reset to 1 each outer iteration).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

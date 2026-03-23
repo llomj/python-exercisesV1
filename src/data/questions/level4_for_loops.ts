@@ -12,7 +12,7 @@ export const level4ForLoopPatterns = [
     de: `In nested for loops, the inner loop completes fully for each iteration of the outer loop. Here i takes 0 then 1, and for each i, j takes 0, 1, 2. So the pairs (i,j) are: (0,0),(0,1),(0,2),(1,0),(1,1),(1,2), producing sums [0,1,2,1,2,3]. Nested loops produce the Cartesian product of their ranges.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Nested loops produce the Cartesian product of their ranges.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -61,7 +61,7 @@ Notes:
     de: `The total number of iterations in nested loops is the product of the individual loop counts. The outer loop runs 4 times, and for each outer iteration, the inner loop runs 3 times. Total = 4 × 3 = 12. This multiplicative relationship is important for understanding time complexity — two nested loops over n elements give O(n²).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This multiplicative relationship is important for understanding time complexity — two nested loops over n elements give O(n²).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -110,7 +110,7 @@ Notes:
     de: `This nested list comprehension builds a 2D list. The outer comprehension iterates i over 1,2. For each i, the inner comprehension computes i*j for j in 1,2,3. Row 1: [1*1, 1*2, 1*3] = [1,2,3], row 2: [2*1, 2*2, 2*3] = [2,4,6]. Nested comprehensions read left-to-right as nested loops.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Nested comprehensions read left-to-right as nested loops.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -159,7 +159,7 @@ Notes:
     de: `Python's for-else is unique: the else block runs when the loop finishes normally without encountering a break. Here the loop completes normally (pass does nothing), so "done" is printed. Think of else as "else no break occurred."
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Think of else as "else no break occurred."
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -208,7 +208,7 @@ Notes:
     de: `When a for loop is terminated by break, the else clause does NOT execute. Here the loop breaks at i=2, so "completed" is never printed. The mnemonic: else means "else the loop was not broken out of." If break fires → else skipped.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The mnemonic: else means "else the loop was not broken out of." If break fires → else skipped.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -257,7 +257,7 @@ Notes:
     de: `This is the classic for-else search pattern. All values [1,3,5,7] are odd, so n%2==0 is never True, break never fires, and the else clause executes. This pattern replaces the common "found = False" flag approach.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This pattern replaces the common "found = False" flag approach.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -306,7 +306,7 @@ Notes:
     de: `In Python, the loop variable persists after the loop ends. The last value from range(5) is 4. This is different from languages like C++ where loop variables are scoped to the loop block. In Python, x "leaks" out into the enclosing scope.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• In Python, x "leaks" out into the enclosing scope.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -355,7 +355,7 @@ Notes:
     de: `When the iterable is empty, the loop body never executes, so x is never created. If x wasn't defined before the loop, print(x) raises NameError. Defensive code should initialize the variable before the loop (x = None) or check the iterable's length.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Defensive code should initialize the variable before the loop (x = None) or check the iterable's length.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -404,7 +404,7 @@ Notes:
     de: `In a Python for loop, the loop variable is reassigned from the iterator at the start of each iteration, regardless of modifications during the loop body. i is set to 0, then i+=100 makes 100; next iteration i is reset to 1, then +100 makes 101. The range iterator is unaffected.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The range iterator is unaffected.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -453,7 +453,7 @@ Notes:
     de: `dict.items() returns (key, value) pairs. Tuple unpacking splits each pair into k and v. The expression k + str(v) concatenates the string key with the stringified integer value: "a"+"1"→"a1". Note str(v) is needed because Python doesn't allow str + int concatenation.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Note str(v) is needed because Python doesn't allow str + int concatenation.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -502,7 +502,7 @@ Notes:
     de: `dict.values() returns a view over the dictionary's values. sum() takes any iterable of numbers and returns their total: 10 + 20 + 30 = 60. This pattern is commonly used for aggregating dictionary data — totaling prices, counting occurrences.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This pattern is commonly used for aggregating dictionary data — totaling prices, counting occurrences.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -551,7 +551,7 @@ Notes:
     de: `Python dicts detect size changes during iteration and raise RuntimeError. Adding d["c"] changes the dict's size, triggering the error. To safely modify, iterate over a copy: for k in list(d.keys()): d["c"] = 3. The list() creates a snapshot so changes don't affect iteration.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The list() creates a snapshot so changes don't affect iteration.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -600,7 +600,7 @@ Notes:
     de: `When iterating over a list of tuples, Python can unpack each tuple into multiple loop variables. Here (num, letter) receives each tuple's elements. Since only letter is used, the output accumulates "a"+"b"+"c" = "abc". The number of variables must match the tuple length.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The number of variables must match the tuple length.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -649,7 +649,7 @@ Notes:
     de: `Python supports nested unpacking in for loops. Each element is a tuple like (1, (2, 3)). The pattern a, (b, c) unpacks the outer tuple: a=1, inner tuple: b=2, c=3. So a+b+c = 6 for the first element, 4+5+6 = 15 for the second. Nested unpacking works to any depth.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Nested unpacking works to any depth.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -698,7 +698,7 @@ Notes:
     de: `Strings are iterable — a for loop visits each character one at a time. Checking each character of "hello" against vowels: h(no), e(yes), l(no), l(no), o(yes). Two vowels found, count = 2. The 'in' operator performs membership testing on a string.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The 'in' operator performs membership testing on a string.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -747,7 +747,7 @@ Notes:
     de: `This reverses a string by prepending each character. Step by step: rev="" → ch="a": rev="a" → ch="b": rev="b"+"a"="ba" → ch="c": rev="c"+"ba"="cba". The key is rev = ch + rev (prepending). While s[::-1] is the Pythonic one-liner, this pattern illustrates string building.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• While s[::-1] is the Pythonic one-liner, this pattern illustrates string building.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -796,7 +796,7 @@ Notes:
     de: `zip() pairs elements position by position but stops when the shortest iterable is exhausted. Here the first list has 3 elements and the second has 2, so only 2 pairs are produced. Element 3 is silently dropped. Use itertools.zip_longest for padding shorter iterables.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Use itertools.zip_longest for padding shorter iterables.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -845,7 +845,7 @@ Notes:
     de: `enumerate() takes an optional start parameter that sets the initial counter value. With start=10, the first item gets index 10, then 11, 12. The start parameter only affects the counter — it doesn't skip elements in the iterable. Default is start=0.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Default is start=0.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -894,7 +894,7 @@ Notes:
     de: `range(start, stop, step) with negative step counts downward. Starting at 10, subtracting 3: 10, 7, 4, 1. The next value would be -2, past stop=0, so it stops. The stop value is always exclusive. If start < stop with negative step, the result is empty.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• If start < stop with negative step, the result is empty.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -943,7 +943,7 @@ Notes:
     de: `range(len(items)) generates indices 0, 1, 2. Each index accesses items[i] and multiplies by i. While range(len()) works, Python style prefers enumerate() when you need both index and value: [v*i for i,v in enumerate(items)].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• While range(len()) works, Python style prefers enumerate() when you need both index and value: [v*i for i,v in enumerate(items)].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -992,7 +992,7 @@ Notes:
     de: `This nested comprehension flattens a 2D list. Reading left to right: the outer loop 'for row in matrix' iterates sub-lists, the inner 'for x in row' extracts elements. The leftmost for is the outer loop. This is the standard pattern for flattening one level of nesting.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is the standard pattern for flattening one level of nesting.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1041,7 +1041,7 @@ Notes:
     de: `The loop starts at i=2 (2%3≠0, no break), then i=3 (3%3==0, break fires). The else clause is skipped because break was used. After the loop, i retains its value of 3 (where break occurred). This combines for-else behavior, loop variable persistence, and break semantics.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This combines for-else behavior, loop variable persistence, and break semantics.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1090,7 +1090,7 @@ Notes:
     de: `Sets provide no guarantee about iteration order. Unlike lists (ordered) and dicts (insertion-ordered since 3.7), sets are unordered. Never write code that depends on set iteration order. Use sorted(my_set) if you need ordered iteration over unique elements.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Use sorted(my_set) if you need ordered iteration over unique elements.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1139,7 +1139,7 @@ Notes:
     de: `When you iterate over a bytes object, each element is an integer (0-255), not a character. b"Hi" contains H (ASCII 72) and i (ASCII 105). This differs from string iteration which yields single-character strings. To get characters, decode first: b"Hi".decode().
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• To get characters, decode first: b"Hi".decode().
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1188,7 +1188,7 @@ Notes:
     de: `A nested list comprehension with two for clauses generates the Cartesian product. range(3) has 3 values, range(4) has 4. Every combination is produced: 3×4 = 12 tuples. This is equivalent to itertools.product(range(3), range(4)).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is equivalent to itertools.product(range(3), range(4)).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1237,7 +1237,7 @@ Notes:
     de: `When you call enumerate() on a dictionary, it iterates over the dictionary's keys (not values or items) and pairs each key with a positional index. To enumerate key-value pairs, use enumerate(d.items()) instead. Dicts iterate over keys by default.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dicts iterate over keys by default.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1286,7 +1286,7 @@ Notes:
     de: `reversed() returns a reverse iterator without modifying the original list. Unlike .reverse() which mutates in place and returns None, reversed() creates a new iterator. It works on any sequence (list, tuple, string, range) but not on sets or dicts directly.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• It works on any sequence (list, tuple, string, range) but not on sets or dicts directly.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1335,7 +1335,7 @@ Notes:
     de: `When sorted() is called on a dictionary, it iterates over the dict's keys and returns them in sorted order as a list. To sort by values, use sorted(d, key=d.get). To get sorted key-value pairs, use sorted(d.items()).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• To get sorted key-value pairs, use sorted(d.items()).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1384,7 +1384,7 @@ Notes:
     de: `Starred unpacking with *rest collects all leftover elements into a list. In (1, 2, 3), first=1 and rest=[2, 3]. In (4, 5), first=4 and rest=[5]. Note rest is always a list, even with a single element. Useful for processing records with variable-length fields.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Useful for processing records with variable-length fields.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1433,7 +1433,7 @@ Notes:
     de: `zip(keys, vals) produces pairs ('a', 1) and ('b', 2). The loop unpacks each pair and assigns d[k] = v. The shorter equivalent is dict(zip(keys, vals)). This pattern is fundamental for combining parallel sequences into mappings.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This pattern is fundamental for combining parallel sequences into mappings.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1482,7 +1482,7 @@ Notes:
     de: `range(0, len('Python'), 2) produces indices 0, 2, 4. Indexing 'Python' at those positions: 'P', 't', 'o' → 'Pto'. This step-based indexing pattern is useful for sampling every Nth element. The equivalent slice is s[::2].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The equivalent slice is s[::2].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1531,7 +1531,7 @@ Notes:
     de: `The loop iterates each character in 'banana': b, a, n, a, n, a. Each time ch equals 'a', count increments. There are 3 occurrences. This manual counting is equivalent to 'banana'.count('a'). Understanding it helps when you need conditional or complex counting.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Understanding it helps when you need conditional or complex counting.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1580,7 +1580,7 @@ Notes:
     de: `The classic find-max algorithm. m starts at 3 (first element). The loop compares each element: 3 (no change), 7>3 (m=7), 2 (no), 9>7 (m=9), 4 (no). Initializing m to nums[0] (not 0) is important — if all values were negative, starting at 0 would give the wrong result.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Initializing m to nums[0] (not 0) is important — if all values were negative, starting at 0 would give the wrong result.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1629,7 +1629,7 @@ Notes:
     de: `The outer loop iterates sublists [1,2], [3], [4,5]. The inner loop iterates elements within each and appends to flat. Result: [1, 2, 3, 4, 5]. One-liner equivalent: [x for sub in nested for x in sub]. This only flattens one level deep.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This only flattens one level deep.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1678,7 +1678,7 @@ Notes:
     de: `The for loop uses tuple unpacking to assign x and y from each pair. The sums are: (1,2)→3, (3,4)→7, (5,6)→11. This multiple assignment target pattern is widely used when iterating over structured data like coordinates, key-value pairs, or database rows.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This multiple assignment target pattern is widely used when iterating over structured data like coordinates, key-value pairs, or database rows.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1727,7 +1727,7 @@ Notes:
     de: `This is the accumulator pattern: initialize total to 0, then add each element. After iteration: 0+10=10, 10+20=30, 30+30=60. The built-in sum() does the same thing. The manual pattern is essential when you need custom logic during accumulation.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The manual pattern is essential when you need custom logic during accumulation.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1776,7 +1776,7 @@ Notes:
     de: `The early return pattern exits the function as soon as a condition is met. The loop checks 1 (odd), 3 (odd), 4 (even) → returns 4 immediately without checking 6. This is more efficient than collecting all matches when you only need the first.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is more efficient than collecting all matches when you only need the first.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1825,7 +1825,7 @@ Notes:
     de: `List comprehensions with an if clause filter elements. range(10) produces 0-9; x % 3 == 0 keeps multiples of 3. Note that 0 is included because 0 % 3 == 0. Comprehensions are more concise and slightly faster than the equivalent loop-and-append.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Comprehensions are more concise and slightly faster than the equivalent loop-and-append.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1874,7 +1874,7 @@ Notes:
     de: `This simulates reading numeric data from text lines. Each string is converted with int() before accumulation. Without int(), using += on strings would concatenate to '357'. This parse-and-accumulate pattern is fundamental for text-based data processing.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This parse-and-accumulate pattern is fundamental for text-based data processing.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1923,7 +1923,7 @@ Notes:
     de: `range(len(nums) - 1) gives indices 0, 1, 2 (stopping one short to avoid IndexError). At each index, adjacent elements are paired: (10,20), (20,30), (30,40). This sliding window pattern is useful for computing differences or comparing consecutive elements.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This sliding window pattern is useful for computing differences or comparing consecutive elements.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1972,7 +1972,7 @@ Notes:
     de: `This implements linear search using enumerate to track the index. When x == 'dog' at i=1, it returns 1 immediately. If no match, -1 is returned. This is equivalent to lst.index(val) except it returns -1 instead of raising ValueError on missing items.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is equivalent to lst.index(val) except it returns -1 instead of raising ValueError on missing items.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2021,7 +2021,7 @@ Notes:
     de: `The walrus operator (:=) assigns and evaluates in one expression. For each x in 0-5, y is assigned x²: 0, 1, 4, 9, 16, 25. Only 16 and 25 exceed 10, so results = [16, 25]. The walrus operator (Python 3.8+) is ideal for compute-then-test patterns.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The walrus operator (Python 3.8+) is ideal for compute-then-test patterns.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2070,7 +2070,7 @@ Notes:
     de: `n*n = 9, so range(9) yields 0-8. The filter i%3==0 keeps multiples of 3: 0, 3, 6. Note 9 is excluded because range is exclusive. Using calculated bounds with modulo filter is common for generating grid coordinates or periodic sequences.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Using calculated bounds with modulo filter is common for generating grid coordinates or periodic sequences.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2119,7 +2119,7 @@ Notes:
     de: `try/except inside a loop provides per-element error handling. int('1')=1 succeeds, int('two') raises ValueError (caught, skipped), int('3')=3 succeeds. Result: [1, 3]. This pattern is essential for processing dirty data where some values may be invalid.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This pattern is essential for processing dirty data where some values may be invalid.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2168,7 +2168,7 @@ Notes:
     de: `enumerate('abc') yields (0,'a'), (1,'b'), (2,'c'). The unpacking assigns idx and char, then result[char] = idx builds a dict mapping characters to their indices. Swapping to result[idx] = char would produce {0:'a', 1:'b', 2:'c'}.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Swapping to result[idx] = char would produce {0:'a', 1:'b', 2:'c'}.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2217,7 +2217,7 @@ Notes:
     de: `str.join() concatenates list elements with the separator between them. '-'.join(['hello', 'world']) produces 'hello-world'. join() is significantly faster than += in a loop because strings are immutable — each += creates a new object, while join allocates once.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• join() is significantly faster than += in a loop because strings are immutable — each += creates a new object, while join allocates once.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2266,7 +2266,7 @@ Notes:
     de: `break only exits the innermost enclosing loop. The inner for-j loop breaks at j==1, but count += 1 is in the outer loop, so it runs every outer iteration. The outer loop runs 3 times, so count = 3. Python's break never exits more than one loop level.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Python's break never exits more than one loop level.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2315,7 +2315,7 @@ Notes:
     de: `continue skips the rest of the current iteration of the innermost loop. For each i (0 and 1), the inner loop: j=0 (count+1), j=1 (skip), j=2 (count+1) — 2 increments per outer iteration. 2 × 2 = 4. Like break, continue only affects the innermost loop.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Like break, continue only affects the innermost loop.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2364,7 +2364,7 @@ Notes:
     de: `sorted() sorts a list of tuples by the first element by default. sorted([(3,'c'),(1,'a'),(2,'b')]) → [(1,'a'),(2,'b'),(3,'c')]. Unpacking in the for loop extracts values 'a', 'b', 'c' in sorted order.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Unpacking in the for loop extracts values 'a', 'b', 'c' in sorted order.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2413,7 +2413,7 @@ Notes:
     de: `Matrix transpose swaps rows and columns. By iterating columns (i) then rows (j) and reading matrix[j][i], we flip the axes. Column 0: [matrix[0][0], matrix[1][0]] = [1, 3]. Column 1: [matrix[0][1], matrix[1][1]] = [2, 4]. Result: [[1, 3], [2, 4]].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: [[1, 3], [2, 4]].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2462,7 +2462,7 @@ Notes:
     de: `Multiple if clauses in a comprehension are combined with AND logic. Both conditions must be satisfied. x%2==0 AND x%3==0 means divisible by 6 (plus 0). From range(20): 0, 6, 12, 18 qualify.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• From range(20): 0, 6, 12, 18 qualify.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2511,7 +2511,7 @@ Notes:
     de: `A ternary expression inside a comprehension transforms each element. 'even' if x%2==0 else 'odd' is placed BEFORE the for clause. If/else before for transforms; if after for filters. 0→even, 1→odd, 2→even, 3→odd.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• 0→even, 1→odd, 2→even, 3→odd.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2560,7 +2560,7 @@ Notes:
     de: `A running total accumulates values as the loop progresses. Each step: total adds the next element and appends the snapshot. 1→3→6→10. Also called prefix sum or cumulative sum. Used in financial balances, statistics, and prefix sum arrays.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Used in financial balances, statistics, and prefix sum arrays.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2609,7 +2609,7 @@ Notes:
     de: `The boolean flag pattern starts with an assumption (all_even = True) and flips it when a counterexample is found. 2 and 4 pass, but 7 is odd → all_even = False, break. Element 8 is never checked. Equivalent to all(n%2==0 for n in nums).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Equivalent to all(n%2==0 for n in nums).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2658,7 +2658,7 @@ Notes:
     de: `The counter dict pattern uses dict.get(key, default) to safely initialize and increment. 'banana' has b=1, a=3, n=2. get() returns 0 for new keys, avoiding KeyError. Equivalent to collections.Counter(word). The most common dict building pattern in Python.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The most common dict building pattern in Python.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2707,7 +2707,7 @@ Notes:
     de: `Using range() with step 2 generates every other index: 0, 2, 4. This selects alternating elements. Equivalent to lst[::2] (slice with step 2). Useful for processing alternating elements or downsampling data.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Useful for processing alternating elements or downsampling data.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2756,7 +2756,7 @@ Notes:
     de: `range(5, 0, -1) starts at 5, decrements by 1, stops before 0. Result: [5, 4, 3, 2, 1]. Note 0 is excluded. Equivalent to reversed(range(1, 6)). Common for countdown loops and reverse iteration.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common for countdown loops and reverse iteration.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2805,7 +2805,7 @@ Notes:
     de: `split() breaks 'hello world' into ['hello', 'world']. capitalize() returns a copy with the first character uppercased: 'Hello', 'World'. join reconnects with space. Equivalent to 'hello world'.title(). A common text normalization pattern.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• A common text normalization pattern.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2854,7 +2854,7 @@ Notes:
     de: `List intersection finds common elements. Iterating a and checking membership in b keeps only shared values. Order follows the first list. Equivalent to list(set(a) & set(b)) but preserves order. Common for data matching and comparing datasets.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common for data matching and comparing datasets.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2903,7 +2903,7 @@ Notes:
     de: `List union without duplicates starts with a copy of one list and adds elements from the second only if they don't already exist. list(a) creates a copy. 3 is skipped (already present), 4 and 5 are added. Equivalent to list(dict.fromkeys(a + b)).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Equivalent to list(dict.fromkeys(a + b)).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2952,7 +2952,7 @@ Notes:
     de: `Deleting from a list while iterating by index is a classic pitfall. range(len(nums)) is computed once as range(5). After del, the list shrinks, but later indices exceed the new length → IndexError. Fix: iterate over a copy (nums[:]) or use a comprehension.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Fix: iterate over a copy (nums[:]) or use a comprehension.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3001,7 +3001,7 @@ Notes:
     de: `Iterating over a shallow copy (nums[:]) while modifying the original is the safe pattern. The copy drives the loop (unchanged). remove() modifies the original list. No IndexError because the iteration source is stable. This is the standard pattern for in-place filtering.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is the standard pattern for in-place filtering.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3050,7 +3050,7 @@ Notes:
     de: `Multiplying a list by an integer repeats its contents. [0]*1=[0], [1]*2=[1,1], [2]*3=[2,2,2]. Each iteration builds a sublist of increasing length. Common for creating triangular structures and pattern generation.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common for creating triangular structures and pattern generation.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3099,7 +3099,7 @@ Notes:
     de: `isinstance() checks if an object is an instance of a class or its subclasses. Since bool is a subclass of int in Python, isinstance(True, int) returns True. So both 1 and True pass the filter. To exclude bools, use type(x) is int instead of isinstance.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• To exclude bools, use type(x) is int instead of isinstance.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3148,7 +3148,7 @@ Notes:
     de: `The map pattern applies a transformation to every element. Equivalent to list(map(lambda x: x**2, nums)) or [x**2 for x in nums]. The loop version is more explicit but the comprehension is preferred in Python for readability and performance.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The loop version is more explicit but the comprehension is preferred in Python for readability and performance.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3197,7 +3197,7 @@ Notes:
     de: `Comprehension with a filter condition selects elements satisfying x > 3. Note that 3 itself doesn't pass (strictly greater). Equivalent to list(filter(lambda x: x > 3, lst)). Comprehensions are the preferred Pythonic approach for filtering.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Comprehensions are the preferred Pythonic approach for filtering.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3246,7 +3246,7 @@ Notes:
     de: `Building a list of tuples pairs related values. (i, i**2) creates a tuple of each value with its square. Tuples are immutable, ordered pairs. This pattern is common for pairing keys with computed values.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This pattern is common for pairing keys with computed values.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3295,7 +3295,7 @@ Notes:
     de: `Generators are lazy, single-use iterators. Once fully consumed by the for loop, they produce no more values — they are exhausted. list(gen) on an exhausted generator returns []. To reuse, create a new generator. This is a key difference from lists and other reusable iterables.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is a key difference from lists and other reusable iterables.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3344,7 +3344,7 @@ Notes:
     de: `Dict comprehension creates {0:0, 1:1, 2:4, 3:9}. Iterating .items() and summing values: 0+1+4+9 = 14. Common pattern for aggregating dictionary data. Could also use sum(d.values()).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Could also use sum(d.values()).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3393,7 +3393,7 @@ Notes:
     de: `The reduce pattern collapses a list into a single value. Starting with 1 (multiplicative identity), each element updates the accumulator. 1×2=2, 2×3=6, 6×4=24. Equivalent to functools.reduce(lambda a,b: a*b, nums) or math.prod(nums) (Python 3.8+).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Equivalent to functools.reduce(lambda a,b: a*b, nums) or math.prod(nums) (Python 3.8+).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3442,7 +3442,7 @@ Notes:
     de: `Starting with [0, 1], each iteration appends fib[-1] + fib[-2]. Step by step: 1+0=1→[0,1,1], 1+1=2→[0,1,1,2], 2+1=3→[0,1,1,2,3], 3+2=5→[0,1,1,2,3,5]. This is the standard iterative Fibonacci approach.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is the standard iterative Fibonacci approach.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3491,7 +3491,7 @@ Notes:
     de: `The * operator unpacks the list into zip's arguments: zip([1,2,3], [4,5,6]). This pairs elements column-wise: (1,4), (2,5), (3,6). Each pair is summed: 5, 7, 9. This pattern is used for transposing rows to columns and element-wise operations.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This pattern is used for transposing rows to columns and element-wise operations.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3540,7 +3540,7 @@ Notes:
     de: `enumerate("hello") yields (0,'h'), (1,'e'), (2,'l'), (3,'l'), (4,'o'). setdefault(ch, i) only inserts if the key is absent. 'l' is first seen at index 2, so setdefault sets it to 2. When 'l' appears again at index 3, setdefault does nothing because the key already exists.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• When 'l' appears again at index 3, setdefault does nothing because the key already exists.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3589,7 +3589,7 @@ Notes:
     de: `One bubble sort pass compares adjacent pairs and swaps if out of order. [4,2,7,1]: 4>2→swap→[2,4,7,1], 4>7?no, 7>1→swap→[2,4,1,7]. One pass guarantees the largest element reaches the end. Full sort requires multiple passes.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Full sort requires multiple passes.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3638,7 +3638,7 @@ Notes:
     de: `This pattern accumulates values for duplicate keys. For ('a',1): d.get('a',0)=0, d['a']=0+1=1. For ('b',2): d['b']=0+2=2. For ('a',3): d.get('a',0)=1, d['a']=1+3=4. This is a manual alternative to collections.Counter or defaultdict(int).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is a manual alternative to collections.Counter or defaultdict(int).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3687,7 +3687,7 @@ Notes:
     de: `dict.update() merges another dict into the target. When keys conflict, the last value wins. result gets d1 first ({'a': 1}), then d2 overwrites 'a' to 3 and adds 'b'. Equivalent to {**d1, **d2} or d1 | d2 (Python 3.9+).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Equivalent to {**d1, **d2} or d1 | d2 (Python 3.9+).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3736,7 +3736,7 @@ Notes:
     de: `The group-by pattern collects values sharing the same key. setdefault(k, []) returns the existing list or creates a new empty one. For 'a': first call creates [], appends 1→[1]. Second call returns existing [1], appends 3→[1,3]. Alternative: collections.defaultdict(list).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Alternative: collections.defaultdict(list).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3785,7 +3785,7 @@ Notes:
     de: `A sliding window moves a fixed-size window across a sequence. Window size 3: nums[0:3]=[1,2,3]→6, nums[1:4]=[2,3,4]→9, nums[2:5]=[3,4,5]→12. Window count = len(nums) - window_size + 1 = 3. Used in moving averages and signal processing.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Used in moving averages and signal processing.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3834,7 +3834,7 @@ Notes:
     de: `This simulates left rotation by popping the front and appending to back. Iter 0: pop 1→[2,3,4,5]+append 1→[2,3,4,5,1]. Iter 1: pop 2→[3,4,5,1]+append 2→[3,4,5,1,2]. Note lst.pop(0) is O(n). For efficiency, use collections.deque with rotate() or slicing: lst[k:] + lst[:k].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• For efficiency, use collections.deque with rotate() or slicing: lst[k:] + lst[:k].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3883,7 +3883,7 @@ Notes:
     de: `Iterating a nested dict requires accessing inner dicts first. data.values() yields {'a': 1} and {'b': 2}. inner.values() extracts [1] and [2]. extend() adds each to vals. Result: [1, 2]. Common pattern for flattening nested data structures.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common pattern for flattening nested data structures.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3932,7 +3932,7 @@ Notes:
     de: `Each character is classified: '3' is not in '+-*' → 'num', '+' is → 'op', '5' → 'num'. This is a simple tokenizer that classifies characters as operators or numbers. Foundation concept for parsers and expression evaluators.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Foundation concept for parsers and expression evaluators.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3981,7 +3981,7 @@ Notes:
     de: `The sentinel pattern uses a special value (0) to signal early termination. 3→total=3, 7→total=10, 0→break. Elements 5 and 2 are never processed. Sentinel values signal "end of useful data." Common sentinels: 0, -1, None, "".
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Sentinel values signal "end of useful data." Common sentinels: 0, -1, None, "".
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4030,7 +4030,7 @@ Notes:
     de: `Pairwise comparison checks consecutive elements. 1<3→True, 3<2→False, 2<4→True. If all True, the list is sorted ascending. range(len-1) prevents IndexError on the last element. Alternative: [a < b for a, b in zip(nums, nums[1:])].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Alternative: [a < b for a, b in zip(nums, nums[1:])].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4079,7 +4079,7 @@ Notes:
     de: `Powers of 2 are generated with the ** operator. 2**0=1 (any number to the power 0 is 1). Sequence: 1, 2, 4, 8, 16, 32. Powers of 2 appear throughout CS: memory sizes, hash table capacities. Bit shifting equivalent: 1 << i.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Bit shifting equivalent: 1 << i.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4128,7 +4128,7 @@ Notes:
     de: `Combining enumerate, f-strings, and join builds formatted output. enumerate yields index-value pairs. f'{i}:{v}' formats each as '0:a', '1:b', '2:c'. join connects them with '-'. This pattern is common for generating CSV, logs, and display strings.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This pattern is common for generating CSV, logs, and display strings.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4177,7 +4177,7 @@ Notes:
     de: `Same accumulation pattern as numeric summing but with string concatenation. get(k, '') returns empty string for new keys. First: ''+'a'='a'. Second: 'a'+'c'='ac'. Equivalent to defaultdict(str). Useful for building composite strings from grouped records.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Useful for building composite strings from grouped records.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4226,7 +4226,7 @@ Notes:
     de: `chr() converts an integer ASCII code to its character. Uppercase A-Z are codes 65-90. chr(65)='A', chr(66)='B', ..., chr(69)='E'. The inverse function is ord(): ord('A')=65. Useful for generating character ranges and simple encodings.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Useful for generating character ranges and simple encodings.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4275,7 +4275,7 @@ Notes:
     de: `This removes duplicates while preserving original order of first appearances. set() provides O(1) membership testing. Unlike list(set(items)) which returns [1,2,3,4] (sorted-like), this gives [3,1,2,4] (insertion order). In Python 3.7+, list(dict.fromkeys(items)) is a shortcut.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• In Python 3.7+, list(dict.fromkeys(items)) is a shortcut.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4324,7 +4324,7 @@ Notes:
     de: `Cumulative product multiplies all elements. Start with 1 (identity for multiplication). 1×1=1, 1×2=2, 2×3=6, 6×4=24. Starting with 0 would always give 0 (common bug). Equivalent to math.prod([1,2,3,4]) in Python 3.8+.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Equivalent to math.prod([1,2,3,4]) in Python 3.8+.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4373,7 +4373,7 @@ Notes:
     de: `This concatenates multiple ranges by iterating over a list of range objects. range(3)→0,1,2 then range(10,13)→10,11,12. Equivalent to itertools.chain(range(3), range(10, 13)). Useful for processing non-contiguous index ranges.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Useful for processing non-contiguous index ranges.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4422,7 +4422,7 @@ Notes:
     de: `Chunking splits a sequence into fixed-size sub-lists. range step matches chunk size. i=0: [1,2], i=2: [3,4], i=4: [5,6]. If length isn't divisible by chunk size, the last chunk is simply shorter (no error). Pattern: [data[i:i+n] for i in range(0, len(data), n)].
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Pattern: [data[i:i+n] for i in range(0, len(data), n)].
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4471,7 +4471,7 @@ Notes:
     de: `This builds a dict mapping first letters to words starting with that letter. w[0] extracts the first character. setdefault creates or retrieves the list. 'hi'→d['h']=['hi'], then 'hey'→d['h']=['hi','hey']. Common for building prefix indexes.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common for building prefix indexes.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4520,7 +4520,7 @@ Notes:
     de: `Interleaving alternates elements from two sequences. extend([a[i], b[i]]) adds both elements each iteration. Alternative: [v for pair in zip(a, b) for v in pair]. Used in merge operations and round-robin scheduling.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Used in merge operations and round-robin scheduling.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4569,7 +4569,7 @@ Notes:
     de: `Histogram counting tallies occurrences using dict.get(ch, 0) to return 0 for new keys. 'banana': b→1, a→1, n→1, a→2, n→2, a→3. hist = {'b':1, 'a':3, 'n':2}. Equivalent to collections.Counter('banana'). Foundation for frequency analysis.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Foundation for frequency analysis.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4618,7 +4618,7 @@ Notes:
     de: `The 'and' operator requires both conditions to be True. From 0-9, only 0 and 6 are divisible by both 2 and 3 (LCM=6). 'and' short-circuits: if x%2!=0, Python skips the x%3 check. Chained conditions are cleaner than nested if statements.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Chained conditions are cleaner than nested if statements.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4667,7 +4667,7 @@ Notes:
     de: `Dict comprehensions support if clauses for filtering. .items() yields ('a',1), ('b',2), ('c',3). Only pairs where v > 1 are included: ('b',2) and ('c',3). This is the dict equivalent of list comprehension filtering. Common for creating subsets of dictionaries.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common for creating subsets of dictionaries.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4716,7 +4716,7 @@ Notes:
     de: `enumerate() on a string yields (index, character) tuples. The comprehension collects them into a list. This is a concise way to pair each character with its position. Useful for building index maps and position-aware processing.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Useful for building index maps and position-aware processing.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4765,7 +4765,7 @@ Notes:
     de: `split() breaks 'hello world' into ['hello', 'world']. The comprehension applies upper() to each word: 'HELLO', 'WORLD'. This chain of split → transform → collect is the standard pattern for text processing in Python. join() can reassemble if needed.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• join() can reassemble if needed.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4814,7 +4814,7 @@ Notes:
     de: `dict(zip(keys, values)) is the one-liner for building a dictionary from two parallel sequences. zip pairs them: ('name','Alice'), ('age',30). dict() converts the pairs into a dictionary. This is more concise than the loop equivalent and a very common Python idiom.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is more concise than the loop equivalent and a very common Python idiom.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4863,7 +4863,7 @@ Notes:
     de: `Nested comprehension where the inner range depends on the outer variable. For i=1: range(1)=[0]. For i=2: range(2)=[0,1]. For i=3: range(3)=[0,1,2]. For i=4: range(4)=[0,1,2,3]. This builds a triangular structure. Common for creating staircase patterns and Pascal's triangle-like structures.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common for creating staircase patterns and Pascal's triangle-like structures.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

@@ -12,7 +12,7 @@ export const level4WhileBatch3 = [
     de: `This simulates a singly linked list using a dictionary. Each key maps to a (value, next_index) tuple, with -1 as the sentinel. Starting at cur=0: nodes[0]=(10,1) → append 10, cur=1. nodes[1]=(20,2) → append 20, cur=2. nodes[2]=(30,-1) → append 30, cur=-1. The condition cur!=-1 becomes False, ending traversal. This mirrors how linked lists work — each node holds data and a pointer to the next node.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This mirrors how linked lists work — each node holds data and a pointer to the next node.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -61,7 +61,7 @@ Notes:
     de: `This manually implements Python's iteration protocol. iter() creates an iterator, next() retrieves elements one at a time: first 10 (total=10), then 20 (total=30). The third next() call raises StopIteration because the iterator is exhausted, which the except clause catches to break. This while-True-try-next pattern is exactly what a for loop does internally.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This while-True-try-next pattern is exactly what a for loop does internally.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -110,7 +110,7 @@ Notes:
     de: `This evaluates a simple expression left-to-right without operator precedence. i=0, result=3. First pass: op='+', val=4, result=3+4=7, i=2. Second pass: op='*', val=2, result=7*2=14, i=4. Now i+1=5 is not <5, loop ends. Note this gives 14, not 11 (which standard math precedence would give as 3+(4*2)). Left-to-right evaluation ignores precedence rules.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Left-to-right evaluation ignores precedence rules.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -159,7 +159,7 @@ Notes:
     de: `This reverses a string by iterating backwards from the last index. i starts at len(s)-1=4. Each step appends s[i] and decrements i: s[4]='e', s[3]='d', s[2]='c', s[1]='b', s[0]='a'. Result builds as "e"→"ed"→"edc"→"edcb"→"edcba". The Pythonic equivalent is s[::-1], but this while loop version demonstrates the manual reversal algorithm used in many languages.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The Pythonic equivalent is s[::-1], but this while loop version demonstrates the manual reversal algorithm used in many languages.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -208,7 +208,7 @@ Notes:
     de: `This finds the length of the common prefix by advancing while characters match. i=0: 'p'=='p' ✓. i=1: 'r'=='r' ✓. i=2: 'e'=='e' ✓. i=3: 'f'!='l' ✗, loop exits. The common prefix is a[:3]="pre". The three-part condition ensures we don't go past either string's end and stops at the first mismatch. This algorithm is used in autocomplete and trie data structures.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This algorithm is used in autocomplete and trie data structures.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -257,7 +257,7 @@ Notes:
     de: `The flag 'up' alternates each iteration, switching between subtracting 3 and 1. Trace: n=10,up=T→n=7,c=1. n=7,up=F→n=6,c=2. n=6,up=T→n=3,c=3. n=3,up=F→n=2,c=4. n=2,up=T→n=-1,c=5. Now n=-1≤0 so the while condition fails. Total count=5. The alternating step sizes create an asymmetric countdown pattern.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The alternating step sizes create an asymmetric countdown pattern.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -306,7 +306,7 @@ Notes:
     de: `This searches for the first element less than 3. i=0: nums[0]=4, 4<3? No, i=1. i=1: nums[1]=6, 6<3? No, i=2. i=2: nums[2]=2, 2<3? Yes → break. The loop exits with i=2, which is the index of the first element satisfying the condition. Note that i is NOT incremented before break, so it points exactly at the found element.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Note that i is NOT incremented before break, so it points exactly at the found element.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -355,7 +355,7 @@ Notes:
     de: `Each iteration appends n then subtracts 7. n=20: append 20, n=13. n=13: append 13, n=6. n=6: append 6, n=-1. n=-1: -1>0 is False, loop stops. The append happens before the subtraction, so 6 is captured even though the next value goes negative. Result has exactly 3 elements: [20, 13, 6]. The step of 7 creates a non-uniform countdown.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The step of 7 creates a non-uniform countdown.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -404,7 +404,7 @@ Notes:
     de: `Both the variable and the loop bound change each iteration, creating a converging condition. x=0,limit=10: 0<10 → x=3,limit=9. x=3,limit=9: 3<9 → x=6,limit=8. x=6,limit=8: 6<8 → x=9,limit=7. x=9,limit=7: 9<7 is False → stop. x=9. The loop ends sooner than a fixed-limit loop because the boundary shrinks as x grows — they meet in the middle.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The loop ends sooner than a fixed-limit loop because the boundary shrinks as x grows — they meet in the middle.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -453,7 +453,7 @@ Notes:
     de: `The modulo operator i%len(tasks) cycles through indices 0,1,2,0,1,2,0 as i increments from 0 to 6. This produces tasks[0]='A', tasks[1]='B', tasks[2]='C', tasks[0]='A', tasks[1]='B', tasks[2]='C', tasks[0]='A'. Result = "ABCABCA". This round-robin pattern is fundamental in OS scheduling, load balancing, and circular buffers.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This round-robin pattern is fundamental in OS scheduling, load balancing, and circular buffers.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -502,7 +502,7 @@ Notes:
     de: `This tracks parenthesis nesting depth. '(' increments depth and updates max_d if deeper. ')' decrements depth. Walking through "((())())": depths are 1,2,3,2,1,2,1,0. The deepest nesting occurs at the third '(' where depth=3. max_d captures this peak. This algorithm is used in expression parsers and syntax validators to detect nesting levels.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This algorithm is used in expression parsers and syntax validators to detect nesting levels.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -551,7 +551,7 @@ Notes:
     de: `The look-and-say sequence describes each run of identical digits. For "1211": i=0, ch='1', count=1 (next char '2'≠'1') → "11", i=1. i=1, ch='2', count=1 (next '1'≠'2') → "1112", i=2. i=2, ch='1', count=2 (s[3]='1'=='1', s[4] out of bounds) → "111221", i=4. Loop ends. "111221" means "one 1, one 2, two 1s". This is Conway's famous sequence.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is Conway's famous sequence.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -600,7 +600,7 @@ Notes:
     de: `The condition not(x<=y or x<10) continues while NEITHER x<=y NOR x<10. x=100,y=0: 100<=0? F, 100<10? F, not(F or F)=T → x=50,y=5. 50<=5? F, 50<10? F → T → x=25,y=10. 25<=10? F, 25<10? F → T → x=12,y=15. 12<=15? T → not(T)=F → stop. De Morgan's law: the loop runs while x>y AND x>=10. Once x drops to 12 and y rises to 15, x<=y triggers the exit.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Once x drops to 12 and y rises to 15, x<=y triggers the exit.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -649,7 +649,7 @@ Notes:
     de: `This checks if a number is a power of 2 by repeatedly dividing by 2. If n reaches exactly 1, it was a power of 2. 64=2^6, so: 64→32→16→8→4→2→1. At n=1, the condition n>1 is False, loop exits. n==1 evaluates to True. For non-powers like 12: 12→6→3, then 3%2≠0 exits early with n=3, so n==1 would be False. The bitwise alternative is n & (n-1) == 0.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The bitwise alternative is n & (n-1) == 0.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -698,7 +698,7 @@ Notes:
     de: `This counts set bits by examining the least significant bit and right-shifting. n=13 (binary 1101): n&1=1, count=1, n=6 (110). n&1=0, count=1, n=3 (11). n&1=1, count=2, n=1 (1). n&1=1, count=3, n=0. Loop exits when n=0 (falsy). The 3 set bits correspond to 13=8+4+1. This is the Brian Kernighan popcount algorithm's simpler variant; Python's bin(13).count('1') does the same.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is the Brian Kernighan popcount algorithm's simpler variant; Python's bin(13).count('1') does the same.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -747,7 +747,7 @@ Notes:
     de: `This implements str.strip() manually with two while loops. The first loop advances lo past leading spaces: s[0]=' ', s[1]=' ', s[2]='h' → lo=2. The second loop retreats hi from trailing spaces: s[8]=' ', s[7]=' ', s[6]='o' → hi=6. The slice s[2:7] extracts "hello". This two-pointer approach runs in O(n) and handles strings with only spaces (lo would exceed hi, yielding an empty slice).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This two-pointer approach runs in O(n) and handles strings with only spaces (lo would exceed hi, yielding an empty slice).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -796,7 +796,7 @@ Notes:
     de: `This word-wrap greedily fits words onto lines up to a width limit. i=0: line="" → else: line="Hi". i=1: len("Hi")+1+5=8 ≤ 10 → elif: line="Hi there". i=2: len("Hi there")+1+5=14 > 10 → append "Hi there", line="world". After loop: line="world" → append. Result: ["Hi there", "world"]. The +1 accounts for the space between words. This greedy algorithm is simpler than Knuth's optimal line-breaking.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This greedy algorithm is simpler than Knuth's optimal line-breaking.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -845,7 +845,7 @@ Notes:
     de: `XOR encryption flips bits where the key has 1s. 72 (01001000) ^ 42 (00101010) = 01100010 = 98. 101 (01100101) ^ 42 (00101010) = 01001111 = 79. XOR is its own inverse: 98^42=72 and 79^42=101, recovering the original message. This symmetric property makes XOR the basis of stream ciphers and one-time pads. The while loop applies the same key to each byte.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The while loop applies the same key to each byte.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -894,7 +894,7 @@ Notes:
     de: `The while condition checks two things: lst is non-empty (truthy) AND the last element exceeds 2. lst[-1]=5>2 → pop → [1,2,3,4]. lst[-1]=4>2 → pop → [1,2,3]. lst[-1]=3>2 → pop → [1,2]. lst[-1]=2, 2>2 is False → stop. The 'lst and' guard prevents IndexError on an empty list. This pattern trims elements from the end based on a condition — useful for removing trailing values.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This pattern trims elements from the end based on a condition — useful for removing trailing values.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -943,7 +943,7 @@ Notes:
     de: `popitem() removes and returns an arbitrary (LIFO in Python 3.7+) key-value pair. The while loop continues as long as d is truthy (non-empty). All three values are summed: 1+2+3=6. The order of removal doesn't affect the total since addition is commutative. After the loop, d is empty {}. This drain pattern is useful when processing and consuming dictionary entries one at a time.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This drain pattern is useful when processing and consuming dictionary entries one at a time.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -992,7 +992,7 @@ Notes:
     de: `The outer loop scans characters. When a digit is found, the inner while loop accumulates consecutive digits into a string, then converts to int. At i=1: '2' is a digit, inner loop gets "2", i=2. Append 2. At i=3: '3' is a digit, inner loop gets "3" then "34" (s[4]='4'), i=5. Append 34. Non-digits just increment i. This two-loop pattern is a basic tokenizer that handles multi-digit numbers correctly.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This two-loop pattern is a basic tokenizer that handles multi-digit numbers correctly.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1041,7 +1041,7 @@ Notes:
     de: `Triangle numbers are cumulative sums of 1+2+...+n. Each iteration adds n to a running total. n=1: total=1. n=2: total=3. n=3: total=6. n=4: total=10. n=5: total=15. The nth triangle number equals n*(n+1)/2, so T(5)=15. These numbers count objects in equilateral triangles: 1 dot, 3 dots, 6 dots, etc. The sequence appears throughout combinatorics and Pascal's triangle.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The sequence appears throughout combinatorics and Pascal's triangle.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1090,7 +1090,7 @@ Notes:
     de: `Both variables converge toward the midpoint: a increases while b decreases. Trace: (1,10)→(2,9)→(3,8)→(4,7)→(5,6)→(6,5). At (6,5), a<b is 6<5=False, so the loop exits. They cross over because the sum a+b=11 is odd — they can never both equal 5.5. With an even sum like (1,9), they'd meet at (5,5). This pattern finds the midpoint of a range.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This pattern finds the midpoint of a range.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1139,7 +1139,7 @@ Notes:
     de: `A sliding window of size 3 computes the average at each valid position. i=0: sum([10,20,30])/3=20.0. i=1: sum([20,30,40])/3=30.0. i=2: sum([30,40,50])/3=40.0. i=3: 3<=5-3=2 is False, stop. Three windows fit in a 5-element list. Moving averages smooth out fluctuations and are widely used in time series analysis, stock charts, and signal processing.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Moving averages smooth out fluctuations and are widely used in time series analysis, stock charts, and signal processing.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1188,7 +1188,7 @@ Notes:
     de: `The modulo operator i%len(lst) wraps indices around when they exceed the list length. i=0: 0%3=0→10. i=1: 1%3=1→20. i=2: 2%3=2→30. i=3: 3%3=0→10. i=4: 4%3=1→20. This creates a circular buffer effect where the list repeats. Wrap-around indexing is used in ring buffers, circular queues, and round-robin scheduling without needing to check bounds explicitly.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Wrap-around indexing is used in ring buffers, circular queues, and round-robin scheduling without needing to check bounds explicitly.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1237,7 +1237,7 @@ Notes:
     de: `The loop subtracts 20 HP each turn and checks the condition only at the top of the loop. hp=50: subtract 20→hp=30, turns=1. hp=30→10, turns=2. hp=10→-10, turns=3. Now hp=-10, which is not >0, so the loop exits. HP goes negative because the damage is applied before the next condition check — the character "dies" mid-turn. This is why games often clamp HP to max(0, hp-damage).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is why games often clamp HP to max(0, hp-damage).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
