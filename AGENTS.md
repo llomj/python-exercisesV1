@@ -75,12 +75,13 @@
 | **EN — Level 1 intermediate B** | `level1_intermediate_b.ts` | **DONE** | `scripts/fix_level1_intermediate_b_generic_blocks.py` (50); escape `\\\\x` etc. in TS when mentioning escape syntax |
 | **EN — Level 1 (all pattern files)** | `level1.ts`, `level1_intermediate_*.ts`, Expert A/B | **DONE** | — |
 | **EN — Level 2 patterns** | `level2.ts` | **DONE** | `scripts/fix_level2_patterns_generic_blocks.py` (100); **BLOCK_END** uses Level 2 Notes line (“Follow PEMDAS…”), not the Level 1 `isinstance` Notes |
-| **EN — Level 2 remaining** | `level2_expert_*.ts`, `level2_intermediate_*.ts` | **NOT DONE** | 50 + 50 + 50 + 50 = **200** markers |
+| **EN — Level 2 Expert A** | `level2_expert_a.ts` | **DONE** | `scripts/fix_level2_expert_a_generic_blocks.py` (50) |
+| **EN — Level 2 remaining** | `level2_expert_b.ts`, `level2_intermediate_*.ts` | **NOT DONE** | 50 + 50 + 50 = **150** markers |
 | **EN — Levels 3–10** | `level3.ts` … `level10*.ts` | **NOT DONE** | Confirm **BLOCK_END** text per file before batch scripts |
 | **FR — Level 1** | `detailedExplanationsTranslations.ts` IDs **301–600** | **IN PROGRESS** | Full **Concepts clés … Remarques** parity per ID; **513, 530, 594** expanded; **551–600** next for parity with completed EN Expert B |
 | **FR — other levels** | IDs **1–300**, **601–3300** | **NOT DONE** | Mirror EN depth as EN batches ship |
 
-**Last updated:** 2026-03-23 — **Level 1** EN complete; **`level2.ts`** EN generic tails replaced (**100**); **~2590** generic EN markers remain project-wide (run `scripts/audit_generic_in_depth_blocks.py` for current count).
+**Last updated:** 2026-03-23 — **Level 1** EN complete; **`level2.ts`** + **`level2_expert_a.ts`** EN generic tails done; **~2540** generic EN markers remain project-wide (run `scripts/audit_generic_in_depth_blocks.py` for current count).
 
 ## 7. Monetisation Goal
 - **Goal**: Monetise this app later. Quality must be top-notch.

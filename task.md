@@ -80,6 +80,12 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
 - **Audit:** Project total **~2590** generic markers; `level2.ts` has **0** duplicate markers.
 - **Next EN:** `level2_expert_a.ts`, `level2_expert_b.ts`, `level2_intermediate_a.ts`, `level2_intermediate_b.ts` (**200** total), then Level 3 — **verify BLOCK_END** per target file before writing fix scripts.
 
+### 2026-03-23 (continued) — commit + Level 2 Expert A
+
+- **Git:** Commit `1127c4f` — Level 1–2 EN in-depth replacements, scripts, FR sample updates, AGENTS/task tracker.
+- **English — `level2_expert_a.ts`:** Patched **50** generic tails via `scripts/fix_level2_expert_a_generic_blocks.py` (Decimal/Fraction/complex/bitwise). Same PEMDAS `BLOCK_END` as `level2.ts`. **`npm run build`** OK.
+- **Next EN:** `level2_expert_b.ts` (50), `level2_intermediate_a.ts` (50), `level2_intermediate_b.ts` (50).
+
 ### Confirmed completed before this tracker
 - IDs `402-411` completed with full in-depth French structure.
 - Prior batches had been advanced through `421`.
