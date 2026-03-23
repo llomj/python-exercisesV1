@@ -112,6 +112,11 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
 - IDs `402-411` completed with full in-depth French structure.
 - Prior batches had been advanced through `421`.
 
+### 2026-03-23 — generic EN `Key Concepts` marker cleanup (Levels 4–10)
+
+- **English:** Removed the duplicated `Key Concepts` bullet `• See the key concepts and explanation above for the main ideas and bullet points.` across `level4.ts`, `level4_*`, `level5*.ts`, `level6*.ts`, `level7*.ts`, `level8*.ts`, `level9*.ts`, and `level10*.ts`.
+- **Verification:** `python3 scripts/audit_generic_in_depth_blocks.py` now reports **0** occurrences.
+
 ### Completed in the latest work session
 - IDs `422-425` upgraded to full in-depth French structure:
   - `422`: list repetition with `*`
