@@ -81679,6 +81679,9 @@ Cas limites :
 Considérations de performance :
 • O(1) ici.
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier la règle suivante : les dictionnaires ayant des valeurs différentes pour les mêmes clés ne sont pas égaux.
+
 Remarques :
 • Réponse : False.`,
   1863: `Cardinalités différentes
@@ -81715,6 +81718,9 @@ Cas limites :
 
 Considérations de performance :
 • O(n).
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier la règle suivante : les dictionnaires ayant des ensembles de clés différents ne sont pas égaux.
 
 Remarques :
 • Réponse : False.`,
@@ -81753,6 +81759,9 @@ Cas limites :
 Considérations de performance :
 • Comme ==.
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier la règle suivante : l'opérateur != vérifie si deux dictionnaires sont différents.
+
 Remarques :
 • Réponse : True.`,
   1865: `is entre littéraux dict
@@ -81790,6 +81799,9 @@ Cas limites :
 Considérations de performance :
 • N/A.
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier la règle suivante : l'opérateur is vérifie si deux variables référencent le même objet, pas si elles ont le même contenu.
+
 Remarques :
 • Réponse : False.`,
   1866: `Réflexivité d is
@@ -81823,6 +81835,9 @@ Cas d'utilisation courants :
 
 Considérations de performance :
 • N/A.
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier la règle suivante : un objet est toujours identique à lui-même.
 
 Remarques :
 • Réponse : True.`,
@@ -81861,6 +81876,9 @@ Cas limites :
 Considérations de performance :
 • O(1) taille en CPython.
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier la règle suivante : un dictionnaire vide est « falsy » dans les contextes booléens.
+
 Remarques :
 • Réponse : False.`,
   1868: `bool(dict non vide)
@@ -81898,6 +81916,9 @@ Cas limites :
 Considérations de performance :
 • O(1).
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier la règle suivante : un dictionnaire non vide est « truthy » dans les contextes booléens.
+
 Remarques :
 • Réponse : True.`,
   1869: `Addition de dicts interdite
@@ -81932,6 +81953,9 @@ Cas d'utilisation courants :
 Considérations de performance :
 • N/A.
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier la règle suivante : les dictionnaires ne prennent pas en charge l'opérateur + pour la concaténation.
+
 Remarques :
 • Réponse : TypeError.`,
   1870: `Multiplication dict interdite
@@ -81965,6 +81989,9 @@ Cas d'utilisation courants :
 
 Considérations de performance :
 • N/A.
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier la règle suivante : les dictionnaires ne prennent pas en charge l'opérateur * pour la répétition.
 
 Remarques :
 • Réponse : TypeError.`,
@@ -82003,6 +82030,9 @@ Cas limites :
 Considérations de performance :
 • list O(n).
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier la règle suivante : les vues d'un dictionnaire sont dynamiques et reflètent les changements du dictionnaire.
+
 Remarques :
 • Réponse : ['a', 'b', 'c'].`,
   1872: `Vue values dynamique
@@ -82039,6 +82069,9 @@ Cas limites :
 
 Considérations de performance :
 • O(n).
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que la vue renvoyée par d.values() est dynamique : après d['b'] = 2, list(v) inclut aussi la nouvelle valeur.
 
 Remarques :
 • Réponse : [1, 2].`,
@@ -82077,6 +82110,9 @@ Cas limites :
 Considérations de performance :
 • O(n).
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que la vue renvoyée par d.items() est dynamique : après d['b'] = 2, list(i) contient aussi la paire ajoutée.
+
 Remarques :
 • Réponse : liste des deux paires dans l’ordre d’insertion.`,
   1874: `for k in dict
@@ -82113,6 +82149,9 @@ Cas limites :
 
 Considérations de performance :
 • O(n) lignes.
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que parcourir directement un dictionnaire dans une boucle for itère sur les clés : print(k) affiche les clés, pas les valeurs.
 
 Remarques :
 • Réponse QCM : affiche 'a' puis 'b'.`,
@@ -82151,6 +82190,9 @@ Cas limites :
 Considérations de performance :
 • O(n).
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que itérer sur .values() renvoie les valeurs : print(v) affiche les valeurs associées aux clés.
+
 Remarques :
 • Réponse : imprime 1 puis 2.`,
   1876: `for k, v in .items()
@@ -82187,6 +82229,9 @@ Cas limites :
 
 Considérations de performance :
 • O(n).
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que .items() fournit des paires (clé, valeur) : dans for k, v, print(k, v) affiche les clés et leurs valeurs.
 
 Remarques :
 • Réponse : lignes « a 1 » puis « b 2 ».`,
@@ -82225,6 +82270,9 @@ Cas limites :
 Considérations de performance :
 • O(n) temps et espace.
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que list(dictionnaire) convertit un dictionnaire en liste de ses clés.
+
 Remarques :
 • Réponse : ['a', 'b'].`,
   1878: `tuple(dict)
@@ -82261,6 +82309,9 @@ Cas limites :
 
 Considérations de performance :
 • O(n).
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que tuple(dictionnaire) convertit un dictionnaire en tuple de ses clés.
 
 Remarques :
 • Réponse : ('a', 'b').`,
@@ -82299,6 +82350,9 @@ Cas limites :
 Considérations de performance :
 • O(n) amorti.
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que set(dictionnaire) convertit un dictionnaire en ensemble de ses clés.
+
 Remarques :
 • Réponse : {'a', 'b'}.`,
   1880: `sorted(dict)
@@ -82335,6 +82389,9 @@ Cas limites :
 
 Considérations de performance :
 • O(n log n).
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que sorted(dictionnaire) trie les clés et renvoie la liste des clés triées.
 
 Remarques :
 • Réponse : ['a', 'b', 'c'].`,
@@ -82373,6 +82430,9 @@ Cas limites :
 Considérations de performance :
 • O(k).
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que {'a': 1}.fromkeys(...) crée un nouveau dictionnaire avec les clés demandées et des valeurs par défaut (None quand aucune valeur n'est fournie).
+
 Remarques :
 • Réponse : {'a': None, 'b': None}.`,
   1882: `dict.fromkeys avec valeur 0
@@ -82409,6 +82469,9 @@ Cas limites :
 
 Considérations de performance :
 • Linéaire.
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que fromkeys(keys, default) utilise la seconde valeur fournie comme valeur par défaut pour toutes les clés.
 
 Remarques :
 • Réponse : {'a': 0, 'b': 0}.`,
@@ -82447,6 +82510,9 @@ Cas limites :
 Considérations de performance :
 • O(n clés).
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que dict.fromkeys(...) est une méthode de classe : elle crée un nouveau dictionnaire en ignorant le dictionnaire de départ.
+
 Remarques :
 • Réponse : {'c': None, 'd': None}.`,
   1884: `max sur dict (clés)
@@ -82484,6 +82550,9 @@ Cas limites :
 Considérations de performance :
 • O(n).
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que max(d) applique le maximum sur les clés lorsqu'il reçoit un dictionnaire directement.
+
 Remarques :
 • Réponse : 'c'.`,
   1885: `min sur dict (clés)
@@ -82518,6 +82587,9 @@ Cas limites :
 Considérations de performance :
 • O(n).
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que min(d) applique le minimum sur les clés lorsqu'il reçoit un dictionnaire directement.
+
 Remarques :
 • Réponse : 'a'.`,
   1886: `max sur .values()
@@ -82551,6 +82623,9 @@ Cas limites :
 
 Considérations de performance :
 • O(n).
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que max(d.values()) renvoie la plus grande valeur parmi les valeurs.
 
 Remarques :
 • Réponse : 3.`,
@@ -82589,6 +82664,9 @@ Cas limites :
 Considérations de performance :
 • O(n).
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que sum(d.values()) additionne toutes les valeurs du dictionnaire.
+
 Remarques :
 • Réponse : 6.`,
   1888: `all sur .values()
@@ -82622,6 +82700,9 @@ Cas d'utilisation courants :
 
 Considérations de performance :
 • Court-circuit.
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que all(d.values()) vérifie que toutes les valeurs sont truthy.
 
 Remarques :
 • Réponse : False.`,
@@ -82657,6 +82738,9 @@ Cas limites :
 Considérations de performance :
 • Court-circuit si True tôt.
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que any(d.values()) renvoie True s'il existe au moins une valeur truthy.
+
 Remarques :
 • Réponse : False.`,
   1890: `or court-circuit avec .get()
@@ -82690,6 +82774,9 @@ Cas d'utilisation courants :
 
 Considérations de performance :
 • Évite second lookup.
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que l'opérateur or renvoie la première valeur truthy, ou la dernière valeur si toutes sont falsy.
 
 Remarques :
 • Réponse : 1.`,
@@ -82725,6 +82812,9 @@ Cas limites :
 Considérations de performance :
 • O(1) amorti.
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que les clés entières fonctionnent tout à fait dans un dictionnaire (même si les valeurs sont des chaînes).
+
 Remarques :
 • Réponse : 'a'.`,
   1892: `Clé tuple
@@ -82759,6 +82849,9 @@ Cas limites :
 Considérations de performance :
 • Hash tuple petit O(1).
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que les clés de type tuple fonctionnent dans les dictionnaires, car les tuples sont immuables et hashables.
+
 Remarques :
 • Réponse : 'a'.`,
   1893: `Liste comme clé
@@ -82790,6 +82883,9 @@ Ordre des opérations :
 Considérations de performance :
 • N/A.
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que les clés de type liste ne fonctionnent pas dans les dictionnaires, car les listes sont mutables et non hashables.
+
 Remarques :
 • Réponse : TypeError.`,
   1894: `Dict comme clé
@@ -82820,6 +82916,9 @@ Ordre des opérations :
 
 Considérations de performance :
 • N/A.
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que les clés de type dictionnaire ne fonctionnent pas dans les dictionnaires, car un dictionnaire est mutable et donc non hashable.
 
 Remarques :
 • Réponse : TypeError.`,
@@ -82855,6 +82954,9 @@ Cas limites :
 Considérations de performance :
 • O(1).
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que None, True et False peuvent être des clés de dictionnaire : ils sont hashables (immuables).
+
 Remarques :
 • Réponse : 'a' (chaîne).`,
   1896: `Collision int / float en accès
@@ -82888,6 +82990,9 @@ Cas limites :
 
 Considérations de performance :
 • O(1).
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que 1 (int) et 1.0 (float) sont considérés comme la même clé dans les dictionnaires, car ils ont le même hash.
 
 Remarques :
 • Réponse : 'b'.`,
@@ -82923,6 +83028,9 @@ Cas limites :
 Considérations de performance :
 • Une entrée.
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que 1 (int) et 1.0 (float) se comportent comme la même clé dans les dictionnaires, ce qui fait collision lors de l'insertion.
+
 Remarques :
 • Réponse : {1: 'b'} (formulation QCM).`,
   1898: `Assignations d[1] puis d[1.0]
@@ -82956,6 +83064,9 @@ Cas limites :
 
 Considérations de performance :
 • Deux ops sur même slot.
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que d[1.0] écrase la même entrée que d[1] : 1 et 1.0 correspondent à la même clé de dictionnaire.
 
 Remarques :
 • Réponse : {1: 'b'} (une entrée).`,
@@ -82991,6 +83102,9 @@ Cas limites :
 Considérations de performance :
 • O(1) amorti.
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que pop() renvoie la vraie valeur si la clé existe, même si vous fournissez une valeur par défaut.
+
 Remarques :
 • Réponse : 1.`,
   1900: `pop avec défaut, clé absente
@@ -83024,6 +83138,9 @@ Cas limites :
 
 Considérations de performance :
 • Une recherche.
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que pop() renvoie la valeur par défaut quand la clé n'existe pas, à condition qu'une valeur par défaut soit fournie.
 
 Remarques :
 • Réponse : 'default'.`,
@@ -85157,6 +85274,9 @@ Cas limites :
 Considérations de performance :
 • count répété O(n²) sur longueur ; acceptable pour petit texte.
 
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que cette compréhension construit un dictionnaire de fréquence des caractères en parcourant les caractères uniques et en comptant chaque occurrence.
+
 Remarques :
 • Réponse : 2 pour la clé "l".`,
   1954: `enumerate vers dict
@@ -85313,6 +85433,9 @@ Cas limites :
 
 Considérations de performance :
 • count répété coûteux sur gros texte.
+
+Exemples :
+• Essayez le même raisonnement avec une entrée étroitement liée pour vérifier que cette compréhension construit un dictionnaire de fréquence des mots, puis lit le nombre associé à "the".
 
 Remarques :
 • Réponse : 2.`,
@@ -111432,6 +111555,12 @@ Fonctionnement :
 Exécution étape par étape :
 • Classe refusée ou erreur à la définition selon version / cas.
 
+Ordre des opérations :
+• Repérez le risque : un défaut mutable direct (items: list = []) serait créé une seule fois et partagé entre toutes les instances.
+• Appliquez la règle @dataclass : les mutables en défaut sont refusés pour éviter l'effet de bord classique (liste partagée).
+• Remplacez par field(default_factory=list) : la fabrique appelle list() à chaque création d'instance.
+• Vérifiez la conséquence : chaque instance reçoit son propre objet liste, donc modifier l'une n'affecte pas les autres.
+
 Cas d'utilisation courants :
 • list, dict, set comme état par instance.
 
@@ -111628,6 +111757,11 @@ Fonctionnement :
 
 Exécution étape par étape :
 • Utilisation par sorted, bisect, comparaisons infix.
+
+Ordre des opérations :
+• Comprenez quels comparateurs sont générés : __lt__, __le__, __gt__ et __ge__ quand order=True est activé.
+• Sachez sur quoi s'appuie l'ordre : un tuple de valeurs de champs, dans l'ordre des champs définis dans le dataclass.
+• Rappelez la contrainte : order=True requiert l'existence de l'égalité (eq=True), sinon l'ordre riche n'est pas complet.
 
 Cas d'utilisation courants :
 • Classement, bornes.
@@ -112985,6 +113119,11 @@ Fonctionnement :
 
 Exécution étape par étape :
 • N/A.
+
+Ordre des opérations :
+• Comparez d'abord les points structurants : immutabilité (namedtuple) versus mutabilité (dataclasses), et les différences d'accès (indexation).
+• Reliez ensuite les choix de conception : dataclass vise des objets plus riches (options frozen, __post_init__, field(default_factory)).
+• Concluez avec le critère de sélection : namedtuple pour des enregistrements simples et immuables, dataclass pour des objets de données avec logique/validation.
 
 Cas d'utilisation courants :
 • petit record immuable → namedtuple ; objet riche mutable → dataclass.
@@ -119260,6 +119399,11 @@ Fonctionnement :
 Exécution étape par étape :
 • Échec → exception à class body, pas à l'usage.
 
+Ordre des opérations :
+• Rappelez le rôle de l'algorithme : C3 produit une MRO cohérente en respectant l'ordre local des bases et la monotonicité.
+• Appliquez la règle Python 3 : C3 est l'unique algorithme utilisé pour calculer la résolution d'ordre des méthodes.
+• Anticipez l'échec : si une linéarisation valide n'existe pas, Python lève un TypeError.
+
 Cas d'utilisation courants :
 • Comprendre erreurs MRO en héritage multiple.
 
@@ -119456,6 +119600,11 @@ Fonctionnement :
 
 Exécution étape par étape :
 • N/A classe créée.
+
+Ordre des opérations :
+• Formulez les deux contraintes : l'ordre des bases dans C impose A avant B, tandis que la MRO de B (qui hérite de A) impose B avant A.
+• Identifiez le conflit : ces deux contraintes ne peuvent pas être satisfaites simultanément.
+• Concluez via C3 : l'algorithme doit respecter tout à la fois l'ordre local et la linéarisation parent, donc l'échec déclenche un TypeError.
 
 Cas d'utilisation courants :
 • Pédagogie obligatoire avant héritage multiple réel.
@@ -123773,6 +123922,11 @@ Fonctionnement :
 
 Exécution étape par étape :
 • Appel register lors de l'import ou setup.
+
+Ordre des opérations :
+• Gardez l'effet concret en tête : isinstance() et issubclass() renvoient True, même s'il n'y a pas d'héritage réel des méthodes/attributs.
+• Appliquez la règle ABC.register() : la classe enregistrée devient une « sous-classe virtuelle » de l'ABC.
+• Vérifiez la conséquence : la reconnaissance passe, mais la classe n'obtient pas automatiquement l'implémentation de l'ABC.
 
 Cas d'utilisation courants :
 • Typer builtins (list) comme ton interface.
@@ -137364,6 +137518,11 @@ Fonctionnement :
 Exécution étape par étape :
 • N/A.
 
+Ordre des opérations :
+• Évitez les tabulations : mélanger des tabs et des espaces est déconseillé et peut entraîner des erreurs en Python 3.
+• Appliquez la règle PEP 8 : chaque niveau d'indentation correspond à 4 espaces.
+• Pour les lignes de continuation, alignez sur le délimiteur d'ouverture (parens, crochets, accolades) plutôt que d'insérer des tabs.
+
 Cas d'utilisation courants :
 • tout fichier .py.
 
@@ -137401,6 +137560,11 @@ Fonctionnement :
 Exécution étape par étape :
 • N/A.
 
+Ordre des opérations :
+• Distinguez les seuils : 79 caractères pour les lignes de code, et 72 pour les docstrings et commentaires.
+• Réduisez les lignes longues en utilisant la continuation implicite via (), [], {}.
+• En dernier recours, utilisez une continuation explicite avec \\ seulement si la continuation implicite ne suffit pas.
+
 Cas d'utilisation courants :
 • revue de code.
 
@@ -137437,6 +137601,11 @@ Fonctionnement :
 
 Exécution étape par étape :
 • N/A.
+
+Ordre des opérations :
+• Adoptez la convention PEP 8 : des noms en snake_case, donc des minuscules séparées par des underscores.
+• Appliquez-la de façon cohérente : fonctions, méthodes et variables doivent suivre le même style.
+• Évitez les styles camelCase/PascalCase dans un code PEP 8.
 
 Cas d'utilisation courants :
 • def load_user_data():.
