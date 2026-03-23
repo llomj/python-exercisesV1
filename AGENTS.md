@@ -76,12 +76,21 @@
 | **EN — Level 1 (all pattern files)** | `level1.ts`, `level1_intermediate_*.ts`, Expert A/B | **DONE** | — |
 | **EN — Level 2 patterns** | `level2.ts` | **DONE** | `scripts/fix_level2_patterns_generic_blocks.py` (100); **BLOCK_END** uses Level 2 Notes line (“Follow PEMDAS…”), not the Level 1 `isinstance` Notes |
 | **EN — Level 2 Expert A** | `level2_expert_a.ts` | **DONE** | `scripts/fix_level2_expert_a_generic_blocks.py` (50) |
-| **EN — Level 2 remaining** | `level2_expert_b.ts`, `level2_intermediate_*.ts` | **NOT DONE** | 50 + 50 + 50 = **150** markers |
-| **EN — Levels 3–10** | `level3.ts` … `level10*.ts` | **NOT DONE** | Confirm **BLOCK_END** text per file before batch scripts |
+| **EN — Level 2 Expert B** | `level2_expert_b.ts` | **DONE** | `scripts/fix_level2_expert_b_generic_blocks.py` (50) |
+| **EN — Level 2 intermediate A** | `level2_intermediate_a.ts` | **DONE** | `scripts/fix_level2_intermediate_a_generic_blocks.py` (50); ensure commas between `TAILS` string literals (Python concatenates adjacent strings) |
+| **EN — Level 2 intermediate B** | `level2_intermediate_b.ts` | **DONE** | `scripts/fix_level2_intermediate_b_generic_blocks.py` (50) |
+| **EN — Level 2 (all files)** | `level2*.ts` | **DONE** | — |
+| **EN — Level 3 patterns** | `level3.ts` | **DONE** | `scripts/fix_level3_patterns_generic_blocks.py` (100); **BLOCK_END** uses Level 3 Notes (“Follow PEP 8…”), not PEMDAS |
+| **EN — Level 3 Expert A** | `level3_expert_a.ts` | **DONE** | `scripts/fix_level3_expert_a_generic_blocks.py` (50); PEP 8 **BLOCK_END** |
+| **EN — Level 3 Expert B** | `level3_expert_b.ts` | **DONE** | `scripts/fix_level3_expert_b_generic_blocks.py` (50); tails from `scripts/_generate_level3_remaining_fixes.py` |
+| **EN — Level 3 intermediate A** | `level3_intermediate_a.ts` | **DONE** | `scripts/fix_level3_intermediate_a_generic_blocks.py` (50) |
+| **EN — Level 3 intermediate B** | `level3_intermediate_b.ts` | **DONE** | `scripts/fix_level3_intermediate_b_generic_blocks.py` (50) |
+| **EN — Level 3 (all files)** | `level3*.ts` | **DONE** | — |
+| **EN — Levels 4–10** | `level4.ts` … `level10*.ts` | **NOT DONE** | Confirm **BLOCK_END** text per file before batch scripts |
 | **FR — Level 1** | `detailedExplanationsTranslations.ts` IDs **301–600** | **IN PROGRESS** | Full **Concepts clés … Remarques** parity per ID; **513, 530, 594** expanded; **551–600** next for parity with completed EN Expert B |
 | **FR — other levels** | IDs **1–300**, **601–3300** | **NOT DONE** | Mirror EN depth as EN batches ship |
 
-**Last updated:** 2026-03-23 — **Level 1** EN complete; **`level2.ts`** + **`level2_expert_a.ts`** EN generic tails done; **~2540** generic EN markers remain project-wide (run `scripts/audit_generic_in_depth_blocks.py` for current count).
+**Last updated:** 2026-03-23 — **Level 3** EN bank complete (`level3.ts` + Expert A/B + intermediate A/B); **~2090** generic EN markers remain project-wide (run `scripts/audit_generic_in_depth_blocks.py` for current count).
 
 ## 7. Monetisation Goal
 - **Goal**: Monetise this app later. Quality must be top-notch.

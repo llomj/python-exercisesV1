@@ -84,7 +84,29 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
 
 - **Git:** Commit `1127c4f` — Level 1–2 EN in-depth replacements, scripts, FR sample updates, AGENTS/task tracker.
 - **English — `level2_expert_a.ts`:** Patched **50** generic tails via `scripts/fix_level2_expert_a_generic_blocks.py` (Decimal/Fraction/complex/bitwise). Same PEMDAS `BLOCK_END` as `level2.ts`. **`npm run build`** OK.
-- **Next EN:** `level2_expert_b.ts` (50), `level2_intermediate_a.ts` (50), `level2_intermediate_b.ts` (50).
+- **Next EN:** (completed in following log entry) `level2_expert_b.ts`, `level2_intermediate_a.ts`, `level2_intermediate_b.ts`.
+
+### 2026-03-23 (continued) — Level 2 Expert B + intermediate A/B EN
+
+- **English:** Patched **50** blocks each in `level2_expert_b.ts`, `level2_intermediate_a.ts`, `level2_intermediate_b.ts` via scripts `fix_level2_expert_b_generic_blocks.py`, `fix_level2_intermediate_a_generic_blocks.py`, `fix_level2_intermediate_b_generic_blocks.py`. Same PEMDAS `BLOCK_END` as other Level 2 files.
+- **`intermediate_a` script:** Adjacent triple-quoted strings without commas were implicitly concatenated — fixed by inserting commas after each tail (or write tails with explicit `""",` like expert_b). **len(TAILS)** must be **50** before running.
+- **Build:** `npm run build` OK. **Audit:** ~**2390** generic markers (41 files); **Level 2** question files: **0** duplicate markers.
+- **Next EN:** `level3.ts` (verify Notes footer / `BLOCK_END` first), then `level3_*` batches.
+- **Level 3 prep:** Generic block ends with Notes: `Follow PEP 8 and best practices; refer to the official docs for full details.` (not PEMDAS). Tails must be handcrafted per question like Level 2 — avoid bulk templates that repeat the same bullets across IDs.
+
+### 2026-03-23 (continued) — Level 3 `level3.ts` EN (100)
+
+- **English:** Replaced **100** generic duplicate tails in `src/data/questions/level3.ts` via `scripts/fix_level3_patterns_generic_blocks.py`. **BLOCK_END** = PEP 8 Notes line (same closing text as the old generic block). **`TAIL_ROWS`:** 100 tuples × 10 sections; fixed four tuples that had only 9 strings (script would fail `_tail` unpacking).
+- **Build:** `npm run build` OK. **Audit:** **~2290** generic markers (40 files); **`level3.ts`:** **0** duplicate markers.
+- **Next EN:** `level3_expert_a.ts`, `level3_expert_b.ts`, `level3_intermediate_a.ts`, `level3_intermediate_b.ts` — grep `Notes:` footer in each file before copying **BLOCK_END** (likely PEP 8 like `level3.ts`).
+
+### 2026-03-23 (continued) — Level 3 Expert B + intermediate A/B EN + generator fix
+
+- **Generator:** Fixed **`scripts/_generate_level3_remaining_fixes.py`** — `FOOTER` no longer starts with `]` (was paired with `write_script()` appending `]`, producing **`]]`** and `SyntaxError`). Regenerated the three fix scripts.
+- **English:** Patched **50** blocks each in `level3_expert_b.ts`, `level3_intermediate_a.ts`, `level3_intermediate_b.ts` via `fix_level3_expert_b_generic_blocks.py`, `fix_level3_intermediate_a_generic_blocks.py`, `fix_level3_intermediate_b_generic_blocks.py`. Same PEP 8 **BLOCK_END** as `level3.ts`.
+- **Build:** `npm run build` OK. **Grep:** no `See the key concepts…` in any `level3*.ts`. **Audit:** **~2090** generic markers project-wide (Level 3 EN files clean for that marker).
+- **Next EN:** `level4.ts` (grep `Notes:` / **BLOCK_END** first), then `level4_*` batches per planning.
+- **Optional polish:** Some `de` tails still contain `— (Editorial: expand this slot if needed.)` padding (generator filled short section lists) — replace with fully question-specific prose when tightening quality.
 
 ### Confirmed completed before this tracker
 - IDs `402-411` completed with full in-depth French structure.

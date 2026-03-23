@@ -25,46 +25,34 @@ Example:
 
 Python versions: 3.10 (Oct 2021) and later support match/case.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• PEP 634 introduced match/case in Python 3.10; earlier interpreters cannot parse the statement.
+• Soft keywords match and case only act as keywords inside match grammar.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Version gates belong in packaging (python_requires) and CI before using structural patterns.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Confirm sys.version_info >= (3, 10).
+2. Only then ship modules that contain match statements.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Syntax validity is decided at parse time — not a runtime flag.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teaching modern control flow and pattern-rich APIs.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Alternate implementations (older PyPy builds) may lag; test your matrix.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• No runtime cost comparison needed — wrong version fails at import.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• if sys.version_info < (3, 10): raise RuntimeError("need 3.10+")
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Document minimum Python in pyproject.toml when adopting match/case.`
   }),
 
   // Q2
@@ -90,46 +78,35 @@ Example:
 
 Literal patterns work with int, float, str, bytes, True, False, and None.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Literal value patterns use equality; case 42 matches an int subject equal to 42.
+• No binding occurs unless you use capture patterns (bare names).
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Cases are tried in order; the first successful pattern runs its suite.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Evaluate subject 42.
+2. Compare to pattern 42.
+3. Execute assignment to result.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Earlier cases win; keep specific literals before wildcards.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Numeric status codes and tokenized commands.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Mixed float/int subjects need consistent patterns.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Small literal compares are O(1).
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• match n: case 0: ... case 1: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Add guards (if) when a range is better than many literals.`
   }),
 
   // Q3
@@ -153,46 +130,35 @@ Example:
 >>> result
 'match'
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• String literal patterns require the whole subject string to equal the pattern value.
+• This is not substring matching — use other tools for partial strings.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• str equality semantics apply between subject and pattern literal.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Subject is "hello".
+2. Pattern "hello" matches.
+3. Bind result in the case suite.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Case order matters if multiple patterns could match.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• CLI verbs and fixed protocol tokens.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Unicode normalization can break naive equality — normalize first if needed.
 
-Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+Performance Compares:
+• Short string compare is fast.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• match cmd: case "start": ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Use casefold() before match if you need case-insensitive commands.`
   }),
 
   // Q4
@@ -217,46 +183,35 @@ Example:
 >>> r
 'five'
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Cases are evaluated top to bottom; the first matching pattern wins.
+• Later cases are skipped after a match — order is part of the program logic.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Subject 5 matches case 5 after case 1 fails.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Test case 1 (fails).
+2. Test case 5 (succeeds).
+3. Assign r = "five".
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Put cheaper or more specific tests first when readability allows.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Priority-based routing of small integer codes.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Unreachable cases below an always-true pattern indicate a bug.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Linear scan of cases — keep ladders readable.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• match x: case 0: ... case 1: ... case _: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Refactor huge ladders into dict dispatch when patterns repeat.`
   }),
 
   // Q5
@@ -284,46 +239,34 @@ something else
 
 Unlike a variable pattern (case x:), the wildcard _ doesn't bind the matched value.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• case _ is a wildcard that matches any subject and does not bind a name to it.
+• It is the conventional default branch when you ignore the value.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• After other patterns fail, _ accepts anything.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Try explicit patterns.
+2. Fall through to _ when nothing else fits.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Typically place _ last to avoid masking specific cases.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Fallback logging and "else" behavior inside match.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• If no case matches and there is no _, Python raises MatchError.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Wildcard acceptance is O(1).
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case _: pass
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• For enums, consider covering all members explicitly for maintainability.`
   }),
 
   // Q6
@@ -347,46 +290,35 @@ Example:
 >>> r
 'other'
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Subject 99 fails case 1; wildcard case _ runs and assigns r = "other".
+• Guards are optional; here patterns alone decide.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Linear search stops at the first successful pattern.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. 99 == 1 is false.
+2. _ matches 99.
+3. r becomes "other".
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Specific patterns before catch-all.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Default bucket for unexpected enum-like ints.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Forgetting _ yields MatchError on unexpected input.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Few comparisons for small ladders.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• match code: case 200: ... case _: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Log inside _ during development to spot unexpected values.`
   }),
 
   // Q7
@@ -410,46 +342,35 @@ Example:
 >>> r
 'tuple match'
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Tuple patterns require the same length and matching elements position-wise.
+• (1, 2) matches a two-tuple with those exact values.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Structural recursion compares nested patterns element by element.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Subject (1, 2).
+2. Pattern (1, 2) succeeds.
+3. Assign r.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Fixed-length tuple patterns differ from open patterns with *.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Points, pairs returned from functions.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Single-element tuple pattern syntax differs from expression syntax.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Small tuples compare quickly.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case (x, y): ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Use *rest in patterns for longer sequences when needed.`
   }),
 
   // Q8
@@ -473,46 +394,35 @@ Example:
 >>> r
 'list match'
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• List patterns mirror list structure; elements must match in order.
+• Length must match for fixed patterns like [1, 2, 3].
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Sequence patterns delegate to element subpatterns.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Subject [1, 2, 3].
+2. Pattern [1, 2, 3] matches.
+3. Bind r.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Nested lists recurse — mind stack depth on deep trees.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Parsed JSON-like lists with known arity.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Heterogeneous lists still match if literals align.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• O(n) in matched length.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case [a, b, c]: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Prefer *rest or *middle patterns for variable-length lists.`
   }),
 
   // Q9
@@ -538,46 +448,34 @@ It's an integer!
 
 Class patterns are powerful for type-based dispatching.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• case int() is a class pattern that succeeds when isinstance(subject, int) (without capture).
+• It differs from a literal int pattern like case 0.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Class patterns can include arguments for positional/keyword captures.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. isinstance(subject, int) for int().
+2. Branch runs if true.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Put bool before int if you must separate bool from int — bool subclasses int.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Type-based dispatch on simple scalars.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Custom classes need __match_args__ for positional class patterns.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• isinstance checks are cheap for built-ins.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case int(x): ... binds x.
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Read PEP 634 class pattern details before emulating C++ overloads.`
   }),
 
   // Q10
@@ -603,46 +501,34 @@ Example:
 
 Note: True/False match int() because bool is a subclass of int in Python.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Subject 42 matches case int() first; str() is never attempted for this subject.
+• Pattern order fixes which branch runs for isinstance-compatible types.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• First successful pattern wins; later branches are skipped.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. int pattern matches 42.
+2. r = "int".
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Arrange from narrow to broad when overlaps exist.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Union-like values without explicit Union objects.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Reordering cases changes behavior — document intent.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• One successful isinstance stops the ladder.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• match v: case int(): ... case str(): ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Combine with guards for numeric ranges inside int.`
   }),
 
   // Q11
@@ -666,46 +552,35 @@ Example:
 >>> r
 'str'
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Subject "hi" matches str() class pattern; int() fails first in typical ordering.
+• Pattern order must list int() before str() only if you want ints first — here str wins for "hi".
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• isinstance("hi", str) satisfies str() pattern.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Try int() — false.
+2. Try str() — true.
+3. r = "str".
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Class patterns use isinstance semantics.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Accepting either numeric or textual payloads.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• bool subclassing int can surprise — order bool cases first if needed.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Two isinstance checks worst case.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• match v: case int(): ... case str(): ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Capture with case str(s) when you need the value.`
   }),
 
   // Q12
@@ -727,46 +602,35 @@ Key concepts:
 
 The name "structural pattern matching" means it matches the STRUCTURE of data, not just its value. You can decompose complex nested objects in a single pattern.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Structural pattern matching compares shape recursively; it is not a single == on the whole object.
+• Literal and class patterns combine to express richer shapes than one equality check.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• The match protocol dispatches on pattern kinds defined in PEP 634.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Classify subject structure.
+2. Compare to pattern tree.
+3. Run suite or fail.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Patterns may bind names while == on arbitrary objects does not.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• AST-like trees and nested JSON.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Objects without match support may fall back to limited behavior.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Deep patterns cost more than flat ==.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case {"k": v}: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Use match when shape matters; use == for simple scalar equality.`
   }),
 
   // Q13
@@ -792,46 +656,35 @@ Example:
 
 This also works: match {"a": 1, "b": 2}: case {"a": 1}: matches (extra key "b" is ignored).
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Mapping patterns match dict keys and values; {"a": 1} requires key "a" with value 1.
+• Extra keys in the subject may or may not be allowed — full mapping requires exact keys unless using ** captures.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Keys are checked for presence and subpatterns match values.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Subject dict has "a":1.
+2. Pattern {"a":1} matches.
+3. r = "match".
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Partial dict patterns are a separate feature — read PEP 634 mapping rules.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• JSON event payloads with known required fields.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Key order is irrelevant for equality; matching uses key lookup.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• O(k) in number of pattern keys.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case {"status": code}: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Use **rest to accept additional keys explicitly.`
   }),
 
   // Q14
@@ -857,46 +710,34 @@ Example:
 
 The pattern only required key "a" — key "b" was ignored.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Partial mapping patterns can match when required keys exist even if extra keys are present.
+• PEP 634 allows partial matching — not a full dict equality.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Specified keys must exist and subpatterns must match; others ignored unless ** forbids them.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Check keys in pattern exist in subject.
+2. Match subpatterns for values.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Contrast with == on dicts which compares full contents.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Evolving APIs where clients send superset fields.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Versioning: new keys should not break partial patterns.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Hash lookups per pattern key.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case {"a": x}: ... with subject {"a":1,"b":2}
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Document whether your pattern is partial or exact for readers.`
   }),
 
   // Q15
@@ -923,46 +764,35 @@ Example:
 
 To also capture "b", use: case {"a": x, "b": y}:
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Binding pattern {"a": x} captures the value at key "a" into name x.
+• Here x becomes 1 from {"a":1,"b":2}.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Mapping pattern with a capture name assigns the matched value.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Key "a" present.
+2. Value 1 matches subpattern (capture).
+3. r = x which is 1.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Name binding is local to the case suite.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Extracting fields from records.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Missing keys cause pattern failure, not KeyError in match.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Dict lookup per key.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case {"user": u}: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Combine guards to validate captured values.`
   }),
 
   // ===== MATCH/CASE ADVANCED PATTERNS (16–30) =====
@@ -989,46 +819,34 @@ Example:
 >>> r
 [2, 3]
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Sequence patterns with star capture: [1, *rest] binds rest to the tail after the fixed prefix.
+• Subject [1,2,3] yields rest = [2,3].
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• *rest collects remaining elements matching the star pattern rules.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Match fixed leading 1.
+2. Bind rest to remaining list.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Fixed elements must align before star absorption.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Command args where head is opcode and tail is operands.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Empty tail if nothing follows fixed prefix.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• O(n) to build rest.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case [cmd, *args]: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Use *middle between stars for splitting three parts.`
   }),
 
   // Q17
@@ -1053,46 +871,34 @@ Example:
 >>> r
 []
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Single-element list [1] with pattern [1, *rest] binds rest to [] — star may be empty.
+• Star patterns allow zero-or-more semantics for the captured slice.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• After matching literal 1, no elements remain so rest is empty.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Match 1 at head.
+2. rest defaults to [].
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Contrast with requiring at least one tail element — use extra literal checks.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Optional trailing arguments.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Clarify whether empty rest is valid for your domain.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Allocates small list for rest.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case [first, *rest]: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Test len(rest) in guard if a minimum arity is required.`
   }),
 
   // Q18
@@ -1118,46 +924,34 @@ Example:
 
 Also: first = 1, last = 4.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Multiple stars: [first, *middle, last] splits head, middle, tail on a four-element list.
+• middle captures the interior elements between first and last.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Star middle absorbs all between fixed ends when unambiguous.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. first=1, last=4 on [1,2,3,4].
+2. middle=[2,3].
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Pattern length constraints must be satisfiable.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Parsing bracketed lists with known ends.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Too-short lists fail the pattern.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Slicing work proportional to length.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case [lo, *mid, hi]: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Prefer simple patterns when readability drops.`
   }),
 
   // Q19
@@ -1184,46 +978,35 @@ Correct way to capture:
 
 The as keyword binds the matched value to a variable.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Class patterns int(x) and str(y) capture components from a tuple subject (1, "a").
+• x becomes 1, y becomes "a".
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Positional arguments inside class patterns bind captures from tuple elements.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Subject tuple unpacked to patterns.
+2. isinstance checks per element.
+3. Bind x,y.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Nested patterns recurse element-wise.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Row tuples from CSV or SQL.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Wrong arity raises pattern failure.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Small tuple unpacking.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case (int(a), str(b)): ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• __match_args__ defines ordering for custom classes.`
   }),
 
   // Q20
@@ -1250,46 +1033,35 @@ Example:
 
 Guards are evaluated only after the pattern matches successfully.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Guards add boolean tests after pattern matches: case x if x > 10.
+• Pattern binds x first; guard filters.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Guard evaluated only after successful pattern.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Bind x = 42.
+2. Guard 42 > 10 true.
+3. r = "big".
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Guards run after bindings — names from pattern are in scope.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Numeric ranges and cross-field validation.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Guard exceptions propagate — keep guards simple.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Extra boolean work per candidate case.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case n if n % 2 == 0:
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Avoid heavy work in guards; refactor to helpers.`
   }),
 
   // Q21
@@ -1315,46 +1087,35 @@ Example:
 
 A case without a guard after a guarded case acts as a fallback for when the guard fails.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Subject 5 binds to x, but guard x > 10 fails — fall through to next case.
+• Second case x matches without guard and runs.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Failed guard does not commit the case — try next pattern.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. x=5.
+2. Guard false.
+3. Next case x matches; r="small".
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Guards partition the same bound name.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Bucketing values after capture.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Ensure later cases remain reachable.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Two pattern attempts may occur.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case n if n < 0: ... case n: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Order guards from most specific to general on same binding.`
   }),
 
   // Q22
@@ -1381,46 +1142,35 @@ Example:
 
 OR patterns are great for handling multiple values the same way.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Value patterns joined by | match if any alternative matches; case 0 | 1 matches 0.
+• Similar to multiple literals in one case line.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Alternatives are tried within the same case clause.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Subject 0.
+2. Matches 0 | 1.
+3. r = "binary".
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• | inside patterns is not the bitwise or operator.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Small finite sets of allowed constants.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Large unions may be clearer as separate cases.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Small fixed checks.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case "y" | "yes": ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Combine with guards when alternatives need ranges.`
   }),
 
   // Q23
@@ -1445,46 +1195,34 @@ Example:
 >>> r
 'binary'
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Subject 1 matches 0|1 branch; case _ not needed when earlier case covers.
+• Order alternatives within | does not matter for simple literals.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• First matching case wins at case level, not | level.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Match 0|1 with subject 1.
+2. Assign binary.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Include _ if you need a catch-all after binary cases.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Bit flags and small enums.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Exhaustiveness — add _ for unexpected.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Trivial.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case 200 | 201: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Document meaning of each alternative in comments.`
   }),
 
   // Q24
@@ -1507,46 +1245,34 @@ Example:
 >>> r
 'other'
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Subject 5 fails 0|1 pattern; wildcard _ runs and labels other.
+• Shows | pattern does not match all ints.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Failed pattern moves to next case.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. 5 not in {0,1} for pattern.
+2. _ matches.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Specific unions before broad wildcards.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Rejecting invalid enum codes with a default path.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• MatchError if neither union nor _ matches.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Small ladder.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case 0 | 1: ... case _: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Log unexpected values in _ during QA.`
   }),
 
   // Q25
@@ -1574,46 +1300,35 @@ Example:
 
 Best practice: include case _: to handle unexpected values explicitly.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Without a matching case and no case _, Python raises MatchError at runtime.
+• Unlike if/elif, match may fail explicitly.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Exhaustiveness is not proven by the type checker unless you use tooling.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Test all cases.
+2. None succeed.
+3. Raise MatchError.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Either add case _ or cover all possibilities.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Enforcing complete handling of sealed sets.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Optional: capture subject in handler via try/except MatchError.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Failure is exceptional — not hot-path.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• try: match x: ... except MatchError:
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• mypy plugins can help check exhaustiveness for enums.`
   }),
 
   // Q26
@@ -1641,46 +1356,34 @@ Example:
 
 The as keyword captures the matched value into a variable.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• str() as msg binds the subject to name msg when pattern succeeds.
+• Combined with literal 200 in tuple pattern for structured rows.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• as binds the entire matched pattern or subpattern per PEP 634.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Tuple subject matches (str, 200).
+2. msg captures "hello".
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• as clarifies which subpattern binds which name.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Extracting fields while also testing structure.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Name collisions — follow scoping rules in case suite.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Cheap binds.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case Point(x, y) as p:
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Read PEP for exact as placement rules.`
   }),
 
   // Q27
@@ -1706,46 +1409,34 @@ Example:
 
 This pattern is powerful for parsing structured data like API responses or messages.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Nested mapping pattern binds code while checking nested keys and literals.
+• {"type":"error","code":404} matches and binds code variable.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Mapping patterns compose with literal and capture subpatterns.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Keys exist.
+2. code captures 404.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Validate required structure before using captures.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• API error envelopes.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Optional keys need alternate patterns or guards.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Dict lookups only for keys in pattern.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case {"data": {"id": i}}:
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Keep patterns aligned with JSON schema docs.`
   }),
 
   // Q28
@@ -1775,46 +1466,34 @@ Example:
 
 dataclass auto-generates __match_args__ = ('x', 'y').
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Custom classes can participate via __match_args__ and optional __match__ for advanced protocols.
+• Instances match positional class patterns when configured.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• PEP 634 defines how objects expose subpatterns for matching.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. isinstance check.
+2. Map attributes per __match_args__.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Dataclasses often work out of the box.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• AST nodes and ORM rows.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Legacy classes without hooks may match only as object patterns.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Attribute reads per slot.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case Point(x, y):
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Prefer isinstance + attributes if patterns are too heavy.`
   }),
 
   // Q29
@@ -1841,46 +1520,34 @@ Example:
 
 Place more specific patterns before more general ones.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Two cases: exact list [1,2] vs prefix [1, *_] — subject [1,2] hits the first.
+• First match wins — order exact before general.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• More specific pattern should appear first to avoid shadowing.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. [1,2] matches exactly.
+2. r="exact".
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Reversing order would make prefix consume cases incorrectly.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Preferring exact command sequences over prefixes.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Overlapping patterns need discipline.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Small lists.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case ["POST", "/api"]: ... case ["POST", *_]:
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Refactor to guards if ordering becomes fragile.`
   }),
 
   // Q30
@@ -1906,46 +1573,34 @@ Example:
 
 This demonstrates why ordering matters: specific before general.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Subject [1,3] fails exact [1,2] but matches [1, *_] capturing prefix behavior.
+• Second case provides fallback.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Star pattern absorbs remaining elements after fixed prefix.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Exact fails at second element.
+2. Prefix case matches with * absorbing [3].
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Specific-before-general prevents wrong bucket.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Version vectors or semver tuples.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Single-element tail still matches *_ depending on pattern.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Linear in list size.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• case [1, 2, *rest]: ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Add guards on rest content when required.`
   }),
 
   // ===== WALRUS OPERATOR := (31–50) =====
@@ -1972,46 +1627,35 @@ Long string: 5 chars
 
 Without :=, you'd need: n = len("hello"); if n > 3: ...
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• The walrus := assigns an expression to a name while returning that value inside another expression.
+• Introduced in Python 3.8 via PEP 572.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Assignment expression binds in the enclosing scope (with subtle scoping rules in comprehensions).
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Evaluate RHS.
+2. Bind name.
+3. Value participates in containing expression.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• := has low precedence — parenthesize.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Reusing computed values in conditions and comprehensions.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Illegal in statement positions where plain = belongs.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Avoid duplicate work by naming intermediate results.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• if (n := len(a)) > 0:
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Named “assignment expression” or “walrus” colloquially.`
   }),
 
   // Q32
@@ -2036,46 +1680,34 @@ Timeline:
 • 3.11 (2022): exception groups, tomllib
 • 3.12 (2023): type parameter syntax
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• PEP 572 added := in Python 3.8; 3.7 cannot parse it.
+• Distinct from match/case version gate.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Syntax addition only — no __future__ import.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Verify >=3.8 for walrus.
+2. Use in expressions only.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Combine version checks for projects supporting 3.8+.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Regex matches and file reads in conditions.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Scope differences inside list comprehensions — read PEP carefully.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Saves recomputation.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• while chunk := f.read(8192): ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Pin python_requires accordingly.`
   }),
 
   // Q33
@@ -2100,46 +1732,35 @@ Example:
 >>> n
 10  # n is also available after the if
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• (n := 10) assigns 10 to n then compares >5 — condition true; body sets r=n.
+• Walrus avoids separate assignment before if.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Value of := expression is the assigned value.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Bind n=10.
+2. Test 10>5.
+3. r=10.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Parentheses required around := in larger expressions often.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Computing expensive test operands once.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Unreachable if condition false — n still assigned? In if header, n exists in block on success per scoping.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Single evaluation of initializer.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• if (m := pat.search(s)) is not None:
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Prefer clarity over cramming too much into one if header.`
   }),
 
   // Q34
@@ -2167,46 +1788,35 @@ Example:
 >>> n
 3  # n was still assigned
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• n:=3 binds 3; 3>5 false — else branch runs; r=small.
+• Walrus still assigns n even when condition fails? In if (n:=3)>5 — n is bound in surrounding scope in 3.8+.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Assignment expression executes the assignment before the boolean op.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. n=3.
+2. Compare false.
+3. else suite.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Mind that n exists after the if/else in function scope.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Parsing attempts where value used in both branches.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Debugging surprise: n bound even if condition false in if statement form.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• One evaluation.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Explicit separate n=3 may read clearer.
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Document team style on walrus in if headers.`
   }),
 
   // Q35
@@ -2234,46 +1844,35 @@ Example:
 >>> y
 9
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• In [y := x**2 for x in range(4)], y updates each iteration; after loop y is last assigned (9 when x=3).
+• Walrus inside comprehension binds in comprehension scope per scoping rules.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Last iteration leaves y as square of last x.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Iterate x=0..3.
+2. Each assigns y=x**2.
+3. After completion y=9.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Walrus in comprehensions has special scoping — avoid shadowing outer names accidentally.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Pairing transformation with filtering in one line.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Python 3.8+ scoping fixes — read release notes.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Same work as explicit loop if written carefully.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• [y for x in data if (y := f(x)) > 0]
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Prefer explicit loops when readability suffers.`
   }),
 
   // Q36
@@ -2301,46 +1900,35 @@ Example:
 >>> line
 'data'
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• while (line := "data") != "quit" assigns line then tests; first iteration binds line to "data".
+• Loop body break exits — line value remains last assigned.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Walrus in while condition repeats each iteration.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Assign line.
+2. Compare.
+3. Execute body.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Classic readline patterns use walrus in while.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Stream processing until sentinel.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Ensure termination — here break prevents infinite loop.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• One assignment per iteration.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• while line := fp.readline(): ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Compare to iter(callable, sentinel) style.`
   }),
 
   // Q37
@@ -2366,46 +1954,35 @@ Example:
 
 The output is [4, 5] because those are the x values that passed the filter.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• List comprehension filters with (y := x*2) > 6 — y bound per x; keeps x where doubled value exceeds 6.
+• Side effect: y leaks per comprehension scoping rules — careful.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Walrus in filter can reuse computed value.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. For each x, compute y=2x.
+2. Test >6.
+3. Emit x if true.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Filter clause runs per element.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Avoid duplicate computation in conditions.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Leaking walrus bindings — know PEP 572 scoping in comprehensions.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Saves a multiply vs writing x*2 twice.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• [x for x in nums if (t := expensive(x)) > 0]
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Split into loop if debugging gets hard.`
   }),
 
   // Q38
@@ -2432,46 +2009,34 @@ True
 
 This is useful for finding the first element matching a condition.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Generator inside any((n := x) > 3 for x in ...) binds n to each x until any True; n left as last iteration value.
+• Short-circuit stops early; n is last assigned x in the generator progression when any finds True.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Walrus binds n each iteration; any stops at first True.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. x=1,2,4 — at 4, (n:=4)>3 true; any returns True.
+2. n may be 4 after loop depending on consumption.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Short-circuit means later values might not assign.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Searching while retaining last candidate.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Relying on n after any without care — document behavior.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Generator is lazy.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• next((x for x in it if cond(x)), default)
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Prefer explicit loop for clarity of n after any.`
   }),
 
   // Q39
@@ -2498,46 +2063,35 @@ Example:
 
 Key: the output is y (squared values), filtered by y > 5.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• List comprehension with y := x**2 filters squares >5; collects y values meeting test.
+• Result list contains y values from qualifying iterations.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Walrus computes square once per x.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. x runs 0..4.
+2. y=x**2.
+3. Keep y if y>5.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Output expression uses y from walrus binding.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Building derived lists with one expensive call.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• 0**2 not >5 — skipped.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• O(n) over range.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• [f(x) for x in items if (v := f(x)) is not None]
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Keep comprehensions readable — else use for-loop.`
   }),
 
   // Q40
@@ -2563,46 +2117,34 @@ True
 
 Without :=, you'd need: n = len(data); n > 2 — two statements instead of one expression.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• (n := len(data)) > 2 binds n to 3 then compares True for data length 3.
+• Walrus returns assigned value as expression value.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• len evaluated once.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. n=3.
+2. 3>2 True.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Parentheses group := with comparison.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Threshold checks on computed sizes.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Empty data n=0 — compare carefully.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• len is O(1) for built-in list.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• if (cache := get_cache()) is not None:
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Name n available after expression in statement forms.`
   }),
 
   // Q41
@@ -2630,46 +2172,33 @@ Use a regular function instead:
 
 The restriction keeps lambdas pure and predictable.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Lambdas are expressions; := cannot appear as a top-level statement inside lambda in the naive way — grammar restricts where := may go.
+• Practical style: avoid walrus inside lambda or wrap carefully.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Reference language grammar and linter messages when experiments fail.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Try helper function instead of lambda if := needed.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Read SyntaxError text literally.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Prefer def with name for readability.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Different Python versions tightened rules.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Clarity beats micro-optimization.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• def f(x): y := ... is invalid — use assignment before.
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Use default-arg tricks sparingly.`
   }),
 
   // Q42
@@ -2698,46 +2227,33 @@ Example:
 5
 >>> x = 5  # Just use regular assignment
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Top-level x := 5 as a lone statement is a SyntaxError — := must be inside an expression context.
+• Use plain assignment x = 5.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Assignment statements use =, not :=.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Parse error if := at statement level.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Wrap in parentheses only works inside expressions, not as a bare statement.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Teach difference between statement and expression assignment.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Interactive REPL may show SyntaxError clearly.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• N/A.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• x = 5
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• PEP 572 lists valid syntactic positions.`
   }),
 
   // Q43
@@ -2767,46 +2283,35 @@ Without :=, you'd need:
 
 This pattern is especially useful for optional dictionary lookups.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• m := dict.get("a") assigns 1; truthy; is not None check passes; r=m.
+• Walrus captures .get result once.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• get returns None if missing — walrus names the result.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. m=1.
+2. Test not None.
+3. r=1.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Short-circuiting comparisons with None.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Optional dict keys without double lookup.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Value None vs missing key both None — disambiguate with 'in'.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• One dict lookup via get.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• if (v := d.get(k)) is not None:
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Combine with defaultdict when appropriate.`
   }),
 
   // Q44
@@ -2833,46 +2338,35 @@ Example:
 
 This pattern safely handles missing dictionary keys without try/except.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• get("b") returns None; is not None fails; else branch r=missing.
+• Walrus still assigns m=None before test.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Condition false routes to else.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. m=None.
+2. Fails positive branch.
+3. Else assigns string.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• m bound even when missing — useful or surprising per team.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Fallback defaults for missing keys.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Distinguish None value vs missing key — .get cannot alone.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Single lookup.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• if (v := d.get(k)) is None: use_default()
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Use 'k in d' when distinction matters.`
   }),
 
   // Q45
@@ -2897,46 +2391,34 @@ Example:
 >>> [x for x in values if (total := x) and total > 5]
 [8, 9]
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Comprehension filters with (total := x) and total > 5 — and uses truthiness of total; 0 would short-circuit falsy.
+• Keeps x where x itself is truthy and >5 after binding? Actually (total := x) and total > 5: first part binds x, second compares.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Walrus binds then boolean and evaluates second test.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. For each x, total=x.
+2. total must be truthy (non-zero) and >5.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Truthiness of ints — watch 0.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Filtering with reused computed flag.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• bool shortcut may skip second test.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• One bind per element.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• [x for x in vals if (t := transform(x)) and t.ok]
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Prefer explicit comparisons to 0/None.`
   }),
 
   // Q46
@@ -2959,46 +2441,33 @@ PEP 572 summary:
 • The expression assigns to NAME and evaluates to the assigned value
 • Restricted contexts: cannot be used in comprehension iteration variables, lambda bodies, or as statements
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• PEP 572 official name is “Assignment Expressions” for the := operator.
+• Colloquial name walrus from glyph shape.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Specification details scoping and valid positions.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. Read PEP 572 for authoritative rules.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Not the same as augmented assignment +=.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Documentation and lint rule naming.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Historical controversy — know team policy.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• N/A.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• Search “PEP 572 Assignment Expressions”.
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Link PEP in internal style guide.`
   }),
 
   // Q47
@@ -3022,46 +2491,35 @@ Example:
 
 Here := avoids computing len(w) twice — once for the filter and once for the output.
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Split words; walrus (n := len(w)) > 4 filters long words; pairs (w, n) collected.
+• n bound per word.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Walrus in filter clause computes length once.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. For each w, n=len(w).
+2. Keep if n>4.
+3. Emit tuple.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Comprehension scoping for n per iteration.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• NLP-ish pipelines in teaching examples.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Punctuation attached to words affects len.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• len is O(1) for str.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• [token for token in line.split() if len(token) > 4]
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Normalize tokens before len for fair comparison.`
   }),
 
   // Q48
@@ -3087,46 +2545,35 @@ Example:
 >>> y
 9  # last value assigned (from x=3, the last iteration)
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• y := x*3 computes triple; filter y>10; keeps original x values meeting test.
+• List stores x, not y.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Walrus names triple for predicate only.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. For each x, y=3x.
+2. Compare y>10.
+3. Collect x.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Output expression chooses x.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Filtering source by derived metric.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Large x may overflow in toy examples — use bounded ints.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• One multiply per element.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• [x for x in nums if (t := f(x)) > threshold]
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Emit t if you need both values.`
   }),
 
   // Q49
@@ -3157,46 +2604,34 @@ Without :=:
 >>> if m:
 ...     r = m.group()
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• re.match in walrus assigns Match or None; truthy match; r=m.group().
+• Avoid calling match twice.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Pattern anchors at start for match.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. m = re.match(...)
+2. If m, extract digits.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Compile regex once outside hot loops in real code.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Parsing leading numbers.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• fullmatch vs search differ.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Regex can be costly — compile.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• if (m := re.search(pat, s)): ...
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• Use raw strings for patterns.`
   }),
 
   // Q50
@@ -3226,45 +2661,33 @@ While technically valid, chained := is considered hard to read. Prefer separate 
 >>> b = 5
 >>> a = b
 
-Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
-
 Key Distinctions:
-• Compare with related operations, types, or patterns and similar constructs.
-• Distinguish this from others that learners might confuse.
+• Chained assignment expressions (a := (b := 5)) evaluate inner first — b=5, then a=5; both names refer to 5.
+• Right-associative nesting of :=.
 
 How It Works:
-• Python evaluates or executes the construct according to its semantics.
-• The result or side effect is produced as defined for that construct.
+• Inner := runs first; outer binds to same value.
 
 Step-by-Step Execution:
-1. Any subexpressions or prerequisites are evaluated or executed first.
-2. The main operation or construct is applied.
-3. The operation completes and returns a value or produces a side effect (or None, if applicable).
-4. In the REPL or in an assignment, the result is displayed or stored.
+1. b=5.
+2. a=5.
 
 Order of Operations:
-1. Literals and innermost subexpressions are evaluated first, from left to right where applicable.
-2. Function or method calls are evaluated: arguments left to right, then the call is performed.
-3. The operation completes and produces its return value or effect.
-4. No other operators or operands remain in this expression once the call or construct finishes.
-5. Display or use of the result happens after the full expression or statement has been evaluated.
+• Parentheses show evaluation order.
 
 Common Use Cases:
-• Using this pattern in real code; teaching the concept; validating behavior with different inputs.
+• Rare; mostly puzzles and golf.
 
 Edge Cases:
-• See the explanation above for edge cases (e.g. empty values, None, boundaries, exceptions).
-• Consider what happens with invalid or boundary inputs where applicable.
+• Readability suffers — avoid in production.
 
 Performance Considerations:
-• Built-in operations are highly optimized in CPython.
-• For hot paths, avoid repeated heavy work; consider caching or simpler patterns when possible.
+• Trivial.
 
 Examples:
-• See the example(s) above; try the same pattern with related values or expressions to reinforce understanding.
+• a = b = 5 without walrus is clearer.
 
 Notes:
-• Follow PEP 8 and best practices; refer to the official docs for full details.`
+• PEP 572 discourages obscure nesting — prefer simple assignments.`
   }),
 ];
