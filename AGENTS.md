@@ -86,7 +86,7 @@
 | **EN — Level 3 intermediate A** | `level3_intermediate_a.ts` | **DONE** | `scripts/fix_level3_intermediate_a_generic_blocks.py` (50) |
 | **EN — Level 3 intermediate B** | `level3_intermediate_b.ts` | **DONE** | `scripts/fix_level3_intermediate_b_generic_blocks.py` (50) |
 | **EN — Level 3 (all files)** | `level3*.ts` | **DONE** | — |
-| **EN — Levels 4–10** | `level4.ts` … `level10*.ts` | **DONE (Key Concepts marker)** | `python3 scripts/audit_generic_in_depth_blocks.py` now reports **0** occurrences of the duplicated `• See the key concepts...` bullet |
+| **EN — Levels 4–10** | `level4.ts` … `level10*.ts` | **DONE (Key Concepts marker + Key Distinctions→Notes boilerplate)** | `python3 scripts/audit_generic_in_depth_blocks.py` reports **0** occurrences, and the old generic `Compare with related operations…` / `Follow PEP 8…` bullets are fully gone |
 | **FR — Level 1** | `detailedExplanationsTranslations.ts` IDs **301–600** | **IN PROGRESS** | Full **Concepts clés … Remarques** parity per ID; **513, 530, 594** expanded; **551–600** next for parity with completed EN Expert B |
 | **FR — other levels** | IDs **1–300**, **601–3300** | **NOT DONE** | Mirror EN depth as EN batches ship |
 
