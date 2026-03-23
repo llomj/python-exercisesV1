@@ -35,7 +35,7 @@ Common uses:
 • Reading user input from files
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • "r" stands for read mode • It is the default mode when no mode is specified • The file must already exist or FileNotFoundError is raised • The file pointer is placed at the beginning of the file • You can only read from the file, not write to it How it works: • open("file.txt", "r") opens file.txt for reading • Returns a file object you can call read(), readline(), or readlines() on • The file is opened in text mode by default Example: f = open("file.txt", "r") content = f.read() f.close() Common uses: • Reading configuration files • Loading data from text files • Processing log files • Reading user input from files
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -107,7 +107,7 @@ Edge cases:
 • Use "x" mode if you want to avoid overwriting
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • "w" stands for write mode • Creates the file if it doesn't exist • Truncates (erases) the file if it already exists • The file pointer is placed at the beginning • You can only write to the file, not read from it How it works: • open("file.txt", "w") opens or creates file.txt for writing • Any existing content is immediately erased • Returns a file object you can call write() or writelines() on Example: f = open("file.txt", "w") f.write("Hello, World!") f.close() Edge cases: • Be careful: "w" mode will destroy existing file contents without warning • Use "a" mode if you want to add to existing content • Use "x" mode if you want to avoid overwriting
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -179,7 +179,7 @@ Common uses:
 • Adding entries to configuration files
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • "a" stands for append mode • Writes new data at the end of the file • Does not erase existing content • Creates the file if it doesn't exist • The file pointer starts at the end How it works: • open("file.txt", "a") opens file.txt for appending • Existing content is preserved • New writes go to the end of the file Example: f = open("log.txt", "a") f.write("New log entry\\n") f.close() Common uses: • Writing to log files • Appending records to data files • Adding entries to configuration files
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -253,7 +253,7 @@ Common uses:
 • Atomic file creation patterns
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • "x" stands for exclusive creation mode • Creates a new file for writing • Raises FileExistsError if the file already exists • Useful for safely creating new files without overwriting How it works: • open("file.txt", "x") creates file.txt only if it doesn't exist • If file.txt already exists, FileExistsError is raised • Otherwise, behaves like "w" mode for writing Example: try: f = open("new_file.txt", "x") f.write("Brand new content") f.close() except FileExistsError: print("File already exists!") Common uses: • Creating unique output files • Preventing accidental data loss • Atomic file creation patterns
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -327,7 +327,7 @@ Common uses:
 • Handling serialized binary data
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • "rb" = read + binary • Returns bytes objects instead of str objects • No character encoding/decoding is applied • No newline translation occurs • Essential for non-text files (images, audio, etc.) How it works: • open("file.txt", "rb") opens the file in binary read mode • f.read() returns a bytes object like b"Hello" • No universal newline translation Example: f = open("image.png", "rb") data = f.read() # Returns bytes object print(type(data)) # <class 'bytes'> f.close() Common uses: • Reading image, audio, or video files • Working with binary protocols • Reading files where encoding is unknown • Handling serialized binary data
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -399,7 +399,7 @@ Edge cases:
 • Use readline() or iterate for large files
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • read() returns the entire file as one string • The file pointer moves to the end after reading • Can pass an optional size argument: read(n) reads n characters • Calling read() again returns an empty string (pointer at end) How it works: • f.read() reads from current position to end of file • Returns everything as a single string • Includes newline characters (\\n) • f.read(10) reads only the first 10 characters Example: f = open("file.txt", "r") content = f.read() # "Hello\\nWorld\\n" more = f.read() # "" (pointer at end) f.close() Edge cases: • On large files, read() loads everything into memory • Use readline() or iterate for large files
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -473,7 +473,7 @@ Edge cases:
 • Last line without newline returns the text without \\n
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Returns one line including the \\n at the end • Successive calls return successive lines • Returns "" (empty string) at end of file • The last line may or may not have a trailing \\n How it works: • f.readline() reads from current position to the next \\n • Includes the \\n in the returned string • Moves the file pointer to the start of the next line Example: # file.txt contains "Hello\\nWorld\\n" f = open("file.txt", "r") line1 = f.readline() # "Hello\\n" line2 = f.readline() # "World\\n" line3 = f.readline() # "" (end of file) f.close() Edge cases: • Empty line returns "\\n" • End of file returns "" • Last line without newline returns the text without \\n
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -546,7 +546,7 @@ Common uses:
 • Filtering or transforming lines
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Returns a list of strings, one per line • Each string includes the trailing \\n • Reads from current position to end of file • Equivalent to list(f) How it works: • f.readlines() reads all lines and returns a list • Each element is a line with its newline character • The list preserves the order of lines Example: # file.txt contains "Hello\\nWorld\\nPython\\n" f = open("file.txt", "r") lines = f.readlines() # ["Hello\\n", "World\\n", "Python\\n"] f.close() Common uses: • Processing all lines of a file at once • When you need random access to lines by index • Filtering or transforming lines
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -619,7 +619,7 @@ Edge cases:
 • The return value matches len() of the string written
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Returns an integer: the number of characters written • Does not automatically add a newline • In text mode, writes str objects • In binary mode, writes bytes objects How it works: • f.write("Hello") writes "Hello" and returns 5 • The return value is the character count of the written string • You must add \\n yourself if you want newlines Example: f = open("file.txt", "w") n = f.write("Hello") print(n) # 5 n = f.write("World\\n") print(n) # 6 (5 chars + newline) f.close() Edge cases: • write("") writes nothing and returns 0 • The return value matches len() of the string written
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -692,7 +692,7 @@ Edge cases:
 • The name is misleading — it doesn't write "lines", just strings
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • writelines() does NOT add newlines automatically • Writes each string exactly as provided • Accepts any iterable of strings • Returns None (not the number of characters) How it works: • f.writelines(["a\\n", "b\\n"]) writes "a\\nb\\n" to the file • f.writelines(["a", "b"]) writes "ab" (no newlines!) • Each string from the iterable is written in order Example: f = open("file.txt", "w") f.writelines(["Hello\\n", "World\\n"]) # File contains: Hello\\nWorld\\n f.writelines(["No", "Newlines"]) # Appends: NoNewlines f.close() Edge cases: • writelines([]) writes nothing • The name is misleading — it doesn't write "lines", just strings
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -769,7 +769,7 @@ Common uses:
 • Prevents resource leaks
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• f.close() Common uses: • Always prefer with for file operations • Works with any context manager (not just files) • Prevents resource leaks
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -841,7 +841,7 @@ Edge cases:
 • In binary mode, seek works with any offset
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • seek(offset) moves the file pointer to the given position • seek(0) moves to the beginning of the file • seek(0, 2) moves to the end of the file • In text mode, only seek(0) and seek(f.tell()) are reliable How it works: • The file pointer tracks where the next read/write will occur • seek(0) resets it to the start • After f.read(), the pointer is at the end; seek(0) lets you read again Example: f = open("file.txt", "r") content = f.read() # Reads everything, pointer at end f.seek(0) # Move pointer back to start content2 = f.read() # Read everything again f.close() Edge cases: • In text mode, seek with non-zero offset from current/end position may not work as expected • In binary mode, seek works with any offset
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -916,7 +916,7 @@ Common uses:
 • Checking if at end of file
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Returns an integer representing the current position • Position 0 means the beginning of the file • After reading n characters in text mode, tell() may not equal n (encoding-dependent) • In binary mode, tell() returns the exact byte offset How it works: • f.tell() returns where the file pointer currently is • After opening a file, tell() returns 0 • After f.read(), tell() returns the position at the end Example: f = open("file.txt", "r") print(f.tell()) # 0 (beginning) f.read(5) print(f.tell()) # 5 (after reading 5 chars) f.read() print(f.tell()) # End of file position f.close() Common uses: • Tracking read progress • Saving and restoring file positions • Checking if at end of file
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -991,7 +991,7 @@ Edge cases:
 • Attempting to read/write on a closed file raises ValueError
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • f.closed is a property, not a method (no parentheses) • Returns True if the file has been closed • Returns False if the file is still open • Useful for checking file state before operations How it works: • After opening a file, f.closed is False • After calling f.close(), f.closed becomes True • After a with block exits, f.closed is True Example: f = open("file.txt", "r") print(f.closed) # False f.close() print(f.closed) # True with open("file.txt") as f: print(f.closed) # False print(f.closed) # True (after with block) Edge cases: • You can still access f.closed after closing (it's just a property) • Attempting to read/write on a closed file raises ValueError
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1066,7 +1066,7 @@ Common uses:
 • Processing web content (usually UTF-8)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Default encoding varies by platform • UTF-8 is the most common and widely compatible encoding • Prevents encoding errors when sharing files across platforms • PEP 597 recommends always specifying encoding How it works: • open("file.txt", encoding="utf-8") forces UTF-8 encoding • Prevents platform-dependent behavior • Raises UnicodeDecodeError if file contains invalid UTF-8 Example: # Consistent across all platforms: with open("file.txt", "r", encoding="utf-8") as f: content = f.read() # Platform-dependent (risky): with open("file.txt", "r") as f: content = f.read() # Uses system default encoding Common uses: • Working with multilingual text • Ensuring cross-platform compatibility • Processing web content (usually UTF-8)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1137,7 +1137,7 @@ Edge cases:
 • "t" (text) is the default sub-mode, so "r" equals "rt"
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • open("file.txt") is equivalent to open("file.txt", "r") • Default is read-only, text mode • The file must exist or FileNotFoundError is raised • Text mode performs newline translation and encoding/decoding How it works: • open("file.txt") opens for reading in text mode • Returns strings when you read from it • File pointer starts at position 0 Example: # These are equivalent: f1 = open("file.txt") f2 = open("file.txt", "r") f3 = open("file.txt", "rt") # "t" for text is also default Edge cases: • "r" mode raises FileNotFoundError if file doesn't exist • "t" (text) is the default sub-mode, so "r" equals "rt"
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1209,7 +1209,7 @@ Common uses:
 • Filtering or transforming file contents
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • File objects support iteration protocol • Each iteration yields one line (including \\n) • Memory-efficient: only one line in memory at a time • The preferred way to process files line by line How it works: • for line in f: reads one line per iteration • Each line includes the trailing newline character • Iteration stops at end of file • Equivalent to calling readline() repeatedly Example: with open("file.txt", "r") as f: for line in f: print(line.strip()) # strip() removes \\n Common uses: • Processing large files without loading into memory • Line-by-line text processing • Filtering or transforming file contents
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1284,7 +1284,7 @@ Edge cases:
 • If size is larger than current file, behavior is platform-dependent
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • truncate() removes content after the current position • truncate(n) truncates the file to n bytes • The file must be opened in a writable mode • The file pointer position is not changed by truncate How it works: • f.truncate() cuts the file at the current pointer position • f.truncate(0) empties the file completely • f.truncate(10) keeps only the first 10 bytes Example: f = open("file.txt", "r+") f.read(5) # Read 5 chars, pointer at position 5 f.truncate() # Everything after position 5 is removed f.close() # To empty a file: f = open("file.txt", "w") # "w" mode truncates automatically f.close() Edge cases: • Requires writable mode ("r+", "w", "a", etc.) • If size is larger than current file, behavior is platform-dependent
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1359,7 +1359,7 @@ Common uses:
 • Logging and timestamps
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Returns a date object (not a string, not a datetime) • Contains year, month, day attributes • Based on the local system clock • No time zone information How it works: • date.today() queries the system clock • Returns a date object with today's year, month, day • Different from datetime.now() which includes time Example: from datetime import date today = date.today() print(today) # e.g., 2024-01-15 print(type(today)) # <class 'datetime.date'> print(today.year) # e.g., 2024 Common uses: • Getting the current date for comparisons • Date arithmetic with timedelta • Logging and timestamps
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1433,7 +1433,7 @@ Common uses:
 • Scheduling and time-based logic
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Returns a datetime object (date + time combined) • Includes year, month, day, hour, minute, second, microsecond • Based on the local system clock • Can accept an optional timezone argument How it works: • datetime.now() queries the system clock • Returns a datetime object with full date and time • Microsecond precision Example: from datetime import datetime now = datetime.now() print(now) # e.g., 2024-01-15 10:30:45.123456 print(type(now)) # <class 'datetime.datetime'> print(now.hour) # e.g., 10 print(now.minute) # e.g., 30 Common uses: • Timestamps for logging • Measuring elapsed time • Scheduling and time-based logic
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1501,7 +1501,7 @@ print(d.month)  # 1
 print(d.day)    # 15
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • date(year, month, day) creates a date object • .year returns the year as an integer • .month returns the month (1-12) • .day returns the day (1-31) How it works: • date(2024, 1, 15) creates January 15, 2024 • .year accesses the year component: 2024 • These are read-only attributes (date objects are immutable) Example: from datetime import date d = date(2024, 1, 15) print(d.year) # 2024 print(d.month) # 1 print(d.day) # 15
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1567,7 +1567,7 @@ d2 = date(2024, 12, 25)
 print(d2.month)  # 12
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • .month returns an integer, not a string name • Range is 1-12 (January=1, December=12) • Date objects are immutable How it works: • date(2024, 1, 15) creates January 15, 2024 • .month returns 1 (January) Example: from datetime import date d = date(2024, 1, 15) print(d.month) # 1 d2 = date(2024, 12, 25) print(d2.month) # 12
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1633,7 +1633,7 @@ d2 = date(2024, 2, 29)  # 2024 is a leap year
 print(d2.day)  # 29
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • .day returns the day of the month as an integer • Range varies by month (e.g., 1-31 for January) • Leap year affects February's range How it works: • date(2024, 1, 15) creates January 15, 2024 • .day returns 15 Example: from datetime import date d = date(2024, 1, 15) print(d.day) # 15 d2 = date(2024, 2, 29) # 2024 is a leap year print(d2.day) # 29
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1699,7 +1699,7 @@ print(dt.minute)  # 30
 print(dt.second)  # 0 (default)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • datetime(year, month, day, hour, minute) creates a datetime • .hour returns the hour as an integer (0-23) • 0 = midnight, 12 = noon, 23 = 11 PM How it works: • datetime(2024, 1, 15, 10, 30) creates Jan 15, 2024 at 10:30 • .hour returns 10 Example: from datetime import datetime dt = datetime(2024, 1, 15, 10, 30) print(dt.hour) # 10 print(dt.minute) # 30 print(dt.second) # 0 (default)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1763,7 +1763,7 @@ print(dt.minute)  # 30
 print(dt.second)  # 45
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • .minute returns the minute as an integer (0-59) • Defaults to 0 if not specified in the constructor How it works: • datetime(2024, 1, 15, 10, 30) creates Jan 15, 2024 at 10:30 • .minute returns 30 Example: from datetime import datetime dt = datetime(2024, 1, 15, 10, 30, 45) print(dt.minute) # 30 print(dt.second) # 45
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1832,7 +1832,7 @@ print(td.seconds)      # 0
 print(td.total_seconds())  # 432000.0
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • timedelta(days=5) creates a 5-day duration • .days returns the days component • timedelta normalizes all values into days, seconds, microseconds • Can be created with weeks, days, hours, minutes, seconds, milliseconds, microseconds How it works: • timedelta(days=5) creates a duration of 5 days • .days returns 5 • .seconds returns remaining seconds (after full days) • .microseconds returns remaining microseconds Example: from datetime import timedelta td = timedelta(days=5) print(td.days) # 5 print(td.seconds) # 0 print(td.total_seconds()) # 432000.0
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1902,7 +1902,7 @@ past = d - timedelta(days=10)
 print(past)    # 2024-01-05
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • date + timedelta = new date (shifted forward) • date - timedelta = new date (shifted backward) • date - date = timedelta (duration between two dates) • The result is a new date object (dates are immutable) How it works: • date(2024, 1, 15) is January 15, 2024 • timedelta(days=10) represents 10 days • January 15 + 10 days = January 25 • Returns date(2024, 1, 25) Example: from datetime import date, timedelta d = date(2024, 1, 15) future = d + timedelta(days=10) print(future) # 2024-01-25 past = d - timedelta(days=10) print(past) # 2024-01-05
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1971,7 +1971,7 @@ print(diff.days)  # 5
 print(type(diff))  # <class 'datetime.timedelta'>
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • date - date = timedelta • The result can be positive or negative • .days gives the integer number of days • Later date - earlier date = positive days How it works: • date(2024, 1, 15) - date(2024, 1, 10) = timedelta(days=5) • .days returns 5 • If reversed: date(2024, 1, 10) - date(2024, 1, 15) = timedelta(days=-5) Example: from datetime import date d1 = date(2024, 1, 15) d2 = date(2024, 1, 10) diff = d1 - d2 print(diff.days) # 5 print(type(diff)) # <class 'datetime.timedelta'>
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2040,7 +2040,7 @@ print(dt.strftime("%d/%m/%Y"))    # "15/01/2024"
 print(dt.strftime("%B %d, %Y"))   # "January 15, 2024"
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • strftime = "string format time" • %Y = 4-digit year (2024) • %m = zero-padded month (01-12) • %d = zero-padded day (01-31) • The separator characters (-, /, etc.) are literal How it works: • datetime(2024, 1, 15) is January 15, 2024 • strftime("%Y-%m-%d") formats as "2024-01-15" • Each %X code is replaced by the corresponding component Example: from datetime import datetime dt = datetime(2024, 1, 15) print(dt.strftime("%Y-%m-%d")) # "2024-01-15" print(dt.strftime("%d/%m/%Y")) # "15/01/2024" print(dt.strftime("%B %d, %Y")) # "January 15, 2024"
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2108,7 +2108,7 @@ print(dt.strftime("%m/%d/%Y"))    # "01/15/2024" (US format)
 print(dt.strftime("%Y/%m/%d"))    # "2024/01/15" (ISO-like)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • %d = zero-padded day (01-31) • %m = zero-padded month (01-12) • %Y = 4-digit year • / characters are literal separators How it works: • datetime(2024, 1, 15) is January 15, 2024 • %d = "15", %m = "01", %Y = "2024" • Result: "15/01/2024" Example: from datetime import datetime dt = datetime(2024, 1, 15) print(dt.strftime("%d/%m/%Y")) # "15/01/2024" print(dt.strftime("%m/%d/%Y")) # "01/15/2024" (US format) print(dt.strftime("%Y/%m/%d")) # "2024/01/15" (ISO-like)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2182,7 +2182,7 @@ Edge cases:
 • Time components default to 0 when not specified
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • strptime = "string parse time" • First argument: the date string to parse • Second argument: the format string matching the input • Returns a datetime object • Inverse of strftime() How it works: • datetime.strptime("2024-01-15", "%Y-%m-%d") parses the string • Creates datetime(2024, 1, 15, 0, 0) • .day returns 15 Example: from datetime import datetime dt = datetime.strptime("2024-01-15", "%Y-%m-%d") print(dt.day) # 15 print(dt.month) # 1 print(dt.year) # 2024 print(type(dt)) # <class 'datetime.datetime'> Edge cases: • Raises ValueError if the string doesn't match the format • Time components default to 0 when not specified
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2251,7 +2251,7 @@ print(d2.weekday())     # 6
 print(d2.isoweekday())  # 7
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Monday = 0, Tuesday = 1, ..., Sunday = 6 • Different from isoweekday() where Monday = 1 and Sunday = 7 • Returns an integer, not a string How it works: • date(2024, 1, 15) is January 15, 2024, which is a Monday • weekday() returns 0 (Monday = 0) Example: from datetime import date d = date(2024, 1, 15) # Monday print(d.weekday()) # 0 print(d.isoweekday()) # 1 (ISO: Monday=1) d2 = date(2024, 1, 14) # Sunday print(d2.weekday()) # 6 print(d2.isoweekday()) # 7
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2320,7 +2320,7 @@ dt = datetime(2024, 1, 15, 10, 30)
 print(dt.isoformat())  # "2024-01-15T10:30:00"
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Returns a string in ISO 8601 format • Format is always YYYY-MM-DD • Equivalent to str(date_obj) for date objects • For datetime objects, includes time: YYYY-MM-DDTHH:MM:SS How it works: • date(2024, 1, 15).isoformat() returns "2024-01-15" • Always zero-padded (month 1 becomes "01") Example: from datetime import date, datetime d = date(2024, 1, 15) print(d.isoformat()) # "2024-01-15" print(str(d)) # "2024-01-15" (same) dt = datetime(2024, 1, 15, 10, 30) print(dt.isoformat()) # "2024-01-15T10:30:00"
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2389,7 +2389,7 @@ print(td.seconds)         # 3600
 print(td.total_seconds()) # 90000.0
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • timedelta normalizes all values to days, seconds, microseconds • 25 hours = 1 day + 1 hour • .days returns only the full days component • .seconds returns the remaining seconds (not total seconds) How it works: • timedelta(hours=25) is normalized to 1 day + 3600 seconds • .days returns 1 • .seconds returns 3600 (1 hour in seconds) • .total_seconds() returns 90000.0 (25 * 3600) Example: from datetime import timedelta td = timedelta(hours=25) print(td.days) # 1 print(td.seconds) # 3600 print(td.total_seconds()) # 90000.0
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2460,7 +2460,7 @@ td2 = timedelta(days=2, hours=3)
 print(td2.seconds)  # 10800 (3 hours in seconds)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • .seconds returns remaining seconds after removing full days • Different from .total_seconds() which returns the entire duration in seconds • .seconds is always in range [0, 86400) (0 to 24 hours) • timedelta stores only: days, seconds, microseconds How it works: • timedelta(hours=25) normalizes to 1 day + 3600 seconds • .days = 1 • .seconds = 3600 (remaining after 1 full day) • .total_seconds() = 90000.0 (25 * 3600) Example: from datetime import timedelta td = timedelta(hours=25) print(td.seconds) # 3600 (remaining after days) print(td.total_seconds()) # 90000.0 (total) td2 = timedelta(days=2, hours=3) print(td2.seconds) # 10800 (3 hours in seconds)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2533,7 +2533,7 @@ m2 = re.match(r"\\d+", "abc123")
 print(m2)          # None (no digits at start)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • re.match() only checks at the start of the string • \\d matches any digit (0-9) • + means "one or more" of the preceding pattern • .group() returns the full matched string • Returns None if no match at the start How it works: • r"\\d+" is a raw string pattern for one or more digits • "123abc" starts with "123" which matches \\d+ • The match stops at "a" (not a digit) • .group() returns "123" Example: import re m = re.match(r"\\d+", "123abc") print(m.group()) # "123" print(m.span()) # (0, 3) m2 = re.match(r"\\d+", "abc123") print(m2) # None (no digits at start)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2602,7 +2602,7 @@ print(m.start())   # 3 (position where match starts)
 print(m.end())     # 6 (position after match ends)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • re.search() searches anywhere in the string • Returns the first match found • \\d+ matches one or more digits • Returns None if no match is found anywhere • .group() returns the matched text How it works: • r"\\d+" looks for one or more digits • "abc123def" — skips "abc", finds "123", stops at "d" • .group() returns "123" Example: import re m = re.search(r"\\d+", "abc123def") print(m.group()) # "123" print(m.start()) # 3 (position where match starts) print(m.end()) # 6 (position after match ends)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2672,7 +2672,7 @@ Common uses:
 • Use search() when the pattern can be anywhere
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • re.match() checks only at position 0 (start of string) • re.search() scans through the entire string • Both return a Match object or None • re.match(pattern, string) is equivalent to re.search("^" + pattern, string) approximately How it works: • re.match(r"\\d+", "abc123") returns None (no digits at start) • re.search(r"\\d+", "abc123") returns match for "123" (found at position 3) • re.match(r"\\d+", "123abc") returns match for "123" (digits at start) Example: import re print(re.match(r"\\d+", "abc123")) # None print(re.search(r"\\d+", "abc123")) # <re.Match object; span=(3, 6), match='123'> Common uses: • Use match() when you expect the pattern at the start • Use search() when the pattern can be anywhere
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2743,7 +2743,7 @@ Edge cases:
 • With groups: re.findall(r"(\\d)(\\w)", "1a2b") returns [("1", "a"), ("2", "b")]
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Returns a list of all matching strings • Finds all non-overlapping matches • Returns strings, not Match objects • If pattern has groups, returns list of groups instead How it works: • r"\\d+" matches one or more digits • In "a1b2c3": finds "1", then "2", then "3" • Returns ["1", "2", "3"] Example: import re print(re.findall(r"\\d+", "a1b2c3")) # ["1", "2", "3"] print(re.findall(r"\\d+", "abc")) # [] (no matches) print(re.findall(r"\\d+", "a12b34c56")) # ["12", "34", "56"] Edge cases: • Returns empty list if no matches found • With groups: re.findall(r"(\\d)(\\w)", "1a2b") returns [("1", "a"), ("2", "b")]
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2811,7 +2811,7 @@ print(re.sub(r"\\d+", "X", "a12b34c56"))   # "aXbXcX"
 print(re.sub(r"\\d", "X", "a1b2", count=1)) # "aXb2" (only first)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • re.sub(pattern, replacement, string) replaces matches • Replaces ALL non-overlapping matches by default • Returns a new string (original is unchanged) • Can specify count parameter to limit replacements • Replacement can be a string or a function How it works: • r"\\d" matches any single digit • In "a1b2c3": replaces "1" with "X", "2" with "X", "3" with "X" • Result: "aXbXcX" Example: import re print(re.sub(r"\\d", "X", "a1b2c3")) # "aXbXcX" print(re.sub(r"\\d+", "X", "a12b34c56")) # "aXbXcX" print(re.sub(r"\\d", "X", "a1b2", count=1)) # "aXb2" (only first)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2881,7 +2881,7 @@ print(re.split(r"[,;]", "a,b;c"))
 # ["a", "b", "c"]
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • re.split(pattern, string) splits at each pattern match • \\s+ matches one or more whitespace characters • Returns a list of strings • More powerful than str.split() for complex patterns • Can specify maxsplit parameter How it works: • r"\\s+" matches one or more whitespace characters • "hello world python" has multi-space gaps • Split at each whitespace group: ["hello", "world", "python"] • Unlike "hello world".split(" "), re.split handles multiple spaces cleanly Example: import re print(re.split(r"\\s+", "hello world python")) # ["hello", "world", "python"] print(re.split(r"[,;]", "a,b;c")) # ["a", "b", "c"]
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2949,7 +2949,7 @@ print(bool(re.match(r"^\\d+$", "123a5")))  # False
 print(bool(re.match(r"^\\d+$", "")))        # False (+ needs at least one)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • ^ anchors to the start of the string • $ anchors to the end of the string • ^\\d+$ means "entire string is digits" • bool(match_object) is True; bool(None) is False How it works: • re.match(r"^\\d+$", "12345") checks if "12345" is all digits • "12345" matches: starts with digits and ends with digits • Returns a Match object (truthy) • bool(Match object) is True Example: import re print(bool(re.match(r"^\\d+$", "12345"))) # True print(bool(re.match(r"^\\d+$", "123a5"))) # False print(bool(re.match(r"^\\d+$", ""))) # False (+ needs at least one)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3018,7 +3018,7 @@ print(bool(re.match(r"^\\d+$", "12345")))  # True
 print(bool(re.match(r"^\\d+$", " 123")))   # False (space isn't a digit)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • ^\\d+$ requires every character to be a digit • "a" is not a digit, so the match fails • re.match() returns None when there is no match • bool(None) is False How it works: • re.match(r"^\\d+$", "123a5") tries to match • \\d+ matches "123", but then "a" is not a digit • The $ anchor requires digits to go all the way to the end • Match fails, returns None • bool(None) is False Example: import re print(bool(re.match(r"^\\d+$", "123a5"))) # False print(bool(re.match(r"^\\d+$", "12345"))) # True print(bool(re.match(r"^\\d+$", " 123"))) # False (space isn't a digit)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3087,7 +3087,7 @@ print(re.findall(r"[aeiou]", "rhythm"))         # [] (no vowels)
 print(re.findall(r"[aeiouAEIOU]", "Hello"))     # ["e", "o"]
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• How it works: • In "hello world": h-e-l-l-o-space-w-o-r-l-d • "e" at position 1: match • "o" at position 4: match • "o" at position 7: match • Result: ["e", "o", "o"] Example: import re print(re.findall(r"[aeiou]", "hello world")) # ["e", "o", "o"] print(re.findall(r"[aeiou]", "rhythm")) # [] (no vowels) print(re.findall(r"[aeiouAEIOU]", "Hello")) # ["e", "o"]
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3156,7 +3156,7 @@ print(re.findall(r"\\b\\w+\\b", "hello, world!"))
 # ["hello", "world"]
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • \\b matches a word boundary (zero-width) • \\w matches any word character [a-zA-Z0-9_] • \\w+ matches one or more word characters • \\b\\w+\\b matches complete words How it works: • In "hello world": two words separated by a space • First \\b\\w+\\b matches "hello" • Second \\b\\w+\\b matches "world" • Result: ["hello", "world"] Example: import re print(re.findall(r"\\b\\w+\\b", "hello world")) # ["hello", "world"] print(re.findall(r"\\b\\w+\\b", "hello, world!")) # ["hello", "world"]
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3226,7 +3226,7 @@ print(m.group(1))   # "user"
 print(m.group(2))   # "host"
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • (pattern) creates a capturing group • \\w+ matches one or more word characters • .groups() returns a tuple of all captured group strings • .group(0) returns the entire match • .group(1) returns the first group, .group(2) the second How it works: • (\\w+) before @ captures "user" as group 1 • (\\w+) after @ captures "host" as group 2 • .groups() returns ("user", "host") Example: import re m = re.match(r"(\\w+)@(\\w+)", "user@host") print(m.groups()) # ("user", "host") print(m.group(0)) # "user@host" (full match) print(m.group(1)) # "user" print(m.group(2)) # "host"
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3295,7 +3295,7 @@ print(m.group(1))  # "user"
 print(m.group(2))  # "host"
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • .group(0) = entire match • .group(1) = first parenthesized group • .group(2) = second parenthesized group • Raises IndexError if group number doesn't exist How it works: • Pattern: (\\w+)@(\\w+) matches "user@host" • Group 1: (\\w+) before @ captures "user" • Group 2: (\\w+) after @ captures "host" • .group(1) returns "user" Example: import re m = re.match(r"(\\w+)@(\\w+)", "user@host") print(m.group(0)) # "user@host" print(m.group(1)) # "user" print(m.group(2)) # "host"
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3368,7 +3368,7 @@ result = re.sub(r"\\b\\w", lambda m: m.group().upper(), "hello world")
 print(result)  # "Hello World"
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • re.sub(pattern, function, string) calls function for each match • The function receives a Match object as argument • The function's return value replaces the match • m.group() returns the matched text • .upper() converts a string to uppercase How it works: • r"(\\w+)" matches each word: "hello", then "world" • For "hello": lambda receives match, m.group() = "hello", .upper() = "HELLO" • For "world": lambda receives match, m.group() = "world", .upper() = "WORLD" • Space between words is not matched, so it's preserved • Result: "HELLO WORLD" Example: import re result = re.sub(r"(\\w+)", lambda m: m.group().upper(), "hello world") print(result) # "HELLO WORLD" # Another example: capitalize first letter result = re.sub(r"\\b\\w", lambda m: m.group().upper(), "hello world") print(result) # "Hello World"
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3446,7 +3446,7 @@ Common uses:
 • Makes patterns more readable
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • r"\\d" is the raw string containing two characters: \\ and d • "\\d" without r would be interpreted by Python first • Raw strings prevent double-escaping issues • Without r, you'd need "\\\\d" to get the regex \\d How it works: • r"\\n" is literally backslash + n (regex newline pattern) • "\\n" is a single newline character (Python escape) • r"\\d+" is backslash + d + plus (regex digit pattern) • "\\d+" might work by accident but is not reliable Example: import re # These are equivalent: re.search(r"\\d+", "abc123") # Raw string (preferred) re.search("\\\\d+", "abc123") # Regular string (needs double escape) # Difference matters with \\n: re.search(r"\\n", text) # Matches literal newline in text re.search("\\n", text) # Also matches newline (by coincidence) re.search(r"\\\\n", text) # Matches literal backslash + n Common uses: • Always use raw strings for regex patterns • Avoids confusion between Python escapes and regex escapes • Makes patterns more readable
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

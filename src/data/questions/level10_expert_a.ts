@@ -44,7 +44,7 @@ Common uses:
 • CRITICAL for fatal problems
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • DEBUG (10) — detailed diagnostic information • INFO (20) — confirmation that things are working • WARNING (30) — something unexpected happened, but the software still works • ERROR (40) — a serious problem, some function failed • CRITICAL (50) — a very serious error, program may not continue How it works: • Each level has a numeric value (multiples of 10) • Setting a level filters out messages below that severity • Custom levels can be added but these 5 are standard • The default level is WARNING Example: >>> import logging >>> logging.DEBUG 10 >>> logging.INFO 20 >>> logging.WARNING 30 >>> logging.ERROR 40 >>> logging.CRITICAL 50 Common uses: • DEBUG for development diagnostics • INFO for runtime confirmations • WARNING for recoverable issues • ERROR for failures • CRITICAL for fatal problems
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -118,7 +118,7 @@ Common uses:
 • Testing often uses INFO for moderate verbosity
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Default level is WARNING (numeric value 30) • Messages below WARNING are suppressed by default • This is why logging.debug() and logging.info() produce no output without configuration • Use logging.basicConfig(level=logging.DEBUG) to see all messages How it works: • When you call logging.warning("msg"), it appears • When you call logging.info("msg"), nothing happens (below threshold) • When you call logging.debug("msg"), nothing happens (below threshold) • You must configure the level to see lower-severity messages Example: >>> import logging >>> logging.warning("This appears") WARNING:root:This appears >>> logging.info("This is hidden") >>> logging.debug("This is also hidden") Common uses: • Production systems typically use WARNING or ERROR • Development uses DEBUG to see everything • Testing often uses INFO for moderate verbosity
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -188,7 +188,7 @@ Example:
 10
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • logging.DEBUG = 10 • Lowest of the 5 standard levels • Used for detailed diagnostic information • Messages at this level are typically only useful during development How it works: • Levels are compared numerically: DEBUG(10) < INFO(20) < WARNING(30) < ERROR(40) < CRITICAL(50) • When a logger's level is set to X, only messages with level >= X are processed • Setting level to DEBUG shows all standard messages Example: >>> import logging >>> logging.DEBUG 10 >>> logging.getLevelName(10) 'DEBUG' >>> logging.getLevelName('DEBUG') 10
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -257,7 +257,7 @@ Example:
 INFO:root:Server started
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • logging.INFO = 20 • Second level above DEBUG • Used for confirmation that things are working as expected • Not shown by default (default level is WARNING = 30) How it works: • INFO messages are suppressed by default • To see INFO messages: logging.basicConfig(level=logging.INFO) • INFO is appropriate for tracking program flow in normal operation Example: >>> import logging >>> logging.INFO 20 >>> logging.basicConfig(level=logging.INFO) >>> logging.info("Server started") INFO:root:Server started
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -325,7 +325,7 @@ Example:
 WARNING:root:Disk space low
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • logging.WARNING = 30 • This is the default level — messages at WARNING and above are shown • Indicates something unexpected or potentially harmful • Program still functions despite the warning How it works: • WARNING messages are shown by default (no configuration needed) • Signals issues that should be investigated but are not critical • Commonly used for deprecation notices, resource usage alerts Example: >>> import logging >>> logging.WARNING 30 >>> logging.warning("Disk space low") WARNING:root:Disk space low
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -393,7 +393,7 @@ Example:
 ERROR:root:Database connection failed
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • logging.ERROR = 40 • Second-highest standard level • Indicates a significant problem that prevented a function from completing • Program may still run, but something definitely failed How it works: • ERROR messages indicate failure of a specific operation • Always shown at default level (40 >= 30) • Used when catching exceptions that prevent normal operation Example: >>> import logging >>> logging.ERROR 40 >>> logging.error("Database connection failed") ERROR:root:Database connection failed
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -461,7 +461,7 @@ Example:
 CRITICAL:root:System out of memory
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • logging.CRITICAL = 50 • Highest standard logging level • Indicates a fatal error — the program may not be able to continue • Reserved for the most severe issues How it works: • CRITICAL messages indicate the program itself may be unable to continue • Always displayed regardless of configured level (unless logging is disabled entirely) • Used for system-level failures, unrecoverable errors Example: >>> import logging >>> logging.CRITICAL 50 >>> logging.critical("System out of memory") CRITICAL:root:System out of memory
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -536,7 +536,7 @@ Common uses:
 • logging.basicConfig(filename='app.log', level=logging.DEBUG)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common uses: • Quick setup for development • Accepts format, filename, filemode, datefmt parameters • logging.basicConfig(filename='app.log', level=logging.DEBUG)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -614,7 +614,7 @@ Common handler types:
 • SocketHandler — send over network
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Handlers determine WHERE log messages go • StreamHandler sends to console (stdout/stderr) • FileHandler sends to a file • Multiple handlers can be attached to one logger • Each handler can have its own level and formatter How it works: • Logger creates a LogRecord • LogRecord is passed to all attached handlers • Each handler checks its own level filter • If the record passes, the handler formats and emits it Example: >>> import logging >>> logger = logging.getLogger('myapp') >>> console_handler = logging.StreamHandler() >>> file_handler = logging.FileHandler('app.log') >>> logger.addHandler(console_handler) >>> logger.addHandler(file_handler) Common handler types: • StreamHandler — console output • FileHandler — write to file • RotatingFileHandler — file with size-based rotation • SMTPHandler — send email alerts • SocketHandler — send over network
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -693,7 +693,7 @@ Common format attributes:
 • %(lineno)d — line number
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Formatters determine HOW log messages look • Applied to handlers, not loggers directly • Use format strings with special LogRecord attributes • Common attributes: %(asctime)s, %(levelname)s, %(message)s, %(name)s How it works: • Create a Formatter with a format string • Attach the Formatter to a Handler • When the handler emits a record, the formatter produces the final string Example: >>> import logging >>> formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') >>> handler = logging.StreamHandler() >>> handler.setFormatter(formatter) >>> logger = logging.getLogger('myapp') >>> logger.addHandler(handler) >>> logger.warning("Test") 2024-01-15 10:30:00,123 - myapp - WARNING - Test Common format attributes: • %(asctime)s — human-readable timestamp • %(levelname)s — level name (DEBUG, INFO, etc.) • %(message)s — the log message • %(name)s — logger name • %(filename)s — source file name • %(lineno)d — line number
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -770,7 +770,7 @@ Common uses:
 • Makes log output show which module generated each message
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • __name__ is the module's fully qualified name (e.g., 'mypackage.utils') • Logger names use dot notation for hierarchy: 'a.b' is a child of 'a' • Child loggers propagate messages to parent loggers • The root logger is the ancestor of all loggers How it works: • In mypackage/utils.py, __name__ is 'mypackage.utils' • logging.getLogger('mypackage.utils') creates a logger in the hierarchy • Settings on 'mypackage' logger apply to all 'mypackage.*' loggers • This allows configuring logging per-package or per-module Example: # In mypackage/utils.py import logging logger = logging.getLogger(__name__) # logger named 'mypackage.utils' logger.info("Processing data") # Configure at package level pkg_logger = logging.getLogger('mypackage') pkg_logger.setLevel(logging.DEBUG) # Affects all mypackage.* loggers Common uses: • Best practice for library and application logging • Enables per-module log configuration • Makes log output show which module generated each message
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -855,7 +855,7 @@ Common uses:
 • Rotating file + syslog for server applications
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • No limit on the number of handlers per logger • Each handler can have its own level and formatter • Common pattern: console handler for development + file handler for persistence • Handlers process records independently How it works: • Logger receives a log message • Message is passed to ALL attached handlers • Each handler applies its own level filter • Each handler uses its own formatter • Output goes to each handler's destination Example: >>> import logging >>> logger = logging.getLogger('myapp') >>> logger.setLevel(logging.DEBUG) >>> >>> console = logging.StreamHandler() >>> console.setLevel(logging.WARNING) >>> >>> file_h = logging.FileHandler('debug.log') >>> file_h.setLevel(logging.DEBUG) >>> >>> logger.addHandler(console) >>> logger.addHandler(file_h) >>> >>> logger.debug("Only in file") >>> logger.warning("In both console and file") Common uses: • Console (WARNING+) + file (DEBUG+) for development • File + email (CRITICAL) for production alerts • Rotating file + syslog for server applications
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -933,7 +933,7 @@ Common uses:
 • Preferred over logging.error when you want stack trace details
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• logging.exception("Calculation failed") ERROR:root:Calculation failed Traceback (most recent call last): File "<stdin>", line 2, in <module> ZeroDivisionError: division by zero Common uses: • Logging caught exceptions with full traceback for debugging • Production error reporting • Preferred over logging.error when you want stack trace details
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1011,7 +1011,7 @@ Common uses:
 • logging for long-running services with structured output
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Logging has severity levels (DEBUG through CRITICAL) • Logging has handlers (console, file, network, email, etc.) • Logging has formatters (custom output format) • Logging can be configured externally (config files, dictConfig) • print() writes to stdout with no filtering or routing How it works: • print() always outputs to stdout (unless redirected) • Logging routes messages through a configurable pipeline • Log levels allow filtering without changing code • Handlers allow routing to multiple destinations • Configuration can be changed at deployment time Example: # print - no control print("User logged in") # Always prints to stdout # logging - full control import logging logging.info("User logged in") # Can be filtered, routed, formatted Common uses: • print() for quick debugging (remove before committing) • logging for production applications • logging for libraries (let the consumer configure output) • logging for long-running services with structured output
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1089,7 +1089,7 @@ Common uses:
 • Combining with RotatingFileHandler for size management
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Creates a handler that writes to the specified file • File is opened in append mode ('a') by default • Can specify mode='w' to overwrite on each run • Must be attached to a logger with addHandler() How it works: • FileHandler("app.log") opens (or creates) app.log • When a log record is emitted through this handler, it writes to the file • Default mode is 'a' (append), so logs accumulate across runs • The handler can have its own level and formatter Example: >>> import logging >>> logger = logging.getLogger('myapp') >>> handler = logging.FileHandler('app.log') >>> handler.setLevel(logging.ERROR) >>> formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s') >>> handler.setFormatter(formatter) >>> logger.addHandler(handler) >>> logger.error("This goes to app.log") Common uses: • Persisting logs for later analysis • Production logging to rotating files • Audit trails and compliance logging • Combining with RotatingFileHandler for size management
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1166,7 +1166,7 @@ Common uses:
 • Comparing data structures for equality
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• self.assertEqual([1,2], [1,2]) # passes Common uses: • Verifying function return values • Checking computed results match expected values • Comparing data structures for equality
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1240,7 +1240,7 @@ Common uses:
 • Prefer assertEqual when comparing specific values (better failure messages)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Checks bool(expr) is True • Any truthy value passes (non-zero numbers, non-empty containers, etc.) • Fails with AssertionError if expr is falsy • Less informative failure messages than assertEqual How it works: • Evaluates bool(expr) • If truthy, test passes • If falsy, raises AssertionError • Failure message just says "False is not true" — not very descriptive Example: >>> self.assertTrue(1 == 1) # passes (True is truthy) >>> self.assertTrue([1, 2, 3]) # passes (non-empty list is truthy) >>> self.assertTrue(42) # passes (non-zero int is truthy) >>> self.assertTrue("") # FAILS (empty string is falsy) >>> self.assertTrue(0) # FAILS (zero is falsy) Common uses: • Checking boolean conditions • Verifying predicates • Prefer assertEqual when comparing specific values (better failure messages)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1314,7 +1314,7 @@ Common uses:
 • Negative test cases
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • Fails with AssertionError if expr is truthy • Opposite of assertTrue How it works: • Evaluates bool(expr) • If falsy, test passes • If truthy, raises AssertionError • Failure message: "True is not false" Example: >>> self.assertFalse(1 == 2) # passes (False is falsy) >>> self.assertFalse("") # passes (empty string is falsy) >>> self.assertFalse(0) # passes (zero is falsy) >>> self.assertFalse(None) # passes (None is falsy) >>> self.assertFalse([1]) # FAILS (non-empty list is truthy) Common uses: • Verifying a condition does not hold • Checking that a function returns a falsy value • Negative test cases
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1388,7 +1388,7 @@ Common uses:
 • Verifying that two references point to the same object
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Uses the 'is' operator (identity check) • a is b means id(a) == id(b) • Different from assertEqual which uses == • Two equal values can be different objects How it works: • Checks if a and b point to the same object in memory • Passes only if they are the same object (same id) • Fails if they are different objects, even with equal values Example: >>> a = [1, 2, 3] >>> b = a >>> c = [1, 2, 3] >>> self.assertIs(a, b) # passes (same object) >>> self.assertIs(a, c) # FAILS (equal but different objects) >>> self.assertIs(None, None) # passes (None is a singleton) Common uses: • Verifying singleton patterns • Checking None identity (prefer assertIsNone) • Verifying that two references point to the same object
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1460,7 +1460,7 @@ Common uses:
 • Testing default return values
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Equivalent to assertIs(x, None) • Uses identity check (is), not equality (==) • None is a singleton — there is only one None object • Preferred over assertEqual(x, None) How it works: • Checks x is None • Passes if x is the None singleton • Fails for any other value, including 0, False, "", [] Example: >>> self.assertIsNone(None) # passes >>> self.assertIsNone(some_func()) # passes if func returns None >>> self.assertIsNone(0) # FAILS (0 is not None) >>> self.assertIsNone(False) # FAILS (False is not None) Common uses: • Checking functions that return None • Verifying optional attributes are unset • Testing default return values
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1531,7 +1531,7 @@ Common uses:
 • Checking keys exist in dictionaries
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Uses the 'in' operator • Works with lists, tuples, strings, sets, dicts (checks keys) • Fails with a clear message showing what was not found and where How it works: • Evaluates a in b • If True, test passes • If False, raises AssertionError with both values shown Example: >>> self.assertIn(3, [1, 2, 3]) # passes >>> self.assertIn("el", "hello") # passes (substring) >>> self.assertIn("x", {"x": 1}) # passes (key in dict) >>> self.assertIn(4, [1, 2, 3]) # FAILS Common uses: • Checking membership in collections • Verifying substrings in strings • Checking keys exist in dictionaries
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1610,7 +1610,7 @@ Common uses:
 • Ensuring edge cases raise appropriate exceptions
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• int("123") # valid, no error Common uses: • Testing error handling code • Verifying input validation • Ensuring edge cases raise appropriate exceptions
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1685,7 +1685,7 @@ Example:
 # Test FAILS — no exception was raised
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• int("123") # Test FAILS — no exception was raised
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1758,7 +1758,7 @@ Common uses:
 • Financial calculations with rounding
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Default precision: 7 decimal places • round(a - b, 7) == 0 is the check • Handles floating-point representation errors • Optional 'places' parameter to change precision How it works: • Computes abs(0.30000000000000004 - 0.3) ≈ 5.5e-17 • Rounds to 7 decimal places: 0.0000000 • This equals 0, so the test passes • assertEqual(0.1+0.2, 0.3) would FAIL Example: >>> self.assertAlmostEqual(0.1 + 0.2, 0.3) # passes (within 7 places) >>> self.assertEqual(0.1 + 0.2, 0.3) # FAILS (not exactly equal) >>> self.assertAlmostEqual(1.0, 1.001, places=2) # passes (within 2 places) >>> self.assertAlmostEqual(1.0, 1.1, places=1) # FAILS (differs at 1 place) Common uses: • Comparing floating-point computation results • Scientific calculations where exact equality is impossible • Financial calculations with rounding
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1840,7 +1840,7 @@ Common uses:
 • Initializing objects under test
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• self.assertEqual(len(self.items), 2) # setUp creates a fresh [1, 2, 3] before each test Common uses: • Creating database connections • Setting up test data • Initializing objects under test
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1921,7 +1921,7 @@ Common uses:
 • Restoring modified global state
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• self.f.write("hello") # tearDown closes file and removes it after each test Common uses: • Closing file handles and network connections • Removing temporary files • Rolling back database transactions • Restoring modified global state
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2004,7 +2004,7 @@ Common uses:
 • Any expensive one-time setup
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• self.assertEqual(result, 1) Common uses: • Creating database connections • Starting test servers • Loading large test datasets • Any expensive one-time setup
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2086,7 +2086,7 @@ Common uses:
 • Environment-dependent tests
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• pass Common uses: • Temporarily disabling broken tests • Platform-specific tests • Tests for unimplemented features • Environment-dependent tests
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2160,7 +2160,7 @@ Common uses:
 • Ensuring awareness when a bug is unexpectedly fixed
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• self.assertEqual(buggy_function(), 42) # known to return wrong value # If buggy_function returns wrong value: "expected failure" (x) # If buggy_function is fixed and returns 42: "unexpected success" (u) Common uses: • Documenting known bugs without removing the test • Tracking issues that should eventually be fixed • Ensuring awareness when a bug is unexpectedly fixed
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2233,7 +2233,7 @@ Common uses:
 • Debugging aids (can be disabled with -O flag)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • assert expr — raises AssertionError if expr is falsy • 1 == 1 evaluates to True • True is truthy, so no error is raised • The assert statement has zero effect when the condition passes How it works: • Python evaluates 1 == 1 • Result is True • Since the condition is truthy, assert does nothing • Execution continues to the next statement Example: >>> assert 1 == 1 # passes, no error >>> assert True # passes >>> assert "hello" # passes (truthy) >>> assert [1, 2, 3] # passes (truthy) Common uses: • Sanity checks during development • Verifying preconditions and postconditions • Debugging aids (can be disabled with -O flag)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2310,7 +2310,7 @@ AssertionError
 AssertionError
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • assert with a falsy expression raises AssertionError • 1 == 2 is False (falsy) • AssertionError is a built-in exception • It is a subclass of Exception How it works: • Python evaluates 1 == 2 • Result is False • Since the condition is falsy, assert raises AssertionError • Program terminates unless the error is caught Example: >>> assert 1 == 2 Traceback (most recent call last): File "<stdin>", line 1 AssertionError >>> assert False AssertionError >>> assert 0 AssertionError >>> assert [] AssertionError
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2387,7 +2387,7 @@ Common uses:
 • Making assertion failures self-documenting
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Syntax: assert expression, "error message" • The message is passed to AssertionError as its argument • Only evaluated if the assertion fails • Helps identify which assertion failed and why How it works: • Python evaluates 1 == 2 → False • Since falsy, raises AssertionError("numbers not equal") • The message appears in the traceback • Makes debugging easier Example: >>> assert 1 == 2, "numbers not equal" Traceback (most recent call last): File "<stdin>", line 1 AssertionError: numbers not equal >>> x = -5 >>> assert x >= 0, f"Expected non-negative, got {x}" AssertionError: Expected non-negative, got -5 Common uses: • Providing descriptive failure messages • Including variable values in failure messages • Making assertion failures self-documenting
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2465,7 +2465,7 @@ Common uses:
 • assert is for debugging and development only
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • python -O disables assert statements • -O sets __debug__ to False • Assert statements are stripped from bytecode • This is why assert should NOT be used for data validation How it works: • Normal: python script.py — asserts are active, __debug__ is True • Optimized: python -O script.py — asserts are removed, __debug__ is False • The assert statements are not just skipped; they are eliminated from the compiled code • No runtime cost in optimized mode Example: # script.py assert False, "This will crash" print("Reached here") $ python script.py # AssertionError: This will crash $ python -O script.py # Reached here (assert was removed!) Common uses: • Production deployments often use -O for performance • This is why input validation should use if/raise, not assert • assert is for debugging and development only
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2545,7 +2545,7 @@ Common uses:
 • Understanding how assert works internally
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• print("Optimized mode") Common uses: • Conditional debug-only code • Performance-sensitive code that skips checks in production • Understanding how assert works internally
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2630,7 +2630,7 @@ Common uses:
 • Quick verification of function behavior
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return a + b >>> >>> import doctest >>> doctest.testmod() # runs all doctests in the module Common uses: • Self-testing documentation • Simple unit tests embedded in docstrings • Ensuring code examples in docs stay accurate • Quick verification of function behavior
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2708,7 +2708,7 @@ Common uses:
 • Safe division with fallback
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• x = 0 >>> x 0 Common uses: • Providing default values when operations fail • Graceful error recovery • Safe division with fallback
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2785,7 +2785,7 @@ Common uses:
 • Inspecting exception details
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• msg = str(e) >>> type(msg) <class 'str'> >>> msg "invalid literal for int() with base 10: 'abc'" Common uses: • Extracting error messages for logging • Creating user-friendly error responses • Inspecting exception details
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2861,7 +2861,7 @@ Common uses:
 • Avoiding putting too much code in the try block
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• print("Success:", result) Success: 5.0 Common uses: • Separating normal flow from error handling • Code that should only run if try succeeded • Avoiding putting too much code in the try block
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2940,7 +2940,7 @@ Common uses:
 • Any cleanup that must happen
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• print("Cleanup runs always") # "Cleanup runs always" prints regardless of success or failure Common uses: • Closing files and database connections • Releasing locks • Restoring state • Any cleanup that must happen
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3025,7 +3025,7 @@ Common uses:
 • Database transactions (try/except for errors, else for commit, finally for close)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• print("Done") Success: 5.0 Done Common uses: • Complete error handling with cleanup • Database transactions (try/except for errors, else for commit, finally for close)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3107,7 +3107,7 @@ Common uses:
 • Library APIs that want to raise their own exception types
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• RuntimeError: Processing failed Common uses: • Wrapping low-level exceptions in higher-level ones • Preserving error context across abstraction layers • Library APIs that want to raise their own exception types
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3185,7 +3185,7 @@ Common uses:
 • Serializing error information for remote debugging
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• print(traceback.format_tb(tb)) <class 'traceback'> [' File "<stdin>", line 2, in <module>\\n'] Common uses: • Logging exception tracebacks programmatically • Custom error reporting systems • Serializing error information for remote debugging
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3264,7 +3264,7 @@ Common uses:
 • Custom error pages in web applications
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• s = traceback.format_exc() >>> print(s) Traceback (most recent call last): File "<stdin>", line 2, in <module> ZeroDivisionError: division by zero Common uses: • Logging exception details to files • Sending error reports to monitoring systems • Custom error pages in web applications
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3345,7 +3345,7 @@ Common uses:
 • Useful when you need all three pieces of exception info
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• print(exc_val) <class 'ZeroDivisionError'> division by zero Common uses: • Low-level exception handling • Custom logging frameworks • The traceback module uses this internally • Useful when you need all three pieces of exception info
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3430,7 +3430,7 @@ Common uses:
 • Structured error reporting
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• print(f"Error {err.code}: {err}") Error 401: Unauthorized Common uses: • HTTP error codes in web frameworks • Database error codes • Application-specific error categories • Structured error reporting
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3513,7 +3513,7 @@ Common uses:
 • Only use bare except for truly last-resort error handling
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• handle_error() Common uses: • Avoid bare except in production code • Use except Exception: instead • Only use bare except for truly last-resort error handling
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3600,7 +3600,7 @@ Common uses:
 • Best practice for catch-all error handling
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• print("Caught:", e) Caught: test Common uses: • Preferred over bare except for general error handling • Allows Ctrl+C and sys.exit() to work normally • Best practice for catch-all error handling
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3688,7 +3688,7 @@ Common uses:
 • Attribute access (try/except AttributeError vs hasattr())
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • EAFP = try the operation, catch the exception if it fails • Contrasted with LBYL (Look Before You Leap) • Considered Pythonic (the preferred Python style) • Uses try/except instead of if/check How it works: • Instead of checking if something is valid before doing it • Just do it and catch the error if it happens • Often faster when the common case is success • More readable for complex validation scenarios Example: # EAFP style (Pythonic) try: value = my_dict["key"] except KeyError: value = "default" # LBYL style (less Pythonic) if "key" in my_dict: value = my_dict["key"] else: value = "default" # EAFP with file operations try: with open("config.json") as f: config = json.load(f) except FileNotFoundError: config = default_config Common uses: • Dictionary access (try/except KeyError vs checking 'in') • File operations (try/except vs os.path.exists) • Type conversions (try int(x) vs checking isdigit()) • Attribute access (try/except AttributeError vs hasattr())
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3782,7 +3782,7 @@ Common uses:
 • When the check is simple and atomic
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • LBYL = check conditions before acting • Uses if/else instead of try/except • More common in other languages (Java, C++) • Can have race conditions (check-then-act problem) How it works: • Before performing an operation, check if it will succeed • Use conditional statements (if) to verify preconditions • Only proceed if the checks pass • Handle the "can't proceed" case in else Example: # LBYL style if "key" in my_dict: value = my_dict["key"] else: value = "default" # EAFP style (more Pythonic) try: value = my_dict["key"] except KeyError: value = "default" # LBYL with file operations import os if os.path.exists("config.json"): with open("config.json") as f: config = json.load(f) else: config = default_config Problems with LBYL: • Race conditions: file could be deleted between check and open • Verbose: requires separate check for each possible failure • Slower when failures are rare (unnecessary checks on every call) Common uses: • Simple type checks before operations • UI input validation • Cases where failure is common (LBYL avoids exception overhead) • When the check is simple and atomic
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

@@ -34,7 +34,7 @@ Common uses:
 • Processing items from multiple sources as one stream
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Processing items from multiple sources as one stream
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -108,7 +108,7 @@ Common uses:
 • More memory-efficient than chain(*big_list) for large inputs
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• More memory-efficient than chain(*big_list) for large inputs
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -184,7 +184,7 @@ Common uses:
 • Testing all input combinations
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Testing all input combinations
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -258,7 +258,7 @@ Common uses:
 • Brute-force search over arrangements
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Brute-force search over arrangements
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -332,7 +332,7 @@ Common uses:
 • Testing pairs of items
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Testing pairs of items
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -404,7 +404,7 @@ Common uses:
 • Sampling with replacement
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Sampling with replacement
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -477,7 +477,7 @@ Common uses:
 • Default fill values in algorithms
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Default fill values in algorithms
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -550,7 +550,7 @@ Common uses:
 • Pairing with zip for enumeration alternatives
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Pairing with zip for enumeration alternatives
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -622,7 +622,7 @@ Common uses:
 • Repeating patterns in data processing
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Repeating patterns in data processing
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -696,7 +696,7 @@ Common uses:
 • Sampling every Nth item from a stream
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Sampling every Nth item from a stream
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -770,7 +770,7 @@ Common uses:
 • Running max/min values
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Running max/min values
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -842,7 +842,7 @@ Common uses:
 • Taking a prefix that satisfies a condition
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Taking a prefix that satisfies a condition
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -914,7 +914,7 @@ Common uses:
 • Finding the first element that doesn't match a condition
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Finding the first element that doesn't match a condition
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -989,7 +989,7 @@ Common uses:
 • Filtering with precomputed conditions
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Filtering with precomputed conditions
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1065,7 +1065,7 @@ Common uses:
 • Matrix operations with uneven rows
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Matrix operations with uneven rows
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1137,7 +1137,7 @@ Common uses:
 • Replacing loops that unpack tuples
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Replacing loops that unpack tuples
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1217,7 +1217,7 @@ Common uses:
 • Logging structured data
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Logging structured data
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1288,7 +1288,7 @@ Common uses:
 • Canonical JSON representation
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Canonical JSON representation
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1359,7 +1359,7 @@ Common uses:
 • Sending data over network protocols
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Sending data over network protocols
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1434,7 +1434,7 @@ Common uses:
 • Interoperability between Python and JSON
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Interoperability between Python and JSON
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1507,7 +1507,7 @@ Common uses:
 • Feature flags in JSON
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Feature flags in JSON
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1582,7 +1582,7 @@ Common uses:
 • Deserializing stored data
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Deserializing stored data
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1653,7 +1653,7 @@ Common uses:
 • Handling boolean configuration values
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Handling boolean configuration values
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1726,7 +1726,7 @@ Common uses:
 • Converting stored JSON arrays back to Python lists
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Converting stored JSON arrays back to Python lists
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1806,7 +1806,7 @@ Common uses:
 • Converting data before serialization
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Converting data before serialization
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1878,7 +1878,7 @@ Common uses:
 • Compact storage format
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Compact storage format
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1950,7 +1950,7 @@ Common uses:
 • File management and processing
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• File management and processing
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2022,7 +2022,7 @@ Common uses:
 • Conditional processing based on file format
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Conditional processing based on file format
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2095,7 +2095,7 @@ Common uses:
 • Processing files without caring about their type
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Processing files without caring about their type
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2169,7 +2169,7 @@ Common uses:
 • Cross-platform path construction
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Cross-platform path construction
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2244,7 +2244,7 @@ Common uses:
 • Finding project root directories
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Finding project root directories
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2315,7 +2315,7 @@ Common uses:
 • Reconstructing paths from parts
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Reconstructing paths from parts
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2387,7 +2387,7 @@ Common uses:
 • Stripping all extensions from a filename
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Stripping all extensions from a filename
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2458,7 +2458,7 @@ Common uses:
 • Working with os module functions that expect string paths
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Working with os module functions that expect string paths
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2531,7 +2531,7 @@ Common uses:
 • Checking file types
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Checking file types
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2602,7 +2602,7 @@ Common uses:
 • File processing pipelines
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• File processing pipelines
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2678,7 +2678,7 @@ Common uses:
 • Constructing sibling file paths
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Constructing sibling file paths
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2753,7 +2753,7 @@ Common uses:
 • Cross-platform path utilities
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Cross-platform path utilities
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2825,7 +2825,7 @@ Common uses:
 • Generating companion files (.py → .pyc)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Generating companion files (.py → .pyc)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2897,7 +2897,7 @@ Common uses:
 • Character rotation ciphers (Caesar cipher, ROT13)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Character rotation ciphers (Caesar cipher, ROT13)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2968,7 +2968,7 @@ Common uses:
 • Encoding/decoding algorithms
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Encoding/decoding algorithms
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3043,7 +3043,7 @@ Common uses:
 • Stripping non-digit characters
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Stripping non-digit characters
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3116,7 +3116,7 @@ Common uses:
 • Text preprocessing for NLP
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Text preprocessing for NLP
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3189,7 +3189,7 @@ Common uses:
 • Character classification
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Character classification
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3266,7 +3266,7 @@ Common uses:
 • Working with hex-encoded data
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Working with hex-encoded data
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3342,7 +3342,7 @@ Common uses:
 • Detecting whitespace-only strings
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Detecting whitespace-only strings
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3420,7 +3420,7 @@ Common uses:
 • Email formatting
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Email formatting
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3498,7 +3498,7 @@ Common uses:
 • Template processing
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Template processing
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3576,7 +3576,7 @@ Common uses:
 • Cases where f-strings or .format are too powerful/risky
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Cases where f-strings or .format are too powerful/risky
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

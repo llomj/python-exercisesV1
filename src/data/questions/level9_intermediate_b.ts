@@ -38,7 +38,7 @@ Common uses:
 • Extending built-in behavior without modifying it
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns 1 Example: class MyList(list): def first(self): return self[0] def last(self): return self[-1] ml = MyList([10, 20, 30]) ml.first() # 10 ml.last() # 30 ml.append(40) # inherited method still works Common uses: • Adding convenience methods to built-in types • Creating domain-specific collection types • Extending built-in behavior without modifying it
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -112,7 +112,7 @@ Common uses:
 • Adding methods incrementally
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• len(ml) calls inherited __len__, returns 4 Example: class MyList(list): pass ml = MyList() ml.append("a") ml.extend(["b", "c"]) len(ml) # 3 ml[0] # "a" ml.pop() # "c" Common uses: • Starting point for custom list types • Type-tagging (isinstance checks) • Adding methods incrementally
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -183,7 +183,7 @@ d.keys_sorted()    # ["a", "b", "c"]
 d.values_sorted()  # [1, 2, 3]
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns ["a", "b"] Example: class MyDict(dict): def keys_sorted(self): return sorted(self.keys()) def values_sorted(self): return [self[k] for k in self.keys_sorted()] d = MyDict(c=3, a=1, b=2) d.keys_sorted() # ["a", "b", "c"] d.values_sorted() # [1, 2, 3]
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -255,7 +255,7 @@ MyStr("Hello").whisper()  # "hello..."
 Note: str is immutable — methods always return new strings, never modify self.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns "HELLO!" Example: class MyStr(str): def shout(self): return self.upper() + "!" def whisper(self): return self.lower() + "..." MyStr("Hello").shout() # "HELLO!" MyStr("Hello").whisper() # "hello..." Note: str is immutable — methods always return new strings, never modify self.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -326,7 +326,7 @@ MyInt(3).is_even()      # False
 MyInt(-5).is_positive()  # False
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns True Example: class MyInt(int): def is_even(self): return self % 2 == 0 def is_positive(self): return self > 0 MyInt(4).is_even() # True MyInt(3).is_even() # False MyInt(-5).is_positive() # False
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -391,7 +391,7 @@ The modulo approach works for all integers:
 • Odd: 1, 3, 5, -1, -3 → n % 2 != 0 → False
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns False The modulo approach works for all integers: • Even: 0, 2, 4, -2, -4 → n % 2 == 0 → True • Odd: 1, 3, 5, -1, -3 → n % 2 != 0 → False
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -463,7 +463,7 @@ Common uses:
 • Auto-initializing counters, lists, or nested dicts
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• d["x"] is now 1 Example: d = DefaultDict() d["a"] # 0 (__missing__ sets and returns 0) d["b"] += 5 # 5 (__missing__ returns 0, then 0+5=5) d # {"a": 0, "b": 5} Common uses: • Implementing default values for missing keys • Auto-initializing counters, lists, or nested dicts
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -537,7 +537,7 @@ Common uses:
 • Creating constrained immutable subtypes
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The returned object is an UpperStr instance with value "HELLO" Example: class UpperStr(str): def __new__(cls, s): return super().__new__(cls, s.upper()) UpperStr("hello") # "HELLO" UpperStr("World") # "WORLD" isinstance(UpperStr("hi"), str) # True Common uses: • Normalizing immutable values at creation time • Validating immutable data before object creation • Creating constrained immutable subtypes
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -609,7 +609,7 @@ class UpperStr(str):
 This is why int, str, tuple subclasses must use __new__ for value customization.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Sets value to "HELLO" This is why int, str, tuple subclasses must use __new__ for value customization.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -685,7 +685,7 @@ Common uses:
 • Custom matching logic
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns True Example: class LoggedSet(set): def __contains__(self, item): result = super().__contains__(item) print(f"Checked {item}: {result}") return result s = LoggedSet({1, 2, 3}) 1 in s # prints "Checked 1: True", returns True 5 in s # prints "Checked 5: False", returns False Common uses: • Logging or auditing membership checks • Case-insensitive containment • Custom matching logic
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -755,7 +755,7 @@ isinstance(ml, object)    # True (grandparent — all classes inherit from objec
 This is fundamental to polymorphism — subclass instances can be used wherever parent instances are expected.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns True Example: class MyList(list): pass ml = MyList() isinstance(ml, MyList) # True (direct instance) isinstance(ml, list) # True (parent class) isinstance(ml, object) # True (grandparent — all classes inherit from object) This is fundamental to polymorphism — subclass instances can be used wherever parent instances are expected.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -824,7 +824,7 @@ isinstance(MyList([]), list)  # True (MyList IS a list)
 This asymmetry is intentional — a Dog is an Animal, but not every Animal is a Dog.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns False Example: class MyList(list): pass isinstance([], MyList) # False (list is not a MyList) isinstance([], list) # True (list is a list) isinstance(MyList([]), list) # True (MyList IS a list) This asymmetry is intentional — a Dog is an Animal, but not every Animal is a Dog.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -897,7 +897,7 @@ Common uses:
 • Implementing set-like behavior with list ordering
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• len(al) → 1 Example: al = AutoList() al.append("a") al.append("b") al.append("a") # skipped al # ["a", "b"] len(al) # 2 Common uses: • Maintaining unique ordered collections • Preventing duplicate entries in lists • Implementing set-like behavior with list ordering
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -967,7 +967,7 @@ isinstance vs type:
 • type(MyList([])) is list → False (checks exact type)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• .__name__ extracts the string "MyList" Example: class MyList(list): pass type(MyList()) # <class 'MyList'> type(MyList()).__name__ # "MyList" type([]).__name__ # "list" isinstance vs type: • isinstance(MyList([]), list) → True (checks hierarchy) • type(MyList([])) is list → False (checks exact type)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1039,7 +1039,7 @@ type(ml[:1])       # <class 'list'> — not MyList!
 To preserve the subclass type, you must override __add__, __mul__, __getitem__, etc.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• To preserve the subclass type, you must override __add__, __mul__, __getitem__, etc.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1113,7 +1113,7 @@ __bases__ vs __mro__:
 • __mro__: full method resolution order (all ancestors)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• .__name__ → "B" Example: class A: pass class B(A): pass class C(B): pass C.__bases__ # (<class 'B'>,) — only direct parent B.__bases__ # (<class 'A'>,) A.__bases__ # (<class 'object'>,) C.__mro__ # (C, B, A, object) — full chain __bases__ vs __mro__: • __bases__: direct parents only • __mro__: full method resolution order (all ancestors)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1181,7 +1181,7 @@ issubclass(C, object)  # True (everything inherits from object)
 issubclass(A, C)       # False (A is NOT a subclass of C)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns True Example: issubclass(C, A) # True (grandparent) issubclass(C, B) # True (direct parent) issubclass(C, C) # True (class is subclass of itself) issubclass(C, object) # True (everything inherits from object) issubclass(A, C) # False (A is NOT a subclass of C)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1259,7 +1259,7 @@ Common uses:
 • Auto-registering subclasses
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Only direct children are included, not grandchildren Example: class A: pass A.__subclasses__() # [] (no subclasses yet) class B(A): pass class C(A): pass A.__subclasses__() # [B, C] class D(B): pass # D inherits from B, not directly from A A.__subclasses__() # [B, C] — D is NOT included (it's a grandchild) Common uses: • Plugin discovery and registration • Finding all implementations of a base class • Auto-registering subclasses
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1332,7 +1332,7 @@ registry = {cls.__name__: cls for cls in Shape.__subclasses__()}
 registry["Circle"]()  # creates a Circle instance
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• set(["B", "C"]) → {"B", "C"} Example: class Shape: pass class Circle(Shape): pass class Square(Shape): pass class Triangle(Shape): pass names = [cls.__name__ for cls in Shape.__subclasses__()] # ["Circle", "Square", "Triangle"] registry = {cls.__name__: cls for cls in Shape.__subclasses__()} # {"Circle": Circle, "Square": Square, "Triangle": Triangle} registry["Circle"]() # creates a Circle instance
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1409,7 +1409,7 @@ Common uses:
 • Validation of subclass constraints
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Base.registry is now ["A", "B"] Example: class Plugin: plugins = {} def __init_subclass__(cls, **kwargs): super().__init_subclass__(**kwargs) Plugin.plugins[cls.__name__] = cls class JSONPlugin(Plugin): pass class XMLPlugin(Plugin): pass Plugin.plugins # {"JSONPlugin": JSONPlugin, "XMLPlugin": XMLPlugin} Common uses: • Plugin registration systems • Auto-discovery of subclasses • Validation of subclass constraints
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1484,7 +1484,7 @@ Comparison:
 • __new__: called when instance is ALLOCATED
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The hook runs before the class statement finishes Timeline: class Parent: def __init_subclass__(cls): print(f"{cls.__name__} created") class Child(Parent): pass # prints "Child created" (definition time!) # No instances have been created yet Comparison: • __init_subclass__: called when class is DEFINED (subclassed) • __init__: called when instance is CREATED • __new__: called when instance is ALLOCATED
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1559,7 +1559,7 @@ B().method()     # "B"
 This pattern is common in __repr__ implementations to make them work correctly for subclasses.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• type(self).__name__ → "Child" Example: class Base: def method(self): return type(self).__name__ class A(Base): pass class B(Base): pass Base().method() # "Base" A().method() # "A" B().method() # "B" This pattern is common in __repr__ implementations to make them work correctly for subclasses.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1634,7 +1634,7 @@ class Sub(Base): pass
 Sub().who()  # "Sub"
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• .__name__ → "Child" type(self) vs self.__class__: • type(self) — the preferred, modern way • self.__class__ — also works, slightly older style • Both return the same result for standard classes • In rare edge cases with old-style classes (Python 2), they could differ • In Python 3, they are always equivalent Example: class Base: def who(self): return self.__class__.__name__ class Sub(Base): pass Sub().who() # "Sub"
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1706,7 +1706,7 @@ A.x          # 1 (unchanged)
 "x" in B.__dict__  # True (B now has its own x)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• A.x → still 1 (A.__dict__["x"] unchanged) Example: class A: x = 1 class B(A): pass B.x # 1 (inherited from A) B.x = 2 # creates B's own x B.x # 2 (B's own) A.x # 1 (unchanged) "x" in B.__dict__ # True (B now has its own x)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1782,7 +1782,7 @@ A.lst  # [] — A is unaffected
 This gotcha applies to any mutable class attribute: lists, dicts, sets.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• B.lst.append(1) A.lst # [1] — both see the change Fix — give each class its own list: class A: lst = [] class B(A): lst = [] # B has its own list now B.lst.append(1) A.lst # [] — A is unaffected This gotcha applies to any mutable class attribute: lists, dicts, sets.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1854,7 +1854,7 @@ B.lst  # [1]
 Best practice: When subclasses need independent mutable state, always redefine the attribute in the subclass or use __init__ to create instance-level attributes.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• B.lst.append(1) A.lst # [] B.lst # [1] Best practice: When subclasses need independent mutable state, always redefine the attribute in the subclass or use __init__ to create instance-level attributes.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1929,7 +1929,7 @@ Cat().speak()  # "Meow"
 This is an informal version of abstract methods — it doesn't prevent Animal() from being instantiated, but calling speak() on a plain Animal will raise an error.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns "Woof" Example: class Animal: def speak(self): raise NotImplementedError class Dog(Animal): def speak(self): return "Woof" class Cat(Animal): def speak(self): return "Meow" Dog().speak() # "Woof" Cat().speak() # "Meow" This is an informal version of abstract methods — it doesn't prevent Animal() from being instantiated, but calling speak() on a plain Animal will raise an error.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2001,7 +2001,7 @@ except NotImplementedError:
 This differs from @abstractmethod which prevents instantiation entirely — Animal() would raise TypeError if Animal used ABC.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• try: Animal().speak() except NotImplementedError: print("Must override speak()") This differs from @abstractmethod which prevents instantiation entirely — Animal() would raise TypeError if Animal used ABC.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2074,7 +2074,7 @@ When to use each:
 • @abstractmethod catches errors earlier and is more Pythonic
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Cannot instantiate (DEFINITION time check) When to use each: • @abstractmethod: when you want strict enforcement (recommended) • NotImplementedError: when you need flexibility (e.g., optional overrides) • @abstractmethod catches errors earlier and is more Pythonic
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2144,7 +2144,7 @@ Product("Widget", 9.99).serialize()  # "{'name': 'Widget', 'price': 9.99}"
 This is a form of the Template Method pattern — the parent defines the algorithm (serialize), and subclasses provide the data (__dict__).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• str({"name": "Bob"}) → "{'name': 'Bob'}" Example: class Product(Serializable): def __init__(self, name, price): self.name = name self.price = price Product("Widget", 9.99).serialize() # "{'name': 'Widget', 'price': 9.99}" This is a form of the Template Method pattern — the parent defines the algorithm (serialize), and subclasses provide the data (__dict__).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2215,7 +2215,7 @@ B().g(5)   # 10 (inherited lambda with parameter)
 Note: lambdas as class attributes are uncommon in practice — def is preferred for readability. But they demonstrate that Python treats all callables in the class namespace as potential methods.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• But they demonstrate that Python treats all callables in the class namespace as potential methods.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2292,7 +2292,7 @@ B().f()  # "B" (direct)
 The inheritance hierarchy determines which methods are available to each class.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• A is irrelevant — D doesn't inherit from A Example: class A: def f(self): return "A" class B: def f(self): return "B" class C(A): def f(self): return "C" class D(B): pass D().f() # "B" (inherits from B) C().f() # "C" (overrides A.f) A().f() # "A" (direct) B().f() # "B" (direct) The inheritance hierarchy determines which methods are available to each class.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2367,7 +2367,7 @@ C.who()  # "C"
 This is crucial for factory methods where the class method needs to create instances of the correct subclass.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns "B" Example: class A: @classmethod def who(cls): return cls.__name__ class B(A): pass class C(A): pass A.who() # "A" B.who() # "B" C.who() # "C" This is crucial for factory methods where the class method needs to create instances of the correct subclass.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2445,7 +2445,7 @@ class Shape:
         return Shape()  # Always returns Shape, not subclass!
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• .__name__ → "B" Example: class Shape: @classmethod def create(cls): return cls() class Circle(Shape): pass class Square(Shape): pass type(Circle.create()) # Circle (not Shape!) type(Square.create()) # Square (not Shape!) Anti-pattern (breaks subclassing): class Shape: @classmethod def create(cls): return Shape() # Always returns Shape, not subclass!
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2514,7 +2514,7 @@ type(obj) is B           # True (exact type check)
 Factory classmethods preserve the type hierarchy — objects created via create() participate correctly in isinstance checks.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns True Example: obj = B.create() isinstance(obj, B) # True (it's a B) isinstance(obj, A) # True (B is a subclass of A) isinstance(obj, object) # True (everything inherits from object) type(obj) is B # True (exact type check) Factory classmethods preserve the type hierarchy — objects created via create() participate correctly in isinstance checks.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2585,7 +2585,7 @@ hasattr(b, "y")  # True
 Fix: call super().__init__() in B.__init__ to ensure parent initialization runs.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (A.__init__ never ran) hasattr(b, "x") # False hasattr(b, "y") # True Fix: call super().__init__() in B.__init__ to ensure parent initialization runs.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2661,7 +2661,7 @@ c.child_attr  # "from child"
 Best practice: always call super().__init__() unless you have a specific reason not to.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (b.x, b.y) → (1, 2) Example: class Base: def __init__(self): self.base_attr = "from base" class Child(Base): def __init__(self): super().__init__() # MUST call super self.child_attr = "from child" c = Child() c.base_attr # "from base" c.child_attr # "from child" Best practice: always call super().__init__() unless you have a specific reason not to.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2728,7 +2728,7 @@ repr(B())  # "A()" — incorrect for B!
 This is why polymorphic __repr__ implementations use type(self).__name__ instead of hardcoding the class name.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is why polymorphic __repr__ implementations use type(self).__name__ instead of hardcoding the class name.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2798,7 +2798,7 @@ repr(C())  # "C()" — correct for all subclasses!
 Best practice: Always use type(self).__name__ or self.__class__.__name__ in __repr__ for subclass-safe representations.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Best practice: Always use type(self).__name__ or self.__class__.__name__ in __repr__ for subclass-safe representations.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2869,7 +2869,7 @@ A() == 42   # False (42 is not an A)
 This is a common pattern for equality in class hierarchies — two objects are "equal" if they belong to the same family.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns True Example: class A: def __eq__(self, other): return isinstance(other, A) class B(A): pass A() == A() # True A() == B() # True (B is an A) A() == 42 # False (42 is not an A) This is a common pattern for equality in class hierarchies — two objects are "equal" if they belong to the same family.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2937,7 +2937,7 @@ Both return True — equality is symmetric here.
 Note: If B overrode __eq__ with different logic, symmetry could break — A() == B() might differ from B() == A(). Maintaining symmetry in __eq__ is important for correctness.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Maintaining symmetry in __eq__ is important for correctness.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3011,7 +3011,7 @@ Common uses:
 • Framework configuration via class keywords
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• B.greeting → "hi" Example: class B(A, greeting="hi"): pass class C(A): pass # uses default greeting="hello" class D(A, greeting="hey"): pass B.greeting # "hi" C.greeting # "hello" (default) D.greeting # "hey" Common uses: • Configuring subclass behavior at definition time • Plugin registration with parameters • Framework configuration via class keywords
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3086,7 +3086,7 @@ b.method()  # 2 (also gets the new method)
 This works because Python's method lookup is dynamic — it checks the class __dict__ every time the method is accessed.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• a.method() → looks up A.method → finds lambda → returns 2 Example: class A: def method(self): return 1 a = A() a.method() # 1 A.method = lambda self: 2 a.method() # 2 (resolved at call time!) b = A() b.method() # 2 (also gets the new method) This works because Python's method lookup is dynamic — it checks the class __dict__ every time the method is accessed.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3158,7 +3158,7 @@ b.method()  # 1 (class method — b is unaffected)
 Important: the instance attribute is a plain function, not a bound method. It doesn't receive self automatically.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• It doesn't receive self automatically.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3228,7 +3228,7 @@ b.x   # 2 (all instances see the class attribute change)
 Note: This is different from a.x = 2, which creates an instance attribute on a only. a.__class__.x = 2 modifies the class itself.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• a.__class__.x = 2 modifies the class itself.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3299,7 +3299,7 @@ B in A.__mro__     # False (B is not an ancestor of A)
 issubclass(B, A) is essentially equivalent to A in B.__mro__.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns True Example: class A: pass class B(A): pass B.__mro__ # (B, A, object) A in B.__mro__ # True B in B.__mro__ # True object in B.__mro__ # True B in A.__mro__ # False (B is not an ancestor of A) issubclass(B, A) is essentially equivalent to A in B.__mro__.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3373,7 +3373,7 @@ str.__mro__          # (str, object)
 Even built-in types have object at the end of their MRO.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns True Example: class X: pass X.__mro__ # (X, object) object in X.__mro__ # True class Y(X): pass Y.__mro__ # (Y, X, object) object in Y.__mro__ # True int.__mro__ # (int, object) str.__mro__ # (str, object) Even built-in types have object at the end of their MRO.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3449,7 +3449,7 @@ str(Invoice())  # "Invoice #123"
 The Template Method pattern allows the parent to define the algorithm structure while deferring specific steps to subclasses.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• __str__ returns "Report" Example: class Printable: def __str__(self): return self.to_string() class Report(Printable): def to_string(self): return "Report" class Invoice(Printable): def to_string(self): return "Invoice #123" str(Report()) # "Report" str(Invoice()) # "Invoice #123" The Template Method pattern allows the parent to define the algorithm structure while deferring specific steps to subclasses.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3523,7 +3523,7 @@ The MRO for C(A, B):
 C.__mro__  # (C, A, B, object) — linearized order for method lookup
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• len((A, B)) → 2 Example: class A: pass class B: pass class C(A, B): pass C.__bases__ # (<class 'A'>, <class 'B'>) len(C.__bases__) # 2 class D(A): pass D.__bases__ # (<class 'A'>,) len(D.__bases__) # 1 The MRO for C(A, B): C.__mro__ # (C, A, B, object) — linearized order for method lookup
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3595,7 +3595,7 @@ object.__bases__ # () — object has no parent
 This is the foundation of Python's object model — everything is an object, and type is the metaclass that creates classes.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• len((type, object)) → 2 The type/object relationship: • isinstance(type, object) → True (type is an object) • isinstance(object, type) → True (object is a type) • type(type) is type → True (type is its own metaclass) • type(object) is type → True Example: type.__mro__ # (<class 'type'>, <class 'object'>) type.__bases__ # (<class 'object'>,) object.__bases__ # () — object has no parent This is the foundation of Python's object model — everything is an object, and type is the metaclass that creates classes.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

@@ -35,7 +35,7 @@ Common uses:
 • Debugging inheritance chains
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • B.__dict__ only contains attributes defined directly on B • Inherited attributes live in the parent class's __dict__ • Python looks up attributes through the MRO chain • "x" in B.__dict__ checks only B's own namespace How it works: • class A: x = 1 defines x in A.__dict__ • class B(A): pass defines nothing in B.__dict__ • B.x works because Python finds x in A via MRO • But "x" in B.__dict__ is False because B has no own x Example: class A: x = 1 class B(A): pass "x" in A.__dict__ # True "x" in B.__dict__ # False B.x # 1 (found via MRO) Common uses: • Inspecting which attributes a class defines itself • Understanding attribute resolution vs ownership • Debugging inheritance chains
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -109,7 +109,7 @@ Common uses:
 • Inspecting class namespaces
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • B defines x = 2, so "x" is in B.__dict__ • This shadows A's x = 1 • A.__dict__["x"] is still 1 • B.__dict__["x"] is 2 How it works: • class B(A): x = 2 creates a new attribute x in B's namespace • B.__dict__ now contains "x" • A.x is still 1, B.x is 2 Example: class A: x = 1 class B(A): x = 2 "x" in B.__dict__ # True B.__dict__["x"] # 2 A.__dict__["x"] # 1 Common uses: • Understanding attribute shadowing • Overriding class attributes in subclasses • Inspecting class namespaces
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -181,7 +181,7 @@ Common uses:
 • Understanding method inheritance vs definition
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• stores f in A.__dict__ • class B(A): pass stores nothing in B.__dict__ • B().f() finds f in A via the method resolution order Example: class A: def f(self): return 1 class B(A): pass "f" in A.__dict__ # True "f" in B.__dict__ # False B().f() # 1 (found via MRO) Common uses: • Checking which methods a class defines itself • Understanding method inheritance vs definition
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -255,7 +255,7 @@ Common uses:
 • Distinguishing instance attrs from class attrs
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • A.__init__ sets self.x = 1 • B inherits __init__ from A • When B() is called, self.x = 1 stores x on the instance • b.__dict__ contains "x" How it works: • B() calls inherited A.__init__(self) • self.x = 1 creates x on the instance b • b.__dict__ == {"x": 1} • "x" in b.__dict__ is True Example: class A: def __init__(self): self.x = 1 class B(A): pass b = B() b.__dict__ # {"x": 1} "x" in b.__dict__ # True Common uses: • Understanding where instance attributes live • Distinguishing instance attrs from class attrs
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -328,7 +328,7 @@ Common uses:
 • Framework introspection
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • A.__subclasses__() returns direct subclasses of A • B is a direct subclass of A, so it appears in the list • Only direct subclasses are included, not grandchildren • The result is a list of class objects How it works: • Python tracks subclasses via weak references • When class B(A) is defined, A registers B • A.__subclasses__() returns [<class 'B'>] Example: class A: pass class B(A): pass class C(A): pass class D(B): pass A.__subclasses__() # [<class 'B'>, <class 'C'>] B.__subclasses__() # [<class 'D'>] Common uses: • Finding all implementations of a base class • Plugin/registry systems • Framework introspection
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -399,7 +399,7 @@ Common uses:
 • Registry patterns
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • B(A) and C(A) are both direct subclasses of A • __subclasses__() counts each direct subclass • Indirect subclasses (children of B or C) are not counted How it works: • class B(A) registers B as a subclass of A • class C(A) registers C as a subclass of A • A.__subclasses__() returns [B, C] • len() of that list is 2 Example: class A: pass class B(A): pass class C(A): pass len(A.__subclasses__()) # 2 Common uses: • Counting implementations • Plugin discovery • Registry patterns
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -474,7 +474,7 @@ Common uses:
 • Extending slotted classes with new attributes
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • A defines __slots__ = ("x",) • B(A) defines __slots__ = ("y",) — adds y • B instances have both x and y slots • Do NOT redeclare parent slots in child __slots__ How it works: • b = B() creates instance with slots x and y • b.x = 1 uses the x slot from A • b.y = 2 uses the y slot from B • (b.x, b.y) returns (1, 2) Example: class A: __slots__ = ("x",) class B(A): __slots__ = ("y",) b = B() b.x = 1 b.y = 2 (b.x, b.y) # (1, 2) Common uses: • Memory-efficient inheritance hierarchies • Extending slotted classes with new attributes
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -549,7 +549,7 @@ Common uses:
 • Mixing slotted and non-slotted classes
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • A has __slots__ = ("x",) — no __dict__ on A instances • B(A) has no __slots__ — B instances get a __dict__ • B instances can use slot x from A AND store extra attrs in __dict__ • b.z = 3 is stored in b.__dict__ How it works: • b = B() has both x slot (from A) and __dict__ (from B) • b.x = 1 uses the slot • b.z = 3 uses __dict__ • Both are accessible Example: class A: __slots__ = ("x",) class B(A): pass b = B() b.x = 1 b.z = 3 (b.x, b.z) # (1, 3) hasattr(b, "__dict__") # True Common uses: • Understanding slot inheritance behavior • Mixing slotted and non-slotted classes
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -623,7 +623,7 @@ Common uses:
 • No actual enforcement — just a signal to developers
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • self._x = 1 is a convention for "internal use" • No access restriction is enforced • Subclasses can freely access _x • B().get_x() returns self._x which is 1 How it works: • A.__init__ sets self._x = 1 • B inherits __init__ from A • B().get_x() accesses self._x — returns 1 • No name mangling or restriction Example: class A: def __init__(self): self._x = 1 class B(A): def get_x(self): return self._x B().get_x() # 1 Common uses: • Indicating internal/private attributes by convention • No actual enforcement — just a signal to developers
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -697,7 +697,7 @@ Common uses:
 • Avoiding accidental attribute access in subclasses
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • self.__x = 1 in A.__init__ stores _A__x on the instance • self.__x in B.get_x looks for _B__x (B's mangled name) • _B__x does not exist — only _A__x does • This raises AttributeError How it works: • A.__init__: self.__x = 1 → self._A__x = 1 • B.get_x: return self.__x → return self._B__x • _B__x was never set, so AttributeError • This is Python's name mangling mechanism Example: class A: def __init__(self): self.__x = 1 class B(A): def get_x(self): return self.__x # looks for _B__x B().get_x() # AttributeError: 'B' object has no attribute '_B__x' Common uses: • Understanding name mangling behavior • Avoiding accidental attribute access in subclasses
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -771,7 +771,7 @@ Common uses:
 • Testing and debugging name-mangled attributes
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • self.__x in A becomes self._A__x • You can access it as self._A__x from anywhere • This bypasses the name mangling protection • B.get_x uses self._A__x — returns 1 How it works: • A.__init__: self.__x = 1 → stored as _A__x • B.get_x: return self._A__x → directly reads _A__x • The mangled name exists on the instance • Returns 1 Example: class A: def __init__(self): self.__x = 1 class B(A): def get_x(self): return self._A__x B().get_x() # 1 Common uses: • Accessing parent's private attributes when necessary • Testing and debugging name-mangled attributes
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -843,7 +843,7 @@ Common uses:
 • Pseudo-private attributes in classes
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • __attr becomes _ClassName__attr • ClassName is the class where the attribute is defined • This applies to attributes and methods • Dunders (__attr__) are NOT mangled (two trailing underscores) How it works: • class Foo: self.__bar = 1 stores self._Foo__bar • class Sub(Foo): self.__bar would be self._Sub__bar • The mangling happens at compile time • It prevents accidental overwrites in subclasses Example: class MyClass: def __init__(self): self.__secret = 42 obj = MyClass() obj._MyClass__secret # 42 Common uses: • Preventing subclass attribute name conflicts • Pseudo-private attributes in classes
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -916,7 +916,7 @@ Common uses:
 • Module-level private variables
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common uses: • Marking internal APIs • Signaling "don't use this directly" • Module-level private variables
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -989,7 +989,7 @@ Common uses:
 • Pseudo-private attributes (stronger than single underscore)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • __attr triggers name mangling • Becomes _ClassName__attr internally • Makes accidental access from subclasses harder • Not true privacy — still accessible via mangled name How it works: • self.__x = 1 becomes self._ClassName__x = 1 • Subclass self.__x becomes self._SubClass__x • Different classes get different mangled names • Prevents accidental name collisions in inheritance Example: class Parent: def __init__(self): self.__val = 10 p = Parent() # p.__val # AttributeError p._Parent__val # 10 — accessible via mangled name Common uses: • Avoiding attribute name collisions in deep hierarchies • Pseudo-private attributes (stronger than single underscore)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1061,7 +1061,7 @@ Common uses:
 • Implementing magic methods correctly
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • __attr__ (both leading and trailing underscores) = dunder • Dunders are never mangled • They are reserved for Python's special/magic methods • Only __attr (leading only) triggers mangling How it works: • __init__ stays as __init__ — no mangling • __str__ stays as __str__ — no mangling • __private (no trailing underscores) → _ClassName__private • __dunder__ (both sides) → __dunder__ (unchanged) Example: class Foo: def __init__(self): # NOT mangled self.__bar = 1 # mangled to _Foo__bar def __repr__(self): # NOT mangled return "Foo" Common uses: • Understanding which names get mangled • Implementing magic methods correctly
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1138,7 +1138,7 @@ Common uses:
 • Instance tracking patterns
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • A.class_id is a class attribute shared across all instances • Each __init__ call increments A.class_id • self.id captures the current count • a1 gets id=1, a2 gets id=2 How it works: • A.class_id starts at 0 • a1 = A(): class_id becomes 1, a1.id = 1 • a2 = A(): class_id becomes 2, a2.id = 2 • (a1.id, a2.id) is (1, 2) Example: class A: class_id = 0 def __init__(self): A.class_id += 1 self.id = A.class_id a1 = A() # id=1 a2 = A() # id=2 a3 = A() # id=3 (a1.id, a2.id) # (1, 2) Common uses: • Auto-incrementing IDs • Counting instances created • Instance tracking patterns
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1211,7 +1211,7 @@ Common uses:
 • Replacing simple metaclasses
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • __init_subclass__ is called when a subclass is created • cls is the new subclass (B), not the parent (A) • It can modify the subclass before it's used • Introduced in Python 3.6 How it works: • class B(A): pass triggers A.__init_subclass__(B) • cls.parent_name = "A" sets parent_name on B • B.parent_name is "A" Example: class A: def __init_subclass__(cls, **kw): super().__init_subclass__(**kw) cls.parent_name = "A" class B(A): pass B.parent_name # "A" Common uses: • Plugin registration systems • Automatic class configuration • Replacing simple metaclasses
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1287,7 +1287,7 @@ Common uses:
 • Domain-specific value types
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • int is immutable — value must be set in __new__ • __new__ creates the actual object • super().__new__(cls, val) creates an int with value val • Positive(5) is an int with value 5 • Positive(5) + 3 uses normal int addition → 8 How it works: • Positive(5) calls __new__ with val=5 • val >= 0, so no ValueError • super().__new__(Positive, 5) creates int with value 5 • Positive(5) + 3 = 8 (inherits int arithmetic) Example: class Positive(int): def __new__(cls, val): if val < 0: raise ValueError("Must be positive") return super().__new__(cls, val) Positive(5) + 3 # 8 Positive(0) * 2 # 0 Common uses: • Constrained numeric types • Custom int/str/tuple subclasses • Domain-specific value types
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1362,7 +1362,7 @@ Common uses:
 • Custom constrained types
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Positive(-1) calls __new__ with val=-1 • val < 0 is True → raise ValueError • The object is never created • This is validation in __new__ How it works: • __new__ checks if val < 0 • -1 < 0 is True • ValueError is raised • No Positive object is created Example: class Positive(int): def __new__(cls, val): if val < 0: raise ValueError return super().__new__(cls, val) Positive(5) # 5 (works fine) Positive(-1) # ValueError Common uses: • Input validation for immutable types • Ensuring data integrity at creation time • Custom constrained types
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1436,7 +1436,7 @@ Common uses:
 • Readable output for ratios and percentages
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Percentage(0.75) creates a float with value 0.75 • __repr__ is overridden to use percentage formatting • f"{self:.1%}" formats 0.75 as "75.0%" • .1 means one decimal place, % means multiply by 100 and add % How it works: • self is 0.75 (a float) • :.1% multiplies by 100 → 75.0, adds % • f"{0.75:.1%}" → "75.0%" • repr(Percentage(0.75)) returns "75.0%" Example: class Percentage(float): def __repr__(self): return f"{self:.1%}" repr(Percentage(0.75)) # '75.0%' repr(Percentage(0.5)) # '50.0%' repr(Percentage(1.0)) # '100.0%' Common uses: • Domain-specific numeric types with custom display • Financial and statistical calculations • Readable output for ratios and percentages
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1514,7 +1514,7 @@ Common uses:
 • Data processing pipelines
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Base class defines the overall algorithm (the "template method") • Individual steps are defined as methods that subclasses can override • The algorithm's structure stays the same; only steps change • Uses inheritance and method overriding How it works: • Base class has a method that calls several step methods • Subclasses override step methods to customize behavior • The template method itself is not overridden Example: class Report: def generate(self): return self.header() + self.body() + self.footer() def header(self): return "=== Report ===\\n" def body(self): return "No data\\n" def footer(self): return "=== End ===" class SalesReport(Report): def body(self): return "Sales: $1000\\n" SalesReport().generate() # Uses overridden body() Common uses: • Document generation frameworks • Game loop patterns • Data processing pipelines
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1586,7 +1586,7 @@ Common uses:
 • Allowing customization of individual steps
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • generate() calls header(), body(), and footer() • generate() defines the algorithm skeleton • header() and footer() are the customizable steps • Subclasses override the steps, not the template method How it works: • generate() orchestrates the algorithm • It calls self.header(), self.body(), self.footer() • Subclasses override header/body/footer to customize output • generate() structure remains unchanged Example: class Report: def generate(self): # template method return self.header() + self.body() + self.footer() def header(self): return "=Head=\\n" def footer(self): return "=End=" Common uses: • Defining fixed algorithm structures • Allowing customization of individual steps
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1665,7 +1665,7 @@ Common uses:
 • Validation strategies
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Strategy pattern uses composition (has-a) not inheritance (is-a) • Behavior is injected as an object or function • Algorithms can be swapped at runtime • Follows Open/Closed Principle How it works: • Define a family of algorithms (strategies) • Context object holds a reference to a strategy • Context delegates work to the strategy • Strategy can be changed without modifying context Example: class Sorter: def __init__(self, strategy): self.strategy = strategy def sort(self, data): return self.strategy(data) s = Sorter(sorted) s.sort([3, 1, 2]) # [1, 2, 3] s.strategy = lambda d: sorted(d, reverse=True) s.sort([3, 1, 2]) # [3, 2, 1] Common uses: • Sorting algorithms • Payment processing strategies • Validation strategies
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1737,7 +1737,7 @@ Common uses:
 • Testing with mock strategies
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Sorter holds a strategy (the sorted built-in function) • sort() delegates to self.strategy(data) • sorted([3, 1, 2]) returns [1, 2, 3] • Strategy can be swapped without changing Sorter How it works: • Sorter(sorted) stores sorted as the strategy • s.sort([3, 1, 2]) calls sorted([3, 1, 2]) • Returns [1, 2, 3] Example: s = Sorter(sorted) s.sort([3, 1, 2]) # [1, 2, 3] s2 = Sorter(lambda d: sorted(d, reverse=True)) s2.sort([3, 1, 2]) # [3, 2, 1] Common uses: • Pluggable algorithms • Runtime algorithm selection • Testing with mock strategies
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1815,7 +1815,7 @@ Common uses:
 • Database connection factories
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • A method is responsible for creating objects • Subclasses can override to change the type of object created • Decouples object creation from usage • Often uses @classmethod in Python How it works: • Base class defines a factory method • Factory method creates and returns an object • Subclasses override to return different types • Client code uses the factory method, not direct construction Example: class Animal: def __init__(self, sound): self.sound = sound @classmethod def create(cls, sound): return cls(sound) class Dog(Animal): pass Dog.create("woof").sound # "woof" Common uses: • Object creation with complex setup • Plugin systems • Database connection factories
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1893,7 +1893,7 @@ Common uses:
 • Framework extension points
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • @classmethod receives the class as cls • Dog.create("woof") → cls is Dog • cls(sound) → Dog("woof") • Dog.__init__ sets self.sound = "woof" How it works: • create is a classmethod inherited from Animal • Dog.create("woof") passes Dog as cls • cls("woof") creates a Dog instance • self.sound = "woof" in __init__ • .sound returns "woof" Example: class Animal: @classmethod def create(cls, sound): return cls(sound) class Dog(Animal): def __init__(self, sound): self.sound = sound Dog.create("woof").sound # "woof" type(Dog.create("woof")) # <class 'Dog'> Common uses: • Alternative constructors • Polymorphic object creation • Framework extension points
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1970,7 +1970,7 @@ Common uses:
 • MVC architecture
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Subject (observable) maintains a list of observers • When state changes, subject notifies all observers • Observers register/unregister dynamically • Decouples the subject from its observers How it works: • Subject has subscribe/unsubscribe/notify methods • Observers register via subscribe • When subject state changes, it calls notify • Each observer's update method is called Example: class Event: def __init__(self): self._handlers = [] def subscribe(self, handler): self._handlers.append(handler) def fire(self, data): for h in self._handlers: h(data) Common uses: • GUI event systems • Pub/sub messaging • Reactive programming • MVC architecture
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2044,7 +2044,7 @@ Common uses:
 • Decoupled communication between components
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Event stores handlers in a list • subscribe adds a handler function • fire calls all handlers with the given data • One handler was subscribed, so results gets one item How it works: • e.subscribe(lambda d: results.append(d)) registers a handler • e.fire("hello") calls the handler with "hello" • The handler appends "hello" to results • results is ["hello"] Example: e = Event() results = [] e.subscribe(lambda d: results.append(d)) e.subscribe(lambda d: results.append(d.upper())) e.fire("hello") results # ["hello", "HELLO"] Common uses: • Event-driven architectures • Callback registration • Decoupled communication between components
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2122,7 +2122,7 @@ Common uses:
 • SOLID principles compliance
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • If S is a subclass of T, you should be able to use S wherever T is expected • Subclass must honor the contract of the parent • Overriding methods should not break parent's guarantees • Violations often indicate a design flaw How it works: • Base class defines a contract (expected behavior) • Subclass must fulfill that contract • If subclass breaks parent's invariants, LSP is violated • Classic violation: Square extending Rectangle Example of LSP violation: class Rectangle: def __init__(self, w, h): self.w = w; self.h = h def area(self): return self.w * self.h class Square(Rectangle): def __init__(self, s): super().__init__(s, s) # If you allow setting w independently, # square invariant (w==h) breaks → LSP violation Common uses: • Designing robust class hierarchies • Code review and refactoring • SOLID principles compliance
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2197,7 +2197,7 @@ Common uses:
 • Design pattern discussions
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• sq = Square(3) test_rect(sq) # Assertion error — Square can't behave like Rectangle Common uses: • Classic SOLID principles example • Interview question • Design pattern discussions
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2278,7 +2278,7 @@ Common uses:
 • SOLID design compliance
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Open for extension: you can add new behavior • Closed for modification: existing code shouldn't change • Use inheritance, interfaces, or composition to extend • Prevents breaking existing functionality How it works: • Instead of modifying a class to add behavior, extend it • Use abstract base classes to define interfaces • New functionality is added by creating new subclasses • Existing code remains untouched Example: from abc import ABC, abstractmethod class Shape(ABC): @abstractmethod def area(self): pass class Circle(Shape): def __init__(self, r): self.r = r def area(self): return 3.14 * self.r ** 2 class Square(Shape): def __init__(self, s): self.s = s def area(self): return self.s ** 2 Common uses: • Plugin architectures • Extensible frameworks • SOLID design compliance
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2355,7 +2355,7 @@ Common uses:
 • Making classes easier to test
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common uses: • Code organization • Reducing coupling • Making classes easier to test
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2439,7 +2439,7 @@ Common uses:
 • Plugin contracts
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Prefer small, specific interfaces over large, general ones • No client should be forced to implement unnecessary methods • Split fat interfaces into smaller role-specific ones • Each interface should have a clear purpose How it works: • A large Worker interface with work(), eat(), sleep() forces all implementations to define all methods • A Robot worker doesn't eat or sleep • Split into Workable, Eatable, Sleepable interfaces • Robot only implements Workable Example: from abc import ABC, abstractmethod class Workable(ABC): @abstractmethod def work(self): pass class Eatable(ABC): @abstractmethod def eat(self): pass class Human(Workable, Eatable): def work(self): return "working" def eat(self): return "eating" class Robot(Workable): def work(self): return "working" Common uses: • API design • Microservice interfaces • Plugin contracts
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2522,7 +2522,7 @@ Common uses:
 • Swappable implementations
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Depend on abstractions (interfaces/abstract classes) • Don't depend on concrete implementations directly • High-level modules define what they need (interface) • Low-level modules implement that interface How it works: • Instead of: class App uses MySQLDatabase directly • Define: class Database(ABC) with abstract methods • App depends on Database (abstraction) • MySQLDatabase implements Database • You can swap implementations without changing App Example: from abc import ABC, abstractmethod class Database(ABC): @abstractmethod def save(self, data): pass class MySQLDB(Database): def save(self, data): return f"MySQL: {data}" class App: def __init__(self, db: Database): self.db = db def store(self, data): return self.db.save(data) Common uses: • Dependency injection • Testing with mocks • Swappable implementations
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2604,7 +2604,7 @@ Common uses:
 • Decoupled module design
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Plugin(ABC) defines an abstract interface • @abstractmethod execute() must be implemented by subclasses • Code that uses Plugin depends on the abstraction • New plugins can be added without changing existing code How it works: • Plugin defines what a plugin must do (execute) • Concrete plugins implement the interface • The application depends on Plugin (abstraction) • Any class implementing execute() can be used as a plugin Example: from abc import ABC, abstractmethod class Plugin(ABC): @abstractmethod def execute(self): pass class LogPlugin(Plugin): def execute(self): return "Logging..." class AuthPlugin(Plugin): def execute(self): return "Authenticating..." def run_plugin(p: Plugin): return p.execute() Common uses: • Plugin architectures • Framework extension points • Decoupled module design
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2684,7 +2684,7 @@ Common uses:
 • Cache managers
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • _instance stores the single instance (starts as None) • __new__ checks if _instance exists • If not, creates a new instance and stores it • If yes, returns the existing instance • s1 is s2 is True — same object How it works: • Singleton() first time: _instance is None → create new → store in _instance • Singleton() second time: _instance exists → return same object • s1 and s2 are the same object • s1 is s2 → True Example: class Singleton: _instance = None def __new__(cls): if not cls._instance: cls._instance = super().__new__(cls) return cls._instance s1 = Singleton() s2 = Singleton() s1 is s2 # True id(s1) == id(s2) # True Common uses: • Configuration managers • Database connection pools • Logger instances • Cache managers
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2760,7 +2760,7 @@ Common uses:
 • Automatic registration
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • type.__call__ is what creates instances of a class • Metaclass overrides __call__ to add custom behavior • super().__call__(*a, **kw) performs the normal creation • The print runs before/during instance creation How it works: • Foo() triggers Meta.__call__(Foo) • Meta.__call__ prints f"Creating {cls.__name__}" → "Creating Foo" • super().__call__() calls type.__call__ → creates the Foo instance • Returns the new Foo instance Example: class Meta(type): def __call__(cls, *a, **kw): print(f"Creating {cls.__name__}") return super().__call__(*a, **kw) class Foo(metaclass=Meta): pass f = Foo() # prints: Creating Foo Common uses: • Logging object creation • Object creation interception • Instance counting • Automatic registration
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2840,7 +2840,7 @@ Common uses:
 • Flexible, swappable components
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Inheritance models "is-a" (Dog is an Animal) • Composition models "has-a" (Car has an Engine) • Deep inheritance hierarchies become rigid and fragile • Composition allows flexible behavior combination How it works: • Instead of inheriting from multiple unrelated classes • Create separate component objects • Delegate behavior to those components • Components can be swapped at runtime Example: class Engine: def start(self): return "Engine running" class GPS: def locate(self): return "Location found" class Car: def __init__(self): self.engine = Engine() self.gps = GPS() def start(self): return self.engine.start() Common uses: • Combining unrelated behaviors • Avoiding deep inheritance hierarchies • Flexible, swappable components
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2925,7 +2925,7 @@ Common uses:
 • Django class-based views
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Mixins are not meant to be instantiated alone • They provide additional methods to other classes • Keep class hierarchies flat • Enable code reuse across unrelated classes How it works: • Define a mixin with specific methods • Use multiple inheritance to add mixin to classes • Classes gain the mixin's methods • Multiple mixins can be combined Example: class JsonMixin: def to_json(self): import json return json.dumps(self.__dict__) class LogMixin: def log(self, msg): print(f"[{self.__class__.__name__}] {msg}") class User(JsonMixin, LogMixin): def __init__(self, name): self.name = name u = User("Alice") u.to_json() # '{"name": "Alice"}' u.log("hi") # [User] hi Common uses: • Adding serialization (JsonMixin, XmlMixin) • Adding logging capabilities • Adding comparison methods • Django class-based views
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3004,7 +3004,7 @@ Common uses:
 • Using super() correctly in complex hierarchies
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Diamond: D inherits from B and C, which both inherit from A • Without resolution, methods from A could be called twice • C3 linearization produces a consistent MRO • Each class appears exactly once in the MRO • super() follows the MRO, not just the direct parent How it works: • Python computes MRO at class creation using C3 linearization • MRO respects: children before parents, left-to-right order • Each class appears once • super() calls follow MRO order Example: class A: def method(self): return "A" class B(A): def method(self): return "B" class C(A): def method(self): return "C" class D(B, C): pass D.__mro__ # (D, B, C, A, object) D().method() # "B" — first in MRO after D Common uses: • Understanding method resolution • Designing multiple inheritance hierarchies • Using super() correctly in complex hierarchies
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3077,7 +3077,7 @@ Common uses:
 • Knowing what except Exception catches
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • BaseException → SystemExit (not under Exception) • BaseException → KeyboardInterrupt (not under Exception) • except Exception catches most errors but not SystemExit/KeyboardInterrupt Example: issubclass(ValueError, Exception) # True issubclass(TypeError, Exception) # True issubclass(KeyError, Exception) # True issubclass(SystemExit, Exception) # False issubclass(KeyboardInterrupt, Exception) # False Common uses: • Understanding exception catching • Designing exception hierarchies • Knowing what except Exception catches
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3151,7 +3151,7 @@ Common uses:
 • Domain-specific exceptions
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • class CustomError(Exception): pass is valid • Inherits __init__ from Exception • Can be raised with a message: raise CustomError("oops") • Can be caught with except CustomError How it works: • CustomError inherits everything from Exception • raise CustomError("oops") creates and raises it • The message "oops" is stored in args • str(e) returns "oops" Example: class CustomError(Exception): pass try: raise CustomError("oops") except CustomError as e: print(e) # oops Common uses: • Application-specific errors • API error responses • Domain-specific exceptions
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3228,7 +3228,7 @@ Common uses:
 • Rich exception objects for error handling
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Override __init__ to add custom attributes • Call super().__init__(msg) to preserve Exception behavior • self.code = code adds a custom attribute • e.code returns 404 How it works: • CustomError("fail", 404) calls __init__ • super().__init__("fail") stores the message • self.code = 404 stores the error code • e.code accesses the code attribute → 404 Example: class CustomError(Exception): def __init__(self, msg, code): super().__init__(msg) self.code = code e = CustomError("fail", 404) e.code # 404 str(e) # "fail" e.args # ("fail",) Common uses: • HTTP error responses with status codes • Database errors with error codes • Rich exception objects for error handling
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3308,7 +3308,7 @@ Common uses:
 • Library exception design
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common uses: • Application error hierarchies • Layered error handling • Library exception design
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3389,7 +3389,7 @@ Common uses:
 • Hierarchical exception catching
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Yes (subclass) • except AppError matches → result = "caught" • result is "caught" Example: class AppError(Exception): pass class DBError(AppError): pass class AuthError(AppError): pass try: raise DBError() except AppError: print("caught") # catches DBError try: raise AuthError() except AppError: print("caught") # catches AuthError too Common uses: • Broad exception handlers for application errors • Fallback error handling • Hierarchical exception catching
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3466,7 +3466,7 @@ Common uses:
 • Grouping similar exception handlers
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • Yes → except block runs • result = "caught" Example: try: raise ValueError() except (TypeError, ValueError): print("caught") # caught try: raise KeyError() except (TypeError, ValueError): pass # NOT caught — KeyError is not in the tuple Common uses: • Handling multiple related error types uniformly • Simplifying error handling code • Grouping similar exception handlers
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3537,7 +3537,7 @@ Common uses:
 • Understanding what except clauses catch
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • ValueError → Exception → BaseException → object • issubclass(ValueError, Exception) is True • This means except Exception catches ValueError • Most common exceptions are subclasses of Exception How it works: • Python checks ValueError's MRO • ValueError.__mro__ includes Exception • issubclass returns True Example: issubclass(ValueError, Exception) # True issubclass(TypeError, Exception) # True issubclass(Exception, BaseException) # True issubclass(ValueError, BaseException) # True Common uses: • Verifying exception hierarchies • Programmatic exception handling • Understanding what except clauses catch
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3612,7 +3612,7 @@ Common uses:
 • Ensuring programs can be interrupted
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common uses: • Understanding exception hierarchy design • Writing correct exception handlers • Ensuring programs can be interrupted
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3689,7 +3689,7 @@ Common uses:
 • Avoiding accidentally catching system events
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• # Program exits normally Common uses: • Understanding why sys.exit() works inside try/except • Correct exception handler design • Avoiding accidentally catching system events
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3770,7 +3770,7 @@ Common uses:
 • Ensuring programs can always be stopped
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • except Exception is a common "catch-all" pattern • If KeyboardInterrupt were under Exception, Ctrl+C would be caught • If SystemExit were under Exception, sys.exit() would be caught • This design ensures programs remain interruptible and exitable How it works: • BaseException is the true root of all exceptions • Exception is for "normal" errors that programs handle • KeyboardInterrupt and SystemExit are "system events", not errors • They bypass Exception to avoid being accidentally caught Example: try: while True: pass except Exception: print("Error!") # Ctrl+C is NOT caught # User can still interrupt the program # If you truly need to catch everything: try: pass except BaseException: pass # Catches EVERYTHING (usually a bad idea) Common uses: • Understanding Python's exception design philosophy • Writing robust exception handlers • Knowing when to use except Exception vs except BaseException • Ensuring programs can always be stopped
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

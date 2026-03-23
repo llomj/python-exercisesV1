@@ -28,7 +28,7 @@ A.__mro__   # (<class 'A'>, <class 'object'>)
 A.mro()     # [<class 'A'>, <class 'object'>]  (list form)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • __mro__ returns the method resolution order as a tuple • Every class ultimately inherits from object • A single class with no explicit parent has MRO: (ClassName, object) • Python uses C3 linearization to compute the MRO How it works: • class A: pass creates a class that implicitly inherits from object • A.__mro__ returns (<class 'A'>, <class 'object'>) • Python first looks in A, then in object Example: class A: pass A.__mro__ # (<class 'A'>, <class 'object'>) A.mro() # [<class 'A'>, <class 'object'>] (list form)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -95,7 +95,7 @@ B.__mro__  # (<class 'B'>, <class 'A'>, <class 'object'>)
 len(B.__mro__)  # 3
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Single inheritance creates a linear MRO chain • The class itself always comes first in its own MRO • Parent classes follow in inheritance order • object is always last How it works: • class B(A) means B inherits from A • B.__mro__ = (<class 'B'>, <class 'A'>, <class 'object'>) • Attribute lookup searches B first, then A, then object Example: class A: pass class B(A): pass B.__mro__ # (<class 'B'>, <class 'A'>, <class 'object'>) len(B.__mro__) # 3
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -162,7 +162,7 @@ class C(B): pass
 C.__mro__  # (<class 'C'>, <class 'B'>, <class 'A'>, <class 'object'>)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • C(B) and B(A) form a linear inheritance chain • MRO follows the chain from child to ultimate parent • Each class appears exactly once in the MRO • object is always the final entry How it works: • C inherits from B, B inherits from A, A inherits from object • C.__mro__ = (C, B, A, object) • Method lookup proceeds in this exact order Example: class A: pass class B(A): pass class C(B): pass C.__mro__ # (<class 'C'>, <class 'B'>, <class 'A'>, <class 'object'>)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -229,7 +229,7 @@ class C(A, B): pass
 C.__mro__  # (<class 'C'>, <class 'A'>, <class 'B'>, <class 'object'>)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • C(A, B) means A is checked before B • The order of base classes in the class definition matters • Unrelated parents are linearized left-to-right • object appears once at the end How it works: • class C(A, B) — A is the first parent, B is the second • C.__mro__ = (C, A, B, object) • Attribute lookup: C → A → B → object Example: class A: pass class B: pass class C(A, B): pass C.__mro__ # (<class 'C'>, <class 'A'>, <class 'B'>, <class 'object'>)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -298,7 +298,7 @@ class C(B, A): pass
 C.x  # "B" — B comes first in MRO
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • C(B, A) means B is checked before A • This is the opposite order from C(A, B) • The programmer controls method resolution priority by choosing base order • This is a fundamental design decision in multiple inheritance How it works: • class C(B, A) — B is listed first, A second • C.__mro__ = (C, B, A, object) • If both A and B define a method, B's version is found first Example: class A: x = "A" class B: x = "B" class C(B, A): pass C.x # "B" — B comes first in MRO
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -367,7 +367,7 @@ class D(B, C): pass
 D.__mro__  # (D, B, C, A, object) — C3 produces this ordering
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • C3 linearization guarantees a consistent and predictable MRO • It preserves local precedence order (order of bases in class definition) • It preserves monotonicity (if A comes before B in a parent's MRO, A also comes before B in child's MRO) • It raises TypeError if no valid linearization exists How it works: • C3 merges the linearizations of parent classes with the list of parents • It picks the first head that doesn't appear in the tail of any other list • This process repeats until all classes are linearized • If no valid head is found, TypeError is raised Example: class A: pass class B(A): pass class C(A): pass class D(B, C): pass D.__mro__ # (D, B, C, A, object) — C3 produces this ordering
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -436,7 +436,7 @@ class D(B, C): pass
 D.__mro__  # (D, B, C, A, object)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Diamond: A is the common ancestor of B and C, D inherits from both B and C • A must come after both B and C in the MRO (since both depend on A) • C3 ensures each class appears exactly once • The order of D's bases (B, C) determines B comes before C How it works: • D(B, C): merge B's MRO (B, A, object) with C's MRO (C, A, object) and bases [B, C] • Pick D first, then B (head of B's MRO, not in tail of others) • Then C (head of C's MRO), then A, then object • Result: (D, B, C, A, object) Example: class A: pass class B(A): pass class C(A): pass class D(B, C): pass D.__mro__ # (D, B, C, A, object)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -501,7 +501,7 @@ D.__mro__  # (D, B, C, A, object)
 D().f()    # "C" — C is checked before A in the MRO
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • A's f returning "A" is never reached because C's f is found first How it works: • D().f() triggers method lookup along D's MRO: D → B → C → A → object • D has no f, B has no f, C has f → return "C" • This demonstrates why MRO matters: even though B is listed first in D's bases, C's method wins because B doesn't override it Example: D.__mro__ # (D, B, C, A, object) D().f() # "C" — C is checked before A in the MRO
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -568,7 +568,7 @@ class C(A, B): pass  # TypeError!
 # A appears before B in C's bases, but B's MRO has A after B — contradiction
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• # A appears before B in C's bases, but B's MRO has A after B — contradiction
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -636,7 +636,7 @@ class C(A, B): pass
 # TypeError: Cannot create a consistent method resolution order (MRO) for bases A, B
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • C(A, B) says: search A before B • But B inherits from A, so B's MRO is (B, A, object) — B before A • These two constraints contradict each other • C3 linearization cannot satisfy both, so TypeError is raised How it works: • To build C's MRO, C3 must merge: A's MRO (A, object), B's MRO (B, A, object), and bases [A, B] • A is a head in A's MRO, but A also appears in the tail of B's MRO (B, A, object) • B is a head in B's MRO, but A must come first per C's base list • No valid ordering exists → TypeError Example: class A: pass class B(A): pass class C(A, B): pass # TypeError: Cannot create a consistent method resolution order (MRO) for bases A, B
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -707,7 +707,7 @@ class C(B, A): pass  # This works! B before A is consistent with B's MRO
 # C.__mro__ = (C, B, A, object)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• B before A is consistent with B's MRO # C.__mro__ = (C, B, A, object)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -773,7 +773,7 @@ D().f()    # "B"
 # Compare with Q8 where B did NOT define f — then C's f was used
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • C's f and A's f are never reached How it works: • D(B, C) → B is listed first in bases • D().f() → D has no f → check B → B has f → return "B" • C's f("C") is shadowed because B appears earlier in the MRO Example: D.__mro__ # (D, B, C, A, object) D().f() # "B" # Compare with Q8 where B did NOT define f — then C's f was used
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -844,7 +844,7 @@ class D(B, C): pass
 D().f()  # "ACB" — super() in B goes to C (not A!), super() in C goes to A
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • super() returns a proxy that delegates to the next class in MRO • "Next class" depends on where in the MRO the current class is • This enables cooperative multiple inheritance • The MRO is determined by the actual instance's class, not the class where super() is written How it works: • In class B, super() points to the next class after B in the MRO of the actual object • If the object is of class D(B, C) with MRO (D, B, C, A, object), then super() in B goes to C, not A • This is why super() is called "cooperative" — each class cooperates by calling super() Example: class A: def f(self): return "A" class B(A): def f(self): return super().f() + "B" class C(A): def f(self): return super().f() + "C" class D(B, C): pass D().f() # "ACB" — super() in B goes to C (not A!), super() in C goes to A
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -912,7 +912,7 @@ D().f()  # "ACB"
 # The key insight: super() in B goes to C, not A!
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Back to B.f(): "AC" + "B" = "ACB" Example: D().f() # "ACB" # The key insight: super() in B goes to C, not A!
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -980,7 +980,7 @@ b.a  # "A" — set by A.__init__
 b.b  # "B" — set by B.__init__
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• B().a accesses the attribute set by A → "A" Example: b = B() b.a # "A" — set by A.__init__ b.b # "B" — set by B.__init__
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1059,7 +1059,7 @@ class D(B, C):
 D()  # prints D, B, C, A — each exactly once
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • In a diamond A ← B, A ← C, B,C ← D, A's __init__ should run once • If B and C both call A.__init__(self) directly, A's __init__ runs twice • If B and C both call super().__init__(), MRO ensures A.__init__ runs once • This is the "cooperative" pattern How it works: • D.__init__ calls super().__init__() → goes to B (MRO: D, B, C, A, object) • B.__init__ calls super().__init__() → goes to C (not A!) • C.__init__ calls super().__init__() → goes to A • A.__init__ calls super().__init__() → goes to object • Each class's __init__ runs exactly once Example: class A: def __init__(self): print("A"); super().__init__() class B(A): def __init__(self): print("B"); super().__init__() class C(A): def __init__(self): print("C"); super().__init__() class D(B, C): def __init__(self): print("D"); super().__init__() D() # prints D, B, C, A — each exactly once
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1125,7 +1125,7 @@ D.x        # 2 — from B
 C.x        # 1 — C has no x, falls through to A
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Return 2 • C (no x) and A (x=1) are never reached How it works: • D.x triggers attribute lookup along the MRO • D has no x → B has x = 2 → return 2 • Even though A also has x = 1, B is checked first Example: D.__mro__ # (D, B, C, A, object) D.x # 2 — from B C.x # 1 — C has no x, falls through to A
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1191,7 +1191,7 @@ B.x  # 1 — B has no x, falls through to A (not C, since C isn't in B's MRO)
 C.x  # 3 — C defines it directly
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • A's x = 1 is shadowed by C's x = 3 • This demonstrates that MRO isn't just "depth first" — siblings matter How it works: • D.x → D (no x) → B (no x) → C (x=3) → return 3 • If C also had no x, then A (x=1) would be found • The MRO ensures C is checked before A in the diamond Example: D.x # 3 — from C B.x # 1 — B has no x, falls through to A (not C, since C isn't in B's MRO) C.x # 3 — C defines it directly
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1263,7 +1263,7 @@ dict.__mro__   # (<class 'dict'>, <class 'object'>)
 str.__mro__    # (<class 'str'>, <class 'object'>)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • list inherits directly from object • list.__mro__ = (<class 'list'>, <class 'object'>) • Similarly, tuple.__mro__ = (<class 'tuple'>, <class 'object'>) • Built-in types follow the same MRO rules as user-defined classes How it works: • list has no explicit Python-level parent other than object • The MRO is simply (list, object) • This is the same structure as any simple user-defined class Example: list.__mro__ # (<class 'list'>, <class 'object'>) tuple.__mro__ # (<class 'tuple'>, <class 'object'>) dict.__mro__ # (<class 'dict'>, <class 'object'>) str.__mro__ # (<class 'str'>, <class 'object'>)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1335,7 +1335,7 @@ isinstance(True, int)  # True
 True + True            # 2
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • bool inherits from int — this is by design • bool.__mro__ = (<class 'bool'>, <class 'int'>, <class 'object'>) • True + True = 2, True * 5 = 5 — because bool IS int • issubclass(bool, int) returns True How it works: • bool was added to Python as a subclass of int for backward compatibility • True and False are instances of bool, which is a subclass of int • All int operations work on booleans Example: bool.__mro__ # (<class 'bool'>, <class 'int'>, <class 'object'>) issubclass(bool, int) # True isinstance(True, int) # True True + True # 2
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1412,7 +1412,7 @@ class B(A):
 B().greet()  # "Hello!"
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • super() returns a proxy (not a class, not an instance) • The proxy delegates attribute access to the next class in the MRO • "Next class" is relative to the class where super() is called • The proxy uses the MRO of the actual instance's type How it works: • super() inside class B creates a proxy bound to B and self • When you call super().method(), the proxy finds method in the next class after B in self's MRO • This enables cooperative method calls across the inheritance chain Example: class A: def greet(self): return "Hello" class B(A): def greet(self): proxy = super() # <super: <class 'B'>, <B object>> return proxy.greet() + "!" B().greet() # "Hello!"
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1484,7 +1484,7 @@ class B(A):
         return super(B, self).f()   # Equivalent explicit form
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • super() in Python 3 is equivalent to super(CurrentClass, self) • The first argument specifies "start searching after this class in the MRO" • The second argument is the object (or class) to bind to • The explicit form is still useful for advanced patterns (e.g., skipping a class) How it works: • super(B, self) means: find the next class after B in type(self).__mro__ • If self is an instance of D with MRO (D, B, C, A, object), super(B, self) delegates to C • super() with no arguments uses compiler magic to fill in the current class and self Example: class B(A): def f(self): return super().f() # Python 3 shorthand return super(B, self).f() # Equivalent explicit form
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1550,7 +1550,7 @@ B().f()  # 2
 A().f()  # 1
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• B.f returns 2 Example: B().f() # 2 A().f() # 1
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1618,7 +1618,7 @@ C().f()  # 3
 # Each level adds 1 through the super() chain
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• C.f returns 2 + 1 = 3 Example: A().f() # 1 B().f() # 2 C().f() # 3 # Each level adds 1 through the super() chain
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1694,7 +1694,7 @@ B().greet()   # "Hello World"
 B.create()    # <B instance>
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • super() works in __init__, regular methods, class methods, and properties • It always follows the MRO regardless of which method it's used in • Common uses include extending parent behavior in any method • The only restriction is that it doesn't work in static methods (no instance/class context) How it works: • super() needs either an implicit or explicit class and instance/class reference • In instance methods: super() uses the class where it's defined and self • In class methods: super() uses the class where it's defined and cls • In static methods: no self or cls available, so super() doesn't work Example: class A: def greet(self): return "Hello" @classmethod def create(cls): return cls() class B(A): def greet(self): return super().greet() + " World" @classmethod def create(cls): return super().create() B().greet() # "Hello World" B.create() # <B instance>
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1761,7 +1761,7 @@ B.f()  # "AB"
 # super() in classmethods follows the same MRO rules
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• B.f() returns "AB" Example: A.f() # "A" B.f() # "AB" # super() in classmethods follows the same MRO rules
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1829,7 +1829,7 @@ s.__init__    # <method-wrapper '__init__'> — from object
 type(s)       # <class 'super'>
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • A's MRO is (A, object) • super(A, instance) means: start looking after A in the MRO • The next (and only remaining) class after A is object • So super(A, A()) proxies for object How it works: • super(A, A()) — first arg is "start after A", second arg is the instance • A.__mro__ = (A, object) • After A in the MRO comes object • Any method call on this proxy will look in object Example: class A: pass s = super(A, A()) s.__init__ # <method-wrapper '__init__'> — from object type(s) # <class 'super'>
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1898,7 +1898,7 @@ b.x  # 1 — set by A.__init__
 b.y  # 2 — set by B.__init__
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• b.x = 1, b.y = 2 Example: b = B(1, 2) b.x # 1 — set by A.__init__ b.y # 2 — set by B.__init__
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1967,7 +1967,7 @@ B()
 # A
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Output: B, then A Example: B() # Output: # B # A
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2034,7 +2034,7 @@ B().greet()  # "Hello World"
 # super() lets you build on the parent's implementation
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Return "Hello World" Example: A().greet() # "Hello" B().greet() # "Hello World" # super() lets you build on the parent's implementation
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2103,7 +2103,7 @@ class A:
 # The fix: don't use super() in static methods, or use @classmethod instead
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • super() with no arguments uses compiler magic (__class__ and self/cls) • @staticmethod has no self or cls parameter • Without an instance or class, super() cannot determine the MRO position • Calling super() in a staticmethod raises RuntimeError or TypeError How it works: • In instance methods: super() uses __class__ (implicit) and self • In class methods: super() uses __class__ (implicit) and cls • In static methods: no self, no cls → super() fails • You could use super(ClassName, instance) explicitly, but that defeats the purpose Example: class A: @staticmethod def f(): super().f() # RuntimeError: super(): no current class # The fix: don't use super() in static methods, or use @classmethod instead
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2181,7 +2181,7 @@ class B(A):
         super().__init__()  # Follows MRO correctly
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • super().__init__() follows the MRO — correct for diamond inheritance • ParentClass.__init__(self) hardcodes the parent — brittle, can cause double calls in diamonds • super() adapts when the class hierarchy changes • ParentClass.__init__(self) must be manually updated if inheritance changes How it works: • In a diamond (D → B → C → A), super().__init__() in B calls C.__init__ (MRO order) • But B calling A.__init__(self) directly skips C entirely • This can cause A.__init__ to run twice (once from B, once from C) • super() prevents this by ensuring each __init__ runs exactly once Example: # BAD — hardcoded parent: class B(A): def __init__(self): A.__init__(self) # Breaks in diamond inheritance # GOOD — cooperative super(): class B(A): def __init__(self): super().__init__() # Follows MRO correctly
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2263,7 +2263,7 @@ c.a  # 10
 c.b  # 20
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Each class accepts **kwargs in __init__ • Each class extracts (pops) only the arguments it needs • Remaining kwargs are forwarded to super().__init__(**kw) • object.__init__() receives empty kwargs at the end How it works: • class A: def __init__(self, **kw): self.a = kw.pop("a", 0); super().__init__(**kw) • class B: def __init__(self, **kw): self.b = kw.pop("b", 0); super().__init__(**kw) • class C(A, B): def __init__(self, **kw): super().__init__(**kw) • C(a=1, b=2) → A pops a=1, passes b=2 to B → B pops b=2, passes {} to object Example: class A: def __init__(self, **kw): self.a = kw.pop("a", 0) super().__init__(**kw) class B: def __init__(self, **kw): self.b = kw.pop("b", 0) super().__init__(**kw) class C(A, B): pass c = C(a=10, b=20) c.a # 10 c.b # 20
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2336,7 +2336,7 @@ Why this matters:
 • The MRO determines which class processes kwargs in which order
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Each class pops only the keyword arguments it needs • All remaining kwargs are forwarded via super().__init__(**kw) • This ensures every class in the MRO gets its required arguments • object.__init__() at the end should receive no extra kwargs How it works: • Class pops its args: self.x = kw.pop("x", default) • Forwards the rest: super().__init__(**kw) • Next class in MRO does the same • Eventually object.__init__() is reached with empty kwargs Why this matters: • Without this pattern, multiple inheritance __init__ conflicts are hard to resolve • Each class only needs to know its own arguments • Adding a new class to the hierarchy doesn't require modifying existing classes • The MRO determines which class processes kwargs in which order
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2404,7 +2404,7 @@ D().f()  # ['C', 'B', 'D']
 # The result reflects the reverse traversal of the MRO (A→C→B→D)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Back to D: ["C", "B"] + ["D"] = ["C", "B", "D"] Example: D().f() # ['C', 'B', 'D'] # The result reflects the reverse traversal of the MRO (A→C→B→D)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2475,7 +2475,7 @@ isinstance(d, Flyable)    # True
 isinstance(d, Swimmable)  # True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Duck inherits from both Flyable and Swimmable • Flyable provides fly(), Swimmable provides swim() • No method name conflicts — both are available on Duck instances • This is a common pattern for combining orthogonal behaviors How it works: • class Duck(Flyable, Swimmable) inherits all methods from both parents • d.fly() → found in Flyable → returns "flying" • d.swim() → found in Swimmable → returns "swimming" • Duck's MRO: (Duck, Flyable, Swimmable, object) Example: d = Duck() d.fly() # "flying" d.swim() # "swimming" isinstance(d, Flyable) # True isinstance(d, Swimmable) # True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2559,7 +2559,7 @@ u.log("created")    # [LOG] created
 u.to_dict()         # {"name": "Alice"}
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • A mixin provides specific functionality (logging, serialization, etc.) • Mixins are not meant to be instantiated on their own • They are "mixed in" via multiple inheritance • Convention: name them with a Mixin suffix (e.g., LogMixin, JSONMixin) How it works: • Define a mixin class with useful methods • Other classes inherit from the mixin alongside their main parent • The mixin's methods become available on the child class • Multiple mixins can be combined Example: class LogMixin: def log(self, msg): print(f"[LOG] {msg}") class SerializeMixin: def to_dict(self): return self.__dict__ class User(LogMixin, SerializeMixin): def __init__(self, name): self.name = name u = User("Alice") u.log("created") # [LOG] created u.to_dict() # {"name": "Alice"}
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2625,7 +2625,7 @@ app.log("hello")    # "LOG: hello"
 app.log("started")  # "LOG: started"
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • LogMixin provides a log() method • App inherits from LogMixin, gaining the log() method • App().log("hello") calls LogMixin.log(self, "hello") • The f-string formats the message as "LOG: hello" How it works: • class App(LogMixin) inherits all of LogMixin's methods • App().log("hello") → LogMixin.log(self, "hello") • f"LOG: {msg}" → f"LOG: hello" → "LOG: hello" Example: app = App() app.log("hello") # "LOG: hello" app.log("started") # "LOG: started"
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2692,7 +2692,7 @@ u.__dict__     # {'name': 'Alice'}
 u.to_json()    # '{"name": "Alice"}'  (JSON string with double quotes)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • self.__dict__ returns the instance's attribute dictionary: {"name": "Alice"} • json.dumps() converts a Python dict to a JSON string • JSON always uses double quotes for strings • The mixin can be added to any class to provide to_json() How it works: • User("Alice") creates an instance with self.name = "Alice" • self.__dict__ = {"name": "Alice"} • json.dumps({"name": "Alice"}) = '{"name": "Alice"}' • Note: JSON uses double quotes, Python repr uses single quotes Example: u = User("Alice") u.__dict__ # {'name': 'Alice'} u.to_json() # '{"name": "Alice"}' (JSON string with double quotes)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2776,7 +2776,7 @@ User().save()
 # LogMixin.save runs first, then calls super().save() → Model.save
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • class MyClass(MixinA, MixinB, MainParent) — mixins first • Left-to-right order determines MRO priority • Mixin methods override main parent methods if names conflict • This ensures mixin behavior takes precedence How it works: • MRO processes bases left to right • class C(Mixin, Base) → MRO: C, Mixin, Base, object • If both Mixin and Base define method(), Mixin's version is used • Placing Mixin first gives it priority Example: class LogMixin: def save(self): print("logging save") return super().save() class Model: def save(self): print("saving to DB") class User(LogMixin, Model): pass User().save() # Output: "logging save" then "saving to DB" # LogMixin.save runs first, then calls super().save() → Model.save
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2852,7 +2852,7 @@ e.stamp()  # datetime.datetime(2024, 1, 15, 10, 30, 45, ...)
 # Returns current datetime each time stamp() is called
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • stamp() is an instance method added by the mixin • It imports datetime and returns datetime.now() • The timestamp is generated at call time, not at object creation • Any class inheriting TimestampMixin gets this method How it works: • class MyClass(TimestampMixin): pass • MyClass().stamp() calls TimestampMixin.stamp(self) • datetime.now() returns the current date and time • Each call returns a new timestamp Example: class Event(TimestampMixin): def __init__(self, name): self.name = name e = Event("meeting") e.stamp() # datetime.datetime(2024, 1, 15, 10, 30, 45, ...) # Returns current datetime each time stamp() is called
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2929,7 +2929,7 @@ C().greet()        # "Hello from A" — A is first in MRO
 B.greet(C())       # "Hello from B" — explicit call to B's version
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Multiple parents can have methods with the same name • Python doesn't raise any error — it uses MRO to resolve the conflict • The first class in the MRO that defines the method wins • You can still access shadowed methods explicitly (e.g., ParentB.method(self)) How it works: • class C(A, B) where both A and B define f() • C's MRO: (C, A, B, object) • C().f() → A.f() is found first (A comes before B in MRO) • B.f() is shadowed but still accessible via B.f(instance) Example: class A: def greet(self): return "Hello from A" class B: def greet(self): return "Hello from B" class C(A, B): pass C().greet() # "Hello from A" — A is first in MRO B.greet(C()) # "Hello from B" — explicit call to B's version
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2996,7 +2996,7 @@ C.x  # 1 — from A (first in bases)
 # Then C.x would be 2 — from B (now first)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Return 1 • B's x = 2 is shadowed How it works: • Attribute lookup follows the MRO: C → A → B → object • A is checked before B because A is listed first in C(A, B) • A.x = 1 is found, so the search stops • B.x = 2 is never reached Example: C.x # 1 — from A (first in bases) # If you change to class C(B, A): pass # Then C.x would be 2 — from B (now first)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3065,7 +3065,7 @@ C.x  # 1 — from A
 # The order of bases is a deliberate design choice
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Return 2 • A's x = 1 is shadowed this time How it works: • The order of bases directly controls the MRO • C(B, A) means B is searched before A • B.x = 2 is the first match Example: class C(B, A): pass C.x # 2 — from B # vs class C(A, B): pass C.x # 1 — from A # The order of bases is a deliberate design choice
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3140,7 +3140,7 @@ class Car:
         self.engine = Engine()  # Car HAS an Engine
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Inheritance ("is-a"): Car is a Vehicle — Car inherits Vehicle's interface and behavior • Composition ("has-a"): Car has an Engine — Car contains an Engine instance • Inheritance creates tight coupling between classes • Composition creates loose coupling and is often preferred How it works: • Inheritance: class Car(Vehicle) — Car IS a Vehicle • Composition: class Car: def __init__(self): self.engine = Engine() — Car HAS an Engine • With inheritance, changing Vehicle affects Car • With composition, Engine can be changed independently Example: # Inheritance (is-a): class Vehicle: def start(self): return "starting" class Car(Vehicle): pass # Car IS a Vehicle # Composition (has-a): class Engine: def start(self): return "vroom" class Car: def __init__(self): self.engine = Engine() # Car HAS an Engine
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3220,7 +3220,7 @@ class App:
         self.logger = logger or Logger()  # Can swap loggers!
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Composition allows swapping components at runtime • Inheritance creates a rigid, tightly coupled hierarchy • Composition makes testing easier (inject mock components) • Inheritance is appropriate when there's a true "is-a" relationship When to use composition: • When you want to reuse behavior without committing to a type hierarchy • When the relationship is "has-a" or "uses-a" • When you need to change behavior at runtime • When you want to combine behaviors from multiple sources without MRO complexity When to use inheritance: • When the relationship is genuinely "is-a" (Dog IS an Animal) • When you need polymorphism (treat derived types as base type) • When you want to share interface and implementation Example: # Composition — flexible: class Logger: def log(self, msg): print(msg) class App: def __init__(self, logger=None): self.logger = logger or Logger() # Can swap loggers!
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3295,7 +3295,7 @@ Car(Engine()).start()          # "vroom"
 Car(ElectricEngine()).start()  # "whirr"  — swap at runtime!
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Car "has-a" Engine (composition) • Car.start() delegates to self.engine.start() • Car doesn't inherit Engine's interface — it wraps it • The Engine can be replaced with a different implementation How it works: • Car.__init__ creates an Engine instance: self.engine = Engine() • Car.start() calls self.engine.start() and returns the result • Car is not a subclass of Engine — it's a wrapper/container • This provides flexibility: you could pass a different engine type Example: class ElectricEngine: def start(self): return "whirr" class Car: def __init__(self, engine): self.engine = engine def start(self): return self.engine.start() Car(Engine()).start() # "vroom" Car(ElectricEngine()).start() # "whirr" — swap at runtime!
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3364,7 +3364,7 @@ isinstance(c, Car)       # True
 Car.__mro__              # (Car, Vehicle, object)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Car(Vehicle) means Car IS a Vehicle • Car inherits start() from Vehicle without redefining it • Car instances are also Vehicle instances • isinstance(Car(), Vehicle) returns True How it works: • class Car(Vehicle): pass — Car inherits everything from Vehicle • Car().start() → Vehicle.start(self) → "starting" • No methods are overridden or added • Car is a specialization of Vehicle Example: c = Car() c.start() # "starting" — inherited from Vehicle isinstance(c, Vehicle) # True — Car IS a Vehicle isinstance(c, Car) # True Car.__mro__ # (Car, Vehicle, object)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3431,7 +3431,7 @@ D.__mro__
 len(D.__mro__)  # 5
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • D(A, B, C) inherits from three parents • D's MRO: (D, A, B, C, object) — 5 entries • Parents appear in the order listed in the class definition • object appears once at the end How it works: • D is first in its own MRO • A, B, C follow in the order they appear in D(A, B, C) • object is the ultimate base, appearing last • len(D.__mro__) = 5 Example: D.__mro__ # (<class 'D'>, <class 'A'>, <class 'B'>, <class 'C'>, <class 'object'>) len(D.__mro__) # 5
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3504,7 +3504,7 @@ isinstance(ml, list)  # True
 len(ml)               # 4
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • class MyList(list) creates a subclass of the built-in list type • MyList instances are also list instances • All list methods (append, pop, sort, etc.) are inherited • You can override or add methods to customize behavior How it works: • MyList(list) inherits from list • MyList([1, 2, 3]) creates a MyList initialized with [1, 2, 3] • isinstance(ml, list) returns True — MyList IS a list • MyList.__mro__ = (MyList, list, object) Example: class MyList(list): def first(self): return self[0] if self else None ml = MyList([1, 2, 3]) ml.first() # 1 ml.append(4) # Works — inherited from list isinstance(ml, list) # True len(ml) # 4
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

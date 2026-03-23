@@ -44,7 +44,7 @@ Common uses:
 Example: Inheritance is a mechanism that allows a child class to inherit features from a parent class, enabling the child to use parent attributes and methods while also allowing overrides for different behavior.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Inheritance concept: • Child class gets parent features • class Child(Parent): inherits from Parent • Child can access parent attributes and methods • Child can override parent methods • Enables code reuse and "is-a" relationships How it works: • class Parent: defines parent class • class Child(Parent): defines child class inheriting from Parent • Child automatically gets Parent's attributes and methods • Child can use parent features directly • Child can override parent methods if needed Example: class Parent: x = 1 def method(self): return 1 class Child(Parent): # Inherits from Parent pass Child.x # 1 (inherits parent attribute) Child().method() # 1 (inherits parent method) Common uses: • Code reuse: class Child(Parent): (inherits parent features) • "Is-a" relationships: class Dog(Animal): (Dog is an Animal) • Inheritance hierarchy • Object-oriented programming Example: Inheritance is a mechanism that allows a child class to inherit features from a parent class, enabling the child to use parent attributes and methods while also allowing overrides for different behavior.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -120,7 +120,7 @@ Common uses:
 Example: If class Parent: x = 1; class Child(Parent): pass; Child.x, then Child.x returns 1 because the child class inherits parent class attributes, so it can access Parent's class attribute x = 1.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child inherits parent attributes: • Child.x returns 1 • class Child(Parent): inherits from Parent • Parent has class attribute x = 1 • Child inherits this attribute • Returns: 1 How it works: • class Parent: x = 1 creates class with class attribute • class Child(Parent): pass creates child inheriting from Parent • Child inherits Parent's class attributes • Child.x accesses inherited attribute • Returns: 1 Example: class Parent: x = 1 class Child(Parent): pass Child.x # 1 (inherits parent class attribute) Parent.x # 1 (parent still has it) Common uses: • Inheriting attributes: class Child(Parent): (inherits parent attributes) • Class attributes: child can access parent class attributes • Inheritance • Code reuse Example: If class Parent: x = 1; class Child(Parent): pass; Child.x, then Child.x returns 1 because the child class inherits parent class attributes, so it can access Parent's class attribute x = 1.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -197,7 +197,7 @@ Common uses:
 Example: If class Parent: def method(self): return 1; class Child(Parent): pass; Child().method(), then Child().method() returns 1 because the child class inherits parent methods, so instances of Child can call Parent's methods.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child inherits parent methods: • Child().method() returns 1 • class Child(Parent): inherits from Parent • Parent has method() • Child inherits this method • Returns: 1 How it works: • Child().method() calls method on Child instance • Python searches for method in Child (not found) • Python searches for method in Parent (found) • Calls Parent.method() with Child instance as self • Returns: 1 Example: class Parent: def method(self): return 1 class Child(Parent): pass Child().method() # 1 (inherits parent method) Common uses: • Inheriting methods: class Child(Parent): (inherits parent methods) • Method reuse: child can use parent methods directly • Inheritance • Code reuse Example: If class Parent: def method(self): return 1; class Child(Parent): pass; Child().method(), then Child().method() returns 1 because the child class inherits parent methods, so instances of Child can call Parent's methods.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -271,7 +271,7 @@ Common uses:
 Example: If class Parent: pass; class Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) returns True because issubclass() checks if a class is a subclass of another class, and Child inherits from Parent.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • Inheritance • Type system Example: If class Parent: pass; class Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) returns True because issubclass() checks if a class is a subclass of another class, and Child inherits from Parent.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -348,7 +348,7 @@ Common uses:
 Example: If class Parent: pass; class Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) returns True because isinstance() checks if an instance is of a class (including parent classes), and since Child inherits from Parent, an instance of Child is also an instance of Parent.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (works with inheritance) • Polymorphism: isinstance(obj, BaseClass) (checks base classes) • Inheritance • Type system Example: If class Parent: pass; class Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) returns True because isinstance() checks if an instance is of a class (including parent classes), and since Child inherits from Parent, an instance of Child is also an instance of Parent.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -423,7 +423,7 @@ Common uses:
 Example: If class Parent: pass; class Child(Parent): pass; Child.__bases__, then Child.__bases__ returns (<class '__main__.Parent'>,) because __bases__ contains a tuple of parent classes, and Child inherits from Parent.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• __bases__ attribute: • Child.__bases__ returns (<class '__main__.Parent'>,) • __bases__ contains tuple of parent classes • Child inherits from Parent • Returns tuple with Parent • Returns: (<class '__main__.Parent'>,) How it works: • class Child(Parent): creates child inheriting from Parent • Python stores parent classes in Child.__bases__ • __bases__ is tuple of parent classes • Contains: (Parent,) • Returns: (<class '__main__.Parent'>,) Example: class Parent: pass class Child(Parent): pass Child.__bases__ # (<class '__main__.Parent'>,) (parent classes) Common uses: • Inheritance inspection: Child.__bases__ (see parent classes) • Introspection: check what a class inherits from • Inheritance • Type system Example: If class Parent: pass; class Child(Parent): pass; Child.__bases__, then Child.__bases__ returns (<class '__main__.Parent'>,) because __bases__ contains a tuple of parent classes, and Child inherits from Parent.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -499,7 +499,7 @@ Common uses:
 Example: If class Parent: x = 1; class Child(Parent): pass; obj = Child(); obj.x, then obj.x returns 1 because an instance of a child class can access parent class attributes through the inheritance chain.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Instance accesses parent attribute: • obj.x returns 1 • obj is instance of Child • Child inherits from Parent • Parent has class attribute x = 1 • obj.x accesses inherited attribute • Returns: 1 How it works: • obj = Child() creates instance of Child • obj.x looks for attribute x • Python searches: obj.__dict__ (not found) → Child.__dict__ (not found) → Parent.__dict__ (finds x = 1) • Returns: 1 Example: class Parent: x = 1 class Child(Parent): pass obj = Child() obj.x # 1 (accesses parent class attribute) Common uses: • Inherited attributes: obj.attr (accesses parent class attribute) • Instance access: instances can access parent class attributes • Inheritance • Attribute access Example: If class Parent: x = 1; class Child(Parent): pass; obj = Child(); obj.x, then obj.x returns 1 because an instance of a child class can access parent class attributes through the inheritance chain.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -577,7 +577,7 @@ Common uses:
 Example: If class Parent: def __init__(self): self.x = 1; class Child(Parent): pass; Child().x, then Child().x returns 1 because the child inherits the parent's __init__ if not overridden, so Parent.__init__ is called when creating a Child instance.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child inherits parent __init__: • Child().x returns 1 • Child doesn't define __init__ • Python uses Parent.__init__ • Parent.__init__ sets self.x = 1 • Returns: 1 How it works: • Child() creates instance and looks for __init__ • Child doesn't have __init__ • Python searches Parent, finds __init__ • Calls Parent.__init__(self) with Child instance • Sets self.x = 1 on Child instance • Returns: 1 Example: class Parent: def __init__(self): self.x = 1 class Child(Parent): pass # No __init__ defined Child().x # 1 (inherits parent __init__) Common uses: • Inherited initialization: class Child(Parent): pass (uses parent __init__) • Constructor inheritance: child can use parent __init__ • Inheritance • Object initialization Example: If class Parent: def __init__(self): self.x = 1; class Child(Parent): pass; Child().x, then Child().x returns 1 because the child inherits the parent's __init__ if not overridden, so Parent.__init__ is called when creating a Child instance.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -652,7 +652,7 @@ Common uses:
 Example: If class Parent: pass; class Child(Parent): pass; Parent.__subclasses__(), then Parent.__subclasses__() returns [<class '__main__.Child'>] because __subclasses__() returns a list of direct subclasses, and Child directly inherits from Parent.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• __subclasses__() method: • Parent.__subclasses__() returns [<class '__main__.Child'>] • __subclasses__() returns list of direct subclasses • Child directly inherits from Parent • Returns list with Child • Returns: [<class '__main__.Child'>] How it works: • class Child(Parent): creates child inheriting from Parent • Python tracks subclasses in Parent.__subclasses__ • __subclasses__() returns list of direct children • Contains: [Child] • Returns: [<class '__main__.Child'>] Example: class Parent: pass class Child(Parent): pass Parent.__subclasses__() # [<class '__main__.Child'>] (direct subclasses) Common uses: • Subclass inspection: Parent.__subclasses__() (see direct children) • Introspection: check what classes inherit from a class • Inheritance • Type system Example: If class Parent: pass; class Child(Parent): pass; Parent.__subclasses__(), then Parent.__subclasses__() returns [<class '__main__.Child'>] because __subclasses__() returns a list of direct subclasses, and Child directly inherits from Parent.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -728,7 +728,7 @@ Common uses:
 Example: If class Parent: x = 1; class Child(Parent): x = 2; Child.x, then Child.x returns 2 because the child class attribute overrides the parent attribute, so the child's value (2) takes precedence over the parent's value (1).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child overrides parent attribute: • Child.x returns 2 • Child defines class attribute x = 2 • Parent has class attribute x = 1 • Child's attribute shadows parent's • Returns: 2 How it works: • class Child(Parent): x = 2 defines child attribute • Child has its own class attribute x = 2 • Child.x looks for attribute x • Python finds x in Child.__dict__ first • Returns: 2 (child's attribute, not parent's) Example: class Parent: x = 1 class Child(Parent): x = 2 # Overrides parent attribute Child.x # 2 (child's attribute, not parent's) Parent.x # 1 (parent's attribute unchanged) Common uses: • Attribute override: class Child(Parent): attr = value (overrides parent) • Customization: child can override parent attributes • Inheritance • Attribute shadowing Example: If class Parent: x = 1; class Child(Parent): x = 2; Child.x, then Child.x returns 2 because the child class attribute overrides the parent attribute, so the child's value (2) takes precedence over the parent's value (1).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -809,7 +809,7 @@ Common uses:
 Example: Method overriding is when a child class redefines a method that already exists in the parent class, allowing the child to provide different behavior while keeping the same method name.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Method overriding: • Child redefines parent method • Same method name in parent and child • Child's method takes precedence • Provides different behavior • Key feature of polymorphism How it works: • Parent defines method() • Child defines method() with same name • Child's method overrides parent's method • Calling method() on Child instance uses Child's version • Parent's method is hidden (but can be accessed via super()) Example: class Parent: def method(self): return 1 class Child(Parent): def method(self): return 2 # Overrides parent method Child().method() # 2 (uses child's version, not parent's) Common uses: • Customization: class Child(Parent): def method(self): return custom_behavior • Polymorphism: same method name, different implementations • Method overriding • Object-oriented programming Example: Method overriding is when a child class redefines a method that already exists in the parent class, allowing the child to provide different behavior while keeping the same method name.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -889,7 +889,7 @@ Common uses:
 Example: If class Parent: def method(self): return 1; class Child(Parent): def method(self): return 2; Child().method(), then Child().method() returns 2 because the child method overrides the parent method, so the child's version takes precedence.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child overrides parent method: • Child().method() returns 2 • Child defines method() with same name • Child's method overrides parent's method • Child's version takes precedence • Returns: 2 How it works: • Child().method() calls method on Child instance • Python searches for method in Child (found) • Uses Child.method() (doesn't check Parent) • Method executes: return 2 • Returns: 2 Example: class Parent: def method(self): return 1 class Child(Parent): def method(self): return 2 # Overrides parent Child().method() # 2 (uses child's method) Parent().method() # 1 (uses parent's method) Common uses: • Method override: class Child(Parent): def method(self): return new_value • Customization: child provides different behavior • Method overriding • Polymorphism Example: If class Parent: def method(self): return 1; class Child(Parent): def method(self): return 2; Child().method(), then Child().method() returns 2 because the child method overrides the parent method, so the child's version takes precedence.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -969,7 +969,7 @@ Common uses:
 Example: If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method(); Child().method(), then Child().method() returns 1 because super() calls the parent method from the child, allowing access to the parent's implementation.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super() calls parent method: • Child().method() returns 1 • Child's method calls super().method() • super() accesses parent class • Calls Parent.method() from within child • Returns: 1 How it works: • Child().method() calls method on Child instance • Child.method() executes: return super().method() • super() gets parent class (Parent) • Calls Parent.method() with Child instance as self • Parent.method() returns 1 • Returns: 1 Example: class Parent: def method(self): return 1 class Child(Parent): def method(self): return super().method() # Calls parent method Child().method() # 1 (calls parent via super()) Common uses: • Extending methods: def method(self): result = super().method(); return modified(result) • Parent access: super().method() (call parent from child) • Method overriding • Inheritance Example: If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method(); Child().method(), then Child().method() returns 1 because super() calls the parent method from the child, allowing access to the parent's implementation.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1047,7 +1047,7 @@ Common uses:
 Example: If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method() + 1; Child().method(), then Child().method() returns 2 because the child can call the parent method and modify the result (1 + 1 = 2).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child modifies parent result: • Child().method() returns 2 • Child's method calls super().method() • Parent method returns 1 • Child adds 1: 1 + 1 = 2 • Returns: 2 How it works: • Child().method() calls method on Child instance • Child.method() executes: return super().method() + 1 • super().method() calls Parent.method(), returns 1 • Child adds 1: 1 + 1 = 2 • Returns: 2 Example: class Parent: def method(self): return 1 class Child(Parent): def method(self): return super().method() + 1 # Extends parent Child().method() # 2 (parent's 1 + 1) Common uses: • Extending methods: def method(self): return super().method() + modification • Behavior extension: child extends parent behavior • Method overriding • Inheritance Example: If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method() + 1; Child().method(), then Child().method() returns 2 because the child can call the parent method and modify the result (1 + 1 = 2).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1128,7 +1128,7 @@ Common uses:
 Example: If class Parent: def __init__(self): self.x = 1; class Child(Parent): def __init__(self): self.y = 2; Child().x, then Child().x raises an AttributeError because overriding __init__ doesn't call the parent __init__ automatically - you must call super().__init__() explicitly.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Overriding __init__ doesn't auto-call parent: • Child().x raises AttributeError • Child's __init__ overrides parent's __init__ • Parent's __init__ not called automatically • Only Child.__init__ runs (sets self.y = 2) • self.x is not set • Raises AttributeError How it works: • Child() creates instance and calls __init__ • Child has its own __init__ (overrides parent) • Python calls Child.__init__ (only) • Child.__init__ sets self.y = 2 (doesn't set self.x) • Parent.__init__ is not called • Child().x raises AttributeError Example: class Parent: def __init__(self): self.x = 1 class Child(Parent): def __init__(self): self.y = 2 # Overrides, doesn't call parent Child().x # AttributeError (parent __init__ not called) Common uses: • Understanding initialization: overriding __init__ doesn't auto-call parent • Explicit parent call: super().__init__() (must call manually) • Method overriding • Object initialization Example: If class Parent: def __init__(self): self.x = 1; class Child(Parent): def __init__(self): self.y = 2; Child().x, then Child().x raises an AttributeError because overriding __init__ doesn't call the parent __init__ automatically - you must call super().__init__() explicitly.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1211,7 +1211,7 @@ Common uses:
 Example: If class Parent: def __init__(self): self.x = 1; class Child(Parent): def __init__(self): super().__init__(); self.y = 2; obj = Child(); obj.x, then obj.x returns 1 because super().__init__() calls the parent's __init__, ensuring parent initialization happens.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super().__init__() calls parent: • obj.x returns 1 • Child.__init__ calls super().__init__() • Parent.__init__ sets self.x = 1 • Child.__init__ sets self.y = 2 • Returns: 1 How it works: • Child() creates instance and calls __init__ • Child.__init__ executes: super().__init__() • super().__init__() calls Parent.__init__() • Parent.__init__ sets self.x = 1 • Child.__init__ sets self.y = 2 • obj.x returns 1 Example: class Parent: def __init__(self): self.x = 1 class Child(Parent): def __init__(self): super().__init__() # Calls parent __init__ self.y = 2 obj = Child() obj.x # 1 (parent __init__ called) obj.y # 2 (child __init__ sets) Common uses: • Parent initialization: def __init__(self): super().__init__(); self.child_attr = value • Constructor chaining: ensure parent initialization happens • Method overriding • Object initialization Example: If class Parent: def __init__(self): self.x = 1; class Child(Parent): def __init__(self): super().__init__(); self.y = 2; obj = Child(); obj.x, then obj.x returns 1 because super().__init__() calls the parent's __init__, ensuring parent initialization happens.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1290,7 +1290,7 @@ Common uses:
 Example: If class Parent: def method(self): return 'parent'; class Child(Parent): pass; Child().method(), then Child().method() returns 'parent' because the child without a method uses the parent method through inheritance.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child uses parent method: • Child().method() returns 'parent' • Child doesn't define method() • Python searches inheritance chain • Finds method() in Parent • Uses Parent.method() • Returns: 'parent' How it works: • Child().method() calls method on Child instance • Python searches for method in Child (not found) • Python searches for method in Parent (found) • Calls Parent.method() with Child instance as self • Method executes: return 'parent' • Returns: 'parent' Example: class Parent: def method(self): return 'parent' class Child(Parent): pass # No method defined Child().method() # 'parent' (uses parent method) Common uses: • Inherited methods: class Child(Parent): pass (uses parent methods) • Method reuse: child can use parent methods without defining them • Inheritance • Code reuse Example: If class Parent: def method(self): return 'parent'; class Child(Parent): pass; Child().method(), then Child().method() returns 'parent' because the child without a method uses the parent method through inheritance.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1370,7 +1370,7 @@ Common uses:
 Example: If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method(); Parent().method(), then Parent().method() returns 1 because a parent instance uses the parent method - the child's override doesn't affect parent instances.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Parent uses parent method: • Parent().method() returns 1 • Parent instance uses Parent.method() • Child's override doesn't affect parent instances • Parent.method() returns 1 • Returns: 1 How it works: • Parent().method() calls method on Parent instance • Python searches for method in Parent (found) • Uses Parent.method() (doesn't check Child) • Method executes: return 1 • Returns: 1 Example: class Parent: def method(self): return 1 class Child(Parent): def method(self): return super().method() # Overrides parent Parent().method() # 1 (uses parent method, not child's) Child().method() # 1 (uses child method, calls parent) Common uses: • Independent methods: parent and child have separate method implementations • Method overriding: affects child instances only • Inheritance • Method resolution Example: If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method(); Parent().method(), then Parent().method() returns 1 because a parent instance uses the parent method - the child's override doesn't affect parent instances.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1452,7 +1452,7 @@ Common uses:
 Example: If class Parent: @classmethod; def method(cls): return 1; class Child(Parent): @classmethod; def method(cls): return 2; Child.method(), then Child.method() returns 2 because class methods can be overridden, and the child's class method takes precedence.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Class methods can be overridden: • Child.method() returns 2 • Child defines @classmethod method() • Child's class method overrides parent's • Child's version takes precedence • Returns: 2 How it works: • Child.method() calls class method on Child class • Python finds method in Child (found) • Uses Child.method() (doesn't check Parent) • Method executes: return 2 • Returns: 2 Example: class Parent: @classmethod def method(cls): return 1 class Child(Parent): @classmethod def method(cls): return 2 # Overrides parent class method Child.method() # 2 (uses child's class method) Parent.method() # 1 (uses parent's class method) Common uses: • Class method override: @classmethod def method(cls): return value (overrides parent) • Customization: child provides different class method behavior • Method overriding • Class methods Example: If class Parent: @classmethod; def method(cls): return 1; class Child(Parent): @classmethod; def method(cls): return 2; Child.method(), then Child.method() returns 2 because class methods can be overridden, and the child's class method takes precedence.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1534,7 +1534,7 @@ Common uses:
 Example: If class Parent: @staticmethod; def method(): return 1; class Child(Parent): @staticmethod; def method(): return 2; Child.method(), then Child.method() returns 2 because static methods can be overridden, and the child's static method takes precedence.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Static methods can be overridden: • Child.method() returns 2 • Child defines @staticmethod method() • Child's static method overrides parent's • Child's version takes precedence • Returns: 2 How it works: • Child.method() calls static method on Child class • Python finds method in Child (found) • Uses Child.method() (doesn't check Parent) • Method executes: return 2 • Returns: 2 Example: class Parent: @staticmethod def method(): return 1 class Child(Parent): @staticmethod def method(): return 2 # Overrides parent static method Child.method() # 2 (uses child's static method) Parent.method() # 1 (uses parent's static method) Common uses: • Static method override: @staticmethod def method(): return value (overrides parent) • Customization: child provides different static method behavior • Method overriding • Static methods Example: If class Parent: @staticmethod; def method(): return 1; class Child(Parent): @staticmethod; def method(): return 2; Child.method(), then Child.method() returns 2 because static methods can be overridden, and the child's static method takes precedence.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1616,7 +1616,7 @@ Common uses:
 Example: If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method(); Child().method(), then Child().method() returns 1 because super() without arguments in a method automatically gets the parent class.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super() without arguments: • Child().method() returns 1 • super() in method automatically gets parent • super() refers to Parent (from Child) • super().method() calls Parent.method() • Returns: 1 How it works: • Child().method() calls method on Child instance • Child.method() executes: return super().method() • super() automatically gets Parent (from Child) • super().method() calls Parent.method() • Parent.method() returns 1 • Returns: 1 Example: class Parent: def method(self): return 1 class Child(Parent): def method(self): return super().method() # super() gets Parent automatically Child().method() # 1 (calls Parent.method()) Common uses: • Parent access: super().method() (automatically gets parent) • Method extension: def method(self): return super().method() + extension • super() function • Inheritance Example: If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method(); Child().method(), then Child().method() returns 1 because super() without arguments in a method automatically gets the parent class.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1697,7 +1697,7 @@ Common uses:
 Example: If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super(Child, self).method(); Child().method(), then Child().method() returns 1 because super(Child, self) explicitly specifies the class and instance, telling Python to look for the parent of Child and use self as the instance.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super() with explicit arguments: • Child().method() returns 1 • super(Child, self) explicitly specifies class and instance • Child is the class, self is the instance • super() looks for parent of Child (Parent) • super().method() calls Parent.method() • Returns: 1 How it works: • Child().method() calls method on Child instance • Child.method() executes: return super(Child, self).method() • super(Child, self) gets parent of Child (Parent), uses self as instance • super().method() calls Parent.method() with self as instance • Parent.method() returns 1 • Returns: 1 Example: class Parent: def method(self): return 1 class Child(Parent): def method(self): return super(Child, self).method() # Explicit super() Child().method() # 1 (calls Parent.method()) Common uses: • Explicit super: super(Class, self).method() (Python 2 style, works in Python 3) • Clarity: explicitly specify class and instance • super() function • Inheritance Example: If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super(Child, self).method(); Child().method(), then Child().method() returns 1 because super(Child, self) explicitly specifies the class and instance, telling Python to look for the parent of Child and use self as the instance.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1775,7 +1775,7 @@ Common uses:
 Example: If class Parent: x = 1; class Child(Parent): def method(self): return super().x; Child().method(), then Child().method() returns 1 because super() can access parent class attributes, and super().x accesses Parent.x = 1.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super() accesses parent attributes: • Child().method() returns 1 • super() returns parent proxy • super().x accesses parent class attribute • Parent has x = 1 • Returns: 1 How it works: • Child().method() calls method on Child instance • Child.method() executes: return super().x • super() gets parent class (Parent) • super().x accesses Parent.x • Parent.x = 1 • Returns: 1 Example: class Parent: x = 1 class Child(Parent): def method(self): return super().x # Accesses parent class attribute Child().method() # 1 (accesses Parent.x) Common uses: • Parent attribute access: super().attr (accesses parent class attribute) • Override bypass: super().x (accesses parent even if child overrides) • super() function • Inheritance Example: If class Parent: x = 1; class Child(Parent): def method(self): return super().x; Child().method(), then Child().method() returns 1 because super() can access parent class attributes, and super().x accesses Parent.x = 1.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1859,7 +1859,7 @@ Common uses:
 Example: If class Parent: def __init__(self, x): self.x = x; class Child(Parent): def __init__(self, x, y): super().__init__(x); self.y = y; obj = Child(1, 2); obj.x, then obj.x returns 1 because super().__init__() passes arguments to the parent, so x = 1 is passed to Parent.__init__, setting obj.x = 1.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super().__init__() with arguments: • obj.x returns 1 • Child(1, 2) calls Child.__init__(1, 2) • Child.__init__ calls super().__init__(1) (passes x) • Parent.__init__ sets self.x = 1 • Child.__init__ sets self.y = 2 • Returns: 1 How it works: • Child(1, 2) calls Child.__init__(1, 2) • Child.__init__ executes: super().__init__(1) • super().__init__(1) calls Parent.__init__(1) • Parent.__init__ sets self.x = 1 • Child.__init__ sets self.y = 2 • obj.x returns 1 Example: class Parent: def __init__(self, x): self.x = x class Child(Parent): def __init__(self, x, y): super().__init__(x) # Passes x to parent self.y = y obj = Child(1, 2) obj.x # 1 (parent __init__ sets with x=1) obj.y # 2 (child __init__ sets) Common uses: • Parent initialization: def __init__(self, x, y): super().__init__(x); self.y = y • Constructor chaining: pass arguments to parent __init__ • Method overriding • Object initialization Example: If class Parent: def __init__(self, x): self.x = x; class Child(Parent): def __init__(self, x, y): super().__init__(x); self.y = y; obj = Child(1, 2); obj.x, then obj.x returns 1 because super().__init__() passes arguments to the parent, so x = 1 is passed to Parent.__init__, setting obj.x = 1.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1941,7 +1941,7 @@ Common uses:
 Example: If class Parent: @classmethod; def method(cls): return 1; class Child(Parent): @classmethod; def method(cls): return super().method(); Child.method(), then Child.method() returns 1 because super() works in class methods, automatically getting the parent class and calling the parent's class method.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super() in class methods: • Child.method() returns 1 • super() works in class methods • super() automatically gets parent class • super().method() calls Parent.method() • Returns: 1 How it works: • Child.method() calls class method on Child class • Child.method() executes: return super().method() • super() automatically gets Parent (from Child) • super().method() calls Parent.method() • Parent.method() returns 1 • Returns: 1 Example: class Parent: @classmethod def method(cls): return 1 class Child(Parent): @classmethod def method(cls): return super().method() # Works in class method Child.method() # 1 (calls Parent.method()) Common uses: • Class method inheritance: @classmethod def method(cls): return super().method() • Parent class methods: super() works in class methods • super() function • Class methods Example: If class Parent: @classmethod; def method(cls): return 1; class Child(Parent): @classmethod; def method(cls): return super().method(); Child.method(), then Child.method() returns 1 because super() works in class methods, automatically getting the parent class and calling the parent's class method.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2023,7 +2023,7 @@ Common uses:
 Example: If class Parent: @staticmethod; def method(): return 1; class Child(Parent): @staticmethod; def method(): return super().method(); Child.method(), then Child.method() raises an AttributeError because super() doesn't work in static methods - static methods have no self or cls, so super() cannot determine the class context.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super() in static methods: • Child.method() raises AttributeError • super() doesn't work in static methods • Static methods have no self or cls • super() needs self/cls to determine context • Raises AttributeError How it works: • Child.method() calls static method on Child class • Child.method() executes: return super().method() • super() needs self or cls to determine class context • Static method has no self or cls • super() cannot determine which class (no context) • Raises AttributeError Example: class Parent: @staticmethod def method(): return 1 class Child(Parent): @staticmethod def method(): return super().method() # AttributeError (no self/cls) Child.method() # AttributeError (super() doesn't work) Common uses: • Understanding limitations: super() doesn't work in static methods • Static methods: no self/cls, so no super() • super() function • Static methods Example: If class Parent: @staticmethod; def method(): return 1; class Child(Parent): @staticmethod; def method(): return super().method(); Child.method(), then Child.method() raises an AttributeError because super() doesn't work in static methods - static methods have no self or cls, so super() cannot determine the class context.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2102,7 +2102,7 @@ Common uses:
 Example: If class Parent: def method(self): return 'parent'; class Child(Parent): def method(self): return super().method() + ' child'; Child().method(), then Child().method() returns 'parent child' because super() can be used to extend parent method behavior, calling the parent and then adding child-specific behavior.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super() extends parent behavior: • Child().method() returns 'parent child' • Child calls super().method() (returns 'parent') • Child extends result: 'parent' + ' child' • Returns extended behavior • Returns: 'parent child' How it works: • Child().method() calls method on Child instance • Child.method() executes: return super().method() + ' child' • super().method() calls Parent.method(), returns 'parent' • Child concatenates: 'parent' + ' child' • Returns: 'parent child' Example: class Parent: def method(self): return 'parent' class Child(Parent): def method(self): return super().method() + ' child' # Extends parent Child().method() # 'parent child' (extends parent behavior) Common uses: • Behavior extension: def method(self): return super().method() + extension • Preserving parent: call parent, then add child behavior • super() function • Method overriding Example: If class Parent: def method(self): return 'parent'; class Child(Parent): def method(self): return super().method() + ' child'; Child().method(), then Child().method() returns 'parent child' because super() can be used to extend parent method behavior, calling the parent and then adding child-specific behavior.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2182,7 +2182,7 @@ Common uses:
 Example: If class Parent: def method(self): return 1; class Child(Parent): pass; super(Child, Child()).method(), then super(Child, Child()).method() returns 1 because super() can be called outside a method with explicit arguments, specifying the class and instance.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super() outside method: • super(Child, Child()).method() returns 1 • super(Child, Child()) explicitly specifies class and instance • Child is the class, Child() is the instance • super() gets parent of Child (Parent) • super().method() calls Parent.method() • Returns: 1 How it works: • super(Child, Child()) creates super proxy • Child is the class (to find parent of) • Child() is the instance (to pass as self) • super() gets parent of Child (Parent) • super().method() calls Parent.method() with Child() instance • Parent.method() returns 1 • Returns: 1 Example: class Parent: def method(self): return 1 class Child(Parent): pass super(Child, Child()).method() # 1 (explicit super() outside method) Common uses: • External super: super(Class, instance).method() (outside method) • Testing: call parent methods from outside class • super() function • Advanced usage Example: If class Parent: def method(self): return 1; class Child(Parent): pass; super(Child, Child()).method(), then super(Child, Child()).method() returns 1 because super() can be called outside a method with explicit arguments, specifying the class and instance.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2262,7 +2262,7 @@ Common uses:
 Example: If class Parent: x = 1; class Child(Parent): x = 2; def method(self): return super().x; Child().method(), then Child().method() returns 1 because super() accesses the parent attribute even if the child overrides it, bypassing the child's x = 2 and accessing Parent.x = 1.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super() bypasses child override: • Child().method() returns 1 • Child has x = 2 (overrides parent) • super().x accesses parent attribute • super() bypasses child's x = 2 • Accesses Parent.x = 1 • Returns: 1 How it works: • Child().method() calls method on Child instance • Child.method() executes: return super().x • super() gets parent class (Parent) • super().x accesses Parent.x (not Child.x) • Parent.x = 1 • Returns: 1 (parent's value, not child's) Example: class Parent: x = 1 class Child(Parent): x = 2 # Overrides parent def method(self): return super().x # Accesses parent, not child Child().method() # 1 (parent's x, not child's x = 2) Common uses: • Parent access: super().attr (accesses parent even if child overrides) • Override bypass: super() accesses parent attributes • super() function • Inheritance Example: If class Parent: x = 1; class Child(Parent): x = 2; def method(self): return super().x; Child().method(), then Child().method() returns 1 because super() accesses the parent attribute even if the child overrides it, bypassing the child's x = 2 and accessing Parent.x = 1.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2346,7 +2346,7 @@ Common uses:
 Example: If class Parent: def method(self): return 1; class Middle(Parent): def method(self): return 2; class Child(Middle): def method(self): return super().method(); Child().method(), then Child().method() returns 2 because super() follows the MRO and calls the immediate parent (Middle), not the ultimate ancestor (Parent).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super() follows MRO: • Child().method() returns 2 • super() follows Method Resolution Order • MRO: Child -> Middle -> Parent • super() in Child calls next in MRO: Middle • Middle.method() returns 2 • Returns: 2 How it works: • Child().method() calls method on Child instance • Child.method() executes: return super().method() • super() follows MRO: [Child, Middle, Parent, object] • super() in Child calls next in MRO: Middle.method() • Middle.method() returns 2 • Returns: 2 (Middle's method, not Parent's) Example: class Parent: def method(self): return 1 class Middle(Parent): def method(self): return 2 class Child(Middle): def method(self): return super().method() # Calls Middle, not Parent Child().method() # 2 (calls Middle.method(), not Parent.method()) Common uses: • MRO understanding: super() follows Method Resolution Order • Immediate parent: super() calls next in MRO, not ultimate ancestor • super() function • Method Resolution Order Example: If class Parent: def method(self): return 1; class Middle(Parent): def method(self): return 2; class Child(Middle): def method(self): return super().method(); Child().method(), then Child().method() returns 2 because super() follows the MRO and calls the immediate parent (Middle), not the ultimate ancestor (Parent).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2425,7 +2425,7 @@ Common uses:
 Example: If class A: x = 1; class B: x = 2; class C(A, B): pass; C.x, then C.x returns 1 because in multiple inheritance, the first parent in the tuple takes precedence, so A's x = 1 is found first.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Multiple inheritance order: • C.x returns 1 • class C(A, B): inherits from A and B • A is first parent, B is second parent • First parent (A) takes precedence • A.x = 1 is found first • Returns: 1 How it works: • class C(A, B): creates child with multiple parents • Python follows MRO: [C, A, B, object] • C.x looks for attribute x • Python searches: C.__dict__ (not found) → A.__dict__ (finds x = 1) • Returns: 1 (A's attribute, not B's) Example: class A: x = 1 class B: x = 2 class C(A, B): pass C.x # 1 (first parent A takes precedence) Common uses: • Multiple inheritance: class C(A, B): (inherits from multiple parents) • Order matters: first parent in tuple takes precedence • Multiple inheritance • Method Resolution Order Example: If class A: x = 1; class B: x = 2; class C(A, B): pass; C.x, then C.x returns 1 because in multiple inheritance, the first parent in the tuple takes precedence, so A's x = 1 is found first.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2502,7 +2502,7 @@ Common uses:
 Example: If class A: x = 1; class B: x = 2; class C(B, A): pass; C.x, then C.x returns 2 because the order matters in multiple inheritance - the first parent in the tuple (B) takes precedence, so B.x = 2 is found first.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Order matters in multiple inheritance: • C.x returns 2 • class C(B, A): inherits from B and A • B is first parent, A is second parent • First parent (B) takes precedence • B.x = 2 is found first • Returns: 2 How it works: • class C(B, A): creates child with B first, A second • Python follows MRO: [C, B, A, object] • C.x looks for attribute x • Python searches: C.__dict__ (not found) → B.__dict__ (finds x = 2) • Returns: 2 (B's attribute, not A's) Example: class A: x = 1 class B: x = 2 class C(B, A): pass # B first C.x # 2 (first parent B takes precedence) Common uses: • Multiple inheritance order: class C(Parent1, Parent2): (order matters) • Precedence: first parent in tuple takes precedence • Multiple inheritance • Method Resolution Order Example: If class A: x = 1; class B: x = 2; class C(B, A): pass; C.x, then C.x returns 2 because the order matters in multiple inheritance - the first parent in the tuple (B) takes precedence, so B.x = 2 is found first.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2584,7 +2584,7 @@ Common uses:
 Example: If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): pass; C().method(), then C().method() returns 'A' because method resolution follows the inheritance order (MRO), and A comes before B, so A.method() is found first.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Method resolution follows order: • C().method() returns 'A' • Python follows MRO: [C, A, B, object] • Searches for method() in order • Finds method() in A first • Uses A.method() which returns 'A' • Returns: 'A' How it works: • C().method() calls method on C instance • Python follows MRO: [C, A, B, object] • Searches for method: C (not found) → A (found) • Uses A.method() with C instance as self • Method executes: return 'A' • Returns: 'A' Example: class A: def method(self): return 'A' class B: def method(self): return 'B' class C(A, B): pass # A first C().method() # 'A' (MRO finds A.method() first) Common uses: • Method resolution: MRO determines which parent's method is used • Multiple inheritance: order determines method resolution • Method Resolution Order • Multiple inheritance Example: If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): pass; C().method(), then C().method() returns 'A' because method resolution follows the inheritance order (MRO), and A comes before B, so A.method() is found first.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2667,7 +2667,7 @@ Common uses:
 Example: If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): def method(self): return super().method(); C().method(), then C().method() returns 'A' because super() in multiple inheritance follows the MRO, and the next class after C is A.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super() follows MRO in multiple inheritance: • C().method() returns 'A' • super() follows MRO: [C, A, B, object] • super() in C calls next in MRO: A • super().method() calls A.method() • A.method() returns 'A' • Returns: 'A' How it works: • C().method() calls method on C instance • C.method() executes: return super().method() • super() follows MRO: [C, A, B, object] • super() in C calls next in MRO: A.method() • A.method() returns 'A' • Returns: 'A' Example: class A: def method(self): return 'A' class B: def method(self): return 'B' class C(A, B): def method(self): return super().method() # Follows MRO: calls A.method() C().method() # 'A' (super() calls next in MRO: A) Common uses: • MRO understanding: super() follows Method Resolution Order • Multiple inheritance: super() calls next in MRO • super() function • Method Resolution Order Example: If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): def method(self): return super().method(); C().method(), then C().method() returns 'A' because super() in multiple inheritance follows the MRO, and the next class after C is A.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2743,7 +2743,7 @@ Common uses:
 Example: If class A: pass; class B: pass; class C(A, B): pass; C.__bases__, then C.__bases__ returns (<class '__main__.A'>, <class '__main__.B'>) because __bases__ contains all parent classes in multiple inheritance.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• __bases__ with multiple parents: • C.__bases__ returns (<class '__main__.A'>, <class '__main__.B'>) • __bases__ contains tuple of all parent classes • C inherits from A and B • Returns tuple with both parents • Returns: (<class '__main__.A'>, <class '__main__.B'>) How it works: • class C(A, B): creates child with multiple parents • Python stores all parent classes in C.__bases__ • __bases__ is tuple of parent classes • Contains: (A, B) in order • Returns: (<class '__main__.A'>, <class '__main__.B'>) Example: class A: pass class B: pass class C(A, B): pass C.__bases__ # (<class '__main__.A'>, <class '__main__.B'>) (all parents) Common uses: • Inheritance inspection: C.__bases__ (see all parent classes) • Introspection: check what classes a class inherits from • Multiple inheritance • Type system Example: If class A: pass; class B: pass; class C(A, B): pass; C.__bases__, then C.__bases__ returns (<class '__main__.A'>, <class '__main__.B'>) because __bases__ contains all parent classes in multiple inheritance.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2821,7 +2821,7 @@ Common uses:
 Example: If class A: pass; class B(A): pass; class C(A): pass; class D(B, C): pass; D.mro(), then D.mro() returns [D, B, C, A, object] because MRO follows C3 linearization, which uses depth-first, left-to-right traversal to create a consistent order.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• C3 linearization MRO: • D.mro() returns [D, B, C, A, object] • MRO follows C3 linearization algorithm • Depth-first, left-to-right traversal • D -> B -> C -> A -> object • Returns: [D, B, C, A, object] How it works: • C3 linearization computes MRO • D inherits from B and C (left-to-right: B first, C second) • B and C both inherit from A (common ancestor) • MRO: D -> B -> C -> A -> object • Ensures consistent, predictable order • Returns: [D, B, C, A, object] Example: class A: pass class B(A): pass class C(A): pass class D(B, C): pass D.mro() # [<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>] Common uses: • MRO inspection: Class.mro() (see method resolution order) • Understanding inheritance: how Python searches for methods • Method Resolution Order • C3 linearization Example: If class A: pass; class B(A): pass; class C(A): pass; class D(B, C): pass; D.mro(), then D.mro() returns [D, B, C, A, object] because MRO follows C3 linearization, which uses depth-first, left-to-right traversal to create a consistent order.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2906,7 +2906,7 @@ Common uses:
 Example: If class A: def method(self): return 'A'; class B(A): def method(self): return 'B'; class C(A): def method(self): return 'C'; class D(B, C): pass; D().method(), then D().method() returns 'B' because the MRO is [D, B, C, A, object], and B.method() is found first.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• MRO determines method: • D().method() returns 'B' • MRO: [D, B, C, A, object] • Searches for method() in order • Finds method() in B first • Uses B.method() which returns 'B' • Returns: 'B' How it works: • D().method() calls method on D instance • Python follows MRO: [D, B, C, A, object] • Searches for method: D (not found) → B (found) • Uses B.method() with D instance as self • Method executes: return 'B' • Returns: 'B' Example: class A: def method(self): return 'A' class B(A): def method(self): return 'B' class C(A): def method(self): return 'C' class D(B, C): pass # B first in MRO D().method() # 'B' (MRO finds B.method() first) Common uses: • Method resolution: MRO determines which parent's method is used • Multiple inheritance: order determines method resolution • Method Resolution Order • Multiple inheritance Example: If class A: def method(self): return 'A'; class B(A): def method(self): return 'B'; class C(A): def method(self): return 'C'; class D(B, C): pass; D().method(), then D().method() returns 'B' because the MRO is [D, B, C, A, object], and B.method() is found first.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2989,7 +2989,7 @@ Common uses:
 Example: If class A: def method(self): return 'A'; class B(A): pass; class C(A): def method(self): return 'C'; class D(B, C): pass; D().method(), then D().method() returns 'C' because the MRO continues searching through all parents, and C.method() is found after B doesn't have it.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• MRO continues searching: • D().method() returns 'C' • MRO: [D, B, C, A, object] • Searches for method() in order • D (not found) → B (not found) → C (found) • Uses C.method() which returns 'C' • Returns: 'C' How it works: • D().method() calls method on D instance • Python follows MRO: [D, B, C, A, object] • Searches for method: D (not found) → B (not found, no method) → C (found) • Uses C.method() with D instance as self • Method executes: return 'C' • Returns: 'C' Example: class A: def method(self): return 'A' class B(A): pass # No method defined class C(A): def method(self): return 'C' class D(B, C): pass D().method() # 'C' (MRO finds C.method() after B doesn't have it) Common uses: • Method resolution: MRO searches all parents until method found • Multiple inheritance: method resolution continues through all parents • Method Resolution Order • Multiple inheritance Example: If class A: def method(self): return 'A'; class B(A): pass; class C(A): def method(self): return 'C'; class D(B, C): pass; D().method(), then D().method() returns 'C' because the MRO continues searching through all parents, and C.method() is found after B doesn't have it.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3066,7 +3066,7 @@ Common uses:
 Example: If class A: x = 1; class B: x = 2; class C(A, B): x = 3; C.x, then C.x returns 3 because the child class attribute overrides all parent attributes, so the child's value (3) takes precedence over all parents' values.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child overrides all parents: • C.x returns 3 • C defines class attribute x = 3 • A has x = 1, B has x = 2 • Child's attribute shadows all parent attributes • Returns: 3 How it works: • class C(A, B): x = 3 defines child attribute • C has its own class attribute x = 3 • C.x looks for attribute x • Python finds x in C.__dict__ first • Returns: 3 (child's attribute, not parents') Example: class A: x = 1 class B: x = 2 class C(A, B): x = 3 # Overrides all parent attributes C.x # 3 (child's attribute, not A.x=1 or B.x=2) Common uses: • Attribute override: class Child(Parent1, Parent2): attr = value (overrides all parents) • Customization: child can override parent attributes • Multiple inheritance • Attribute shadowing Example: If class A: x = 1; class B: x = 2; class C(A, B): x = 3; C.x, then C.x returns 3 because the child class attribute overrides all parent attributes, so the child's value (3) takes precedence over all parents' values.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3150,7 +3150,7 @@ Common uses:
 Example: If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): def method(self): return super().method(); C().method(), then C().method() returns 'A' because super() in multiple inheritance calls the next class in the MRO after C, which is A.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super() calls next in MRO: • C().method() returns 'A' • super() follows MRO: [C, A, B, object] • super() in C calls next in MRO: A • super().method() calls A.method() • A.method() returns 'A' • Returns: 'A' How it works: • C().method() calls method on C instance • C.method() executes: return super().method() • super() follows MRO: [C, A, B, object] • super() in C calls next in MRO: A.method() • A.method() returns 'A' • Returns: 'A' Example: class A: def method(self): return 'A' class B: def method(self): return 'B' class C(A, B): def method(self): return super().method() # Calls next in MRO: A C().method() # 'A' (super() calls A, not B) Common uses: • MRO understanding: super() calls next in Method Resolution Order • Multiple inheritance: super() follows MRO, not just first parent • super() function • Method Resolution Order Example: If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): def method(self): return super().method(); C().method(), then C().method() returns 'A' because super() in multiple inheritance calls the next class in the MRO after C, which is A.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3234,7 +3234,7 @@ Common uses:
 Example: Polymorphism is a principle where different types can be used through the same interface, but each type provides its own implementation - "same interface, different behavior."
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Polymorphism concept: • Same interface, different behavior • Same method name, different implementations • Different types respond appropriately • Code works with multiple types • "If it walks like a duck and quacks like a duck, it's a duck" How it works: • Different classes define same method name • Each class provides its own implementation • Same method call works on different types • Each type responds with its own behavior • Enables code reuse and flexibility Example: class Animal: def speak(self): return 'sound' class Dog(Animal): def speak(self): return 'bark' # Different implementation class Cat(Animal): def speak(self): return 'meow' # Different implementation # Same interface (speak()), different behavior (bark, meow) Common uses: • Polymorphism: same interface, different behavior • Code reuse: function works with multiple types • Method overriding: different classes, same method name • Object-oriented programming Example: Polymorphism is a principle where different types can be used through the same interface, but each type provides its own implementation - "same interface, different behavior."
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3318,7 +3318,7 @@ Common uses:
 Example: If class Animal: def speak(self): return 'sound'; class Dog(Animal): def speak(self): return 'bark'; class Cat(Animal): def speak(self): return 'meow'; [Dog().speak(), Cat().speak()], then [Dog().speak(), Cat().speak()] returns ['bark', 'meow'] because different classes implement the same method differently, demonstrating polymorphism.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Different implementations, same interface: • [Dog().speak(), Cat().speak()] returns ['bark', 'meow'] • Both classes have speak() method • Dog.speak() returns 'bark' • Cat.speak() returns 'meow' • Same interface, different behavior • Returns: ['bark', 'meow'] How it works: • Dog().speak() calls speak() on Dog instance • Python uses Dog.speak() (returns 'bark') • Cat().speak() calls speak() on Cat instance • Python uses Cat.speak() (returns 'meow') • Both use same method name, different implementations • Returns: ['bark', 'meow'] Example: class Animal: def speak(self): return 'sound' class Dog(Animal): def speak(self): return 'bark' # Overrides parent class Cat(Animal): def speak(self): return 'meow' # Overrides parent [Dog().speak(), Cat().speak()] # ['bark', 'meow'] (polymorphism) Common uses: • Polymorphism: different classes, same method, different behavior • Method overriding: each class provides its own implementation • Code flexibility: same interface works with multiple types • Object-oriented programming Example: If class Animal: def speak(self): return 'sound'; class Dog(Animal): def speak(self): return 'bark'; class Cat(Animal): def speak(self): return 'meow'; [Dog().speak(), Cat().speak()], then [Dog().speak(), Cat().speak()] returns ['bark', 'meow'] because different classes implement the same method differently, demonstrating polymorphism.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3402,7 +3402,7 @@ Common uses:
 Example: If class Shape: def area(self): return 0; class Circle(Shape): def area(self): return 3.14; class Square(Shape): def area(self): return 1; [Circle().area(), Square().area()], then [Circle().area(), Square().area()] returns [3.14, 1] because polymorphism allows the same method name with different implementations - Circle.area() returns 3.14, Square.area() returns 1.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Same method name, different implementations: • [Circle().area(), Square().area()] returns [3.14, 1] • Both classes have area() method • Circle.area() returns 3.14 • Square.area() returns 1 • Same method name, different implementations • Returns: [3.14, 1] How it works: • Circle().area() calls area() on Circle instance • Python uses Circle.area() (returns 3.14) • Square().area() calls area() on Square instance • Python uses Square.area() (returns 1) • Both use same method name, different implementations • Returns: [3.14, 1] Example: class Shape: def area(self): return 0 # Default class Circle(Shape): def area(self): return 3.14 # Circle-specific class Square(Shape): def area(self): return 1 # Square-specific [Circle().area(), Square().area()] # [3.14, 1] (polymorphism) Common uses: • Polymorphism: same method name, different implementations • Method overriding: each class provides its own behavior • Code flexibility: same interface, different behavior • Object-oriented programming Example: If class Shape: def area(self): return 0; class Circle(Shape): def area(self): return 3.14; class Square(Shape): def area(self): return 1; [Circle().area(), Square().area()], then [Circle().area(), Square().area()] returns [3.14, 1] because polymorphism allows the same method name with different implementations - Circle.area() returns 3.14, Square.area() returns 1.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3487,7 +3487,7 @@ Common uses:
 Example: If def process(obj): return obj.method(); class A: def method(self): return 1; class B: def method(self): return 2; [process(A()), process(B())], then [process(A()), process(B())] returns [1, 2] because functions can work with different types through duck typing polymorphism - the function only cares that objects have the required method, not their specific type.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Duck typing polymorphism: • [process(A()), process(B())] returns [1, 2] • process() doesn't care about specific type • Only cares that object has method() • A.method() returns 1 • B.method() returns 2 • Same interface, different behavior • Returns: [1, 2] How it works: • process(A()) calls process() with A instance • process() executes: return obj.method() • A.method() returns 1 • process(B()) calls process() with B instance • process() executes: return obj.method() • B.method() returns 2 • Returns: [1, 2] Example: def process(obj): return obj.method() # Duck typing: just needs method() class A: def method(self): return 1 class B: def method(self): return 2 [process(A()), process(B())] # [1, 2] (works with different types) Common uses: • Duck typing: function works with any type that has required method • Polymorphism: same interface, different types • Code flexibility: function works with multiple types • Object-oriented programming Example: If def process(obj): return obj.method(); class A: def method(self): return 1; class B: def method(self): return 2; [process(A()), process(B())], then [process(A()), process(B())] returns [1, 2] because functions can work with different types through duck typing polymorphism - the function only cares that objects have the required method, not their specific type.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3569,7 +3569,7 @@ Common uses:
 Example: If class Parent: def method(self): return 'parent'; class Child(Parent): def method(self): return 'child'; obj = Parent(); obj = Child(); obj.method(), then obj.method() returns 'child' because a variable can hold different types, and method calls use the actual type of the object (Child), not the variable's original assignment.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Variable holds different types: • obj.method() returns 'child' • obj is reassigned to Child instance • obj.method() uses actual type: Child • Child.method() returns 'child' • Returns: 'child' How it works: • obj = Parent() creates Parent instance • obj = Child() reassigns obj to Child instance • obj.method() calls method on current object • Current object is Child instance • Python uses Child.method() (returns 'child') • Returns: 'child' Example: class Parent: def method(self): return 'parent' class Child(Parent): def method(self): return 'child' obj = Parent() # obj points to Parent obj = Child() # obj now points to Child obj.method() # 'child' (uses actual type: Child) Common uses: • Polymorphism: variable can hold different types • Dynamic typing: method call uses actual object type • Runtime behavior: method resolution at runtime • Object-oriented programming Example: If class Parent: def method(self): return 'parent'; class Child(Parent): def method(self): return 'child'; obj = Parent(); obj = Child(); obj.method(), then obj.method() returns 'child' because a variable can hold different types, and method calls use the actual type of the object (Child), not the variable's original assignment.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3649,7 +3649,7 @@ Common uses:
 Example: If class A: def __add__(self, other): return 'A'; class B: def __add__(self, other): return 'B'; A() + B(), then A() + B() returns 'A' because operator overloading enables polymorphic operations - the same operator behaves differently for different types, and A.__add__() is called.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (polymorphic operators) • Custom operators: define how operators work for your types • Polymorphism • Special methods Example: If class A: def __add__(self, other): return 'A'; class B: def __add__(self, other): return 'B'; A() + B(), then A() + B() returns 'A' because operator overloading enables polymorphic operations - the same operator behaves differently for different types, and A.__add__() is called.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3732,7 +3732,7 @@ Common uses:
 Example: If class Animal: def speak(self): pass; class Dog(Animal): def speak(self): return 'bark'; def make_sound(animal): return animal.speak(); make_sound(Dog()), then make_sound(Dog()) returns 'bark' because polymorphism allows a function to accept any Animal and call the appropriate speak() implementation - in this case, Dog.speak().
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Polymorphic function: • make_sound(Dog()) returns 'bark' • make_sound() accepts any Animal • Calls animal.speak() • Actual type is Dog • Python uses Dog.speak() (returns 'bark') • Returns: 'bark' How it works: • make_sound(Dog()) calls function with Dog instance • make_sound() executes: return animal.speak() • animal is Dog instance • Python calls Dog.speak() (not Animal.speak()) • Dog.speak() returns 'bark' • Returns: 'bark' Example: class Animal: def speak(self): pass class Dog(Animal): def speak(self): return 'bark' # Override def make_sound(animal): return animal.speak() # Works with any Animal make_sound(Dog()) # 'bark' (calls Dog.speak()) Common uses: • Polymorphic functions: function works with base type, calls actual type's method • Method overriding: different subclasses, same method name • Code flexibility: function works with multiple types • Object-oriented programming Example: If class Animal: def speak(self): pass; class Dog(Animal): def speak(self): return 'bark'; def make_sound(animal): return animal.speak(); make_sound(Dog()), then make_sound(Dog()) returns 'bark' because polymorphism allows a function to accept any Animal and call the appropriate speak() implementation - in this case, Dog.speak().
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3817,7 +3817,7 @@ Common uses:
 Example: If class A: def method(self): return 1; class B(A): def method(self): return 2; class C(B): def method(self): return 3; [A().method(), B().method(), C().method()], then [A().method(), B().method(), C().method()] returns [1, 2, 3] because each class in the hierarchy can override the method, providing its own implementation.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Each class overrides method: • [A().method(), B().method(), C().method()] returns [1, 2, 3] • A.method() returns 1 • B.method() returns 2 • C.method() returns 3 • Each class provides its own implementation • Returns: [1, 2, 3] How it works: • A().method() calls method on A instance • Python uses A.method() (returns 1) • B().method() calls method on B instance • Python uses B.method() (returns 2) • C().method() calls method on C instance • Python uses C.method() (returns 3) • Returns: [1, 2, 3] Example: class A: def method(self): return 1 class B(A): def method(self): return 2 # Overrides A class C(B): def method(self): return 3 # Overrides B [A().method(), B().method(), C().method()] # [1, 2, 3] (polymorphism) Common uses: • Method overriding: each class in hierarchy can override method • Polymorphism: same method name, different implementations • Inheritance hierarchy • Object-oriented programming Example: If class A: def method(self): return 1; class B(A): def method(self): return 2; class C(B): def method(self): return 3; [A().method(), B().method(), C().method()], then [A().method(), B().method(), C().method()] returns [1, 2, 3] because each class in the hierarchy can override the method, providing its own implementation.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3896,7 +3896,7 @@ Common uses:
 Example: If class Parent: def method(self): return 'parent'; class Child(Parent): pass; [Parent().method(), Child().method()], then [Parent().method(), Child().method()] returns ['parent', 'parent'] because a child without an override uses the parent method, but this is still polymorphic - the same method call works on both types.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child uses parent method: • [Parent().method(), Child().method()] returns ['parent', 'parent'] • Parent.method() returns 'parent' • Child doesn't define method() • Child uses Parent.method() (returns 'parent') • Still polymorphic: same method call works on both • Returns: ['parent', 'parent'] How it works: • Parent().method() calls method on Parent instance • Python uses Parent.method() (returns 'parent') • Child().method() calls method on Child instance • Python searches: Child (not found) → Parent (found) • Uses Parent.method() (returns 'parent') • Returns: ['parent', 'parent'] Example: class Parent: def method(self): return 'parent' class Child(Parent): pass # No override [Parent().method(), Child().method()] # ['parent', 'parent'] (still polymorphic) Common uses: • Inherited methods: child uses parent method if not overridden • Polymorphism: same method call works on multiple types • Method reuse: child inherits parent behavior • Object-oriented programming Example: If class Parent: def method(self): return 'parent'; class Child(Parent): pass; [Parent().method(), Child().method()], then [Parent().method(), Child().method()] returns ['parent', 'parent'] because a child without an override uses the parent method, but this is still polymorphic - the same method call works on both types.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3977,7 +3977,7 @@ Common uses:
 Example: If class A: def __str__(self): return 'A'; class B: def __str__(self): return 'B'; [str(A()), str(B())], then [str(A()), str(B())] returns ['A', 'B'] because special methods enable polymorphic behavior with built-in functions - each class defines its own __str__(), so str() calls the appropriate implementation.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (polymorphic with built-ins) • Operator overloading: define how operators work for your types • Polymorphism • Built-in functions Example: If class A: def __str__(self): return 'A'; class B: def __str__(self): return 'B'; [str(A()), str(B())], then [str(A()), str(B())] returns ['A', 'B'] because special methods enable polymorphic behavior with built-in functions - each class defines its own __str__(), so str() calls the appropriate implementation.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4057,7 +4057,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self.__x = 1; obj = MyClass(); obj.__x, then obj.__x raises an AttributeError because double underscore prefix triggers name mangling, renaming __x to _MyClass__x.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Name mangling with double underscore: • obj.__x raises AttributeError • Python renames __x to _MyClass__x • Name mangling adds class name prefix • Direct access via __x fails • Raises AttributeError How it works: • self.__x = 1 sets attribute • Python renames __x to _MyClass__x internally • obj.__x tries to access __x • Python looks for __x (not found, it's _MyClass__x now) • Raises AttributeError: 'MyClass' object has no attribute '__x' Example: class MyClass: def __init__(self): self.__x = 1 # Name mangled to _MyClass__x obj = MyClass() obj.__x # AttributeError (name mangled) obj._MyClass__x # 1 (mangled name works) Common uses: • Private attributes: self.__attr (name mangled, harder to access) • Encapsulation: prevent direct access to internal attributes • Name mangling • Object-oriented programming Example: If class MyClass: def __init__(self): self.__x = 1; obj = MyClass(); obj.__x, then obj.__x raises an AttributeError because double underscore prefix triggers name mangling, renaming __x to _MyClass__x.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4135,7 +4135,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self.__x = 1; obj = MyClass(); obj._MyClass__x, then obj._MyClass__x returns 1 because name mangling renames __x to _MyClass__x, and you can still access it using the mangled name.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Name mangling creates mangled name: • obj._MyClass__x returns 1 • __x is renamed to _MyClass__x • Mangled name: _ClassName__attribute • Can still access using mangled name • Returns: 1 How it works: • self.__x = 1 sets attribute • Python renames __x to _MyClass__x • obj._MyClass__x accesses mangled name • Attribute exists as _MyClass__x • Returns: 1 Example: class MyClass: def __init__(self): self.__x = 1 # Renamed to _MyClass__x obj = MyClass() obj._MyClass__x # 1 (access via mangled name) obj.__x # AttributeError (original name doesn't work) Common uses: • Understanding mangling: __attr becomes _ClassName__attr • Accessing mangled attributes: obj._ClassName__attr • Name mangling • Encapsulation Example: If class MyClass: def __init__(self): self.__x = 1; obj = MyClass(); obj._MyClass__x, then obj._MyClass__x returns 1 because name mangling renames __x to _MyClass__x, and you can still access it using the mangled name.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4214,7 +4214,7 @@ Common uses:
 Example: If class MyClass: __x = 1; MyClass.__x, then MyClass.__x returns 1 because class attributes with __ prefix don't get name mangled - name mangling only applies to instance attributes (self.__x).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Class attribute doesn't mangle: • MyClass.__x returns 1 • __x is class attribute (not self.__x) • Name mangling only applies to instance attributes • Class attributes with __ don't mangle • Returns: 1 How it works: • class MyClass: __x = 1 defines class attribute • __x is at class level (not self.__x) • Name mangling only for instance attributes • MyClass.__x accesses class attribute directly • Returns: 1 Example: class MyClass: __x = 1 # Class attribute (doesn't mangle) MyClass.__x # 1 (access directly, no mangling) # vs class MyClass: def __init__(self): self.__x = 1 # Instance attribute (mangles to _MyClass__x) Common uses: • Class attributes: __attr at class level (doesn't mangle) • Understanding mangling: only instance attributes get mangled • Name mangling • Class vs instance attributes Example: If class MyClass: __x = 1; MyClass.__x, then MyClass.__x returns 1 because class attributes with __ prefix don't get name mangled - name mangling only applies to instance attributes (self.__x).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4291,7 +4291,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self._x = 1; obj = MyClass(); obj._x, then obj._x returns 1 because single underscore is a convention indicating "protected" attributes, but Python doesn't enforce it - the attribute is still accessible.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Single underscore convention: • obj._x returns 1 • Single underscore is convention only • Not enforced by Python • Signals "internal use" but accessible • Returns: 1 How it works: • self._x = 1 sets attribute with single underscore • Python doesn't mangle or restrict access • obj._x accesses attribute directly • Convention indicates internal use • Returns: 1 Example: class MyClass: def __init__(self): self._x = 1 # Protected (convention) obj = MyClass() obj._x # 1 (accessible, but convention says "internal") Common uses: • Protected attributes: self._attr (convention, not enforced) • Internal use: signal that attribute is for internal use • Naming conventions • Encapsulation Example: If class MyClass: def __init__(self): self._x = 1; obj = MyClass(); obj._x, then obj._x returns 1 because single underscore is a convention indicating "protected" attributes, but Python doesn't enforce it - the attribute is still accessible.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4370,7 +4370,7 @@ Common uses:
 Example: If class Parent: def __init__(self): self.__x = 1; class Child(Parent): def method(self): return self.__x; Child().method(), then Child().method() raises an AttributeError because name mangling prevents child classes from accessing parent's private attributes - Parent.__x becomes _Parent__x, but Child tries to access __x which would be _Child__x.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Name mangling prevents child access: • Child().method() raises AttributeError • Parent.__x is mangled to _Parent__x • Child tries to access __x (would be _Child__x) • Different mangled names • Raises AttributeError How it works: • Parent.__init__ sets self.__x = 1 (mangled to _Parent__x) • Child().method() tries to access self.__x • In Child context, __x would mangle to _Child__x • _Child__x doesn't exist (attribute is _Parent__x) • Raises AttributeError Example: class Parent: def __init__(self): self.__x = 1 # Mangled to _Parent__x class Child(Parent): def method(self): return self.__x # Would mangle to _Child__x (doesn't exist) Child().method() # AttributeError (can't access parent's __x) Common uses: • Private attributes: name mangling prevents child access • Encapsulation: each class has its own mangled namespace • Name mangling • Inheritance Example: If class Parent: def __init__(self): self.__x = 1; class Child(Parent): def method(self): return self.__x; Child().method(), then Child().method() raises an AttributeError because name mangling prevents child classes from accessing parent's private attributes - Parent.__x becomes _Parent__x, but Child tries to access __x which would be _Child__x.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4449,7 +4449,7 @@ Common uses:
 Example: If class Parent: def __init__(self): self.__x = 1; class Child(Parent): def method(self): return self._Parent__x; Child().method(), then Child().method() returns 1 because you can access the mangled name with the class name prefix - Parent.__x becomes _Parent__x, and accessing it directly works.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Access mangled name directly: • Child().method() returns 1 • self._Parent__x accesses mangled name • Parent.__x is mangled to _Parent__x • Using mangled name works • Returns: 1 How it works: • Parent.__init__ sets self.__x = 1 (mangled to _Parent__x) • Child().method() accesses self._Parent__x • Uses full mangled name with class prefix • Attribute exists as _Parent__x • Returns: 1 Example: class Parent: def __init__(self): self.__x = 1 # Mangled to _Parent__x class Child(Parent): def method(self): return self._Parent__x # Access via mangled name Child().method() # 1 (can access parent's mangled attribute) Common uses: • Accessing mangled attributes: obj._ClassName__attr • Understanding mangling: can access if you know the mangled name • Name mangling • Inheritance Example: If class Parent: def __init__(self): self.__x = 1; class Child(Parent): def method(self): return self._Parent__x; Child().method(), then Child().method() returns 1 because you can access the mangled name with the class name prefix - Parent.__x becomes _Parent__x, and accessing it directly works.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4529,7 +4529,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self.__x__ = 1; obj = MyClass(); obj.__x__, then obj.__x__ returns 1 because double underscore on both sides doesn't trigger name mangling - this pattern is reserved for special methods.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (don't mangle) • Understanding mangling: only __attr (not __attr__) mangles • Name mangling • Special methods Example: If class MyClass: def __init__(self): self.__x__ = 1; obj = MyClass(); obj.__x__, then obj.__x__ returns 1 because double underscore on both sides doesn't trigger name mangling - this pattern is reserved for special methods.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4609,7 +4609,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self._x = 1; def get_x(self): return self._x; obj = MyClass(); obj.get_x(), then obj.get_x() returns 1 because getter methods provide controlled access to protected attributes, allowing the class to manage how attributes are accessed.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Getter method for protected attribute: • obj.get_x() returns 1 • get_x() provides controlled access • Accesses protected attribute _x • Returns value through method • Returns: 1 How it works: • obj.get_x() calls getter method • get_x() executes: return self._x • Accesses protected attribute _x = 1 • Returns value through method • Returns: 1 Example: class MyClass: def __init__(self): self._x = 1 # Protected attribute def get_x(self): return self._x # Getter method obj = MyClass() obj.get_x() # 1 (controlled access) obj._x # 1 (direct access also works, but getter preferred) Common uses: • Controlled access: getter methods provide interface to protected attributes • Encapsulation: hide implementation details behind methods • Getter methods • Object-oriented programming Example: If class MyClass: def __init__(self): self._x = 1; def get_x(self): return self._x; obj = MyClass(); obj.get_x(), then obj.get_x() returns 1 because getter methods provide controlled access to protected attributes, allowing the class to manage how attributes are accessed.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4689,7 +4689,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self.__x = 1; def get_x(self): return self.__x; obj = MyClass(); obj.get_x(), then obj.get_x() returns 1 because getter methods can access mangled names from within the class - Python automatically resolves __x to _MyClass__x inside the class.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Getter accesses mangled name: • obj.get_x() returns 1 • get_x() accesses __x from within class • Python automatically uses mangled name _MyClass__x • Works from within class • Returns: 1 How it works: • obj.get_x() calls getter method • get_x() executes: return self.__x • Inside class, __x refers to _MyClass__x (mangled) • Python automatically resolves to mangled name • Returns: 1 Example: class MyClass: def __init__(self): self.__x = 1 # Mangled to _MyClass__x def get_x(self): return self.__x # Inside class, __x works (auto-mangled) obj = MyClass() obj.get_x() # 1 (works from within class) obj.__x # AttributeError (doesn't work from outside) Common uses: • Private attributes: getter methods can access mangled attributes • Encapsulation: hide attributes, provide controlled access • Getter methods • Name mangling Example: If class MyClass: def __init__(self): self.__x = 1; def get_x(self): return self.__x; obj = MyClass(); obj.get_x(), then obj.get_x() returns 1 because getter methods can access mangled names from within the class - Python automatically resolves __x to _MyClass__x inside the class.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4772,7 +4772,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self.__x = 1; def set_x(self, val): self.__x = val; obj = MyClass(); obj.set_x(2); obj.get_x() if hasattr(obj, 'get_x') else obj._MyClass__x, then it returns 2 because setter methods can modify mangled attributes from within the class.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Setter modifies mangled attribute: • obj.set_x(2) modifies __x • Inside class, __x refers to _MyClass__x • set_x() modifies mangled attribute • obj.get_x() or obj._MyClass__x returns 2 • Returns: 2 How it works: • obj.set_x(2) calls setter method • set_x() executes: self.__x = val • Inside class, __x refers to _MyClass__x • Sets _MyClass__x = 2 • obj.get_x() or obj._MyClass__x returns 2 • Returns: 2 Example: class MyClass: def __init__(self): self.__x = 1 # Mangled to _MyClass__x def set_x(self, val): self.__x = val # Modifies mangled attribute def get_x(self): return self.__x obj = MyClass() obj.set_x(2) # Modifies __x obj.get_x() # 2 (updated value) Common uses: • Private attributes: setter methods can modify mangled attributes • Encapsulation: controlled modification of private attributes • Setter methods • Name mangling Example: If class MyClass: def __init__(self): self.__x = 1; def set_x(self, val): self.__x = val; obj = MyClass(); obj.set_x(2); obj.get_x() if hasattr(obj, 'get_x') else obj._MyClass__x, then it returns 2 because setter methods can modify mangled attributes from within the class.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4854,7 +4854,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; obj = MyClass(); obj.x, then obj.x returns 1 because @property provides controlled read access, making the method accessible as an attribute.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Property provides controlled access: • obj.x returns 1 • @property makes method accessible as attribute • Property getter returns self._x • Clean interface: obj.x (not obj.get_x()) • Returns: 1 How it works: • obj.x accesses property • Python calls property getter: @property def x(self) • Getter executes: return self._x • Returns protected attribute value • Returns: 1 Example: class MyClass: def __init__(self): self._x = 1 # Protected attribute @property def x(self): return self._x # Property getter obj = MyClass() obj.x # 1 (property access, clean interface) Common uses: • Controlled access: @property def attr(self): return self._attr • Clean interface: obj.attr instead of obj.get_attr() • Properties • Encapsulation Example: If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; obj = MyClass(); obj.x, then obj.x returns 1 because @property provides controlled read access, making the method accessible as an attribute.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4938,7 +4938,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; @x.setter; def x(self, val): self._x = val * 2; obj = MyClass(); obj.x = 5; obj.x, then obj.x returns 10 because the property setter transforms the value before storing it (5 * 2 = 10).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Property setter transforms value: • obj.x = 5 calls setter • Setter executes: self._x = val * 2 = 5 * 2 = 10 • Stores transformed value: 10 • obj.x calls getter: return self._x • Returns: 10 How it works: • obj.x = 5 calls setter: @x.setter def x(self, val) • Setter transforms: self._x = val * 2 • Evaluates: 5 * 2 = 10 • Stores: self._x = 10 • obj.x returns: 10 Example: class MyClass: def __init__(self): self._x = 1 @property def x(self): return self._x @x.setter def x(self, val): self._x = val * 2 # Transforms value obj = MyClass() obj.x = 5 # Stores 10 (5 * 2) obj.x # 10 (transformed value) Common uses: • Value transformation: @x.setter def x(self, val): self._x = transform(val) • Validation: @x.setter def x(self, val): if valid: self._x = val • Properties • Encapsulation Example: If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; @x.setter; def x(self, val): self._x = val * 2; obj = MyClass(); obj.x = 5; obj.x, then obj.x returns 10 because the property setter transforms the value before storing it (5 * 2 = 10).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5019,7 +5019,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self.__x = 1; @property; def x(self): return self.__x; obj = MyClass(); obj.x, then obj.x returns 1 because properties can access mangled attributes - inside the class, __x automatically refers to the mangled name.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Property accesses mangled attribute: • obj.x returns 1 • Property getter accesses __x • Inside class, __x refers to _MyClass__x • Property can access mangled name • Returns: 1 How it works: • obj.x accesses property • Property getter executes: return self.__x • Inside class, __x refers to _MyClass__x (mangled) • Python automatically resolves to mangled name • Returns: 1 Example: class MyClass: def __init__(self): self.__x = 1 # Mangled to _MyClass__x @property def x(self): return self.__x # Property can access mangled name obj = MyClass() obj.x # 1 (property accesses mangled attribute) obj.__x # AttributeError (direct access fails) Common uses: • Private attributes: @property def attr(self): return self.__attr • Controlled access: properties provide interface to mangled attributes • Properties • Name mangling Example: If class MyClass: def __init__(self): self.__x = 1; @property; def x(self): return self.__x; obj = MyClass(); obj.x, then obj.x returns 1 because properties can access mangled attributes - inside the class, __x automatically refers to the mangled name.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5102,7 +5102,7 @@ Common uses:
 Example: If class MyClass: @property; def x(self): return 1; @x.setter; def x(self, val): pass; obj = MyClass(); obj.x = 5; obj.x, then obj.x returns 1 because a setter that doesn't store the value doesn't change the property, so the getter still returns 1.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Setter doesn't store: • obj.x = 5 calls setter • Setter executes: pass (does nothing) • Value 5 is ignored (not stored) • obj.x calls getter: return 1 • Returns: 1 (unchanged) How it works: • obj.x = 5 calls setter: @x.setter def x(self, val) • Setter executes: pass (does nothing) • Value 5 is not stored • obj.x calls getter: @property def x(self) • Getter returns: 1 (unchanged) • Returns: 1 Example: class MyClass: @property def x(self): return 1 @x.setter def x(self, val): pass # Doesn't store value obj = MyClass() obj.x = 5 # Calls setter (ignores value) obj.x # 1 (getter unchanged) Common uses: • Read-only simulation: setter that ignores values • Validation-only setters: setter that validates but doesn't store • Properties • Encapsulation Example: If class MyClass: @property; def x(self): return 1; @x.setter; def x(self, val): pass; obj = MyClass(); obj.x = 5; obj.x, then obj.x returns 1 because a setter that doesn't store the value doesn't change the property, so the getter still returns 1.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5187,7 +5187,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self._x = 1; def get_x(self): return self._x; def set_x(self, val): self._x = val; x = property(get_x, set_x); obj = MyClass(); obj.x = 5; obj.x, then obj.x returns 5 because property() can be created with getter and setter functions, and the setter stores the value.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• property() with getter and setter: • obj.x = 5 calls set_x(5) • set_x sets self._x = 5 • obj.x calls get_x() • get_x returns self._x = 5 • Returns: 5 How it works: • property(get_x, set_x) creates property • get_x is getter function • set_x is setter function • obj.x = 5 calls set_x(5) • set_x sets self._x = 5 • obj.x calls get_x() • Returns: 5 Example: class MyClass: def __init__(self): self._x = 1 def get_x(self): return self._x def set_x(self, val): self._x = val x = property(get_x, set_x) # Alternative to @property obj = MyClass() obj.x = 5 # Calls set_x(5) obj.x # 5 (calls get_x()) Common uses: • Property creation: x = property(getter, setter) (alternative syntax) • Functional style: property() function instead of decorators • Properties • Encapsulation Example: If class MyClass: def __init__(self): self._x = 1; def get_x(self): return self._x; def set_x(self, val): self._x = val; x = property(get_x, set_x); obj = MyClass(); obj.x = 5; obj.x, then obj.x returns 5 because property() can be created with getter and setter functions, and the setter stores the value.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5272,7 +5272,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); del obj.x; hasattr(obj, '_x'), then hasattr(obj, '_x') returns False because @x.deleter provides controlled deletion, and del obj.x calls the deleter, which deletes self._x.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Property deleter: • del obj.x calls deleter • @x.deleter defines deletion behavior • Deleter executes: del self._x • Attribute _x is deleted • hasattr(obj, '_x') returns False How it works: • obj._x = 1 sets attribute • del obj.x calls deleter: @x.deleter def x(self) • Deleter executes: del self._x • Attribute _x is deleted • hasattr(obj, '_x') checks if attribute exists • Returns: False Example: class MyClass: def __init__(self): self._x = 1 @property def x(self): return self._x @x.deleter def x(self): del self._x # Controlled deletion obj = MyClass() del obj.x # Calls deleter hasattr(obj, '_x') # False (deleted) Common uses: • Controlled deletion: @x.deleter def x(self): cleanup logic • Property deletion: del obj.property (uses deleter) • Properties • Encapsulation Example: If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); del obj.x; hasattr(obj, '_x'), then hasattr(obj, '_x') returns False because @x.deleter provides controlled deletion, and del obj.x calls the deleter, which deletes self._x.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5352,7 +5352,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; obj = MyClass(); obj.x = 2, then obj.x = 2 raises an AttributeError because a property without a setter is read-only and cannot be assigned to.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Property without setter: • obj.x = 2 raises AttributeError • Property only has getter (no setter) • Cannot assign to read-only property • Raises AttributeError: can't set attribute • Error: AttributeError How it works: • obj.x = 2 attempts to assign to property • Property has no setter defined • Python cannot set read-only property • Raises AttributeError: can't set attribute Example: class MyClass: def __init__(self): self._x = 1 @property def x(self): return self._x # Only getter, no setter obj = MyClass() obj.x # 1 (read works) obj.x = 2 # AttributeError (no setter, read-only) Common uses: • Read-only properties: @property def value(self): return self._value • Computed properties: @property def area(self): return self.width * self.height • Properties • Encapsulation Example: If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; obj = MyClass(); obj.x = 2, then obj.x = 2 raises an AttributeError because a property without a setter is read-only and cannot be assigned to.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5433,7 +5433,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x if self._x > 0 else 0; obj = MyClass(); obj._x = -1; obj.x, then obj.x returns 0 because the property getter can validate/transform values on access, returning 0 for negative values.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (False) • Returns: 0 (transformed value) Example: class MyClass: def __init__(self): self._x = 1 @property def x(self): return self._x if self._x > 0 else 0 # Transforms on access obj = MyClass() obj._x = -1 # Set directly (bypasses property) obj.x # 0 (getter transforms negative to 0) Common uses: • Value transformation: @property def x(self): return transform(self._x) • Validation on access: getter can validate/transform values • Properties • Encapsulation Example: If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x if self._x > 0 else 0; obj = MyClass(); obj._x = -1; obj.x, then obj.x returns 0 because the property getter can validate/transform values on access, returning 0 for negative values.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5518,7 +5518,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; @x.setter; def x(self, val): if val < 0: raise ValueError; self._x = val; obj = MyClass(); obj.x = -1, then obj.x = -1 raises a ValueError because the property setter validates input and raises an error if validation fails.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (True, -1 < 0) • Raises ValueError (validation fails) • Value is not stored • Raises ValueError How it works: • obj.x = -1 calls setter: @x.setter def x(self, val) • Setter validates: if val < 0: raise ValueError • -1 < 0 is True • Raises ValueError • Value is not stored Example: class MyClass: def __init__(self): self._x = 1 @property def x(self): return self._x @x.setter def x(self, val): if val < 0: raise ValueError("Value must be non-negative") self._x = val obj = MyClass() obj.x = -1 # ValueError (validation fails) Common uses: • Input validation: @x.setter def x(self, val): if not valid: raise Error • Business rules: properties can enforce constraints • Properties • Encapsulation Example: If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; @x.setter; def x(self, val): if val < 0: raise ValueError; self._x = val; obj = MyClass(); obj.x = -1, then obj.x = -1 raises a ValueError because the property setter validates input and raises an error if validation fails.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5602,7 +5602,7 @@ Common uses:
 Example: If class MyClass: _x = 1; @classmethod; @property; def x(cls): return cls._x, then it raises a TypeError because you can't combine @classmethod and @property - properties are for instances, class methods are for classes.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Cannot combine decorators: • Raises TypeError • @property expects instance method (self) • @classmethod provides class method (cls) • Decorators are incompatible • Raises TypeError How it works: • @classmethod @property def x(cls): tries to combine decorators • @property expects method with self (instance) • @classmethod provides method with cls (class) • Decorators conflict • Raises TypeError Example: class MyClass: _x = 1 @classmethod @property # TypeError (can't combine) def x(cls): return cls._x # Instead, use: class MyClass: _x = 1 @classmethod def x(cls): return cls._x # Class method (no @property) Common uses: • Understanding limitations: @property and @classmethod can't be combined • Class attributes: use @classmethod without @property • Properties • Class methods Example: If class MyClass: _x = 1; @classmethod; @property; def x(cls): return cls._x, then it raises a TypeError because you can't combine @classmethod and @property - properties are for instances, class methods are for classes.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5682,7 +5682,7 @@ Common uses:
 Example: If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; MyClass(), then MyClass() raises a TypeError because abstract classes with abstract methods cannot be instantiated - they must be subclassed and the abstract methods must be implemented first.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Abstract class can't be instantiated: • MyClass() raises TypeError • MyClass has abstract method (method) • Abstract classes cannot be instantiated • Must implement abstract methods first • Raises TypeError How it works: • MyClass() tries to create instance • Python checks for abstract methods • Finds @abstractmethod def method(self) • Class has abstract methods • Raises TypeError: Can't instantiate abstract class MyClass with abstract method method Example: from abc import ABC, abstractmethod class MyClass(ABC): @abstractmethod def method(self): pass MyClass() # TypeError (can't instantiate abstract class) Common uses: • Abstract base classes: define interface that subclasses must implement • Interface enforcement: prevent instantiation until interface is complete • Abstract base classes • Object-oriented programming Example: If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; MyClass(), then MyClass() raises a TypeError because abstract classes with abstract methods cannot be instantiated - they must be subclassed and the abstract methods must be implemented first.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5762,7 +5762,7 @@ Common uses:
 Example: If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): pass; Child(), then Child() raises a TypeError because the child must implement the abstract method or it also becomes abstract and cannot be instantiated.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child must implement abstract method: • Child() raises TypeError • Child inherits abstract method from Parent • Child doesn't implement method() • Child is also abstract • Raises TypeError How it works: • Child() tries to create instance • Python checks for abstract methods • Finds inherited @abstractmethod def method(self) from Parent • Child doesn't implement method() • Child is abstract • Raises TypeError: Can't instantiate abstract class Child with abstract method method Example: from abc import ABC, abstractmethod class Parent(ABC): @abstractmethod def method(self): pass class Child(Parent): pass # Doesn't implement method Child() # TypeError (still abstract) Common uses: • Abstract inheritance: child must implement parent's abstract methods • Interface enforcement: abstract methods must be implemented • Abstract base classes • Inheritance Example: If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): pass; Child(), then Child() raises a TypeError because the child must implement the abstract method or it also becomes abstract and cannot be instantiated.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5843,7 +5843,7 @@ Common uses:
 Example: If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): def method(self): return 1; Child().method(), then Child().method() returns 1 because a child implementing the abstract method can be instantiated and the method works correctly.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child implementing abstract method: • Child().method() returns 1 • Child implements abstract method from Parent • Child is no longer abstract • Can be instantiated • Returns: 1 How it works: • Child() creates instance (no longer abstract) • Child implements method() (returns 1) • Child().method() calls Child.method() • Method executes: return 1 • Returns: 1 Example: from abc import ABC, abstractmethod class Parent(ABC): @abstractmethod def method(self): pass class Child(Parent): def method(self): return 1 # Implements abstract method Child().method() # 1 (can instantiate, method implemented) Common uses: • Abstract implementation: child implements parent's abstract methods • Interface completion: implementing abstract methods makes class concrete • Abstract base classes • Inheritance Example: If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): def method(self): return 1; Child().method(), then Child().method() returns 1 because a child implementing the abstract method can be instantiated and the method works correctly.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5926,7 +5926,7 @@ Common uses:
 Example: If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): @abstractmethod; def method(self): pass; Child(), then Child() raises a TypeError because a child keeping the method abstract still cannot be instantiated - the method must be implemented (not just marked abstract) for the class to be concrete.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child keeps method abstract: • Child() raises TypeError • Child marks method() as @abstractmethod • Method is still abstract (not implemented) • Child is still abstract • Raises TypeError How it works: • Child() tries to create instance • Python checks for abstract methods • Finds @abstractmethod def method(self) in Child • Method is still abstract (marked with @abstractmethod) • Child is abstract • Raises TypeError: Can't instantiate abstract class Child with abstract method method Example: from abc import ABC, abstractmethod class Parent(ABC): @abstractmethod def method(self): pass class Child(Parent): @abstractmethod def method(self): pass # Still abstract Child() # TypeError (still abstract) Common uses: • Abstract inheritance: child can keep method abstract • Multi-level abstraction: abstract methods can be passed down • Abstract base classes • Inheritance Example: If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): @abstractmethod; def method(self): pass; Child(), then Child() raises a TypeError because a child keeping the method abstract still cannot be instantiated - the method must be implemented (not just marked abstract) for the class to be concrete.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6004,7 +6004,7 @@ Common uses:
 Example: If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; MyClass.__abstractmethods__, then MyClass.__abstractmethods__ returns frozenset({'method'}) because __abstractmethods__ contains a set of abstract method names.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• __abstractmethods__ attribute: • MyClass.__abstractmethods__ returns frozenset({'method'}) • Contains names of abstract methods • Used to check if class is abstract • Empty when all methods implemented • Returns: frozenset({'method'}) How it works: • @abstractmethod def method(self) marks method as abstract • Python adds 'method' to __abstractmethods__ • __abstractmethods__ is frozenset of abstract method names • Contains: {'method'} • Returns: frozenset({'method'}) Example: from abc import ABC, abstractmethod class MyClass(ABC): @abstractmethod def method(self): pass MyClass.__abstractmethods__ # frozenset({'method'}) (abstract methods) Common uses: • Abstract method inspection: Class.__abstractmethods__ (see abstract methods) • Introspection: check which methods are abstract • Abstract base classes • Type system Example: If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; MyClass.__abstractmethods__, then MyClass.__abstractmethods__ returns frozenset({'method'}) because __abstractmethods__ contains a set of abstract method names.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6086,7 +6086,7 @@ Common uses:
 Example: If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): def method(self): return 1; Child.__abstractmethods__, then Child.__abstractmethods__ returns frozenset() because a child implementing the abstract method has no abstract methods - all are implemented.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child has no abstract methods: • Child.__abstractmethods__ returns frozenset() • Child implements abstract method from Parent • All abstract methods are implemented • __abstractmethods__ is empty • Returns: frozenset() How it works: • Child implements method() (returns 1) • Python checks abstract methods • All abstract methods are implemented • Removes 'method' from __abstractmethods__ • __abstractmethods__ becomes empty • Returns: frozenset() Example: from abc import ABC, abstractmethod class Parent(ABC): @abstractmethod def method(self): pass class Child(Parent): def method(self): return 1 # Implements abstract method Child.__abstractmethods__ # frozenset() (no abstract methods) Common uses: • Abstract method inspection: Child.__abstractmethods__ (check if concrete) • Introspection: empty set means class is concrete • Abstract base classes • Type system Example: If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): def method(self): return 1; Child.__abstractmethods__, then Child.__abstractmethods__ returns frozenset() because a child implementing the abstract method has no abstract methods - all are implemented.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6165,7 +6165,7 @@ Common uses:
 Example: If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; @classmethod; def method(cls): pass; MyClass(), then MyClass() raises a TypeError because an abstract class method prevents instantiation - the class is abstract until the class method is implemented.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Abstract classmethod: • MyClass() raises TypeError • @abstractmethod @classmethod marks class method as abstract • Class has abstract class method • Cannot be instantiated • Raises TypeError How it works: • MyClass() tries to create instance • Python checks for abstract methods • Finds @abstractmethod @classmethod def method(cls) • Class has abstract class method • Raises TypeError: Can't instantiate abstract class MyClass with abstract method method Example: from abc import ABC, abstractmethod class MyClass(ABC): @abstractmethod @classmethod def method(cls): pass # Abstract class method MyClass() # TypeError (abstract class method) Common uses: • Abstract class methods: @abstractmethod @classmethod (abstract class method) • Interface enforcement: abstract methods can be class methods • Abstract base classes • Class methods Example: If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; @classmethod; def method(cls): pass; MyClass(), then MyClass() raises a TypeError because an abstract class method prevents instantiation - the class is abstract until the class method is implemented.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6244,7 +6244,7 @@ Common uses:
 Example: If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; @staticmethod; def method(): pass; MyClass(), then MyClass() raises a TypeError because an abstract static method prevents instantiation - the class is abstract until the static method is implemented.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Abstract staticmethod: • MyClass() raises TypeError • @abstractmethod @staticmethod marks static method as abstract • Class has abstract static method • Cannot be instantiated • Raises TypeError How it works: • MyClass() tries to create instance • Python checks for abstract methods • Finds @abstractmethod @staticmethod def method() • Class has abstract static method • Raises TypeError: Can't instantiate abstract class MyClass with abstract method method Example: from abc import ABC, abstractmethod class MyClass(ABC): @abstractmethod @staticmethod def method(): pass # Abstract static method MyClass() # TypeError (abstract static method) Common uses: • Abstract static methods: @abstractmethod @staticmethod (abstract static method) • Interface enforcement: abstract methods can be static methods • Abstract base classes • Static methods Example: If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; @staticmethod; def method(): pass; MyClass(), then MyClass() raises a TypeError because an abstract static method prevents instantiation - the class is abstract until the static method is implemented.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6323,7 +6323,7 @@ Common uses:
 Example: If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) returns True because a child is still a subclass even if it's abstract - abstract status doesn't affect the inheritance relationship.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child is still subclass: • issubclass(Child, Parent) returns True • Child inherits from Parent • Abstract status doesn't affect inheritance • Child is subclass even if abstract • Returns: True How it works: • class Child(Parent): creates child inheriting from Parent • issubclass(Child, Parent) checks inheritance • Child is indeed a subclass of Parent • Abstract status doesn't affect this • Returns: True Example: from abc import ABC, abstractmethod class Parent(ABC): @abstractmethod def method(self): pass class Child(Parent): pass # Abstract (doesn't implement method) issubclass(Child, Parent) # True (still subclass, even if abstract) Common uses: • Inheritance check: issubclass(Child, Parent) (works even if abstract) • Understanding abstraction: abstract status doesn't affect inheritance • Abstract base classes • Inheritance Example: If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) returns True because a child is still a subclass even if it's abstract - abstract status doesn't affect the inheritance relationship.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6406,7 +6406,7 @@ Common uses:
 Example: If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; isinstance(MyClass(), MyClass), then it raises a TypeError because you can't create an instance of an abstract class to test isinstance() - abstract classes cannot be instantiated.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Cannot instantiate abstract class: • isinstance(MyClass(), MyClass) raises TypeError • MyClass() tries to instantiate abstract class • Abstract classes cannot be instantiated • Cannot create instance for isinstance() • Raises TypeError How it works: • isinstance(MyClass(), MyClass) tries to create instance • MyClass() attempts to instantiate abstract class • Python checks for abstract methods • Finds @abstractmethod def method(self) • Raises TypeError: Can't instantiate abstract class MyClass with abstract method method Example: from abc import ABC, abstractmethod class MyClass(ABC): @abstractmethod def method(self): pass isinstance(MyClass(), MyClass) # TypeError (can't instantiate abstract class) # Instead, create concrete subclass: class Concrete(MyClass): def method(self): return 1 isinstance(Concrete(), MyClass) # True (works with concrete subclass) Common uses: • Understanding limitations: can't instantiate abstract classes • isinstance() testing: need concrete subclass for isinstance() • Abstract base classes • Type system Example: If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; isinstance(MyClass(), MyClass), then it raises a TypeError because you can't create an instance of an abstract class to test isinstance() - abstract classes cannot be instantiated.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6485,7 +6485,7 @@ Common uses:
 Example: If class Parent: pass; class Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) returns True because isinstance() returns True for parent classes - it checks the entire inheritance chain.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (works with inheritance) • Polymorphism: isinstance(obj, BaseClass) (checks base classes) • isinstance() function • Type system Example: If class Parent: pass; class Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) returns True because isinstance() returns True for parent classes - it checks the entire inheritance chain.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6560,7 +6560,7 @@ Common uses:
 Example: If class Parent: pass; class Child(Parent): pass; isinstance(Child(), Child), then isinstance(Child(), Child) returns True because isinstance() returns True for the instance's own class - an instance is always an instance of its own class.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (check own class) • Instance validation: isinstance(instance, Class) (always True for own class) • isinstance() function • Type system Example: If class Parent: pass; class Child(Parent): pass; isinstance(Child(), Child), then isinstance(Child(), Child) returns True because isinstance() returns True for the instance's own class - an instance is always an instance of its own class.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6636,7 +6636,7 @@ Common uses:
 Example: If class Parent: pass; class Child(Parent): pass; isinstance(Child(), (Parent, str)), then isinstance(Child(), (Parent, str)) returns True because isinstance() can check multiple types using a tuple, and Child() is an instance of Parent.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• isinstance() with tuple: • isinstance(Child(), (Parent, str)) returns True • isinstance() checks if instance is of any type in tuple • Child() is instance of Parent (inheritance) • Matches Parent in tuple • Returns: True How it works: • isinstance(Child(), (Parent, str)) checks multiple types • Checks if Child() is instance of Parent (True, through inheritance) • Or instance of str (False) • Returns True if matches any type in tuple • Returns: True Example: class Parent: pass class Child(Parent): pass isinstance(Child(), (Parent, str)) # True (matches Parent) isinstance(Child(), (str, int)) # False (matches neither) Common uses: • Multiple type checking: isinstance(obj, (Type1, Type2, Type3)) • Type validation: check if object is one of several types • isinstance() function • Type system Example: If class Parent: pass; class Child(Parent): pass; isinstance(Child(), (Parent, str)), then isinstance(Child(), (Parent, str)) returns True because isinstance() can check multiple types using a tuple, and Child() is an instance of Parent.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6712,7 +6712,7 @@ Common uses:
 Example: If class Parent: pass; class Child(Parent): pass; isinstance(Parent(), Child), then isinstance(Parent(), Child) returns False because isinstance() doesn't work backwards - a parent instance is not an instance of a child class.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• isinstance() doesn't work backwards: • isinstance(Parent(), Child) returns False • Parent() creates instance of Parent • Parent is not a subclass of Child • Parent instance is not instance of Child • Returns: False How it works: • Parent() creates instance of Parent • isinstance(instance, Child) checks if instance is of Child • Parent is not a subclass of Child (inheritance is one-way) • Parent instance is not instance of Child • Returns: False Example: class Parent: pass class Child(Parent): pass isinstance(Parent(), Child) # False (parent not instance of child) isinstance(Child(), Parent) # True (child is instance of parent) Common uses: • Understanding inheritance: isinstance() only works forward (child -> parent) • Type checking: parent instances are not instances of child classes • isinstance() function • Inheritance Example: If class Parent: pass; class Child(Parent): pass; isinstance(Parent(), Child), then isinstance(Parent(), Child) returns False because isinstance() doesn't work backwards - a parent instance is not an instance of a child class.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6786,7 +6786,7 @@ Common uses:
 Example: If class Parent: pass; class Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) returns True because issubclass() checks if the first class is a subclass of the second class, and Child inherits from Parent.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • issubclass() function • Inheritance Example: If class Parent: pass; class Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) returns True because issubclass() checks if the first class is a subclass of the second class, and Child inherits from Parent.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6862,7 +6862,7 @@ Common uses:
 Example: If class Parent: pass; class Child(Parent): pass; issubclass(Parent, Child), then issubclass(Parent, Child) returns False because issubclass() doesn't work backwards - a parent is not a subclass of a child.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• issubclass() doesn't work backwards: • issubclass(Parent, Child) returns False • Parent doesn't inherit from Child • Inheritance is one-way (Child -> Parent) • Parent is not subclass of Child • Returns: False How it works: • issubclass(Parent, Child) checks if Parent is subclass of Child • Parent doesn't inherit from Child • Inheritance only works one way • Parent is not a subclass of Child • Returns: False Example: class Parent: pass class Child(Parent): pass issubclass(Parent, Child) # False (parent not subclass of child) issubclass(Child, Parent) # True (child is subclass of parent) Common uses: • Understanding inheritance: issubclass() only works forward (child -> parent) • Type checking: parent classes are not subclasses of child classes • issubclass() function • Inheritance Example: If class Parent: pass; class Child(Parent): pass; issubclass(Parent, Child), then issubclass(Parent, Child) returns False because issubclass() doesn't work backwards - a parent is not a subclass of a child.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6938,7 +6938,7 @@ Common uses:
 Example: If class Parent: pass; class Child(Parent): pass; issubclass(Child, (Parent, str)), then issubclass(Child, (Parent, str)) returns True because issubclass() can check multiple base classes using a tuple, and Child is a subclass of Parent.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• issubclass() with tuple: • issubclass(Child, (Parent, str)) returns True • issubclass() checks if Child is subclass of any class in tuple • Child inherits from Parent • Matches Parent in tuple • Returns: True How it works: • issubclass(Child, (Parent, str)) checks multiple base classes • Checks if Child is subclass of Parent (True) • Or subclass of str (False) • Returns True if matches any class in tuple • Returns: True Example: class Parent: pass class Child(Parent): pass issubclass(Child, (Parent, str)) # True (Child is subclass of Parent) issubclass(Child, (str, int)) # False (Child is not subclass of str or int) Common uses: • Multiple base class checking: issubclass(Class, (Base1, Base2, Base3)) • Type validation: check if class inherits from one of several bases • issubclass() function • Inheritance Example: If class Parent: pass; class Child(Parent): pass; issubclass(Child, (Parent, str)), then issubclass(Child, (Parent, str)) returns True because issubclass() can check multiple base classes using a tuple, and Child is a subclass of Parent.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7016,7 +7016,7 @@ Common uses:
 Example: If class A: pass; class B(A): pass; class C(B): pass; issubclass(C, A), then issubclass(C, A) returns True because issubclass() checks the entire inheritance chain, and C is a subclass of A through B.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• issubclass() checks entire chain: • issubclass(C, A) returns True • issubclass() checks entire inheritance chain • C inherits from B, B inherits from A • C is subclass of A (through B) • Returns: True How it works: • issubclass(C, A) checks if C is subclass of A • C directly inherits from B • B inherits from A • Inheritance chain: C -> B -> A • C is subclass of A (through inheritance chain) • Returns: True Example: class A: pass class B(A): pass class C(B): pass issubclass(C, A) # True (C is subclass of A through B) issubclass(C, B) # True (C directly inherits from B) Common uses: • Inheritance chain: issubclass() checks entire chain, not just direct parent • Type checking: check if class inherits from ancestor • issubclass() function • Inheritance Example: If class A: pass; class B(A): pass; class C(B): pass; issubclass(C, A), then issubclass(C, A) returns True because issubclass() checks the entire inheritance chain, and C is a subclass of A through B.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7096,7 +7096,7 @@ Common uses:
 Example: If class A: pass; class B(A): pass; class C(B): pass; isinstance(C(), A), then isinstance(C(), A) returns True because isinstance() checks the entire inheritance chain, and C() is an instance of A through B.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• isinstance() checks entire chain: • isinstance(C(), A) returns True • isinstance() checks entire inheritance chain • C() is instance of C • C inherits from B, B inherits from A • C() is instance of A (through inheritance chain) • Returns: True How it works: • isinstance(C(), A) checks if C() is instance of A • C() is instance of C • C inherits from B, B inherits from A • Inheritance chain: C -> B -> A • C() is instance of A (through inheritance chain) • Returns: True Example: class A: pass class B(A): pass class C(B): pass isinstance(C(), A) # True (C() is instance of A through B) isinstance(C(), B) # True (C() is instance of B) isinstance(C(), C) # True (C() is instance of C) Common uses: • Inheritance chain: isinstance() checks entire chain, not just direct class • Type checking: check if instance is of ancestor class • isinstance() function • Inheritance Example: If class A: pass; class B(A): pass; class C(B): pass; isinstance(C(), A), then isinstance(C(), A) returns True because isinstance() checks the entire inheritance chain, and C() is an instance of A through B.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7176,7 +7176,7 @@ Common uses:
 Example: If class A: pass; class B: pass; class C(A, B): pass; issubclass(C, A) and issubclass(C, B), then it returns True because in multiple inheritance, the child is a subclass of all parents - C inherits from both A and B, so it's a subclass of both.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Multiple inheritance: • issubclass(C, A) and issubclass(C, B) returns True • C inherits from both A and B • C is subclass of A (True) • C is subclass of B (True) • Both True, so and returns True • Returns: True How it works: • class C(A, B): creates child with multiple parents • issubclass(C, A) checks if C is subclass of A (True) • issubclass(C, B) checks if C is subclass of B (True) • Both return True • and expression: True and True = True • Returns: True Example: class A: pass class B: pass class C(A, B): pass # Multiple inheritance issubclass(C, A) # True (C is subclass of A) issubclass(C, B) # True (C is subclass of B) issubclass(C, A) and issubclass(C, B) # True (both True) Common uses: • Multiple inheritance: child is subclass of all parents • Type checking: check if class inherits from multiple bases • issubclass() function • Multiple inheritance Example: If class A: pass; class B: pass; class C(A, B): pass; issubclass(C, A) and issubclass(C, B), then it returns True because in multiple inheritance, the child is a subclass of all parents - C inherits from both A and B, so it's a subclass of both.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7262,7 +7262,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self.x = 1; class Child(MyClass): def __init__(self): super().__init__(); self.y = 2; obj = Child(); [obj.x, obj.y], then [obj.x, obj.y] returns [1, 2] because super().__init__() initializes parent attributes, ensuring both parent and child attributes are set.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super().__init__() initializes parent: • [obj.x, obj.y] returns [1, 2] • super().__init__() calls parent __init__ • Parent __init__ sets self.x = 1 • Child __init__ sets self.y = 2 • Both attributes initialized • Returns: [1, 2] How it works: • Child() creates instance and calls __init__ • Child.__init__ executes: super().__init__() • super().__init__() calls MyClass.__init__() • MyClass.__init__ sets self.x = 1 • Child.__init__ sets self.y = 2 • obj.x = 1, obj.y = 2 • Returns: [1, 2] Example: class MyClass: def __init__(self): self.x = 1 class Child(MyClass): def __init__(self): super().__init__() # Initializes parent self.y = 2 obj = Child() [obj.x, obj.y] # [1, 2] (both initialized) Common uses: • Parent initialization: def __init__(self): super().__init__(); self.child_attr = value • Constructor chaining: ensure parent attributes are initialized • super() function • Object initialization Example: If class MyClass: def __init__(self): self.x = 1; class Child(MyClass): def __init__(self): super().__init__(); self.y = 2; obj = Child(); [obj.x, obj.y], then [obj.x, obj.y] returns [1, 2] because super().__init__() initializes parent attributes, ensuring both parent and child attributes are set.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7344,7 +7344,7 @@ Common uses:
 Example: If class MyClass: def __init__(self, x): self.x = x; class Child(MyClass): def __init__(self, x, y): super().__init__(x); self.y = y; Child(1, 2).x, then Child(1, 2).x returns 1 because super().__init__() passes arguments to the parent, so x = 1 is passed to MyClass.__init__, setting self.x = 1.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• super().__init__() with arguments: • Child(1, 2).x returns 1 • Child(1, 2) calls Child.__init__(1, 2) • Child.__init__ calls super().__init__(1) (passes x) • MyClass.__init__ sets self.x = 1 • Child.__init__ sets self.y = 2 • Returns: 1 How it works: • Child(1, 2) calls Child.__init__(1, 2) • Child.__init__ executes: super().__init__(1) • super().__init__(1) calls MyClass.__init__(1) • MyClass.__init__ sets self.x = 1 • Child.__init__ sets self.y = 2 • Child(1, 2).x returns 1 Example: class MyClass: def __init__(self, x): self.x = x class Child(MyClass): def __init__(self, x, y): super().__init__(x) # Passes x to parent self.y = y Child(1, 2).x # 1 (parent __init__ sets with x=1) Common uses: • Parent initialization: def __init__(self, x, y): super().__init__(x); self.y = y • Constructor chaining: pass arguments to parent __init__ • super() function • Object initialization Example: If class MyClass: def __init__(self, x): self.x = x; class Child(MyClass): def __init__(self, x, y): super().__init__(x); self.y = y; Child(1, 2).x, then Child(1, 2).x returns 1 because super().__init__() passes arguments to the parent, so x = 1 is passed to MyClass.__init__, setting self.x = 1.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7420,7 +7420,7 @@ Common uses:
 Example: If class MyClass: x = 1; class Child(MyClass): x = 2; class GrandChild(Child): pass; GrandChild.x, then GrandChild.x returns 2 because the grandchild inherits from its immediate parent (Child), and Child has x = 2.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Grandchild inherits from immediate parent: • GrandChild.x returns 2 • GrandChild inherits from Child (immediate parent) • Child has x = 2 (overrides MyClass.x = 1) • GrandChild uses Child.x = 2 • Returns: 2 How it works: • class GrandChild(Child): creates grandchild inheriting from Child • GrandChild.x looks for attribute x • Python searches: GrandChild (not found) -> Child (finds x = 2) • Uses Child.x = 2 (doesn't reach MyClass.x = 1) • Returns: 2 Example: class MyClass: x = 1 class Child(MyClass): x = 2 # Overrides parent class GrandChild(Child): pass GrandChild.x # 2 (inherits from immediate parent Child) Common uses: • Inheritance chain: grandchild inherits from immediate parent • Attribute resolution: child's override takes precedence • Inheritance • Attribute shadowing Example: If class MyClass: x = 1; class Child(MyClass): x = 2; class GrandChild(Child): pass; GrandChild.x, then GrandChild.x returns 2 because the grandchild inherits from its immediate parent (Child), and Child has x = 2.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7499,7 +7499,7 @@ Common uses:
 Example: If class MyClass: def method(self): return 1; class Child(MyClass): def method(self): return super().method() + 1; Child().method(), then Child().method() returns 2 because the child can extend the parent method using super(), calling the parent and then adding child-specific behavior.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Child extends parent method: • Child().method() returns 2 • Child's method calls super().method() • Parent method returns 1 • Child adds 1: 1 + 1 = 2 • Returns: 2 How it works: • Child().method() calls method on Child instance • Child.method() executes: return super().method() + 1 • super().method() calls MyClass.method(), returns 1 • Child adds 1: 1 + 1 = 2 • Returns: 2 Example: class MyClass: def method(self): return 1 class Child(MyClass): def method(self): return super().method() + 1 # Extends parent Child().method() # 2 (parent's 1 + 1) Common uses: • Method extension: def method(self): return super().method() + extension • Behavior extension: child extends parent behavior • super() function • Method overriding Example: If class MyClass: def method(self): return 1; class Child(MyClass): def method(self): return super().method() + 1; Child().method(), then Child().method() returns 2 because the child can extend the parent method using super(), calling the parent and then adding child-specific behavior.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7578,7 +7578,7 @@ Common uses:
 Example: If class MyClass: def __str__(self): return 'MyClass'; class Child(MyClass): def __str__(self): return 'Child'; str(Child()), then str(Child()) returns 'Child' because the child can override special methods, and Child.__str__() takes precedence over MyClass.__str__().
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • Customization: child provides different behavior for built-ins • Special methods • Method overriding Example: If class MyClass: def __str__(self): return 'MyClass'; class Child(MyClass): def __str__(self): return 'Child'; str(Child()), then str(Child()) returns 'Child' because the child can override special methods, and Child.__str__() takes precedence over MyClass.__str__().
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7657,7 +7657,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self.__x = 1; class Child(MyClass): def method(self): return self.__x; Child().method(), then Child().method() raises an AttributeError because name mangling prevents child classes from accessing parent's private attributes - MyClass.__x becomes _MyClass__x, but Child tries to access __x which would be _Child__x.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Name mangling prevents child access: • Child().method() raises AttributeError • MyClass.__x is mangled to _MyClass__x • Child tries to access __x (would be _Child__x) • Different mangled names • Raises AttributeError How it works: • MyClass.__init__ sets self.__x = 1 (mangled to _MyClass__x) • Child().method() tries to access self.__x • In Child context, __x would mangle to _Child__x • _Child__x doesn't exist (attribute is _MyClass__x) • Raises AttributeError Example: class MyClass: def __init__(self): self.__x = 1 # Mangled to _MyClass__x class Child(MyClass): def method(self): return self.__x # Would mangle to _Child__x (doesn't exist) Child().method() # AttributeError (can't access parent's __x) Common uses: • Private attributes: name mangling prevents child access • Encapsulation: each class has its own mangled namespace • Name mangling • Inheritance Example: If class MyClass: def __init__(self): self.__x = 1; class Child(MyClass): def method(self): return self.__x; Child().method(), then Child().method() raises an AttributeError because name mangling prevents child classes from accessing parent's private attributes - MyClass.__x becomes _MyClass__x, but Child tries to access __x which would be _Child__x.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7737,7 +7737,7 @@ Common uses:
 Example: If class MyClass: def __init__(self): self._x = 1; class Child(MyClass): def method(self): return self._x; Child().method(), then Child().method() returns 1 because single underscore (protected) is accessible to child classes - it's a convention, not enforced privacy.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Single underscore accessible to child: • Child().method() returns 1 • self._x is protected attribute (single underscore) • Single underscore doesn't mangle • Child can access parent's _x • Returns: 1 How it works: • MyClass.__init__ sets self._x = 1 • Child().method() accesses self._x • Single underscore doesn't trigger name mangling • Attribute name remains _x • Child can access it through inheritance • Returns: 1 Example: class MyClass: def __init__(self): self._x = 1 # Protected (convention) class Child(MyClass): def method(self): return self._x # Can access parent's protected attribute Child().method() # 1 (accessible to child) Common uses: • Protected attributes: self._attr (accessible to child classes) • Inheritance: child can access parent's protected attributes • Naming conventions • Encapsulation Example: If class MyClass: def __init__(self): self._x = 1; class Child(MyClass): def method(self): return self._x; Child().method(), then Child().method() returns 1 because single underscore (protected) is accessible to child classes - it's a convention, not enforced privacy.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7816,7 +7816,7 @@ Common uses:
 Example: If class MyClass: @classmethod; def method(cls): return cls; class Child(MyClass): pass; Child.method(), then Child.method() returns <class '__main__.Child'> because class methods receive the child class when called on the child - cls receives Child, not MyClass.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Class method receives child class: • Child.method() returns <class '__main__.Child'> • @classmethod def method(cls) receives cls parameter • When called on Child, cls = Child • Returns the class it's called on • Returns: <class '__main__.Child'> How it works: • Child.method() calls class method on Child class • Python calls method with cls = Child (not MyClass) • method(cls) executes: return cls • Returns Child class • Returns: <class '__main__.Child'> Example: class MyClass: @classmethod def method(cls): return cls # Returns the class it's called on class Child(MyClass): pass Child.method() # <class '__main__.Child'> (receives Child, not MyClass) MyClass.method() # <class '__main__.MyClass'> (receives MyClass) Common uses: • Polymorphic class methods: @classmethod def method(cls): return cls (receives actual class) • Class-specific behavior: class methods work with the class they're called on • Class methods • Inheritance Example: If class MyClass: @classmethod; def method(cls): return cls; class Child(MyClass): pass; Child.method(), then Child.method() returns <class '__main__.Child'> because class methods receive the child class when called on the child - cls receives Child, not MyClass.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7894,7 +7894,7 @@ Common uses:
 Example: If class MyClass: @staticmethod; def method(): return 1; class Child(MyClass): pass; Child.method(), then Child.method() returns 1 because static methods are inherited unchanged - they don't receive class information, so they behave the same regardless of which class they're called on.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Static method inherited unchanged: • Child.method() returns 1 • Static method doesn't receive self or cls • Same behavior regardless of class • Inherited unchanged from parent • Returns: 1 How it works: • Child.method() calls static method on Child class • Static method doesn't receive class information • Uses same implementation as MyClass.method() • Returns: 1 Example: class MyClass: @staticmethod def method(): return 1 class Child(MyClass): pass Child.method() # 1 (inherited unchanged) MyClass.method() # 1 (same behavior) Common uses: • Static method inheritance: static methods are inherited unchanged • Non-polymorphic methods: static methods don't change based on class • Static methods • Inheritance Example: If class MyClass: @staticmethod; def method(): return 1; class Child(MyClass): pass; Child.method(), then Child.method() returns 1 because static methods are inherited unchanged - they don't receive class information, so they behave the same regardless of which class they're called on.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7973,7 +7973,7 @@ Common uses:
 Example: If class MyClass: @property; def x(self): return 1; class Child(MyClass): pass; Child().x, then Child().x returns 1 because properties are inherited by child classes, so Child inherits the property from MyClass.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Property inherited by child: • Child().x returns 1 • Property is class attribute (descriptor) • Inherited by Child from MyClass • Works the same in child class • Returns: 1 How it works: • Child() creates instance of Child • Child().x accesses property • Property is inherited from MyClass • Python uses inherited property getter • Property getter returns 1 • Returns: 1 Example: class MyClass: @property def x(self): return 1 class Child(MyClass): pass Child().x # 1 (inherits property from MyClass) Common uses: • Property inheritance: properties are inherited by child classes • Code reuse: child can use parent's properties • Properties • Inheritance Example: If class MyClass: @property; def x(self): return 1; class Child(MyClass): pass; Child().x, then Child().x returns 1 because properties are inherited by child classes, so Child inherits the property from MyClass.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

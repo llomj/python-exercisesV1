@@ -31,7 +31,7 @@ Example:
 TypeError: Can't instantiate abstract class Shape with abstract method area
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def area(self): pass >>> Shape() TypeError: Can't instantiate abstract class Shape with abstract method area
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -97,7 +97,7 @@ Example:
 3.14
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Circle inherits from Shape (which is abstract) • Circle provides a concrete implementation of area() • Since all abstract methods are implemented, Circle can be instantiated • Calling area() returns 3.14 How it works: • Shape declares area() as @abstractmethod • Circle overrides area() with a concrete implementation returning 3.14 • Circle() succeeds because no abstract methods remain unimplemented • Circle().area() calls the concrete implementation, returning 3.14 Example: >>> Circle().area() 3.14
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -170,7 +170,7 @@ Example:
 'I am a shape'
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def area(self): return 3.14 >>> Circle().describe() 'I am a shape'
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -236,7 +236,7 @@ Example:
 'I am a shape'
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Shape has one abstract method (area) and one concrete method (describe) • Circle implements area(), satisfying the ABC contract • Circle inherits describe() without overriding it • Calling Circle().describe() invokes Shape's describe() How it works: • Circle() creates an instance (all abstract methods implemented) • Circle().describe() looks for describe in Circle — not found • Python follows MRO to Shape, finds describe() there • Returns "I am a shape" Example: >>> Circle().describe() 'I am a shape'
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -313,7 +313,7 @@ Example:
 'Rex'
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def speak(self): return "Woof" >>> d = Dog("Rex", "Lab") >>> d.name 'Rex'
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -379,7 +379,7 @@ Example:
 TypeError: Can't instantiate abstract class B with abstract method g
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • A defines two abstract methods: f() and g() • B only implements f(), leaving g() unimplemented • B is still abstract because g() remains unimplemented • B() raises TypeError How it works: • A.__abstractmethods__ = frozenset({'f', 'g'}) • B implements f(), so B.__abstractmethods__ = frozenset({'g'}) • Since B still has abstract methods, B() raises TypeError • Error: "Can't instantiate abstract class B with abstract method g" Example: >>> B() TypeError: Can't instantiate abstract class B with abstract method g
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -447,7 +447,7 @@ Example:
 2
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • A defines two abstract methods: f() and g() • B implements both f() and g() • B has no remaining abstract methods, so it's concrete • B() succeeds and B().f() returns 1 How it works: • B overrides f() to return 1 and g() to return 2 • B.__abstractmethods__ = frozenset() (empty — all implemented) • B() creates an instance successfully • B().f() calls B's f(), which returns 1 Example: >>> B().f() 1 >>> B().g() 2
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -520,7 +520,7 @@ Example:
 'base extended'
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return super().f() + " extended" >>> B().f() 'base extended'
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -586,7 +586,7 @@ Example:
 'base extended'
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • A.f() is abstract but has a body returning "base" • B.f() overrides A.f() (required since it's abstract) • B.f() calls super().f() to get "base" from the parent • Concatenation produces "base extended" How it works: • B() creates instance (f is implemented) • B().f() calls B's f() • super().f() invokes A.f() which returns "base" • "base" + " extended" = "base extended" Example: >>> B().f() 'base extended'
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -656,7 +656,7 @@ Example:
 42
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return 42 >>> B().x 42
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -730,7 +730,7 @@ Example:
 <B object>
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return cls() >>> B.create() <B object>
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -804,7 +804,7 @@ Example:
 True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return len(data) > 0 >>> B.validate([1, 2]) True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -879,7 +879,7 @@ Example:
 1
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def g(self): return 2 >>> C().f() 1
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -946,7 +946,7 @@ Example:
 2
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • A defines abstract method f() • B inherits from A and adds abstract method g() • C must implement both f() and g() to be concrete • C implements both, so it can be instantiated How it works: • C.__abstractmethods__ would be frozenset() (all implemented) • C() creates an instance successfully • C().f() calls C's implementation of f(), returning 1 Example: >>> C().f() 1 >>> C().g() 2
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1017,7 +1017,7 @@ Example:
 <class 'abc.ABCMeta'>
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • ABC is defined as: class ABC(metaclass=ABCMeta) • Using metaclass=ABCMeta is the older, more explicit way • Inheriting from ABC is the modern, recommended approach • Both produce the same result: a class that supports @abstractmethod How it works: • ABCMeta is the metaclass that enables abstract method checking • ABC is a convenience class with ABCMeta already set • class Shape(ABC) is shorthand for class Shape(metaclass=ABCMeta) • Both allow @abstractmethod declarations and prevent instantiation of incomplete subclasses Example: >>> from abc import ABC, ABCMeta >>> class A(ABC): pass >>> class B(metaclass=ABCMeta): pass >>> type(A) <class 'abc.ABCMeta'> >>> type(B) <class 'abc.ABCMeta'>
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1086,7 +1086,7 @@ Example:
 <class 'abc.ABCMeta'>
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • ABC is a class with metaclass=ABCMeta • ABCMeta is the actual metaclass that does the heavy lifting • ABCMeta tracks __abstractmethods__ on each class • ABCMeta prevents instantiation when abstract methods exist How it works: • ABCMeta.__new__ checks for @abstractmethod decorators • It collects them into __abstractmethods__ (a frozenset) • On instantiation, ABCMeta.__call__ checks if __abstractmethods__ is non-empty • If non-empty, raises TypeError Example: >>> from abc import ABC, ABCMeta >>> type(ABC) <class 'abc.ABCMeta'> >>> ABC.__class__ <class 'abc.ABCMeta'>
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1155,7 +1155,7 @@ Example:
 True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Inheriting from ABC doesn't automatically make a class abstract • Only @abstractmethod methods prevent instantiation • A class with ABC but no abstract methods is concrete • A.__abstractmethods__ is frozenset() (empty) How it works: • class A(ABC): pass — no abstract methods declared • A.__abstractmethods__ is empty • A() succeeds because there are no unimplemented abstract methods • The instance is a regular object of type A Example: >>> from abc import ABC >>> class A(ABC): pass >>> a = A() >>> isinstance(a, A) True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1225,7 +1225,7 @@ frozenset({'f'})
 frozenset()
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def f(self): return 1 >>> B.__abstractmethods__ frozenset()
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1294,7 +1294,7 @@ True
 True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • register() creates a virtual subclass relationship • No actual method inheritance happens • isinstance() and issubclass() checks pass • The registered class doesn't need to implement abstract methods How it works: • MyABC.register(list) tells Python that list is a virtual subclass of MyABC • isinstance([], MyABC) returns True • issubclass(list, MyABC) returns True • But list doesn't actually get any MyABC methods Example: >>> MyABC.register(list) >>> isinstance([], MyABC) True >>> issubclass(list, MyABC) True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1364,7 +1364,7 @@ True
 True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • Python checks actual inheritance — no • Python checks virtual subclass registry — yes (int is registered) • Returns True Example: >>> MyABC.register(int) >>> isinstance(42, MyABC) True >>> issubclass(int, MyABC) True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1436,7 +1436,7 @@ True
 AttributeError: 'int' object has no attribute 'greet'
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def greet(self): return "hello" >>> MyABC.register(int) >>> isinstance(42, MyABC) True >>> (42).greet() AttributeError: 'int' object has no attribute 'greet'
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1507,7 +1507,7 @@ True
 False
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Sized is an ABC that requires __len__ • list has __len__ (len([]) works) • isinstance checks if the object's class implements the required methods • Uses __subclasshook__ for structural checking How it works: • Sized defines __subclasshook__ that checks for __len__ • list has __len__, so the check passes • isinstance([], Sized) returns True • This is an example of structural checking built into ABCs Example: >>> from collections.abc import Sized >>> isinstance([], Sized) True >>> isinstance("hello", Sized) True >>> isinstance(42, Sized) False
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1578,7 +1578,7 @@ True
 False
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Iterable is an ABC that requires __iter__ • str has __iter__ (you can iterate over characters) • isinstance checks if the object's class has __iter__ • Uses __subclasshook__ for structural checking How it works: • Iterable defines __subclasshook__ that checks for __iter__ • str has __iter__, so the check passes • isinstance("hello", Iterable) returns True • Any object with __iter__ is considered Iterable Example: >>> from collections.abc import Iterable >>> isinstance("hello", Iterable) True >>> isinstance([1, 2], Iterable) True >>> isinstance(42, Iterable) False
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1649,7 +1649,7 @@ False
 True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Hashable requires __hash__ to be implemented (and not None) • Mutable types like list set __hash__ = None • This prevents them from being used as dictionary keys or set elements • isinstance checks both the presence AND non-None-ness of __hash__ How it works: • Hashable.__subclasshook__ checks if __hash__ is not None • list.__hash__ is None (explicitly disabled) • isinstance([], Hashable) returns False • Immutable types like tuple, str, int are Hashable Example: >>> from collections.abc import Hashable >>> isinstance([], Hashable) False >>> isinstance({}, Hashable) False >>> isinstance((), Hashable) True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1720,7 +1720,7 @@ True
 -3550055125485641917
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Tuples are immutable, so they can be hashed • tuple.__hash__ is implemented (not None) • isinstance((1, 2), Hashable) returns True • This is why tuples can be dictionary keys but lists cannot How it works: • Hashable.__subclasshook__ checks for __hash__ • tuple.__hash__ exists and is not None • isinstance((1, 2), Hashable) returns True • Note: a tuple containing unhashable items (like lists) will raise TypeError at hash time, but the isinstance check still passes Example: >>> from collections.abc import Hashable >>> isinstance((1, 2), Hashable) True >>> isinstance("hello", Hashable) True >>> hash((1, 2)) -3550055125485641917
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1796,7 +1796,7 @@ Example:
 'circle'
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return shape.draw() >>> render(Circle()) 'circle'
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1864,7 +1864,7 @@ Example:
 • No need for class Sprite(Drawable)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Structural subtyping: "if it has the right methods, it matches" • Based on duck typing philosophy • No inheritance required • Checked by static type checkers (mypy, pyright) How it works: • A Protocol defines required methods/attributes • Any class with those methods/attributes is structurally compatible • The type checker verifies the match without requiring inheritance • This is the opposite of nominal subtyping (used by ABC) Example: • Protocol Drawable requires draw() -> str • class Sprite has draw() -> str • Sprite is structurally compatible with Drawable • No need for class Sprite(Drawable)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1932,7 +1932,7 @@ Comparison:
 • Protocol checks "has-a" structure implicitly
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Nominal subtyping: "you must explicitly inherit to be a subtype" • Based on class declarations, not structure • class Child(Parent) explicitly declares the relationship • Used by ABC (Abstract Base Class) How it works: • ABC defines abstract methods that must be overridden • A class must explicitly inherit from the ABC to be considered a subtype • Even if a class has all the right methods, it's not a subtype without inheriting • isinstance/issubclass checks require actual or registered inheritance Comparison: • ABC (nominal): class Circle(Shape) required • Protocol (structural): just having the right methods is enough • ABC enforces "is-a" relationships explicitly • Protocol checks "has-a" structure implicitly
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2000,7 +2000,7 @@ Example:
 'sprite'
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return shape.draw() >>> render(Sprite()) # Type checker accepts this 'sprite'
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2066,7 +2066,7 @@ Example:
 'sprite'
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Sprite has a draw() method that returns "sprite" • No ABC or Protocol inheritance needed for the method to work • This is standard Python duck typing • Protocol formalizes this for static type checkers How it works: • Sprite() creates an instance • .draw() calls the draw method • Returns "sprite" • If a Protocol Drawable exists with draw(), Sprite matches it structurally Example: >>> Sprite().draw() 'sprite'
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2134,7 +2134,7 @@ Example:
 • Both approaches make Sprite usable where Drawable is expected
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • class Sprite(Drawable): — NOT required • Both approaches make Sprite usable where Drawable is expected
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2204,7 +2204,7 @@ True
 False
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • @runtime_checkable enables isinstance() checks with Protocol • Without it, isinstance() with Protocol raises TypeError • The check verifies method existence (not signatures) • [1, 2] is a list, and list has __len__ How it works: • @runtime_checkable adds __instancecheck__ to HasLen • isinstance([1, 2], HasLen) checks if list has __len__ • list.__len__ exists, so the check passes • Returns True Example: >>> isinstance([1, 2], HasLen) True >>> isinstance("hello", HasLen) True >>> isinstance(42, HasLen) False
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2275,7 +2275,7 @@ True
 False
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• >>> isinstance([], Sizeable) True >>> isinstance(42, Sizeable) False
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2341,7 +2341,7 @@ Example:
 TypeError: Protocols with non-method members don't support issubclass()
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Protocol without @runtime_checkable is for static type checking only • isinstance() is a runtime check, which Protocol doesn't support by default • @runtime_checkable must be explicitly added to enable isinstance() • This is a deliberate design choice to separate static and runtime checking How it works: • MyProto is a Protocol without @runtime_checkable • isinstance("hello", MyProto) tries a runtime check • Protocol's __instancecheck__ raises TypeError • Error: "Protocols with non-method members don't support issubclass()" Example: >>> isinstance("hello", MyProto) TypeError: Protocols with non-method members don't support issubclass()
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2414,7 +2414,7 @@ Example:
 20
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return a if a < b else b >>> minimum(Temperature(20), Temperature(30)).value 20
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2488,7 +2488,7 @@ Example:
 "I'm quacking!"
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return thing.quack() >>> make_quack(Duck()) 'Quack!' >>> make_quack(Person()) "I'm quacking!"
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2559,7 +2559,7 @@ Example:
 • Now type checkers verify that arguments to process() have run()
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• obj.run() • Now type checkers verify that arguments to process() have run()
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2632,7 +2632,7 @@ Closed!
 >>> cleanup(open("test.txt"))  # Also works — files have close()
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• >>> cleanup(open("test.txt")) # Also works — files have close()
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2703,7 +2703,7 @@ Example:
 'Hello!'
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• pass >>> Polite().greet() 'Hello!'
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2773,7 +2773,7 @@ Comparison table:
 • ABC — Python 2.6+ — abc module
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is the fundamental difference between Protocol and ABC: • Protocol: structural subtyping — "does it have the right methods?" • ABC: nominal subtyping — "does it inherit from the right class?" Key concepts: • Protocol = structural checks (duck typing formalized) • ABC = nominal checks (inheritance-based) • Protocol: no inheritance needed, just matching methods • ABC: explicit inheritance required (class Child(MyABC)) How it works: • Protocol: type checker scans class for required methods/attributes • ABC: Python checks MRO (method resolution order) for parent class • Protocol: a class with matching methods IS a subtype • ABC: a class MUST inherit to be a subtype (or use register()) Comparison table: • Protocol — based on structure — no inheritance needed — duck typing • ABC — based on inheritance — explicit subclass needed — nominal typing • Protocol — Python 3.8+ — typing module • ABC — Python 2.6+ — abc module
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2850,7 +2850,7 @@ Example:
 [1, 2, 3]
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return self.i >>> list(Counter(3)) [1, 2, 3]
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2928,7 +2928,7 @@ True
 2
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• return len(self._data) >>> s = MySeq([1, 2, 3, 2]) >>> 2 in s True >>> s.count(2) 2
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3006,7 +3006,7 @@ Example:
 >>> m.extend([2, 3])  # Free mixin!
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• >>> m.extend([2, 3]) # Free mixin!
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3075,7 +3075,7 @@ True
 False
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Mapping requires __getitem__, __len__, __iter__ • dict has all three methods • Mapping also provides mixins: __contains__, keys, items, values, get, __eq__, __ne__ • dict is registered as a virtual subclass of Mapping How it works: • isinstance checks if dict satisfies the Mapping interface • dict has __getitem__ (d[key]), __len__ (len(d)), __iter__ (iterate keys) • The check passes, returning True • All standard dict operations conform to the Mapping ABC Example: >>> from collections.abc import Mapping >>> isinstance({"a": 1}, Mapping) True >>> isinstance([], Mapping) False
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3144,7 +3144,7 @@ True
 False
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • MutableMapping inherits from Mapping • Additional required: __setitem__ and __delitem__ • dict supports d[key] = value and del d[key] • MutableMapping also provides mixins: pop, popitem, clear, update, setdefault How it works: • isinstance checks if dict satisfies MutableMapping • dict has __getitem__, __len__, __iter__ (from Mapping) • dict also has __setitem__ and __delitem__ (for mutation) • The check passes, returning True Example: >>> from collections.abc import MutableMapping >>> isinstance({"a": 1}, MutableMapping) True >>> isinstance(type("", (), {"__getitem__": None})(), MutableMapping) False
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3213,7 +3213,7 @@ True
 True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Set requires __contains__, __iter__, __len__ • frozenset has all three methods • Set is the immutable set ABC (read-only operations) • Both set and frozenset satisfy Set How it works: • isinstance checks if frozenset satisfies Set • frozenset has __contains__ (in operator), __iter__ (iteration), __len__ (length) • The check passes, returning True • Set also provides mixins: __le__, __lt__, __eq__, __ne__, __gt__, __ge__, __and__, __or__, __xor__, __sub__, isdisjoint Example: >>> from collections.abc import Set >>> isinstance(frozenset(), Set) True >>> isinstance(set(), Set) True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3282,7 +3282,7 @@ False
 True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • MutableSet inherits from Set • Additional required: add() and discard() • frozenset is immutable — no add() or discard() • Regular set IS a MutableSet (it has add and discard) How it works: • isinstance checks if frozenset satisfies MutableSet • frozenset has __contains__, __iter__, __len__ (from Set) • But frozenset does NOT have add() or discard() • The check fails, returning False Example: >>> from collections.abc import MutableSet >>> isinstance(frozenset(), MutableSet) False >>> isinstance(set(), MutableSet) True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3357,7 +3357,7 @@ False
 True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def __call__(self, x): return x + 1 >>> isinstance(Adder(), Callable) True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3429,7 +3429,7 @@ Example:
 >>> # Widget satisfies BOTH Drawable and Resizable!
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• def resize(self, factor: float) -> None: pass >>> # Widget satisfies BOTH Drawable and Resizable!
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3502,7 +3502,7 @@ Example:
 '<__main__.Empty object at 0x...>'
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • object (the base class of all classes) defines __str__ • Every class in Python inherits from object • Therefore every object has __str__ • The Printable Protocol is universally satisfied How it works: • Printable requires __str__(self) -> str • object.__str__ exists and returns a string representation • Every class inherits __str__ from object (unless overridden) • So every instance of every class matches the Printable Protocol Example: >>> str(42) '42' >>> str([1, 2, 3]) '[1, 2, 3]' >>> str(None) 'None' >>> class Empty: pass >>> str(Empty()) '<__main__.Empty object at 0x...>'
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
