@@ -41843,7 +41843,7 @@ Exemples :
 • if not data: return
 
 Remarques :
-• Les guard clauses (if cond: return) évitent l'imbrication.`,
+• Les clauses de garde (if cond: return) évitent l'imbrication.`,
   963: `Peut-on avoir plusieurs elif ? → Yes : on peut enchaîner autant de elif qu'on veut entre if et else.
 
 Débutant :
@@ -78934,7 +78934,7 @@ Exécution étape par étape :
 2. Toutes assignées à a comme liste.
 
 Ordre des opérations :
-• Évaluation RHS, puis pattern matching d’affectation.
+• Évaluation RHS, puis filtrage par motifs d’affectation.
 
 Cas d'utilisation courants :
 • Cloner liste en modifiable, « splat » inverse minimal.

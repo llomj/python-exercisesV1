@@ -419,6 +419,13 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
   - **3295:** `Early return`, `nested vs guard clauses`, `validation pipelines`, and `pattern matching` fragments (translated to French wording).
 - **Verification:** `npm run build` passed; targeted `rg` checks confirm the old English fragments no longer exist.
 
+### 2026-03-23 (continued) — French micro-prose cleanup (tail)
+
+- **Completed:** removed two remaining English-term fragments inside French detailed explanations:
+  - **962:** `guard clauses` → `clauses de garde`.
+  - **1796:** `pattern matching d’affectation` → `filtrage par motifs d’affectation`.
+- **Build verification:** `npm run build` passed.
+
 ## Verification Workflow
 
 For each batch:
