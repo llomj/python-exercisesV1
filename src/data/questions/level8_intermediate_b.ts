@@ -33,7 +33,7 @@ Common uses:
 • Lazy attribute computation
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The method returns f"no xyz" → "no xyz" Example: c = C() c.xyz # "no xyz" c.hello # "no hello" c.foo # "no foo" Common uses: • Dynamic attribute proxying • Default values for missing attributes • Lazy attribute computation
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -105,7 +105,7 @@ c.x      # 1 (found normally, __getattr__ NOT called)
 c.y      # "fallback" (__getattr__ called)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• If __getattr__ also fails → AttributeError Example: class C: def __init__(self): self.x = 1 def __getattr__(self, name): return "fallback" c = C() c.x # 1 (found normally, __getattr__ NOT called) c.y # "fallback" (__getattr__ called)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -175,7 +175,7 @@ Edge cases:
 • Must use object.__getattribute__(self, name) to break the cycle
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This happens for ANY attribute name — .foo, .bar, .xyz all return 42 Example: c = C() c.anything # 42 c.x # 42 c.hello # 42 Edge cases: • Accessing self.something inside __getattribute__ causes infinite recursion • Must use object.__getattribute__(self, name) to break the cycle
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -246,7 +246,7 @@ c.x = 1
 c.x  # prints "accessing x", returns 1
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• If AttributeError → Python calls __getattr__ as fallback Example: class C: def __getattribute__(self, name): print(f"accessing {name}") return object.__getattribute__(self, name) c = C() c.x = 1 c.x # prints "accessing x", returns 1
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -318,7 +318,7 @@ Common uses:
 • Logging: record every attribute change
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• c.x retrieves the stored value → 10 Example: c = C() c.x = 5 # stored as 10 c.y = 3 # stored as 6 c.x # 10 c.y # 6 Common uses: • Validation: reject negative values, wrong types • Transformation: normalize, convert units • Logging: record every attribute change
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -389,7 +389,7 @@ Common uses:
 • Cleanup logic before removing an attribute
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The method simply runs the print statement Example: class Protected: def __delattr__(self, name): raise AttributeError(f"Cannot delete {name}") Common uses: • Preventing attribute deletion • Logging deletions for debugging • Cleanup logic before removing an attribute
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -457,7 +457,7 @@ Common uses:
 • Attribute access logging with custom storage
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns self._data.get("x", "missing") → 42 Common uses: • Attribute proxying and delegation • Implementing record-like objects • Attribute access logging with custom storage
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -526,7 +526,7 @@ c.y = "hello"
 c.__dict__        # {"x": 1, "y": "hello"}
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• No assignments have been made, so no entries exist Example: c = C() c.__dict__ # {} c.x = 1 c.__dict__ # {"x": 1} c.y = "hello" c.__dict__ # {"x": 1, "y": "hello"}
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -593,7 +593,7 @@ c.z = 3
 len(c.__dict__)    # 3
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• len(c.__dict__) = 2 Example: c = C() c.__dict__ # {"x": 1, "y": 2} len(c.__dict__) # 2 c.z = 3 len(c.__dict__) # 3
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -660,7 +660,7 @@ c.y = 2       # OK
 c.z = 3       # AttributeError: 'C' object has no attribute 'z'
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• c.z = 2 raises AttributeError — "z" is not in __slots__ Example: c = C() c.x = 1 # OK c.y = 2 # OK c.z = 3 # AttributeError: 'C' object has no attribute 'z'
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -728,7 +728,7 @@ hasattr(Normal(), "__dict__")   # True
 hasattr(Slotted(), "__dict__")  # False
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The instance uses descriptor-based slots instead Example: class Normal: pass class Slotted: __slots__ = ["x"] hasattr(Normal(), "__dict__") # True hasattr(Slotted(), "__dict__") # False
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -795,7 +795,7 @@ c.y = 20
 print(c.x, c.y)  # 10 20
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (c.x, c.y) returns (1, 2) Example: c = C() c.x = 10 c.y = 20 print(c.x, c.y) # 10 20
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -869,7 +869,7 @@ Trade-offs:
 • Slightly more complex with inheritance
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Without __slots__: each instance has a __dict__ (Python dict, ~100+ bytes overhead) • With __slots__: attributes stored in compact fixed slots (~8 bytes each) • For classes with millions of instances, this saves significant memory • Attribute access is also slightly faster (descriptor lookup vs dict lookup) Memory comparison: class Normal: def __init__(self): self.x = 1 self.y = 2 # Each instance: ~168 bytes (includes __dict__) class Slotted: __slots__ = ["x", "y"] def __init__(self): self.x = 1 self.y = 2 # Each instance: ~56 bytes (no __dict__) Trade-offs: • Cannot add arbitrary attributes at runtime • Cannot use __dict__-based introspection • Slightly more complex with inheritance
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -936,7 +936,7 @@ c.__class__ is C      # True
 type(c) is c.__class__  # True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Displayed as <class '__main__.C'> Example: c = C() c.__class__ # <class '__main__.C'> c.__class__ is C # True type(c) is c.__class__ # True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1002,7 +1002,7 @@ obj.__class__.__name__  # "MyClass"
 type(obj).__name__      # "MyClass" (equivalent)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• So c.__class__.__name__ is "C" Example: class MyClass: pass obj = MyClass() obj.__class__.__name__ # "MyClass" type(obj).__name__ # "MyClass" (equivalent)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1071,7 +1071,7 @@ Common uses:
 • Favored over inheritance for flexibility ("favor composition over inheritance")
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• .start() calls Engine.start() → returns "vroom" Example: car = Car() car.engine # <Engine instance> car.engine.start() # "vroom" Common uses: • Building complex objects from simpler components • Favored over inheritance for flexibility ("favor composition over inheritance")
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1145,7 +1145,7 @@ Common uses:
 • Plugin architectures
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • "Has-a" relationship: Car has an Engine, House has Rooms • Contrasts with inheritance ("is-a" relationship) • More flexible than inheritance — can change components at runtime • Components can be swapped, tested independently, and reused Composition vs Inheritance: • Inheritance: class Car(Vehicle) — Car IS-A Vehicle • Composition: class Car: engine = Engine() — Car HAS-A Engine Example: class CPU: def compute(self): return "computing" class Computer: def __init__(self): self.cpu = CPU() def run(self): return self.cpu.compute() Common uses: • Dependency injection • Strategy pattern (swap algorithms) • Plugin architectures
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1221,7 +1221,7 @@ Common uses:
 • Playlist has songs (songs exist in multiple playlists)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Aggregation: container references objects but doesn't own them • Composition: container creates and owns the objects • In aggregation, objects can outlive the container • In composition, objects are destroyed with the container Example: # Composition — Engine created inside Car class Car: def __init__(self): self.engine = Engine() # Car owns Engine # Aggregation — Engine passed in from outside class Car: def __init__(self, engine): self.engine = engine # Car uses Engine but doesn't own it engine = Engine() car = Car(engine) del car # engine still exists print(engine) # still alive Common uses: • Team has members (members exist independently) • University has students (students exist outside university) • Playlist has songs (songs exist in multiple playlists)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1292,7 +1292,7 @@ class Logger:
         self.logs = []  # instance variable — each has its own list
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Fix: class Logger: def __init__(self): self.logs = [] # instance variable — each has its own list
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1359,7 +1359,7 @@ l1.logs  # ["a"]
 l2.logs  # [] — unaffected
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• l2.logs is still [] — its own separate list Example: l1.logs is l2.logs # False — different objects l1.log("a") l1.logs # ["a"] l2.logs # [] — unaffected
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1431,7 +1431,7 @@ Common uses:
 • Logging services
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Singleton() is Singleton() → True (same identity) Example: a = Singleton() b = Singleton() a is b # True id(a) == id(b) # True Common uses: • Database connection pools • Configuration managers • Logging services
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1507,7 +1507,7 @@ Common uses:
 • Object caching / flyweight pattern
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• __init__ sets up instance attributes Example: class C: def __new__(cls): print("Creating instance") return object.__new__(cls) def __init__(self): print("Initializing instance") C() # prints "Creating instance" then "Initializing instance" Common uses: • Singleton pattern • Immutable types (str, int, tuple subclasses) • Object caching / flyweight pattern
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1581,7 +1581,7 @@ C(42)
 # Initialized: 42
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• obj now references the fully initialized instance Example: class C: def __new__(cls, value): instance = object.__new__(cls) print(f"Created: {id(instance)}") return instance def __init__(self, value): self.value = value print(f"Initialized: {self.value}") C(42) # Created: 140234567890 # Initialized: 42
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1654,7 +1654,7 @@ C()
 # 2. init
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• init
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1726,7 +1726,7 @@ Common uses:
 • Debugging: see all live instances
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• len(C.instances) → 2 Example: a = C() b = C() C.instances # [<C instance>, <C instance>] len(C.instances) # 2 C.instances[0] is a # True Common uses: • Instance registry / tracking • Object pool management • Debugging: see all live instances
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1797,7 +1797,7 @@ reads C.count (0), adds 1, and stores 1 as an INSTANCE variable,
 leaving C.count still at 0.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• C.count → 3 Example: print(C.count) # 3 C() print(C.count) # 4 Edge case: If you used self.count += 1 instead of C.count += 1, the first access reads C.count (0), adds 1, and stores 1 as an INSTANCE variable, leaving C.count still at 0.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1865,7 +1865,7 @@ Common uses:
 • Remote object proxies (RPC)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• p._obj returns the modified list [1, 2, 3, 4] Common uses: • Lazy loading proxies • Access control wrappers • Logging / monitoring decorators • Remote object proxies (RPC)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1936,7 +1936,7 @@ Common uses:
 • Plugin registries: mapping names to handler classes
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Classes are first-class objects in Python • They can be assigned to variables, stored in collections, passed as arguments • A class attribute can hold a reference to another class • This is different from inheritance — no is-a relationship is created Example: class Inner: def greet(self): return "hello" class Outer: helper = Inner # class as attribute obj = Outer.helper() # creates an Inner instance obj.greet() # "hello" Common uses: • Factory classes storing product classes • Strategy pattern: swappable algorithm classes • Plugin registries: mapping names to handler classes
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2004,7 +2004,7 @@ isinstance(result, A)     # True
 isinstance(result, B)     # False
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• isinstance(B.inner_class(), A) → True Example: result = B.inner_class() type(result) # <class 'A'> isinstance(result, A) # True isinstance(result, B) # False
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2076,7 +2076,7 @@ Common uses:
 • Data transfer objects (DTOs)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• c.x → 1 Example: c = C(x=1, y=2, name="hello") c.x # 1 c.y # 2 c.name # "hello" Common uses: • Flexible constructors accepting arbitrary attributes • Configuration objects • Data transfer objects (DTOs)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2151,7 +2151,7 @@ Edge cases:
 • __del__ may not run if the interpreter is shutting down
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The object's memory is reclaimed Example: c = C() del c # MAY print "deleted" (reference count drops to 0) # But with multiple references: c = C() d = c del c # does NOT print "deleted" (d still references the object) del d # NOW may print "deleted" Edge cases: • Circular references may delay __del__ calls • __del__ may not run if the interpreter is shutting down
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2219,7 +2219,7 @@ Best practices:
 • Prefer explicit .close() methods
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Daemon threads — may not clean up properly Best practices: • Use context managers (with statement) for cleanup instead • Use weakref for breaking circular references • Don't rely on __del__ for critical resource release • Prefer explicit .close() methods
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2286,7 +2286,7 @@ d is c     # False (different C instances)
 d.x is c.x  # True (same list)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• d is c # False (different C instances) d.x is c.x # True (same list)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2355,7 +2355,7 @@ d.x is c.x  # False
 d.x == c.x  # False (contents now differ)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• d.x == c.x → True (equal contents) Example: d.x.append(2) d.x # [1, 2] c.x # [1] — NOT affected (independent copy) d.x is c.x # False d.x == c.x # False (contents now differ)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2427,7 +2427,7 @@ Common uses:
 • Custom initialization of the copied object
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns a C instance with an independent copy of the list Example: c = C([1, 2, 3]) d = copy.copy(c) d.x is c.x # False (list was sliced, creating a new list) d.x == c.x # True (same contents) Common uses: • Converting a shallow copy into something deeper for specific attributes • Skipping certain attributes during copy • Custom initialization of the copied object
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2498,7 +2498,7 @@ Common uses:
 • REPL: shows object details when typed interactively
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• __repr__ returns f"C({self.x})" → "C(5)" Example: c = C(5) repr(c) # "C(5)" str(c) # "C(5)" (__str__ falls back to __repr__ if not defined) print([c]) # [C(5)] (__repr__ used inside containers) Common uses: • Debugging: clear representation of object state • Logging: meaningful object descriptions • REPL: shows object details when typed interactively
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2568,7 +2568,7 @@ Defining __eq__ makes the class unhashable by default (sets __hash__ to None).
 You must define __hash__ explicitly if you want instances in sets or as dict keys.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• You must define __hash__ explicitly if you want instances in sets or as dict keys.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2635,7 +2635,7 @@ def __eq__(self, other):
     return self.x == other.x
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns False Best practice: def __eq__(self, other): if not isinstance(other, C): return NotImplemented # lets Python try other.__eq__ return self.x == other.x
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2705,7 +2705,7 @@ a == b              # False (identity check, different objects)
 len({a, b})         # 2
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Both A and B remain in the set → len = 2 Example: a = C(1) b = C(1) hash(a) == hash(b) # True (same hash) a == b # False (identity check, different objects) len({a, b}) # 2
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2772,7 +2772,7 @@ s = {C(1), C(2), C(1), C(3), C(2)}
 len(s)  # 3 (deduplicated to C(1), C(2), C(3))
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Only A remains → len = 1 Example: s = {C(1), C(2), C(1), C(3), C(2)} len(s) # 3 (deduplicated to C(1), C(2), C(3))
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2840,7 +2840,7 @@ id(c)      # e.g., 140234567890
 id(c2)     # e.g., 140234567920 (different!)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• c == c2 would depend on __eq__ (default: also False, same as is) Example: c = C(5) c2 = C(5) c is c2 # False id(c) # e.g., 140234567890 id(c2) # e.g., 140234567920 (different!)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2909,7 +2909,7 @@ c2.x        # 10 (same object, same attribute)
 id(c) == id(c2)  # True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• id(c) == id(c2) → True Example: c = C(5) c2 = c c is c2 # True c.x = 10 c2.x # 10 (same object, same attribute) id(c) == id(c2) # True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2976,7 +2976,7 @@ c1.class_var is C.class_var   # True
 id(c1.class_var) == id(c2.class_var)  # True
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• c1.class_var is c2.class_var → True (same object) Example: c1.class_var is c2.class_var # True c1.class_var is C.class_var # True id(c1.class_var) == id(c2.class_var) # True
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3043,7 +3043,7 @@ c2.data  # [] — not affected
 c1.data is c2.data  # False
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• c1.data == c2.data → True (both are empty lists, equal content) Example: c1.data.append(1) c1.data # [1] c2.data # [] — not affected c1.data is c2.data # False
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3114,7 +3114,7 @@ class Normal: pass
 sys.getsizeof(Normal())  # typically ~48 bytes
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result is approximately 16 (not the true memory usage) Example: import sys c = C() c.__sizeof__() # 0 (custom) sys.getsizeof(c) # 16 (0 + GC overhead) # Default behavior without override: class Normal: pass sys.getsizeof(Normal()) # typically ~48 bytes
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3188,7 +3188,7 @@ Common uses:
 • Plugin discovery systems
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This happens at class definition, before any D instances are created Example: class Base: def __init_subclass__(cls, **kwargs): print(f"New subclass: {cls.__name__}") class Child(Base): pass # prints "New subclass: Child" class Other(Base): pass # prints "New subclass: Other" Common uses: • Automatic subclass registration • Validation of subclass structure • Plugin discovery systems
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3262,7 +3262,7 @@ Common uses:
 • Replacing simple metaclass use cases
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Common uses: • Automatic registration of plugins/handlers • Enforcing interface contracts on subclasses • Class-level configuration via keyword arguments • Replacing simple metaclass use cases
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3333,7 +3333,7 @@ Note:
 This can be restricted with __slots__, which prevents dynamic attribute creation.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• c.dynamic_attr retrieves "hello" Example: c = C() c.x = 1 c.name = "test" c.items = [1, 2, 3] c.__dict__ # {"x": 1, "name": "test", "items": [1, 2, 3]} Note: This can be restricted with __slots__, which prevents dynamic attribute creation.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3406,7 +3406,7 @@ obj.x           # 1
 type(obj)       # <class '__main__.MyClass'>
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• .x accesses the class attribute → 1 Equivalent class statement: class MyClass: x = 1 Example: MyClass = type("MyClass", (), {"x": 1}) MyClass.x # 1 obj = MyClass() obj.x # 1 type(obj) # <class '__main__.MyClass'>
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3484,7 +3484,7 @@ obj.set_x(20)
 obj.get_x()    # 20
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• .greet() calls the method on the instance → "hi" Equivalent: class MyClass: def greet(self): return "hi" MyClass().greet() # "hi" Example: Cls = type("Cls", (), { "x": 10, "get_x": lambda self: self.x, "set_x": lambda self, v: setattr(self, "x", v) }) obj = Cls() obj.get_x() # 10 obj.set_x(20) obj.get_x() # 20
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
