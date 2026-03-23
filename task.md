@@ -426,6 +426,15 @@ Complete and maintain high-quality, unique in-depth explanations for Level 1 wit
   - **1796:** `pattern matching d’affectation` → `filtrage par motifs d’affectation`.
 - **Build verification:** `npm run build` passed.
 
+### 2026-03-23 (continued) — French micro-prose cleanup (test-framework terms)
+
+- **Completed:** translated remaining English test-framework micro-phrases inside French detailed explanations:
+  - **2311:** `pytest markers.` -> `marqueurs pytest`.
+  - **3230:** `skip vs expectedFailure vs xfail pytest.` -> `skip, expectedFailure et xfail (pytest)`.
+  - **3231:** `expectedFailure vs xfail strict.` -> `expectedFailure par rapport à xfail strict.`
+  - **3237:** `doctest vs unittest/pytest.` -> `doctest par rapport à unittest/pytest.`
+- **Verification:** `npm run build` passed; targeted checks confirm old fragments are gone.
+
 ## Verification Workflow
 
 For each batch:

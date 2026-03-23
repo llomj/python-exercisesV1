@@ -99660,7 +99660,7 @@ Ordre des opérations :
 • Même règle pour classes.
 
 Cas d'utilisation courants :
-• Flask/FastAPI, pytest markers.
+• Flask/FastAPI, marqueurs pytest.
 
 Cas limites :
 • Décoration conditionnelle : ordre dynamique rare.
@@ -136696,7 +136696,7 @@ Concepts clés :
 • Décoration au moment de la découverte.
 
 Distinctions clés :
-• skip vs expectedFailure vs xfail pytest.
+• skip, expectedFailure et xfail (pytest).
 
 Fonctionnement :
 • Le runner remplace le test par un stub skip.
@@ -136736,7 +136736,7 @@ Concepts clés :
 • Documentation de bug connu.
 
 Distinctions clés :
-• expectedFailure vs xfail strict.
+• expectedFailure par rapport à xfail strict.
 
 Fonctionnement :
 • Encapsule résultat AssertionError comme attendu.
@@ -136976,7 +136976,7 @@ Concepts clés :
 • Doc vivante.
 
 Distinctions clés :
-• doctest vs unittest/pytest.
+• doctest par rapport à unittest/pytest.
 
 Fonctionnement :
 • Parse >>> puis compare sortie texte.
