@@ -29,7 +29,7 @@ Counter({'l': 2, 'h': 1, 'e': 1, 'o': 1})
 Counter accepts any iterable: strings, lists, tuples, or keyword arguments like Counter(a=3, b=1).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("hello") counts: h→1, e→1, l→2, o→1 • The repr orders elements by count (highest first), then by insertion order for ties • Counter is a subclass of dict, so it supports all dict operations • Missing keys return 0 instead of raising KeyError How it works: • Iterates through "hello": h, e, l, l, o • Builds internal dict: {'h': 1, 'e': 1, 'l': 2, 'o': 1} • Display orders by count descending: l (2) first, then h, e, o (1 each) Example: >>> from collections import Counter >>> Counter("hello") Counter({'l': 2, 'h': 1, 'e': 1, 'o': 1}) Counter accepts any iterable: strings, lists, tuples, or keyword arguments like Counter(a=3, b=1).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -97,7 +97,7 @@ Example:
 Unlike regular dicts, Counter returns 0 for missing keys rather than raising KeyError.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter["key"] returns the count of that element • 'l' appears at indices 2 and 3 in "hello" • The count is 2 • This works like a regular dict lookup for existing keys How it works: • Counter("hello") builds {'h': 1, 'e': 1, 'l': 2, 'o': 1} • Accessing ["l"] returns the stored count: 2 Example: >>> Counter("hello")["l"] 2 >>> Counter("hello")["h"] 1 Unlike regular dicts, Counter returns 0 for missing keys rather than raising KeyError.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -167,7 +167,7 @@ Example:
 This enables patterns like: counter["new_item"] += 1 without initialization.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Regular dict["missing"] raises KeyError • Counter["missing"] returns 0 • This makes counting operations seamless — no need to check membership first • 'z' is not in "hello", so its count is 0 How it works: • Counter("hello") has keys h, e, l, o only • Accessing ["z"] triggers __missing__ • __missing__ returns 0 (not stored, just returned) • No KeyError is raised Example: >>> Counter("hello")["z"] 0 >>> Counter("hello")["x"] 0 This enables patterns like: counter["new_item"] += 1 without initialization.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -238,7 +238,7 @@ Example:
 This is commonly used for finding the most frequent items in a dataset.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • most_common(n) returns top n elements by count • Results are (element, count) tuples • Ordered from highest count to lowest • Ties are broken by insertion order How it works: • Counter("hello") = {'h': 1, 'e': 1, 'l': 2, 'o': 1} • most_common(2) picks top 2 by count • 'l' has count 2 (highest) → first • Among count-1 elements (h, e, o), 'h' was inserted first → second • Result: [('l', 2), ('h', 1)] Example: >>> Counter("hello").most_common(2) [('l', 2), ('h', 1)] >>> Counter("hello").most_common(1) [('l', 2)] This is commonly used for finding the most frequent items in a dataset.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -305,7 +305,7 @@ Example:
 This is useful for getting a full frequency distribution sorted by popularity.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • No argument = return everything • Still sorted by count descending • Ties broken by insertion order • Returns list of (element, count) tuples How it works: • Counter("hello").most_common() returns all 4 unique elements • Sorted: [('l', 2), ('h', 1), ('e', 1), ('o', 1)] • 'l' first (count 2), then h, e, o in insertion order (count 1 each) Example: >>> Counter("hello").most_common() [('l', 2), ('h', 1), ('e', 1), ('o', 1)] This is useful for getting a full frequency distribution sorted by popularity.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -372,7 +372,7 @@ Example:
 Note the confusing-looking [(3, 3)] — the first 3 is the element, the second 3 is how many times it appeared.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter([1, 1, 2, 3, 3, 3]) counts: {1: 2, 2: 1, 3: 3} • most_common(1) returns the single most common element • The number 3 appears 3 times — highest frequency • Result is [(3, 3)] — the tuple (element=3, count=3) How it works: • Counter builds: {1: 2, 2: 1, 3: 3} • most_common(1) finds element with highest count • Element 3 has count 3 → [(3, 3)] Example: >>> Counter([1, 1, 2, 3, 3, 3]).most_common(1) [(3, 3)] Note the confusing-looking [(3, 3)] — the first 3 is the element, the second 3 is how many times it appeared.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -441,7 +441,7 @@ Example:
 Elements with zero or negative counts are not included in the output.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("aab") = Counter({'a': 2, 'b': 1}) • elements() yields 'a' twice (count 2), then 'b' once (count 1) • Returns an iterator, so we wrap in list() to see the result • Order follows insertion order of the Counter How it works: • Counter("aab") processes: a, a, b → {'a': 2, 'b': 1} • elements() iterates: yield 'a', yield 'a', yield 'b' • list() collects: ['a', 'a', 'b'] Example: >>> list(Counter("aab").elements()) ['a', 'a', 'b'] >>> list(Counter(a=3, b=1).elements()) ['a', 'a', 'a', 'b'] Elements with zero or negative counts are not included in the output.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -508,7 +508,7 @@ Counter({'b': 2, 'c': 2, 'a': 1, 'd': 1})
 Counter addition is useful for combining frequency counts from multiple sources.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("abc") = {'a': 1, 'b': 1, 'c': 1} • Counter("bcd") = {'b': 1, 'c': 1, 'd': 1} • Addition sums counts: a: 0+1=1, b: 1+1=2, c: 1+1=2, d: 1+0=1 • Result ordered by count descending in repr How it works: • For each key, add counts from both Counters • a: 1+0=1, b: 1+1=2, c: 1+1=2, d: 0+1=1 • Display: Counter({'b': 2, 'c': 2, 'a': 1, 'd': 1}) Example: >>> Counter("abc") + Counter("bcd") Counter({'b': 2, 'c': 2, 'a': 1, 'd': 1}) Counter addition is useful for combining frequency counts from multiple sources.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -576,7 +576,7 @@ Counter({'a': 1})
 Important: The - operator drops zero/negative, but subtract() method keeps them in-place.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("abc") = {'a': 1, 'b': 1, 'c': 1} • Counter("bc") = {'b': 1, 'c': 1} • Subtraction: a: 1-0=1, b: 1-1=0, c: 1-1=0 • Zero and negative counts are dropped from the result How it works: • a: 1 (only in first) → stays as 1 • b: 1-1=0 → dropped • c: 1-1=0 → dropped • Result: Counter({'a': 1}) Example: >>> Counter("abc") - Counter("bc") Counter({'a': 1}) Important: The - operator drops zero/negative, but subtract() method keeps them in-place.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -644,7 +644,7 @@ Counter({'b': 1, 'c': 1})
 This is useful for finding common elements with their minimum shared frequency.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("abc") = {'a': 1, 'b': 1, 'c': 1} • Counter("bcd") = {'b': 1, 'c': 1, 'd': 1} • Intersection takes min: a: min(1,0)=0, b: min(1,1)=1, c: min(1,1)=1, d: min(0,1)=0 • Zero counts are excluded How it works: • 'a' only in first → min(1, 0) = 0 → excluded • 'b' in both → min(1, 1) = 1 → included • 'c' in both → min(1, 1) = 1 → included • 'd' only in second → min(0, 1) = 0 → excluded Example: >>> Counter("abc") & Counter("bcd") Counter({'b': 1, 'c': 1}) This is useful for finding common elements with their minimum shared frequency.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -712,7 +712,7 @@ Counter({'a': 2, 'c': 2, 'b': 1})
 Union is like a "best of both" — for each element, keep the higher count.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("aab") = {'a': 2, 'b': 1} • Counter("bcc") = {'b': 1, 'c': 2} • Union takes max: a: max(2,0)=2, b: max(1,1)=1, c: max(0,2)=2 • All elements with positive max counts are included How it works: • 'a': max(2, 0) = 2 • 'b': max(1, 1) = 1 • 'c': max(0, 2) = 2 • Result: Counter({'a': 2, 'c': 2, 'b': 1}) Example: >>> Counter("aab") | Counter("bcc") Counter({'a': 2, 'c': 2, 'b': 1}) Union is like a "best of both" — for each element, keep the higher count.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -782,7 +782,7 @@ Example:
 In Python 3.10+, Counter has a .total() method that does this directly.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("aab") = {'a': 2, 'b': 1} • c.values() returns dict_values([2, 1]) • sum([2, 1]) = 3 • This equals the length of the original iterable: len("aab") = 3 How it works: • Counter counts: a→2, b→1 • .values() extracts just the counts: [2, 1] • sum() adds them: 2 + 1 = 3 Example: >>> c = Counter("aab") >>> sum(c.values()) 3 >>> len("aab") 3 In Python 3.10+, Counter has a .total() method that does this directly.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -851,7 +851,7 @@ Example:
 Converting to dict is useful when you need a plain dict for JSON serialization or APIs that don't accept Counter.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("aab") = Counter({'a': 2, 'b': 1}) • dict() strips the Counter wrapper • Result is a plain dict: {'a': 2, 'b': 1} • Loses Counter features like missing-key-returns-0 and arithmetic operators How it works: • Counter("aab") stores {'a': 2, 'b': 1} internally • dict() copies key-value pairs into a new regular dict • Result: {'a': 2, 'b': 1} Example: >>> dict(Counter("aab")) {'a': 2, 'b': 1} >>> type(dict(Counter("aab"))) <class 'dict'> Converting to dict is useful when you need a plain dict for JSON serialization or APIs that don't accept Counter.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -921,7 +921,7 @@ Example:
 Key difference: dict.update() replaces values, but Counter.update() adds counts.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("hello") = {'h': 1, 'e': 1, 'l': 2, 'o': 1} • "world" contains one 'l' • update() adds: l count goes from 2 to 2+1=3 • This is different from dict.update() which replaces values How it works: • Start: c = {'h': 1, 'e': 1, 'l': 2, 'o': 1} • update("world") counts w:1, o:1, r:1, l:1, d:1 • Adds to existing: l: 2+1=3, o: 1+1=2, plus new keys w, r, d • c["l"] = 3 Example: >>> c = Counter("hello") >>> c.update("world") >>> c["l"] 3 Key difference: dict.update() replaces values, but Counter.update() adds counts.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -990,7 +990,7 @@ Example:
 subtract() modifies the Counter in place and does not drop zero/negative counts.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("hello") = {'h': 1, 'e': 1, 'l': 2, 'o': 1} • "lo" has l:1, o:1 • subtract() reduces: l: 2-1=1, o: 1-1=0 • Counts can go to zero or negative (kept in the Counter) How it works: • Start: c['l'] = 2 • subtract("lo") subtracts l:1 • c['l'] = 2 - 1 = 1 Example: >>> c = Counter("hello") >>> c.subtract("lo") >>> c["l"] 1 subtract() modifies the Counter in place and does not drop zero/negative counts.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1063,7 +1063,7 @@ True
 Zero-count elements are kept by subtract() but would be excluded by the - operator.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("hello") has 'o': 1 • "lo" has 'o': 1 • After subtract: o: 1-1=0 • The key 'o' stays in the Counter with count 0 • Accessing it returns 0 (same as a missing key, but 'o' is actually present) How it works: • c["o"] was 1 • subtract("lo") subtracts 1 from 'o' • c["o"] = 0 • 'o' is still a key in c, just with count 0 Example: >>> c = Counter("hello") >>> c.subtract("lo") >>> c["o"] 0 >>> "o" in c True Zero-count elements are kept by subtract() but would be excluded by the - operator.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1132,7 +1132,7 @@ Counter({'a': 4, 'b': 2})
 This is useful for cleaning up a Counter after subtract() operations that may have created zero/negative counts.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • c = Counter(a=4, b=2, c=0, d=-2) • +c creates a new Counter keeping only positive counts • a: 4 (positive → kept), b: 2 (positive → kept) • c: 0 (zero → removed), d: -2 (negative → removed) How it works: • Unary + iterates through the Counter • Keeps only elements where count > 0 • Returns a new Counter: Counter({'a': 4, 'b': 2}) • Original Counter is not modified Example: >>> c = Counter(a=4, b=2, c=0, d=-2) >>> +c Counter({'a': 4, 'b': 2}) This is useful for cleaning up a Counter after subtract() operations that may have created zero/negative counts.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1202,7 +1202,7 @@ Counter({'d': 2})
 Unary - effectively extracts the "deficit" elements from a Counter.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • c = Counter(a=4, b=2, c=0, d=-2) • -c negates each count: a→-4, b→-2, c→0, d→2 • Then keeps only positive: d→2 • Result: Counter({'d': 2}) How it works: • a: -4 (negative after negation → removed) • b: -2 (negative after negation → removed) • c: 0 (zero after negation → removed) • d: -(-2) = 2 (positive → kept) • Result: Counter({'d': 2}) Example: >>> c = Counter(a=4, b=2, c=0, d=-2) >>> -c Counter({'d': 2}) Unary - effectively extracts the "deficit" elements from a Counter.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1269,7 +1269,7 @@ True
 This is why Counter is great for anagram detection — two strings are anagrams if their Counters are equal.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("abcabc") = {'a': 2, 'b': 2, 'c': 2} • Counter("aabbcc") = {'a': 2, 'b': 2, 'c': 2} • Same counts for every element → equal • Order of the original string doesn't matter How it works: • "abcabc" has: a×2, b×2, c×2 • "aabbcc" has: a×2, b×2, c×2 • Identical counts → True Example: >>> Counter("abcabc") == Counter("aabbcc") True This is why Counter is great for anagram detection — two strings are anagrams if their Counters are equal.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1338,7 +1338,7 @@ True
 The equality check considers all elements from both Counters.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("abc") = {'a': 1, 'b': 1, 'c': 1} • Counter("ab") = {'a': 1, 'b': 1} • 'c' has count 1 in first but 0 in second • Different counts → not equal → False How it works: • Compare each element's count • 'a': 1 == 1 ✓, 'b': 1 == 1 ✓, 'c': 1 != 0 ✗ • At least one mismatch → False Example: >>> Counter("abc") == Counter("ab") False >>> Counter("ab") == Counter("ba") True The equality check considers all elements from both Counters.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1409,7 +1409,7 @@ Example:
 This pattern is simpler than using a regular dict where you'd need c.setdefault("a", 0) or c.get("a", 0).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter() creates an empty Counter • c["a"] returns 0 (missing key default) • c["a"] += 1 sets c["a"] = 0 + 1 = 1 • Second c["a"] += 1 sets c["a"] = 1 + 1 = 2 How it works: • Start: c = Counter() (empty) • c["a"] += 1 → c["a"] = 0 + 1 = 1 • c["a"] += 1 → c["a"] = 1 + 1 = 2 • c["a"] = 2 Example: >>> c = Counter() >>> c["a"] += 1 >>> c["a"] += 1 >>> c["a"] 2 This pattern is simpler than using a regular dict where you'd need c.setdefault("a", 0) or c.get("a", 0).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1476,7 +1476,7 @@ Example:
 To sort by count instead, use: sorted(c.items(), key=lambda x: x[1], reverse=True).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("banana") = {'b': 1, 'a': 3, 'n': 2} • .items() returns dict_items([('b', 1), ('a', 3), ('n', 2)]) • sorted() sorts tuples by first element (the key): 'a' < 'b' < 'n' • Result: [('a', 3), ('b', 1), ('n', 2)] How it works: • Items: ('b', 1), ('a', 3), ('n', 2) • Sort by key: 'a' → ('a', 3), 'b' → ('b', 1), 'n' → ('n', 2) • Result: [('a', 3), ('b', 1), ('n', 2)] Example: >>> sorted(Counter("banana").items()) [('a', 3), ('b', 1), ('n', 2)] To sort by count instead, use: sorted(c.items(), key=lambda x: x[1], reverse=True).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1547,7 +1547,7 @@ False
 An empty Counter is falsy in boolean context.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("hello") - Counter("hello") • Every element: count - count = 0 • The - operator removes zero counts • Result: Counter() — an empty Counter How it works: • h: 1-1=0 → dropped • e: 1-1=0 → dropped • l: 2-2=0 → dropped • o: 1-1=0 → dropped • All dropped → Counter() Example: >>> Counter("hello") - Counter("hello") Counter() >>> bool(Counter("hello") - Counter("hello")) False An empty Counter is falsy in boolean context.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1616,7 +1616,7 @@ Example:
 To get total count of all elements, use sum(c.values()) instead.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("hello") = {'h': 1, 'e': 1, 'l': 2, 'o': 1} • len() counts keys: h, e, l, o → 4 keys • This is the number of unique characters, not the string length • "hello" has 5 characters but only 4 unique ones How it works: • Counter has 4 keys: 'h', 'e', 'l', 'o' • len() returns 4 • Note: len("hello") = 5, but len(Counter("hello")) = 4 Example: >>> len(Counter("hello")) 4 >>> len("hello") 5 To get total count of all elements, use sum(c.values()) instead.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1684,7 +1684,7 @@ Example:
 elements() is useful for reconstructing the original data from a frequency count.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter(a=2, b=3) has 'a' with count 2, 'b' with count 3 • elements() yields: 'a', 'a', 'b', 'b', 'b' • sorted() arranges alphabetically: 'a', 'a', 'b', 'b', 'b' • Result: ['a', 'a', 'b', 'b', 'b'] How it works: • elements() produces: a, a, b, b, b (in insertion order) • sorted() sorts alphabetically (already in order here) • Result: ['a', 'a', 'b', 'b', 'b'] Example: >>> c = Counter(a=2, b=3) >>> sorted(c.elements()) ['a', 'a', 'b', 'b', 'b'] elements() is useful for reconstructing the original data from a frequency count.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1758,7 +1758,7 @@ defaultdict(<class 'int'>, {'x': 0})
 This makes defaultdict(int) perfect for counting without initialization.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • defaultdict(int) uses int as the default_factory • Accessing a missing key triggers the factory: int() → 0 • The value is stored in the dict, not just returned • After d["x"], d now contains {"x": 0} How it works: • d = defaultdict(int) — factory is int • d["x"] — "x" not found • Calls int() → 0 • Stores d["x"] = 0 • Returns 0 Example: >>> d = defaultdict(int) >>> d["x"] 0 >>> d defaultdict(<class 'int'>, {'x': 0}) This makes defaultdict(int) perfect for counting without initialization.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1829,7 +1829,7 @@ Example:
 This pattern eliminates the need for d.setdefault("a", []).append(item).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • defaultdict(list) uses list as the default_factory • Accessing missing "a" triggers: list() → [] • A new empty list is created and stored at d["a"] • Subsequent accesses return the same list object How it works: • d["a"] not found → calls list() → [] • d["a"] = [] is stored • Returns [] Example: >>> d = defaultdict(list) >>> d["a"] [] >>> d["a"].append(1) >>> d["a"] [1] This pattern eliminates the need for d.setdefault("a", []).append(item).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1900,7 +1900,7 @@ Example:
 This pattern is ideal for grouping unique values by key.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • defaultdict(set) creates empty set() for missing keys • d["a"] auto-creates set() on first access • .add(1) adds 1 to the set • .add(2) adds 2 to the set • Result: {1, 2} How it works: • d["a"] not found → set() → set stored at d["a"] • d["a"].add(1) → {1} • d["a"].add(2) → {1, 2} Example: >>> d = defaultdict(set) >>> d["a"].add(1) >>> d["a"].add(2) >>> d["a"] {1, 2} This pattern is ideal for grouping unique values by key.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1969,7 +1969,7 @@ Example:
 This achieves the same result as Counter("hello") but with more manual control.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• d[c] += 1 >>> d["l"] 2 This achieves the same result as Counter("hello") but with more manual control.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2040,7 +2040,7 @@ Example:
 This is the standard grouping pattern — group items by key into lists.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d["a"] on first access creates [] and stores it • .append(1) modifies that list in place: [1] • .append(2) modifies the same list: [1, 2] • Both appends target the same list object How it works: • d["a"] → [] (created by list()) • d["a"].append(1) → [1] • d["a"].append(2) → [1, 2] • d["a"] returns [1, 2] Example: >>> d = defaultdict(list) >>> d["a"].append(1) >>> d["a"].append(2) >>> d["a"] [1, 2] This is the standard grouping pattern — group items by key into lists.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2111,7 +2111,7 @@ Example:
 Lambdas are useful when the built-in types (int, list, set) don't provide the default you need.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • lambda: "N/A" is a callable that returns "N/A" • Accessing missing "missing" key triggers the lambda • Returns "N/A" and stores it at d["missing"] • Any callable works: lambda, function, class How it works: • d["missing"] not found • Calls lambda: "N/A" → returns "N/A" • d["missing"] = "N/A" • Returns "N/A" Example: >>> d = defaultdict(lambda: "N/A") >>> d["missing"] 'N/A' >>> d["also_missing"] 'N/A' Lambdas are useful when the built-in types (int, list, set) don't provide the default you need.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2184,7 +2184,7 @@ Example:
 This side effect means you should use "key in d" or d.get() if you don't want to create keys.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d["a"] accesses missing "a" → creates d["a"] = 0 • d["b"] accesses missing "b" → creates d["b"] = 0 • Both keys now exist in d • len(d) = 2 How it works: • d = defaultdict(int) — empty • d["a"] → triggers __missing__, stores {"a": 0} • d["b"] → triggers __missing__, stores {"a": 0, "b": 0} • len(d) = 2 Example: >>> d = defaultdict(int) >>> d["a"] 0 >>> d["b"] 0 >>> len(d) 2 This side effect means you should use "key in d" or d.get() if you don't want to create keys.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2255,7 +2255,7 @@ False
 Always use "in" to check membership when you don't want to accidentally create keys.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • "x" in d uses __contains__, not __getitem__ • __contains__ does not trigger __missing__ • d is empty, so "x" is not present → False • The key "x" is NOT created by this check How it works: • "x" in d → calls d.__contains__("x") • Checks if "x" is a key → No • Returns False • d remains empty — no side effect Example: >>> d = defaultdict(int) >>> "x" in d False >>> len(d) 0 Always use "in" to check membership when you don't want to accidentally create keys.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2325,7 +2325,7 @@ Example:
 This is a common gotcha: d["x"] returns 0 but d.get("x") returns None.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• >>> d.get("x", 42) # 42 (explicit default) >>> d["x"] # 0 (triggers factory) This is a common gotcha: d["x"] returns 0 but d.get("x") returns None.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2398,7 +2398,7 @@ True
 Rule of thumb: d[key] creates, d.get(key) and "key in d" do not.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d["x"] triggers __missing__ → creates d["x"] = 0 • d.get("y") uses dict.get → returns None, no key created • Only "x" exists as a key • len(d) = 1 How it works: • d["x"] → key not found → __missing__ → d["x"] = int() = 0 → key created • d.get("y") → key not found → returns None → NO key created • d has one key: {"x": 0} • len(d) = 1 Example: >>> d = defaultdict(int) >>> d["x"] 0 >>> d.get("y") is None True >>> len(d) 1 Rule of thumb: d[key] creates, d.get(key) and "key in d" do not.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2469,7 +2469,7 @@ True
 This means defaultdict can be used anywhere a dict is expected.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Yes • Returns True Example: >>> isinstance(defaultdict(int), dict) True >>> isinstance(defaultdict(int), defaultdict) True >>> issubclass(defaultdict, dict) True This means defaultdict can be used anywhere a dict is expected.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2541,7 +2541,7 @@ Example:
 The factory only applies to missing keys; pre-initialized keys keep their values.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • defaultdict(int, a=1, b=2) has factory=int, initial keys a=1, b=2 • d["c"] is missing → factory int() → 0 • d["c"] += 5 → 0 + 5 = 5 • d now has: {"a": 1, "b": 2, "c": 5} How it works: • d starts as {"a": 1, "b": 2} with factory int • d["c"] not found → int() = 0 • d["c"] += 5 → d["c"] = 0 + 5 = 5 • d["c"] = 5 Example: >>> d = defaultdict(int, a=1, b=2) >>> d["c"] += 5 >>> d["c"] 5 >>> d["a"] 1 The factory only applies to missing keys; pre-initialized keys keep their values.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2612,7 +2612,7 @@ Example:
 You can call d.default_factory() manually to see what value it would produce.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d.default_factory holds the factory callable • For defaultdict(int), it holds the int class itself • Printing it shows <class 'int'> • It's the actual type object, not a string or the result of calling it How it works: • defaultdict(int) stores int as default_factory • d.default_factory returns the int type object • repr(int) = "<class 'int'>" • It's the factory itself, not the default value (0) Example: >>> d = defaultdict(int) >>> d.default_factory <class 'int'> >>> d.default_factory() 0 You can call d.default_factory() manually to see what value it would produce.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2684,7 +2684,7 @@ Example:
 Changing the factory doesn't affect existing keys — only new missing-key accesses use the new factory.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Initially d.default_factory = int (returns 0) • Reassigned to list (returns []) • d["a"] now triggers list() → [] • Previously created keys are unaffected How it works: • d = defaultdict(int) — factory is int • d.default_factory = list — factory changed to list • d["a"] not found → calls list() → [] • d["a"] = [] Example: >>> d = defaultdict(int) >>> d["x"] 0 >>> d.default_factory = list >>> d["y"] [] Changing the factory doesn't affect existing keys — only new missing-key accesses use the new factory.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2755,7 +2755,7 @@ Example:
 Converting to dict is useful when passing data to code that expects a regular dict or for serialization.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d = defaultdict(int) is empty (no keys added) • dict(d) copies all key-value pairs into a regular dict • Since d is empty, dict(d) = {} • The result is a plain dict with no default_factory How it works: • defaultdict(int) has no keys yet • dict() copies nothing → {} • Result is a regular dict, not a defaultdict • Missing key access will now raise KeyError Example: >>> d = defaultdict(int) >>> dict(d) {} >>> type(dict(d)) <class 'dict'> Converting to dict is useful when passing data to code that expects a regular dict or for serialization.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2826,7 +2826,7 @@ Example:
 Despite this, OrderedDict still has unique features: order-sensitive equality, move_to_end(), and popitem(last=False).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Python 3.7+ dicts preserve insertion order (guaranteed) • Python 3.6 CPython preserved order (implementation detail, not guaranteed) • Python 3.5 and earlier: no order guarantee • This applies to all key types, not just strings How it works: • dict stores keys in the order they were first inserted • Updating an existing key's value does NOT change its position • Deleting and re-inserting moves the key to the end • Iteration order matches insertion order Example: >>> d = {"b": 2, "a": 1, "c": 3} >>> list(d) ['b', 'a', 'c'] Despite this, OrderedDict still has unique features: order-sensitive equality, move_to_end(), and popitem(last=False).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2896,7 +2896,7 @@ Example:
 Note: In Python 3.7+, regular dicts also preserve insertion order, so this behavior is the same.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • OrderedDict(a=1, b=2) creates an ordered dict with keys 'a', 'b' • list(od) extracts just the keys (like list(dict)) • Order is insertion order: 'a' was added before 'b' • Result: ['a', 'b'] How it works: • OrderedDict stores: a→1, b→2 in that order • list() iterates over keys: 'a', 'b' • Returns ['a', 'b'] Example: >>> od = OrderedDict(a=1, b=2) >>> list(od) ['a', 'b'] >>> list(od.values()) [1, 2] Note: In Python 3.7+, regular dicts also preserve insertion order, so this behavior is the same.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2965,7 +2965,7 @@ Example:
 move_to_end() is unique to OrderedDict — regular dicts don't have this method.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • od starts with order: a, b • move_to_end("a") moves 'a' to the end (last=True by default) • New order: b, a • This is an O(1) operation How it works: • Before: ['a', 'b'] • move_to_end("a", last=True) — moves 'a' after 'b' • After: ['b', 'a'] Example: >>> od = OrderedDict(a=1, b=2) >>> od.move_to_end("a") >>> list(od) ['b', 'a'] move_to_end() is unique to OrderedDict — regular dicts don't have this method.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3034,7 +3034,7 @@ Example:
 This is useful for implementing LRU caches where you need to move items to the front.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • od starts with order: a, b • move_to_end("b", last=False) moves 'b' to the front • New order: b, a • last=False means "move to the start" How it works: • Before: ['a', 'b'] • move_to_end("b", last=False) — moves 'b' before 'a' • After: ['b', 'a'] Example: >>> od = OrderedDict(a=1, b=2) >>> od.move_to_end("b", last=False) >>> list(od) ['b', 'a'] This is useful for implementing LRU caches where you need to move items to the front.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3104,7 +3104,7 @@ True
 Compare with regular dict: {"a": 1, "b": 2} == {"b": 2, "a": 1} is True.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • OrderedDict(a=1, b=2) has order: a, b • OrderedDict(b=2, a=1) has order: b, a • Same key-value pairs but different order • OrderedDict == OrderedDict: order matters → False How it works: • Compare keys and values AND their order • First: a=1, b=2 (order: a, b) • Second: b=2, a=1 (order: b, a) • Values match but order differs → False Example: >>> OrderedDict(a=1, b=2) == OrderedDict(b=2, a=1) False >>> OrderedDict(a=1, b=2) == OrderedDict(a=1, b=2) True Compare with regular dict: {"a": 1, "b": 2} == {"b": 2, "a": 1} is True.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3172,7 +3172,7 @@ True
 This is different from OrderedDict where the same comparison returns False because order matters.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • a: 1==1 ✓, b: 2==2 ✓ • All match → True Example: >>> {"a": 1, "b": 2} == {"b": 2, "a": 1} True This is different from OrderedDict where the same comparison returns False because order matters.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3243,7 +3243,7 @@ OrderedDict([('a', 1)])
 This is like a stack (LIFO) operation on the ordered dict.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • od has order: a=1, b=2 • popitem(last=True) removes the last item: ('b', 2) • Returns the removed item as a (key, value) tuple • od now contains only {'a': 1} How it works: • Last item in order is ('b', 2) • popitem(last=True) removes it • Returns ('b', 2) • od is now OrderedDict([('a', 1)]) Example: >>> od = OrderedDict(a=1, b=2) >>> od.popitem(last=True) ('b', 2) >>> od OrderedDict([('a', 1)]) This is like a stack (LIFO) operation on the ordered dict.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3314,7 +3314,7 @@ OrderedDict([('b', 2)])
 Regular dict.popitem() does not support the last parameter — it always removes LIFO.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • od has order: a=1, b=2 • popitem(last=False) removes the first item: ('a', 1) • Returns ('a', 1) as a tuple • od now contains only {'b': 2} How it works: • First item in order is ('a', 1) • popitem(last=False) removes it • Returns ('a', 1) • od is now OrderedDict([('b', 2)]) Example: >>> od = OrderedDict(a=1, b=2) >>> od.popitem(last=False) ('a', 1) >>> od OrderedDict([('b', 2)]) Regular dict.popitem() does not support the last parameter — it always removes LIFO.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3385,7 +3385,7 @@ Example:
 Unlike OrderedDict.popitem(), regular dict.popitem() does not accept a last parameter — it always pops from the end.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d = {"a": 1, "b": 2, "c": 3} — insertion order: a, b, c • popitem() removes the last inserted: ('c', 3) • Returns a (key, value) tuple • d is now {"a": 1, "b": 2} How it works: • Last inserted key is 'c' • popitem() removes ('c', 3) • Returns ('c', 3) • d becomes {"a": 1, "b": 2} Example: >>> d = {"a": 1, "b": 2, "c": 3} >>> d.popitem() ('c', 3) >>> d {'a': 1, 'b': 2} Unlike OrderedDict.popitem(), regular dict.popitem() does not accept a last parameter — it always pops from the end.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3457,7 +3457,7 @@ Example:
 To move a key to the end after updating, you'd need to explicitly call od.move_to_end("a").
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • od starts with order: a=1, b=2 • od["a"] = 10 updates the value of 'a' to 10 • 'a' stays at its original position (first) • Order remains: a, b How it works: • Before: OrderedDict([('a', 1), ('b', 2)]) • od["a"] = 10 — key 'a' already exists, just update value • After: OrderedDict([('a', 10), ('b', 2)]) • list(od) = ['a', 'b'] — order unchanged Example: >>> od = OrderedDict(a=1, b=2) >>> od["a"] = 10 >>> list(od) ['a', 'b'] >>> od["a"] 10 To move a key to the end after updating, you'd need to explicitly call od.move_to_end("a").
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

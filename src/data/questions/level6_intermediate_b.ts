@@ -28,7 +28,7 @@ Common uses:
 • Generating test data structures
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• x=3: range(3) produces 0,1,2 → key 3 maps to [0, 1, 2] Result: {0: [], 1: [0], 2: [0, 1], 3: [0, 1, 2]} Common uses: • Building adjacency lists • Creating lookup tables with computed values • Generating test data structures
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -92,7 +92,7 @@ Common uses:
 • Data preprocessing pipelines
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: {"a": 5, "b": 2} Common uses: • Transforming dict values while keeping keys • Computing summary statistics from string data • Data preprocessing pipelines
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -157,7 +157,7 @@ Common uses:
 • Text processing and analysis
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• All other characters appear once Common uses: • Character frequency analysis • Simple histogram building • Text processing and analysis
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -221,7 +221,7 @@ Common uses:
 • Converting enumerated data to dicts for O(1) access
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: {0: "a", 1: "b", 2: "c"} Common uses: • Creating index-to-value mappings • Building reverse lookups from sequences • Converting enumerated data to dicts for O(1) access
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -285,7 +285,7 @@ Common uses:
 • Building configuration dicts from separate key/value sources
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Comprehension builds dict: {"a": 1, "b": 2, "c": 3} Common uses: • Creating dicts from parallel lists • Mapping labels to values • Building configuration dicts from separate key/value sources
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -349,7 +349,7 @@ Common uses:
 • Data cleaning and preprocessing
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: {"A": 2, "B": 4} Common uses: • Normalizing dict keys (e.g., case-insensitive lookups) • Applying transformations to both keys and values • Data cleaning and preprocessing
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -414,7 +414,7 @@ Common uses:
 • Simple text analytics without external libraries
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The lookup ["the"] returns 2 Common uses: • Word frequency analysis in text processing • Building histograms from data • Simple text analytics without external libraries
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -481,7 +481,7 @@ Common uses:
 • Lookup tables for conditions
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• x=4: 4%2==0 → True Result: {0: True, 1: False, 2: True, 3: False, 4: True} Common uses: • Precomputing boolean properties for a range of inputs • Creating classification mappings • Lookup tables for conditions
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -546,7 +546,7 @@ Common uses:
 • Mapping between string and numeric representations
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• x=2: str(2)="2" → "2": 2 Result: {"0": 0, "1": 1, "2": 2} Common uses: • Preparing data for JSON serialization • Creating string-keyed lookup tables • Mapping between string and numeric representations
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -611,7 +611,7 @@ Common uses:
 • Graph adjacency data with tuple keys
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Excluded: (0,0), (1,1), (2,2) — these would give KeyError Common uses: • Sparse matrix representations • Coordinate-based lookup tables • Graph adjacency data with tuple keys
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -677,7 +677,7 @@ Common uses:
 • Extracting items meeting specific criteria
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• "d": 4 → 4 is even → included Result: {"b": 2, "d": 4} Common uses: • Data filtering and cleaning • Selecting subsets of configuration • Extracting items meeting specific criteria
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -742,7 +742,7 @@ Common uses:
 • Canonical representations for comparison
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Comprehension builds dict in sorted order Result: {"a": 1, "b": 2, "c": 3} Common uses: • Creating ordered configurations • Preparing dicts for consistent display • Canonical representations for comparison
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -807,7 +807,7 @@ Common uses:
 • Flipping sign conventions
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• "c": -(3) = -3 Result: {"a": -1, "b": 2, "c": -3} Common uses: • Inverting numeric values (e.g., credits to debits) • Mathematical transformations on dict data • Flipping sign conventions
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -871,7 +871,7 @@ Common uses:
 • Data cleaning where sign doesn't matter
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• "b": abs(-2) = 2 Result: {"a": 1, "b": 2} Common uses: • Normalizing signed data • Computing magnitudes or distances • Data cleaning where sign doesn't matter
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -939,7 +939,7 @@ Common uses:
 • Alternative to set() when order matters
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• list({1: 1, 2: 2, 3: 3}) → [1, 2, 3] Common uses: • Order-preserving deduplication: list(dict.fromkeys(seq)) • Removing duplicates while maintaining first-seen order • Alternative to set() when order matters
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1004,7 +1004,7 @@ Common uses:
 • Filtering API responses with null/None fields
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• "c": 3 → 3 is not None → included Result: {"a": 1, "c": 3} Common uses: • Cleaning data with missing values • Removing optional fields that weren't set • Filtering API responses with null/None fields
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1071,7 +1071,7 @@ Common uses:
 • Creating modified copies of dicts
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• "c": 3 inserts "c": 3 Result: {"a": 1, "b": 2, "c": 3} Common uses: • Merging multiple dicts in a single expression • Adding extra keys while merging: {**defaults, **user_config, "debug": True} • Creating modified copies of dicts
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1137,7 +1137,7 @@ Common uses:
 • Building composite dicts from partial sources
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• No overlapping keys, so all pairs are included Common uses: • Clean dict merging syntax (replaces {**d1, **d2}) • Combining configuration dicts • Building composite dicts from partial sources
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1201,7 +1201,7 @@ Common uses:
 • Building up dicts incrementally
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• {"a": 1, "b": 3} | {"c": 4} → {"a": 1, "b": 3, "c": 4} Result: {"a": 1, "b": 3, "c": 4} Common uses: • Layered configuration: base | env_config | cli_overrides • Priority-based merging where later sources win • Building up dicts incrementally
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1267,7 +1267,7 @@ Common uses:
 • Replacing d.update() with cleaner syntax
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• d is now {"a": 2, "b": 3} Common uses: • Updating configs in-place: config |= new_settings • Accumulating data from multiple sources • Replacing d.update() with cleaner syntax
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1332,7 +1332,7 @@ Common uses:
 • Combining multiple dicts without copying
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• If "x" weren't in a, it would search b next Common uses: • Layered configuration (defaults < env < CLI args) • Scope chains (like variable lookups in nested functions) • Combining multiple dicts without copying
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1397,7 +1397,7 @@ Common uses:
 • Template contexts with fallback layers
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• This is different from | merge where the last dict wins Common uses: • Override chains: user settings shadow defaults • Variable scoping: local scope shadows enclosing scope • Template contexts with fallback layers
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1461,7 +1461,7 @@ Common uses:
 • Namespace resolution: local → enclosing → global → builtin
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Search complete Common uses: • Fallback lookups: try specific config, fall back to defaults • Namespace resolution: local → enclosing → global → builtin
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1526,7 +1526,7 @@ Common uses:
 • Inspecting which keys exist in a layered namespace
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Keys from later maps appear first in iteration Common uses: • Getting all available keys across scoped configurations • Inspecting which keys exist in a layered namespace
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1591,7 +1591,7 @@ Common uses:
 • Selecting best candidates from scored options
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns the key "c" (not the value 3) Common uses: • Finding the key with the highest/lowest value • Identifying top-performing items in a dataset • Selecting best candidates from scored options
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1655,7 +1655,7 @@ Common uses:
 • Paired with max() for range analysis
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns "a" Common uses: • Finding the key with the lowest value • Identifying worst-performing or cheapest items • Paired with max() for range analysis
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1721,7 +1721,7 @@ Common uses:
 • Creating leaderboards or priority lists
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Sort by these values: 1("b"), 2("c"), 3("a") Result: ["b", "c", "a"] Common uses: • Ranking items by score • Displaying data sorted by value • Creating leaderboards or priority lists
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1785,7 +1785,7 @@ Common uses:
 • Priority queues based on dict values
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Descending sort: 3("a"), 2("c"), 1("b") Result: ["a", "c", "b"] Common uses: • Top-N rankings • Displaying results from best to worst • Priority queues based on dict values
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1851,7 +1851,7 @@ Common uses:
 • Data validation (checking total element counts)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• sum(2, 1) = 3 Common uses: • Counting total items in grouped data • Measuring aggregate size of nested structures • Data validation (checking total element counts)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1917,7 +1917,7 @@ Common uses:
 • Checking which fields two records have in common
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• list({"b"}) → ["b"] Common uses: • Finding shared keys between configurations • Computing overlap between datasets • Checking which fields two records have in common
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1983,7 +1983,7 @@ Common uses:
 • Grouping keys by their values
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• "c": 1 → v==1 → include "c" Result: ["a", "c"] Common uses: • Reverse lookups (value → keys) • Finding duplicates in value space • Grouping keys by their values
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2047,7 +2047,7 @@ Common uses:
 • Building index-to-name mappings from name-to-index dicts
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• k="b", v=2 → 2: "b" Result: {1: "a", 2: "b"} Common uses: • Creating bidirectional lookups • Decoding encoded values • Building index-to-name mappings from name-to-index dicts
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2113,7 +2113,7 @@ Common uses:
 • Knowing when to use .copy() vs assignment
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• id(d1) == id(d2) would also be True Common uses: • Understanding Python's reference semantics • Avoiding accidental mutation through aliases • Knowing when to use .copy() vs assignment
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2177,7 +2177,7 @@ Caution with mutable defaults:
 • Use a dict comprehension instead: {k: [] for k in range(3)}
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0} Caution with mutable defaults: • dict.fromkeys(range(3), []) — all keys share the SAME list object • Modifying one list affects all keys • Use a dict comprehension instead: {k: [] for k in range(3)}
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2242,7 +2242,7 @@ Related checks:
 • isinstance({"a": 1}, dict) → True (non-empty dicts too)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Returns True because the object's type matches Related checks: • type({}) == dict → True (exact type check) • isinstance({}, (dict, list)) → True (check against multiple types) • isinstance({"a": 1}, dict) → True (non-empty dicts too)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2308,7 +2308,7 @@ Key difference from lists:
 • Support set operations (& | - ^)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Adding/removing keys from d is reflected in the view Key difference from lists: • Views don't copy data — they reference the original dict • More memory efficient than creating a separate list • Support set operations (& | - ^)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2373,7 +2373,7 @@ Comparison of view types:
 • d.items() → dict_items view of (key, value) tuples
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Iterating yields tuples: for k, v in d.items() Comparison of view types: • d.keys() → dict_keys view of keys only • d.values() → dict_values view of values only • d.items() → dict_items view of (key, value) tuples
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2438,7 +2438,7 @@ Common uses:
 • Checking if all items from one dict exist in another
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• set({("a", 1), ("b", 2)}) created successfully Common uses: • Computing symmetric difference between two dicts' items • Finding common key-value pairs: set(d1.items()) & set(d2.items()) • Checking if all items from one dict exist in another
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2503,7 +2503,7 @@ Workaround:
 • Or use frozenset for set values
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• hash([1]) → TypeError: unhashable type: 'list' Workaround: • Convert lists to tuples first: set((k, tuple(v)) for k, v in d.items()) • Or use frozenset for set values
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2568,7 +2568,7 @@ Common uses:
 • Template-style string construction from configs
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: "Name: Alice, Age: 30" Common uses: • Formatting structured data for display • Building log messages from dict data • Template-style string construction from configs
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2633,7 +2633,7 @@ Common uses:
 • Sparse matrix implementations
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• hash((1, 2)) works because ints are hashable Common uses: • Coordinate-based lookups: grid[(x, y)] = value • Multi-dimensional keys: cache[(func_name, arg1, arg2)] • Sparse matrix implementations
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2698,7 +2698,7 @@ Common uses:
 • Group-by operations where the group key is a set of attributes
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• d[frozenset({1, 2})] → same frozenset → same hash → retrieves "fs key" Common uses: • Using sets of items as dict keys (e.g., graph edges) • Caching results for unordered argument sets • Group-by operations where the group key is a set of attributes
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2763,7 +2763,7 @@ Common mistake:
 • d.get("z", 0) → 0 (because "z" is not in d)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The default parameter (0) is ignored Common mistake: • Thinking get() always returns the default • get() only uses the default when the key is MISSING • d.get("z", 0) → 0 (because "z" is not in d)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2828,7 +2828,7 @@ Related edge cases:
 • {1: "a", True: "b", 1.0: "c"} → {1: "c"} (all three are equal)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: {True: "one"} Related edge cases: • {0: "zero", False: "false"} → {0: "false"} (same principle) • {1: "a", True: "b", 1.0: "c"} → {1: "c"} (all three are equal)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2893,7 +2893,7 @@ Why this happens:
 • This is by design in Python, not a bug
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Result: {0: "false"} Why this happens: • bool is a subclass of int: issubclass(bool, int) → True • True is literally 1, False is literally 0 • This is by design in Python, not a bug
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2958,7 +2958,7 @@ Alternatives:
 • d.clear() — removes all keys
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• d is now {} — empty dict Alternatives: • d.pop("a") — removes and returns the value (1) • d.pop("a", default) — removes or returns default if missing • d.clear() — removes all keys
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3024,7 +3024,7 @@ Dunder methods:
 • __delitem__ → del d[key]
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Same as writing "a" in d Dunder methods: • __contains__ → in operator • __getitem__ → d[key] • __setitem__ → d[key] = value • __delitem__ → del d[key]
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3090,7 +3090,7 @@ Related dunder methods:
 • __len__() → len(d)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Same result as d["a"] Related dunder methods: • __setitem__(key, value) → d[key] = value • __delitem__(key) → del d[key] • __contains__(key) → key in d • __len__() → len(d)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3156,7 +3156,7 @@ Related:
 • These dunder methods enable custom dict-like classes
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• d is now {"a": 1, "b": 2} Related: • __getitem__ → d[key] (read) • __setitem__ → d[key] = value (write) • __delitem__ → del d[key] (delete) • These dunder methods enable custom dict-like classes
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3221,7 +3221,7 @@ Common uses:
 • Reversing priority order of dict entries
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• [1, 2][::-1] → [2, 1] Common uses: • Processing dict values in reverse order • Getting the most recently added values first • Reversing priority order of dict entries
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

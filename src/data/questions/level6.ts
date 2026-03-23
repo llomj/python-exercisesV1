@@ -40,7 +40,7 @@ Common uses:
 Example: {'a': 1, 'b': 2} creates a dictionary object containing two key-value pairs, where 'a' maps to 1 and 'b' maps to 2.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary creation: • {'a': 1, 'b': 2} = dictionary with two pairs • Curly braces {} with key:value pairs • Keys map to values: 'a' → 1, 'b' → 2 • Keys must be immutable • Values can be any type How it works: • Python recognizes {} with key:value pairs as dictionary • 'a': 1 creates mapping from 'a' to 1 • 'b': 2 creates mapping from 'b' to 2 • Creates dictionary object in memory • Returns dictionary type Example: {'a': 1, 'b': 2} # Dictionary of strings to integers {1: 'a', 2: 'b'} # Dictionary of integers to strings {'name': 'Alice', 'age': 30} # Mixed value types {} # Empty dictionary Common uses: • Key-value storage: data = {'key': value} • Mapping relationships: mapping = {k: v for k, v in pairs} • Configuration: config = {'setting': value} • Data structures Example: {'a': 1, 'b': 2} creates a dictionary object containing two key-value pairs, where 'a' maps to 1 and 'b' maps to 2.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -116,7 +116,7 @@ Common uses:
 Example: {} creates an empty dictionary object, which is a valid dictionary with zero key-value pairs and length 0.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Empty dictionary: • {} = empty dictionary (no key-value pairs) • Curly braces with nothing inside • Valid dictionary object, just has zero length • Falsy in boolean contexts: bool({}) = False • Length is 0: len({}) = 0 How it works: • Python recognizes {} as empty dictionary literal • Creates a dictionary object with no pairs • Still a valid dictionary type • Can be used immediately for operations • Returns empty dictionary object Example: {} # Empty dictionary bool({}) # False (falsy) len({}) # 0 (zero length) {}['key'] = 'value' # {'key': 'value'} (can add pairs) Common uses: • Initialization: result = {} • Placeholders: data = {} • Starting points for building dictionaries • Return values for empty results Example: {} creates an empty dictionary object, which is a valid dictionary with zero key-value pairs and length 0.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -192,7 +192,7 @@ Common uses:
 Example: dict() returns {} because calling the dict constructor without arguments creates an empty dictionary object, which is equivalent to the empty dictionary literal {}.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• dict() with no arguments: • dict() = {} (empty dictionary) • Constructor function with no arguments • Creates empty dictionary object • Equivalent to {} literal • Returns empty dictionary How it works: • dict() called without arguments • Creates new empty dictionary object • Returns empty dictionary: {} • Same result as {} literal • Ready for operations Example: dict() # {} (empty dictionary) dict() == {} # True (equivalent) len(dict()) # 0 (zero length) dict()['key'] = 'value' # {'key': 'value'} (can add pairs) Common uses: • Creating empty dictionaries: items = dict() • Initialization: data = dict() • Alternative to {} literal • Constructor syntax preference Example: dict() returns {} because calling the dict constructor without arguments creates an empty dictionary object, which is equivalent to the empty dictionary literal {}.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -267,7 +267,7 @@ Common uses:
 Example: dict([('a', 1), ('b', 2)]) returns {'a': 1, 'b': 2} because dict() creates a dictionary from the list of tuples, treating each tuple as a key-value pair.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• dict() from list of tuples: • dict([('a', 1), ('b', 2)]) = {'a': 1, 'b': 2} • dict() creates dictionary from list of (key, value) tuples • Each tuple becomes a key-value pair • First element is key, second element is value • Returns dictionary object How it works: • dict() called with [('a', 1), ('b', 2)] • Iterates through list of tuples • ('a', 1) becomes key 'a' → value 1 • ('b', 2) becomes key 'b' → value 2 • Returns dictionary: {'a': 1, 'b': 2} Example: dict([('a', 1), ('b', 2)]) # {'a': 1, 'b': 2} dict([(1, 'a'), (2, 'b')]) # {1: 'a', 2: 'b'} dict([('x', 10), ('y', 20)]) # {'x': 10, 'y': 20} Common uses: • Converting pairs: mapping = dict(pairs) • Creating from tuples: data = dict(tuple_list) • List-to-dict conversion • Pair conversion Example: dict([('a', 1), ('b', 2)]) returns {'a': 1, 'b': 2} because dict() creates a dictionary from the list of tuples, treating each tuple as a key-value pair.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -343,7 +343,7 @@ Common uses:
 Example: dict(a=1, b=2) returns {'a': 1, 'b': 2} because dict() creates a dictionary from keyword arguments, where each keyword name becomes a string key and its value becomes the corresponding value.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• dict() with keyword arguments: • dict(a=1, b=2) = {'a': 1, 'b': 2} • dict() creates dictionary from keyword arguments • Keyword names become keys (as strings) • Argument values become values • Keys must be valid identifiers How it works: • dict() called with keyword arguments a=1, b=2 • Keyword 'a' becomes key 'a' (string) • Value 1 becomes value 1 • Keyword 'b' becomes key 'b' (string) • Value 2 becomes value 2 • Returns dictionary: {'a': 1, 'b': 2} Example: dict(a=1, b=2) # {'a': 1, 'b': 2} dict(x=10, y=20) # {'x': 10, 'y': 20} dict(name='Alice', age=30) # {'name': 'Alice', 'age': 30} Common uses: • Creating dictionaries: data = dict(key=value) • Convenient syntax: mapping = dict(a=1, b=2) • Keyword-based creation • Named parameter dictionaries Example: dict(a=1, b=2) returns {'a': 1, 'b': 2} because dict() creates a dictionary from keyword arguments, where each keyword name becomes a string key and its value becomes the corresponding value.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -418,7 +418,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}['a'] returns 1 because Python looks up the key 'a' in the dictionary and returns the corresponding value, which is 1.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary access: • {'a': 1, 'b': 2}['a'] = 1 (returns value for key) • Square brackets [] with key • Returns value associated with key • Key must exist (or raises KeyError) • Access by key, not index How it works: • {'a': 1, 'b': 2} is the dictionary • ['a'] is the key in square brackets • Python looks up key 'a' in dictionary • Finds mapping: 'a' → 1 • Returns value: 1 Example: {'a': 1, 'b': 2}['a'] # 1 (value for key 'a') {'a': 1, 'b': 2}['b'] # 2 (value for key 'b') {'a': 1, 'b': 2}['c'] # KeyError (key 'c' doesn't exist) Common uses: • Getting values: value = dict[key] • Accessing data: data = items[key] • Key-based access • Dictionary lookup Example: {'a': 1, 'b': 2}['a'] returns 1 because Python looks up the key 'a' in the dictionary and returns the corresponding value, which is 1.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -493,7 +493,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}['b'] returns 2 because Python looks up the key 'b' in the dictionary and returns the corresponding value, which is 2.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary access by key: • {'a': 1, 'b': 2}['b'] = 2 (returns value for key) • Square brackets [] with key 'b' • Returns value associated with key 'b' • Key-based lookup (not index-based) • Returns value: 2 How it works: • {'a': 1, 'b': 2} is the dictionary • ['b'] is the key in square brackets • Python looks up key 'b' in dictionary • Finds mapping: 'b' → 2 • Returns value: 2 Example: {'a': 1, 'b': 2}['b'] # 2 (value for key 'b') {'x': 10, 'y': 20}['y'] # 20 (value for key 'y') {'a': 1, 'b': 2}['c'] # KeyError (key doesn't exist) Common uses: • Getting values: value = dict[key] • Accessing data: data = items[key] • Key-based lookup • Dictionary retrieval Example: {'a': 1, 'b': 2}['b'] returns 2 because Python looks up the key 'b' in the dictionary and returns the corresponding value, which is 2.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -570,7 +570,7 @@ Common uses:
 Example: Accessing a non-existent key like {'a': 1, 'b': 2}['c'] raises a KeyError because Python cannot find the key 'c' in the dictionary, and square bracket access requires the key to exist.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Accessing non-existent key: • {'a': 1, 'b': 2}['c'] raises KeyError • Key 'c' doesn't exist in dictionary • Square bracket access [] raises KeyError • Must use .get() for safe access • Error message: "KeyError: 'c'" How it works: • Accessing ['c'] on {'a': 1, 'b': 2} • Python searches for key 'c' in dictionary • Finds no match (key doesn't exist) • Raises KeyError • Cannot return value for non-existent key Example: {'a': 1, 'b': 2}['c'] # KeyError: 'c' d = {'a': 1, 'b': 2} d['x'] # KeyError: 'x' if 'c' in d: # Check first d['c'] # Safe to access Common uses: • Error handling: try/except for KeyError • Checking first: if key in dict: dict[key] • Safe access: value = dict.get(key) • Key existence validation Example: Accessing a non-existent key like {'a': 1, 'b': 2}['c'] raises a KeyError because Python cannot find the key 'c' in the dictionary, and square bracket access requires the key to exist.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -646,7 +646,7 @@ Common uses:
 Example: len({'a': 1, 'b': 2}) returns 2 because len() counts the number of key-value pairs in the dictionary, which is 2.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• len() on dictionary: • len({'a': 1, 'b': 2}) = 2 (number of pairs) • len() counts key-value pairs • Each pair counts as one • Returns integer count • Works with any dictionary How it works: • len() called with {'a': 1, 'b': 2} • Counts key-value pairs in dictionary • Finds two pairs: 'a': 1, 'b': 2 • Returns count: 2 • Returns integer: 2 Example: len({'a': 1, 'b': 2}) # 2 (two pairs) len({'a': 1}) # 1 (one pair) len({}) # 0 (empty dictionary) len({'a': 1, 'b': 2, 'c': 3}) # 3 (three pairs) Common uses: • Checking size: if len(dict) > 0: • Getting count: count = len(data) • Size validation • Pair counting Example: len({'a': 1, 'b': 2}) returns 2 because len() counts the number of key-value pairs in the dictionary, which is 2.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -722,7 +722,7 @@ Common uses:
 Example: len({}) returns 0 because the empty dictionary contains zero key-value pairs, and len() counts and returns the number of pairs (which is 0 for an empty dictionary).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Empty dictionary length: • len({}) = 0 (zero pairs) • Empty dictionary contains no pairs • Length is 0 by definition • Valid dictionary object, just empty • Falsy but exists How it works: • len() takes empty dictionary {} as argument • Counts key-value pairs in dictionary • Finds zero pairs • Returns 0 • Empty dictionaries always return 0 Example: len({}) # 0 (empty dictionary) len(dict()) # 0 (empty dictionary) bool({}) # False (falsy but exists) {}['key'] = 'value' # {'key': 'value'} (can add pairs) Common uses: • Checking if empty: if len(items) == 0: • Validation: if len(data) > 0: • Empty check • Size verification Example: len({}) returns 0 because the empty dictionary contains zero key-value pairs, and len() counts and returns the number of pairs (which is 0 for an empty dictionary).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -799,7 +799,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.get('a') returns 1 because get() looks up the key 'a' in the dictionary and returns its value, which is 1.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• get() method: • {'a': 1, 'b': 2}.get('a') = 1 (returns value) • get(key) returns value for key • Returns None if key not found (no default) • Safe access (no KeyError) • Works with any key How it works: • get('a') called on {'a': 1, 'b': 2} • Searches for key 'a' in dictionary • Finds mapping: 'a' → 1 • Returns value: 1 • No error if key not found Example: {'a': 1, 'b': 2}.get('a') # 1 (value for key) {'a': 1, 'b': 2}.get('c') # None (key not found, no error) {'a': 1, 'b': 2}.get('b') # 2 (value for key) Common uses: • Safe access: value = dict.get(key) • Avoiding KeyError: data = items.get(key) • Default value access • Safe dictionary lookup Example: {'a': 1, 'b': 2}.get('a') returns 1 because get() looks up the key 'a' in the dictionary and returns its value, which is 1.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -874,7 +874,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.get('c') returns None because get() searches for the key 'c' in the dictionary, doesn't find it, and returns None instead of raising a KeyError.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • Default handling: result = items.get(key) or default • Error-free access Example: {'a': 1, 'b': 2}.get('c') returns None because get() searches for the key 'c' in the dictionary, doesn't find it, and returns None instead of raising a KeyError.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -949,7 +949,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.get('c', 0) returns 0 because get() searches for the key 'c' in the dictionary, doesn't find it, and returns the default value 0 instead of None or raising an error.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• get() with default: • {'a': 1, 'b': 2}.get('c', 0) = 0 (returns default) • get(key, default) returns default if key not found • Default value provided • No error raised • Safe access with fallback How it works: • get('c', 0) called on {'a': 1, 'b': 2} • Searches for key 'c' in dictionary • Finds no match (key doesn't exist) • Returns default value: 0 • No error raised Example: {'a': 1, 'b': 2}.get('c', 0) # 0 (not found, returns default) {'a': 1, 'b': 2}.get('c', 'missing') # 'missing' (returns default) {'a': 1, 'b': 2}.get('a', 0) # 1 (found, returns actual value) Common uses: • Default values: value = dict.get(key, default) • Fallback values: data = items.get(key, fallback) • Safe access with defaults • Error-free access with fallback Example: {'a': 1, 'b': 2}.get('c', 0) returns 0 because get() searches for the key 'c' in the dictionary, doesn't find it, and returns the default value 0 instead of None or raising an error.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1024,7 +1024,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.get('a', 0) returns 1 because get() finds the key 'a' in the dictionary and returns its actual value (1), ignoring the default value (0), which is only used when the key doesn't exist.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• get() with existing key: • {'a': 1, 'b': 2}.get('a', 0) = 1 (returns actual value) • get(key, default) returns actual value if key exists • Default value ignored when key found • Returns value from dictionary • Default only used if key missing How it works: • get('a', 0) called on {'a': 1, 'b': 2} • Searches for key 'a' in dictionary • Finds mapping: 'a' → 1 • Returns actual value: 1 (ignores default 0) • Default only used if key not found Example: {'a': 1, 'b': 2}.get('a', 0) # 1 (found, returns actual value) {'a': 1, 'b': 2}.get('b', 10) # 2 (found, returns actual value) {'a': 1, 'b': 2}.get('c', 0) # 0 (not found, returns default) Common uses: • Safe access with fallback: value = dict.get(key, default) • Always returning value: result = items.get(key, 0) • Default handling • Fallback values Example: {'a': 1, 'b': 2}.get('a', 0) returns 1 because get() finds the key 'a' in the dictionary and returns its actual value (1), ignoring the default value (0), which is only used when the key doesn't exist.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1099,7 +1099,7 @@ Common uses:
 Example: {'a': 1}.setdefault('a', 2) returns 1 because setdefault() finds the key 'a' already exists with value 1, and returns that existing value, ignoring the default value (2).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• setdefault() with existing key: • {'a': 1}.setdefault('a', 2) = 1 (returns existing value) • setdefault(key, default) returns existing value if key exists • Default value ignored when key found • Dictionary unchanged (key already exists) • Returns value from dictionary How it works: • setdefault('a', 2) called on {'a': 1} • Searches for key 'a' in dictionary • Finds existing mapping: 'a' → 1 • Returns existing value: 1 (ignores default 2) • Dictionary unchanged: {'a': 1} Example: {'a': 1}.setdefault('a', 2) # 1 (returns existing value) {'a': 1}.setdefault('a', 10) # 1 (returns existing value) {'a': 1} # {'a': 1} (unchanged) Common uses: • Getting or setting: value = dict.setdefault(key, default) • Ensuring key exists: dict.setdefault(key, []) • Default initialization • Value retrieval or creation Example: {'a': 1}.setdefault('a', 2) returns 1 because setdefault() finds the key 'a' already exists with value 1, and returns that existing value, ignoring the default value (2).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1175,7 +1175,7 @@ Common uses:
 Example: {'a': 1}.setdefault('b', 2) returns 2 because setdefault() doesn't find the key 'b' in the dictionary, sets 'b' to the default value (2), and returns that value, modifying the dictionary to {'a': 1, 'b': 2}.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• setdefault() with missing key: • {'a': 1}.setdefault('b', 2) = 2 (sets and returns default) • setdefault(key, default) sets key to default if missing • Modifies dictionary in place • Returns default value • Dictionary changed: {'a': 1} → {'a': 1, 'b': 2} How it works: • setdefault('b', 2) called on {'a': 1} • Searches for key 'b' in dictionary • Finds no match (key doesn't exist) • Sets 'b' to default value: 2 • Returns default value: 2 • Dictionary modified: {'a': 1, 'b': 2} Example: {'a': 1}.setdefault('b', 2) # 2 (sets 'b' to 2, returns 2) {'a': 1} # {'a': 1, 'b': 2} (modified) {'a': 1}.setdefault('c', 0) # 0 (sets 'c' to 0, returns 0) Common uses: • Initializing defaults: value = dict.setdefault(key, default) • Ensuring key exists: dict.setdefault(key, []) • Default creation • Value initialization Example: {'a': 1}.setdefault('b', 2) returns 2 because setdefault() doesn't find the key 'b' in the dictionary, sets 'b' to the default value (2), and returns that value, modifying the dictionary to {'a': 1, 'b': 2}.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1249,7 +1249,7 @@ Common uses:
 Example: The difference is get() only retrieves values and never modifies the dictionary (e.g., {'a': 1}.get('b', 0) returns 0 but doesn't change the dict), while setdefault() modifies the dictionary if the key is missing (e.g., {'a': 1}.setdefault('b', 0) returns 0 and adds 'b': 0 to the dict).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• get() vs setdefault(): • get(key, default): returns value or default, never modifies dict • setdefault(key, default): returns value or default, sets key if missing • get() is read-only (doesn't change dict) • setdefault() modifies dict if key missing • Both return same value when key exists How it works: • get('c', 0): searches for 'c', not found, returns 0, dict unchanged • setdefault('c', 0): searches for 'c', not found, sets 'c' to 0, returns 0, dict modified • Both return value when key exists • Only setdefault() modifies when missing Example: d = {'a': 1} d.get('b', 0) # 0 (returns 0, d unchanged: {'a': 1}) d.setdefault('b', 0) # 0 (returns 0, d modified: {'a': 1, 'b': 0}) Common uses: • get(): safe read-only access: value = dict.get(key, default) • setdefault(): ensure key exists: value = dict.setdefault(key, default) • Choose based on whether you want to modify dict • Important distinction for dictionary behavior Example: The difference is get() only retrieves values and never modifies the dictionary (e.g., {'a': 1}.get('b', 0) returns 0 but doesn't change the dict), while setdefault() modifies the dictionary if the key is missing (e.g., {'a': 1}.setdefault('b', 0) returns 0 and adds 'b': 0 to the dict).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1326,7 +1326,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.pop('a') returns 1 because pop() removes the key-value pair 'a': 1 from the dictionary and returns the removed value, leaving the dictionary as {'b': 2}.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• pop() method: • {'a': 1, 'b': 2}.pop('a') = 1 (returns removed value) • pop(key) removes key-value pair • Modifies dictionary in place • Returns the removed value • Dictionary changed: {'a': 1, 'b': 2} → {'b': 2} How it works: • pop('a') called on {'a': 1, 'b': 2} • Searches for key 'a' in dictionary • Finds mapping: 'a' → 1 • Removes pair 'a': 1 from dictionary • Returns removed value: 1 • Dictionary modified: {'b': 2} Example: d = {'a': 1, 'b': 2} d.pop('a') # 1 (returns removed value) d # {'b': 2} (modified) {'a': 1, 'b': 2}.pop('b') # 2 (returns removed value) Common uses: • Removing pairs: value = dict.pop(key) • Getting and removing: removed = items.pop(key) • Dictionary cleanup • In-place modification Example: {'a': 1, 'b': 2}.pop('a') returns 1 because pop() removes the key-value pair 'a': 1 from the dictionary and returns the removed value, leaving the dictionary as {'b': 2}.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1404,7 +1404,7 @@ Common uses:
 Example: Calling pop() with a non-existent key like {'a': 1, 'b': 2}.pop('c') raises a KeyError because pop() cannot remove a key-value pair that doesn't exist, and no default value was provided.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• pop() - key not found: • {'a': 1, 'b': 2}.pop('c') raises KeyError • Key 'c' doesn't exist in dictionary • pop() requires key to exist (no default) • Raises KeyError (cannot remove non-existent key) • Error message: "KeyError: 'c'" How it works: • pop('c') called on {'a': 1, 'b': 2} • Searches for key 'c' in dictionary • Finds no match (key doesn't exist) • Cannot remove non-existent pair • Raises KeyError • No value to return Example: {'a': 1, 'b': 2}.pop('c') # KeyError: 'c' d = {'a': 1, 'b': 2} d.pop('x') # KeyError: 'x' if 'c' in d: # Check first d.pop('c') # Safe to pop Common uses: • Error handling: try/except for KeyError • Checking first: if key in dict: dict.pop(key) • Safe removal: value = dict.pop(key, default) • Key existence validation Example: Calling pop() with a non-existent key like {'a': 1, 'b': 2}.pop('c') raises a KeyError because pop() cannot remove a key-value pair that doesn't exist, and no default value was provided.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1480,7 +1480,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.pop('c', 0) returns 0 because pop() searches for the key 'c' in the dictionary, doesn't find it, and returns the default value (0) without raising an error, leaving the dictionary unchanged.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• pop() with default: • {'a': 1, 'b': 2}.pop('c', 0) = 0 (returns default) • pop(key, default) returns default if key not found • No error raised (unlike pop() without default) • Dictionary unchanged (no pair to remove) • Returns default value How it works: • pop('c', 0) called on {'a': 1, 'b': 2} • Searches for key 'c' in dictionary • Finds no match (key doesn't exist) • Cannot remove non-existent pair • Returns default value: 0 (no error) • Dictionary unchanged: {'a': 1, 'b': 2} Example: {'a': 1, 'b': 2}.pop('c', 0) # 0 (not found, returns default) {'a': 1, 'b': 2}.pop('c', 'missing') # 'missing' (returns default) {'a': 1, 'b': 2} # {'a': 1, 'b': 2} (unchanged) Common uses: • Safe removal: value = dict.pop(key, default) • Default handling: removed = items.pop(key, fallback) • Error-free removal • Safe pop with fallback Example: {'a': 1, 'b': 2}.pop('c', 0) returns 0 because pop() searches for the key 'c' in the dictionary, doesn't find it, and returns the default value (0) without raising an error, leaving the dictionary unchanged.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1558,7 +1558,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.keys() returns a dict_keys(['a', 'b']) view object because keys() creates a dynamic view of all keys in the dictionary, which can be iterated or converted to a list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• keys() method: • {'a': 1, 'b': 2}.keys() = dict_keys(['a', 'b']) • keys() returns dict_keys view object • View reflects dictionary keys • Not a list (but can be converted) • Updates automatically when dict changes How it works: • keys() called on {'a': 1, 'b': 2} • Creates view object of keys • View contains: 'a', 'b' • Returns dict_keys view: dict_keys(['a', 'b']) • View updates if dictionary changes Example: {'a': 1, 'b': 2}.keys() # dict_keys(['a', 'b']) list({'a': 1, 'b': 2}.keys()) # ['a', 'b'] (converted to list) for key in {'a': 1, 'b': 2}.keys(): # Iterates: 'a', 'b' print(key) Common uses: • Getting keys: keys = dict.keys() • Iterating keys: for key in dict.keys(): • Key iteration • Dictionary key access Example: {'a': 1, 'b': 2}.keys() returns a dict_keys(['a', 'b']) view object because keys() creates a dynamic view of all keys in the dictionary, which can be iterated or converted to a list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1633,7 +1633,7 @@ Common uses:
 Example: list({'a': 1, 'b': 2}.keys()) returns ['a', 'b'] because list() consumes the dict_keys view created by keys() and collects all keys into a new list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• list(keys()): • list({'a': 1, 'b': 2}.keys()) = ['a', 'b'] • keys() returns dict_keys view • list() consumes view • Collects keys into new list • Creates list of keys How it works: • keys() called on {'a': 1, 'b': 2} • Returns dict_keys view: ['a', 'b'] • list() iterates through view • Collects keys: 'a', 'b' • Returns new list: ['a', 'b'] Example: list({'a': 1, 'b': 2}.keys()) # ['a', 'b'] (list of keys) list({'x': 10, 'y': 20}.keys()) # ['x', 'y'] (list of keys) list({}.keys()) # [] (empty list) Common uses: • Getting key list: key_list = list(dict.keys()) • Creating key list: keys = list(items.keys()) • Converting view to list • Key list creation Example: list({'a': 1, 'b': 2}.keys()) returns ['a', 'b'] because list() consumes the dict_keys view created by keys() and collects all keys into a new list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1709,7 +1709,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.values() returns a dict_values([1, 2]) view object because values() creates a dynamic view of all values in the dictionary, which can be iterated or converted to a list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• values() method: • {'a': 1, 'b': 2}.values() = dict_values([1, 2]) • values() returns dict_values view object • View reflects dictionary values • Not a list (but can be converted) • Updates automatically when dict changes How it works: • values() called on {'a': 1, 'b': 2} • Creates view object of values • View contains: 1, 2 • Returns dict_values view: dict_values([1, 2]) • View updates if dictionary changes Example: {'a': 1, 'b': 2}.values() # dict_values([1, 2]) list({'a': 1, 'b': 2}.values()) # [1, 2] (converted to list) for value in {'a': 1, 'b': 2}.values(): # Iterates: 1, 2 print(value) Common uses: • Getting values: values = dict.values() • Iterating values: for value in dict.values(): • Value iteration • Dictionary value access Example: {'a': 1, 'b': 2}.values() returns a dict_values([1, 2]) view object because values() creates a dynamic view of all values in the dictionary, which can be iterated or converted to a list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1784,7 +1784,7 @@ Common uses:
 Example: list({'a': 1, 'b': 2}.values()) returns [1, 2] because list() consumes the dict_values view created by values() and collects all values into a new list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• list(values()): • list({'a': 1, 'b': 2}.values()) = [1, 2] • values() returns dict_values view • list() consumes view • Collects values into new list • Creates list of values How it works: • values() called on {'a': 1, 'b': 2} • Returns dict_values view: [1, 2] • list() iterates through view • Collects values: 1, 2 • Returns new list: [1, 2] Example: list({'a': 1, 'b': 2}.values()) # [1, 2] (list of values) list({'x': 10, 'y': 20}.values()) # [10, 20] (list of values) list({}.values()) # [] (empty list) Common uses: • Getting value list: value_list = list(dict.values()) • Creating value list: values = list(items.values()) • Converting view to list • Value list creation Example: list({'a': 1, 'b': 2}.values()) returns [1, 2] because list() consumes the dict_values view created by values() and collects all values into a new list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1860,7 +1860,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.items() returns a dict_items([('a', 1), ('b', 2)]) view object because items() creates a dynamic view of all key-value pairs in the dictionary as tuples, which can be iterated or converted to a list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• items() method: • {'a': 1, 'b': 2}.items() = dict_items([('a', 1), ('b', 2)]) • items() returns dict_items view object • View contains (key, value) tuples • Not a list (but can be converted) • Updates automatically when dict changes How it works: • items() called on {'a': 1, 'b': 2} • Creates view object of key-value pairs • View contains: ('a', 1), ('b', 2) • Returns dict_items view: dict_items([('a', 1), ('b', 2)]) • View updates if dictionary changes Example: {'a': 1, 'b': 2}.items() # dict_items([('a', 1), ('b', 2)]) list({'a': 1, 'b': 2}.items()) # [('a', 1), ('b', 2)] (converted to list) for key, value in {'a': 1, 'b': 2}.items(): # Iterates: ('a', 1), ('b', 2) print(key, value) Common uses: • Getting pairs: pairs = dict.items() • Iterating pairs: for key, value in dict.items(): • Pair iteration • Dictionary pair access Example: {'a': 1, 'b': 2}.items() returns a dict_items([('a', 1), ('b', 2)]) view object because items() creates a dynamic view of all key-value pairs in the dictionary as tuples, which can be iterated or converted to a list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1935,7 +1935,7 @@ Common uses:
 Example: list({'a': 1, 'b': 2}.items()) returns [('a', 1), ('b', 2)] because list() consumes the dict_items view created by items() and collects all key-value pairs as tuples into a new list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• list(items()): • list({'a': 1, 'b': 2}.items()) = [('a', 1), ('b', 2)] • items() returns dict_items view • list() consumes view • Collects pairs as tuples into new list • Creates list of (key, value) tuples How it works: • items() called on {'a': 1, 'b': 2} • Returns dict_items view: [('a', 1), ('b', 2)] • list() iterates through view • Collects pairs as tuples: ('a', 1), ('b', 2) • Returns new list: [('a', 1), ('b', 2)] Example: list({'a': 1, 'b': 2}.items()) # [('a', 1), ('b', 2)] (list of tuples) list({'x': 10, 'y': 20}.items()) # [('x', 10), ('y', 20)] (list of tuples) list({}.items()) # [] (empty list) Common uses: • Getting pair list: pair_list = list(dict.items()) • Creating pair list: pairs = list(items.items()) • Converting view to list • Pair list creation Example: list({'a': 1, 'b': 2}.items()) returns [('a', 1), ('b', 2)] because list() consumes the dict_items view created by items() and collects all key-value pairs as tuples into a new list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2010,7 +2010,7 @@ Common uses:
 Example: 'a' in {'a': 1, 'b': 2} returns True because the in operator checks if 'a' exists as a key in the dictionary, and it finds the key 'a'.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• in operator with dictionary: • 'a' in {'a': 1, 'b': 2} = True • in checks if key exists in dictionary • Searches keys only (not values) • Returns True if key found • Returns False if key not found How it works: • 'a' is the value to check • in is membership operator • {'a': 1, 'b': 2} is the dictionary • Searches for key 'a' in dictionary • Finds key 'a', returns True Example: 'a' in {'a': 1, 'b': 2} # True (key 'a' exists) 'c' in {'a': 1, 'b': 2} # False (key 'c' doesn't exist) 1 in {'a': 1, 'b': 2} # False (1 is a value, not a key) Common uses: • Checking key existence: if key in dict: • Key validation: if item in items: • Key membership check • Dictionary key verification Example: 'a' in {'a': 1, 'b': 2} returns True because the in operator checks if 'a' exists as a key in the dictionary, and it finds the key 'a'.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2086,7 +2086,7 @@ Common uses:
 Example: 1 in {'a': 1, 'b': 2} returns False because the in operator checks if 1 exists as a key in the dictionary, but the keys are 'a' and 'b', not 1. The in operator only checks keys, not values.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• The in operator only checks keys, not values.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2161,7 +2161,7 @@ Common uses:
 Example: 1 in {'a': 1, 'b': 2}.values() returns True because .values() returns a view of all values (1, 2), and the in operator checks if 1 exists in those values, which it does.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• in with .values(): • 1 in {'a': 1, 'b': 2}.values() = True • .values() returns view of all values • in checks if value exists in values view • Searches through values (not keys) • Returns True if value found How it works: • 1 is the value to check • in is membership operator • {'a': 1, 'b': 2}.values() is values view: [1, 2] • Searches for value 1 in values view • Finds value 1, returns True Example: 1 in {'a': 1, 'b': 2}.values() # True (1 is a value) 3 in {'a': 1, 'b': 2}.values() # False (3 is not a value) 'a' in {'a': 1, 'b': 2}.values() # False ('a' is not a value) Common uses: • Checking value existence: if value in dict.values(): • Value membership: if item in items.values(): • Value-based membership check • Dictionary value verification Example: 1 in {'a': 1, 'b': 2}.values() returns True because .values() returns a view of all values (1, 2), and the in operator checks if 1 exists in those values, which it does.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2236,7 +2236,7 @@ Common uses:
 Example: ('a', 1) in {'a': 1, 'b': 2}.items() returns True because .items() returns a view of all key-value pairs as tuples [('a', 1), ('b', 2)], and the in operator checks if the tuple ('a', 1) exists in those pairs, which it does.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• in with .items(): • ('a', 1) in {'a': 1, 'b': 2}.items() = True • .items() returns view of all (key, value) tuples • in checks if tuple exists in items view • Searches through pairs (not individual keys or values) • Returns True if pair found How it works: • ('a', 1) is the tuple to check • in is membership operator • {'a': 1, 'b': 2}.items() is items view: [('a', 1), ('b', 2)] • Searches for tuple ('a', 1) in items view • Finds pair ('a', 1), returns True Example: ('a', 1) in {'a': 1, 'b': 2}.items() # True (pair exists) ('a', 2) in {'a': 1, 'b': 2}.items() # False (pair doesn't exist) ('c', 1) in {'a': 1, 'b': 2}.items() # False (pair doesn't exist) Common uses: • Checking pair existence: if (key, value) in dict.items(): • Pair membership: if pair in items.items(): • Pair-based membership check • Dictionary pair verification Example: ('a', 1) in {'a': 1, 'b': 2}.items() returns True because .items() returns a view of all key-value pairs as tuples [('a', 1), ('b', 2)], and the in operator checks if the tuple ('a', 1) exists in those pairs, which it does.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2315,7 +2315,7 @@ Common uses:
 Example: If d = {'a': 1} and then d['b'] = 2, the dictionary d becomes {'a': 1, 'b': 2} because assignment with a new key adds that key-value pair to the dictionary.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary assignment - adding: • d = {'a': 1}; d['b'] = 2; d = {'a': 1, 'b': 2} • Assignment with new key adds pair • d['b'] = 2 creates new key 'b' with value 2 • Modifies dictionary in place • Dictionary changed: {'a': 1} → {'a': 1, 'b': 2} How it works: • d = {'a': 1} creates dictionary • d['b'] = 2 assigns value 2 to key 'b' • Key 'b' doesn't exist, so it's added • Creates new pair: 'b': 2 • Dictionary modified: {'a': 1, 'b': 2} Example: d = {'a': 1} d['b'] = 2 # Adds 'b': 2 d # {'a': 1, 'b': 2} d['c'] = 3 # Adds 'c': 3 d # {'a': 1, 'b': 2, 'c': 3} Common uses: • Adding pairs: dict[key] = value • Building dictionaries: items[key] = data • Dictionary modification • Pair addition Example: If d = {'a': 1} and then d['b'] = 2, the dictionary d becomes {'a': 1, 'b': 2} because assignment with a new key adds that key-value pair to the dictionary.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2392,7 +2392,7 @@ Common uses:
 Example: If d = {'a': 1} and then d['a'] = 2, the dictionary d becomes {'a': 2} because assignment with an existing key updates that key's value, replacing 1 with 2.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary assignment - updating: • d = {'a': 1}; d['a'] = 2; d = {'a': 2} • Assignment with existing key updates value • d['a'] = 2 changes value of key 'a' from 1 to 2 • Modifies dictionary in place • Dictionary changed: {'a': 1} → {'a': 2} How it works: • d = {'a': 1} creates dictionary • d['a'] = 2 assigns value 2 to key 'a' • Key 'a' exists, so its value is updated • Replaces old value: 1 → 2 • Dictionary modified: {'a': 2} Example: d = {'a': 1} d['a'] = 2 # Updates 'a': 1 to 'a': 2 d # {'a': 2} d['a'] = 10 # Updates 'a': 2 to 'a': 10 d # {'a': 10} Common uses: • Updating values: dict[key] = new_value • Modifying dictionaries: items[key] = updated_data • Dictionary modification • Value updates Example: If d = {'a': 1} and then d['a'] = 2, the dictionary d becomes {'a': 2} because assignment with an existing key updates that key's value, replacing 1 with 2.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2468,7 +2468,7 @@ Common uses:
 Example: {'a': 1}.update({'b': 2}) returns None because update() modifies the dictionary in place (changing {'a': 1} to {'a': 1, 'b': 2}), and the method itself returns None rather than returning the modified dictionary.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• update() method: • {'a': 1}.update({'b': 2}) = None (returns None) • update() merges another dict into current dict • Modifies dictionary in place • Returns None (doesn't return new dict) • Dictionary changed: {'a': 1} → {'a': 1, 'b': 2} How it works: • update({'b': 2}) called on {'a': 1} • Merges {'b': 2} into {'a': 1} • Adds new key 'b' with value 2 • Modifies original dictionary: {'a': 1, 'b': 2} • Returns None (no return value) Example: d = {'a': 1} d.update({'b': 2}) # None (returns None) d # {'a': 1, 'b': 2} (modified) {'a': 1}.update({'b': 2}) # None (returns None) Common uses: • Merging dictionaries: dict1.update(dict2) • Adding multiple pairs: items.update(new_items) • Dictionary merging • In-place modification Example: {'a': 1}.update({'b': 2}) returns None because update() modifies the dictionary in place (changing {'a': 1} to {'a': 1, 'b': 2}), and the method itself returns None rather than returning the modified dictionary.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2545,7 +2545,7 @@ Common uses:
 Example: If d = {'a': 1} and then d.update({'b': 2}), the dictionary d becomes {'a': 1, 'b': 2} because update() merges the key-value pairs from {'b': 2} into the original dictionary.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• update() - adding pairs: • d = {'a': 1}; d.update({'b': 2}); d = {'a': 1, 'b': 2} • update() merges pairs from argument dict • Adds new key 'b' with value 2 • Modifies dictionary in place • Dictionary changed: {'a': 1} → {'a': 1, 'b': 2} How it works: • d = {'a': 1} creates dictionary • d.update({'b': 2}) merges {'b': 2} into d • Adds new key 'b' with value 2 • Modifies original dictionary: {'a': 1, 'b': 2} • Returns None (no return value) Example: d = {'a': 1} d.update({'b': 2}) # None (returns None) d # {'a': 1, 'b': 2} (modified) d.update({'c': 3, 'd': 4}) # Adds multiple pairs d # {'a': 1, 'b': 2, 'c': 3, 'd': 4} Common uses: • Merging dictionaries: dict1.update(dict2) • Adding multiple pairs: items.update(new_items) • Dictionary combination • In-place merging Example: If d = {'a': 1} and then d.update({'b': 2}), the dictionary d becomes {'a': 1, 'b': 2} because update() merges the key-value pairs from {'b': 2} into the original dictionary.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2622,7 +2622,7 @@ Common uses:
 Example: If d = {'a': 1} and then d.update({'a': 2}), the dictionary d becomes {'a': 2} because update() overwrites the existing key 'a' with the new value 2 from the argument dictionary.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• update() - overwriting: • d = {'a': 1}; d.update({'a': 2}); d = {'a': 2} • update() overwrites existing keys • Key 'a' exists, value updated: 1 → 2 • Modifies dictionary in place • Dictionary changed: {'a': 1} → {'a': 2} How it works: • d = {'a': 1} creates dictionary • d.update({'a': 2}) merges {'a': 2} into d • Key 'a' already exists • Overwrites existing value: 1 → 2 • Dictionary modified: {'a': 2} Example: d = {'a': 1} d.update({'a': 2}) # None (returns None) d # {'a': 2} (value updated) d.update({'a': 10, 'b': 20}) # Updates 'a', adds 'b' d # {'a': 10, 'b': 20} Common uses: • Updating values: dict.update({key: new_value}) • Merging with overwrite: items.update(updates) • Dictionary updates • Value overwriting Example: If d = {'a': 1} and then d.update({'a': 2}), the dictionary d becomes {'a': 2} because update() overwrites the existing key 'a' with the new value 2 from the argument dictionary.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2699,7 +2699,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.popitem() returns ('b', 2) or ('a', 1) because popitem() removes one key-value pair from the dictionary and returns it as a (key, value) tuple. In Python 3.7+, it removes the last inserted pair (LIFO).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• In Python 3.7+, it removes the last inserted pair (LIFO).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2775,7 +2775,7 @@ Common uses:
 Example: {'a': 1}.popitem() returns ('a', 1) because popitem() removes the only key-value pair in the dictionary and returns it as a (key, value) tuple, leaving the dictionary empty.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• popitem() on single-item dict: • {'a': 1}.popitem() = ('a', 1) (returns tuple) • popitem() removes only pair • Returns (key, value) tuple • Modifies dictionary in place • Dictionary changed: {'a': 1} → {} How it works: • popitem() called on {'a': 1} • Removes the only key-value pair: 'a': 1 • Returns pair as tuple: ('a', 1) • Dictionary becomes empty: {} • Returns tuple: ('a', 1) Example: d = {'a': 1} d.popitem() # ('a', 1) (returns only pair) d # {} (empty) {'x': 10}.popitem() # ('x', 10) (returns only pair) Common uses: • Removing last pair: key, value = dict.popitem() • Getting and removing: pair = items.popitem() • Single-item removal • Dictionary emptying Example: {'a': 1}.popitem() returns ('a', 1) because popitem() removes the only key-value pair in the dictionary and returns it as a (key, value) tuple, leaving the dictionary empty.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2852,7 +2852,7 @@ Common uses:
 Example: Calling popitem() on an empty dictionary raises a KeyError because there are no key-value pairs to remove from the dictionary, and Python raises this error to indicate that the operation cannot be performed on an empty dictionary.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• popitem() on empty dict: • {}.popitem() raises KeyError • Empty dictionary has no pairs to remove • KeyError indicates invalid operation • Must check if dict is not empty before popping • Error message: "popitem(): dictionary is empty" How it works: • popitem() called on empty dictionary {} • Searches for key-value pair to remove • Finds no pairs (dictionary is empty) • Raises KeyError • No pair to return Example: {}.popitem() # KeyError: popitem(): dictionary is empty d = {} d.popitem() # KeyError: popitem(): dictionary is empty if d: # Check first d.popitem() # Safe to pop Common uses: • Error handling: try/except for KeyError • Checking first: if dict: dict.popitem() • Validating dict not empty • Safe popping with validation Example: Calling popitem() on an empty dictionary raises a KeyError because there are no key-value pairs to remove from the dictionary, and Python raises this error to indicate that the operation cannot be performed on an empty dictionary.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2928,7 +2928,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.clear() returns None because clear() removes all key-value pairs from the dictionary (changing {'a': 1, 'b': 2} to {}), and the method itself returns None rather than returning the empty dictionary.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• clear() method: • {'a': 1, 'b': 2}.clear() = None (returns None) • clear() removes all key-value pairs • Modifies dictionary in place • Returns None (doesn't return new dict) • Dictionary changed: {'a': 1, 'b': 2} → {} How it works: • clear() called on {'a': 1, 'b': 2} • Removes all key-value pairs • Dictionary becomes empty: {} • Original dictionary object still exists • Returns None (no return value) Example: d = {'a': 1, 'b': 2} d.clear() # None (returns None) d # {} (dictionary is now empty) {'a': 1, 'b': 2}.clear() # None (returns None) Common uses: • Clearing dictionary: dict.clear() • Removing all items: items.clear() • Resetting dictionary • In-place modification Example: {'a': 1, 'b': 2}.clear() returns None because clear() removes all key-value pairs from the dictionary (changing {'a': 1, 'b': 2} to {}), and the method itself returns None rather than returning the empty dictionary.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3007,7 +3007,7 @@ Common uses:
 Example: If d = {'a': 1} and then d.clear(), the dictionary d becomes {} because clear() removes all key-value pairs from the dictionary, leaving it empty.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• clear() empties dictionary: • d = {'a': 1}; d.clear(); d = {} • clear() removes all pairs • Dictionary becomes empty • Original object still exists • All pairs removed How it works: • d = {'a': 1} creates dictionary • d.clear() removes all pairs • Dictionary becomes empty: {} • Original dictionary object unchanged (just emptied) • Returns None (no return value) Example: d = {'a': 1} d.clear() # None (returns None) d # {} (empty) a = {'x': 1, 'y': 2} b = a # b references same dict as a a.clear() # Clears both a and b b # {} (also empty, same object) Common uses: • Clearing dictionary: dict.clear() • Removing all items: items.clear() • Resetting dictionary • In-place emptying Example: If d = {'a': 1} and then d.clear(), the dictionary d becomes {} because clear() removes all key-value pairs from the dictionary, leaving it empty.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3085,7 +3085,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.copy() returns {'a': 1, 'b': 2} because copy() creates a new dictionary object with the same key-value pairs, resulting in a shallow copy of the original dictionary.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• copy() method: • {'a': 1, 'b': 2}.copy() = {'a': 1, 'b': 2} (new dict) • copy() creates shallow copy • Creates new dictionary object • Key-value pairs are copied (not shared) • Returns new dictionary How it works: • copy() called on {'a': 1, 'b': 2} • Creates new dictionary object • Copies key-value pairs to new dictionary: {'a': 1, 'b': 2} • New dictionary is independent of original • Returns new dictionary: {'a': 1, 'b': 2} Example: a = {'a': 1, 'b': 2} b = a.copy() # {'a': 1, 'b': 2} (new dict) b['c'] = 3 # b = {'a': 1, 'b': 2, 'c': 3} a # {'a': 1, 'b': 2} (unchanged) Common uses: • Creating copies: new_dict = dict.copy() • Independent dictionaries: copy = items.copy() • Shallow copying • Copy creation Example: {'a': 1, 'b': 2}.copy() returns {'a': 1, 'b': 2} because copy() creates a new dictionary object with the same key-value pairs, resulting in a shallow copy of the original dictionary.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3161,7 +3161,7 @@ Common uses:
 Example: dict({'a': 1, 'b': 2}) returns {'a': 1, 'b': 2} because dict() creates a new dictionary object with the same key-value pairs, resulting in a shallow copy of the original dictionary.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• dict() constructor: • dict({'a': 1, 'b': 2}) = {'a': 1, 'b': 2} (new dict) • dict() creates shallow copy • Creates new dictionary object • Key-value pairs are copied (not shared) • Returns new dictionary How it works: • dict() called with {'a': 1, 'b': 2} • Creates new dictionary object • Copies key-value pairs to new dictionary: {'a': 1, 'b': 2} • New dictionary is independent of original • Returns new dictionary: {'a': 1, 'b': 2} Example: a = {'a': 1, 'b': 2} b = dict(a) # {'a': 1, 'b': 2} (new dict) b['c'] = 3 # b = {'a': 1, 'b': 2, 'c': 3} a # {'a': 1, 'b': 2} (unchanged) Common uses: • Creating copies: new_dict = dict(old_dict) • Shallow copying: copy = dict(original) • Dictionary construction • Copy creation Example: dict({'a': 1, 'b': 2}) returns {'a': 1, 'b': 2} because dict() creates a new dictionary object with the same key-value pairs, resulting in a shallow copy of the original dictionary.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3236,7 +3236,7 @@ Common uses:
 Example: {**{'a': 1}, **{'b': 2}} returns {'a': 1, 'b': 2} because ** unpacks each dictionary, spreading their key-value pairs into a new dictionary literal, effectively merging them.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• ** unpacking for merging: • {**{'a': 1}, **{'b': 2}} = {'a': 1, 'b': 2} • ** unpacks dictionary key-value pairs • First dict unpacks: 'a': 1 • Second dict unpacks: 'b': 2 • Merges into new dictionary: {'a': 1, 'b': 2} How it works: • {**{'a': 1}, **{'b': 2}} creates new dictionary • **{'a': 1} unpacks to 'a': 1 • **{'b': 2} unpacks to 'b': 2 • Combines pairs: {'a': 1, 'b': 2} • Returns new merged dictionary Example: {**{'a': 1}, **{'b': 2}} # {'a': 1, 'b': 2} {**{'x': 10}, **{'y': 20}} # {'x': 10, 'y': 20} {**{'a': 1}, **{'b': 2}, **{'c': 3}} # {'a': 1, 'b': 2, 'c': 3} Common uses: • Merging dictionaries: merged = {**dict1, **dict2} • Combining dicts: combined = {**a, **b, **c} • Dictionary merging • Unpacking dictionaries Example: {**{'a': 1}, **{'b': 2}} returns {'a': 1, 'b': 2} because ** unpacks each dictionary, spreading their key-value pairs into a new dictionary literal, effectively merging them.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3311,7 +3311,7 @@ Common uses:
 Example: {**{'a': 1}, **{'a': 2}} returns {'a': 2} because when unpacking dictionaries with the same key, the later dictionary overwrites the earlier one, so 'a': 2 takes precedence over 'a': 1.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• ** unpacking with conflicts: • {**{'a': 1}, **{'a': 2}} = {'a': 2} • First dict unpacks: 'a': 1 • Second dict unpacks: 'a': 2 • Later dict overwrites earlier: 'a': 2 wins • Result: {'a': 2} How it works: • {**{'a': 1}, **{'a': 2}} creates new dictionary • **{'a': 1} unpacks to 'a': 1 • **{'a': 2} unpacks to 'a': 2 • Second overwrites first: 'a': 2 • Returns: {'a': 2} Example: {**{'a': 1}, **{'a': 2}} # {'a': 2} (later wins) {**{'x': 10}, **{'x': 20}} # {'x': 20} (later wins) {**{'a': 1, 'b': 2}, **{'a': 3}} # {'a': 3, 'b': 2} (later overwrites) Common uses: • Merging with overwrite: merged = {**base, **updates} • Updating values: combined = {**old, **new} • Dictionary updates • Override behavior Example: {**{'a': 1}, **{'a': 2}} returns {'a': 2} because when unpacking dictionaries with the same key, the later dictionary overwrites the earlier one, so 'a': 2 takes precedence over 'a': 1.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3386,7 +3386,7 @@ Common uses:
 Example: {'a': 1} | {'b': 2} returns {'a': 1, 'b': 2} because the | operator merges the key-value pairs from both dictionaries into a new dictionary (Python 3.9+).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• | operator for merging: • {'a': 1} | {'b': 2} = {'a': 1, 'b': 2} • | operator merges dictionaries • Creates new dictionary object • Combines key-value pairs from both • Returns new merged dictionary How it works: • {'a': 1} | {'b': 2} merges two dictionaries • Takes pairs from left: 'a': 1 • Takes pairs from right: 'b': 2 • Combines into new dict: {'a': 1, 'b': 2} • Returns new dictionary (originals unchanged) Example: {'a': 1} | {'b': 2} # {'a': 1, 'b': 2} {'x': 10} | {'y': 20} # {'x': 10, 'y': 20} {'a': 1, 'b': 2} | {'c': 3} # {'a': 1, 'b': 2, 'c': 3} Common uses: • Merging dictionaries: merged = dict1 | dict2 • Combining dicts: combined = a | b | c • Dictionary merging • Clean merge syntax Example: {'a': 1} | {'b': 2} returns {'a': 1, 'b': 2} because the | operator merges the key-value pairs from both dictionaries into a new dictionary (Python 3.9+).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3461,7 +3461,7 @@ Common uses:
 Example: {'a': 1} | {'a': 2} returns {'a': 2} because the | operator overwrites values from the left dictionary with values from the right dictionary when there are key conflicts, so 'a': 2 takes precedence.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• | operator with conflicts: • {'a': 1} | {'a': 2} = {'a': 2} • | operator merges dictionaries • Key 'a' exists in both • Right dict overwrites left: 'a': 2 wins • Result: {'a': 2} How it works: • {'a': 1} | {'a': 2} merges two dictionaries • Left dict has: 'a': 1 • Right dict has: 'a': 2 • Right overwrites left: 'a': 2 • Returns: {'a': 2} Example: {'a': 1} | {'a': 2} # {'a': 2} (right wins) {'x': 10} | {'x': 20} # {'x': 20} (right wins) {'a': 1, 'b': 2} | {'a': 3} # {'a': 3, 'b': 2} (right overwrites) Common uses: • Merging with overwrite: merged = base | updates • Updating values: combined = old | new • Dictionary updates • Override behavior Example: {'a': 1} | {'a': 2} returns {'a': 2} because the | operator overwrites values from the left dictionary with values from the right dictionary when there are key conflicts, so 'a': 2 takes precedence.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3538,7 +3538,7 @@ Common uses:
 Example: If d = {'a': 1} and then d |= {'b': 2}, the dictionary d becomes {'a': 1, 'b': 2} because |= merges the key-value pairs from {'b': 2} into the existing dictionary d, modifying it in place (Python 3.9+).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• |= operator (in-place update): • d = {'a': 1}; d |= {'b': 2}; d = {'a': 1, 'b': 2} • |= updates dictionary in place • Merges right dict into left dict • Modifies existing dictionary • Returns None (but modifies d) How it works: • d = {'a': 1} creates dictionary • d |= {'b': 2} merges {'b': 2} into d • Adds new key 'b' with value 2 • Modifies original dictionary: {'a': 1, 'b': 2} • Returns None (but d is modified) Example: d = {'a': 1} d |= {'b': 2} # None (returns None) d # {'a': 1, 'b': 2} (modified) d |= {'c': 3} # Adds 'c': 3 d # {'a': 1, 'b': 2, 'c': 3} Common uses: • In-place merging: dict1 |= dict2 • Updating dictionaries: items |= updates • Dictionary modification • Concise update syntax Example: If d = {'a': 1} and then d |= {'b': 2}, the dictionary d becomes {'a': 1, 'b': 2} because |= merges the key-value pairs from {'b': 2} into the existing dictionary d, modifying it in place (Python 3.9+).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3616,7 +3616,7 @@ Common uses:
 Example: The difference is | creates a new dictionary by merging two dictionaries (e.g., {'a': 1} | {'b': 2} returns {'a': 1, 'b': 2} without modifying originals), while |= modifies the left dictionary in place (e.g., d |= {'b': 2} modifies d to include {'b': 2}).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• | vs |=: • | creates new dictionary (non-destructive) • |= modifies existing dictionary (destructive) • | returns new dict, originals unchanged • |= returns None, modifies left dict • Both merge dictionaries How it works: • d1 | d2: creates new dict, d1 and d2 unchanged • d1 |= d2: modifies d1, merges d2 into d1 • | is for creating new merged dicts • |= is for updating existing dicts • Choose based on whether you want to modify original Example: a = {'a': 1} b = {'b': 2} c = a | b # {'a': 1, 'b': 2} (new dict) a # {'a': 1} (unchanged) a |= b # None (returns None) a # {'a': 1, 'b': 2} (modified) Common uses: • |: creating new merged dicts: merged = dict1 | dict2 • |=: updating existing dicts: dict1 |= dict2 • Choose based on whether to modify original • Important distinction for dictionary behavior Example: The difference is | creates a new dictionary by merging two dictionaries (e.g., {'a': 1} | {'b': 2} returns {'a': 1, 'b': 2} without modifying originals), while |= modifies the left dictionary in place (e.g., d |= {'b': 2} modifies d to include {'b': 2}).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3693,7 +3693,7 @@ Common uses:
 Example: If a = {'a': [1]} and b = a.copy(), then b['a'].append(2) causes a to become {'a': [1, 2]} because copy() creates a shallow copy where the nested list [1] is shared between both dictionaries, so modifying it through one affects the other.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Shallow copy with nesting: • a = {'a': [1]}; b = a.copy(); b['a'].append(2); a = {'a': [1, 2]} • copy() creates shallow copy • Outer dict is new, nested list is shared • Modifying nested list affects both dicts • Shallow copy shares nested objects How it works: • a = {'a': [1]} creates dict with nested list • b = a.copy() creates new dict but shares list • b['a'].append(2) modifies shared list • Both a and b reference same list object • a becomes {'a': [1, 2]} (list modified) Example: a = {'a': [1]} b = a.copy() # b = {'a': [1]} (new dict, shared list) b['a'].append(2) # Modifies shared list a # {'a': [1, 2]} (list modified) b # {'a': [1, 2]} (same list) Common uses: • Understanding shallow copy limitations • When to use deep copy: import copy; b = copy.deepcopy(a) • Nested object behavior • Copy behavior awareness Example: If a = {'a': [1]} and b = a.copy(), then b['a'].append(2) causes a to become {'a': [1, 2]} because copy() creates a shallow copy where the nested list [1] is shared between both dictionaries, so modifying it through one affects the other.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3771,7 +3771,7 @@ Common uses:
 Example: copy.deepcopy({'a': [1]}) returns {'a': [1]} where the nested list [1] is a new, independent list object because deepcopy() recursively copies all nested objects, making them completely independent of the original.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• deepcopy() function: • copy.deepcopy({'a': [1]}) = {'a': [1]} (deep copy) • deepcopy() creates deep copy • Recursively copies all nested objects • Nested objects are independent • No shared references How it works: • copy.deepcopy({'a': [1]}) creates deep copy • Copies outer dictionary • Recursively copies nested list [1] • Creates new list object (not shared) • Returns independent copy: {'a': [1]} Example: import copy a = {'a': [1]} b = copy.deepcopy(a) # b = {'a': [1]} (deep copy) b['a'].append(2) # Modifies b's list a # {'a': [1]} (unchanged, independent) b # {'a': [1, 2]} (modified) Common uses: • Creating independent copies: copy = copy.deepcopy(original) • Avoiding shared references: deep = copy.deepcopy(nested) • Deep copying • Independent nested objects Example: copy.deepcopy({'a': [1]}) returns {'a': [1]} where the nested list [1] is a new, independent list object because deepcopy() recursively copies all nested objects, making them completely independent of the original.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3848,7 +3848,7 @@ Common uses:
 Example: {x: x*2 for x in [1, 2, 3]} returns {1: 2, 2: 4, 3: 6} because the dictionary comprehension iterates through [1, 2, 3] and creates key-value pairs where each key is x and each value is x*2.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary comprehension: • {x: x*2 for x in [1, 2, 3]} = {1: 2, 2: 4, 3: 6} • Comprehension syntax: {key: value for item in iterable} • Iterates through [1, 2, 3] • For each x: creates pair x: x*2 • Returns new dictionary How it works: • Comprehension iterates: x = 1, 2, 3 • For x = 1: creates pair 1: 1*2 = 1: 2 • For x = 2: creates pair 2: 2*2 = 2: 4 • For x = 3: creates pair 3: 3*2 = 3: 6 • Returns: {1: 2, 2: 4, 3: 6} Example: {x: x*2 for x in [1, 2, 3]} # {1: 2, 2: 4, 3: 6} {x: x**2 for x in [1, 2, 3]} # {1: 1, 2: 4, 3: 9} {x: len(x) for x in ['a', 'ab', 'abc']} # {'a': 1, 'ab': 2, 'abc': 3} Common uses: • Creating dictionaries: dict = {k: v for k, v in pairs} • Transforming data: mapping = {x: transform(x) for x in items} • Dictionary creation • Efficient dict construction Example: {x: x*2 for x in [1, 2, 3]} returns {1: 2, 2: 4, 3: 6} because the dictionary comprehension iterates through [1, 2, 3] and creates key-value pairs where each key is x and each value is x*2.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3923,7 +3923,7 @@ Common uses:
 Example: {x: x**2 for x in range(3)} returns {0: 0, 1: 1, 2: 4} because range(3) generates 0, 1, 2, and the comprehension creates key-value pairs where each key is x and each value is x**2.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary comprehension with range: • {x: x**2 for x in range(3)} = {0: 0, 1: 1, 2: 4} • range(3) generates: 0, 1, 2 • For each x: creates pair x: x**2 • Returns new dictionary • Works with any iterable How it works: • range(3) generates: 0, 1, 2 • For x = 0: creates pair 0: 0**2 = 0: 0 • For x = 1: creates pair 1: 1**2 = 1: 1 • For x = 2: creates pair 2: 2**2 = 2: 4 • Returns: {0: 0, 1: 1, 2: 4} Example: {x: x**2 for x in range(3)} # {0: 0, 1: 1, 2: 4} {x: x*10 for x in range(5)} # {0: 0, 1: 10, 2: 20, 3: 30, 4: 40} {x: chr(65+x) for x in range(3)} # {0: 'A', 1: 'B', 2: 'C'} Common uses: • Number sequences: dict = {x: f(x) for x in range(n)} • Generating mappings: mapping = {i: value for i in range(n)} • Range-based dictionaries • Sequential dict creation Example: {x: x**2 for x in range(3)} returns {0: 0, 1: 1, 2: 4} because range(3) generates 0, 1, 2, and the comprehension creates key-value pairs where each key is x and each value is x**2.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3998,7 +3998,7 @@ Common uses:
 Example: {k: v*2 for k, v in {'a': 1, 'b': 2}.items()} returns {'a': 2, 'b': 4} because the comprehension iterates over the items, unpacks each (key, value) tuple, and creates new pairs where values are doubled while keys remain the same.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary comprehension with items(): • {k: v*2 for k, v in {'a': 1, 'b': 2}.items()} = {'a': 2, 'b': 4} • .items() yields (key, value) tuples • Unpacks into k, v • Creates new pairs: k: v*2 • Returns transformed dictionary How it works: • {'a': 1, 'b': 2}.items() yields: ('a', 1), ('b', 2) • Unpacks: k='a', v=1 and k='b', v=2 • For ('a', 1): creates pair 'a': 1*2 = 'a': 2 • For ('b', 2): creates pair 'b': 2*2 = 'b': 4 • Returns: {'a': 2, 'b': 4} Example: {k: v*2 for k, v in {'a': 1, 'b': 2}.items()} # {'a': 2, 'b': 4} {k: v**2 for k, v in {'x': 3, 'y': 4}.items()} # {'x': 9, 'y': 16} {k: str(v) for k, v in {'a': 1, 'b': 2}.items()} # {'a': '1', 'b': '2'} Common uses: • Transforming values: new = {k: transform(v) for k, v in old.items()} • Value operations: updated = {k: v*2 for k, v in data.items()} • Dictionary transformation • Value modification Example: {k: v*2 for k, v in {'a': 1, 'b': 2}.items()} returns {'a': 2, 'b': 4} because the comprehension iterates over the items, unpacks each (key, value) tuple, and creates new pairs where values are doubled while keys remain the same.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4073,7 +4073,7 @@ Common uses:
 Example: {x: x for x in [1, 2, 3] if x > 1} returns {2: 2, 3: 3} because the if x > 1 condition filters the elements, only including values greater than 1, so 1 is excluded but 2 and 3 are included.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary comprehension with condition: • {x: x for x in [1, 2, 3] if x > 1} = {2: 2, 3: 3} • if condition filters elements • Only includes x where x > 1 • Excludes 1, includes 2 and 3 • Returns filtered dictionary How it works: • Iterates through [1, 2, 3] • For x = 1: if 1 > 1 is False, skip • For x = 2: if 2 > 1 is True, creates pair 2: 2 • For x = 3: if 3 > 1 is True, creates pair 3: 3 • Returns: {2: 2, 3: 3} Example: {x: x for x in [1, 2, 3] if x > 1} # {2: 2, 3: 3} {x: x*2 for x in [1, 2, 3] if x % 2 == 0} # {2: 4} (only even) {x: x for x in range(5) if x % 2 == 1} # {1: 1, 3: 3} (only odd) Common uses: • Filtering dictionaries: filtered = {k: v for k, v in items if condition} • Conditional creation: dict = {x: f(x) for x in items if predicate(x)} • Dictionary filtering • Conditional dict creation Example: {x: x for x in [1, 2, 3] if x > 1} returns {2: 2, 3: 3} because the if x > 1 condition filters the elements, only including values greater than 1, so 1 is excluded but 2 and 3 are included.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4148,7 +4148,7 @@ Common uses:
 Example: {x: 'even' if x%2==0 else 'odd' for x in [1, 2, 3]} returns {1: 'odd', 2: 'even', 3: 'odd'} because the ternary expression evaluates to 'even' when x is even and 'odd' when x is odd, creating conditional values in the dictionary.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary comprehension with ternary: • {x: 'even' if x%2==0 else 'odd' for x in [1, 2, 3]} = {1: 'odd', 2: 'even', 3: 'odd'} • Ternary: 'even' if x%2==0 else 'odd' • Evaluates condition for each x • Returns 'even' if even, 'odd' if odd • Creates conditional values How it works: • Iterates through [1, 2, 3] • For x = 1: 1%2==0 is False, value = 'odd', creates 1: 'odd' • For x = 2: 2%2==0 is True, value = 'even', creates 2: 'even' • For x = 3: 3%2==0 is False, value = 'odd', creates 3: 'odd' • Returns: {1: 'odd', 2: 'even', 3: 'odd'} Example: {x: 'even' if x%2==0 else 'odd' for x in [1, 2, 3]} # {1: 'odd', 2: 'even', 3: 'odd'} {x: 'big' if x > 5 else 'small' for x in [3, 7, 2]} # {3: 'small', 7: 'big', 2: 'small'} {x: 'pos' if x > 0 else 'neg' for x in [-1, 1, 0]} # {-1: 'neg', 1: 'pos', 0: 'neg'} Common uses: • Conditional values: dict = {k: 'A' if condition else 'B' for k in items} • Value mapping: mapping = {x: 'type1' if pred(x) else 'type2' for x in items} • Conditional dict creation • Ternary expressions in comprehensions Example: {x: 'even' if x%2==0 else 'odd' for x in [1, 2, 3]} returns {1: 'odd', 2: 'even', 3: 'odd'} because the ternary expression evaluates to 'even' when x is even and 'odd' when x is odd, creating conditional values in the dictionary.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4223,7 +4223,7 @@ Common uses:
 Example: {str(x): x for x in [1, 2, 3]} returns {'1': 1, '2': 2, '3': 3} because str(x) converts each integer x to its string representation for the key, while keeping the integer as the value.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary comprehension with key transformation: • {str(x): x for x in [1, 2, 3]} = {'1': 1, '2': 2, '3': 3} • str(x) transforms key to string • Value remains x (integer) • Creates string keys from integer values • Returns transformed dictionary How it works: • Iterates through [1, 2, 3] • For x = 1: str(1) = '1', creates pair '1': 1 • For x = 2: str(2) = '2', creates pair '2': 2 • For x = 3: str(3) = '3', creates pair '3': 3 • Returns: {'1': 1, '2': 2, '3': 3} Example: {str(x): x for x in [1, 2, 3]} # {'1': 1, '2': 2, '3': 3} {x: str(x) for x in [1, 2, 3]} # {1: '1', 2: '2', 3: '3'} (value transform) {chr(65+x): x for x in range(3)} # {'A': 0, 'B': 1, 'C': 2} Common uses: • Key transformation: dict = {transform(k): v for k, v in items} • Type conversion: mapping = {str(k): k for k in numbers} • Key formatting • Dictionary key transformation Example: {str(x): x for x in [1, 2, 3]} returns {'1': 1, '2': 2, '3': 3} because str(x) converts each integer x to its string representation for the key, while keeping the integer as the value.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4300,7 +4300,7 @@ Common uses:
 Example: {(x, y): x+y for x in [1, 2] for y in [3, 4]} returns {(1, 3): 4, (1, 4): 5, (2, 3): 5, (2, 4): 6} because the nested loops create all combinations of x and y, using tuples (x, y) as keys and x+y as values.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary comprehension with nested loops: • {(x, y): x+y for x in [1, 2] for y in [3, 4]} = {(1, 3): 4, (1, 4): 5, (2, 3): 5, (2, 4): 6} • Nested loops: for x in [1, 2] for y in [3, 4] • Creates all combinations • Key is tuple (x, y) • Value is x+y How it works: • Outer loop: x = 1, 2 • Inner loop: y = 3, 4 • Combinations: (1,3), (1,4), (2,3), (2,4) • For (1, 3): creates pair (1, 3): 1+3 = (1, 3): 4 • For (1, 4): creates pair (1, 4): 1+4 = (1, 4): 5 • For (2, 3): creates pair (2, 3): 2+3 = (2, 3): 5 • For (2, 4): creates pair (2, 4): 2+4 = (2, 4): 6 • Returns: {(1, 3): 4, (1, 4): 5, (2, 3): 5, (2, 4): 6} Example: {(x, y): x+y for x in [1, 2] for y in [3, 4]} # {(1, 3): 4, (1, 4): 5, (2, 3): 5, (2, 4): 6} {(i, j): i*j for i in [1, 2] for j in [2, 3]} # {(1, 2): 2, (1, 3): 3, (2, 2): 4, (2, 3): 6} Common uses: • Cartesian products: dict = {(x, y): f(x, y) for x in xs for y in ys} • Coordinate mappings: mapping = {(i, j): value for i in range(n) for j in range(m)} • Nested iteration • Tuple keys Example: {(x, y): x+y for x in [1, 2] for y in [3, 4]} returns {(1, 3): 4, (1, 4): 5, (2, 3): 5, (2, 4): 6} because the nested loops create all combinations of x and y, using tuples (x, y) as keys and x+y as values.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4375,7 +4375,7 @@ Common uses:
 Example: {x: y for x, y in zip([1, 2], [3, 4])} returns {1: 3, 2: 4} because zip() pairs elements from both lists, and the comprehension creates dictionary pairs where the first element is the key and the second element is the value.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary comprehension with zip: • {x: y for x, y in zip([1, 2], [3, 4])} = {1: 3, 2: 4} • zip([1, 2], [3, 4]) pairs: (1, 3), (2, 4) • Unpacks into x, y • Creates pairs: x: y • Returns dictionary How it works: • zip([1, 2], [3, 4]) yields: (1, 3), (2, 4) • Unpacks: x=1, y=3 and x=2, y=4 • For (1, 3): creates pair 1: 3 • For (2, 4): creates pair 2: 4 • Returns: {1: 3, 2: 4} Example: {x: y for x, y in zip([1, 2], [3, 4])} # {1: 3, 2: 4} {k: v for k, v in zip(['a', 'b'], [1, 2])} # {'a': 1, 'b': 2} {str(i): i*2 for i, j in zip([1, 2], [3, 4])} # {'1': 2, '2': 4} (using i) Common uses: • Creating from lists: dict = {k: v for k, v in zip(keys, values)} • Pairing data: mapping = {x: y for x, y in zip(list1, list2)} • Dictionary from parallel lists • Zip-based creation Example: {x: y for x, y in zip([1, 2], [3, 4])} returns {1: 3, 2: 4} because zip() pairs elements from both lists, and the comprehension creates dictionary pairs where the first element is the key and the second element is the value.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4451,7 +4451,7 @@ Common uses:
 Example: {x: x for x in []} returns {} because when the iterable is empty, there are no elements to iterate over, so no key-value pairs are created, resulting in an empty dictionary.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary comprehension with empty iterable: • {x: x for x in []} = {} (empty dictionary) • Empty iterable [] has no elements • No iterations occur • No pairs created • Returns empty dictionary How it works: • Comprehension iterates over [] • Finds no elements • No iterations occur • No key-value pairs created • Returns: {} Example: {x: x for x in []} # {} (empty) {x: x*2 for x in []} # {} (empty) {x: x for x in range(0)} # {} (empty range) {k: v for k, v in [].items()} # {} (empty, if [] had items()) Common uses: • Empty results: dict = {k: v for k, v in items if condition} (might be empty) • Conditional creation: result = {x: f(x) for x in items if pred(x)} • Empty dict creation • Comprehension edge cases Example: {x: x for x in []} returns {} because when the iterable is empty, there are no elements to iterate over, so no key-value pairs are created, resulting in an empty dictionary.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4526,7 +4526,7 @@ Common uses:
 Example: {x: x*2 for x in [1, 2] if x > 0} returns {1: 2, 2: 4} because the if x > 0 condition filters elements, and since both 1 and 2 are greater than 0, both pass the filter and pairs are created with doubled values.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary comprehension with condition: • {x: x*2 for x in [1, 2] if x > 0} = {1: 2, 2: 4} • if x > 0 filters elements • Both 1 and 2 pass condition (both > 0) • Creates pairs for both: 1: 2, 2: 4 • Returns filtered dictionary How it works: • Iterates through [1, 2] • For x = 1: if 1 > 0 is True, creates pair 1: 1*2 = 1: 2 • For x = 2: if 2 > 0 is True, creates pair 2: 2*2 = 2: 4 • Both pass condition • Returns: {1: 2, 2: 4} Example: {x: x*2 for x in [1, 2] if x > 0} # {1: 2, 2: 4} (all pass) {x: x*2 for x in [-1, 1, 2] if x > 0} # {1: 2, 2: 4} (-1 filtered out) {x: x**2 for x in [1, 2, 3] if x % 2 == 0} # {2: 4} (only even) Common uses: • Filtering and transforming: dict = {k: transform(v) for k, v in items if condition} • Conditional creation: result = {x: f(x) for x in items if predicate(x)} • Dictionary filtering • Conditional dict creation Example: {x: x*2 for x in [1, 2] if x > 0} returns {1: 2, 2: 4} because the if x > 0 condition filters elements, and since both 1 and 2 are greater than 0, both pass the filter and pairs are created with doubled values.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4603,7 +4603,7 @@ Common uses:
 Example: {'a': 1, 'b': 2} == {'b': 2, 'a': 1} returns True because both dictionaries contain the same key-value pairs, and equality comparison checks content regardless of order.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary equality: • {'a': 1, 'b': 2} == {'b': 2, 'a': 1} = True • == compares content (keys and values) • Order doesn't matter for equality • Same keys and same values = equal • Returns True (equal) How it works: • {'a': 1, 'b': 2} has keys: 'a', 'b' with values: 1, 2 • {'b': 2, 'a': 1} has keys: 'a', 'b' with values: 1, 2 • Same keys: 'a', 'b' (order ignored) • Same values: 1, 2 (matching keys) • Returns: True (equal) Example: {'a': 1, 'b': 2} == {'b': 2, 'a': 1} # True (same content) {'a': 1} == {'b': 1} # False (different keys) {'a': 1} == {'a': 2} # False (different values) Common uses: • Comparing dictionaries: if dict1 == dict2: • Content equality: equal = (items1 == items2) • Dictionary comparison • Equality checking Example: {'a': 1, 'b': 2} == {'b': 2, 'a': 1} returns True because both dictionaries contain the same key-value pairs, and equality comparison checks content regardless of order.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4678,7 +4678,7 @@ Common uses:
 Example: {'a': 1} == {'a': 2} returns False because both dictionaries have the same key 'a' but different values (1 vs 2), so they are not equal.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary equality with different values: • {'a': 1} == {'a': 2} = False • Both have key 'a' • Values differ: 1 vs 2 • Different values = not equal • Returns False (not equal) How it works: • {'a': 1} has key 'a' with value 1 • {'a': 2} has key 'a' with value 2 • Same keys: 'a' (matches) • Different values: 1 vs 2 (mismatch) • Returns: False (not equal) Example: {'a': 1} == {'a': 2} # False (different values) {'a': 1, 'b': 2} == {'a': 1, 'b': 3} # False (different values) {'a': 1} == {'a': 1} # True (same values) Common uses: • Comparing dictionaries: if dict1 == dict2: • Value checking: equal = (items1 == items2) • Dictionary comparison • Equality validation Example: {'a': 1} == {'a': 2} returns False because both dictionaries have the same key 'a' but different values (1 vs 2), so they are not equal.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4753,7 +4753,7 @@ Common uses:
 Example: {'a': 1} == {'a': 1, 'b': 2} returns False because the dictionaries have different sets of keys (one has only 'a', the other has 'a' and 'b'), so they are not equal.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Dictionary equality with different keys: • {'a': 1} == {'a': 1, 'b': 2} = False • First dict has keys: 'a' • Second dict has keys: 'a', 'b' • Different key sets = not equal • Returns False (not equal) How it works: • {'a': 1} has keys: 'a' (one key) • {'a': 1, 'b': 2} has keys: 'a', 'b' (two keys) • Key sets differ: {'a'} vs {'a', 'b'} • Different key sets (even if common keys match) • Returns: False (not equal) Example: {'a': 1} == {'a': 1, 'b': 2} # False (different keys) {'a': 1, 'b': 2} == {'a': 1} # False (different keys) {'a': 1} == {'a': 1} # True (same keys and values) Common uses: • Comparing dictionaries: if dict1 == dict2: • Key checking: equal = (items1 == items2) • Dictionary comparison • Equality validation Example: {'a': 1} == {'a': 1, 'b': 2} returns False because the dictionaries have different sets of keys (one has only 'a', the other has 'a' and 'b'), so they are not equal.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4828,7 +4828,7 @@ Common uses:
 Example: {'a': 1} != {'a': 2} returns True because != checks if dictionaries are different, and since {'a': 1} and {'a': 2} have the same key but different values, they are not equal, so != returns True.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• != operator with dictionaries: • {'a': 1} != {'a': 2} = True • != checks if dictionaries differ • Same key 'a', different values: 1 vs 2 • Different values = not equal • Returns True (not equal) How it works: • {'a': 1} has key 'a' with value 1 • {'a': 2} has key 'a' with value 2 • Same keys: 'a' (matches) • Different values: 1 vs 2 (mismatch) • Not equal, so != returns: True Example: {'a': 1} != {'a': 2} # True (different values) {'a': 1} != {'a': 1} # False (same values) {'a': 1} != {'b': 1} # True (different keys) Common uses: • Checking differences: if dict1 != dict2: • Difference detection: different = (items1 != items2) • Dictionary comparison • Inequality checking Example: {'a': 1} != {'a': 2} returns True because != checks if dictionaries are different, and since {'a': 1} and {'a': 2} have the same key but different values, they are not equal, so != returns True.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4905,7 +4905,7 @@ Common uses:
 Example: {'a': 1} is {'a': 1} returns False because each dictionary literal creates a new object, so even though both dictionaries have the same content, they are different objects, and is checks object identity, not content equality.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• is operator with dictionaries: • {'a': 1} is {'a': 1} = False • is checks object identity (same object) • Each dict literal creates new object • Different objects (even if same content) • Returns False (different objects) How it works: • {'a': 1} creates new dictionary object A • {'a': 1} creates new dictionary object B • Objects A and B are different (different memory addresses) • is checks if same object (same memory address) • Different objects, so is returns: False Example: {'a': 1} is {'a': 1} # False (different objects) {'a': 1} == {'a': 1} # True (same content) a = {'a': 1} b = a a is b # True (same object) Common uses: • Checking object identity: if dict1 is dict2: • Reference checking: same = (items1 is items2) • Object identity • Reference equality Example: {'a': 1} is {'a': 1} returns False because each dictionary literal creates a new object, so even though both dictionaries have the same content, they are different objects, and is checks object identity, not content equality.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -4983,7 +4983,7 @@ Common uses:
 Example: If d = {'a': 1} and then d is d, it returns True because d is always the same object as d - an object is always identical to itself.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• is operator with same variable: • d = {'a': 1}; d is d = True • is checks object identity (same object) • d is d means "is d the same as d" • Always True (object is identical to itself) • Returns True (same object) How it works: • d = {'a': 1} assigns dictionary object to d • d is d checks if d is the same object as d • Same variable (same reference) • Same object (same memory address) • Returns: True (always true) Example: d = {'a': 1} d is d # True (always true) a = {'a': 1} b = {'a': 1} a is b # False (different objects) a is a # True (always true) Common uses: • Checking self-identity: if obj is obj: • Reference validation: same = (items is items) • Self-identity check • Always true for same variable Example: If d = {'a': 1} and then d is d, it returns True because d is always the same object as d - an object is always identical to itself.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5059,7 +5059,7 @@ Common uses:
 Example: bool({}) returns False because empty dictionaries are falsy in boolean contexts - they have no content, so they evaluate to False.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (falsy if empty) • Validation: if not dict: return {} • Empty check • Truthiness check Example: bool({}) returns False because empty dictionaries are falsy in boolean contexts - they have no content, so they evaluate to False.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5135,7 +5135,7 @@ Common uses:
 Example: bool({'a': 1}) returns True because non-empty dictionaries are truthy in boolean contexts - they have content, so they evaluate to True.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• (truthy if not empty) • Validation: if dict: process(dict) • Content check • Truthiness check Example: bool({'a': 1}) returns True because non-empty dictionaries are truthy in boolean contexts - they have content, so they evaluate to True.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5210,7 +5210,7 @@ Common uses:
 Example: {'a': 1, 'b': 2} + {'c': 3} raises a TypeError because dictionaries don't support the + operator - use the | operator, ** unpacking, or update() to merge dictionaries instead.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• + operator with dictionaries: • {'a': 1, 'b': 2} + {'c': 3} raises TypeError • + operator not supported for dictionaries • TypeError: unsupported operand type(s) for +: 'dict' and 'dict' • Use | or update() or ** for merging • Cannot concatenate dictionaries How it works: • {'a': 1, 'b': 2} + {'c': 3} attempts to add dictionaries • Python looks for + operator implementation on dict • Finds no + operator for dict type • Raises TypeError • Cannot perform operation Example: {'a': 1, 'b': 2} + {'c': 3} # TypeError {'a': 1, 'b': 2} | {'c': 3} # {'a': 1, 'b': 2, 'c': 3} (works) {**{'a': 1, 'b': 2}, **{'c': 3}} # {'a': 1, 'b': 2, 'c': 3} (works) Common uses: • Merging dictionaries: use dict1 | dict2 (Python 3.9+) • Merging: use {**dict1, **dict2} • Merging: use dict1.update(dict2) • Use appropriate method for merging Example: {'a': 1, 'b': 2} + {'c': 3} raises a TypeError because dictionaries don't support the + operator - use the | operator, ** unpacking, or update() to merge dictionaries instead.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5286,7 +5286,7 @@ Common uses:
 Example: {'a': 1} * 2 raises a TypeError because dictionaries don't support the * operator - dictionaries have unique keys, so repetition doesn't make sense, and you should use copy() or dict() to create copies instead.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• * operator with dictionaries: • {'a': 1} * 2 raises TypeError • * operator not supported for dictionaries • TypeError: unsupported operand type(s) for *: 'dict' and 'int' • Cannot repeat dictionaries (unique keys requirement) • Use other methods for duplicating How it works: • {'a': 1} * 2 attempts to multiply dictionary • Python looks for * operator implementation on dict • Finds no * operator for dict type • Raises TypeError • Cannot perform operation Example: {'a': 1} * 2 # TypeError [1, 2] * 2 # [1, 2, 1, 2] (works for lists) {'a': 1, 'b': 2} * 3 # TypeError dict({'a': 1} * 2) # TypeError (still fails) Common uses: • Copying dictionaries: use dict.copy() or dict(dict) • Merging dictionaries: use dict1 | dict2 or {**dict1, **dict2} • Don't use * for dictionaries • Use appropriate methods Example: {'a': 1} * 2 raises a TypeError because dictionaries don't support the * operator - dictionaries have unique keys, so repetition doesn't make sense, and you should use copy() or dict() to create copies instead.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5364,7 +5364,7 @@ Common uses:
 Example: If d = {'a': 1, 'b': 2}, k = d.keys(), and then d['c'] = 3, list(k) returns ['a', 'b', 'c'] because the keys() view reflects changes to the dictionary, so it includes the newly added key 'c'.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• dict_keys view - dynamic: • d = {'a': 1, 'b': 2}; k = d.keys(); d['c'] = 3; list(k) = ['a', 'b', 'c'] • keys() creates dynamic view • View reflects changes to dictionary • Adding 'c' updates view • Returns current keys: ['a', 'b', 'c'] How it works: • d = {'a': 1, 'b': 2} creates dictionary • k = d.keys() creates view (not snapshot) • d['c'] = 3 adds new key 'c' • View automatically includes 'c' (dynamic) • list(k) converts view: ['a', 'b', 'c'] Example: d = {'a': 1, 'b': 2} k = d.keys() # dict_keys(['a', 'b']) d['c'] = 3 # Adds 'c' list(k) # ['a', 'b', 'c'] (includes 'c') Common uses: • Dynamic views: k = dict.keys() (reflects changes) • Live iteration: for key in dict.keys(): (always current) • Dictionary monitoring • View behavior awareness Example: If d = {'a': 1, 'b': 2}, k = d.keys(), and then d['c'] = 3, list(k) returns ['a', 'b', 'c'] because the keys() view reflects changes to the dictionary, so it includes the newly added key 'c'.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5440,7 +5440,7 @@ Common uses:
 Example: If d = {'a': 1}, v = d.values(), and then d['b'] = 2, list(v) returns [1, 2] because the values() view reflects changes to the dictionary, so it includes the newly added value 2.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• dict_values view - dynamic: • d = {'a': 1}; v = d.values(); d['b'] = 2; list(v) = [1, 2] • values() creates dynamic view • View reflects changes to dictionary • Adding 'b': 2 updates view • Returns current values: [1, 2] How it works: • d = {'a': 1} creates dictionary • v = d.values() creates view (not snapshot) • d['b'] = 2 adds new pair 'b': 2 • View automatically includes 2 (dynamic) • list(v) converts view: [1, 2] Example: d = {'a': 1} v = d.values() # dict_values([1]) d['b'] = 2 # Adds 'b': 2 list(v) # [1, 2] (includes 2) Common uses: • Dynamic views: v = dict.values() (reflects changes) • Live iteration: for value in dict.values(): (always current) • Dictionary monitoring • View behavior awareness Example: If d = {'a': 1}, v = d.values(), and then d['b'] = 2, list(v) returns [1, 2] because the values() view reflects changes to the dictionary, so it includes the newly added value 2.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5516,7 +5516,7 @@ Common uses:
 Example: If d = {'a': 1}, i = d.items(), and then d['b'] = 2, list(i) returns [('a', 1), ('b', 2)] because the items() view reflects changes to the dictionary, so it includes the newly added pair ('b', 2).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• dict_items view - dynamic: • d = {'a': 1}; i = d.items(); d['b'] = 2; list(i) = [('a', 1), ('b', 2)] • items() creates dynamic view • View reflects changes to dictionary • Adding 'b': 2 updates view • Returns current pairs: [('a', 1), ('b', 2)] How it works: • d = {'a': 1} creates dictionary • i = d.items() creates view (not snapshot) • d['b'] = 2 adds new pair 'b': 2 • View automatically includes ('b', 2) (dynamic) • list(i) converts view: [('a', 1), ('b', 2)] Example: d = {'a': 1} i = d.items() # dict_items([('a', 1)]) d['b'] = 2 # Adds 'b': 2 list(i) # [('a', 1), ('b', 2)] (includes ('b', 2)) Common uses: • Dynamic views: i = dict.items() (reflects changes) • Live iteration: for k, v in dict.items(): (always current) • Dictionary monitoring • View behavior awareness Example: If d = {'a': 1}, i = d.items(), and then d['b'] = 2, list(i) returns [('a', 1), ('b', 2)] because the items() view reflects changes to the dictionary, so it includes the newly added pair ('b', 2).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5592,7 +5592,7 @@ Common uses:
 Example: for k in {'a': 1, 'b': 2}: print(k) prints 'a' then 'b' because iterating over a dictionary directly iterates over its keys, not its values or key-value pairs.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Iterating dictionary directly: • for k in {'a': 1, 'b': 2}: print(k) prints 'a' then 'b' • Iterating dict iterates over keys • Prints keys: 'a', 'b' • Not values or pairs • Equivalent to for k in dict.keys(): How it works: • for k in {'a': 1, 'b': 2} iterates over dictionary • Python iterates over keys: 'a', 'b' • First iteration: k = 'a', prints 'a' • Second iteration: k = 'b', prints 'b' • Prints: 'a' then 'b' Example: for k in {'a': 1, 'b': 2}: print(k) # Prints: 'a' then 'b' for k in {'a': 1, 'b': 2}.keys(): print(k) # Same: 'a' then 'b' Common uses: • Iterating keys: for key in dict: (shorthand) • Key iteration: for k in items: (iterates keys) • Dictionary key access • Common iteration pattern Example: for k in {'a': 1, 'b': 2}: print(k) prints 'a' then 'b' because iterating over a dictionary directly iterates over its keys, not its values or key-value pairs.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5668,7 +5668,7 @@ Common uses:
 Example: for v in {'a': 1, 'b': 2}.values(): print(v) prints 1 then 2 because iterating over .values() iterates over the dictionary's values, not its keys or key-value pairs.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Iterating .values(): • for v in {'a': 1, 'b': 2}.values(): print(v) prints 1 then 2 • .values() returns view of values • Iterating view gives values • Prints values: 1, 2 • Not keys or pairs How it works: • {'a': 1, 'b': 2}.values() returns view: [1, 2] • for v in view iterates over values • First iteration: v = 1, prints 1 • Second iteration: v = 2, prints 2 • Prints: 1 then 2 Example: for v in {'a': 1, 'b': 2}.values(): print(v) # Prints: 1 then 2 for v in {'x': 10, 'y': 20}.values(): print(v) # Prints: 10 then 20 Common uses: • Iterating values: for value in dict.values(): • Value iteration: for v in items.values(): (iterates values) • Dictionary value access • Value-specific iteration Example: for v in {'a': 1, 'b': 2}.values(): print(v) prints 1 then 2 because iterating over .values() iterates over the dictionary's values, not its keys or key-value pairs.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5744,7 +5744,7 @@ Common uses:
 Example: for k, v in {'a': 1, 'b': 2}.items(): print(k, v) prints 'a' 1 then 'b' 2 because iterating over .items() with unpacking iterates over key-value pairs, assigning the key to k and the value to v.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Iterating .items() with unpacking: • for k, v in {'a': 1, 'b': 2}.items(): print(k, v) prints 'a' 1 then 'b' 2 • .items() returns view of (key, value) tuples • k, v unpacks each tuple • k gets key, v gets value • Prints keys and values together How it works: • {'a': 1, 'b': 2}.items() returns view: [('a', 1), ('b', 2)] • for k, v in view unpacks each tuple • First iteration: k='a', v=1, prints 'a' 1 • Second iteration: k='b', v=2, prints 'b' 2 • Prints: 'a' 1 then 'b' 2 Example: for k, v in {'a': 1, 'b': 2}.items(): print(k, v) # Prints: 'a' 1 then 'b' 2 for key, value in {'x': 10, 'y': 20}.items(): print(key, value) # Prints: 'x' 10 then 'y' 20 Common uses: • Iterating pairs: for k, v in dict.items(): • Key-value iteration: for key, value in items.items(): (iterates pairs) • Dictionary pair access • Both keys and values together Example: for k, v in {'a': 1, 'b': 2}.items(): print(k, v) prints 'a' 1 then 'b' 2 because iterating over .items() with unpacking iterates over key-value pairs, assigning the key to k and the value to v.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5819,7 +5819,7 @@ Common uses:
 Example: list({'a': 1, 'b': 2}) returns ['a', 'b'] because list() iterates over the dictionary, which iterates over keys, and collects those keys into a list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• list() on dictionary: • list({'a': 1, 'b': 2}) = ['a', 'b'] • list() iterates over dictionary • Dictionary iteration gives keys • Collects keys into list • Returns list of keys How it works: • list() called with {'a': 1, 'b': 2} • Iterates over dictionary (keys: 'a', 'b') • Collects keys: 'a', 'b' • Returns new list: ['a', 'b'] • Same as list(dict.keys()) Example: list({'a': 1, 'b': 2}) # ['a', 'b'] (keys) list({'a': 1, 'b': 2}.keys()) # ['a', 'b'] (same) list({'x': 10, 'y': 20}) # ['x', 'y'] (keys) Common uses: • Getting key list: key_list = list(dict) • Converting keys: keys = list(items) • Key list creation • Dictionary key extraction Example: list({'a': 1, 'b': 2}) returns ['a', 'b'] because list() iterates over the dictionary, which iterates over keys, and collects those keys into a list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5894,7 +5894,7 @@ Common uses:
 Example: tuple({'a': 1, 'b': 2}) returns ('a', 'b') because tuple() iterates over the dictionary, which iterates over keys, and collects those keys into a tuple.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• tuple() on dictionary: • tuple({'a': 1, 'b': 2}) = ('a', 'b') • tuple() iterates over dictionary • Dictionary iteration gives keys • Collects keys into tuple • Returns tuple of keys How it works: • tuple() called with {'a': 1, 'b': 2} • Iterates over dictionary (keys: 'a', 'b') • Collects keys: 'a', 'b' • Returns new tuple: ('a', 'b') • Same as tuple(dict.keys()) Example: tuple({'a': 1, 'b': 2}) # ('a', 'b') (keys) tuple({'a': 1, 'b': 2}.keys()) # ('a', 'b') (same) tuple({'x': 10, 'y': 20}) # ('x', 'y') (keys) Common uses: • Getting key tuple: key_tuple = tuple(dict) • Converting keys: keys = tuple(items) • Key tuple creation • Dictionary key extraction Example: tuple({'a': 1, 'b': 2}) returns ('a', 'b') because tuple() iterates over the dictionary, which iterates over keys, and collects those keys into a tuple.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -5969,7 +5969,7 @@ Common uses:
 Example: set({'a': 1, 'b': 2}) returns {'a', 'b'} because set() iterates over the dictionary, which iterates over keys, and collects those keys into a set.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• set() on dictionary: • set({'a': 1, 'b': 2}) = {'a', 'b'} • set() iterates over dictionary • Dictionary iteration gives keys • Collects keys into set • Returns set of keys How it works: • set() called with {'a': 1, 'b': 2} • Iterates over dictionary (keys: 'a', 'b') • Collects keys: 'a', 'b' • Returns new set: {'a', 'b'} • Same as set(dict.keys()) Example: set({'a': 1, 'b': 2}) # {'a', 'b'} (keys) set({'a': 1, 'b': 2}.keys()) # {'a', 'b'} (same) set({'x': 10, 'y': 20}) # {'x', 'y'} (keys) Common uses: • Getting key set: key_set = set(dict) • Converting keys: keys = set(items) • Key set creation • Dictionary key extraction Example: set({'a': 1, 'b': 2}) returns {'a', 'b'} because set() iterates over the dictionary, which iterates over keys, and collects those keys into a set.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6044,7 +6044,7 @@ Common uses:
 Example: sorted({'c': 3, 'a': 1, 'b': 2}) returns ['a', 'b', 'c'] because sorted() iterates over the dictionary, which iterates over keys, and sorts those keys alphabetically into a list.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• sorted() on dictionary: • sorted({'c': 3, 'a': 1, 'b': 2}) = ['a', 'b', 'c'] • sorted() iterates over dictionary • Dictionary iteration gives keys • Sorts keys alphabetically • Returns sorted list of keys How it works: • sorted() called with {'c': 3, 'a': 1, 'b': 2} • Iterates over dictionary (keys: 'c', 'a', 'b') • Sorts keys: 'a' < 'b' < 'c' • Returns sorted list: ['a', 'b', 'c'] • Same as sorted(dict.keys()) Example: sorted({'c': 3, 'a': 1, 'b': 2}) # ['a', 'b', 'c'] (sorted keys) sorted({'x': 10, 'a': 1, 'z': 20}) # ['a', 'x', 'z'] (sorted keys) sorted({'3': 3, '1': 1, '2': 2}) # ['1', '2', '3'] (sorted keys) Common uses: • Sorting keys: sorted_keys = sorted(dict) • Key sorting: keys = sorted(items) • Key list sorting • Dictionary key ordering Example: sorted({'c': 3, 'a': 1, 'b': 2}) returns ['a', 'b', 'c'] because sorted() iterates over the dictionary, which iterates over keys, and sorts those keys alphabetically into a list.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6121,7 +6121,7 @@ Common uses:
 Example: {'a': 1}.fromkeys(['a', 'b']) returns {'a': None, 'b': None} because fromkeys() is a class method that creates a new dictionary with the given keys, and when no value is provided, all values default to None.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• fromkeys() method: • {'a': 1}.fromkeys(['a', 'b']) = {'a': None, 'b': None} • fromkeys() is class method (ignores instance) • Creates new dictionary with given keys • Values default to None if not provided • Useful for initialization How it works: • fromkeys(['a', 'b']) called on {'a': 1} • Ignores instance dictionary {'a': 1} • Creates new dictionary with keys: 'a', 'b' • Values default to None (not provided) • Returns: {'a': None, 'b': None} Example: {'a': 1}.fromkeys(['a', 'b']) # {'a': None, 'b': None} dict.fromkeys(['a', 'b']) # {'a': None, 'b': None} (same) {'x': 10}.fromkeys(['x', 'y', 'z']) # {'x': None, 'y': None, 'z': None} Common uses: • Initializing dictionaries: dict = dict.fromkeys(keys) • Default values: data = dict.fromkeys(keys, default) • Key initialization • Dictionary creation Example: {'a': 1}.fromkeys(['a', 'b']) returns {'a': None, 'b': None} because fromkeys() is a class method that creates a new dictionary with the given keys, and when no value is provided, all values default to None.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6195,7 +6195,7 @@ Common uses:
 Example: dict.fromkeys(['a', 'b'], 0) returns {'a': 0, 'b': 0} because fromkeys() creates a new dictionary with the given keys, and when a value (0) is provided, all keys are set to that value.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• fromkeys() with value: • dict.fromkeys(['a', 'b'], 0) = {'a': 0, 'b': 0} • fromkeys() creates new dictionary with keys • Second argument sets value for all keys • All keys get same value: 0 • Useful for initialization How it works: • fromkeys(['a', 'b'], 0) called on dict class • Creates new dictionary with keys: 'a', 'b' • Sets all values to 0 (second argument) • Returns: {'a': 0, 'b': 0} Example: dict.fromkeys(['a', 'b'], 0) # {'a': 0, 'b': 0} dict.fromkeys(['x', 'y'], 'default') # {'x': 'default', 'y': 'default'} dict.fromkeys(['1', '2'], []) # {'1': [], '2': []} (same list reference!) Common uses: • Initializing with defaults: dict = dict.fromkeys(keys, default) • Default values: data = dict.fromkeys(keys, 0) • Key initialization with values • Dictionary creation with defaults Example: dict.fromkeys(['a', 'b'], 0) returns {'a': 0, 'b': 0} because fromkeys() creates a new dictionary with the given keys, and when a value (0) is provided, all keys are set to that value.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6270,7 +6270,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.fromkeys(['c', 'd']) returns {'c': None, 'd': None} because fromkeys() is a class method that ignores the instance dictionary and creates a new dictionary with the given keys.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• fromkeys() - class method: • {'a': 1, 'b': 2}.fromkeys(['c', 'd']) = {'c': None, 'd': None} • fromkeys() is class method (ignores instance) • Creates new dictionary with given keys • Instance dictionary {'a': 1, 'b': 2} not used • Returns new dictionary How it works: • fromkeys(['c', 'd']) called on {'a': 1, 'b': 2} • Ignores instance dictionary {'a': 1, 'b': 2} • Creates new dictionary with keys: 'c', 'd' • Values default to None (not provided) • Returns: {'c': None, 'd': None} Example: {'a': 1, 'b': 2}.fromkeys(['c', 'd']) # {'c': None, 'd': None} (new dict) {'x': 10}.fromkeys(['a', 'b']) # {'a': None, 'b': None} (new dict) dict.fromkeys(['a', 'b']) # {'a': None, 'b': None} (same) Common uses: • Creating new dictionaries: dict = dict.fromkeys(keys) • Initialization: data = items.fromkeys(new_keys, default) • Class method usage • Dictionary creation Example: {'a': 1, 'b': 2}.fromkeys(['c', 'd']) returns {'c': None, 'd': None} because fromkeys() is a class method that ignores the instance dictionary and creates a new dictionary with the given keys.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6345,7 +6345,7 @@ Common uses:
 Example: max({'a': 1, 'b': 2, 'c': 3}) returns 'c' because max() iterates over the dictionary, which iterates over keys, and returns the maximum key 'c' (lexicographically largest).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• max() on dictionary: • max({'a': 1, 'b': 2, 'c': 3}) = 'c' • max() iterates over dictionary (keys) • Compares keys: 'a' < 'b' < 'c' • Returns maximum key: 'c' • Not maximum value (value 3) How it works: • max() called with {'a': 1, 'b': 2, 'c': 3} • Iterates over dictionary (keys: 'a', 'b', 'c') • Compares keys: 'a' < 'b' < 'c' (lexicographic) • Finds maximum key: 'c' • Returns: 'c' Example: max({'a': 1, 'b': 2, 'c': 3}) # 'c' (max key) max({'x': 10, 'a': 1, 'z': 20}) # 'z' (max key) max({'1': 1, '2': 2, '3': 3}) # '3' (max key, string) Common uses: • Finding max key: max_key = max(dict) • Key comparison: largest = max(items) • Dictionary key ordering • Maximum key finding Example: max({'a': 1, 'b': 2, 'c': 3}) returns 'c' because max() iterates over the dictionary, which iterates over keys, and returns the maximum key 'c' (lexicographically largest).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6420,7 +6420,7 @@ Common uses:
 Example: min({'a': 1, 'b': 2, 'c': 3}) returns 'a' because min() iterates over the dictionary, which iterates over keys, and returns the minimum key 'a' (lexicographically smallest).
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• min() on dictionary: • min({'a': 1, 'b': 2, 'c': 3}) = 'a' • min() iterates over dictionary (keys) • Compares keys: 'a' < 'b' < 'c' • Returns minimum key: 'a' • Not minimum value (value 1) How it works: • min() called with {'a': 1, 'b': 2, 'c': 3} • Iterates over dictionary (keys: 'a', 'b', 'c') • Compares keys: 'a' < 'b' < 'c' (lexicographic) • Finds minimum key: 'a' • Returns: 'a' Example: min({'a': 1, 'b': 2, 'c': 3}) # 'a' (min key) min({'x': 10, 'a': 1, 'z': 20}) # 'a' (min key) min({'1': 1, '2': 2, '3': 3}) # '1' (min key, string) Common uses: • Finding min key: min_key = min(dict) • Key comparison: smallest = min(items) • Dictionary key ordering • Minimum key finding Example: min({'a': 1, 'b': 2, 'c': 3}) returns 'a' because min() iterates over the dictionary, which iterates over keys, and returns the minimum key 'a' (lexicographically smallest).
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6495,7 +6495,7 @@ Common uses:
 Example: max({'a': 1, 'b': 2, 'c': 3}.values()) returns 3 because .values() returns a view of all values [1, 2, 3], and max() finds the maximum value, which is 3.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• max() on .values(): • max({'a': 1, 'b': 2, 'c': 3}.values()) = 3 • .values() returns view of values: [1, 2, 3] • max() compares values: 1 < 2 < 3 • Returns maximum value: 3 • Not maximum key (key 'c') How it works: • {'a': 1, 'b': 2, 'c': 3}.values() returns view: [1, 2, 3] • max() called with values view • Compares values: 1 < 2 < 3 (numeric) • Finds maximum value: 3 • Returns: 3 Example: max({'a': 1, 'b': 2, 'c': 3}.values()) # 3 (max value) max({'x': 10, 'y': 20}.values()) # 20 (max value) max({'a': 'z', 'b': 'a'}.values()) # 'z' (max value, string) Common uses: • Finding max value: max_value = max(dict.values()) • Value comparison: largest = max(items.values()) • Dictionary value ordering • Maximum value finding Example: max({'a': 1, 'b': 2, 'c': 3}.values()) returns 3 because .values() returns a view of all values [1, 2, 3], and max() finds the maximum value, which is 3.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6570,7 +6570,7 @@ Common uses:
 Example: sum({'a': 1, 'b': 2, 'c': 3}.values()) returns 6 because .values() returns a view of all values [1, 2, 3], and sum() adds them together: 1 + 2 + 3 = 6.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• sum() on .values(): • sum({'a': 1, 'b': 2, 'c': 3}.values()) = 6 • .values() returns view of values: [1, 2, 3] • sum() adds all values: 1 + 2 + 3 • Returns sum: 6 • Works with numeric values How it works: • {'a': 1, 'b': 2, 'c': 3}.values() returns view: [1, 2, 3] • sum() called with values view • Adds all values: 1 + 2 + 3 • Computes sum: 6 • Returns: 6 Example: sum({'a': 1, 'b': 2, 'c': 3}.values()) # 6 (1 + 2 + 3) sum({'x': 10, 'y': 20}.values()) # 30 (10 + 20) sum({}.values()) # 0 (empty, no values) Common uses: • Summing values: total = sum(dict.values()) • Value aggregation: sum = sum(items.values()) • Dictionary value summing • Numeric value operations Example: sum({'a': 1, 'b': 2, 'c': 3}.values()) returns 6 because .values() returns a view of all values [1, 2, 3], and sum() adds them together: 1 + 2 + 3 = 6.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6645,7 +6645,7 @@ Common uses:
 Example: all({'a': 1, 'b': 0}.values()) returns False because .values() returns a view of all values [1, 0], and all() checks if all values are truthy - since 1 is truthy but 0 is falsy, all() returns False.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• all() on .values(): • all({'a': 1, 'b': 0}.values()) = False • .values() returns view of values: [1, 0] • all() checks if all values truthy • 1 is truthy, 0 is falsy • Not all truthy, returns False How it works: • {'a': 1, 'b': 0}.values() returns view: [1, 0] • all() called with values view • Checks each value: 1 (truthy), 0 (falsy) • 1 is truthy, 0 is falsy • Not all truthy, returns: False Example: all({'a': 1, 'b': 0}.values()) # False (0 is falsy) all({'a': 1, 'b': 2}.values()) # True (all truthy) all({'a': 0, 'b': 0}.values()) # False (all falsy) Common uses: • Checking all truthy: if all(dict.values()): • Value validation: valid = all(items.values()) • Dictionary value checking • Truthiness validation Example: all({'a': 1, 'b': 0}.values()) returns False because .values() returns a view of all values [1, 0], and all() checks if all values are truthy - since 1 is truthy but 0 is falsy, all() returns False.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6720,7 +6720,7 @@ Common uses:
 Example: any({'a': 0, 'b': 0}.values()) returns False because .values() returns a view of all values [0, 0], and any() checks if any value is truthy - since both 0 and 0 are falsy, any() returns False.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• any() on .values(): • any({'a': 0, 'b': 0}.values()) = False • .values() returns view of values: [0, 0] • any() checks if any value truthy • 0 is falsy, 0 is falsy • No truthy values, returns False How it works: • {'a': 0, 'b': 0}.values() returns view: [0, 0] • any() called with values view • Checks each value: 0 (falsy), 0 (falsy) • Both 0 and 0 are falsy • No truthy values, returns: False Example: any({'a': 0, 'b': 0}.values()) # False (all falsy) any({'a': 0, 'b': 1}.values()) # True (1 is truthy) any({'a': 1, 'b': 2}.values()) # True (all truthy) Common uses: • Checking any truthy: if any(dict.values()): • Value validation: has_truthy = any(items.values()) • Dictionary value checking • Truthiness detection Example: any({'a': 0, 'b': 0}.values()) returns False because .values() returns a view of all values [0, 0], and any() checks if any value is truthy - since both 0 and 0 are falsy, any() returns False.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6795,7 +6795,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.get('a') or {'a': 1, 'b': 2}.get('c') returns 1 because get('a') returns 1 (truthy), and or returns the first truthy value, so it returns 1 without evaluating the second get().
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• or operator with get(): • {'a': 1, 'b': 2}.get('a') or {'a': 1, 'b': 2}.get('c') = 1 • get('a') returns 1 (truthy) • or returns first truthy value • Returns 1 (without evaluating second get()) • Short-circuit evaluation How it works: • get('a') called on {'a': 1, 'b': 2} • Returns 1 (key 'a' exists) • or checks if 1 is truthy (it is) • Returns 1 (first truthy value) • Doesn't evaluate get('c') (short-circuit) Example: {'a': 1, 'b': 2}.get('a') or get('c') # 1 (first truthy) {'a': 0, 'b': 2}.get('a') or get('c') # None (0 is falsy, 'c' not found) {'a': 1}.get('c') or 0 # 0 (None is falsy, uses 0) Common uses: • Fallback values: value = dict.get(key) or default • Providing defaults: result = items.get(key) or fallback • Default value patterns • Short-circuit evaluation Example: {'a': 1, 'b': 2}.get('a') or {'a': 1, 'b': 2}.get('c') returns 1 because get('a') returns 1 (truthy), and or returns the first truthy value, so it returns 1 without evaluating the second get().
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6871,7 +6871,7 @@ Common uses:
 Example: {1: 'a', 2: 'b', 3: 'c'}[1] returns 'a' because dictionaries can use integers as keys, and accessing [1] looks up the key 1, which maps to the value 'a'.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Integer keys in dictionaries: • {1: 'a', 2: 'b', 3: 'c'}[1] = 'a' • Integer keys work in dictionaries • Key 1 maps to value 'a' • Dictionaries support any hashable key type • Returns value: 'a' How it works: • {1: 'a', 2: 'b', 3: 'c'} creates dictionary with integer keys • [1] accesses key 1 in dictionary • Finds mapping: 1 → 'a' • Returns value: 'a' Example: {1: 'a', 2: 'b', 3: 'c'}[1] # 'a' (integer key) {10: 'x', 20: 'y'}[10] # 'x' (integer key) {0: 'zero', 1: 'one'}[0] # 'zero' (integer key) Common uses: • Numeric keys: dict = {1: value1, 2: value2} • ID-based dictionaries: items = {id: data for id, data in pairs} • Integer key dictionaries • Flexible key types Example: {1: 'a', 2: 'b', 3: 'c'}[1] returns 'a' because dictionaries can use integers as keys, and accessing [1] looks up the key 1, which maps to the value 'a'.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -6945,7 +6945,7 @@ Common uses:
 Example: {(1, 2): 'a', (3, 4): 'b'}[(1, 2)] returns 'a' because dictionaries can use tuples as keys (tuples are immutable and hashable), and accessing [(1, 2)] looks up the tuple key (1, 2), which maps to the value 'a'.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Tuple keys in dictionaries: • {(1, 2): 'a', (3, 4): 'b'}[(1, 2)] = 'a' • Tuple keys work in dictionaries (immutable) • Key (1, 2) maps to value 'a' • Tuples are hashable (can be keys) • Returns value: 'a' How it works: • {(1, 2): 'a', (3, 4): 'b'} creates dictionary with tuple keys • [(1, 2)] accesses tuple key (1, 2) in dictionary • Finds mapping: (1, 2) → 'a' • Returns value: 'a' Example: {(1, 2): 'a', (3, 4): 'b'}[(1, 2)] # 'a' (tuple key) {(1, 1): 'x', (2, 2): 'y'}[(1, 1)] # 'x' (tuple key) {('a', 1): 'z', ('b', 2): 'w'}[('a', 1)] # 'z' (tuple key) Common uses: • Composite keys: dict = {(x, y): value for x, y in pairs} • Multi-dimensional indexing: items = {(row, col): data} • Tuple key dictionaries • Complex key structures Example: {(1, 2): 'a', (3, 4): 'b'}[(1, 2)] returns 'a' because dictionaries can use tuples as keys (tuples are immutable and hashable), and accessing [(1, 2)] looks up the tuple key (1, 2), which maps to the value 'a'.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7020,7 +7020,7 @@ Common uses:
 Example: {[1, 2]: 'a'} raises a TypeError because lists are mutable and unhashable, so they cannot be used as dictionary keys. Use tuples instead: {tuple([1, 2]): 'a'}.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Use tuples instead: {tuple([1, 2]): 'a'}.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7095,7 +7095,7 @@ Common uses:
 Example: {{'a': 1}: 'b'} raises a TypeError because dictionaries are mutable and unhashable, so they cannot be used as dictionary keys. Use tuples of items instead: {tuple({'a': 1}.items()): 'b'}.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Use tuples of items instead: {tuple({'a': 1}.items()): 'b'}.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7169,7 +7169,7 @@ Common uses:
 Example: {None: 'a', True: 'b', False: 'c'}[None] returns 'a' because None, True, and False are all hashable and can be used as dictionary keys, and accessing [None] looks up the key None, which maps to the value 'a'.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• None, True, False as keys: • {None: 'a', True: 'b', False: 'c'}[None] = 'a' • None, True, False can be dictionary keys • They are hashable (immutable) • Key None maps to value 'a' • Returns value: 'a' How it works: • {None: 'a', True: 'b', False: 'c'} creates dictionary with None/True/False keys • [None] accesses key None in dictionary • Finds mapping: None → 'a' • Returns value: 'a' Example: {None: 'a', True: 'b', False: 'c'}[None] # 'a' (None key) {None: 'a', True: 'b', False: 'c'}[True] # 'b' (True key) {None: 'a', True: 'b', False: 'c'}[False] # 'c' (False key) Common uses: • Boolean/None keys: dict = {None: default, True: true_val, False: false_val} • Special value keys: items = {None: value1, True: value2} • Dictionary keys with special values • Hashable value keys Example: {None: 'a', True: 'b', False: 'c'}[None] returns 'a' because None, True, and False are all hashable and can be used as dictionary keys, and accessing [None] looks up the key None, which maps to the value 'a'.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7244,7 +7244,7 @@ Common uses:
 Example: {1: 'a', 1.0: 'b'}[1] returns 'b' because 1 and 1.0 hash to the same value, so they are considered the same key in the dictionary, and the later value 'b' overwrites the earlier value 'a'.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Hash equality - 1 and 1.0: • {1: 'a', 1.0: 'b'}[1] = 'b' • 1 and 1.0 hash to same value • They are considered same key • Later value ('b') overwrites earlier ('a') • Returns: 'b' How it works: • {1: 'a', 1.0: 'b'} creates dictionary • 1 and 1.0 hash to same value (same key) • Later value 'b' overwrites 'a' • Dictionary becomes {1: 'b'} (or {1.0: 'b'}) • [1] accesses same key, returns 'b' Example: {1: 'a', 1.0: 'b'}[1] # 'b' (same key) {1: 'a', 1.0: 'b'}[1.0] # 'b' (same key) {2: 'x', 2.0: 'y'} # {2: 'y'} (same key) Common uses: • Understanding hash equality: 1 == 1.0 (hash same) • Key equality: same hash = same key • Numeric key behavior • Hash-based key equality Example: {1: 'a', 1.0: 'b'}[1] returns 'b' because 1 and 1.0 hash to the same value, so they are considered the same key in the dictionary, and the later value 'b' overwrites the earlier value 'a'.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7319,7 +7319,7 @@ Common uses:
 Example: {1: 'a', 1.0: 'b'} returns {1: 'b'} because 1 and 1.0 hash to the same value, so they are considered the same key, and the later value 'b' overwrites the earlier value 'a'.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Hash equality - dictionary creation: • {1: 'a', 1.0: 'b'} = {1: 'b'} • 1 and 1.0 hash to same value (same key) • Later value 'b' overwrites 'a' • Dictionary has only one pair: {1: 'b'} • Both 1 and 1.0 access same entry How it works: • {1: 'a', 1.0: 'b'} creates dictionary • First sets 1: 'a' • Then sets 1.0: 'b' (same key as 1) • 'b' overwrites 'a' • Dictionary becomes {1: 'b'} (or {1.0: 'b'}) Example: {1: 'a', 1.0: 'b'} # {1: 'b'} (same key) {2: 'x', 2.0: 'y'} # {2: 'y'} (same key) {3: 'z', 3.0: 'w'} # {3: 'w'} (same key) Common uses: • Understanding hash equality: 1 == 1.0 (hash same) • Key overwriting: later value wins • Numeric key behavior • Hash-based key equality Example: {1: 'a', 1.0: 'b'} returns {1: 'b'} because 1 and 1.0 hash to the same value, so they are considered the same key, and the later value 'b' overwrites the earlier value 'a'.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7395,7 +7395,7 @@ Common uses:
 Example: If d = {}, d[1] = 'a', and then d[1.0] = 'b', the dictionary d becomes {1: 'b'} because 1 and 1.0 hash to the same value, so they are considered the same key, and the assignment d[1.0] = 'b' overwrites the value from d[1] = 'a'.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Hash equality - assignment: • d = {}; d[1] = 'a'; d[1.0] = 'b'; d = {1: 'b'} • 1 and 1.0 hash to same value (same key) • d[1] = 'a' sets value to 'a' • d[1.0] = 'b' overwrites same key to 'b' • Dictionary has only one pair: {1: 'b'} How it works: • d = {} creates empty dictionary • d[1] = 'a' sets key 1 to value 'a' • d[1.0] = 'b' sets key 1.0 to value 'b' • 1 and 1.0 are same key (same hash) • 'b' overwrites 'a', d becomes {1: 'b'} Example: d = {} d[1] = 'a' # d = {1: 'a'} d[1.0] = 'b' # d = {1: 'b'} (overwrites) d # {1: 'b'} Common uses: • Understanding hash equality: 1 == 1.0 (hash same) • Key assignment: later assignment wins • Numeric key behavior • Hash-based key equality Example: If d = {}, d[1] = 'a', and then d[1.0] = 'b', the dictionary d becomes {1: 'b'} because 1 and 1.0 hash to the same value, so they are considered the same key, and the assignment d[1.0] = 'b' overwrites the value from d[1] = 'a'.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7470,7 +7470,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.pop('a', 'default') returns 1 because pop() finds the key 'a' in the dictionary and returns its actual value (1), ignoring the default value ('default'), which is only used when the key doesn't exist.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• pop() with existing key: • {'a': 1, 'b': 2}.pop('a', 'default') = 1 • pop(key, default) returns actual value if key exists • Default value ignored when key found • Returns value from dictionary • Default only used if key missing How it works: • pop('a', 'default') called on {'a': 1, 'b': 2} • Searches for key 'a' in dictionary • Finds mapping: 'a' → 1 • Returns actual value: 1 (ignores default 'default') • Dictionary modified: {'b': 2} (pair removed) Example: {'a': 1, 'b': 2}.pop('a', 'default') # 1 (returns actual value) {'a': 1, 'b': 2}.pop('b', 0) # 2 (returns actual value) {'a': 1, 'b': 2}.pop('c', 'default') # 'default' (key not found) Common uses: • Removing pairs: value = dict.pop(key, default) • Getting and removing: removed = items.pop(key, fallback) • Safe removal with fallback • Default handling Example: {'a': 1, 'b': 2}.pop('a', 'default') returns 1 because pop() finds the key 'a' in the dictionary and returns its actual value (1), ignoring the default value ('default'), which is only used when the key doesn't exist.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -7546,7 +7546,7 @@ Common uses:
 Example: {'a': 1, 'b': 2}.pop('c', 'default') returns 'default' because pop() searches for the key 'c' in the dictionary, doesn't find it, and returns the default value ('default') without raising an error, leaving the dictionary unchanged.
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• pop() with missing key: • {'a': 1, 'b': 2}.pop('c', 'default') = 'default' • pop(key, default) returns default if key not found • No error raised (unlike pop() without default) • Dictionary unchanged (no pair to remove) • Returns default value How it works: • pop('c', 'default') called on {'a': 1, 'b': 2} • Searches for key 'c' in dictionary • Finds no match (key doesn't exist) • Cannot remove non-existent pair • Returns default value: 'default' (no error) • Dictionary unchanged: {'a': 1, 'b': 2} Example: {'a': 1, 'b': 2}.pop('c', 'default') # 'default' (not found, returns default) {'a': 1, 'b': 2}.pop('c', 0) # 0 (not found, returns default) {'a': 1, 'b': 2} # {'a': 1, 'b': 2} (unchanged) Common uses: • Safe removal: value = dict.pop(key, default) • Default handling: removed = items.pop(key, fallback) • Error-free removal • Safe pop with fallback Example: {'a': 1, 'b': 2}.pop('c', 'default') returns 'default' because pop() searches for the key 'c' in the dictionary, doesn't find it, and returns the default value ('default') without raising an error, leaving the dictionary unchanged.
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.

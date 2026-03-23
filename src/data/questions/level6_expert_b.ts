@@ -32,7 +32,7 @@ Common uses:
 • Any context requiring hashable objects
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Hashable means an object has a __hash__() method and can be used as a dict key or set element • Integers are immutable → they are hashable • hash(42) returns an integer hash value (in CPython, hash(42) == 42 for small ints) • All numeric types (int, float, complex) are hashable How it works: • Python calls 42.__hash__() internally • For small integers, CPython returns the integer itself as its hash • The hash value is used for O(1) lookups in dicts and sets Example: hash(42) # 42 (in CPython) hash(0) # 0 hash(-1) # -2 (special case in CPython, -1 is reserved) {42: "value"} # works — int as dict key Common uses: • Using integers as dictionary keys • Adding integers to sets • Any context requiring hashable objects
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -102,7 +102,7 @@ Common uses:
 • String interning relies on hashing
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Strings are immutable — once created, their content cannot change • Immutability is a prerequisite for hashability in Python • hash("hello") returns a consistent integer for the lifetime of the process • String hashes may differ between Python sessions (hash randomization since 3.3) How it works: • Python computes a hash based on the string's characters • The hash is cached after first computation (optimization) • PYTHONHASHSEED controls randomization for security against hash-collision attacks Example: hash("hello") # some integer (varies between sessions) hash("") # 0 {"hello": 1} # works — string as dict key Common uses: • Strings as dictionary keys (the most common dict key type) • Strings in sets for membership testing • String interning relies on hashing
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -174,7 +174,7 @@ Common uses:
 • Multi-value keys: cache[(arg1, arg2)] = result
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Tuples are immutable sequences • (1, 2, 3) contains only integers, which are hashable • Therefore the tuple itself is hashable • The hash is computed from all elements combined How it works: • Python's tuple.__hash__() iterates over each element • It calls hash() on each element and combines the results • If any element raises TypeError (unhashable), the tuple is also unhashable • The combination algorithm uses XOR with constants for good distribution Example: hash((1, 2, 3)) # works — all elements hashable hash(("a", "b")) # works — strings are hashable hash((1, (2, 3))) # works — nested tuple of hashables {(1, 2): "value"} # tuple as dict key Common uses: • Tuples as dictionary keys (e.g., coordinate pairs) • Tuples in sets for unique combinations • Multi-value keys: cache[(arg1, arg2)] = result
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -245,7 +245,7 @@ Common uses:
 • Use frozenset for set-like elements in tuples
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • The TypeError propagates up — the tuple cannot be hashed • This means the tuple cannot be a dict key or set element Example: hash((1, [2, 3])) # TypeError: unhashable type: 'list' hash((1, (2, 3))) # works — nested tuple is hashable {(1, [2, 3]): "x"} # TypeError — can't use as dict key Common uses: • This is a common gotcha when trying to use tuples as dict keys • Convert inner lists to tuples first: (1, tuple([2, 3])) • Use frozenset for set-like elements in tuples
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -317,7 +317,7 @@ Common uses:
 • Immutable set constants
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • set is mutable → unhashable • frozenset is immutable → hashable • hash(frozenset({1, 2})) returns a valid integer • frozensets can be dict keys or elements of other sets How it works: • frozenset.__hash__() computes a hash from all elements • The algorithm uses XOR of element hashes with mixing • Order doesn't matter: frozenset({1, 2}) == frozenset({2, 1}) and same hash • This is why frozenset exists — to provide a hashable set type Example: hash(frozenset({1, 2})) # valid hash hash(set({1, 2})) # TypeError: unhashable type: 'set' {frozenset({1, 2}): "value"} # frozenset as dict key s = {frozenset({1}), frozenset({2})} # set of frozensets Common uses: • Using sets as dictionary keys (convert to frozenset first) • Sets of sets (inner sets must be frozensets) • Immutable set constants
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -390,7 +390,7 @@ Common uses:
 • Default dictionary values with None keys
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• d = {None: 0, "a": 1} d[None] # 0 None in {None, 1} # True Common uses: • None as a sentinel dict key • Checking if None is in a set • Default dictionary values with None keys
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -463,7 +463,7 @@ Common uses:
 • Understanding bool/int relationship prevents subtle bugs
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • bool is a subclass of int: isinstance(True, int) → True • True == 1 evaluates to True • Python's hash contract: if a == b, then hash(a) == hash(b) • Therefore hash(True) == hash(1) must be True How it works: • True is essentially the integer 1 with a different repr • hash(True) calls int.__hash__(1) → returns 1 • hash(1) also returns 1 • They are equal because the hash contract requires it Example: hash(True) # 1 hash(1) # 1 hash(True) == hash(1) # True True == 1 # True True + True # 2 (because True is 1) Common uses: • This equality means {True: "a", 1: "b"} has only ONE key • Be careful mixing bools and ints as dict keys • Understanding bool/int relationship prevents subtle bugs
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -536,7 +536,7 @@ Common uses:
 • Understanding this prevents unexpected dict behavior
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • bool is a subclass of int • False == 0 evaluates to True • Hash contract: equal objects must have equal hashes • hash(0) == hash(False) → True How it works: • False is internally stored as integer 0 • hash(False) calls int.__hash__(0) → returns 0 • hash(0) also returns 0 • Both are equal, satisfying the hash contract Example: hash(False) # 0 hash(0) # 0 False == 0 # True False + 1 # 1 (because False is 0) int(False) # 0 Common uses: • {0: "zero", False: "false"} → only one key (0 or False) • Avoid mixing 0 and False as dict keys • Understanding this prevents unexpected dict behavior
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -608,7 +608,7 @@ Common uses:
 • Decimal and Fraction also follow this rule
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • 0 == 0.0 is True (int and float comparison) • Hash contract: if a == b, then hash(a) == hash(b) • hash(0) and hash(0.0) are both 0 • This extends to all numeric types: int, float, Decimal, Fraction How it works: • Python's numeric tower ensures cross-type equality • int.__hash__ and float.__hash__ are designed to produce the same hash for equal values • hash(0) → 0, hash(0.0) → 0 • hash(1) → 1, hash(1.0) → 1 (same pattern for all equal numerics) Example: hash(0) == hash(0.0) # True hash(1) == hash(1.0) # True 0 == 0.0 # True {0: "int", 0.0: "float"} # {0: "float"} — one key, last value Common uses: • Be aware when mixing int and float keys in dicts • Numeric hash consistency is a language guarantee • Decimal and Fraction also follow this rule
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -680,7 +680,7 @@ Common uses:
 • Warns against mixing bool/int/float as dict keys
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • True == 1 == 1.0 — all three are numerically equal • In a dict literal, each subsequent equal key overwrites the previous value • The key object is NOT replaced — first key stays (True) • Only the value is updated with each assignment How it works: • {True: "a"} → dict has key True with value "a" • 1: "b" → 1 == True, so value updates to "b", key stays True • 1.0: "c" → 1.0 == True, so value updates to "c", key stays True • Result: {True: "c"} — one key-value pair Example: {True: "a", 1: "b", 1.0: "c"} # {True: "c"} len({True: "a", 1: "b", 1.0: "c"}) # 1 {1: "a", True: "b"} # {1: "b"} {1.0: "a", 1: "b", True: "c"} # {1.0: "c"} Common uses: • This is a classic Python gotcha in interviews • Demonstrates the hash/equality contract in action • Warns against mixing bool/int/float as dict keys
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -754,7 +754,7 @@ Common uses:
 • Important for understanding Python's numeric hash contract
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • 0 == False → True (bool subclass of int) • 0 == 0.0 → True (numeric equality) • All three map to the same dict slot • len(d) is 1 — only one key exists How it works: • d = {0: "zero"} → key 0, value "zero" • False: "false" → False == 0, so value updates to "false", key stays 0 • 0.0: "float_zero" → 0.0 == 0, so value updates to "float_zero", key stays 0 • Result: {0: "float_zero"} — len is 1 Example: d = {0: "zero", False: "false", 0.0: "float_zero"} len(d) # 1 d # {0: "float_zero"} d[0] # "float_zero" d[False] # "float_zero" d[0.0] # "float_zero" Common uses: • Illustrates why mixing 0/False/0.0 as keys is dangerous • All three access the same value • Important for understanding Python's numeric hash contract
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -830,7 +830,7 @@ Common uses:
 • Contrast with the same-object NaN case (question 63)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • float("nan") creates a new NaN object each time • NaN != NaN is True (IEEE 754 standard) • Two different NaN objects are different dict keys • Each call to float("nan") produces a distinct object with a distinct id How it works: • d[float("nan")] = 1 → creates NaN object A, adds to dict • d[float("nan")] = 2 → creates NaN object B (different id) • Python checks: hash(A) may equal hash(B), but A == B is False (NaN != NaN) • Since they're not equal, they're treated as different keys • len(d) is 2 Example: a = float("nan") b = float("nan") a == b # False (NaN != NaN) a is b # False (different objects) d = {} d[a] = 1; d[b] = 2 len(d) # 2 Common uses: • NaN behavior is one of Python's most surprising edge cases • Important in data science when handling missing values • Contrast with the same-object NaN case (question 63)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -906,7 +906,7 @@ Common uses:
 • Different NaN objects → different keys (no identity, equality is False)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • n = float("nan") creates ONE NaN object • d[n] = 1 then d[n] = 2 uses the SAME object both times • Python dict lookup: first checks identity (is), then equality (==) • n is n → True, so Python treats it as the same key • The value is updated, not a new key added How it works: • d[n] = 1 → adds key n with value 1 • d[n] = 2 → checks if n is already a key: hash matches, n is n → True • Since identity matches, it's the same key → value updated to 2 • len(d) is 1 Example: n = float("nan") n == n # False (NaN != NaN) n is n # True (same object!) d = {n: 1} d[n] = 2 len(d) # 1 d[n] # 2 Common uses: • Shows Python dicts use identity check before equality • Same NaN object → same key (identity short-circuit) • Different NaN objects → different keys (no identity, equality is False)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -980,7 +980,7 @@ Common uses:
 • Default behavior — no __hash__ definition needed
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • By default, object.__hash__ returns a value derived from id() • By default, object.__eq__ checks identity (is) • So every instance is unique as a dict key • This changes if you define __eq__ without __hash__ How it works: • class C: pass creates a class with default __hash__ and __eq__ • a = C() — a has a unique id • hash(a) is based on id(a) • a == a is True (identity), a == C() is False (different objects) • {a: 1} works perfectly Example: class C: pass a = C() hash(a) # some integer based on id(a) d = {a: "val"} # works fine d[a] # "val" Common uses: • Object tracking: visited = {obj: True} • Object-to-data mappings • Default behavior — no __hash__ definition needed
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1056,7 +1056,7 @@ Common uses:
 • Each instance is naturally a unique key
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • a = C() and b = C() are two different objects • a is b → False (different identity) • hash(a) != hash(b) (different id-based hashes) • Both can coexist as separate keys in the dict How it works: • d = {a: 1, b: 2} → two entries • a and b have different id() values • hash(a) and hash(b) differ (based on id) • a == b is False (default __eq__ checks identity) • len(d) is 2 Example: class C: pass a, b = C(), C() a is b # False d = {a: 1, b: 2} len(d) # 2 d[a] # 1 d[b] # 2 Common uses: • Tracking individual objects in dicts • Object registries and caches • Each instance is naturally a unique key
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1135,7 +1135,7 @@ Common uses:
 • Data classes with frozen=True auto-generate both
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • __hash__() returns an integer hash value • __eq__() checks equality between objects • Both are needed for correct dict/set behavior • The hash contract: if a == b, then hash(a) == hash(b) How it works: • When inserting into a dict: hash(key) determines the bucket • When looking up: hash(key) finds candidate bucket, then __eq__ confirms match • Without __hash__: can't compute bucket → unhashable • Without __eq__: can't confirm matches → incorrect behavior • All built-in immutable types define both correctly Example: class Point: def __init__(self, x, y): self.x, self.y = x, y def __hash__(self): return hash((self.x, self.y)) def __eq__(self, other): return self.x == other.x and self.y == other.y p1 = Point(1, 2) {p1: "origin"} # works — has both __hash__ and __eq__ Common uses: • Custom classes as dict keys or set elements • Value-based equality (not identity-based) • Data classes with frozen=True auto-generate both
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1215,7 +1215,7 @@ Common uses:
 • Use @dataclass(frozen=True) for automatic correct implementation
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • By default, classes inherit __hash__ from object (based on id) • If you define __eq__, Python assumes the default __hash__ is no longer valid • Python sets __hash__ = None → instances become unhashable • You must explicitly define __hash__ to keep instances hashable How it works: • class C with __eq__ but no __hash__: C.__hash__ is None • hash(a) raises TypeError: unhashable type: 'C' • This is a safety measure — if equality changed, the old hash may violate the contract • To fix: define __hash__ consistent with __eq__ Example: class C: def __eq__(self, other): return True a = C() hash(a) # TypeError: unhashable type: 'C' {a: 1} # TypeError class D: def __eq__(self, other): return True def __hash__(self): return 0 # must be consistent with __eq__ hash(D()) # 0 — works Common uses: • Understanding why custom classes become unhashable • Always define __hash__ alongside __eq__ • Use @dataclass(frozen=True) for automatic correct implementation
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1289,7 +1289,7 @@ Common uses:
 • Filtering dictionaries by key sets
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d.keys() returns a dict_keys view object • dict_keys supports set operations: &, |, -, ^ • d.keys() & {"a", "b"} computes the intersection • Only keys present in both are included How it works: • d.keys() is {"a"} (view of dict keys) • {"a", "b"} is a set • & computes intersection: elements in both • "a" is in both → included • "b" is only in the set → excluded • Result: {"a"} Example: d = {"a": 1, "b": 2, "c": 3} d.keys() & {"a", "b", "d"} # {"a", "b"} d.keys() & {"x", "y"} # set() (empty — no overlap) d.keys() & d.keys() # {"a", "b", "c"} Common uses: • Finding common keys between dicts and sets • Checking which expected keys exist: expected & d.keys() • Filtering dictionaries by key sets
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1361,7 +1361,7 @@ Common uses:
 • Set operations on dict keys without explicit conversion
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d.keys() returns a set-like view • | computes the union — all unique elements from both sides • d.keys() | {"c"} combines {"a", "b"} with {"c"} • Result: {"a", "b", "c"} How it works: • d.keys() yields "a" and "b" • {"c"} contributes "c" • Union includes all unique elements: "a", "b", "c" • Returns a set (not a dict_keys view) Example: d = {"a": 1, "b": 2} d.keys() | {"c"} # {"a", "b", "c"} d.keys() | {"a"} # {"a", "b"} (no duplicates) d.keys() | set() # {"a", "b"} Common uses: • Combining key sets from multiple dicts • Adding expected keys to existing key views • Set operations on dict keys without explicit conversion
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1434,7 +1434,7 @@ Common uses:
 • Filtering out unwanted keys
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d.keys() - {"a"} removes "a" from the keys view • d.keys() is {"a"}, minus {"a"} leaves nothing • Result: set() (empty set) • Returns a set object How it works: • d.keys() contains "a" • Subtract {"a"} — remove all elements in the right operand • "a" is removed → nothing remains • Result is an empty set: set() Example: d = {"a": 1, "b": 2, "c": 3} d.keys() - {"a"} # {"b", "c"} d.keys() - {"a", "b", "c"} # set() d.keys() - {"x"} # {"a", "b", "c"} (nothing to remove) d.keys() - set() # {"a", "b", "c"} Common uses: • Finding keys NOT in a given set • Detecting missing keys: required - d.keys() • Filtering out unwanted keys
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1512,7 +1512,7 @@ Common uses:
 • Basis for collections.defaultdict
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • __missing__(self, key) is called only by __getitem__ (d[key]) • It is NOT called by .get(), .setdefault(), or "in" checks • It allows custom behavior for missing keys instead of KeyError • The return value of __missing__ becomes the return value of d[key] How it works: • d["b"] calls dict.__getitem__(d, "b") • "b" is not in d → __getitem__ calls self.__missing__("b") • __missing__ returns f"no b" → "no b" • d["b"] returns "no b" • But "b" is NOT added to the dict — d still has only {"a": 1} Example: class MyDict(dict): def __missing__(self, key): return f"no {key}" d = MyDict(a=1) d["a"] # 1 (key exists, __missing__ not called) d["b"] # "no b" (__missing__ called) d["xyz"] # "no xyz" "b" in d # False (key was never added) Common uses: • Custom default values for missing keys • Logging access to missing keys • Basis for collections.defaultdict
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1589,7 +1589,7 @@ Common uses:
 • Compare with defaultdict which DOES store the default value
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • __missing__ is called, returns 0 for d["x"] • But it does NOT do self[key] = 0 — the key is not stored • "x" in d → False (the key was never inserted) • To auto-insert, you must explicitly do self[key] = value in __missing__ How it works: • d["x"] triggers __missing__("x") • __missing__ returns 0 → d["x"] evaluates to 0 • The dict itself is unchanged — still empty • "x" in d checks the dict contents → False Example: class MyDict(dict): def __missing__(self, key): return 0 d = MyDict() d["x"] # 0 (returned by __missing__) "x" in d # False (not added) len(d) # 0 (still empty) d.get("x") # None (__missing__ is NOT called by .get()) Common uses: • Understanding the difference between returning and storing • __missing__ is read-only by default • Compare with defaultdict which DOES store the default value
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1668,7 +1668,7 @@ Common uses:
 • Lazy initialization of dict values
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • self[key] = 0 inside __missing__ inserts the key into the dict • return 0 returns the value to the caller • After d["x"], d now contains {"x": 0} • "x" in d → True How it works: • d["x"] → key not found → __missing__("x") called • __missing__ does self["x"] = 0 → adds "x" to dict • __missing__ returns 0 → d["x"] evaluates to 0 • Now d == {"x": 0} • "x" in d → True Example: class MyDict(dict): def __missing__(self, key): self[key] = 0 return 0 d = MyDict() d["x"] # 0 "x" in d # True len(d) # 1 d # {"x": 0} Common uses: • This is essentially what collections.defaultdict does • Auto-populating dictionaries • Lazy initialization of dict values
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1741,7 +1741,7 @@ Common uses:
 • KeyError is the standard behavior for missing dict keys
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • dict.__getitem__ raises KeyError if the key is not found • dict does NOT define __missing__ — only subclasses can • d["b"] with no "b" key → KeyError: 'b' • Use d.get("b") for safe access (returns None) or d.get("b", default) How it works: • d["b"] calls dict.__getitem__(d, "b") • __getitem__ looks up "b" in the hash table • Not found → checks if __missing__ exists on the class • For plain dict, __missing__ is not defined → raises KeyError • Subclasses can define __missing__ to customize this behavior Example: d = {"a": 1} d["b"] # KeyError: 'b' d.get("b") # None (safe access) d.get("b", 0) # 0 (with default) Common uses: • Always use .get() or try/except for safe dict access • Use defaultdict or custom __missing__ for auto-defaults • KeyError is the standard behavior for missing dict keys
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1821,7 +1821,7 @@ Common uses:
 • Any pattern needing auto-initialization
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • defaultdict(factory) stores a default_factory callable • When d[key] misses, __missing__ calls self.default_factory() • The result is stored: self[key] = default_factory() • This is why defaultdict(list) auto-creates empty lists How it works: • d = defaultdict(int) → default_factory is int • d["x"] → key not found → __missing__("x") called • __missing__ calls int() → 0 • Stores: self["x"] = 0 • Returns 0 • Now "x" is in the dict with value 0 Example: from collections import defaultdict d = defaultdict(int) d["x"] # 0 (int() called) d["x"] += 1 # works: d["x"] is now 1 d # defaultdict(int, {"x": 1}) d2 = defaultdict(list) d2["a"].append(1) # auto-creates list, appends 1 d2 # {"a": [1]} Common uses: • Counting: defaultdict(int) • Grouping: defaultdict(list) • Nested dicts: defaultdict(dict) • Any pattern needing auto-initialization
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1896,7 +1896,7 @@ Common uses:
 • class.__dict__ returns a mappingproxy in Python 3
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • MappingProxyType(d) wraps dict d in a read-only view • Reading is allowed: p["a"] returns 1 • Writing is blocked: p["a"] = 2 raises TypeError • The proxy reflects changes made to the original dict How it works: • MappingProxyType stores a reference to the original dict • p["a"] delegates to d["a"] → returns 1 • All read operations work: p["a"], p.get("a"), "a" in p, len(p) • Write operations raise TypeError Example: from types import MappingProxyType d = {"a": 1} p = MappingProxyType(d) p["a"] # 1 p.get("a") # 1 "a" in p # True len(p) # 1 Common uses: • Exposing internal dicts as read-only APIs • Preventing accidental modification of shared state • class.__dict__ returns a mappingproxy in Python 3
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -1971,7 +1971,7 @@ Common uses:
 • Simulating frozen/immutable dicts
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• d["b"] = 2 # OK — modify original dict p["b"] # 2 — proxy reflects the change Common uses: • Protecting configuration dicts from modification • API design: expose read-only mappings • Simulating frozen/immutable dicts
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2048,7 +2048,7 @@ Common uses:
 • Used internally by Python for class.__dict__
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • p is a view of d, not a copy • Modifying d affects what p sees • d["b"] = 2 → p["b"] is now 2 • The proxy always reflects the current state of the original dict How it works: • MappingProxyType stores a reference to d internally • When you access p["b"], it reads from d["b"] • d["b"] = 2 modifies d → p["b"] now returns 2 • The proxy has no independent state — it's purely a wrapper Example: from types import MappingProxyType d = {"a": 1} p = MappingProxyType(d) d["b"] = 2 p["b"] # 2 d["a"] = 99 p["a"] # 99 del d["a"] "a" in p # False Common uses: • Understanding that MappingProxyType is a live view, not a snapshot • Read-only access that stays in sync with the source • Used internally by Python for class.__dict__
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2122,7 +2122,7 @@ Common uses:
 • Snapshot of dict state at a point in time
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d.copy() returns a new dict with the same entries • d2 is a separate object from d • Adding d2["b"] = 2 only affects d2, not d • d remains {"a": 1} How it works: • d.copy() creates a new dict and copies all key-value pairs • d2 is independent at the top level • d2["b"] = 2 adds to d2 only • d is unchanged: {"a": 1} Example: d = {"a": 1} d2 = d.copy() d2["b"] = 2 d # {"a": 1} (unchanged) d2 # {"a": 1, "b": 2} d is d2 # False (different objects) Common uses: • Creating independent copies of dicts • Modifying a copy without affecting the original • Snapshot of dict state at a point in time
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2200,7 +2200,7 @@ Common uses:
 • Common source of bugs in Python
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d.copy() copies references to values, not the values themselves • d["a"] and d2["a"] point to the SAME inner dict object • Modifying the inner dict through d2 also affects d • For independent nested copies, use copy.deepcopy() How it works: • d = {"a": {"x": 1}} — d["a"] points to inner dict {"x": 1} • d2 = d.copy() — d2["a"] points to the SAME inner dict • d2["a"]["y"] = 2 — modifies the shared inner dict • d["a"] is the same object → now {"x": 1, "y": 2} Example: d = {"a": {"x": 1}} d2 = d.copy() d["a"] is d2["a"] # True (same object!) d2["a"]["y"] = 2 d["a"] # {"x": 1, "y": 2} (modified!) import copy d3 = copy.deepcopy(d) d3["a"]["z"] = 3 d["a"] # {"x": 1, "y": 2} (NOT affected) Common uses: • Understanding shallow vs deep copy is critical for mutable data • Use copy.deepcopy() when nested independence is needed • Common source of bugs in Python
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2273,7 +2273,7 @@ Common uses:
 • Getting the class name: obj.__class__.__name__
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • __class__ is the class that created the instance How it works: • d = {"a": 1} creates a dict instance • d.__class__ returns dict (the built-in dict type) • type(d) also returns dict • d.__class__ is dict → True Example: d = {"a": 1} d.__class__ # <class 'dict'> type(d) # <class 'dict'> d.__class__ is dict # True d.__class__.__name__ # "dict" Common uses: • Type checking: obj.__class__ is SomeType • Introspection and debugging • Getting the class name: obj.__class__.__name__
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2346,7 +2346,7 @@ Common uses:
 • Important for understanding Python's type hierarchy
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • isinstance(obj, cls) checks if obj is an instance of cls or any subclass • bool inherits from int: class bool(int) • True is a bool, and bool is a subclass of int • Therefore isinstance(True, int) is True How it works: • isinstance checks the method resolution order (MRO) • bool.__mro__ = (bool, int, object) • int is in bool's MRO → isinstance returns True • This is why True + True == 2 and True == 1 Example: isinstance(True, bool) # True (directly) isinstance(True, int) # True (bool subclasses int) isinstance(True, object) # True (everything subclasses object) isinstance(1, bool) # False (int is NOT a bool) type(True) is int # False (type gives exact class) Common uses: • Explains why True/False behave as 1/0 in arithmetic • Explains why True and 1 are the same dict key • Important for understanding Python's type hierarchy
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2419,7 +2419,7 @@ Common uses:
 • Alternative to defaultdict for one-off defaults
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • If key is not in dict: inserts key with default value, returns default • If key is already in dict: returns existing value, no modification • Unlike .get(), setdefault MODIFIES the dict for missing keys • Returns the value (new or existing) How it works: • d.setdefault("b", []) — "b" is not in d • Inserts "b": [] into d • Returns [] • d is now {"a": 1, "b": []} Example: d = {"a": 1} d.setdefault("b", []) # [] (inserted and returned) d # {"a": 1, "b": []} d.setdefault("a", 99) # 1 (key exists, not modified) d # {"a": 1, "b": []} Common uses: • Building lists in dicts: d.setdefault(key, []).append(value) • Initializing missing keys with defaults • Alternative to defaultdict for one-off defaults
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2491,7 +2491,7 @@ Common uses:
 • Alternative to {**d, "b": 2} (dict unpacking)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • dict(mapping, **kwargs) creates a new dict from mapping and adds kwargs • dict(d, b=2) copies d and adds b=2 • If a key appears in both, the kwarg wins • Returns a new dict — d is not modified How it works: • dict(d, b=2) first copies all entries from d: {"a": 1} • Then adds keyword argument: b=2 • Result: {"a": 1, "b": 2} • d remains unchanged: {"a": 1} Example: d = {"a": 1} e = dict(d, b=2) # {"a": 1, "b": 2} f = dict(d, a=99) # {"a": 99} — kwarg overrides d # {"a": 1} (unchanged) Common uses: • Creating modified copies of dicts • Adding/overriding specific keys in a new dict • Alternative to {**d, "b": 2} (dict unpacking)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2563,7 +2563,7 @@ Common uses:
 • Creating subsets of dictionaries
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • {k: v for k, v in d.items() if condition} filters entries • if k != "a" excludes the key "a" • Only "b": 2 passes the filter • Result: {"b": 2} How it works: • Iterates over d.items(): ("a", 1), ("b", 2) • For ("a", 1): k != "a" is False → excluded • For ("b", 2): k != "a" is True → included • Result: {"b": 2} Example: d = {"a": 1, "b": 2, "c": 3} {k: v for k, v in d.items() if k != "a"} # {"b": 2, "c": 3} {k: v for k, v in d.items() if v > 1} # {"b": 2, "c": 3} {k: v for k, v in d.items() if k in "ac"} # {"a": 1, "c": 3} Common uses: • Non-destructive key removal (original dict unchanged) • Filtering dicts by key or value conditions • Creating subsets of dictionaries
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2635,7 +2635,7 @@ Common uses:
 • Batch key removal
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d.pop(k) removes key k from dict d and returns its value • [d.pop(k) for k in ["a", "c"]] pops "a" and "c" sequentially • The list comprehension returns [1, 3] (the popped values) • d is left with only {"b": 2} How it works: • d.pop("a") removes "a", returns 1 → d is {"b": 2, "c": 3} • d.pop("c") removes "c", returns 3 → d is {"b": 2} • List comprehension result: [1, 3] • d is now {"b": 2} Example: d = {"a": 1, "b": 2, "c": 3} removed = [d.pop(k) for k in ["a", "c"]] removed # [1, 3] d # {"b": 2} Common uses: • Removing multiple known keys from a dict • Collecting removed values for processing • Batch key removal
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2708,7 +2708,7 @@ Common uses:
 • Set-like comparisons without explicit conversion
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Yes • Returns True Example: d = {"a": 1, "b": 2} d.keys() == {"a", "b"} # True d.keys() == {"b", "a"} # True (order irrelevant) d.keys() == {"a"} # False (missing "b") d.keys() == {"a", "b", "c"} # False (extra "c") Common uses: • Validating expected keys in a dict • Checking dict schema: d.keys() == required_keys • Set-like comparisons without explicit conversion
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2778,7 +2778,7 @@ Common uses:
 • Comparing key sets between dicts
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d.keys() is {"a", "b"} • {"a", "c"} has "c" instead of "b" • They are not equal → False • Both must have exactly the same elements for True How it works: • Compares elements: "a" is in both, "b" is only in keys, "c" is only in set • Not all elements match → False Example: d = {"a": 1, "b": 2} d.keys() == {"a", "c"} # False d.keys() == {"a", "b"} # True d.keys() == set() # False (unless dict is empty) Common uses: • Detecting unexpected keys: if d.keys() != expected • Schema validation • Comparing key sets between dicts
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2851,7 +2851,7 @@ Common uses:
 • Top-N queries on data
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • Counter("abracadabra") counts each character: a=5, b=2, r=2, c=1, d=1 • .most_common(3) returns the 3 elements with highest counts • Returns list of (element, count) tuples in descending order • Ties are broken by insertion order (Python 3.7+) How it works: • "abracadabra" → Counter({'a': 5, 'b': 2, 'r': 2, 'c': 1, 'd': 1}) • .most_common(3) → [('a', 5), ('b', 2), ('r', 2)] • 'a' has 5 occurrences (most frequent) • 'b' and 'r' both have 2 (tied, order depends on first appearance) Example: from collections import Counter c = Counter("abracadabra") c.most_common(3) # [('a', 5), ('b', 2), ('r', 2)] c.most_common(1) # [('a', 5)] c.most_common() # all elements, sorted by count Common uses: • Finding most frequent elements in sequences • Word frequency analysis • Top-N queries on data
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2923,7 +2923,7 @@ Common uses:
 • Converting dict to list of tuples for processing
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d.items() returns dict_items view: [("a", 1)] • list(d.items()) converts to a list of tuples • [0] gets the first tuple: ("a", 1) • Each item is a (key, value) tuple How it works: • d = {"a": 1} has one entry • d.items() → dict_items([("a", 1)]) • list(...) → [("a", 1)] • [0] → ("a", 1) — a tuple Example: d = {"a": 1, "b": 2} list(d.items())[0] # ("a", 1) list(d.items())[1] # ("b", 2) list(d.items()) # [("a", 1), ("b", 2)] Common uses: • Accessing dict items by position (Python 3.7+ preserves order) • Iterating with index over dict items • Converting dict to list of tuples for processing
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -2995,7 +2995,7 @@ Common uses:
 • Adding entries: {**d, "new_key": value}
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • {**d} creates a new dict with all entries from d • The new dict has the same keys and values • == compares contents: same contents → True • The objects are different (not the same identity) How it works: • {**d} unpacks d into a new dict literal • {"a": 1, "b": 2} is created • == checks if all key-value pairs match → True Example: d = {"a": 1, "b": 2} e = {**d} e == d # True (same contents) e is d # False (different objects) {**d, "c": 3} # {"a": 1, "b": 2, "c": 3} Common uses: • Shallow copying: e = {**d} • Merging dicts: {**d1, **d2} • Adding entries: {**d, "new_key": value}
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3067,7 +3067,7 @@ Common uses:
 • Avoiding aliasing bugs by creating new dicts
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • {**d} creates a new dict — a different object from d • 'is' checks identity (same object in memory) • Different objects → is returns False • Even though {**d} == d is True, {**d} is d is False How it works: • {**d} allocates a new dict object and copies entries • id({**d}) != id(d) — different memory addresses • 'is' compares id() values → False Example: d = {"a": 1, "b": 2} e = {**d} e is d # False (different objects) e == d # True (same contents) id(e) == id(d) # False Common uses: • Understanding == vs is for containers • Confirming that unpacking creates independent copies • Avoiding aliasing bugs by creating new dicts
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3141,7 +3141,7 @@ Common uses:
 • Security risk: never exec untrusted input
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • exec("d['a'] = 1") executes d['a'] = 1 as Python code • d is accessible in the exec'd code's scope • The assignment modifies d in place • d becomes {"a": 1} How it works: • exec receives the string "d['a'] = 1" • It compiles and executes this as Python code • d is found in the enclosing scope (locals/globals) • d['a'] = 1 adds the key-value pair to d • After exec, d is {"a": 1} Example: d = {} exec("d['a'] = 1") d # {"a": 1} exec("d['b'] = d['a'] + 1") d # {"a": 1, "b": 2} Common uses: • Dynamic code execution (use with caution!) • Code generation and evaluation • Security risk: never exec untrusted input
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3218,7 +3218,7 @@ Common uses:
 • Data exchange between systems
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • json.loads(s) parses a JSON string into Python objects • JSON objects ({...}) → Python dict • JSON arrays ([...]) → Python list • JSON strings → Python str, numbers → int/float, true/false → True/False, null → None How it works: • json.loads('{"a": 1}') parses the JSON string • {"a": 1} is a JSON object • Converted to Python dict: {"a": 1} • type(result) is dict Example: import json result = json.loads('{"a": 1}') type(result) # <class 'dict'> result # {"a": 1} result["a"] # 1 json.loads('[1, 2, 3]') # [1, 2, 3] (list) json.loads('"hello"') # "hello" (str) json.loads('null') # None Common uses: • Parsing API responses • Reading JSON configuration files • Data exchange between systems
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3289,7 +3289,7 @@ Common uses:
 • Peeking at dict contents
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • iter(d) creates an iterator over d's keys • next() returns the first element from the iterator • In Python 3.7+, dicts preserve insertion order • The first key inserted is "a" How it works: • iter(d) yields keys: "a", "b", "c" (in insertion order) • next() retrieves the first yielded value: "a" • Only the key is returned, not the value or a tuple Example: d = {"a": 1, "b": 2, "c": 3} next(iter(d)) # "a" next(iter(d.values())) # 1 next(iter(d.items())) # ("a", 1) Common uses: • Getting the first key without converting to list • Efficient — O(1), doesn't create a list of all keys • Peeking at dict contents
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3361,7 +3361,7 @@ Common uses:
 • Stack-like access to dict entries (LIFO)
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • reversed(d) yields keys in reverse order: "c", "b", "a" • next() returns the first from the reversed iterator: "c" • This is the last key that was inserted • Only works in Python 3.8+ (dict.__reversed__ was added) How it works: • reversed(d) creates a reverse iterator over d's keys • next() retrieves the first element: "c" (last inserted key) • Efficient — doesn't need to build a list Example: d = {"a": 1, "b": 2, "c": 3} next(reversed(d)) # "c" (last key) list(reversed(d)) # ["c", "b", "a"] next(reversed(d.values())) # 3 (last value) next(reversed(d.items())) # ("c", 3) (last item) Common uses: • Getting the last inserted key efficiently • Iterating dicts in reverse order • Stack-like access to dict entries (LIFO)
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3435,7 +3435,7 @@ Common uses:
 • Building lookup tables from sequences
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • enumerate("abc") yields (0, "a"), (1, "b"), (2, "c") • k, v unpacks each tuple: k=index, v=character • {k: v ...} creates a dict mapping index to character • Result: {0: "a", 1: "b", 2: "c"} How it works: • enumerate("abc"): - (0, "a") → k=0, v="a" - (1, "b") → k=1, v="b" - (2, "c") → k=2, v="c" • Dict comprehension: {0: "a", 1: "b", 2: "c"} Example: {k: v for k, v in enumerate("abc")} # {0: "a", 1: "b", 2: "c"} dict(enumerate("abc")) # same result {v: k for k, v in enumerate("abc")} # reversed: {"a": 0, "b": 1, "c": 2} Common uses: • Creating index-to-element mappings • dict(enumerate(seq)) is equivalent • Building lookup tables from sequences
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3507,7 +3507,7 @@ Common uses:
 • Comparing dict contents as ordered sequences
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d.items() returns dict_items([("a", 1), ("b", 2)]) • tuple() converts this view to a tuple • Result: (("a", 1), ("b", 2)) • Each inner element is a (key, value) tuple How it works: • d.items() is a view of key-value pairs • tuple(view) creates a tuple from the iterable • Each pair becomes a tuple inside the outer tuple Example: d = {"a": 1, "b": 2} tuple(d.items()) # (("a", 1), ("b", 2)) tuple(d.keys()) # ("a", "b") tuple(d.values()) # (1, 2) list(d.items()) # [("a", 1), ("b", 2)] Common uses: • Converting dict to hashable form (for use as dict key or set element) • Serializing dict structure • Comparing dict contents as ordered sequences
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3579,7 +3579,7 @@ Common uses:
 • Understanding that update() is in-place and last-write-wins
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• Key concepts: • d.update({"a": 2}) sets d["a"] to 2 • d.update(a=3) sets d["a"] to 3 (keyword argument syntax) • Each call overwrites the previous value • Final state: {"a": 3} — last update wins How it works: • d starts as {"a": 1} • d.update({"a": 2}) → d is {"a": 2} • d.update(a=3) → d is {"a": 3} • update() accepts both dict arguments and keyword arguments Example: d = {"a": 1} d.update({"a": 2}) # d = {"a": 2} d.update(a=3) # d = {"a": 3} d.update({"a": 4}, a=5) # d = {"a": 5} — kwarg overrides dict arg Common uses: • Merging data from multiple sources • Configuration override chains • Understanding that update() is in-place and last-write-wins
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
@@ -3652,7 +3652,7 @@ Common uses:
 • Data quality checks on dictionaries
 
 Key Concepts:
-• See the key concepts and explanation above for the main ideas and bullet points.
+• • Data quality checks on dictionaries
 
 Key Distinctions:
 • Compare with related operations, types, or patterns and similar constructs.
