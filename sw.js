@@ -81,7 +81,9 @@ self.addEventListener('install', (event) => {
 
       for (const url of CDN_URLS) {
         try {
-          await cache.add(url);
+          // Use no-cors so opaque responses (e.g. Tailwind CDN) can be cached for offline
+          const res = await fetch(url, { mode: 'no-cors' });
+          await cache.put(url, res);
         } catch (e) {
           console.warn('CDN cache failed:', url, e.message);
         }
@@ -172,13 +174,13 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // CDN: cache first, then network
+  // CDN: cache first (allow opaque), then network with no-cors fallback
   event.respondWith(
     cachesMatchSafe(event.request).then((cached) => {
       if (cached) return cached;
-      return fetch(event.request)
+      return fetch(event.request, { mode: 'no-cors' })
         .then((response) => {
-          if (response && response.status === 200 && response.type !== 'opaque') {
+          if (response && (response.status === 200 || response.type === 'opaque')) {
             const clone = response.clone();
             caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
           }
