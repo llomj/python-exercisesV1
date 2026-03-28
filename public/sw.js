@@ -174,11 +174,12 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // CDN: cache first (allow opaque), then network with no-cors fallback
+  // CDN: cache first (allow opaque), then network using original request
+  // NOTE: do NOT override mode here — forcing no-cors on an existing Request throws TypeError
   event.respondWith(
     cachesMatchSafe(event.request).then((cached) => {
       if (cached) return cached;
-      return fetch(event.request, { mode: 'no-cors' })
+      return fetch(event.request)
         .then((response) => {
           if (response && (response.status === 200 || response.type === 'opaque')) {
             const clone = response.clone();
