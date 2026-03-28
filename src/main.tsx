@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { LanguageProvider } from './contexts/LanguageContext';
+// Bundle Font Awesome locally so icons work offline (CDN woff2 files are not cacheable cross-origin)
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 // Service Worker: register only in production; in dev, unregister so preview always gets latest (stars, etc.)
 if ('serviceWorker' in navigator) {

@@ -5,7 +5,6 @@ const PRECACHE_ASSETS = []; // BUILD_INJECT
 
 const CDN_URLS = [
   'https://cdn.tailwindcss.com',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap',
   'https://cdn-icons-png.flaticon.com/512/5968/5968350.png'
 ];
