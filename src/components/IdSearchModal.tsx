@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Question } from '../types';
-import { QUESTIONS_BANK } from '../questionsBank';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useSound } from '../contexts/SoundContext';
 import { formatTranslation } from '../translations';
@@ -9,6 +8,7 @@ import { translateQuestionText, translateOptions } from '../utils/translateQuest
 import { getTranslatedShortExplanation } from '../data/shortExplanationsTranslations';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { getQuestionsBank } from '../services/questionsBankLoader';
 
 const formatCodeSnippet = (text: string): string => {
   if (!text) return '';
@@ -227,7 +227,25 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
   const [idInput, setIdInput] = useState('');
   const [question, setQuestion] = useState<Question | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [questionsById, setQuestionsById] = useState<Map<number, Question> | null>(null);
   const showWhitespaceHints = question ? shouldVisualizeOptionWhitespace(question.options) : false;
+
+  useEffect(() => {
+    let mounted = true;
+    getQuestionsBank()
+      .then((qs) => {
+        if (!mounted) return;
+        const map = new Map<number, Question>();
+        for (const q of qs) map.set(q.id, q);
+        setQuestionsById(map);
+      })
+      .catch(() => {
+        if (mounted) setQuestionsById(new Map());
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const handleSearch = () => {
     const id = parseInt(idInput.trim());
@@ -237,7 +255,13 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
       return;
     }
 
-    const found = QUESTIONS_BANK.find(q => q.id === id);
+    if (!questionsById) {
+      setError(t('quiz.loading'));
+      setQuestion(null);
+      return;
+    }
+
+    const found = questionsById.get(id);
     if (!found) {
       setError(formatTranslation(t('idSearch.questionNotFound'), { id }));
       setQuestion(null);

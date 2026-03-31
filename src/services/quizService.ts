@@ -1,5 +1,5 @@
-import { Question, PersonaStage } from "../types";
-import { QUESTIONS_BANK } from "../questionsBank";
+import { Question } from "../types";
+import { getQuestionsBank } from "./questionsBankLoader";
 
 export class QuizService {
   /**
@@ -13,10 +13,11 @@ export class QuizService {
     completedIds: number[] = [],
     randomMode: boolean = false
   ): Promise<Question[]> {
+    const bank = await getQuestionsBank();
     // 1. Filter by requested level OR all levels if random mode
     const levelQuestions = randomMode 
-      ? QUESTIONS_BANK // Get questions from all levels in random mode
-      : QUESTIONS_BANK.filter(q => q.level === level);
+      ? bank // Get questions from all levels in random mode
+      : bank.filter(q => q.level === level);
     
     // 2. Exclude already completed questions to prevent repeats
     const available = levelQuestions.filter(q => !completedIds.includes(q.id));

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IdLogEntry } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useSound } from '../contexts/SoundContext';
 import { getTranslatedShortExplanation } from '../data/shortExplanationsTranslations';
-import { QUESTIONS_BANK } from '../questionsBank';
 import { translateQuestionText } from '../utils/translateQuestion';
 import { formatCodeSnippet, splitQuestion } from '../utils/questionDisplay';
 import { getTranslatedDetailedExplanation } from '../data/detailedExplanationsTranslations';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { getQuestionsBank } from '../services/questionsBankLoader';
 
 interface IdLogViewProps {
   entries: IdLogEntry[];
@@ -19,7 +19,26 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
   const { t, language } = useLanguage();
   const { playCutSound } = useSound();
   const [expandedEntries, setExpandedEntries] = useState<Set<string>>(new Set());
+  const [bank, setBank] = useState<{ byId: Map<number, string | undefined> } | null>(null);
   const sortedEntries = [...entries].sort((a, b) => b.timestamp - a.timestamp);
+
+  useEffect(() => {
+    let mounted = true;
+    getQuestionsBank()
+      .then((qs) => {
+        if (!mounted) return;
+        const byId = new Map<number, string | undefined>();
+        for (const q of qs) byId.set(q.id, q.detailedExplanation);
+        setBank({ byId });
+      })
+      .catch(() => {
+        // If bank can't be loaded (e.g. first-load offline), we still render the log.
+        if (mounted) setBank({ byId: new Map() });
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const toggleCodonExplanation = (entryKey: string) => {
     playCutSound();
@@ -35,8 +54,8 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
   };
 
   const getQuestionDetailedExplanation = (id: number): string | null => {
-    const question = QUESTIONS_BANK.find(q => q.id === id);
-    return question?.detailedExplanation || null;
+    if (!bank) return null;
+    return bank.byId.get(id) || null;
   };
 
   return (
