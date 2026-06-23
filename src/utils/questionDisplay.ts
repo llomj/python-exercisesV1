@@ -4,6 +4,24 @@
  */
 import { translateQuestionText } from './translateQuestion';
 
+const CODE_BLOCK_START_RE = /^\s*(def|class|for|while|if|with|import|from|print|match|case|try|except|finally|elif|else|return|break|continue|assert)\b/;
+const SIMPLE_ASSIGNMENT_RE = /^\s*[A-Za-z_][\w,\s]*(?::\s*[\w\[\], ]+)?\s*=\s*.+$/;
+const CALL_OR_INDEX_RE = /^\s*[A-Za-z_][\w.]*\s*(\(|\[)/;
+const EXPRESSION_RE = /^\s*[\[\(\{'"`0-9A-Za-z_].*(==|!=|<=|>=|<|>|\bin\b|\bis\b|\bor\b|\band\b|\bif\b|\belse\b|\+|-|\*|\/|%)/;
+
+const isLikelyCodeLine = (line: string): boolean => {
+  const trimmed = line.trim();
+  if (!trimmed || trimmed.endsWith('?')) return false;
+  if (/^\s{2,}/.test(line)) return true;
+  if (CODE_BLOCK_START_RE.test(trimmed)) return true;
+  if (SIMPLE_ASSIGNMENT_RE.test(trimmed)) return true;
+  if (CALL_OR_INDEX_RE.test(trimmed)) return true;
+  if (EXPRESSION_RE.test(trimmed) && !/^(What|Quel|Quelle|Quels|Que|Résultat|Sortie|Valeur|Comment|Quand|Où|Pourquoi|Peut|Est|Sont|Laquelle|Lequel)\b/i.test(trimmed)) {
+    return true;
+  }
+  return false;
+};
+
 export const formatCodeSnippet = (text: string): string => {
   if (!text) return '';
 
@@ -79,14 +97,18 @@ export const splitQuestion = (text: string, language: string = 'en', questionId?
   try {
     const enhancedText = translateQuestionText(text, language, questionId);
 
-    if (enhancedText.includes('\n')) {
-      const lines = enhancedText.split('\n');
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        if (/^\s{2,}/.test(line) || /^\s*(def|class|for|while|if|with|import|from)\s+/.test(line)) {
+    if (text.includes('\n') || enhancedText.includes('\n')) {
+      const sourceLines = text.split('\n');
+      const displayLines = enhancedText.split('\n');
+      const maxLines = Math.max(sourceLines.length, displayLines.length);
+
+      for (let i = 0; i < maxLines; i++) {
+        const sourceLine = sourceLines[i] ?? '';
+        const displayLine = displayLines[i] ?? sourceLine;
+        if (isLikelyCodeLine(sourceLine) || isLikelyCodeLine(displayLine)) {
           return {
-            prefix: lines.slice(0, i).join('\n').trim(),
-            code: lines.slice(i).join('\n')
+            prefix: displayLines.slice(0, i).join('\n').trim(),
+            code: displayLines.slice(i).join('\n')
           };
         }
       }
@@ -113,21 +135,18 @@ export const splitQuestion = (text: string, language: string = 'en', questionId?
 
     if (questionWordMatch && questionWordMatch[0]) {
       const questionEnd = questionWordMatch[0].length;
-      let remainingText = enhancedText.substring(questionEnd).trim();
-      remainingText = remainingText.replace(/^(of|de|is)\s+/i, '');
-      const hasQuestionMark = remainingText.endsWith('?');
-      if (hasQuestionMark) remainingText = remainingText.slice(0, -1).trim();
+      let displayRemainingText = enhancedText.substring(questionEnd).trim();
+      let sourceRemainingText = text.substring(Math.min(questionEnd, text.length)).trim();
+      displayRemainingText = displayRemainingText.replace(/^(of|de|is)\s+/i, '');
+      sourceRemainingText = sourceRemainingText.replace(/^(of|de|is)\s+/i, '');
+      const hasQuestionMark = displayRemainingText.endsWith('?');
+      if (hasQuestionMark) displayRemainingText = displayRemainingText.slice(0, -1).trim();
+      if (sourceRemainingText.endsWith('?')) sourceRemainingText = sourceRemainingText.slice(0, -1).trim();
 
-      const functionCallPattern = /[a-zA-Z_]\w*\s*\(/;
-      const codeKeywordPattern = /\b(def|class|for|while|if|with|import|from|print)\s+/;
-      const bracketPattern = /[\[\(\{]/;
-
-      if (functionCallPattern.test(remainingText) ||
-        bracketPattern.test(remainingText) ||
-        codeKeywordPattern.test(remainingText)) {
+      if (isLikelyCodeLine(sourceRemainingText) || isLikelyCodeLine(displayRemainingText)) {
         return {
           prefix: enhancedText.substring(0, questionEnd).trim() + (hasQuestionMark ? '?' : ''),
-          code: remainingText
+          code: displayRemainingText
         };
       }
     }

@@ -13,6 +13,24 @@ import { translateQuestionText, translateOptions } from '../utils/translateQuest
 import { getTranslatedShortExplanation, SHORT_EXPLANATIONS_FR } from '../data/shortExplanationsTranslations';
 import { getTranslatedQuestion } from '../data/questionsFr';
 
+const CODE_BLOCK_START_RE = /^\s*(def|class|for|while|if|with|import|from|print|match|case|try|except|finally|elif|else|return|break|continue|assert)\b/;
+const SIMPLE_ASSIGNMENT_RE = /^\s*[A-Za-z_][\w,\s]*(?::\s*[\w\[\], ]+)?\s*=\s*.+$/;
+const CALL_OR_INDEX_RE = /^\s*[A-Za-z_][\w.]*\s*(\(|\[)/;
+const EXPRESSION_RE = /^\s*[\[\(\{'"`0-9A-Za-z_].*(==|!=|<=|>=|<|>|\bin\b|\bis\b|\bor\b|\band\b|\bif\b|\belse\b|\+|-|\*|\/|%)/;
+
+const isLikelyCodeLine = (line: string): boolean => {
+  const trimmed = line.trim();
+  if (!trimmed || trimmed.endsWith('?')) return false;
+  if (/^\s{2,}/.test(line)) return true;
+  if (CODE_BLOCK_START_RE.test(trimmed)) return true;
+  if (SIMPLE_ASSIGNMENT_RE.test(trimmed)) return true;
+  if (CALL_OR_INDEX_RE.test(trimmed)) return true;
+  if (EXPRESSION_RE.test(trimmed) && !/^(What|Quel|Quelle|Quels|Que|Résultat|Sortie|Valeur|Comment|Quand|Où|Pourquoi|Peut|Est|Sont|Laquelle|Lequel)\b/i.test(trimmed)) {
+    return true;
+  }
+  return false;
+};
+
 // Function to format code snippets with proper Python indentation
 // Ensures newline after : and 4-space indentation for the next line
 const formatCodeSnippet = (text: string): string => {
@@ -585,17 +603,18 @@ const splitQuestion = (text: string, language: string = 'en', questionId?: numbe
     const translatedText = translateText(text, language, questionId);
     // Then enhance vague method calls
     const enhancedText = enhanceVagueMethodCalls(translatedText);
-    // Check for multi-line code blocks (has newlines and indentation)
-    if (enhancedText.includes('\n')) {
-      const lines = enhancedText.split('\n');
-      // Find first line that looks like code (has indentation or code keywords)
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        // If line has indentation or starts with code keywords, split here
-        if (/^\s{2,}/.test(line) || /^\s*(def|class|for|while|if|with|import|from)\s+/.test(line)) {
-          const code = lines.slice(i).join('\n');
+    // Check for multi-line code blocks using original structure as the source of truth.
+    if (text.includes('\n') || enhancedText.includes('\n')) {
+      const sourceLines = text.split('\n');
+      const displayLines = enhancedText.split('\n');
+      const maxLines = Math.max(sourceLines.length, displayLines.length);
+      for (let i = 0; i < maxLines; i++) {
+        const sourceLine = sourceLines[i] ?? '';
+        const displayLine = displayLines[i] ?? sourceLine;
+        if (isLikelyCodeLine(sourceLine) || isLikelyCodeLine(displayLine)) {
+          const code = displayLines.slice(i).join('\n');
           return {
-            prefix: lines.slice(0, i).join('\n').trim(),
+            prefix: displayLines.slice(0, i).join('\n').trim(),
             code: enhanceBareMethodCall(code) // Enhance code section for bare method calls
           };
         }
@@ -626,32 +645,24 @@ const splitQuestion = (text: string, language: string = 'en', questionId?: numbe
 
     if (questionWordMatch && questionWordMatch[0]) {
       const questionEnd = questionWordMatch[0].length;
-      let remainingText = enhancedText.substring(questionEnd).trim();
+      let displayRemainingText = enhancedText.substring(questionEnd).trim();
+      let sourceRemainingText = text.substring(Math.min(questionEnd, text.length)).trim();
 
       // Remove "of", "de", "is", etc. from start of remaining text fully
-      remainingText = remainingText.replace(/^(of|de|is)\s+/i, '');
+      displayRemainingText = displayRemainingText.replace(/^(of|de|is)\s+/i, '');
+      sourceRemainingText = sourceRemainingText.replace(/^(of|de|is)\s+/i, '');
 
       // Remove trailing question mark if present (it's part of the question, not code)
-      const hasQuestionMark = remainingText.endsWith('?');
+      const hasQuestionMark = displayRemainingText.endsWith('?');
       if (hasQuestionMark) {
-        remainingText = remainingText.slice(0, -1).trim();
+        displayRemainingText = displayRemainingText.slice(0, -1).trim();
       }
+      if (sourceRemainingText.endsWith('?')) sourceRemainingText = sourceRemainingText.slice(0, -1).trim();
 
-      // If remaining text has function calls, brackets, or other code patterns, treat as code
-      // This catches cases like "type(None)", "print('hello')", "[1, 2, 3]", "Python"[0], etc.
-      // IMPORTANT: Use ALL remaining text as code to avoid dropping parts (like "Python" in "Python"[0])
-      const functionCallPattern = /[a-zA-Z_]\w*\s*\(/;
-      const codeKeywordPattern = /\b(def|class|for|while|if|with|import|from|print)\s+/;
-      const bracketPattern = /[\[\(\{]/;
-
-      if (functionCallPattern.test(remainingText) ||
-        bracketPattern.test(remainingText) ||
-        codeKeywordPattern.test(remainingText)) {
-        // Use ALL remaining text as code - don't try to find "where code starts"
-        // This ensures we never drop parts like "Python" in "Python"[0]
+      if (isLikelyCodeLine(sourceRemainingText) || isLikelyCodeLine(displayRemainingText)) {
         return {
           prefix: enhancedText.substring(0, questionEnd).trim() + (hasQuestionMark ? '?' : ''),
-          code: enhanceBareMethodCall(remainingText) // Enhance code section for bare method calls
+          code: enhanceBareMethodCall(displayRemainingText) // Enhance code section for bare method calls
         };
       }
     }
