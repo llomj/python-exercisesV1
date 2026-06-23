@@ -476,3 +476,11 @@ For each batch:
 ## Next Action (when resuming)
 
 Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2: **601–900 done**. Levels 3–5: **901–1800 done**. **Level 6 FR : 1801–2100 done**. **Level 7 FR : 2101–2400 done**. **Level 8 FR : 2401–2700 done**. **Level 9 FR : 2701–3000 done**. **Level 10 FR : 3001–3300 done** (rebuild 3201–3300 aligné banque). **Genome FR in-depth : niveau 10 bouclé pour cette plage.**
+
+### 2026-06-24 — Level 2 simplified question in-depth restore
+
+- **Completed:** restored expandable detailed explanations for rewritten Level 2 IDs that had been simplified in prompt wording but lost their in-depth panel.
+- **English IDs updated:** `836–849`, `881–885`.
+- **French in-depth IDs synced:** `836–849`, `881–885`.
+- **Result:** ID search and quiz view now have the long expandable explanation block again instead of only the short one-line explanation for these rewritten entries.
+- **Build verification:** `npm run build` passed.

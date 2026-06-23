@@ -1371,35 +1371,255 @@ Notes:
     q: `What is int("10") + 5?`,
     o: ["15", "10", "5", "Error"],
     c: 0,
-    e: "int('10') becomes 10, and 10 + 5 = 15."
+    e: "int('10') becomes 10, and 10 + 5 = 15.",
+    de: `int("10") changes the text "10" into the integer 10. Then Python adds 5, so the result is 15.
+
+Beginner:
+• int(...) converts a whole-number string into an integer.
+
+Intermediate:
+• Once the text becomes a number, normal addition works.
+
+Advanced:
+• This pattern is common when values come from text-based input such as forms or files.
+
+Key concepts:
+• int("10") → 10
+• 10 + 5 → 15
+
+Key Distinctions:
+• "10" is a string.
+• 10 is an integer.
+
+How It Works:
+• Convert first, then add.
+
+Step-by-Step Execution:
+1. Turn "10" into 10.
+2. Add 5.
+3. Return 15.
+
+Order of Operations:
+• Function call before addition.
+
+Common Use Cases:
+• Parsing numeric input stored as text.
+
+Edge Cases:
+• int("10.0") would fail because it is not an integer string.
+
+Performance Considerations:
+• Tiny constant-time work for a short string.
+
+Examples:
+• int("8") + 2 → 10
+
+Notes:
+• Use float(...) if decimal input is allowed.`
   }),
   // 82. to_bytes big-endian
   (_i: number) => ({
     q: `What is float("2.5") * 2?`,
     o: ["5.0", "4.5", "2.5", "Error"],
     c: 0,
-    e: "float('2.5') becomes 2.5, and 2.5 * 2 = 5.0."
+    e: "float('2.5') becomes 2.5, and 2.5 * 2 = 5.0.",
+    de: `float("2.5") converts the text "2.5" into the number 2.5. Multiplying by 2 gives 5.0.
+
+Beginner:
+• float(...) is for decimal numbers.
+
+Intermediate:
+• A float times an int still produces a numeric result, here 5.0.
+
+Advanced:
+• Python promotes the int 2 during the calculation so the result stays in floating-point form.
+
+Key concepts:
+• float("2.5") → 2.5
+• 2.5 * 2 → 5.0
+
+Key Distinctions:
+• float(...) handles decimal strings.
+• int(...) would not accept "2.5" directly.
+
+How It Works:
+• Convert the string to a float, then multiply.
+
+Step-by-Step Execution:
+1. Turn "2.5" into 2.5.
+2. Multiply by 2.
+3. Return 5.0.
+
+Order of Operations:
+• Conversion first, multiplication second.
+
+Common Use Cases:
+• Measurements, percentages, money-like values, and user input.
+
+Edge Cases:
+• float("abc") would raise an error.
+
+Performance Considerations:
+• Tiny constant-time work for ordinary values.
+
+Examples:
+• float("1.5") * 4 → 6.0
+
+Notes:
+• Floating-point values can show small precision quirks in other cases.`
   }),
   // 83. from_bytes single byte 0xff
   (_i: number) => ({
     q: `What is len(str(1234))?`,
     o: ["4", "3", "1234", "Error"],
     c: 0,
-    e: "str(1234) becomes '1234', and its length is 4."
+    e: "str(1234) becomes '1234', and its length is 4.",
+    de: `str(1234) turns the number into the text "1234". That text has four characters, so len(...) returns 4.
+
+Beginner:
+• len(...) counts characters in a string.
+
+Intermediate:
+• The number 1234 itself is not being counted directly. Python first converts it to text.
+
+Advanced:
+• This is useful when checking how many digits a value has after formatting.
+
+Key concepts:
+• str(1234) → "1234"
+• len("1234") → 4
+
+Key Distinctions:
+• len works on the string result, not on the original integer value as a number type.
+
+How It Works:
+• Convert the number to text, then count the characters.
+
+Step-by-Step Execution:
+1. Convert 1234 to "1234".
+2. Count the characters.
+3. Return 4.
+
+Order of Operations:
+• Inner call first: str(...)
+• Outer call second: len(...)
+
+Common Use Cases:
+• Counting digits, formatting checks, validation.
+
+Edge Cases:
+• str(-12) has length 3 because the minus sign counts too.
+
+Performance Considerations:
+• Small constant-time work for short values.
+
+Examples:
+• len(str(99)) → 2
+
+Notes:
+• Leading zeros only count if they exist in the string form you are measuring.`
   }),
   // 84. from_bytes signed interpretation
   (_i: number) => ({
     q: `What is abs(-12)?`,
     o: ["12", "-12", "0", "Error"],
     c: 0,
-    e: "abs() returns the distance from zero, so abs(-12) is 12."
+    e: "abs() returns the distance from zero, so abs(-12) is 12.",
+    de: `abs(-12) returns the absolute value of -12. Absolute value means distance from zero, so the answer is 12.
+
+Beginner:
+• Negative numbers become positive with abs(...) in examples like this.
+
+Intermediate:
+• abs(-12) and abs(12) are both 12 because both are equally far from zero.
+
+Advanced:
+• abs also works on floats and other numeric types, not just integers.
+
+Key concepts:
+• abs(-12) → 12
+• abs(12) → 12
+
+Key Distinctions:
+• Absolute value means distance from zero.
+• It is not the same thing as subtraction.
+
+How It Works:
+• Python returns the non-negative magnitude of the value.
+
+Step-by-Step Execution:
+1. Read -12.
+2. Measure distance from zero.
+3. Return 12.
+
+Order of Operations:
+• Single function call.
+
+Common Use Cases:
+• Distances, differences, error sizes.
+
+Edge Cases:
+• abs(0) is 0.
+
+Performance Considerations:
+• Constant-time numeric work.
+
+Examples:
+• abs(-1.5) → 1.5
+
+Notes:
+• For complex numbers, abs(...) returns magnitude.`
   }),
   // 85. to_bytes for 256
   (_i: number) => ({
     q: `What is round(7.49)?`,
     o: ["7", "8", "7.5", "Error"],
     c: 0,
-    e: "7.49 rounds to the nearest integer, which is 7."
+    e: "7.49 rounds to the nearest integer, which is 7.",
+    de: `round(7.49) returns the nearest whole number. Since 7.49 is closer to 7 than to 8, the result is 7.
+
+Beginner:
+• This number has not reached 7.5, so it does not round up.
+
+Intermediate:
+• 7.49 is 0.49 away from 7 and 0.51 away from 8.
+
+Advanced:
+• Exact .5 cases have special tie behavior in Python, but 7.49 is not a tie.
+
+Key concepts:
+• round(7.49) → 7
+• round(7.5) may behave differently than beginners expect in some cases
+
+Key Distinctions:
+• round(...) chooses the nearest value.
+• int(...) would simply cut off the decimal part.
+
+How It Works:
+• Python compares the number to nearby whole numbers and picks the closest one.
+
+Step-by-Step Execution:
+1. Compare 7.49 to 7 and 8.
+2. 7 is closer.
+3. Return 7.
+
+Order of Operations:
+• Single function call.
+
+Common Use Cases:
+• Approximate display values and quick summaries.
+
+Edge Cases:
+• round(7.51) would be 8.
+
+Performance Considerations:
+• Constant-time numeric operation.
+
+Examples:
+• round(2.2) → 2
+
+Notes:
+• Use the second argument to round(...) when you need decimal-place rounding instead of whole numbers.`
   }),
   // 86. format() binary without prefix
   (_i: number) => ({

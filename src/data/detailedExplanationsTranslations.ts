@@ -36327,581 +36327,624 @@ Exemples :
 
 Remarques :
 • z.conjugate().conjugate() = z.`,
-  836: `5 & 3 vaut 1 : ET bit à bit. 101 & 011 = 001 = 1.
+  836: `int("12") + 3 vaut 15. int("12") convertit le texte en nombre, puis on additionne 3.
 
 Débutant :
-• & = ET : bit à 1 seulement si les deux opérandes ont 1 à cette position.
+• int("12") transforme la chaîne "12" en entier 12.
 
 Intermédiaire :
-• 5=101, 3=011 ; AND position par position → 001=1.
+• La conversion se fait d'abord, puis Python calcule 12 + 3.
 
 Expert :
-• Masquage : extraire des bits ; flags.
+• C'est très courant quand une valeur vient d'une saisie utilisateur, d'un formulaire ou d'un fichier.
 
 Concepts clés :
-• & = AND bit à bit ; 1 & 1 = 1, sinon 0.
+• int("12") → 12
+• 12 + 3 → 15
 
 Distinctions clés :
-• vs and (logique) ; vs | (OR).
+• "12" est du texte.
+• 12 est un nombre entier.
 
 Fonctionnement :
-• AND sur chaque paire de bits.
+• Python lit les chiffres de la chaîne, crée un entier, puis effectue l'addition.
 
 Exécution étape par étape :
-1. 5 (101), 3 (011).
-2. & → 1 (001).
+1. Convertir "12" en 12.
+2. Ajouter 3.
+3. Obtenir 15.
 
 Ordre des opérations :
-• &.
+• Appel de fonction d'abord, addition ensuite.
 
 Cas d'utilisation courants :
-• Masques binaires, flags, permissions.
+• Convertir une entrée texte en valeur numérique.
 
 Cas limites :
-• 0 & n = 0 ; n & n = n.
+• int("12.5") échoue, car ce n'est pas une chaîne d'entier.
 
 Considérations de performance :
-• O(1).
+• Travail minime pour une petite chaîne.
 
 Exemples :
-• 0xFF & 0x0F → 0x0F (masque bas nibble)
+• int("7") + 1 → 8
 
 Remarques :
-• Ne pas confondre avec and.`,
-  837: `5 | 3 vaut 7 : OU bit à bit. 101 | 011 = 111 = 7.
+• Utilisez float(...) si le texte peut contenir une décimale.`,
+  837: `float("2.5") + 1 vaut 3.5. float("2.5") convertit le texte en nombre décimal, puis on ajoute 1.
 
 Débutant :
-• | = OU : bit à 1 si l'un ou l'autre a 1.
+• float(...) sert à convertir un texte représentant un nombre avec décimale.
 
 Intermédiaire :
-• 5=101, 3=011 ; OR → 111=7.
+• Après conversion, Python additionne 2.5 et 1 pour obtenir 3.5.
 
 Expert :
-• Combiner des flags ; setter des bits.
+• Lors du calcul, l'entier 1 est promu en 1.0 pour travailler en flottant.
 
 Concepts clés :
-• | = OR bit à bit ; 0|0=0, sinon 1.
+• float("2.5") → 2.5
+• 2.5 + 1 → 3.5
 
 Distinctions clés :
-• vs or (logique) ; vs & (AND).
+• int(...) convient aux entiers.
+• float(...) convient aux nombres décimaux.
 
 Fonctionnement :
-• OR sur chaque paire de bits.
+• Python convertit d'abord la chaîne en float, puis effectue l'addition.
 
 Exécution étape par étape :
-1. 5, 3.
-2. | → 7.
+1. Convertir "2.5" en 2.5.
+2. Ajouter 1.
+3. Obtenir 3.5.
 
 Ordre des opérations :
-• |.
+• Conversion avant addition.
 
 Cas d'utilisation courants :
-• Combinaison de flags.
+• Prix, mesures, pourcentages, saisies utilisateur.
 
 Cas limites :
-• 0 | n = n ; n | n = n.
+• float("bonjour") produirait une erreur.
 
 Considérations de performance :
-• O(1).
+• Travail très léger pour une valeur courte.
 
 Exemples :
-• 0b1000 | 0b0100 → 0b1100
+• float("1.2") + 2 → 3.2
 
 Remarques :
-• | pour bits, or pour booléens.`,
-  838: `5 ^ 3 vaut 6 : XOR bit à bit. 101 ^ 011 = 110 = 6.
+• Les floats peuvent parfois afficher de petites imprécisions dans d'autres cas.`,
+  838: `abs(-9) vaut 9. abs(...) renvoie la valeur absolue, c'est-à-dire la distance à zéro.
 
 Débutant :
-• ^ = XOR : bit à 1 si les deux bits diffèrent.
+• La valeur absolue enlève le signe moins d'un nombre négatif.
 
 Intermédiaire :
-• 5=101, 3=011 ; XOR → 110=6.
+• abs(-9) et abs(9) valent tous les deux 9.
 
 Expert :
-• Toggle bits ; swap sans variable temp ; crypto simple.
+• abs(...) fonctionne aussi avec les floats et, dans un autre sens, avec les complexes.
 
 Concepts clés :
-• ^ = XOR ; 0^0=0, 1^1=0, 0^1=1, 1^0=1.
+• abs(-9) → 9
+• abs(9) → 9
 
 Distinctions clés :
-• vs ** (puissance) ; vs | et &.
+• La valeur absolue représente une distance à zéro.
+• Ce n'est pas une soustraction.
 
 Fonctionnement :
-• XOR sur chaque paire de bits.
+• Python renvoie la grandeur non négative du nombre.
 
 Exécution étape par étape :
-1. 5, 3.
-2. ^ → 6.
+1. Lire -9.
+2. Mesurer sa distance à zéro.
+3. Renvoyer 9.
 
 Ordre des opérations :
-• ^.
+• Un seul appel de fonction.
 
 Cas d'utilisation courants :
-• Inversion de bits, échange XOR.
+• Distances, écarts, erreurs.
 
 Cas limites :
-• n ^ n = 0 ; n ^ 0 = n.
+• abs(0) vaut 0.
 
 Considérations de performance :
-• O(1).
+• Opération constante.
 
 Exemples :
-• a^=b; b^=a; a^=b pour swap
+• abs(-3.5) → 3.5
 
 Remarques :
-• XOR = exclusive OR.`,
-  839: `~5 vaut -6 : NOT bit à bit ; en complément à 2, ~n = -(n+1).
+• Pour un complexe, abs(z) renvoie sa norme.`,
+  839: `7 % 3 vaut 1. L'opérateur % renvoie le reste après une division.
 
 Débutant :
-• ~ inverse tous les bits ; ~5 = -6.
+• 3 entre deux fois dans 7, et il reste 1.
 
 Intermédiaire :
-• Formule : ~n = -(n+1). ~0 = -1, ~(-1) = 0.
+• 7 = 3×2 + 1, donc le reste est 1.
 
 Expert :
-• Complément à 2 ; ~~n = n.
+• En Python, a = (a // b) * b + (a % b).
 
 Concepts clés :
-• ~ = inversion de tous les bits ; complément à 2.
+• 7 % 3 → 1
+• 7 // 3 → 2
 
 Distinctions clés :
-• vs - (négation) ; ~5 ≠ -5.
+• % donne le reste.
+• // donne le quotient entier.
 
 Fonctionnement :
-• Inversion bit à bit, interprétation complément à 2.
+• Python cherche combien de groupes entiers de 3 tiennent dans 7, puis renvoie ce qu'il reste.
 
 Exécution étape par étape :
-1. 5.
-2. ~ → -6.
+1. 3 va deux fois dans 7.
+2. Cela utilise 6.
+3. Il reste 1.
 
 Ordre des opérations :
-• ~ (unaire).
+• Une seule opération modulo.
 
 Cas d'utilisation courants :
-• Masques inversés, index depuis la fin.
+• Pair/impair, cycles, index circulaires.
 
 Cas limites :
-• ~0 → -1.
+• 6 % 3 vaut 0 car il ne reste rien.
 
 Considérations de performance :
-• O(1).
+• Arithmétique entière constante.
 
 Exemples :
-• ~(-6) → 5
+• 10 % 4 → 2
 
 Remarques :
-• ~n = -(n+1) toujours.`,
-  840: `1 << 3 vaut 8 : décalage à gauche ; 1 * 2³ = 8.
+• Si le reste vaut 0, le premier nombre est divisible par le second.`,
+  840: `2 ** 4 vaut 16. L'opérateur ** signifie "élever à la puissance".
 
 Débutant :
-• << décale les bits à gauche ; 1 << 3 = 1000 en binaire = 8.
+• 2 ** 4 signifie 2 × 2 × 2 × 2.
 
 Intermédiaire :
-• a << n = a * 2^n. Zéros insérés à droite.
+• L'exposant indique combien de fois on multiplie la base par elle-même.
 
 Expert :
-• 1 << n = 2^n ; masques : 1 << n met le bit n à 1.
+• Les puissances apparaissent souvent dans les calculs scientifiques et les puissances de 2.
 
 Concepts clés :
-• << = décalage gauche ; multiplication par 2^n.
+• 2 ** 4 → 16
+• 2 ** 3 → 8
 
 Distinctions clés :
-• vs >> (droite) ; vs * (multiplication).
+• ** = puissance
+• * = multiplication simple
 
 Fonctionnement :
-• Décalage des bits, zéros à droite.
+• Python applique l'exponentiation et calcule les multiplications répétées.
 
 Exécution étape par étape :
-1. 1, 3.
-2. << → 8.
+1. Partir de 2.
+2. Le multiplier par lui-même 4 fois au total.
+3. Obtenir 16.
 
 Ordre des opérations :
-• <<.
+• L'exponentiation est prioritaire dans les expressions plus longues.
 
 Cas d'utilisation courants :
-• Puissances de 2, flags, masques.
+• Puissances, surfaces, volumes, croissance.
 
 Cas limites :
-• 1 << 0 = 1.
+• Tout nombre à la puissance 0 vaut 1.
 
 Considérations de performance :
-• O(1).
+• Calcul très rapide pour un petit exposant.
 
 Exemples :
-• 5 << 1 = 10 (5*2)
+• 3 ** 2 → 9
 
 Remarques :
-• Équivalent à * 2**n.`,
-  841: `16 >> 2 vaut 4 : décalage à droite ; 16 // 2² = 4.
+• On lit a ** b comme "a puissance b".`,
+  841: `9 // 2 vaut 4. L'opérateur // fait une division entière par plancher.
 
 Débutant :
-• >> décale les bits à droite ; 10000 >> 2 = 100 = 4.
+• 2 entre quatre fois complètement dans 9.
 
 Intermédiaire :
-• a >> n = a // 2^n. Bits perdus à droite.
+• 9 / 2 vaut 4.5, mais // garde ici seulement la partie entière inférieure, donc 4.
 
 Expert :
-• Pour négatifs : décalage arithmétique (signe préservé).
+• Avec les négatifs, Python arrondit vers le bas, pas vers zéro.
 
 Concepts clés :
-• >> = décalage droite ; division entière par 2^n.
+• 9 // 2 → 4
+• 9 / 2 → 4.5
 
 Distinctions clés :
-• vs << ; vs // (division).
+• / donne la division normale.
+• // donne la division entière.
 
 Fonctionnement :
-• Décalage des bits, bits perdus à droite.
+• Python divise puis prend le plancher du résultat.
 
 Exécution étape par étape :
-1. 16, 2.
-2. >> → 4.
+1. Calculer 9 / 2 = 4.5.
+2. Prendre le plancher.
+3. Renvoyer 4.
 
 Ordre des opérations :
-• >>.
+• Une seule division entière.
 
 Cas d'utilisation courants :
-• Division rapide par 2^n, extraction de bits.
+• Compter des groupes complets, des pages, des paquets.
 
 Cas limites :
-• 16 >> 4 = 1.
+• -9 // 2 vaut -5.
 
 Considérations de performance :
-• O(1).
+• Arithmétique constante.
 
 Exemples :
-• 100 >> 1 = 50
+• 11 // 3 → 3
 
 Remarques :
-• Équivalent à // 2**n.`,
-  842: `0b1010 & 0b1100 vaut 8 : ET sur littéraux binaires. 1010 & 1100 = 1000 = 8.
+• Très utile quand on veut un résultat entier seulement.`,
+  842: `10 % 3 vaut 1. Le modulo renvoie le reste après la division.
 
 Débutant :
-• 0b1010=10, 0b1100=12 ; 10 & 12 = 8.
+• 3 entre trois fois dans 10, et il reste 1.
 
 Intermédiaire :
-• 0b = préfixe binaire. Le résultat est un int.
+• 10 = 3×3 + 1.
 
 Expert :
-• Position 3 : 1&1=1 ; positions 2,1,0 : 0. Résultat 1000=8.
+• Le modulo sert souvent à gérer des répétitions ou des cycles.
 
 Concepts clés :
-• Littéraux 0b ; & bit à bit.
+• 10 % 3 → 1
+• 10 // 3 → 3
 
 Distinctions clés :
-• vs 0o (octal) ; vs 0x (hex).
+• % renvoie le reste.
+• // renvoie le nombre de groupes entiers.
 
 Fonctionnement :
-• Parsing binaire, puis &.
+• Python calcule combien de 3 entiers tiennent dans 10 et renvoie ce qui reste.
 
 Exécution étape par étape :
-1. 0b1010, 0b1100.
-2. & → 8.
+1. 3 × 3 = 9.
+2. 10 - 9 = 1.
+3. Renvoyer 1.
 
 Ordre des opérations :
-• Littéraux, &.
+• Une seule opération modulo.
 
 Cas d'utilisation courants :
-• Masques en binaire lisible.
+• Cycles, horaires, vérification de divisibilité.
 
 Cas limites :
-• 0b1111 & 0b1111 = 15.
+• 9 % 3 vaut 0.
 
 Considérations de performance :
-• O(1).
+• Arithmétique entière constante.
 
 Exemples :
-• bin(0b1010 & 0b1100) → '0b1000'
+• 14 % 5 → 4
 
 Remarques :
-• 0b pour lisibilité des masques.`,
-  843: `0b1010 | 0b1100 vaut 14 : OU bit à bit sur littéraux binaires.
+• Un reste de 0 signifie divisible.`,
+  843: `round(3.6) vaut 4. round(...) renvoie l'entier le plus proche.
 
 Débutant :
-• 0b1010=10, 0b1100=12 ; 10 | 12 = 14.
+• 3.6 est plus proche de 4 que de 3.
 
 Intermédiaire :
-• OR position par position ; 1110 en binaire = 14.
+• 3.6 est à 0.4 de 4 et à 0.6 de 3.
 
 Expert :
-• Combiner des masques ; 0b pour lisibilité.
+• Python a une règle spéciale pour les cas exacts en .5, mais cela n'intervient pas ici.
 
 Concepts clés :
-• Littéraux 0b ; | bit à bit.
+• round(3.6) → 4
+• round(3.2) → 3
 
 Distinctions clés :
-• vs & (AND) ; vs ^ (XOR).
+• round(...) arrondit.
+• int(...) coupe simplement la partie décimale.
 
 Fonctionnement :
-• Parsing binaire, puis |.
+• Python compare la valeur aux entiers voisins et choisit le plus proche.
 
 Exécution étape par étape :
-1. 0b1010, 0b1100.
-2. | → 14.
+1. Observer 3.6.
+2. Comparer 3 et 4.
+3. Choisir 4.
 
 Ordre des opérations :
-• Littéraux, |.
+• Un seul appel de fonction.
 
 Cas d'utilisation courants :
-• Combiner des flags en binaire.
+• Estimations, affichages simplifiés, résumés.
 
 Cas limites :
-• 0b1111 | 0b0000 = 15.
+• round(2.5) peut surprendre selon la règle d'arrondi des .5.
 
 Considérations de performance :
-• O(1).
+• Opération constante.
 
 Exemples :
-• bin(0b1010 | 0b1100) → '0b1110'
+• round(8.1) → 8
 
 Remarques :
-• 0b pour lisibilité.`,
-  844: `0b1010 ^ 0b1100 vaut 6 : XOR bit à bit sur littéraux binaires.
+• Si vous voulez des décimales précises, utilisez le second argument de round(...).`,
+  844: `round(3.14159, 2) vaut 3.14. Le second argument indique combien de décimales conserver.
 
 Débutant :
-• XOR : bit à 1 si les deux diffèrent ; 1010 ^ 1100 = 0110 = 6.
+• Deux décimales signifie garder deux chiffres après le point.
 
 Intermédiaire :
-• 10 ^ 12 = 6 ; positions où un seul a 1.
+• On regarde le troisième chiffre après le point : ici c'est 1, donc 3.14 ne change pas.
 
 Expert :
-• Toggle bits ; swap XOR sans variable temp.
+• Le second argument donne une précision décimale, pas un "arrondi au multiple de 2".
 
 Concepts clés :
-• ^ = XOR ; 0^0=0, 1^1=0, 0^1=1, 1^0=1.
+• round(3.14159, 2) → 3.14
+• round(3.14159, 3) → 3.142
 
 Distinctions clés :
-• vs | (OR) ; vs & (AND).
+• Le 2 correspond à deux décimales.
+• Ce n'est pas une valeur à ajouter ou à multiplier.
 
 Fonctionnement :
-• XOR sur chaque paire de bits.
+• Python examine la décimale suivante pour décider s'il faut augmenter la dernière conservée.
 
 Exécution étape par étape :
-1. 0b1010, 0b1100.
-2. ^ → 6.
+1. Garder 3.14.
+2. Regarder la décimale suivante : 1.
+3. Laisser 3.14 tel quel.
 
 Ordre des opérations :
-• Littéraux, ^.
+• round(nombre, chiffres)
 
 Cas d'utilisation courants :
-• Inversion de bits, échange XOR.
+• Prix, mesures, affichages propres.
 
 Cas limites :
-• 0b1010 ^ 0b1010 = 0.
+• Les floats peuvent parfois montrer de petites approximations.
 
 Considérations de performance :
-• O(1).
+• Travail constant sur une valeur simple.
 
 Exemples :
-• 0b1111 ^ 0b1010 → 5
+• round(2.718, 2) → 2.72
 
 Remarques :
-• XOR = exclusive OR.`,
-  845: `bin(10) vaut '0b1010' : représentation binaire en chaîne.
+• Pour l'affichage seul, une chaîne formatée peut aussi être utile.`,
+  845: `int(4.9) vaut 4. int(...) enlève simplement la partie décimale.
 
 Débutant :
-• bin(n) donne la chaîne binaire de n avec préfixe 0b.
+• int(...) coupe ce qui est après le point.
 
 Intermédiaire :
-• bin(-5) → '-0b101' ; négatifs en complément à 2.
+• 4.9 devient 4, pas 5.
 
 Expert :
-• int('0b1010', 2) → 10 pour l'inverse.
+• On parle de troncature vers zéro.
 
 Concepts clés :
-• bin(int) → str ; préfixe 0b.
+• int(4.9) → 4
+• round(4.9) → 5
 
 Distinctions clés :
-• vs hex() ; vs oct() ; vs format(n, 'b').
+• int(...) tronque.
+• round(...) arrondit.
 
 Fonctionnement :
-• Conversion en base 2, formatage.
+• Python convertit le float en entier en supprimant la partie fractionnaire.
 
 Exécution étape par étape :
-1. 10.
-2. bin(10) → '0b1010'.
+1. Partir de 4.9.
+2. Enlever .9.
+3. Renvoyer 4.
 
 Ordre des opérations :
-• Appel.
+• Un seul appel de conversion.
 
 Cas d'utilisation courants :
-• Debug, affichage binaire, masques.
+• Index, compteurs, valeurs entières dérivées d'un calcul.
 
 Cas limites :
-• bin(0) → '0b0'.
+• int(-4.9) vaut -4.
 
 Considérations de performance :
-• O(log n).
+• Conversion constante.
 
 Exemples :
-• bin(255) → '0b11111111'
+• int(7.1) → 7
 
 Remarques :
-• Préfixe 0b pour littéraux valides.`,
-  846: `bin(10 & 12) vaut '0b1000' : bin du résultat d'un ET bit à bit.
+• Utilisez round(...) si vous voulez la valeur la plus proche.`,
+  846: `str(42) vaut "42". str(...) convertit une valeur en texte.
 
 Débutant :
-• 10 & 12 = 8 ; bin(8) = '0b1000'.
+• str(...) transforme un nombre en chaîne de caractères.
 
 Intermédiaire :
-• 1010 & 1100 = 1000 en binaire.
+• Après conversion, "42" n'est plus un entier mais du texte.
 
 Expert :
-• Chaînage : opération bitwise puis conversion.
+• Cette conversion est fréquente avant un affichage, un message ou une concaténation.
 
 Concepts clés :
-• & puis bin ; ordre d'évaluation.
+• str(42) → "42"
+• Le type final est une chaîne
 
 Distinctions clés :
-• vs bin(10) & bin(12) (erreur, str).
+• 42 est un nombre.
+• "42" est du texte.
 
 Fonctionnement :
-• 10 & 12 → 8, bin(8) → '0b1000'.
+• Python formate l'entier en caractères et renvoie une chaîne.
 
 Exécution étape par étape :
-1. 10 & 12 → 8.
-2. bin(8) → '0b1000'.
+1. Lire 42.
+2. Le convertir en texte.
+3. Renvoyer "42".
 
 Ordre des opérations :
-• &, puis bin.
+• Un seul appel de conversion.
 
 Cas d'utilisation courants :
-• Vérifier les bits après masquage.
+• Affichage, étiquettes, logs, messages.
 
 Cas limites :
-• bin(0 & n) → '0b0'.
+• str(True) donne "True".
 
 Considérations de performance :
-• O(1).
+• Conversion légère pour une petite valeur.
 
 Exemples :
-• bin(0xFF & 0x0F) → '0b1111'
+• str(7) + " pommes" → "7 pommes"
 
 Remarques :
-• & avant bin.`,
-  847: `1 << 10 vaut 1024 : 2^10 = 1024.
+• On peut reconvertir le texte en nombre plus tard si besoin.`,
+  847: `2 ** 10 vaut 1024. C'est une puissance de 2 très utilisée en informatique.
 
 Débutant :
-• Décalage gauche : 1 * 2^10 = 1024.
+• 2 ** 10 signifie multiplier 2 par lui-même 10 fois.
 
 Intermédiaire :
-• 1 << n = 2^n ; puissances de 2.
+• Les puissances de 2 grandissent vite : 2, 4, 8, 16, 32... jusqu'à 1024.
 
 Expert :
-• Masques : 1 << n met le bit n à 1 ; flags ; 1 KiB = 1024.
+• 1024 apparaît souvent pour les tailles mémoire ou les structures binaires.
 
 Concepts clés :
-• << = multiplication par 2^n.
+• 2 ** 10 → 1024
+• 2 ** 8 → 256
 
 Distinctions clés :
-• vs 10 << 1 (décale 10) ; vs 2**10.
+• ** = puissance
+• * = multiplication simple
 
 Fonctionnement :
-• Décalage de 10 positions à gauche.
+• Python calcule l'exponentiation.
 
 Exécution étape par étape :
-1. 1, 10.
-2. << → 1024.
+1. Partir de 2.
+2. Le multiplier par lui-même jusqu'à 10 facteurs.
+3. Obtenir 1024.
 
 Ordre des opérations :
-• <<.
+• L'exponentiation est prioritaire.
 
 Cas d'utilisation courants :
-• Puissances de 2, KB (1024), flags.
+• Mémoire, croissance binaire, calculs de puissance.
 
 Cas limites :
-• 1 << 0 = 1.
+• 2 ** 0 vaut 1.
 
 Considérations de performance :
-• O(1).
+• Rapide pour un petit exposant entier.
 
 Exemples :
-• 1 << 20 = 1048576 (1 MiB)
+• 2 ** 5 → 32
 
 Remarques :
-• Équivalent à 2**10.`,
-  848: `x = 5 ; x ^= x ; x vaut 0 : XOR avec soi-même annule.
+• 1024 est proche de 1000, d'où son usage fréquent en informatique.`,
+  848: `Après x = 5 puis x = x * 2, x vaut 10.
 
 Débutant :
-• x ^= x équivaut à x = x ^ x ; n ^ n = 0.
+• Une variable peut changer de valeur d'une ligne à l'autre.
 
 Intermédiaire :
-• 5 ^ 5 = 0 ; tout nombre XOR lui-même = 0.
+• x = x * 2 signifie : prendre la valeur actuelle de x, la multiplier par 2, puis réenregistrer le résultat dans x.
 
 Expert :
-• Technique pour réinitialiser sans variable temp.
+• La réaffectation est au cœur de beaucoup d'algorithmes.
 
 Concepts clés :
-• ^= opérateur d'affectation ; n ^ n = 0.
+• Départ : x = 5
+• Mise à jour : x = x * 2
+• Résultat : x = 10
 
 Distinctions clés :
-• vs x &= x (idempotent) ; vs x |= x (idempotent).
+• = sert ici à affecter une nouvelle valeur.
+• L'ancienne valeur de x est utilisée avant d'être remplacée.
 
 Fonctionnement :
-• x ^ x → 0, assignation.
+• Python lit x, calcule x * 2, puis stocke le résultat dans x.
 
 Exécution étape par étape :
-1. x = 5.
-2. x ^ x → 0.
-3. x = 0.
+1. Mettre 5 dans x.
+2. Calculer 5 * 2.
+3. Stocker 10 dans x.
 
 Ordre des opérations :
-• ^, ^=.
+• La multiplication se fait avant la fin de l'affectation.
 
 Cas d'utilisation courants :
-• Reset de variable, swap XOR.
+• Scores, compteurs, mises à jour progressives.
 
 Cas limites :
-• 0 ^= 0 → 0.
+• Si x partait de 0, il resterait 0.
 
 Considérations de performance :
-• O(1).
+• Opération très légère.
 
 Exemples :
-• a ^= a ; b ^= b pour reset
+• y = 4 ; y = y + 3 donne y = 7
 
 Remarques :
-• n ^ n = 0 toujours.`,
-  849: `a, b = 3, 7 ; a ^ b ^ b vaut 3 : XOR annule avec double application.
+• La forme courte équivalente est x *= 2.`,
+  849: `a, b = 3, 1 puis a + b vaut 4.
 
 Débutant :
-• a ^ b ^ b = (a ^ b) ^ b = a ^ (b ^ b) = a ^ 0 = a.
+• a reçoit 3 et b reçoit 1.
 
 Intermédiaire :
-• XOR est auto-inverse : (a ^ b) ^ b = a.
+• a, b = 3, 1 permet d'affecter deux variables sur une seule ligne.
 
 Expert :
-• Base du swap XOR : a, b = a^b, a^b^a.
+• C'est une forme d'unpacking très fréquente en Python.
 
 Concepts clés :
-• Associativité de ^ ; n ^ n = 0 ; n ^ 0 = n.
+• a = 3
+• b = 1
+• a + b = 4
 
 Distinctions clés :
-• vs a ^ b (une fois) ; vs a + b - b.
+• L'affectation avec virgule définit les deux variables d'un coup.
+• Ensuite, l'addition suit les règles normales.
 
 Fonctionnement :
-• a ^ b → c, c ^ b → a.
+• Python affecte les deux valeurs, puis évalue l'addition.
 
 Exécution étape par étape :
-1. a ^ b → 4 (3^7).
-2. 4 ^ b → 3.
+1. Mettre 3 dans a.
+2. Mettre 1 dans b.
+3. Calculer 3 + 1.
 
 Ordre des opérations :
-• ^ gauche à droite.
+• Affectation d'abord, addition ensuite.
 
 Cas d'utilisation courants :
-• Swap sans variable temp ; chiffrement simple.
+• Définir plusieurs variables, décomposer des résultats, échanges de valeurs.
 
 Cas limites :
-• a ^ b ^ a = b.
+• En déballage simple, il faut le même nombre de variables et de valeurs.
 
 Considérations de performance :
-• O(1).
+• Travail très léger.
 
 Exemples :
-• 3 ^ 7 ^ 7 → 3
+• x, y = 2, 5 puis x + y → 7
 
 Remarques :
-• (x ^ y) ^ y = x.`,
+• Cette écriture compacte est très idiomatique en Python.`,
   850: `bool(0b0000) vaut False : zéro est falsy.
 
 Débutant :
@@ -38174,211 +38217,224 @@ Exemples :
 
 Remarques :
 • 255 = max 8 bits.`,
-  881: `int.from_bytes(b'\x00\x0a', 'big') vaut 10 : bytes big-endian vers int.
+  881: `int("10") + 5 vaut 15. int("10") convertit le texte en entier avant l'addition.
 
 Débutant :
-• from_bytes convertit des bytes en int ; 'big' = octet de poids fort en premier.
+• int(...) transforme une chaîne représentant un entier en nombre.
 
 Intermédiaire :
-• b'\x00\x0a' = 0×256 + 10 = 10 ; big-endian.
+• Une fois la conversion faite, Python additionne 10 et 5.
 
 Expert :
-• int.from_bytes(bytes, byteorder, signed=False) ; 'big' ou 'little'.
+• C'est typique quand une donnée numérique arrive sous forme de texte.
 
 Concepts clés :
-• Conversion bytes → int ; ordre des octets (big/little).
+• int("10") → 10
+• 10 + 5 → 15
 
 Distinctions clés :
-• vs 'little' (\x0a\x00 = 2560) ; vs to_bytes (inverse).
+• "10" est une chaîne.
+• 10 est un entier.
 
 Fonctionnement :
-• \x00 = 0, \x0a = 10 ; big : 0×256 + 10 = 10.
+• Conversion d'abord, addition ensuite.
 
 Exécution étape par étape :
-1. b'\x00\x0a', 'big'.
-2. from_bytes → 10.
+1. Convertir "10" en 10.
+2. Ajouter 5.
+3. Renvoyer 15.
 
 Ordre des opérations :
-• Appel méthode.
+• L'appel int(...) se fait avant l'addition.
 
 Cas d'utilisation courants :
-• Parse binaire ; protocoles réseau ; fichiers.
+• Lecture de valeurs saisies ou lues depuis un fichier.
 
 Cas limites :
-• from_bytes(b'', 'big') → 0.
+• int("10.0") échoue.
 
 Considérations de performance :
-• O(n) octets.
+• Travail minime pour une petite chaîne.
 
 Exemples :
-• int.from_bytes(b'\x01\x00', 'big') → 256
+• int("8") + 2 → 10
 
 Remarques :
-• big = MSB first.`,
-  882: `(10).to_bytes(2, 'big') vaut b'\x00\x0a' : int vers bytes big-endian.
+• Pour des décimales, utilisez float(...).`,
+  882: `float("2.5") * 2 vaut 5.0. float("2.5") convertit le texte en nombre décimal, puis on multiplie par 2.
 
 Débutant :
-• to_bytes convertit int en bytes ; 2 octets, ordre big.
+• float(...) sert à lire un nombre décimal écrit en texte.
 
 Intermédiaire :
-• 10 = 0×256 + 10 ; 2 octets : \x00, \x0a.
+• 2.5 multiplié par 2 donne 5.0.
 
 Expert :
-• n.to_bytes(length, byteorder, signed=False) ; length doit suffire.
+• Le résultat reste un float parce qu'on calcule avec une valeur décimale.
 
 Concepts clés :
-• Conversion int → bytes ; padding à gauche si nécessaire.
+• float("2.5") → 2.5
+• 2.5 * 2 → 5.0
 
 Distinctions clés :
-• vs to_bytes(1, 'big') (10 tient sur 1 octet) ; vs from_bytes (inverse).
+• float(...) gère les décimales.
+• int(...) est réservé aux entiers.
 
 Fonctionnement :
-• 10 en 2 octets big : 0, 10 → b'\x00\x0a'.
+• Python convertit d'abord la chaîne, puis applique la multiplication.
 
 Exécution étape par étape :
-1. 10, 2, 'big'.
-2. to_bytes → b'\x00\x0a'.
+1. Convertir "2.5" en 2.5.
+2. Multiplier par 2.
+3. Renvoyer 5.0.
 
 Ordre des opérations :
-• Appel méthode.
+• Conversion avant multiplication.
 
 Cas d'utilisation courants :
-• Sérialisation ; protocoles ; hash truncation.
+• Mesures, taux, montants décimaux.
 
 Cas limites :
-• (10).to_bytes(1, 'big') → b'\x0a'.
+• float("abc") provoquerait une erreur.
 
 Considérations de performance :
-• O(length).
+• Opération légère.
 
 Exemples :
-• (256).to_bytes(2, 'big') → b'\x01\x00'
+• float("1.5") * 4 → 6.0
 
 Remarques :
-• length trop petit → OverflowError.`,
-  883: `int.from_bytes(b'\xff', 'big') vaut 255 : un octet 0xff = 255.
+• Les floats peuvent parfois montrer de petites imprécisions.`,
+  883: `len(str(1234)) vaut 4. On convertit 1234 en texte, puis on compte ses caractères.
 
 Débutant :
-• b'\xff' = un octet de valeur 255 ; from_bytes('big') → 255.
+• str(1234) donne "1234".
 
 Intermédiaire :
-• \xff = 255 ; non signé par défaut.
+• len(...) compte le nombre de caractères dans cette chaîne.
 
 Expert :
-• signed=False (défaut) ; 0-255. signed=True interprète comme complément à 2.
+• C'est une façon simple de compter le nombre de chiffres affichés.
 
 Concepts clés :
-• Un octet ; 0xff = 255 non signé.
+• str(1234) → "1234"
+• len("1234") → 4
 
 Distinctions clés :
-• vs from_bytes(b'\xff', 'big', signed=True) = -1 ; interprétation signée.
+• len s'applique à la chaîne obtenue, pas à l'entier comme type numérique.
 
 Fonctionnement :
-• b'\xff' → 255 (non signé).
+• Conversion d'abord, comptage ensuite.
 
 Exécution étape par étape :
-1. b'\xff', 'big'.
-2. from_bytes → 255.
+1. Transformer 1234 en "1234".
+2. Compter les caractères.
+3. Renvoyer 4.
 
 Ordre des opérations :
-• Appel méthode.
+• str(...) d'abord, len(...) ensuite.
 
 Cas d'utilisation courants :
-• Lecture octets ; valeurs 0-255.
+• Compter des chiffres, valider des formats.
 
 Cas limites :
-• b'\x00' → 0.
+• str(-12) a une longueur de 3 à cause du signe -.
 
 Considérations de performance :
-• O(1) pour 1 octet.
+• Travail léger pour une petite chaîne.
 
 Exemples :
-• int.from_bytes(b'\x80', 'big') → 128
+• len(str(99)) → 2
 
 Remarques :
-• Défaut non signé.`,
-  884: `int.from_bytes(b'\xff', 'big', signed=True) vaut -1 : interprétation signée.
+• Les zéros initiaux comptent seulement s'ils sont présents dans la chaîne mesurée.`,
+  884: `abs(-12) vaut 12. La valeur absolue représente la distance à zéro.
 
 Débutant :
-• signed=True : 0xff = -1 en complément à 2 sur 8 bits.
+• Un nombre négatif devient positif avec abs(...) dans ce type d'exemple.
 
 Intermédiaire :
-• Un octet 0xff : non signé 255, signé -1.
+• abs(-12) et abs(12) valent tous les deux 12.
 
 Expert :
-• Complément à 2 : bit de signe ; 0xff = -1 sur 8 bits signés.
+• abs fonctionne aussi avec d'autres types numériques.
 
 Concepts clés :
-• signed=True : complément à 2 ; 0xff → -1.
+• abs(-12) → 12
+• abs(12) → 12
 
 Distinctions clés :
-• vs signed=False (255) ; même bytes, interprétation différente.
+• C'est une distance à zéro, pas une soustraction.
 
 Fonctionnement :
-• b'\xff' avec signed=True → -1.
+• Python renvoie la grandeur non négative du nombre.
 
 Exécution étape par étape :
-1. b'\xff', 'big', signed=True.
-2. from_bytes → -1.
+1. Lire -12.
+2. Mesurer sa distance à zéro.
+3. Renvoyer 12.
 
 Ordre des opérations :
-• Appel méthode.
+• Un seul appel de fonction.
 
 Cas d'utilisation courants :
-• Données signées ; protocoles binaires.
+• Distances, écarts, erreurs.
 
 Cas limites :
-• b'\x7f' signed → 127 ; b'\x80' signed → -128.
+• abs(0) vaut 0.
 
 Considérations de performance :
-• O(1).
+• Opération constante.
 
 Exemples :
-• int.from_bytes(b'\x80', 'big', signed=True) → -128
+• abs(-1.5) → 1.5
 
 Remarques :
-• Complément à 2.`,
-  885: `(256).to_bytes(2, 'big') vaut b'\x01\x00' : 256 = 1×256 + 0.
+• Pour un complexe, abs(...) renvoie la norme.`,
+  885: `round(7.49) vaut 7. Python renvoie ici l'entier le plus proche.
 
 Débutant :
-• 256 en 2 octets big : 1, 0 ; b'\x01\x00'.
+• 7.49 n'atteint pas 7.5, donc on n'arrondit pas à 8.
 
 Intermédiaire :
-• 256 = 1×256 + 0 ; premier octet 1, second 0.
+• 7.49 est plus proche de 7 que de 8.
 
 Expert :
-• to_bytes(2, 'big') ; 256 nécessite 2 octets minimum.
+• Les cas exacts en .5 suivent une règle particulière en Python, mais pas celui-ci.
 
 Concepts clés :
-• 256 dépasse 1 octet ; 2 octets : 0x0100.
+• round(7.49) → 7
+• round(7.51) → 8
 
 Distinctions clés :
-• vs (255).to_bytes(2, 'big') = b'\x00\xff' ; padding à gauche.
+• round(...) arrondit.
+• int(...) tronque.
 
 Fonctionnement :
-• 256 → 0x0100 → b'\x01\x00'.
+• Python compare la valeur aux entiers voisins et choisit le plus proche.
 
 Exécution étape par étape :
-1. 256, 2, 'big'.
-2. to_bytes → b'\x01\x00'.
+1. Comparer 7.49 à 7 et 8.
+2. 7 est plus proche.
+3. Renvoyer 7.
 
 Ordre des opérations :
-• Appel méthode.
+• Un seul appel de fonction.
 
 Cas d'utilisation courants :
-• Entiers multi-octets ; ordre réseau.
+• Résumés, affichages simples, estimations.
 
 Cas limites :
-• (256).to_bytes(1, 'big') → OverflowError.
+• round(7.5) peut surprendre selon le contexte.
 
 Considérations de performance :
-• O(length).
+• Opération constante.
 
 Exemples :
-• (65535).to_bytes(2, 'big') → b'\xff\xff'
+• round(2.2) → 2
 
 Remarques :
-• 256 = 2⁸.`,
+• Utilisez round(x, n) si vous voulez garder des décimales.`,
   886: `format(42, 'b') vaut '101010' : binaire sans préfixe.
 
 Débutant :

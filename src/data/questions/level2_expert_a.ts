@@ -1963,7 +1963,51 @@ Notes:
     q: `What is int("12") + 3?`,
     o: ["15", "12", "9", "Error"],
     c: 0,
-    e: "int('12') becomes 12, and 12 + 3 = 15."
+    e: "int('12') becomes 12, and 12 + 3 = 15.",
+    de: `int("12") converts the text "12" into the number 12. After that, this is just regular addition: 12 + 3 = 15.
+
+Beginner:
+• int("12") turns a numeric string into an integer.
+
+Intermediate:
+• The conversion happens first, so Python evaluates 12 + 3.
+
+Advanced:
+• This is a common pattern when reading user input, because input usually starts as text.
+
+Key concepts:
+• int("12") → 12
+• 12 + 3 → 15
+
+Key Distinctions:
+• "12" is text, but 12 is a number.
+• You cannot add a string and an int directly without converting first.
+
+How It Works:
+• Python parses the digits in the string, creates an integer, then performs addition.
+
+Step-by-Step Execution:
+1. Convert "12" to 12.
+2. Add 3.
+3. Get 15.
+
+Order of Operations:
+• Function call first, then addition.
+
+Common Use Cases:
+• Converting input from forms, files, or prompts into numbers.
+
+Edge Cases:
+• int("12.5") would fail because it is not a whole-number string.
+
+Performance Considerations:
+• Very small constant-time work for short strings.
+
+Examples:
+• int("7") + 1 → 8
+
+Notes:
+• Use float(...) instead when the text may contain a decimal point.`
   }),
 
   // Q37
@@ -1971,7 +2015,51 @@ Notes:
     q: `What is float("2.5") + 1?`,
     o: ["3.5", "2.5", "3", "Error"],
     c: 0,
-    e: "float('2.5') becomes 2.5, and adding 1 gives 3.5."
+    e: "float('2.5') becomes 2.5, and adding 1 gives 3.5.",
+    de: `float("2.5") converts the text "2.5" into the number 2.5. Then Python adds 1, so the result is 3.5.
+
+Beginner:
+• float(...) is used when the number has a decimal part.
+
+Intermediate:
+• After conversion, Python is adding a float and an int, which gives a float result.
+
+Advanced:
+• Python promotes the int 1 to 1.0 during the calculation, so both values are treated as floating-point numbers.
+
+Key concepts:
+• float("2.5") → 2.5
+• 2.5 + 1 → 3.5
+
+Key Distinctions:
+• int(...) is for whole numbers.
+• float(...) is for numbers with decimals.
+
+How It Works:
+• Python reads the string, builds a float, then performs numeric addition.
+
+Step-by-Step Execution:
+1. Convert "2.5" to 2.5.
+2. Add 1.
+3. Get 3.5.
+
+Order of Operations:
+• Conversion first, addition second.
+
+Common Use Cases:
+• Working with prices, measurements, and typed user input.
+
+Edge Cases:
+• float("two") would raise an error because it is not numeric text.
+
+Performance Considerations:
+• Very small constant-time work for short strings.
+
+Examples:
+• float("1.2") + 2 → 3.2
+
+Notes:
+• Results with floats can sometimes show rounding quirks in other examples because computers store decimals approximately.`
   }),
 
   // Q38
@@ -1979,7 +2067,51 @@ Notes:
     q: `What is abs(-9)?`,
     o: ["9", "-9", "0", "Error"],
     c: 0,
-    e: "abs() returns the distance from zero, so abs(-9) is 9."
+    e: "abs() returns the distance from zero, so abs(-9) is 9.",
+    de: `abs(...) returns the absolute value of a number, which means its distance from zero. The distance of -9 from zero is 9.
+
+Beginner:
+• Absolute value removes the minus sign from a negative number.
+
+Intermediate:
+• abs(-9) and abs(9) are both 9 because both are the same distance from zero.
+
+Advanced:
+• abs(...) works with ints, floats, and even complex numbers, though complex values return magnitude instead.
+
+Key concepts:
+• abs(-9) → 9
+• abs(9) → 9
+
+Key Distinctions:
+• Absolute value is not the same as just "making numbers positive" in a vague way.
+• It specifically measures distance from zero.
+
+How It Works:
+• Python checks the sign and returns the non-negative magnitude.
+
+Step-by-Step Execution:
+1. Read -9.
+2. Compute its distance from zero.
+3. Return 9.
+
+Order of Operations:
+• Single function call.
+
+Common Use Cases:
+• Measuring differences, distances, or error sizes.
+
+Edge Cases:
+• abs(0) is 0.
+
+Performance Considerations:
+• Constant-time numeric operation.
+
+Examples:
+• abs(-3.5) → 3.5
+
+Notes:
+• For complex numbers, abs(z) gives the magnitude, not another complex number.`
   }),
 
   // Q39
@@ -1987,7 +2119,51 @@ Notes:
     q: `What is 7 % 3?`,
     o: ["1", "2", "3", "Error"],
     c: 0,
-    e: "% gives the remainder after division. 7 divided by 3 leaves remainder 1."
+    e: "% gives the remainder after division. 7 divided by 3 leaves remainder 1.",
+    de: `The % operator gives the remainder after division. Since 7 = 3×2 + 1, the remainder is 1.
+
+Beginner:
+• Divide 7 by 3. You can fit 3 into 7 two times, with 1 left over.
+
+Intermediate:
+• The modulo result is the leftover amount after using floor division.
+
+Advanced:
+• Python links these operations as a = (a // b) * b + (a % b).
+
+Key concepts:
+• 7 % 3 → 1
+• 7 // 3 → 2
+
+Key Distinctions:
+• % gives the remainder.
+• // gives the whole-number quotient.
+
+How It Works:
+• Python computes how many full groups of 3 fit into 7 and returns the leftover part.
+
+Step-by-Step Execution:
+1. 3 fits into 7 two times.
+2. That uses 6.
+3. 1 remains.
+
+Order of Operations:
+• Single modulo operation.
+
+Common Use Cases:
+• Checking even/odd values, wrapping indexes, cycling through patterns.
+
+Edge Cases:
+• 6 % 3 is 0 because nothing is left over.
+
+Performance Considerations:
+• Constant-time integer arithmetic.
+
+Examples:
+• 10 % 4 → 2
+
+Notes:
+• A remainder of 0 means the first number is divisible by the second.`
   }),
 
   // Q40
@@ -1995,7 +2171,51 @@ Notes:
     q: `What is 2 ** 4?`,
     o: ["16", "8", "12", "4"],
     c: 0,
-    e: "The ** operator means power, so 2 ** 4 equals 16."
+    e: "The ** operator means power, so 2 ** 4 equals 16.",
+    de: `The ** operator means "raise to a power." So 2 ** 4 means 2 × 2 × 2 × 2, which equals 16.
+
+Beginner:
+• 2 ** 4 means "2 to the power of 4."
+
+Intermediate:
+• The exponent tells you how many times to multiply the base by itself.
+
+Advanced:
+• Exponentiation is common in growth formulas, powers of 2, and scientific calculations.
+
+Key concepts:
+• 2 ** 4 → 16
+• 2 ** 3 → 8
+
+Key Distinctions:
+• ** is exponentiation.
+• * is ordinary multiplication.
+
+How It Works:
+• Python applies the exponent operator and computes repeated multiplication.
+
+Step-by-Step Execution:
+1. Start with base 2.
+2. Multiply it by itself 4 times total.
+3. Get 16.
+
+Order of Operations:
+• Exponentiation happens before multiplication and addition in larger expressions.
+
+Common Use Cases:
+• Powers of 2, area/volume formulas, compound growth.
+
+Edge Cases:
+• Any number to the power 0 is 1.
+
+Performance Considerations:
+• Small exponents are trivial to compute.
+
+Examples:
+• 3 ** 2 → 9
+
+Notes:
+• Read a ** b as "a raised to b."`
   }),
 
   // Q41
@@ -2003,7 +2223,51 @@ Notes:
     q: `What is 9 // 2?`,
     o: ["4", "4.5", "5", "Error"],
     c: 0,
-    e: "// is floor division, so 9 // 2 gives 4."
+    e: "// is floor division, so 9 // 2 gives 4.",
+    de: `The // operator does floor division. It divides and keeps only the whole-number part, so 9 // 2 is 4.
+
+Beginner:
+• 2 goes into 9 four full times.
+
+Intermediate:
+• Normal division gives 4.5, but floor division drops the fractional part here and returns 4.
+
+Advanced:
+• With positive numbers, floor division often looks like "drop the decimal." With negative numbers, it rounds down, not toward zero.
+
+Key concepts:
+• 9 // 2 → 4
+• 9 / 2 → 4.5
+
+Key Distinctions:
+• / gives regular division.
+• // gives floor division.
+
+How It Works:
+• Python divides, then returns the mathematical floor of the result.
+
+Step-by-Step Execution:
+1. Compute 9 / 2 = 4.5.
+2. Take the floor.
+3. Return 4.
+
+Order of Operations:
+• Single floor-division operation.
+
+Common Use Cases:
+• Counting full groups, page counts, chunking items.
+
+Edge Cases:
+• -9 // 2 is -5 because floor goes downward.
+
+Performance Considerations:
+• Constant-time arithmetic.
+
+Examples:
+• 11 // 3 → 3
+
+Notes:
+• Floor division is especially useful when you need a whole-number answer only.`
   }),
 
   // Q42
@@ -2011,7 +2275,51 @@ Notes:
     q: `What is 10 % 3?`,
     o: ["1", "3", "0", "Error"],
     c: 0,
-    e: "10 divided by 3 leaves remainder 1."
+    e: "10 divided by 3 leaves remainder 1.",
+    de: `Modulo returns the remainder after division. Since 10 = 3×3 + 1, the remainder is 1.
+
+Beginner:
+• 3 fits into 10 three times, with 1 left over.
+
+Intermediate:
+• This is another remainder question, just like 7 % 3, but with a different quotient.
+
+Advanced:
+• Modulo is useful for repeating patterns because the result stays inside a small range.
+
+Key concepts:
+• 10 % 3 → 1
+• 10 // 3 → 3
+
+Key Distinctions:
+• % returns the leftover amount.
+• // returns the number of full groups.
+
+How It Works:
+• Python finds how many full 3s fit into 10 and returns what remains.
+
+Step-by-Step Execution:
+1. 3 × 3 = 9.
+2. 10 - 9 = 1.
+3. Return 1.
+
+Order of Operations:
+• Single modulo operation.
+
+Common Use Cases:
+• Cycles, wrapping positions, checking divisibility.
+
+Edge Cases:
+• 9 % 3 is 0 because 9 is exactly divisible by 3.
+
+Performance Considerations:
+• Constant-time integer math.
+
+Examples:
+• 14 % 5 → 4
+
+Notes:
+• If a % b is 0, then a is divisible by b.`
   }),
 
   // Q43
@@ -2019,7 +2327,51 @@ Notes:
     q: `What is round(3.6)?`,
     o: ["4", "3", "3.6", "Error"],
     c: 0,
-    e: "round(3.6) rounds to the nearest integer, which is 4."
+    e: "round(3.6) rounds to the nearest integer, which is 4.",
+    de: `round(3.6) returns the nearest whole number. Since 3.6 is closer to 4 than to 3, the result is 4.
+
+Beginner:
+• Values .5 and above usually round up in simple examples like this one.
+
+Intermediate:
+• 3.6 is 0.4 away from 4 and 0.6 away from 3, so 4 is closer.
+
+Advanced:
+• Python uses banker's rounding for exact .5 cases, but that does not affect 3.6.
+
+Key concepts:
+• round(3.6) → 4
+• round(3.2) → 3
+
+Key Distinctions:
+• round(...) changes the displayed value to the nearest target precision.
+• int(...) does not round; it truncates toward zero for positive numbers.
+
+How It Works:
+• Python compares the number to nearby whole numbers and picks the nearest one.
+
+Step-by-Step Execution:
+1. Look at 3.6.
+2. Compare 3 and 4.
+3. 4 is nearer.
+
+Order of Operations:
+• Single function call.
+
+Common Use Cases:
+• Estimates, display values, simple summaries.
+
+Edge Cases:
+• round(2.5) may surprise beginners because Python rounds ties to the nearest even result.
+
+Performance Considerations:
+• Constant-time numeric operation.
+
+Examples:
+• round(8.1) → 8
+
+Notes:
+• When you need a fixed number of decimal places, use the second argument to round(...).`
   }),
 
   // Q44
@@ -2027,7 +2379,51 @@ Notes:
     q: `What is round(3.14159, 2)?`,
     o: ["3.14", "3.15", "3.1", "Error"],
     c: 0,
-    e: "Rounding 3.14159 to two decimal places gives 3.14."
+    e: "Rounding 3.14159 to two decimal places gives 3.14.",
+    de: `round(3.14159, 2) means round the number to 2 decimal places. The result is 3.14.
+
+Beginner:
+• Two decimal places means keep two digits after the decimal point.
+
+Intermediate:
+• The third decimal digit is 1, so 3.14 stays 3.14 instead of rounding up.
+
+Advanced:
+• The second argument to round controls precision, not the total number of digits.
+
+Key concepts:
+• round(3.14159, 2) → 3.14
+• round(3.14159, 3) → 3.142
+
+Key Distinctions:
+• 2 here means two digits after the decimal point.
+• It does not mean "round to the nearest 2."
+
+How It Works:
+• Python looks at the third decimal place to decide whether the second one changes.
+
+Step-by-Step Execution:
+1. Keep 3.14.
+2. Check the next digit, which is 1.
+3. Leave 3.14 unchanged.
+
+Order of Operations:
+• round(number, digits)
+
+Common Use Cases:
+• Prices, measurements, percentages, display formatting.
+
+Edge Cases:
+• Some floating-point values can behave unexpectedly because decimals are stored approximately.
+
+Performance Considerations:
+• Constant-time numeric work for ordinary values.
+
+Examples:
+• round(2.718, 2) → 2.72
+
+Notes:
+• For display-only formatting, format strings can sometimes be a better fit than changing the numeric value.`
   }),
 
   // Q45
@@ -2035,7 +2431,51 @@ Notes:
     q: `What is int(4.9)?`,
     o: ["4", "5", "4.9", "Error"],
     c: 0,
-    e: "int() drops the decimal part of a positive float, so int(4.9) is 4."
+    e: "int() drops the decimal part of a positive float, so int(4.9) is 4.",
+    de: `int(4.9) converts the float to an integer by removing the decimal part. It does not round, so the result is 4.
+
+Beginner:
+• int(...) cuts off everything after the decimal point.
+
+Intermediate:
+• That means 4.9 becomes 4, not 5.
+
+Advanced:
+• This is called truncation toward zero, which matters even more with negative values.
+
+Key concepts:
+• int(4.9) → 4
+• round(4.9) → 5
+
+Key Distinctions:
+• int(...) truncates.
+• round(...) rounds to the nearest value.
+
+How It Works:
+• Python converts the float to an integer by discarding the fractional part.
+
+Step-by-Step Execution:
+1. Start with 4.9.
+2. Remove .9.
+3. Return 4.
+
+Order of Operations:
+• Single conversion call.
+
+Common Use Cases:
+• Converting counts, indexes, or parsed values into ints.
+
+Edge Cases:
+• int(-4.9) is -4, not -5.
+
+Performance Considerations:
+• Constant-time conversion.
+
+Examples:
+• int(7.1) → 7
+
+Notes:
+• Use round(...) if you want nearest-value behavior instead.`
   }),
 
   // Q46
@@ -2043,7 +2483,51 @@ Notes:
     q: `What is str(42)?`,
     o: ['"42"', '"4.2"', "42", "Error"],
     c: 0,
-    e: "str(42) converts the integer into the string '42'."
+    e: "str(42) converts the integer into the string '42'.",
+    de: `str(42) converts the integer 42 into the text "42". The value looks similar when printed, but it is now a string, not a number.
+
+Beginner:
+• str(...) turns a value into text.
+
+Intermediate:
+• After conversion, you can join it with other strings, but it is no longer numeric data.
+
+Advanced:
+• Converting values to strings is common before display, logging, or building labels.
+
+Key concepts:
+• str(42) → "42"
+• The result type is string, not int
+
+Key Distinctions:
+• 42 is a number.
+• "42" is text.
+
+How It Works:
+• Python formats the integer as characters and returns a string object.
+
+Step-by-Step Execution:
+1. Read numeric value 42.
+2. Convert it to its text form.
+3. Return "42".
+
+Order of Operations:
+• Single conversion call.
+
+Common Use Cases:
+• Printing, labels, messages, file output.
+
+Edge Cases:
+• str(True) gives "True" because str works on many types, not just numbers.
+
+Performance Considerations:
+• Small constant-time conversion for short values.
+
+Examples:
+• str(7) + " apples" → "7 apples"
+
+Notes:
+• If you need a number again later, convert the string back with int(...) or float(...).`
   }),
 
   // Q47
@@ -2051,7 +2535,51 @@ Notes:
     q: `What is 2 ** 10?`,
     o: ["1024", "10", "100", "512"],
     c: 0,
-    e: "2 ** 10 means 2 to the power of 10, which is 1024."
+    e: "2 ** 10 means 2 to the power of 10, which is 1024.",
+    de: `2 ** 10 means multiply 2 by itself 10 times. The result is 1024.
+
+Beginner:
+• This is another exponent question, just with a larger power.
+
+Intermediate:
+• Powers of 2 grow quickly: 2, 4, 8, 16, 32, and so on up to 1024.
+
+Advanced:
+• 1024 appears often in computing because it is close to one thousand and equals 2^10.
+
+Key concepts:
+• 2 ** 10 → 1024
+• 2 ** 5 → 32
+
+Key Distinctions:
+• This is exponentiation, not multiplication.
+• 2 * 10 would be 20, which is completely different.
+
+How It Works:
+• Python evaluates the exponent and computes the repeated multiplication.
+
+Step-by-Step Execution:
+1. Start with 2.
+2. Multiply by 2 repeatedly until 10 factors are used.
+3. Get 1024.
+
+Order of Operations:
+• Exponentiation first in larger expressions.
+
+Common Use Cases:
+• Memory sizes, powers of 2, binary growth patterns.
+
+Edge Cases:
+• 2 ** 0 is 1.
+
+Performance Considerations:
+• Small integer exponentiation is fast.
+
+Examples:
+• 2 ** 8 → 256
+
+Notes:
+• 1024 is often associated with KB-style binary sizing in computing.`
   }),
 
   // Q48
@@ -2059,7 +2587,52 @@ Notes:
     q: `x = 5\nx = x * 2\nWhat is x?`,
     o: ["0", "5", "10", "25"],
     c: 2,
-    e: "Start with 5, multiply by 2, and x becomes 10."
+    e: "Start with 5, multiply by 2, and x becomes 10.",
+    de: `The variable starts at 5. The next line replaces x with x * 2, so x becomes 10.
+
+Beginner:
+• Variables can change. The second line updates x.
+
+Intermediate:
+• x = x * 2 means "take the current value of x, multiply it by 2, and store the new result back into x."
+
+Advanced:
+• Reassignment is central in programming because later lines can depend on earlier state changes.
+
+Key concepts:
+• Start: x = 5
+• Update: x = x * 2
+• Result: x = 10
+
+Key Distinctions:
+• = means assignment here, not mathematical equality in the usual school sense.
+• The old value of x is used before the new one replaces it.
+
+How It Works:
+• Python reads the current value, computes x * 2, then writes the result back into x.
+
+Step-by-Step Execution:
+1. Set x to 5.
+2. Compute 5 * 2.
+3. Store 10 in x.
+
+Order of Operations:
+• Multiplication happens before the assignment finishes.
+
+Common Use Cases:
+• Updating counters, scores, totals, and repeated calculations.
+
+Edge Cases:
+• If x started as 0, doubling would still leave it at 0.
+
+Performance Considerations:
+• Constant-time arithmetic and assignment.
+
+Examples:
+• y = 4; y = y + 3 gives y = 7
+
+Notes:
+• A shorter form of the same idea is x *= 2.`
   }),
 
   // Q49
@@ -2067,7 +2640,52 @@ Notes:
     q: `a, b = 3, 1\nWhat is a + b?`,
     o: ["3", "7", "0", "4"],
     c: 3,
-    e: "Add the two values: 3 + 1 = 4."
+    e: "Add the two values: 3 + 1 = 4.",
+    de: `The first line assigns 3 to a and 1 to b. The question then asks for a + b, so the answer is 4.
+
+Beginner:
+• a and b are variables holding numbers.
+
+Intermediate:
+• a, b = 3, 1 is a compact way to assign two variables in one line.
+
+Advanced:
+• Python tuple unpacking makes multiple assignments concise and readable.
+
+Key concepts:
+• a = 3
+• b = 1
+• a + b = 4
+
+Key Distinctions:
+• The comma assignment sets both variables at once.
+• After assignment, normal addition rules apply.
+
+How It Works:
+• Python assigns the two values, then evaluates the addition expression.
+
+Step-by-Step Execution:
+1. Put 3 in a.
+2. Put 1 in b.
+3. Compute 3 + 1.
+
+Order of Operations:
+• Assignment first, then addition.
+
+Common Use Cases:
+• Setting multiple values together, swapping variables, unpacking results.
+
+Edge Cases:
+• The number of values must match the number of variables in simple unpacking.
+
+Performance Considerations:
+• Very small constant-time work.
+
+Examples:
+• x, y = 2, 5 then x + y → 7
+
+Notes:
+• This style is common in Python and worth getting comfortable with early.`
   }),
 
   // Q50
