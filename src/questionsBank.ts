@@ -51,7 +51,13 @@ import { level10IntermediateA } from './data/questions/level10_intermediate_a';
 import { level10IntermediateB } from './data/questions/level10_intermediate_b';
 import { level10ExpertA } from './data/questions/level10_expert_a';
 import { level10ExpertB } from './data/questions/level10_expert_b';
-import { QUESTIONS_PER_LEVEL, QUESTIONS_PER_SUBLEVEL } from './constants';
+import { QUESTIONS_PER_LEVEL } from './constants';
+
+type PatternFactory = (i: number) => any;
+type QuestionGroup = {
+  concept: string;
+  patterns: PatternFactory[];
+};
 
 // GENERATOR ENGINE
 // Assigns BEGINNER for the first third, INTERMEDIATE for the second third, EXPERT for the last third.
@@ -64,37 +70,105 @@ const getSubLevel = (index: number, totalPatterns: number): SubLevel => {
   return SubLevel.EXPERT;
 };
 
-const generateLevel = (level: number, stage: PersonaStage, patterns: ((i: number) => any)[], startId: number) => {
-  return Array.from({ length: patterns.length }, (_, i) => {
-    const pattern = patterns[i](i);
+const generateLevel = (level: number, stage: PersonaStage, groups: QuestionGroup[], startId: number) => {
+  const groupedPatterns = groups.flatMap(group =>
+    group.patterns.map(pattern => ({ pattern, concept: group.concept }))
+  );
+
+  return Array.from({ length: groupedPatterns.length }, (_, i) => {
+    const { pattern, concept } = groupedPatterns[i];
+    const patternData = pattern(i);
     return {
       id: startId + i,
       level,
-      subLevel: getSubLevel(i, patterns.length),
+      subLevel: getSubLevel(i, groupedPatterns.length),
       persona_stage: stage,
-      concept: "logic",
+      concept,
       difficulty: level > 7 ? 3 : (level > 4 ? 2 : 1),
       questionFormat: 'standard', // default format for existing questions
-      question: pattern.q,
-      options: pattern.o,
-      correct_option_index: pattern.c,
-      explanation: pattern.e,
-      detailedExplanation: pattern.de || undefined
+      question: patternData.q,
+      options: patternData.o,
+      correct_option_index: patternData.c,
+      explanation: patternData.e,
+      detailedExplanation: patternData.de || undefined
     } as Question;
   });
 };
 
 export const QUESTIONS_BANK: Question[] = [
   // Level 0 must contribute exactly QUESTIONS_PER_LEVEL (300) so IDs 301–600 stay unique Level 1.
-  ...generateLevel(0, PersonaStage.TADPOLE, level0Patterns.slice(0, QUESTIONS_PER_LEVEL), 1),
-  ...generateLevel(1, PersonaStage.PLANKTON, [...level1Patterns, ...level1IntermediateA, ...level1IntermediateB, ...level1ExpertA, ...level1ExpertB], 301),
-  ...generateLevel(2, PersonaStage.SHRIMP, [...level2Patterns, ...level2IntermediateA, ...level2IntermediateB, ...level2ExpertA, ...level2ExpertB], 601),
-  ...generateLevel(3, PersonaStage.CRAB, [...level3Patterns, ...level3IntermediateA, ...level3IntermediateB, ...level3ExpertA, ...level3ExpertB], 901),
-  ...generateLevel(4, PersonaStage.SMALL_FISH, [...level4Patterns, ...level4ForLoopPatterns, ...level4WhileBatch1, ...level4WhileLoopPatterns, ...level4WhileBatch3, ...level4WhileBatch4], 1201),
-  ...generateLevel(5, PersonaStage.OCTOPUS, [...level5Patterns, ...level5IntermediateA, ...level5IntermediateB, ...level5ExpertA, ...level5ExpertB], 1501),
-  ...generateLevel(6, PersonaStage.SEAL, [...level6Patterns, ...level6IntermediateA, ...level6IntermediateB, ...level6ExpertA, ...level6ExpertB], 1801),
-  ...generateLevel(7, PersonaStage.DOLPHIN, [...level7Patterns, ...level7IntermediateA, ...level7IntermediateB, ...level7ExpertA, ...level7ExpertB], 2101),
-  ...generateLevel(8, PersonaStage.SHARK, [...level8Patterns, ...level8IntermediateA, ...level8IntermediateB, ...level8ExpertA, ...level8ExpertB], 2401),
-  ...generateLevel(9, PersonaStage.WHALE, [...level9Patterns, ...level9IntermediateA, ...level9IntermediateB, ...level9ExpertA, ...level9ExpertB], 2701),
-  ...generateLevel(10, PersonaStage.GOD_WHALE, [...level10Patterns, ...level10IntermediateA, ...level10IntermediateB, ...level10ExpertA, ...level10ExpertB], 3001)
+  ...generateLevel(0, PersonaStage.TADPOLE, [
+    { concept: 'first_steps', patterns: level0Patterns.slice(0, QUESTIONS_PER_LEVEL) }
+  ], 1),
+  ...generateLevel(1, PersonaStage.PLANKTON, [
+    { concept: 'variables_types_strings', patterns: level1Patterns },
+    { concept: 'string_methods_fstrings', patterns: level1IntermediateA },
+    { concept: 'string_ops_type_conversion', patterns: level1IntermediateB },
+    { concept: 'bytes_encoding_none', patterns: level1ExpertA },
+    { concept: 'identity_edge_cases', patterns: level1ExpertB }
+  ], 301),
+  ...generateLevel(2, PersonaStage.SHRIMP, [
+    { concept: 'arithmetic_precedence', patterns: level2Patterns },
+    { concept: 'math_module_rounding', patterns: level2IntermediateA },
+    { concept: 'number_processing', patterns: level2IntermediateB },
+    { concept: 'advanced_number_types', patterns: level2ExpertA },
+    { concept: 'numeric_edge_cases', patterns: level2ExpertB }
+  ], 601),
+  ...generateLevel(3, PersonaStage.CRAB, [
+    { concept: 'boolean_logic_conditionals', patterns: level3Patterns },
+    { concept: 'any_all_guard_clauses', patterns: level3IntermediateA },
+    { concept: 'conditional_precedence', patterns: level3IntermediateB },
+    { concept: 'pattern_matching_walrus', patterns: level3ExpertA },
+    { concept: 'truthiness_edge_cases', patterns: level3ExpertB }
+  ], 901),
+  ...generateLevel(4, PersonaStage.SMALL_FISH, [
+    { concept: 'loop_basics', patterns: level4Patterns },
+    { concept: 'for_loop_mastery', patterns: level4ForLoopPatterns },
+    { concept: 'while_loops_intro', patterns: level4WhileBatch1 },
+    { concept: 'while_loops_core', patterns: level4WhileLoopPatterns },
+    { concept: 'while_loops_advanced_a', patterns: level4WhileBatch3 },
+    { concept: 'while_loops_advanced_b', patterns: level4WhileBatch4 }
+  ], 1201),
+  ...generateLevel(5, PersonaStage.OCTOPUS, [
+    { concept: 'lists_indexing', patterns: level5Patterns },
+    { concept: 'list_comprehensions_tuples', patterns: level5IntermediateA },
+    { concept: 'sets_sorting_zip_map', patterns: level5IntermediateB },
+    { concept: 'advanced_lists_slicing', patterns: level5ExpertA },
+    { concept: 'collections_itertools', patterns: level5ExpertB }
+  ], 1501),
+  ...generateLevel(6, PersonaStage.SEAL, [
+    { concept: 'dictionaries_basics', patterns: level6Patterns },
+    { concept: 'dict_patterns_nested', patterns: level6IntermediateA },
+    { concept: 'dict_comprehensions_merging', patterns: level6IntermediateB },
+    { concept: 'counter_defaultdict_ordereddict', patterns: level6ExpertA },
+    { concept: 'dict_hashability_mappingproxy', patterns: level6ExpertB }
+  ], 1801),
+  ...generateLevel(7, PersonaStage.DOLPHIN, [
+    { concept: 'functions_parameters_return', patterns: level7Patterns },
+    { concept: 'closures_first_class', patterns: level7IntermediateA },
+    { concept: 'generators_scope_patterns', patterns: level7IntermediateB },
+    { concept: 'decorators_function_design', patterns: level7ExpertA },
+    { concept: 'functools_advanced_functions', patterns: level7ExpertB }
+  ], 2101),
+  ...generateLevel(8, PersonaStage.SHARK, [
+    { concept: 'classes_objects_methods', patterns: level8Patterns },
+    { concept: 'magic_methods_iteration', patterns: level8IntermediateA },
+    { concept: 'attributes_lifecycle_composition', patterns: level8IntermediateB },
+    { concept: 'dataclasses_enums_namedtuples', patterns: level8ExpertA },
+    { concept: 'descriptors_abcs_type_hints', patterns: level8ExpertB }
+  ], 2401),
+  ...generateLevel(9, PersonaStage.WHALE, [
+    { concept: 'inheritance_polymorphism', patterns: level9Patterns },
+    { concept: 'mro_super_mechanics', patterns: level9IntermediateA },
+    { concept: 'advanced_inheritance_patterns', patterns: level9IntermediateB },
+    { concept: 'abcs_protocols_structural_typing', patterns: level9ExpertA },
+    { concept: 'oop_design_patterns', patterns: level9ExpertB }
+  ], 2701),
+  ...generateLevel(10, PersonaStage.GOD_WHALE, [
+    { concept: 'design_patterns_architecture', patterns: level10Patterns },
+    { concept: 'file_io_datetime_regex', patterns: level10IntermediateA },
+    { concept: 'itertools_json_os_pathlib', patterns: level10IntermediateB },
+    { concept: 'logging_testing_error_patterns', patterns: level10ExpertA },
+    { concept: 'async_idioms_best_practices', patterns: level10ExpertB }
+  ], 3001)
 ];

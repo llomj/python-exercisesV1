@@ -4,7 +4,7 @@ import { OperationsView } from './components/OperationsView';
 import { LevelSelectorModal } from './components/LevelSelectorModal';
 import { ConceptsView } from './components/ConceptsView';
 import { FundamentalsView } from './components/FundamentalsView';
-import { UserStats, PersonaStage, QuestionAttempt } from './types';
+import { UserStats, PersonaStage, QuestionAttempt, QuizSessionMode } from './types';
 import { EvolutionHub } from './components/EvolutionHub';
 import { FallingStars } from './components/FallingStars';
 import { PersonaIcon } from './components/PersonaIcon';
@@ -381,6 +381,7 @@ const App: React.FC = () => {
     total: number;
     starEarned: number | null;
     levelAccuracyPercent?: number;
+    reviewMode?: boolean;
     allLevelsFiveStars?: boolean;
     randomMode?: boolean;
     prevScore?: number;
@@ -389,6 +390,7 @@ const App: React.FC = () => {
     godMode?: boolean;
   } | null>(null);
   const [randomizeTrigger, setRandomizeTrigger] = useState(0);
+  const [quizSessionMode, setQuizSessionMode] = useState<QuizSessionMode>('standard');
   const [showRandomModeModal, setShowRandomModeModal] = useState(false);
   const randomMode = stats.randomMode ?? false;
   const [showOperations, setShowOperations] = useState(false);
@@ -537,7 +539,8 @@ const App: React.FC = () => {
     : currentLevelInfo.persona;
   const currentProgress = stats.levelProgress[stats.currentLevel] || 0;
 
-  const handleStartEvolution = () => {
+  const handleStartEvolution = (mode: QuizSessionMode = 'standard') => {
+    setQuizSessionMode(mode);
     setView('quiz');
     setShowResult(null);
   };
@@ -600,7 +603,19 @@ const App: React.FC = () => {
 
   const handleQuizComplete = (score: number) => {
     const total = 15;
+    const reviewMode = quizSessionMode === 'review';
     const xpGained = score * XP_PER_QUESTION;
+
+    if (reviewMode) {
+      setShowResult({
+        score,
+        total,
+        starEarned: null,
+        reviewMode: true
+      });
+      setView('hub');
+      return;
+    }
 
     if (randomMode) {
       // Random mode: update randomModeStats and xpRandom only; level xp unchanged
@@ -819,6 +834,8 @@ const App: React.FC = () => {
               randomizeTrigger={randomizeTrigger}
               randomMode={randomMode}
               randomModeStats={stats.randomModeStats}
+              history={stats.history}
+              sessionMode={quizSessionMode}
               onSaveToIdLog={saveToIdLog}
               savedIdLogIds={stats.idLog.map(entry => entry.id)}
               earnedStars={randomMode
@@ -910,8 +927,14 @@ const App: React.FC = () => {
                 </>
               ) : (
                 <>
-                  <h2 className="text-3xl font-bold mb-2">{t('result.mutationsComplete')}</h2>
-                  <p className="text-slate-400">{formatTranslation(t('result.geneticsStabilized'), { score: showResult.score })}</p>
+                  <h2 className="text-3xl font-bold mb-2">
+                    {showResult.reviewMode ? t('hub.reviewModeLabel' as any) : t('result.mutationsComplete')}
+                  </h2>
+                  <p className="text-slate-400">
+                    {showResult.reviewMode
+                      ? formatTranslation(t('result.geneticsStabilized'), { score: showResult.score })
+                      : formatTranslation(t('result.geneticsStabilized'), { score: showResult.score })}
+                  </p>
                 </>
               )}
             </div>
@@ -919,7 +942,9 @@ const App: React.FC = () => {
             <div className="py-4 px-6 bg-white/5 rounded-2xl flex flex-wrap justify-around gap-4 border border-white/5 relative z-10">
               <div>
                 <div className="text-xs text-slate-500 uppercase font-bold mb-1 tracking-wider">{t('result.evolutionGain')}</div>
-                <div className="text-2xl font-black text-amber-400">+{showResult.score * XP_PER_QUESTION} XP</div>
+                <div className="text-2xl font-black text-amber-400">
+                  {showResult.reviewMode ? '0 XP' : `+${showResult.score * XP_PER_QUESTION} XP`}
+                </div>
               </div>
               <div>
                 <div className="text-xs text-slate-500 uppercase font-bold mb-1 tracking-wider">{t('result.successRate')}</div>

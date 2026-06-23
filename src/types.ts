@@ -5,6 +5,7 @@ export enum SubLevel {
 }
 
 export type QuestionFormat = 'standard' | 'output' | 'bug' | 'blank';
+export type QuizSessionMode = 'standard' | 'review';
 
 export interface Question {
   id: number;
@@ -29,6 +30,7 @@ export interface QuestionAttempt {
   isCorrect: boolean;
   explanation: string;
   level: number;
+  concept?: string;
   timestamp: number;
 }
 

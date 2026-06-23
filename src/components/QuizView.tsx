@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Question, QuestionAttempt } from '../types';
+import { Question, QuestionAttempt, QuizSessionMode } from '../types';
 import { quizService } from '../services/quizService';
 import { ProgressBar } from './ProgressBar';
 import { LEVELS, getRandomModeScore, getStarsFromAccuracyRandom } from '../constants';
@@ -752,6 +752,8 @@ interface QuizViewProps {
   randomizeTrigger?: number; // Add trigger to force re-randomization
   randomMode?: boolean; // Random mode: questions from all levels
   randomModeStats?: { totalAnswered: number; totalCorrect: number }; // Base stats for live score display
+  history?: QuestionAttempt[];
+  sessionMode?: QuizSessionMode;
   earnedStars?: number; // 0-5 stars for current level (from accuracy); only in level mode
   soundEnabled?: boolean;
   hapticEnabled?: boolean;
@@ -772,6 +774,8 @@ export const QuizView: React.FC<QuizViewProps> = ({
   randomizeTrigger,
   randomMode = false,
   randomModeStats,
+  history = [],
+  sessionMode = 'standard',
   earnedStars = 0,
   soundEnabled = true,
   hapticEnabled = true,
@@ -823,7 +827,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
       try {
         setLoading(true);
         // Fetch questions based on mode: level-specific or random from all levels
-        const data = await quizService.getBatch(level, 15, initialCompletedIds.current, randomMode);
+        const data = await quizService.getBatch(level, 15, initialCompletedIds.current, randomMode, history, sessionMode);
         // Shuffle options for each question so correct answer isn't always first
         const shuffledQuestions = data.map(shuffleOptions);
         setQuestions(shuffledQuestions);
@@ -844,7 +848,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
     fetchQuestions();
     // Dependency on 'level', 'randomizeTrigger', and 'randomMode'. If any changes, we reset.
     // If completedIds (passed from props) changes, we do NOT re-run this.
-  }, [level, randomizeTrigger, randomMode]);
+  }, [level, randomizeTrigger, randomMode, history, sessionMode]);
 
   useEffect(() => {
     if (!scoreJustIncreased) return;
@@ -883,6 +887,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
       isCorrect,
       explanation: currentQuestion.explanation,
       level: level,
+      concept: currentQuestion.concept,
       timestamp: Date.now()
     });
   };
@@ -922,7 +927,9 @@ export const QuizView: React.FC<QuizViewProps> = ({
         <div className="space-y-2">
           <p className="text-slate-200 font-bold text-lg">{t('quiz.stabilizingGenome')}</p>
           <p className="text-slate-500 text-xs max-w-xs mx-auto">
-            {formatTranslation(t('quiz.sequencingPatterns'), { level })}
+            {sessionMode === 'review'
+              ? t('quiz.reviewSequencing' as any)
+              : formatTranslation(t('quiz.sequencingPatterns'), { level })}
           </p>
         </div>
       </div>
@@ -967,7 +974,9 @@ export const QuizView: React.FC<QuizViewProps> = ({
           <div className="flex-1 min-w-0 px-6 overflow-x-auto">
           <div className="flex justify-between items-center text-[10px] font-black tracking-[0.2em] mb-1.5 min-w-max">
             <div className="flex items-center gap-2 flex-shrink-0">
-              {randomMode ? (
+              {sessionMode === 'review' ? (
+                <span className="text-amber-400">{t('hub.reviewModeLabel' as any)}</span>
+              ) : randomMode ? (
                 <div className="flex gap-0.5">
                   {[1, 2, 3, 4, 5].map(starNum => (
                     <i

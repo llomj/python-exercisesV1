@@ -484,3 +484,16 @@ Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2: **60
 - **French in-depth IDs synced:** `836–849`, `881–885`.
 - **Result:** ID search and quiz view now have the long expandable explanation block again instead of only the short one-line explanation for these rewritten entries.
 - **Build verification:** `npm run build` passed.
+
+### 2026-06-24 — Phase 1 progression engine
+
+- **Completed:** added concept-aware batch selection and a lightweight review mode.
+- **Question bank:** `src/questionsBank.ts` now assigns meaningful concept tags per source bank instead of the generic `"logic"` concept.
+- **Quiz engine:** `src/services/quizService.ts` now:
+  - biases standard batches toward weak concepts from user history,
+  - preserves concept diversity in the rest of the batch,
+  - supports `review` sessions built from recent mistakes plus same-concept reinforcement.
+- **UI:** `src/components/EvolutionHub.tsx` now shows a `Review weak spots` action when mistakes exist for the current level (or all levels in random mode).
+- **Session rules:** review sessions record attempts in history but do **not** grant XP, stars, or level progression.
+- **Quiz wiring:** `src/components/QuizView.tsx` and `src/App.tsx` now pass history/session mode through to the quiz engine and surface review-mode labels.
+- **Build verification:** `npm run build` passed.

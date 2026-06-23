@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { UserStats, PersonaStage } from '../types';
+import { UserStats, PersonaStage, QuizSessionMode } from '../types';
 import {
   LEVELS,
   QUESTIONS_PER_LEVEL,
@@ -20,7 +20,7 @@ import { formatTranslation } from '../translations';
 
 interface EvolutionHubProps {
   stats: UserStats;
-  onStartQuiz: () => void;
+  onStartQuiz: (mode?: QuizSessionMode) => void;
 }
 
 export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }) => {
@@ -33,6 +33,9 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
   const nextThreshold = getNextRandomModeThreshold(randomScore);
   const currentLevelInfo = LEVELS.find(l => l.level === stats.currentLevel) || LEVELS[0];
   const progress = stats.levelProgress[stats.currentLevel] || 0;
+  const reviewMistakesCount = stats.history.filter(
+    attempt => !attempt.isCorrect && (randomMode || attempt.level === stats.currentLevel)
+  ).length;
 
   const totalCompleted = stats.completedQuestionIds.length;
   const totalPossible = TOTAL_QUESTIONS;
@@ -237,11 +240,19 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
           </div>
 
           <button
-            onClick={() => { playCutSound(); onStartQuiz(); }}
+            onClick={() => { playCutSound(); onStartQuiz('standard'); }}
             className="w-full py-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-2xl font-black text-lg transition-all transform hover:scale-[1.02] active:scale-95 shadow-2xl shadow-indigo-500/40 flex items-center justify-center gap-3"
           >
             {t('hub.continueMutation')} <i className="fas fa-chevron-right text-sm"></i>
           </button>
+          {reviewMistakesCount > 0 && (
+            <button
+              onClick={() => { playCutSound(); onStartQuiz('review'); }}
+              className="w-full py-3 bg-amber-500/15 hover:bg-amber-500/20 text-amber-300 rounded-2xl font-black text-sm transition-all border border-amber-500/30 flex items-center justify-center gap-3"
+            >
+              {t('hub.reviewMistakes' as any)} <span className="text-amber-400">({reviewMistakesCount})</span>
+            </button>
+          )}
         </div>
 
         <div className="glass rounded-3xl p-8 space-y-6 flex flex-col justify-between min-w-0 overflow-x-auto">
