@@ -809,6 +809,8 @@ export const QuizView: React.FC<QuizViewProps> = ({
   // We use a ref to capture completedIds at the START of the quiz session.
   // This prevents the quiz from re-fetching if completedIds updates mid-quiz.
   const initialCompletedIds = useRef(completedIds);
+  // Capture history at session start so answer logging does not refetch a new batch mid-quiz.
+  const initialHistory = useRef(history);
   // Ref for session correct count - updated synchronously so live score displays immediately
   const sessionCorrectRef = useRef(0);
 
@@ -838,7 +840,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
       try {
         setLoading(true);
         // Fetch questions based on mode: level-specific or random from all levels
-        const data = await quizService.getBatch(level, 15, initialCompletedIds.current, randomMode, history, sessionMode);
+        const data = await quizService.getBatch(level, 15, initialCompletedIds.current, randomMode, initialHistory.current, sessionMode);
         // Shuffle options for each question so correct answer isn't always first
         const shuffledQuestions = data.map(shuffleOptions);
         setQuestions(shuffledQuestions);
@@ -859,7 +861,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
     fetchQuestions();
     // Dependency on 'level', 'randomizeTrigger', and 'randomMode'. If any changes, we reset.
     // If completedIds (passed from props) changes, we do NOT re-run this.
-  }, [level, randomizeTrigger, randomMode, history, sessionMode]);
+  }, [level, randomizeTrigger, randomMode, sessionMode]);
 
   useEffect(() => {
     if (!scoreJustIncreased) return;
@@ -885,7 +887,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
     setIsAnswered(true);
 
     if (isCorrect) {
-      sessionCorrectRef.current = 1;
+      sessionCorrectRef.current += 1;
       setScore(s => s + 1);
       if (randomMode) setScoreJustIncreased(true);
     }
