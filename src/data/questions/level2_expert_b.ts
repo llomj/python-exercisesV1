@@ -1368,38 +1368,38 @@ Notes:
   }),
   // 81. int.from_bytes big-endian
   (_i: number) => ({
-    q: `What is int("10")?`,
-    o: ["10", "2560", "0", "Error"],
+    q: `What is int("10") + 5?`,
+    o: ["15", "10", "5", "Error"],
     c: 0,
-    e: "int() converts the string '10' into the integer 10."
+    e: "int('10') becomes 10, and 10 + 5 = 15."
   }),
   // 82. to_bytes big-endian
   (_i: number) => ({
-    q: `What is bytes([10])?`,
-    o: ["b'\\x00\\x0a'", "b'\\x0a\\x00'", "b'\\x0a'", "Error"],
-    c: 2,
-    e: "bytes([10]) creates a one-byte object containing the value 10, shown as b'\\x0a'."
+    q: `What is float("2.5") * 2?`,
+    o: ["5.0", "4.5", "2.5", "Error"],
+    c: 0,
+    e: "float('2.5') becomes 2.5, and 2.5 * 2 = 5.0."
   }),
   // 83. from_bytes single byte 0xff
   (_i: number) => ({
-    q: `What is b"A"[0]?`,
-    o: ["65", "255", "0", "Error"],
+    q: `What is len(str(1234))?`,
+    o: ["4", "3", "1234", "Error"],
     c: 0,
-    e: "Indexing a bytes object gives the numeric byte value, and the ASCII code for 'A' is 65."
+    e: "str(1234) becomes '1234', and its length is 4."
   }),
   // 84. from_bytes signed interpretation
   (_i: number) => ({
-    q: `What is len(b"ab")?`,
-    o: ["2", "255", "0", "Error"],
+    q: `What is abs(-12)?`,
+    o: ["12", "-12", "0", "Error"],
     c: 0,
-    e: "The bytes object b'ab' contains two bytes, so its length is 2."
+    e: "abs() returns the distance from zero, so abs(-12) is 12."
   }),
   // 85. to_bytes for 256
   (_i: number) => ({
-    q: `What is bytes([65, 66])?`,
-    o: ["b'AB'", "b'A'", "65", "Error"],
+    q: `What is round(7.49)?`,
+    o: ["7", "8", "7.5", "Error"],
     c: 0,
-    e: "65 is 'A' and 66 is 'B', so bytes([65, 66]) becomes b'AB'."
+    e: "7.49 rounds to the nearest integer, which is 7."
   }),
   // 86. format() binary without prefix
   (_i: number) => ({
@@ -1720,24 +1720,24 @@ Notes:
   }),
   // 93. f-string binary with zero-padding
   (_i: number) => ({
-    q: `What is format(5, "b")?`,
-    o: ["'101'", "'0b101'", "'5'", "Error"],
+    q: `What is format(12, "04d")?`,
+    o: ["'0012'", "'12'", "'012'", "Error"],
     c: 0,
-    e: "format(5, 'b') returns the binary digits without the 0b prefix, so the result is '101'."
+    e: "04d means a width of 4 using decimal digits with leading zeros, so 12 becomes '0012'."
   }),
   // 94. f-string hex with zero-padding
   (_i: number) => ({
-    q: `What is f"{5:04d}"?`,
-    o: ["'0005'", "'5'", "'05'", "Error"],
-    c: 0,
-    e: "In an f-string, 04d means a width of 4 using decimal digits with leading zeros, so 5 becomes '0005'."
+    q: `What is f"{7.2:.1f}"?`,
+    o: ["'7.0'", "'7.2'", "'7.20'", "Error"],
+    c: 1,
+    e: ".1f keeps one digit after the decimal point, so the result is '7.2'."
   }),
   // 95. f-string with explicit sign
   (_i: number) => ({
-    q: `What is f"{3.14:.2f}"?`,
-    o: ["'+3.14'", "'3.14'", "'+ 3.14'", "Error"],
-    c: 1,
-    e: ".2f means show the number with exactly two digits after the decimal point, so the result is '3.14'."
+    q: `What is f"{12:.2f}"?`,
+    o: ["'12.00'", "'12'", "'12.0'", "Error"],
+    c: 0,
+    e: ".2f formats the number with exactly two digits after the decimal point, so the result is '12.00'."
   }),
   // 96. isinstance with tuple of types
   (_i: number) => ({

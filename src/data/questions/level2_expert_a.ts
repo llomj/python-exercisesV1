@@ -1960,144 +1960,90 @@ Notes:
 
   // Q36
   (_i: number) => ({
-    q: `What is 0b101 in decimal?`,
-    o: ["5", "6", "4", "Error"],
+    q: `What is int("12") + 3?`,
+    o: ["15", "12", "9", "Error"],
     c: 0,
-    e: "Binary 0b101 means 4 + 1, which equals 5."
+    e: "int('12') becomes 12, and 12 + 3 = 15."
   }),
 
   // Q37
   (_i: number) => ({
-    q: `What is 0b10 + 0b11?`,
-    o: ["5", "4", "6", "3"],
+    q: `What is float("2.5") + 1?`,
+    o: ["3.5", "2.5", "3", "Error"],
     c: 0,
-    e: "0b10 is 2 and 0b11 is 3, so the total is 5."
+    e: "float('2.5') becomes 2.5, and adding 1 gives 3.5."
   }),
 
   // Q38
   (_i: number) => ({
-    q: `What is int("101", 2)?`,
-    o: ["5", "2", "101", "Error"],
+    q: `What is abs(-9)?`,
+    o: ["9", "-9", "0", "Error"],
     c: 0,
-    e: "int(text, 2) reads the string as base 2, so '101' becomes 5."
+    e: "abs() returns the distance from zero, so abs(-9) is 9."
   }),
 
   // Q39
   (_i: number) => ({
-    q: `What is int("111", 2)?`,
-    o: ["7", "3", "111", "Error"],
+    q: `What is 7 % 3?`,
+    o: ["1", "2", "3", "Error"],
     c: 0,
-    e: "In binary, 111 means 4 + 2 + 1, which equals 7."
+    e: "% gives the remainder after division. 7 divided by 3 leaves remainder 1."
   }),
 
   // Q40
   (_i: number) => ({
-    q: `What is 2 ** 3?`,
-    o: ["8", "6", "9", "3"],
+    q: `What is 2 ** 4?`,
+    o: ["16", "8", "12", "4"],
     c: 0,
-    e: "The ** operator means power, so 2 ** 3 equals 8."
+    e: "The ** operator means power, so 2 ** 4 equals 16."
   }),
 
   // Q41
   (_i: number) => ({
-    q: `What is 8 // 2?`,
-    o: ["4", "8", "2", "16"],
+    q: `What is 9 // 2?`,
+    o: ["4", "4.5", "5", "Error"],
     c: 0,
-    e: "// is floor division, so 8 // 2 equals 4."
+    e: "// is floor division, so 9 // 2 gives 4."
   }),
 
   // Q42
   (_i: number) => ({
-    q: `What is 10 == 0b1010?`,
-    o: ["True", "False", "Error", "None"],
+    q: `What is 10 % 3?`,
+    o: ["1", "3", "0", "Error"],
     c: 0,
-    e: "0b1010 is another way to write 10, so the comparison is True."
+    e: "10 divided by 3 leaves remainder 1."
   }),
 
   // Q43
   (_i: number) => ({
-    q: `What is int("12", 8)?`,
-    o: ["10", "12", "8", "Error"],
+    q: `What is round(3.6)?`,
+    o: ["4", "3", "3.6", "Error"],
     c: 0,
-    e: "In base 8, 12 means 1*8 + 2, which equals 10."
+    e: "round(3.6) rounds to the nearest integer, which is 4."
   }),
 
   // Q44
   (_i: number) => ({
-    q: `What is int("A", 16)?`,
-    o: ["10", "16", "1", "Error"],
+    q: `What is round(3.14159, 2)?`,
+    o: ["3.14", "3.15", "3.1", "Error"],
     c: 0,
-    e: "In hexadecimal, A stands for 10."
+    e: "Rounding 3.14159 to two decimal places gives 3.14."
   }),
 
   // Q45
   (_i: number) => ({
-    q: `What is bin(10)?\n(Hint: bin() returns a string with the 0b prefix.)`,
-    o: ["'0b1010'", "'1010'", "'0x0a'", "1010"],
+    q: `What is int(4.9)?`,
+    o: ["4", "5", "4.9", "Error"],
     c: 0,
-    e: "bin() converts an integer to its binary string representation with '0b' prefix.",
-    de: `The bin() built-in function converts an integer to a string showing its binary representation, prefixed with '0b'.
-
-Key concepts:
-• bin(10) returns '0b1010'
-• The '0b' prefix indicates binary representation
-• The result is a string, not a number
-• 10 in binary: 8+2 = 1010
-
-Related conversion functions:
-• bin(10) → '0b1010' (binary)
-• oct(10) → '0o12' (octal)
-• hex(10) → '0xa' (hexadecimal)
-• int('0b1010', 2) → 10 (binary string back to int)
-
-Converting between bases:
-• Binary: bin(n) — prefix '0b'
-• Octal: oct(n) — prefix '0o'
-• Hex: hex(n) — prefix '0x'
-• All return strings
-
-Example:
->>> bin(10)
-'0b1010'
->>> bin(255)
-'0b11111111'
-
-Key Distinctions:
-• bin() returns string with '0b' prefix and binary digits for nonnegative int.
-• bin(10) -> '0b1010'.
-
-How It Works:
-• Format integer in base 2 with prefix.
-
-Step-by-Step Execution:
-1. Convert 10 to binary text.
-2. Prefix 0b.
-
-Order of Operations:
-• Built-in bin call.
-
-Common Use Cases:
-• Debugging bit patterns in teaching.
-
-Edge Cases:
-• Negative ints show minus sign and infinite bits concept — uses -0b... form.
-
-Performance Considerations:
-• O(number of output bits).
-
-Examples:
-• bin(0) is '0b0'.
-
-Notes:
-• format(n,'b') without prefix if slice [2:] from bin.`
+    e: "int() drops the decimal part of a positive float, so int(4.9) is 4."
   }),
 
   // Q46
   (_i: number) => ({
-    q: `What is hex(15)?`,
-    o: ["'0xf'", "'0b1111'", "'15'", "Error"],
+    q: `What is str(42)?`,
+    o: ['"42"', '"4.2"', "42", "Error"],
     c: 0,
-    e: "hex() returns a hexadecimal string with the 0x prefix, so 15 becomes '0xf'."
+    e: "str(42) converts the integer into the string '42'."
   }),
 
   // Q47
