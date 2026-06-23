@@ -1,5 +1,10 @@
 # Task Tracker - Level 1 In-Depth Explanations (EN/FR)
 
+### 2026-06-24 — Header settings control
+
+- Moved the mobile settings trigger from the fixed bottom-center bar into the top-right header beside the answer-count badge in `src/App.tsx`.
+- Removed the old bottom fixed settings bar to match the requested placement with minimal layout change.
+
 ## Objective
 
 Complete and maintain high-quality, unique in-depth explanations for Level 1 with strict English/French parity.

@@ -739,7 +739,7 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto relative flex items-center gap-2">
             <button
               type="button"
               onClick={() => { playCutSoundIfEnabled(); setShowGameplayInfoModal(true); }}
@@ -765,49 +765,46 @@ const App: React.FC = () => {
                 </div>
               );
             })()}
+            <button
+              type="button"
+              onClick={() => { playCutSoundIfEnabled(); setShowSettingsMenu(!showSettingsMenu); }}
+              className="w-10 h-10 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all"
+              title={t('settings.settings')}
+              aria-label={t('settings.settings')}
+            >
+              <i className="fas fa-gear text-sm"></i>
+            </button>
+            <SettingsMenu
+              isOpen={showSettingsMenu}
+              onClose={() => setShowSettingsMenu(false)}
+              view={view}
+              randomMode={randomMode}
+              onToggleRandomMode={handleRandomModeToggle}
+              onShowGlossary={() => { setOpenSettingsOnBack(true); setView('glossary'); }}
+              onShowIdSearch={() => setShowIdSearch(true)}
+              onShowIdLog={() => setShowIdLog(true)}
+              onShowLearningLog={() => { setOpenSettingsOnBack(true); setView('log'); }}
+              onShowLevelSelector={() => setShowLevelSelector(true)}
+              onShowMethods={() => { setOpenSettingsOnBack(true); setView('methods'); }}
+              onShowConcepts={() => { setOpenSettingsOnBack(true); setView('concepts'); }}
+              onShowFlow={() => { setOpenSettingsOnBack(true); setView('flow'); }}
+              onShowOperations={() => { setOpenSettingsOnBack(true); setShowOperations(true); }}
+              onShowFundamentals={(section) => { setOpenSettingsOnBack(true); setFundamentalsInitialSection(section); setView('fundamentals'); }}
+              onToggleLanguage={toggleLanguage}
+              soundEnabled={soundEnabled}
+              hapticEnabled={hapticEnabled}
+              theme={theme}
+              onToggleSound={() => setSoundEnabled(s => !s)}
+              onToggleHaptic={() => setHapticEnabled(h => !h)}
+              onSetTheme={(nextTheme) => setTheme(nextTheme)}
+              triggerHaptic={triggerHaptic}
+              onRefreshApp={handleRefreshApp}
+              onResetApp={() => setShowResetModal(true)}
+            />
           </div>
         </div>
 
       </nav>
-
-      {/* Settings at bottom - pb lifts gear above iPhone home-indicator; min 2rem when env is 0 in PWA */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 flex justify-center pb-[max(2rem,env(safe-area-inset-bottom))] pt-2 bg-gradient-to-t from-slate-950 to-transparent">
-        <button
-          onClick={() => { playCutSoundIfEnabled(); setShowSettingsMenu(!showSettingsMenu); }}
-          className="w-16 h-16 flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all shadow-lg min-w-[64px] min-h-[64px]"
-          title={t('settings.settings')}
-        >
-          <i className="fas fa-gear text-xl"></i>
-        </button>
-      </div>
-      <SettingsMenu
-        isOpen={showSettingsMenu}
-        onClose={() => setShowSettingsMenu(false)}
-        view={view}
-        anchorBottom
-        randomMode={randomMode}
-        onToggleRandomMode={handleRandomModeToggle}
-        onShowGlossary={() => { setOpenSettingsOnBack(true); setView('glossary'); }}
-        onShowIdSearch={() => setShowIdSearch(true)}
-        onShowIdLog={() => setShowIdLog(true)}
-        onShowLearningLog={() => { setOpenSettingsOnBack(true); setView('log'); }}
-        onShowLevelSelector={() => setShowLevelSelector(true)}
-        onShowMethods={() => { setOpenSettingsOnBack(true); setView('methods'); }}
-        onShowConcepts={() => { setOpenSettingsOnBack(true); setView('concepts'); }}
-        onShowFlow={() => { setOpenSettingsOnBack(true); setView('flow'); }}
-        onShowOperations={() => { setOpenSettingsOnBack(true); setShowOperations(true); }}
-        onShowFundamentals={(section) => { setOpenSettingsOnBack(true); setFundamentalsInitialSection(section); setView('fundamentals'); }}
-        onToggleLanguage={toggleLanguage}
-        soundEnabled={soundEnabled}
-        hapticEnabled={hapticEnabled}
-        theme={theme}
-        onToggleSound={() => setSoundEnabled(s => !s)}
-        onToggleHaptic={() => setHapticEnabled(h => !h)}
-        onSetTheme={(nextTheme) => setTheme(nextTheme)}
-        triggerHaptic={triggerHaptic}
-        onRefreshApp={handleRefreshApp}
-        onResetApp={() => setShowResetModal(true)}
-      />
 
       <main className="container mx-auto px-4 py-1 max-w-4xl min-h-[calc(100dvh-160px)]">
         {view === 'quiz' ? (
