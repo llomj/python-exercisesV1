@@ -5,6 +5,13 @@
 - Moved the mobile settings trigger from the fixed bottom-center bar into the top-right header beside the answer-count badge in `src/App.tsx`.
 - Removed the old bottom fixed settings bar to match the requested placement with minimal layout change.
 
+### 2026-06-24 — Level 2 question audit (IDs 801-900)
+
+- Audited the Level 2 expert numeric block and identified `Decimal`, `Fraction`, `complex`, bitwise, and byte-conversion clusters as too specialized for the current progression.
+- Added `work/level2_801_900_audit.md` with `keep / simplify / move later` recommendations for the `801-900` range.
+- Fixed French code-parity issues in `src/data/questionsFr.ts` where translated prompts had altered Python syntax.
+- Added inline hints to the hardest `826-850` and `881-895` prompts in both English and French to make the questions more attainable without changing IDs or correct answers.
+
 ## Objective
 
 Complete and maintain high-quality, unique in-depth explanations for Level 1 with strict English/French parity.

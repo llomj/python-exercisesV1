@@ -1389,7 +1389,7 @@ Notes:
 
   // Q26
   (_i: number) => ({
-    q: `What is type(1+2j)?`,
+    q: `What is type(1+2j)?\n(Hint: j marks the imaginary part.)`,
     o: ["<class 'complex'>", "<class 'tuple'>", "<class 'float'>", "<class 'int'>"],
     c: 0,
     e: "The j suffix creates a complex number — Python's built-in type for imaginary numbers.",
@@ -1445,7 +1445,7 @@ Notes:
 
   // Q27
   (_i: number) => ({
-    q: `What is (1+2j).real?`,
+    q: `What is (1+2j).real?\n(Hint: the real part is the non-j part.)`,
     o: ["1.0", "1", "2.0", "Error"],
     c: 0,
     e: "The .real attribute returns the real part as a float — 1.0, not the integer 1.",
@@ -1501,7 +1501,7 @@ Notes:
 
   // Q28
   (_i: number) => ({
-    q: `What is (1+2j).imag?`,
+    q: `What is (1+2j).imag?\n(Hint: the imaginary part is the coefficient of j.)`,
     o: ["2.0", "2", "1.0", "Error"],
     c: 0,
     e: "The .imag attribute returns the imaginary part as a float — 2.0.",
@@ -1557,7 +1557,7 @@ Notes:
 
   // Q29
   (_i: number) => ({
-    q: `What is (1+2j) + (3+4j)?`,
+    q: `What is (1+2j) + (3+4j)?\n(Hint: add the real parts and add the imaginary parts.)`,
     o: ["(4+6j)", "(4+8j)", "(3+6j)", "Error"],
     c: 0,
     e: "Complex addition adds real and imaginary parts separately: (1+3) + (2+4)j = 4+6j.",
@@ -1613,7 +1613,7 @@ Notes:
 
   // Q30
   (_i: number) => ({
-    q: `What is (1+2j) * (3+4j)?`,
+    q: `What is (1+2j) * (3+4j)?\n(Hint: use j² = -1.)`,
     o: ["(-5+10j)", "(3+8j)", "(7+10j)", "(-5-10j)"],
     c: 0,
     e: "Complex multiplication uses FOIL: 3+4j+6j+8j² = 3+10j-8 = -5+10j (since j²=-1).",
@@ -1672,7 +1672,7 @@ Notes:
 
   // Q31
   (_i: number) => ({
-    q: `What is abs(3+4j)?`,
+    q: `What is abs(3+4j)?\n(Hint: use the 3-4-5 triangle.)`,
     o: ["5.0", "7.0", "25", "Error"],
     c: 0,
     e: "abs() of a complex number returns its magnitude: sqrt(3² + 4²) = sqrt(25) = 5.0.",
@@ -1732,7 +1732,7 @@ Notes:
 
   // Q32
   (_i: number) => ({
-    q: `What is complex(3, 4)?`,
+    q: `What is complex(3, 4)?\n(Hint: complex(real, imag) builds a complex number.)`,
     o: ["(3+4j)", "3+4j", "complex(3, 4)", "Error"],
     c: 0,
     e: "complex(real, imag) creates a complex number — complex(3, 4) produces (3+4j).",
@@ -1788,7 +1788,7 @@ Notes:
 
   // Q33
   (_i: number) => ({
-    q: `What is (1+0j) == 1?`,
+    q: `What is (1+0j) == 1?\n(Hint: a complex number with 0 imaginary part can equal a real number.)`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "A complex number with zero imaginary part equals the corresponding int or float.",
@@ -1844,7 +1844,7 @@ Notes:
 
   // Q34
   (_i: number) => ({
-    q: `What is bool(0+0j)?`,
+    q: `What is bool(0+0j)?\n(Hint: only 0+0j is falsy.)`,
     o: ["False", "True", "Error", "None"],
     c: 0,
     e: "Zero complex (0+0j) is falsy — any complex with both parts zero is False.",
@@ -1902,7 +1902,7 @@ Notes:
 
   // Q35
   (_i: number) => ({
-    q: `What is (3+4j).conjugate()?`,
+    q: `What is (3+4j).conjugate()?\n(Hint: keep the real part and flip the sign of the imaginary part.)`,
     o: ["(3-4j)", "(3+4j)", "(-3+4j)", "(-3-4j)"],
     c: 0,
     e: "The conjugate flips the sign of the imaginary part: (3+4j) → (3-4j).",
@@ -1960,581 +1960,79 @@ Notes:
 
   // Q36
   (_i: number) => ({
-    q: `What is 5 & 3?`,
-    o: ["1", "7", "6", "8"],
+    q: `What is 0b101 in decimal?`,
+    o: ["5", "6", "4", "Error"],
     c: 0,
-    e: "Bitwise AND: 101 & 011 = 001 = 1. Only bits that are 1 in BOTH operands remain.",
-    de: `The & operator performs bitwise AND — each bit in the result is 1 only if the corresponding bits in both operands are 1.
-
-Step by step:
-• 5 in binary: 101
-• 3 in binary: 011
-• AND operation:
-  101
-  011
-  ---
-  001 = 1
-
-Key concepts:
-• & compares each bit position independently
-• Bit is 1 only if BOTH input bits are 1
-• Acts like a logical AND on each bit pair
-• Common use: masking — extracting specific bits from a value
-
-Truth table for AND:
-• 0 & 0 = 0
-• 0 & 1 = 0
-• 1 & 0 = 0
-• 1 & 1 = 1
-
-Example:
->>> 5 & 3
-1
->>> bin(5 & 3)
-'0b1'
-
-Key Distinctions:
-• & is bitwise AND on integers: bits both 1 stay 1.
-• 5 is 0b101, 3 is 0b011 -> 0b001 which is 1.
-
-How It Works:
-• Pairwise AND on two's-complement bit patterns for ints.
-
-Step-by-Step Execution:
-1. Align bits of 5 and 3.
-2. AND -> 1.
-
-Order of Operations:
-• & binds tighter than comparison operators; weaker than + * in mixed cases — check table.
-
-Common Use Cases:
-• Masks and feature flags in integers.
-
-Edge Cases:
-• Negative ints use infinite sign bits in conceptual two's complement.
-
-Performance Considerations:
-• O(1) word-sized ints.
-
-Examples:
-• Clear bits with AND mask 0.
-
-Notes:
-• bool & bool coerces to int 0/1 in Python 3.`
+    e: "Binary 0b101 means 4 + 1, which equals 5."
   }),
 
   // Q37
   (_i: number) => ({
-    q: `What is 5 | 3?`,
-    o: ["7", "1", "6", "8"],
+    q: `What is 0b10 + 0b11?`,
+    o: ["5", "4", "6", "3"],
     c: 0,
-    e: "Bitwise OR: 101 | 011 = 111 = 7. Bits that are 1 in EITHER operand remain.",
-    de: `The | operator performs bitwise OR — each bit in the result is 1 if the corresponding bit in either operand is 1.
-
-Step by step:
-• 5 in binary: 101
-• 3 in binary: 011
-• OR operation:
-  101
-  011
-  ---
-  111 = 7
-
-Key concepts:
-• | compares each bit position independently
-• Bit is 1 if EITHER input bit is 1
-• Acts like a logical OR on each bit pair
-• Common use: combining flags or setting specific bits
-
-Truth table for OR:
-• 0 | 0 = 0
-• 0 | 1 = 1
-• 1 | 0 = 1
-• 1 | 1 = 1
-
-Example:
->>> 5 | 3
-7
->>> bin(5 | 3)
-'0b111'
-
-Key Distinctions:
-• | is bitwise OR: bit 1 if either operand has 1.
-• 0b101 | 0b011 -> 0b111 = 7.
-
-How It Works:
-• Bitwise OR on int unlimited precision.
-
-Step-by-Step Execution:
-1. OR each bit position.
-2. Result 7.
-
-Order of Operations:
-• | with other bitwise ops has defined precedence among themselves.
-
-Common Use Cases:
-• Combining permission bitmasks.
-
-Edge Cases:
-• Do not confuse | with logical or for booleans — different.
-
-Performance Considerations:
-• O(1) for small ints.
-
-Examples:
-• set union uses | for sets — unrelated to int | int.
-
-Notes:
-• Overloaded | for dict merge in 3.9+ — not this quiz.`
+    e: "0b10 is 2 and 0b11 is 3, so the total is 5."
   }),
 
   // Q38
   (_i: number) => ({
-    q: `What is 5 ^ 3?`,
-    o: ["6", "1", "7", "8"],
+    q: `What is int("101", 2)?`,
+    o: ["5", "2", "101", "Error"],
     c: 0,
-    e: "Bitwise XOR: 101 ^ 011 = 110 = 6. Bits that differ between operands become 1.",
-    de: `The ^ operator performs bitwise XOR (exclusive OR) — each bit in the result is 1 if the corresponding bits in the operands are different.
-
-Step by step:
-• 5 in binary: 101
-• 3 in binary: 011
-• XOR operation:
-  101
-  011
-  ---
-  110 = 6
-
-Key concepts:
-• ^ compares each bit position independently
-• Bit is 1 only if the input bits are DIFFERENT
-• Acts like a logical XOR on each bit pair
-• Common use: toggling bits, simple encryption, swapping values
-
-Truth table for XOR:
-• 0 ^ 0 = 0
-• 0 ^ 1 = 1
-• 1 ^ 0 = 1
-• 1 ^ 1 = 0
-
-Example:
->>> 5 ^ 3
-6
->>> bin(5 ^ 3)
-'0b110'
-
-Key Distinctions:
-• ^ is bitwise XOR: 1 if bits differ.
-• 0b101 ^ 0b011 -> 0b110 = 6.
-
-How It Works:
-• XOR table per bit.
-
-Step-by-Step Execution:
-1. XOR bits.
-2. 6.
-
-Order of Operations:
-• ^ between ints.
-
-Common Use Cases:
-• Parity, toggling bits, XOR linked list tricks.
-
-Edge Cases:
-• XOR is its own inverse: a^a == 0.
-
-Performance Considerations:
-• O(1).
-
-Examples:
-• Swap XOR swap pattern for ints — avoid in Python style.
-
-Notes:
-• bool ^ bool is int 0/1.`
+    e: "int(text, 2) reads the string as base 2, so '101' becomes 5."
   }),
 
   // Q39
   (_i: number) => ({
-    q: `What is ~5?`,
-    o: ["-6", "-5", "6", "-4"],
+    q: `What is int("111", 2)?`,
+    o: ["7", "3", "111", "Error"],
     c: 0,
-    e: "Bitwise NOT inverts all bits — in two's complement, ~n = -(n+1), so ~5 = -6.",
-    de: `The ~ operator performs bitwise NOT — it inverts every bit. In Python's two's complement representation, ~n equals -(n+1).
-
-Key concepts:
-• ~5 = -6 because ~n = -(n + 1)
-• This comes from two's complement binary representation
-• ~0 = -1, ~1 = -2, ~(-1) = 0
-• Python integers have unlimited precision, so all bits are flipped
-
-Two's complement explanation:
-• 5 in binary: ...00000101
-• ~5 flips all bits: ...11111010
-• In two's complement, ...11111010 = -6
-• Formula: ~n = -(n + 1) always holds
-
-Useful identity:
-• ~n = -(n + 1)
-• ~~n = n (double NOT returns original)
-• ~(-n) = n - 1
-
-Example:
->>> ~5
--6
->>> ~0
--1
->>> ~(-1)
-0
-
-Key Distinctions:
-• ~ is bitwise NOT: ~x == -x-1 for ints in two's complement view.
-• ~5 -> -6.
-
-How It Works:
-• Inverts all bits in unlimited precision representation.
-
-Step-by-Step Execution:
-1. Invert bits of 5.
-2. Interpret as signed int -> -6.
-
-Order of Operations:
-• Unary ~ binds tightly.
-
-Common Use Cases:
-• Low-level bit tricks and competitive programming.
-
-Edge Cases:
-• ~(-1) is 0 in the sense infinite ones flip — careful with theory.
-
-Performance Considerations:
-• O(1) for word size.
-
-Examples:
-• ~~x is not always x for floats — ~ is int/bit op.
-
-Notes:
-• For positive n, ~n == -n-1.`
+    e: "In binary, 111 means 4 + 2 + 1, which equals 7."
   }),
 
   // Q40
   (_i: number) => ({
-    q: `What is 1 << 3?`,
-    o: ["8", "3", "4", "1"],
+    q: `What is 2 ** 3?`,
+    o: ["8", "6", "9", "3"],
     c: 0,
-    e: "Left shift by 3: 1 (binary 1) becomes 1000 (binary) = 8. Equivalent to 1 * 2³.",
-    de: `The << operator shifts bits to the left, inserting zeros on the right. Left shifting by n positions multiplies by 2^n.
-
-Step by step:
-• 1 in binary: 0001
-• Shift left by 3: 1000
-• 1000 in decimal = 8
-• Equivalent to: 1 * 2^3 = 8
-
-Key concepts:
-• a << n = a * 2^n
-• Each left shift doubles the value
-• 1 << 3 = 1 * 8 = 8
-• Zeros are inserted on the right side
-
-Common uses:
-• Quick power-of-2 multiplication: x << 1 = x * 2
-• Creating bitmasks: 1 << n sets the nth bit
-• 1 << 0 = 1, 1 << 1 = 2, 1 << 2 = 4, 1 << 3 = 8
-
-Example:
->>> 1 << 3
-8
->>> 5 << 1
-10
-
-Key Distinctions:
-• << left-shifts bits: multiplying by 2**k for nonnegative left operands.
-• 1 << 3 is 8.
-
-How It Works:
-• Insert zeros on the right in binary representation.
-
-Step-by-Step Execution:
-1. Start 0b1.
-2. Shift left 3 -> 0b1000.
-
-Order of Operations:
-• << between ints.
-
-Common Use Cases:
-• Powers of two and bitmask building.
-
-Edge Cases:
-• Negative shift counts raise ValueError; huge shifts allocate big ints.
-
-Performance Considerations:
-• Big int shifts cost by result size.
-
-Examples:
-• 1 << 10 == 1024.
-
-Notes:
-• For floats use multiplication — << is int only.`
+    e: "The ** operator means power, so 2 ** 3 equals 8."
   }),
 
   // Q41
   (_i: number) => ({
-    q: `What is 16 >> 2?`,
-    o: ["4", "8", "2", "64"],
+    q: `What is 8 // 2?`,
+    o: ["4", "8", "2", "16"],
     c: 0,
-    e: "Right shift by 2: 10000 becomes 100 = 4. Equivalent to 16 // 2² = 16 // 4.",
-    de: `The >> operator shifts bits to the right, discarding bits that fall off. Right shifting by n positions divides by 2^n (integer division).
-
-Step by step:
-• 16 in binary: 10000
-• Shift right by 2: 00100
-• 100 in decimal = 4
-• Equivalent to: 16 // 2^2 = 16 // 4 = 4
-
-Key concepts:
-• a >> n = a // 2^n (floor division by power of 2)
-• Each right shift halves the value (floor)
-• Bits shifted off the right are lost
-• For negative numbers, sign bit is preserved (arithmetic shift)
-
-Common uses:
-• Quick power-of-2 division: x >> 1 = x // 2
-• Extracting specific bits from a value
-• 16 >> 1 = 8, 16 >> 2 = 4, 16 >> 3 = 2, 16 >> 4 = 1
-
-Example:
->>> 16 >> 2
-4
->>> 100 >> 1
-50
-
-Key Distinctions:
-• >> floor-divides by 2**k toward negative infinity for ints.
-• 16 >> 2 is 4.
-
-How It Works:
-• Drop k least significant bits (for nonnegative).
-
-Step-by-Step Execution:
-1. 16 // 4 conceptually.
-2. Result 4.
-
-Order of Operations:
-• >> on nonnegative int is floor division by power of two.
-
-Common Use Cases:
-• Halving in integer-only pipelines.
-
-Edge Cases:
-• Negative left operand shifts differently — arithmetic shift conceptual.
-
-Performance Considerations:
-• O(1) for small ints.
-
-Examples:
-• -7 >> 1 is -4 floor toward -inf.
-
-Notes:
-• Prefer // for clarity if not bit-motivated.`
+    e: "// is floor division, so 8 // 2 equals 4."
   }),
 
   // Q42
   (_i: number) => ({
-    q: `What is 0b1010 & 0b1100?`,
-    o: ["8", "14", "6", "2"],
+    q: `What is 10 == 0b1010?`,
+    o: ["True", "False", "Error", "None"],
     c: 0,
-    e: "Binary AND: 1010 & 1100 = 1000 = 8. Only the leftmost bit is 1 in both.",
-    de: `The 0b prefix creates integers from binary literals. The & operator then performs bitwise AND on these values.
-
-Step by step:
-• 0b1010 = 10 (decimal)
-• 0b1100 = 12 (decimal)
-• AND operation:
-  1010
-  1100
-  ----
-  1000 = 8
-
-Key concepts:
-• 0b prefix lets you write integers in binary
-• 0b1010 is the integer 10, 0b1100 is the integer 12
-• Bitwise operations work on the binary representations
-• The result is a regular Python int (8), not a binary string
-
-Bit-by-bit analysis:
-• Position 3: 1 & 1 = 1
-• Position 2: 0 & 1 = 0
-• Position 1: 1 & 0 = 0
-• Position 0: 0 & 0 = 0
-• Result: 1000 = 8
-
-Example:
->>> 0b1010 & 0b1100
-8
-
-Key Distinctions:
-• Binary literals work as ints; AND masks common 1 bits.
-• 0b1010 & 0b1100 -> 0b1000 = 8.
-
-How It Works:
-• Same as decimal ints — just literal syntax.
-
-Step-by-Step Execution:
-1. Parse 10 and 12 decimal equivalents.
-2. AND -> 8.
-
-Order of Operations:
-• & on two ints.
-
-Common Use Cases:
-• Hardware register masks.
-
-Edge Cases:
-• Underscores allowed in literals for grouping in modern Python.
-
-Performance Considerations:
-• O(1).
-
-Examples:
-• 0b1111 & 0b1010 -> 0b1010.
-
-Notes:
-• int.bit_count() counts set bits in 3.8+ / 3.10+.`
+    e: "0b1010 is another way to write 10, so the comparison is True."
   }),
 
   // Q43
   (_i: number) => ({
-    q: `What is 0b1010 | 0b1100?`,
-    o: ["14", "8", "6", "10"],
+    q: `What is int("12", 8)?`,
+    o: ["10", "12", "8", "Error"],
     c: 0,
-    e: "Binary OR: 1010 | 1100 = 1110 = 14. Any bit that is 1 in either operand stays 1.",
-    de: `Bitwise OR on binary literals combines the set bits from both operands.
-
-Step by step:
-• 0b1010 = 10 (decimal)
-• 0b1100 = 12 (decimal)
-• OR operation:
-  1010
-  1100
-  ----
-  1110 = 14
-
-Bit-by-bit analysis:
-• Position 3: 1 | 1 = 1
-• Position 2: 0 | 1 = 1
-• Position 1: 1 | 0 = 1
-• Position 0: 0 | 0 = 0
-• Result: 1110 = 14
-
-Key concepts:
-• OR keeps a bit if it's set in either operand
-• Result has more bits set than either input (or equal)
-• a | 0 = a (OR with zero preserves the value)
-• a | a = a (OR with self is unchanged)
-
-Example:
->>> 0b1010 | 0b1100
-14
->>> bin(0b1010 | 0b1100)
-'0b1110'
-
-Key Distinctions:
-• OR combines 1 bits: 0b1010 | 0b1100 -> 0b1110 = 14.
-
-How It Works:
-• Bitwise OR on literal ints.
-
-Step-by-Step Execution:
-1. OR bits.
-2. 14.
-
-Order of Operations:
-• Single |.
-
-Common Use Cases:
-• Merging flags.
-
-Edge Cases:
-• Result at least as large in bit length as max operand for nonnegative.
-
-Performance Considerations:
-• O(1).
-
-Examples:
-• union of bit positions.
-
-Notes:
-• Use bin() to debug bit patterns.`
+    e: "In base 8, 12 means 1*8 + 2, which equals 10."
   }),
 
   // Q44
   (_i: number) => ({
-    q: `What is 0b1010 ^ 0b1100?`,
-    o: ["6", "8", "14", "2"],
+    q: `What is int("A", 16)?`,
+    o: ["10", "16", "1", "Error"],
     c: 0,
-    e: "Binary XOR: 1010 ^ 1100 = 0110 = 6. Bits that differ between operands become 1.",
-    de: `Bitwise XOR on binary literals produces 1 only where the bits differ between the two operands.
-
-Step by step:
-• 0b1010 = 10 (decimal)
-• 0b1100 = 12 (decimal)
-• XOR operation:
-  1010
-  1100
-  ----
-  0110 = 6
-
-Bit-by-bit analysis:
-• Position 3: 1 ^ 1 = 0 (same → 0)
-• Position 2: 0 ^ 1 = 1 (different → 1)
-• Position 1: 1 ^ 0 = 1 (different → 1)
-• Position 0: 0 ^ 0 = 0 (same → 0)
-• Result: 0110 = 6
-
-Key concepts:
-• XOR finds the bits that are different
-• a ^ 0 = a (XOR with zero preserves value)
-• a ^ a = 0 (XOR with self gives zero)
-• XOR is reversible: (a ^ b) ^ b = a
-
-Example:
->>> 0b1010 ^ 0b1100
-6
->>> bin(0b1010 ^ 0b1100)
-'0b110'
-
-Key Distinctions:
-• XOR finds differing bits: 1010 xor 1100 -> 0110 = 6.
-
-How It Works:
-• XOR table per bit position.
-
-Step-by-Step Execution:
-1. Compute xor.
-2. 6.
-
-Order of Operations:
-• Single ^.
-
-Common Use Cases:
-• Checksums and toggling.
-
-Edge Cases:
-• a^b^b == a classic identity.
-
-Performance Considerations:
-• O(1).
-
-Examples:
-• XOR swap without temp for ints — Python style still prefers tuple swap.
-
-Notes:
-• Hamming distance uses XOR and bit_count.`
+    e: "In hexadecimal, A stands for 10."
   }),
 
   // Q45
   (_i: number) => ({
-    q: `What is bin(10)?`,
+    q: `What is bin(10)?\n(Hint: bin() returns a string with the 0b prefix.)`,
     o: ["'0b1010'", "'1010'", "'0x0a'", "1010"],
     c: 0,
     e: "bin() converts an integer to its binary string representation with '0b' prefix.",
@@ -2596,265 +2094,39 @@ Notes:
 
   // Q46
   (_i: number) => ({
-    q: `What is bin(10 & 12)?`,
-    o: ["'0b1000'", "'0b1010'", "'0b1100'", "'0b0010'"],
+    q: `What is hex(15)?`,
+    o: ["'0xf'", "'0b1111'", "'15'", "Error"],
     c: 0,
-    e: "10 & 12 = 8 (1010 & 1100 = 1000), then bin(8) = '0b1000'.",
-    de: `This combines a bitwise AND operation with bin() to visualize the result in binary.
-
-Step by step:
-• 10 in binary: 1010
-• 12 in binary: 1100
-• 10 & 12:
-  1010
-  1100
-  ----
-  1000 = 8
-• bin(8) = '0b1000'
-
-Key concepts:
-• Operations are evaluated inside out: first 10 & 12 = 8, then bin(8)
-• bin() is useful for visualizing bitwise operation results
-• The result string always has the '0b' prefix
-• Leading zeros are not shown: bin(8) is '0b1000' not '0b01000'
-
-Useful pattern:
-• Use bin() to verify bitwise operations visually
-• bin(a & b) shows which bits are common
-• bin(a | b) shows which bits are set in either
-• bin(a ^ b) shows which bits differ
-
-Example:
->>> bin(10 & 12)
-'0b1000'
->>> bin(10 | 12)
-'0b1110'
-
-Key Distinctions:
-• Inner & evaluates first: 10 & 12 -> 8, then bin(8) -> '0b1000'.
-• Shows composing bitwise op inside conversion.
-
-How It Works:
-• Function call with inner expression evaluated first.
-
-Step-by-Step Execution:
-1. 10 & 12 -> 8.
-2. bin(8).
-
-Order of Operations:
-• Call parens: argument & before bin.
-
-Common Use Cases:
-• Printing masked values in binary.
-
-Edge Cases:
-• Large results produce long strings.
-
-Performance Considerations:
-• Linear in bit length output.
-
-Examples:
-• hex(10&12) alternative view.
-
-Notes:
-• f-string binary formatting with format specs also works.`
+    e: "hex() returns a hexadecimal string with the 0x prefix, so 15 becomes '0xf'."
   }),
 
   // Q47
   (_i: number) => ({
-    q: `What is 1 << 10?`,
+    q: `What is 2 ** 10?`,
     o: ["1024", "10", "100", "512"],
     c: 0,
-    e: "1 << 10 = 2^10 = 1024. Left shifting 1 by n gives 2 to the power of n.",
-    de: `Left shifting 1 by n positions is the fastest way to compute 2^n in Python. 1 << 10 = 2^10 = 1024.
-
-Key concepts:
-• 1 << n = 2^n (power of 2)
-• 1 << 10 = 1024 = 2^10
-• This is faster than 2**10 for computing powers of 2
-• Works because shifting left multiplies by 2 each time
-
-Powers of 2 via left shift:
-• 1 << 0 = 1
-• 1 << 1 = 2
-• 1 << 2 = 4
-• 1 << 3 = 8
-• 1 << 10 = 1024
-• 1 << 20 = 1048576
-
-Common values:
-• 1 << 8 = 256 (1 byte range)
-• 1 << 10 = 1024 (1 KB)
-• 1 << 20 = 1048576 (1 MB)
-• 1 << 30 = 1073741824 (1 GB)
-
-Example:
->>> 1 << 10
-1024
->>> 1 << 10 == 2**10
-True
-
-Key Distinctions:
-• Shift 1 left 10 bits -> 2**10 = 1024.
-• Common for kilobyte scale constants.
-
-How It Works:
-• Same as pow(2,10) for nonnegative small left operand.
-
-Step-by-Step Execution:
-1. 1 << 10.
-2. 1024.
-
-Order of Operations:
-• << on ints.
-
-Common Use Cases:
-• Buffer sizes and page sizes in code comments.
-
-Edge Cases:
-• 0 << n is 0.
-
-Performance Considerations:
-• Big int if n huge.
-
-Examples:
-• 1<<20 for megabyte scale.
-
-Notes:
-• Use bit_length to measure integer size.`
+    e: "2 ** 10 means 2 to the power of 10, which is 1024."
   }),
 
   // Q48
   (_i: number) => ({
-    q: `x = 5\nx ^= x\nWhat is x?`,
+    q: `x = 5\nx = x * 2\nWhat is x?`,
     o: ["0", "5", "10", "25"],
-    c: 0,
-    e: "XOR with self always gives 0 — every bit cancels out: 101 ^ 101 = 000.",
-    de: `XORing any value with itself always produces 0. This is because XOR returns 1 only when bits differ, and identical values have no differing bits.
-
-Step by step:
-• x = 5 (binary: 101)
-• x ^= x means x = x ^ x = 5 ^ 5
-• XOR operation:
-  101
-  101
-  ---
-  000 = 0
-
-Key concepts:
-• a ^ a = 0 for any value a
-• This is a fundamental property of XOR
-• Every bit pair is (0,0) or (1,1) — both XOR to 0
-• Used in cryptography, checksums, and variable swapping
-
-XOR properties:
-• a ^ a = 0 (self-cancellation)
-• a ^ 0 = a (identity)
-• a ^ b = b ^ a (commutative)
-• (a ^ b) ^ c = a ^ (b ^ c) (associative)
-
-Example:
->>> x = 5; x ^= x; x
-0
->>> 255 ^ 255
-0
-
-Key Distinctions:
-• In-place XOR with self: x ^= x sets x to 0 for any int (a^a==0).
-• Side effect updates x; expression result is 0.
-
-How It Works:
-• __ixor__ on int mutates name binding to new int in CPython for augmented assignment.
-
-Step-by-Step Execution:
-1. Load x=5.
-2. XOR with itself -> 0.
-3. Bind x to 0.
-
-Order of Operations:
-• Augmented assignment evaluates x once in CPython 3 for this pattern.
-
-Common Use Cases:
-• Obfuscated zeroing — rarely idiomatic Python.
-
-Edge Cases:
-• Custom objects may define different ^=.
-
-Performance Considerations:
-• O(1).
-
-Examples:
-• Clear bitfields with &= 0 instead for clarity.
-
-Notes:
-• Prefer x = 0 for readability.`
+    c: 2,
+    e: "Start with 5, multiply by 2, and x becomes 10."
   }),
 
   // Q49
   (_i: number) => ({
-    q: `a, b = 3, 7\nWhat is a ^ b ^ b?`,
+    q: `a, b = 3, 1\nWhat is a + b?`,
     o: ["3", "7", "0", "4"],
-    c: 0,
-    e: "XOR is self-inverse: a ^ b ^ b = a. XORing with b twice cancels out.",
-    de: `XOR has a remarkable property: applying it twice with the same value cancels out, returning the original. This means a ^ b ^ b = a.
-
-Step by step:
-• a = 3 (binary: 011)
-• b = 7 (binary: 111)
-• a ^ b = 011 ^ 111 = 100 = 4
-• 4 ^ b = 100 ^ 111 = 011 = 3
-• Result: 3 (back to original a!)
-
-Key concepts:
-• a ^ b ^ b = a (XOR is self-inverse)
-• The b XORs cancel each other out
-• This works because b ^ b = 0, and a ^ 0 = a
-• Proof: a ^ b ^ b = a ^ (b ^ b) = a ^ 0 = a
-
-Applications:
-• Simple encryption: encrypt with key, decrypt by XORing with same key
-• XOR swap: swap two values without a temp variable
-• Error detection and correction codes
-• Finding the unique element in a list of pairs
-
-Example:
->>> a, b = 3, 7
->>> a ^ b ^ b
-3
-
-Key Distinctions:
-• XOR is associative: (a^b)^b == a because b^b==0 and a^0==a.
-• Result restores a=3.
-
-How It Works:
-• Chain XOR left-associative: ((a^b)^b).
-
-Step-by-Step Execution:
-1. a^b.
-2. XOR result with b -> cancels b bits.
-
-Order of Operations:
-• ^ chains left to right among equal precedence.
-
-Common Use Cases:
-• XOR decryption round trips in simple ciphers.
-
-Edge Cases:
-• Negative ints XOR with tricky infinite bit patterns.
-
-Performance Considerations:
-• O(1) big-int XOR proportional to word count.
-
-Examples:
-• One-time pad uses XOR secrecy.
-
-Notes:
-• For crypto use secrets module and proper keys — not toy XOR.`
+    c: 3,
+    e: "Add the two values: 3 + 1 = 4."
   }),
 
   // Q50
   (_i: number) => ({
-    q: `What is bool(0b0000)?`,
+    q: `What is bool(0b0000)?\n(Hint: 0b0000 is just 0.)`,
     o: ["False", "True", "0", "None"],
     c: 0,
     e: "0b0000 is 0 in decimal — and 0 is falsy regardless of how it's written.",

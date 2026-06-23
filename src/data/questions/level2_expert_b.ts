@@ -1368,230 +1368,38 @@ Notes:
   }),
   // 81. int.from_bytes big-endian
   (_i: number) => ({
-    q: `What is int.from_bytes(b'\\x00\\x0a', 'big')?`,
+    q: `What is int("10")?`,
     o: ["10", "2560", "0", "Error"],
     c: 0,
-    e: "Big-endian: \\x00 is high byte (0), \\x0a is low byte (10). Result: 0×256 + 10 = 10.",
-    de: `int.from_bytes() converts a bytes object to an integer. In big-endian ('big'), the first byte is the most significant.
-
-Key concepts:
-• b'\\x00\\x0a' in big-endian: 0×256 + 10 = 10
-• 'big' means most significant byte first (network byte order)
-• 'little' would reverse: 10×256 + 0 = 2560
-• \\x0a is hexadecimal for 10
-• This is useful for parsing binary protocols and file formats
-
-Example: int.from_bytes(b'\\x00\\x0a', 'big') → 10. In little-endian it would be 2560.
-
-Key Distinctions:
-• from_bytes interprets byte string as big-endian integer: high byte first.
-• b'\x00\x0a' -> 0*256+10 = 10 (bytes shown escaped in quiz text).
-
-How It Works:
-• Horner accumulation over bytes with shift 8.
-
-Step-by-Step Execution:
-1. First byte 0.
-2. Second byte 10 -> total 10.
-
-Order of Operations:
-• int.from_bytes static method.
-
-Common Use Cases:
-• Parsing network uint16 big-endian.
-
-Edge Cases:
-• signed=True uses two's complement interpretation.
-
-Performance Considerations:
-• O(len(bytes)).
-
-Examples:
-• 'little' endian swaps weighting.
-
-Notes:
-• PEP 456 style — know your wire format.`
+    e: "int() converts the string '10' into the integer 10."
   }),
   // 82. to_bytes big-endian
   (_i: number) => ({
-    q: `What is (10).to_bytes(2, 'big')?`,
+    q: `What is bytes([10])?`,
     o: ["b'\\x00\\x0a'", "b'\\x0a\\x00'", "b'\\x0a'", "Error"],
-    c: 0,
-    e: "10 in 2 bytes big-endian: high byte = 0, low byte = 10 (0x0a).",
-    de: `to_bytes() converts an integer to a bytes object. The first argument is the number of bytes, and the second is the byte order.
-
-Key concepts:
-• (10).to_bytes(2, 'big') → b'\\x00\\x0a'
-• 10 = 0×256 + 10, so bytes are [0x00, 0x0a] in big-endian
-• 'big' = most significant byte first
-• 'little' would give b'\\x0a\\x00' (reversed)
-• OverflowError if the number doesn't fit in the specified bytes
-
-Example: (10).to_bytes(2, 'big') → b'\\x00\\x0a'. This is the inverse of int.from_bytes().
-
-Key Distinctions:
-• to_bytes(2,'big') packs small int into 2 bytes big-endian.
-• 10 -> 0x00 0x0a.
-
-How It Works:
-• Ensures value fits in length*8 bits; raises OverflowError if not.
-
-Step-by-Step Execution:
-1. Check range for 2 bytes.
-2. Emit high then low byte.
-
-Order of Operations:
-• Method on int.
-
-Common Use Cases:
-• Binary protocols and struct-like packing without struct module.
-
-Edge Cases:
-• signed encodings extend sign bit.
-
-Performance Considerations:
-• O(length).
-
-Examples:
-• (256).to_bytes(2,'big') -> b'\x01\x00'.
-
-Notes:
-• Prefer struct.pack for multiple fields together.`
+    c: 2,
+    e: "bytes([10]) creates a one-byte object containing the value 10, shown as b'\\x0a'."
   }),
   // 83. from_bytes single byte 0xff
   (_i: number) => ({
-    q: `What is int.from_bytes(b'\\xff', 'big')?`,
-    o: ["255", "-1", "0", "Error"],
+    q: `What is b"A"[0]?`,
+    o: ["65", "255", "0", "Error"],
     c: 0,
-    e: "\\xff as unsigned (default) is 255. Signed interpretation would be -1.",
-    de: `By default, int.from_bytes() interprets bytes as unsigned. \\xff as an unsigned 8-bit value is 255.
-
-Key concepts:
-• int.from_bytes(b'\\xff', 'big') → 255 (unsigned, default)
-• \\xff = 11111111 in binary = 255 unsigned
-• Default signed=False means unsigned interpretation
-• With signed=True: int.from_bytes(b'\\xff', 'big', signed=True) → -1
-• The same bits have different values depending on signed vs unsigned
-
-Example: int.from_bytes(b'\\xff', 'big') → 255. The default is unsigned interpretation.
-
-Key Distinctions:
-• Single byte 0xff is 255 unsigned.
-• from_bytes one byte -> 255.
-
-How It Works:
-• One byte magnitude 255.
-
-Step-by-Step Execution:
-1. Parse 0xff as 255.
-
-Order of Operations:
-• from_bytes length 1.
-
-Common Use Cases:
-• Reading raw bytes from files.
-
-Edge Cases:
-• signed=True makes 0xff mean -1 in two's complement for one byte.
-
-Performance Considerations:
-• O(1).
-
-Examples:
-• Compare signed interpretation next.
-
-Notes:
-• Always specify endianness explicitly in APIs.`
+    e: "Indexing a bytes object gives the numeric byte value, and the ASCII code for 'A' is 65."
   }),
   // 84. from_bytes signed interpretation
   (_i: number) => ({
-    q: `What is int.from_bytes(b'\\xff', 'big', signed=True)?`,
-    o: ["-1", "255", "0", "Error"],
+    q: `What is len(b"ab")?`,
+    o: ["2", "255", "0", "Error"],
     c: 0,
-    e: "\\xff in signed 8-bit two's complement is -1.",
-    de: `When signed=True, int.from_bytes() interprets the bytes using two's complement. \\xff (all bits set) in signed 8-bit is -1.
-
-Key concepts:
-• int.from_bytes(b'\\xff', 'big', signed=True) → -1
-• Two's complement: \\xff = -1 for 8-bit signed
-• \\xff unsigned = 255, signed = -1
-• \\x80 signed = -128 (minimum 8-bit signed value)
-• Two's complement is how computers represent negative integers
-
-Example: int.from_bytes(b'\\xff', 'big', signed=True) → -1. This is two's complement representation.
-
-Key Distinctions:
-• signed=True interprets bytes as two's complement; 0xff as one byte is -1.
-• High bit set means negative.
-
-How It Works:
-• Sign extend from bit width of given length.
-
-Step-by-Step Execution:
-1. Read one signed byte -1.
-
-Order of Operations:
-• from_bytes with signed flag.
-
-Common Use Cases:
-• Parsing signed 8-bit samples.
-
-Edge Cases:
-• Length must match bit width intended.
-
-Performance Considerations:
-• O(len).
-
-Examples:
-• -128 as single signed byte 0x80.
-
-Notes:
-• Match width to your protocol spec.`
+    e: "The bytes object b'ab' contains two bytes, so its length is 2."
   }),
   // 85. to_bytes for 256
   (_i: number) => ({
-    q: `What is (256).to_bytes(2, 'big')?`,
-    o: ["b'\\x01\\x00'", "b'\\x00\\x01'", "b'\\x01'", "Error"],
+    q: `What is bytes([65, 66])?`,
+    o: ["b'AB'", "b'A'", "65", "Error"],
     c: 0,
-    e: "256 = 1×256 + 0, so in 2 bytes big-endian: [0x01, 0x00].",
-    de: `256 in 2 bytes big-endian is b'\\x01\\x00'. The high byte is 1 and the low byte is 0, because 256 = 1×256 + 0.
-
-Key concepts:
-• (256).to_bytes(2, 'big') → b'\\x01\\x00'
-• 256 = 0x0100 in hex
-• Big-endian: most significant byte first → [0x01, 0x00]
-• (256).to_bytes(1, 'big') → OverflowError (doesn't fit in 1 byte)
-• 256 is the smallest number that needs more than 1 byte
-
-Example: (256).to_bytes(2, 'big') → b'\\x01\\x00'. (255).to_bytes(1, 'big') → b'\\xff'.
-
-Key Distinctions:
-• 256 needs two bytes unsigned big-endian: 0x01 0x00.
-• to_bytes verifies fit.
-
-How It Works:
-• 256 == 2**8 fits in 16 bits.
-
-Step-by-Step Execution:
-1. Emit 1 then 0.
-
-Order of Operations:
-• to_bytes(2,'big').
-
-Common Use Cases:
-• Emitting 16-bit big-endian fields.
-
-Edge Cases:
-• Overflow if value too large for length.
-
-Performance Considerations:
-• O(length).
-
-Examples:
-• (255).to_bytes(2,'big') -> b'\x00\xff'.
-
-Notes:
-• Combine with int.from_bytes for round trip tests.`
+    e: "65 is 'A' and 66 is 'B', so bytes([65, 66]) becomes b'AB'."
   }),
   // 86. format() binary without prefix
   (_i: number) => ({
@@ -1912,138 +1720,24 @@ Notes:
   }),
   // 93. f-string binary with zero-padding
   (_i: number) => ({
-    q: `What is f"{42:08b}"?`,
-    o: ["'00101010'", "'101010'", "'0b101010'", "Error"],
+    q: `What is format(5, "b")?`,
+    o: ["'101'", "'0b101'", "'5'", "Error"],
     c: 0,
-    e: "'08b' means 8-character-wide binary, zero-padded on the left.",
-    de: `In f-string format specs, '08b' means: pad to 8 characters with zeros, in binary format. 42 = 101010 (6 digits), padded to 8 gives 00101010.
-
-Key concepts:
-• f"{42:08b}" → '00101010' (8-bit binary, zero-padded)
-• '0' = pad with zeros, '8' = total width, 'b' = binary
-• 42 in binary = 101010 (6 bits), padded to 8 = 00101010
-• Useful for displaying byte values: f"{255:08b}" → '11111111'
-• Without padding: f"{42:b}" → '101010'
-
-Example: f"{42:08b}" → '00101010'. This shows all 8 bits clearly.
-
-Key Distinctions:
-• f-string 08b: zero-fill width 8 binary for 42.
-• Includes only bits; no 0b unless alternate in spec.
-
-How It Works:
-• Format mini-language inside f-string brace.
-
-Step-by-Step Execution:
-1. Format 42 with 0 pad width 8 base 2.
-
-Order of Operations:
-• Expression evaluated then formatted.
-
-Common Use Cases:
-• Bit pattern tables in teaching output.
-
-Edge Cases:
-• Value wider than width: min width can expand.
-
-Performance Considerations:
-• Small.
-
-Examples:
-• f"{3:04b}" padded binary.
-
-Notes:
-• Use #08b if you need 0b prefix with padding.`
+    e: "format(5, 'b') returns the binary digits without the 0b prefix, so the result is '101'."
   }),
   // 94. f-string hex with zero-padding
   (_i: number) => ({
-    q: `What is f"{255:04x}"?`,
-    o: ["'00ff'", "'ff'", "'0xff'", "Error"],
+    q: `What is f"{5:04d}"?`,
+    o: ["'0005'", "'5'", "'05'", "Error"],
     c: 0,
-    e: "'04x' means 4-character-wide lowercase hex, zero-padded.",
-    de: `The format spec '04x' pads the hexadecimal output to 4 characters with leading zeros. 255 = ff in hex, padded to 4 gives 00ff.
-
-Key concepts:
-• f"{255:04x}" → '00ff' (4-digit hex, zero-padded)
-• '0' = pad with zeros, '4' = width, 'x' = lowercase hex
-• 255 in hex = ff (2 digits), padded to 4 = 00ff
-• f"{255:04X}" → '00FF' (uppercase version)
-• Common in color codes: f"{r:02x}{g:02x}{b:02x}" for RGB
-
-Example: f"{255:04x}" → '00ff'. f"{16:04x}" → '0010'.
-
-Key Distinctions:
-• :04x zero-pads hex lowercase to width 4.
-• 255 -> '00ff' style.
-
-How It Works:
-• int format with x type and width.
-
-Step-by-Step Execution:
-1. Format 255 hex width 4.
-
-Order of Operations:
-• f-string.
-
-Common Use Cases:
-• Fixed-width hex color components.
-
-Edge Cases:
-• Use X for uppercase.
-
-Performance Considerations:
-• O(width).
-
-Examples:
-• CSS #rrggbb from ints.
-
-Notes:
-• Slice or concatenate with '#' for HTML colors.`
+    e: "In an f-string, 04d means a width of 4 using decimal digits with leading zeros, so 5 becomes '0005'."
   }),
   // 95. f-string with explicit sign
   (_i: number) => ({
-    q: `What is f"{3.14:+.2f}"?`,
+    q: `What is f"{3.14:.2f}"?`,
     o: ["'+3.14'", "'3.14'", "'+ 3.14'", "Error"],
-    c: 0,
-    e: "'+' in format spec forces showing the sign for positive numbers too.",
-    de: `The '+' flag in a format specification forces the sign to be displayed for both positive and negative numbers. Normally, only negative numbers show their sign.
-
-Key concepts:
-• f"{3.14:+.2f}" → '+3.14' (explicit positive sign)
-• f"{-3.14:+.2f}" → '-3.14' (negative sign always shown)
-• Without '+': f"{3.14:.2f}" → '3.14' (no sign for positive)
-• Use ' ' instead of '+' for a space: f"{3.14: .2f}" → ' 3.14'
-• Useful for aligning columns of positive and negative numbers
-
-Example: f"{3.14:+.2f}" → '+3.14'. f"{-3.14:+.2f}" → '-3.14'.
-
-Key Distinctions:
-• + in format shows explicit sign for positive numbers; .2f two decimals.
-• Helps aligned columns of signed values.
-
-How It Works:
-• Sign option in format spec for floats.
-
-Step-by-Step Execution:
-1. Format 3.14 with plus and two fraction digits.
-
-Order of Operations:
-• f-string.
-
-Common Use Cases:
-• Tables showing + and - explicitly.
-
-Edge Cases:
-• NaN and inf have string forms with signs handled differently.
-
-Performance Considerations:
-• Float format cost.
-
-Examples:
-• f"{-3.14:+.2f}".
-
-Notes:
-• Align with >10 for field width.`
+    c: 1,
+    e: ".2f means show the number with exactly two digits after the decimal point, so the result is '3.14'."
   }),
   // 96. isinstance with tuple of types
   (_i: number) => ({
