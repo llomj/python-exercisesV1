@@ -22515,219 +22515,166 @@ Exemples :
 
 Remarques :
 • En général API publique : isinstance.`,
-  501: `type(b"hello") est la classe bytes : les littéraux b"..." produisent des séquences d'octets immuables.
+  501: `"Python".lower() vaut "python" : lower() met les lettres majuscules en minuscules.
 
 Débutant :
-• bytes représente des données binaires, pas du texte Unicode décodé.
-• Le préfixe b indique un littéral bytes.
+• lower() renvoie une nouvelle chaîne.
+• La chaîne d'origine n'est pas modifiée.
 
 Intermédiaire :
-• Chaque élément est un int 0–255.
-• Diffère de str qui est texte Unicode.
-
-Expert :
-• bytes est immutable comme str ; bytearray est la variante mutable.
+• Utile avant une comparaison de texte.
 
 Concepts clés :
-• type(), bytes, littéral b.
-
-Distinctions clés :
-• bytes vs str vs bytearray.
-
-Fonctionnement :
-• Construction d'un objet bytes depuis la notation littérale.
+• lower(), casse, chaîne immuable.
 
 Exécution étape par étape :
-1. Parser b"hello".
-2. Stocker octets ASCII.
-3. type → bytes.
-
-Ordre des opérations :
-• Littéral évalué à la demande.
-
-Cas d'utilisation courants :
-• Fichiers binaires, sockets, crypto.
-
-Cas limites :
-• Octet >255 impossible dans littéral simple.
-
-Considérations de performance :
-• Contigus en mémoire en CPython.
-
-Exemples :
-• type(b"")
-
-Remarques :
-• Décodez explicitement vers str pour affichage texte.`,
-  502: `type(bytearray(b"hello")) est bytearray : copie mutable d'une séquence d'octets.
+1. On part de "Python".
+2. Le P devient p.
+3. Le résultat final est "python".`,
+  502: `"  hello  ".strip() vaut "hello" : strip() enlève les espaces au début et à la fin.
 
 Débutant :
-• bytearray se comporte comme une liste d'octets.
-• On peut modifier des indices.
+• Les espaces extérieurs disparaissent.
+• Les espaces au milieu resteraient.
 
 Intermédiaire :
-• bytearray(b"...") copie souvent les données.
-
-Expert :
-• Méthodes similaires à bytes pour recherche, mais __setitem__ existe.
+• Très utile avec des saisies utilisateur.
 
 Concepts clés :
-• bytearray, mutabilité.
-
-Distinctions clés :
-• bytes immutable ; bytearray mutable.
-
-Fonctionnement :
-• Alloue buffer modifiable.
+• strip(), espaces de bord, nouvelle chaîne.
 
 Exécution étape par étape :
-1. Partir de b"hello".
-2. Construire bytearray.
-3. type → bytearray.
-
-Ordre des opérations :
-• Appel constructeur.
-
-Cas d'utilisation courants :
-• Buffer I/O, construction incrémentale.
-
-Cas limites :
-• Valeur hors 0–255 → ValueError.
-
-Considérations de performance :
-• Réallocation possible comme list.
-
-Exemples :
-• bytearray(5)
-
-Remarques :
-• .decode() pour obtenir str.`,
-  503: `b"hello"[0] vaut 104 : l'indexation d'un bytes renvoie un int (code octet), pas un bytes d'un élément.
+1. On prend "  hello  ".
+2. On retire les espaces au début.
+3. On retire les espaces à la fin.
+4. Résultat : "hello".`,
+  503: `"hello".replace("l", "L", 1) vaut "heLlo" : seul le premier l est remplacé.
 
 Débutant :
-• 104 est le code ASCII de 'h'.
-• Même règle d'index négatif qu'une séquence.
+• Le troisième argument limite le nombre de remplacements.
 
 Intermédiaire :
-• Contrairement à str[0] qui est str une lettre, bytes[0] est int.
-
-Expert :
-• Pour obtenir un sous-bytes d'un octet : b"h"[0:1].
+• Sans ce 1, les deux l seraient remplacés.
 
 Concepts clés :
-• Indexation bytes → int.
-
-Distinctions clés :
-• str[i] str vs bytes[i] int.
-
-Fonctionnement :
-• Accès direct au buffer.
+• replace(), count, remplacement partiel.
 
 Exécution étape par étape :
-1. bytes b"hello".
-2. Index 0.
-3. 104.
-
-Ordre des opérations :
-• Évaluation bytes puis [].
-
-Cas d'utilisation courants :
-• Parser binaire octet par octet.
-
-Cas limites :
-• Index hors plage → IndexError.
-
-Considérations de performance :
-• O(1).
-
-Exemples :
-• b"A"[0]  # 65
-
-Remarques :
-• chr(b[0]) si ASCII attendu.`,
-  504: `b"hello"[1] vaut 101 : deuxième octet, code ASCII de 'e'.
+1. On cherche le premier "l".
+2. On le remplace par "L".
+3. Le second "l" reste inchangé.
+4. Résultat : "heLlo".`,
+  504: `"banana".count("a") vaut 3 : la lettre a apparaît trois fois.
 
 Débutant :
-• Indices commencent à 0.
+• count() renvoie un nombre.
 
 Intermédiaire :
-• Cohérent pour toute la séquence bytes.
-
-Expert :
-• Données non texte : pas de “lettre”, juste octet.
+• count() ne modifie jamais la chaîne.
 
 Concepts clés :
-• Octets individuels comme int.
-
-Distinctions clés :
-• Lecture seule sur bytes.
-
-Fonctionnement :
-• Même mécanisme que [0].
+• count(), occurrences, comptage.
 
 Exécution étape par étape :
-1. b"hello".
-2. Index 1 → 101.
-
-Ordre des opérations :
-• [] sur bytes.
-
-Cas d'utilisation courants :
-• Inspection paquets réseau.
-
-Cas limites :
-• N/A.
-
-Considérations de performance :
-• O(1).
-
-Exemples :
-• b"\xff"[0]  # 255
-
-Remarques :
-• Toujours vérifier encodage avant interprétation texte.`,
-  505: `list(b"Hi") vaut [72, 105] : itération matérialise chaque octet comme entier.
+1. On lit "banana".
+2. On repère a aux positions 1, 3 et 5.
+3. Total : 3.`,
+  505: `"42".isdigit() vaut True : tous les caractères sont des chiffres.
 
 Débutant :
-• H → 72, i → 105 en ASCII.
+• 4 est un chiffre.
+• 2 est un chiffre.
 
 Intermédiaire :
-• list() consomme tout l'itérable bytes.
-
-Expert :
-• Pour grandes données, évitez list() si un itérateur suffit.
+• "-5".isdigit() serait False à cause du signe -.
 
 Concepts clés :
-• bytes itérable d'int.
-
-Distinctions clés :
-• list(bytes) vs list(str) caractères.
-
-Fonctionnement :
-• __iter__ produit ints.
+• isdigit(), booléen, validation simple.
 
 Exécution étape par étape :
-1. Itérer b"Hi".
-2. Liste deux ints.
+1. Python vérifie "4".
+2. Python vérifie "2".
+3. Tous passent, donc True.`,
+  506: `str(None) vaut "None" : c'est la représentation texte de la valeur spéciale None.
 
-Ordre des opérations :
-• list construit depuis itérable.
+Débutant :
+• "None" est une chaîne.
+• None est une valeur Python spéciale.
 
-Cas d'utilisation courants :
-• Édition ponctuelle avant reconstruction bytes.
+Intermédiaire :
+• Il ne faut pas confondre la chaîne "None" avec la valeur None.
 
-Cas limites :
-• Mémoire double pour gros buffers.
+Concepts clés :
+• str(), conversion en texte, None.
 
-Considérations de performance :
-• O(n).
+Exécution étape par étape :
+1. On prend la valeur None.
+2. str() la convertit en texte.
+3. Résultat : "None".`,
+  507: `"abc".upper().startswith("A") vaut True : upper() donne "ABC", puis startswith("A") réussit.
 
-Exemples :
-• list(b"")  # []
+Débutant :
+• upper() renvoie "ABC".
+• startswith() teste le début.
 
-Remarques :
-• bytes(liste) reconstruit si valeurs valides.`,
-  506: `len(b"abc") vaut 3 : nombre d'octets, pas de caractères Unicode.
+Intermédiaire :
+• C'est un exemple de chaînage de méthodes.
+
+Concepts clés :
+• upper(), startswith(), chaînage.
+
+Exécution étape par étape :
+1. "abc" devient "ABC".
+2. On teste si "ABC" commence par "A".
+3. Résultat : True.`,
+  508: `len("a\nb") vaut 3 : il y a "a", le saut de ligne, puis "b".
+
+Débutant :
+• \n compte comme un caractère.
+
+Intermédiaire :
+• len() compte les caractères stockés, pas l'apparence visuelle.
+
+Concepts clés :
+• len(), séquence d'échappement, longueur.
+
+Exécution étape par étape :
+1. "a" compte pour 1.
+2. "\n" compte pour 1.
+3. "b" compte pour 1.
+4. Total : 3.`,
+  509: `"7".zfill(3) vaut "007" : zfill complète à gauche avec des zéros jusqu'à la largeur demandée.
+
+Débutant :
+• La largeur finale doit être 3.
+
+Intermédiaire :
+• Très utile pour des codes ou des affichages à largeur fixe.
+
+Concepts clés :
+• zfill(), remplissage, chaîne.
+
+Exécution étape par étape :
+1. On part de "7".
+2. Il manque deux caractères pour atteindre 3.
+3. Python ajoute deux zéros devant.
+4. Résultat : "007".`,
+  510: `f"{3.14159:.2f}" vaut "3.14" : le format .2f garde deux décimales.
+
+Débutant :
+• .2f signifie nombre à virgule fixe avec 2 chiffres après la virgule.
+
+Intermédiaire :
+• Le format agit sur l'affichage, pas sur la valeur d'origine.
+
+Concepts clés :
+• f-string, format numérique, .2f.
+
+Exécution étape par étape :
+1. On prend 3.14159.
+2. On applique le format .2f.
+3. Le texte produit est "3.14".`,
+  511: `Après ba = bytearray(b"abc") puis ba[0] = 65, ba vaut bytearray(b"Abc") : mutation in-place du premier octet.
 
 Débutant :
 • Chaque lettre ASCII = 1 octet.
@@ -24606,296 +24553,158 @@ Exemples :
 
 Remarques :
 • index pour position.`,
-  551: `id(42) == id(42) vaut True : même expression, même petit int souvent mis en cache.
+  551: `a = [1, 2]; b = a.copy(); a is b vaut False : copy() crée une nouvelle liste.
 
 Débutant :
-• id entier identité mémoire.
+• is teste l'identité, pas le contenu.
 
 Intermédiaire :
-• CPython small int cache.
-
-Expert :
-• ne pas dépendre pour grands entiers.
+• Les valeurs sont les mêmes, mais pas l'objet.
 
 Concepts clés :
-• id, int cache.
-
-Distinctions clés :
-• portable logique évite id.
-
-Fonctionnement :
-• réutilisation objet int.
+• copy(), is, nouvelle liste.
 
 Exécution étape par étape :
-1. Deux id(42).
-2. égaux.
-
-Ordre des opérations :
-• appels id.
-
-Cas d'utilisation courants :
-• debug rare.
-
-Cas limites :
-• grands int.
-
-Considérations de performance :
-• O(1).
-
-Exemples :
-• id(None)==id(None)
-
-Remarques :
-• peu utile métier.`,
-  552: `a = []; b = []; a is b vaut False : deux listes vides distinctes.
+1. a vaut [1, 2].
+2. b reçoit une copie.
+3. Les deux listes sont distinctes.
+4. a is b -> False.`,
+  552: `a = [1, 2]; b = a.copy(); a == b vaut True : les contenus sont identiques.
 
 Débutant :
-• is ≠ contenu.
+• == compare les valeurs.
 
 Intermédiaire :
-• == serait True.
-
-Expert :
-• shallow copy nouvelle id.
+• Deux objets différents peuvent être égaux.
 
 Concepts clés :
-• identité list.
-
-Distinctions clés :
-• is vs ==.
-
-Fonctionnement :
-• deux allocations.
+• ==, égalité, copie.
 
 Exécution étape par étape :
-1. Liste a.
-2. Liste b.
-3. is False.
-
-Ordre des opérations :
-• créations puis is.
-
-Cas d'utilisation courants :
-• éviter partage accidentel.
-
-Cas limites :
-• a=b=[] puis True.
-
-Considérations de performance :
-• O(1).
-
-Exemples :
-• [] is []
-
-Remarques :
-• alias explicite si besoin.`,
-  553: `a = [1, 2]; b = [1, 2]; a == b vaut True : égalité structurelle.
+1. a et b contiennent [1, 2].
+2. Python compare les éléments.
+3. Résultat : True.`,
+  553: `a = [[1], [2]]; b = a.copy(); b[0].append(9) rend a[0] égal à [1, 9] : la copie est superficielle.
 
 Débutant :
-• éléments égaux ordre égal.
+• La liste extérieure est copiée.
 
 Intermédiaire :
-• récursif sur conteneurs.
-
-Expert :
-• [1] == [1.0] True.
+• Les listes internes restent partagées.
 
 Concepts clés :
-• list __eq__.
-
-Distinctions clés :
-• == True, is souvent False.
-
-Fonctionnement :
-• paire à paire.
+• shallow copy, liste imbriquée, mutation partagée.
 
 Exécution étape par étape :
-1. 1==1, 2==2.
-2. True.
-
-Ordre des opérations :
-• ==.
-
-Cas d'utilisation courants :
-• tests.
-
-Cas limites :
-• types incomparables TypeError.
-
-Considérations de performance :
-• O(n).
-
-Exemples :
-• [1,2]==[1,2]
-
-Remarques :
-• attention int/float.`,
-  554: `a = [1, 2]; b = [1, 2]; a is b vaut False : objets distincts.
+1. a[0] et b[0] pointent vers la même sous-liste.
+2. append(9) modifie cette sous-liste.
+3. a[0] devient [1, 9].`,
+  554: `x is None vaut True quand x vaut None : c'est le test idiomatique en Python.
 
 Débutant :
-• même contenu, identités différentes.
+• None est une valeur spéciale unique.
 
 Intermédiaire :
-• copie shallow.
-
-Expert :
-• pas d'interning listes.
+• is None est préféré à == None.
 
 Concepts clés :
-• is list.
-
-Distinctions clés :
-• is vs ==.
-
-Fonctionnement :
-• ids différents.
+• None, is, identité.
 
 Exécution étape par étape :
-1. Deux listes.
-2. is False.
-
-Ordre des opérations :
-• is.
-
-Cas d'utilisation courants :
-• détecter alias.
-
-Cas limites :
-• N/A.
-
-Considérations de performance :
-• O(1).
-
-Exemples :
-• a=b=[1]; a is b
-
-Remarques :
-• partage volontaire b=a.`,
-  555: `a = [1, 2]; b = a; a is b vaut True : alias même liste.
+1. x reçoit None.
+2. On teste l'identité avec None.
+3. Résultat : True.`,
+  555: `x = "" ; x or "fallback" vaut "fallback" : la chaîne vide est falsy.
 
 Débutant :
-• un objet deux noms.
+• or renvoie la première valeur truthy.
 
 Intermédiaire :
-• mutation visible via les deux.
-
-Expert :
-• refcounting.
+• "" est considéré comme faux.
 
 Concepts clés :
-• référence partagée.
-
-Distinctions clés :
-• alias vs copie.
-
-Fonctionnement :
-• même id.
+• or, valeur par défaut, truthiness.
 
 Exécution étape par étape :
-1. Crée liste.
-2. b référence même.
-3. is True.
-
-Ordre des opérations :
-• assign puis is.
-
-Cas d'utilisation courants :
-• modifier liste argument.
-
-Cas limites :
-• rebind casse lien.
-
-Considérations de performance :
-• O(1).
-
-Exemples :
-• def f(l): l.append(1)
-
-Remarques :
-• documentez mutation.`,
-  556: `a = "hello"; b = "hello"; a is b souvent True en CPython (internage), mais == reste le test texte portable.
+1. Python teste x.
+2. "" est falsy.
+3. Python renvoie "fallback".`,
+  556: `bool("0") vaut True : toute chaîne non vide est truthy.
 
 Débutant :
-• effet visible identique souvent.
+• "0" n'est pas vide.
 
 Intermédiaire :
-• ne pas coder métier sur is.
-
-Expert :
-• str construites dynamiquement : is peut False.
+• Le contenu du texte ne change pas cette règle.
 
 Concepts clés :
-• internage str.
-
-Distinctions clés :
-• littéraux vs runtime.
-
-Fonctionnement :
-• même objet ou non.
+• bool(), chaîne non vide, truthiness.
 
 Exécution étape par étape :
-1. Deux noms.
-2. is souvent True.
-
-Ordre des opérations :
-• is.
-
-Cas d'utilisation courants :
-• curiosité CPython.
-
-Cas limites :
-• longues str.
-
-Considérations de performance :
-• O(1).
-
-Exemples :
-• "a"*1000
-
-Remarques :
-• == portable.`,
-  557: `a = (1, 2); b = (1, 2); a == b vaut True : tuples comparés élément par élément.
+1. x contient un caractère.
+2. La chaîne n'est pas vide.
+3. Résultat : True.`,
+  557: `a = [1, 2]; b = a; b.append(3) fait devenir a égal à [1, 2, 3] : a et b pointent vers la même liste.
 
 Débutant :
-• immuables, contenu détermine ==.
+• Une affectation simple ne copie pas la liste.
 
 Intermédiaire :
-• is peut False malgré == True.
-
-Expert :
-• hashable si éléments hashables.
+• append() modifie la liste en place.
 
 Concepts clés :
-• tuple __eq__.
-
-Distinctions clés :
-• tuple vs list comparaisons.
-
-Fonctionnement :
-• compare positions.
+• alias, mutation, liste partagée.
 
 Exécution étape par étape :
-1. 1==1,2==2.
-2. True.
+1. b reçoit la même référence que a.
+2. b.append(3) modifie cette liste.
+3. a voit aussi [1, 2, 3].`,
+  558: `a = [1, 2]; b = list(a); b.append(3) laisse a à [1, 2] : list(a) crée une nouvelle liste extérieure.
 
-Ordre des opérations :
-• ==.
+Débutant :
+• a et b sont séparés ici.
 
-Cas d'utilisation courants :
-• clés dict composées.
+Intermédiaire :
+• C'est une copie superficielle pratique.
 
-Cas limites :
-• éléments non ordonnables.
+Concepts clés :
+• list(a), copie, indépendance.
 
-Considérations de performance :
-• O(n).
+Exécution étape par étape :
+1. b reçoit une nouvelle liste [1, 2].
+2. b.append(3) ne touche que b.
+3. a reste [1, 2].`,
+  559: `a = {"count": 1}; b = a; b["count"] = 2 fait que a["count"] vaut 2 : les deux noms partagent le même dictionnaire.
 
-Exemples :
-• (1,)==(1,)
+Débutant :
+• Les dictionnaires sont mutables comme les listes.
 
-Remarques :
-• virgule singleton.`,
-  558: `type(42) == int vaut True : la classe renvoyée est int.
+Intermédiaire :
+• Une affectation simple ne copie pas le dictionnaire.
+
+Concepts clés :
+• dictionnaire partagé, mutation, alias.
+
+Exécution étape par étape :
+1. b reçoit la même référence que a.
+2. La clé "count" est mise à jour via b.
+3. a voit aussi la valeur 2.`,
+  560: `a = {"count": 1}; b = dict(a); b["count"] = 2 laisse a["count"] à 1 : dict(a) crée une nouvelle copie extérieure.
+
+Débutant :
+• a et b ne sont plus le même dictionnaire.
+
+Intermédiaire :
+• C'est l'équivalent copie simple pour un dict.
+
+Concepts clés :
+• dict(a), copie superficielle, dictionnaire indépendant.
+
+Exécution étape par étape :
+1. b reçoit une copie de a.
+2. La modification de b ne touche pas a.
+3. a["count"] reste 1.`,
+  561: `isinstance(42, (int, float)) vaut True : 42 est bien un int, donc il correspond à l'un des types autorisés.
 
 Débutant :
 • type donne la classe.
@@ -39050,468 +38859,103 @@ Exemples :
 
 Remarques :
 • Astuce : sum de bool = count.`,
-  901: `True and False vaut False : l'opérateur and exige que les deux opérandes soient vrais pour renvoyer True ; dès qu'un opérande est False, le résultat est False.
-
-Débutant :
-• and signifie « et » : les deux côtés doivent être vrais.
-• True and False → False car le second opérande est faux.
-
-Intermédiaire :
-• and court-circuite : si le premier est False, le second n'est pas évalué.
-• Ici le premier est True, donc Python évalue False et renvoie False.
-
-Expert :
-• and renvoie le dernier opérande évalué ou le premier falsy.
-• True and False → évalue les deux, renvoie False.
+  901: `x = 12 ; "high" if x > 10 else "low" vaut "high" : la condition x > 10 est vraie.
 
 Concepts clés :
-• Conjonction logique, court-circuit, évaluation paresseuse.
-
-Distinctions clés :
-• True and False ≠ True or False (or renverrait True).
-
-Fonctionnement :
-• Python évalue True (truthy), puis False (falsy) ; and renvoie le dernier évalué.
+• expression conditionnelle
+• branche vraie
 
 Exécution étape par étape :
-1. Évaluer True → truthy, continuer.
-2. Évaluer False → falsy.
-3. and renvoie False.
-
-Ordre des opérations :
-• and a priorité plus faible que or et not dans les expressions complexes.
-
-Cas d'utilisation courants :
-• Conditions composées : if x > 0 and x < 10.
-
-Cas limites :
-• and avec expressions à effets de bord : le second peut ne pas s'exécuter.
-
-Considérations de performance :
-• Court-circuit évite des calculs inutiles quand le premier est falsy.
-
-Exemples :
-• True and True  # True
-• 1 and 0  # 0 (and renvoie la valeur, pas forcément bool)
-
-Remarques :
-• and/or renvoient une des valeurs évaluées, pas toujours True/False.`,
-  902: `True or False vaut True : l'opérateur or renvoie True dès qu'un opérande est truthy ; ici le premier (True) suffit.
-
-Débutant :
-• or signifie « ou » : au moins un côté doit être vrai.
-• True or False → True car le premier est déjà vrai.
-
-Intermédiaire :
-• or court-circuite : si le premier est truthy, le second n'est jamais évalué.
-• Python s'arrête à True et renvoie True.
-
-Expert :
-• or renvoie le premier opérande truthy ou le dernier si tous sont falsy.
-• True or False → True (court-circuit, False jamais évalué).
+1. x vaut 12.
+2. 12 > 10 est vrai.
+3. Python renvoie "high".`,
+  902: `x = 7 ; "adult" if x >= 18 else "minor" vaut "minor" : la condition est fausse, donc Python prend la branche else.
 
 Concepts clés :
-• Disjonction logique, court-circuit, évaluation paresseuse.
-
-Distinctions clés :
-• True or False ≠ True and False (and exigerait les deux vrais).
-
-Fonctionnement :
-• Python évalue True ; c'est truthy, donc or renvoie True sans toucher à False.
+• >=
+• branche false
 
 Exécution étape par étape :
-1. Évaluer True → truthy.
-2. Court-circuit : renvoyer True immédiatement.
-3. False n'est jamais évalué.
-
-Ordre des opérations :
-• or a priorité plus faible que and ; and plus faible que not.
-
-Cas d'utilisation courants :
-• Valeur par défaut : x = user_input or "default".
-
-Cas limites :
-• 0 or 1 → 1 (or renvoie la valeur truthy, pas True).
-
-Considérations de performance :
-• Court-circuit évite d'évaluer le second opérande si le premier suffit.
-
-Exemples :
-• False or True  # True
-• "" or "hello"  # "hello"
-
-Remarques :
-• Utiliser or pour des valeurs par défaut est idiomatique en Python.`,
-  903: `False and False vaut False : avec and, si le premier opérande est False, le résultat est False sans évaluer le second.
-
-Débutant :
-• and exige que les deux soient vrais.
-• Dès que le premier est False, le résultat est False.
-
-Intermédiaire :
-• Court-circuit : False and ... ne nécessite pas d'évaluer le second.
-• Python renvoie False immédiatement.
-
-Expert :
-• and renvoie le premier falsy ou le dernier opérande évalué.
-• False and False → False (court-circuit sur le premier).
+1. 7 >= 18 est faux.
+2. Python choisit "minor".`,
+  903: `Avec x = 0, le bloc else s'exécute et result vaut "no" : 0 est une valeur falsy.
 
 Concepts clés :
-• Court-circuit sur and : premier falsy arrête l'évaluation.
-
-Distinctions clés :
-• False and False vs False or False : and reste False, or aussi (aucun truthy).
-
-Fonctionnement :
-• Premier False évalué → falsy → and renvoie False, second jamais évalué.
+• if x teste la truthiness
+• 0 est falsy
 
 Exécution étape par étape :
-1. Évaluer False → falsy.
-2. Court-circuit : renvoyer False.
-3. Le second False n'est pas évalué.
-
-Ordre des opérations :
-• Une seule évaluation nécessaire grâce au court-circuit.
-
-Cas d'utilisation courants :
-• Vérifications en chaîne : if a and b and c (s'arrête au premier faux).
-
-Cas limites :
-• False and expensive_call() : expensive_call() n'est jamais exécuté.
-
-Considérations de performance :
-• Très efficace : évite des calculs coûteux quand la condition est déjà fausse.
-
-Exemples :
-• False and True  # False
-• [] and [1,2]  # [] (premier falsy)
-
-Remarques :
-• Placer la condition la plus rapide ou la plus probable en premier peut optimiser.`,
-  904: `False or False vaut False : or renvoie True seulement si au moins un opérande est truthy ; ici les deux sont False.
-
-Débutant :
-• or signifie « ou » : un des deux doit être vrai.
-• False or False → aucun n'est vrai, donc False.
-
-Intermédiaire :
-• or évalue de gauche à droite ; si le premier est falsy, il évalue le second.
-• Les deux sont False → résultat False.
-
-Expert :
-• or renvoie le premier truthy ou le dernier opérande si tous sont falsy.
-• False or False → évalue les deux, renvoie le dernier (False).
+1. x vaut 0.
+2. if x échoue.
+3. Le else fixe result à "no".`,
+  904: `name = "" ; name or "Anonymous" vaut "Anonymous" : la chaîne vide est falsy, donc or renvoie la valeur de secours.
 
 Concepts clés :
-• Disjonction : aucun truthy → résultat falsy (le dernier évalué).
-
-Distinctions clés :
-• False or False vs False and False : les deux donnent False mais pour des raisons différentes.
-
-Fonctionnement :
-• Python évalue False (falsy), puis le second False (falsy) ; or renvoie ce dernier.
+• or
+• chaîne vide falsy
 
 Exécution étape par étape :
-1. Évaluer False → falsy, continuer.
-2. Évaluer False → falsy.
-3. or renvoie False (dernier évalué).
-
-Ordre des opérations :
-• Pas de court-circuit ici : les deux opérandes sont évalués.
-
-Cas d'utilisation courants :
-• Chaîne de fallbacks : x = a or b or c (premier truthy gagne).
-
-Cas limites :
-• 0 or 0 or [] → [] (tous falsy, renvoie le dernier).
-
-Considérations de performance :
-• Quand le premier est falsy, or doit évaluer le second.
-
-Exemples :
-• None or None  # None
-• 0 or 0.0  # 0.0
-
-Remarques :
-• or ne renvoie pas toujours bool ; il renvoie une des valeurs.`,
-  905: `True and True vaut True : and exige que les deux opérandes soient truthy ; ici les deux le sont.
-
-Débutant :
-• and signifie « et » : les deux doivent être vrais.
-• True and True → True car les deux sont vrais.
-
-Intermédiaire :
-• Aucun court-circuit : les deux sont évalués (ou pourraient l'être).
-• and renvoie le dernier opérande évalué quand tous sont truthy.
-
-Expert :
-• and renvoie le premier falsy ou le dernier opérande.
-• True and True → les deux truthy, renvoie True (le dernier).
+1. name vaut "".
+2. Python passe au second opérande.
+3. Résultat : "Anonymous".`,
+  905: `Avec score = 85, grade vaut "B" : 85 ne passe pas le test >= 90, mais passe le test >= 80.
 
 Concepts clés :
-• Conjonction : tous truthy → résultat = dernier opérande.
-
-Distinctions clés :
-• True and True vs True or True : les deux donnent True.
-
-Fonctionnement :
-• Python évalue True, puis True ; tous truthy → and renvoie le dernier (True).
+• if / elif / else
+• ordre des branches
 
 Exécution étape par étape :
-1. Évaluer True → truthy, continuer.
-2. Évaluer True → truthy.
-3. and renvoie True.
-
-Ordre des opérations :
-• Priorité : not > and > or.
-
-Cas d'utilisation courants :
-• Conditions multiples : if age >= 18 and has_id.
-
-Cas limites :
-• 1 and 2 → 2 (and renvoie la valeur, pas True).
-
-Considérations de performance :
-• Les deux opérandes sont évalués ; pas de gain de court-circuit ici.
-
-Exemples :
-• True and 1  # 1
-• "a" and "b"  # "b"
-
-Remarques :
-• En conditions if, toute valeur truthy est acceptée ; le résultat peut ne pas être bool.`,
-  906: `True or True vaut True : or renvoie le premier opérande truthy ; ici le premier (True) suffit.
-
-Débutant :
-• or signifie « ou » : au moins un doit être vrai.
-• True or True → True car le premier est déjà vrai.
-
-Intermédiaire :
-• Court-circuit : le second True n'est jamais évalué.
-• Python s'arrête au premier truthy.
-
-Expert :
-• or renvoie le premier truthy ou le dernier si tous falsy.
-• True or True → True (court-circuit immédiat).
+1. score >= 90 est faux.
+2. score >= 80 est vrai.
+3. grade devient "B".`,
+  906: `age >= 18 and has_id vaut False avec age = 17 et has_id = True : le premier test est déjà faux.
 
 Concepts clés :
-• Court-circuit sur or : premier truthy suffit.
-
-Distinctions clés :
-• True or True vs True and True : les deux donnent True.
-
-Fonctionnement :
-• Premier True évalué → truthy → or renvoie True, second jamais évalué.
+• and exige deux conditions vraies
 
 Exécution étape par étape :
-1. Évaluer True → truthy.
-2. Court-circuit : renvoyer True.
-3. Le second True n'est pas évalué.
-
-Ordre des opérations :
-• Une seule évaluation grâce au court-circuit.
-
-Cas d'utilisation courants :
-• Fallback rapide : config or default_config.
-
-Cas limites :
-• True or expensive_call() : expensive_call() n'est jamais exécuté.
-
-Considérations de performance :
-• Très efficace quand le premier opérande est souvent truthy.
-
-Exemples :
-• 1 or 2  # 1
-• "x" or "y"  # "x"
-
-Remarques :
-• Placer l'option la plus probable en premier optimise les or.`,
-  907: `not True vaut False : not inverse la valeur booléenne ; True devient False.
-
-Débutant :
-• not signifie « non » ou « pas ».
-• not True → False.
-
-Intermédiaire :
-• not est un opérateur unaire ; il précède son opérande.
-• not convertit toute valeur en bool puis inverse.
-
-Expert :
-• not x équivaut à not bool(x) pour les valeurs truthy/falsy.
-• not True → False (inversion directe).
+1. 17 >= 18 est faux.
+2. False and True donne False.`,
+  907: `age >= 18 or has_id vaut True avec age = 20 et has_id = False : une seule condition vraie suffit avec or.
 
 Concepts clés :
-• Négation logique, opérateur unaire.
-
-Distinctions clés :
-• not True vs not False : inverse de chaque côté.
-
-Fonctionnement :
-• Python évalue True, applique not, renvoie False.
+• or
+• une condition vraie suffit
 
 Exécution étape par étape :
-1. Évaluer True.
-2. Appliquer not → False.
-3. Renvoyer False.
-
-Ordre des opérations :
-• not a la priorité la plus haute parmi and, or, not.
-
-Cas d'utilisation courants :
-• Inverser une condition : if not found.
-
-Cas limites :
-• not [] → True (liste vide falsy, not donne True).
-
-Considérations de performance :
-• Négligeable ; not est très rapide.
-
-Exemples :
-• not 1  # False
-• not ""  # True
-
-Remarques :
-• not renvoie toujours bool (True ou False).`,
-  908: `not False vaut True : not inverse la valeur booléenne ; False devient True.
-
-Débutant :
-• not signifie « non » ou « pas ».
-• not False → True.
-
-Intermédiaire :
-• not est un opérateur unaire de négation.
-• not False → True (double négation logique).
-
-Expert :
-• not x pour x falsy donne True.
-• not False → True (inversion directe).
+1. 20 >= 18 est vrai.
+2. True or False donne True.`,
+  908: `Avec x = -3, label vaut "negative" : la condition x < 0 est la première qui réussit.
 
 Concepts clés :
-• Négation logique : falsy → True après not.
-
-Distinctions clés :
-• not False vs not True : symétrique.
-
-Fonctionnement :
-• Python évalue False, applique not, renvoie True.
+• if / elif / else
+• choix de branche
 
 Exécution étape par étape :
-1. Évaluer False.
-2. Appliquer not → True.
-3. Renvoyer True.
-
-Ordre des opérations :
-• not a priorité plus haute que and et or.
-
-Cas d'utilisation courants :
-• Vérifier l'absence : if not error.
-
-Cas limites :
-• not 0 → True, not None → True.
-
-Considérations de performance :
-• Négligeable.
-
-Exemples :
-• not []  # True
-• not None  # True
-
-Remarques :
-• not est le seul opérateur logique qui renvoie toujours un bool.`,
-  909: `not (True and False) vaut True : les parenthèses forcent d'abord True and False (= False), puis not inverse en True.
-
-Débutant :
-• D'abord calculer True and False → False.
-• Puis not False → True.
-
-Intermédiaire :
-• Parenthèses changent l'ordre : and avant not.
-• not (False) = True.
-
-Expert :
-• Équivalent à not False car True and False → False.
-• Lois de De Morgan : not (A and B) = (not A) or (not B).
+1. x > 0 est faux.
+2. x < 0 est vrai.
+3. label devient "negative".`,
+  909: `"empty" if not items else "filled" vaut "empty" quand items = [] : une liste vide est falsy, donc not items est vrai.
 
 Concepts clés :
-• Priorité : parenthèses > not > and > or.
-
-Distinctions clés :
-• not (True and False) ≠ not True and False (ce dernier = False and False = False).
-
-Fonctionnement :
-• Sous-expression (True and False) → False.
-• not False → True.
+• liste vide falsy
+• not
 
 Exécution étape par étape :
-1. Évaluer True and False → False.
-2. Appliquer not à False → True.
-3. Résultat : True.
-
-Ordre des opérations :
-• Parenthèses d'abord, puis not.
-
-Cas d'utilisation courants :
-• Exprimer « ni l'un ni l'autre » : not (a and b).
-
-Cas limites :
-• not (x and y) équivaut à (not x) or (not y) par De Morgan.
-
-Considérations de performance :
-• and court-circuite ; not est immédiat.
-
-Exemples :
-• not (False and True)  # True
-• not (1 and 0)  # True
-
-Remarques :
-• Les parenthèses sont essentielles pour éviter not True and False.`,
-  910: `not True or False vaut False : not True s'évalue d'abord (= False), puis False or False = False.
-
-Débutant :
-• not True → False.
-• False or False → False.
-
-Intermédiaire :
-• Priorité : not avant or. Donc (not True) or False.
-• not True = False, False or False = False.
-
-Expert :
-• Pas de parenthèses : not True or False = (not True) or False.
-• Résultat : False or False = False.
+1. items vaut [].
+2. [] est falsy.
+3. not items devient vrai.
+4. Python renvoie "empty".`,
+  910: `"yes" if "Py" in text else "no" vaut "yes" avec text = "Python" : "Py" est bien présent dans la chaîne.
 
 Concepts clés :
-• Priorité des opérateurs : not > or.
-
-Distinctions clés :
-• not True or False ≠ not (True or False) ; ce dernier = not True = False aussi ici, mais la structure diffère.
-
-Fonctionnement :
-• not True → False.
-• False or False → False (dernier évalué).
+• opérateur in
+• test de sous-chaîne
 
 Exécution étape par étape :
-1. not True → False.
-2. False or False : évaluer les deux.
-3. Résultat False.
-
-Ordre des opérations :
-• not (unaire) avant or (binaire).
-
-Cas d'utilisation courants :
-• Erreur fréquente : oublier des parenthèses dans des conditions complexes.
-
-Cas limites :
-• not x or y : si x truthy, not x = False, donc or évalue y.
-
-Considérations de performance :
-• Les deux opérandes de or sont évalués (pas de court-circuit).
-
-Exemples :
-• not False or True  # True (not False = True, court-circuit)
-• not 1 or 0  # False
-
-Remarques :
-• Toujours parenthéser les expressions logiques complexes pour éviter les surprises.`,
+1. Python cherche "Py" dans "Python".
+2. La sous-chaîne est trouvée.
+3. Résultat : "yes".`,
   911: `10 > 5 vaut True : l'opérateur > compare deux nombres ; 10 est strictement supérieur à 5.
 
 Débutant :

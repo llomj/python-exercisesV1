@@ -1,236 +1,266 @@
 // --- LEVEL 1 EXPERT B: Object Identity, Advanced Types, Edge Cases (50 Questions) ---
 // Questions 51-100 of expert set. Each is TRULY UNIQUE.
 export const level1ExpertB = [
-  // 51. Small integer caching: id(42) == id(42)
+  // 51. Copy vs alias basics
   (_i: number) => ({
-    q: `What is the result of: id(42) == id(42)?`,
-    o: ["True", "False", "Error", "None"],
-    c: 0,
-    e: "CPython caches small integers (-5 to 256), so id() returns the same value for 42.",
-    de: `In CPython, small integers from -5 to 256 are cached (interned) as singleton objects. This means every reference to 42 points to the exact same object in memory, so id(42) returns the same integer both times.
-
-Key Concepts:
-• id() returns the unique identity (memory address) of an object
-• Small integer caching is a CPython optimization, not a language guarantee
-• The cache range is -5 to 256 inclusive
-• Outside this range, integers may or may not be the same object
-
-Example: id(42) == id(42) → True because 42 is within the cached range.
-
-Key Distinctions:
-• id() returns the current object address; small ints may be cached so id(42)==id(42) is often True.
-• This is about identity of int objects, not value equality across separate literals in all implementations.
-
-How It Works:
-• CPython may reuse the same int object for small integers; two id(42) calls can see the same address.
-
-Step-by-Step Execution:
-1. Evaluate left id(42) → integer address A.
-2. Evaluate right id(42) → possibly same address A.
-3. == compares integers A==A → True.
-
-Order of Operations:
-• Calls happen left then right; then equality.
-
-Common Use Cases:
-• Teaching that identity and value differ; debugging "is" vs == for ints.
-
-Edge Cases:
-• Huge integers or different interpreters: do not rely on id equality for logic.
-
-Performance Considerations:
-• id() is a fast C pointer read.
-
-Examples:
-• x = 42; id(x) == id(x)  # True
-• id([]) == id([])  # False (new lists)
-
-Notes:
-• Never use id() for equality checks in production code — use == for values.`
-  }),
-  // 52. Mutable objects are never identical when created separately
-  (_i: number) => ({
-    q: `a = []; b = []; what is a is b?`,
+    q: `a = [1, 2]; b = a.copy(); what is a is b?`,
     o: ["False", "True", "Error", "None"],
     c: 0,
-    e: "Each [] creates a new list object, so they are not the same object.",
-    de: `Every time you write [], Python creates a brand-new list object in memory. Even though both a and b are empty lists and a == b is True (equal values), they are distinct objects with different identities.
+    e: "copy() makes a new list object, so a and b are different objects.",
+    de: `a.copy() creates a new list with the same items, but it is not the same object in memory.
 
 Key Concepts:
-• 'is' checks identity (same object in memory), not equality
-• '==' checks value equality
-• Mutable objects (lists, dicts, sets) are always distinct when created separately
-• Each constructor call or literal creates a new object
+• is checks whether two names point to the same object
+• copy() makes a new outer list
+• Equal content does not mean same identity
 
-Example: a = []; b = []; a is b → False. But a == b → True because both are empty lists.
-
-Key Distinctions:
-• Two separate [] constructs allocate two distinct list objects — a is b is False.
-• Both are empty but not the same object in memory.
-
-How It Works:
-• Each list literal runs list.__new__ and fills; identities differ.
-
-Step-by-Step Execution:
-1. Create first empty list, bind a.
-2. Create second empty list, bind b.
-3. a is b → False.
-
-Order of Operations:
-• Assignments left to right; then is comparison.
-
-Common Use Cases:
-• Avoid assuming two fresh [] share identity; use a.clear() or one shared variable if you need one list.
-
-Edge Cases:
-• a = b = [] makes one list — different question.
-
-Performance Considerations:
-• Two small empty list allocations are cheap but not free.
+Step by step:
+1. a refers to [1, 2]
+2. b = a.copy() creates another list [1, 2]
+3. The values match, but the objects differ
+4. a is b -> False
 
 Examples:
-• [] is []  # typically False
+• a == b would be True here
+• b = a would make a is b True
 
 Notes:
-• Default-argument pitfall: def f(x=[]): mutates one list across calls.`
+• This is the practical difference between copying and aliasing.`
   }),
-  // 53. List equality with ==
+  // 52. Copy preserves equality
   (_i: number) => ({
-    q: `a = [1, 2]; b = [1, 2]; what is a == b?`,
+    q: `a = [1, 2]; b = a.copy(); what is a == b?`,
     o: ["True", "False", "Error", "None"],
     c: 0,
-    e: "== compares values: both lists contain the same elements.",
-    de: `The == operator compares values, not identity. Two lists are equal if they have the same length and all corresponding elements are equal.
+    e: "The two lists contain the same values, so == is True.",
+    de: `== compares values, not identity. After a.copy(), both lists contain the same elements in the same order.
 
 Key Concepts:
-• == performs value comparison for all built-in types
-• Lists are equal if they contain the same elements in the same order
-• This is different from 'is' which checks if two names reference the same object
-• Python calls the __eq__ method internally for == comparisons
+• == compares content
+• copy() duplicates the outer list
+• Two different objects can still be equal
 
-Example: [1, 2] == [1, 2] → True because both lists have identical elements.
-
-Key Distinctions:
-• == on lists compares elements pairwise: [1,2] == [1,2] → True.
-• Structural equality does not require the same object identity.
-
-How It Works:
-• list.__eq__ walks indices; int 1==1 and 2==2.
-
-Step-by-Step Execution:
-1. Build left list [1,2].
-2. Build right list [1,2].
-3. Elementwise == → True.
-
-Order of Operations:
-• Lists evaluated, then ==.
-
-Common Use Cases:
-• Comparing sequences from different sources (copy vs original).
-
-Edge Cases:
-• Nested lists: deep equality rules; NaN breaks reflexivity in floats.
-
-Performance Considerations:
-• O(n); early exit on first mismatch.
+Step by step:
+1. a is [1, 2]
+2. b becomes another [1, 2]
+3. Python compares the items
+4. Result: True
 
 Examples:
-• [1] == [1.0]  # True in Python 3 for this int/float pair
+• a is b would be False
+• [1, 2] == [1, 2] is True
 
 Notes:
-• For numpy arrays, == behaves differently — this is plain list.`
+• This question reinforces the difference between == and is.`
   }),
-  // 54. List identity with is
+  // 53. Shallow copy of nested list
   (_i: number) => ({
-    q: `a = [1, 2]; b = [1, 2]; what is a is b?`,
-    o: ["False", "True", "Error", "None"],
+    q: `a = [[1], [2]]; b = a.copy(); b[0].append(9); what is a[0]?`,
+    o: ["[1, 9]", "[1]", "[9]", "Error"],
     c: 0,
-    e: "Each list literal creates a separate object in memory.",
-    de: `Even though a and b have the same values, they are two separate list objects. The 'is' operator checks whether both variables point to the exact same object in memory.
+    e: "copy() is shallow, so the inner list is still shared.",
+    de: `This is a shallow-copy question. The outer list is copied, but the inner lists are still the same objects.
 
 Key Concepts:
-• 'is' checks object identity (same memory address)
-• Two list literals always create two distinct objects
-• a is b → False, but a == b → True
-• Only assignment (b = a) makes two variables reference the same object
+• copy() duplicates only the outer container
+• Nested mutable items are still shared
+• Mutating a shared inner list affects both structures
 
-Example: a = [1, 2]; b = [1, 2]; a is b → False. id(a) != id(b).
-
-Key Distinctions:
-• Two list literals with same contents are still different objects — is is False.
-• == can be True while is is False.
-
-How It Works:
-• is compares object identity; two constructions → two ids.
-
-Step-by-Step Execution:
-1. First [1,2] object.
-2. Second [1,2] object.
-3. is → False.
-
-Order of Operations:
-• Build both lists, then is.
-
-Common Use Cases:
-• Caching: detect if two names refer to same underlying list.
-
-Edge Cases:
-• Interning does not apply to lists.
-
-Performance Considerations:
-• Two allocations vs one — memory aware in hot loops.
+Step by step:
+1. a starts as [[1], [2]]
+2. b = a.copy() makes a new outer list
+3. b[0] still points to the same inner list as a[0]
+4. append(9) changes that shared inner list
+5. a[0] becomes [1, 9]
 
 Examples:
-• a=[1,2]; b=[1,2]; a==b, a is b
+• list(a) is also shallow here
+• copy.deepcopy(...) would avoid the shared inner lists
 
 Notes:
-• Copy with list(x) or x.copy() if you need a duplicate, not an alias.`
+• This is one of the most important practical list-copy ideas.`
   }),
-  // 55. Same reference via assignment
+  // 54. Idiomatic None check
   (_i: number) => ({
-    q: `a = [1, 2]; b = a; what is a is b?`,
+    q: `x = None; what is x is None?`,
     o: ["True", "False", "Error", "None"],
     c: 0,
-    e: "b = a makes b reference the same object as a.",
-    de: `When you write b = a, you're not copying the list — you're making b point to the exact same list object that a points to. Both names now reference one object.
+    e: "is None is the standard way to check for None.",
+    de: `x is None is True because x refers to the special singleton value None.
 
 Key Concepts:
-• Assignment with = creates a new reference, not a copy
-• After b = a, both variables point to the same object
-• Modifying through one name affects the other: a.append(3) also changes b
-• To create an independent copy, use b = a.copy() or b = a[:]
+• None is a single special object
+• is checks identity
+• is None is the idiomatic Python test
 
-Example: a = [1, 2]; b = a; a is b → True. a.append(3) makes b == [1, 2, 3] too.
-
-Key Distinctions:
-• Assignment aliases the same list object — a is b is True.
-• Mutating a mutates b.
-
-How It Works:
-• b binds to the object already bound to a.
-
-Step-by-Step Execution:
-1. Create [1,2], bind a.
-2. b = a binds same object.
-3. a is b → True.
-
-Order of Operations:
-• Assignment then comparison.
-
-Common Use Cases:
-• Passing lists to functions — shared mutable state.
-
-Edge Cases:
-• Rebinding a or b breaks sharing.
-
-Performance Considerations:
-• No copy — O(1) alias.
+Step by step:
+1. Assign None to x
+2. Check whether x is that exact special object
+3. Result: True
 
 Examples:
-• a=[1]; b=a; b.append(2); a  # [1,2]
+• x == None also works here, but is None is preferred
+• x = 0 would make x is None False
 
 Notes:
-• Use b = a.copy() or list(a) for a shallow duplicate.`
+• This is more reliable and more readable than comparing with == for None checks.`
+  }),
+  // 55. Fallback with or
+  (_i: number) => ({
+    q: `x = ""; what is x or "fallback"?`,
+    o: ['"fallback"', '""', "False", "Error"],
+    c: 0,
+    e: "An empty string is falsy, so or returns the fallback value.",
+    de: `or returns the first truthy value it finds. Because "" is falsy, Python continues to "fallback".
+
+Key Concepts:
+• Empty strings are falsy
+• or returns a value, not just True or False
+• This pattern is common for defaults
+
+Step by step:
+1. Check x, which is ""
+2. "" is falsy
+3. Move to the second value
+4. Result: "fallback"
+
+Examples:
+• None or "default" -> "default"
+• "hello" or "default" -> "hello"
+
+Notes:
+• This pattern is useful, but only when an empty value should really trigger a fallback.`
+  }),
+
+  // 56. Truthiness of non-empty strings
+  (_i: number) => ({
+    q: `x = "0"; what is bool(x)?`,
+    o: ["True", "False", "0", "Error"],
+    c: 0,
+    e: "Any non-empty string is truthy, even if it looks like zero.",
+    de: `The string "0" is not empty, so bool("0") is True.
+
+Key Concepts:
+• Non-empty strings are truthy
+• Empty strings are falsy
+• Truthiness is based on emptiness here, not numeric meaning
+
+Step by step:
+1. x contains one character
+2. Python checks whether the string is empty
+3. It is not empty
+4. Result: True
+
+Examples:
+• bool("") -> False
+• bool("False") -> True
+
+Notes:
+• This prevents a common beginner mistake: string content is not the same as numeric value.`
+  }),
+
+  // 57. Shared reference after assignment
+  (_i: number) => ({
+    q: `a = [1, 2]; b = a; b.append(3); what is a?`,
+    o: ["[1, 2, 3]", "[1, 2]", "[3]", "Error"],
+    c: 0,
+    e: "b and a refer to the same list, so the append is visible through both names.",
+    de: `Assignment does not copy a list. It gives another name to the same list object.
+
+Key Concepts:
+• b = a creates an alias
+• append() mutates the existing list
+• Both names see the same change
+
+Step by step:
+1. a refers to [1, 2]
+2. b refers to the same list
+3. b.append(3) mutates that list
+4. a now shows [1, 2, 3]
+
+Examples:
+• b = a.copy() would avoid this shared mutation
+
+Notes:
+• This is one of the most important mutable-object behaviors in Python.`
+  }),
+
+  // 58. Independent list after copying
+  (_i: number) => ({
+    q: `a = [1, 2]; b = list(a); b.append(3); what is a?`,
+    o: ["[1, 2]", "[1, 2, 3]", "[3]", "Error"],
+    c: 0,
+    e: "list(a) creates a new outer list, so changing b does not change a.",
+    de: `list(a) makes a new list with the same items. Since b is separate, appending to b leaves a unchanged.
+
+Key Concepts:
+• list(a) can be used as a shallow copy
+• The outer list becomes independent
+• Mutating b does not mutate a
+
+Step by step:
+1. a is [1, 2]
+2. b = list(a) creates a separate [1, 2]
+3. b.append(3) changes only b
+4. a stays [1, 2]
+
+Examples:
+• a.copy() behaves similarly for a simple list
+
+Notes:
+• This is the safer pattern when you want to modify a copy.`
+  }),
+
+  // 59. Shared dict by assignment
+  (_i: number) => ({
+    q: `a = {"count": 1}; b = a; b["count"] = 2; what is a["count"]?`,
+    o: ["2", "1", "Error", "None"],
+    c: 0,
+    e: "Both names refer to the same dictionary, so the updated value is visible through a.",
+    de: `Like lists, dictionaries are mutable objects. Assignment shares the same dictionary instead of making a copy.
+
+Key Concepts:
+• b = a creates a shared reference
+• Updating the dictionary through b changes the same object
+• a and b both see the new value
+
+Step by step:
+1. a refers to {"count": 1}
+2. b = a points to the same dictionary
+3. b["count"] = 2 changes that dictionary
+4. a["count"] is now 2
+
+Examples:
+• dict(a) would create a separate outer dictionary
+
+Notes:
+• Lists and dictionaries follow the same sharing rule after plain assignment.`
+  }),
+
+  // 60. Independent dict after copying
+  (_i: number) => ({
+    q: `a = {"count": 1}; b = dict(a); b["count"] = 2; what is a["count"]?`,
+    o: ["1", "2", "Error", "None"],
+    c: 0,
+    e: "dict(a) creates a new dictionary, so changing b does not change a.",
+    de: `dict(a) makes a shallow copy of the dictionary. The outer dictionary is new, so reassigning a value in b does not affect a.
+
+Key Concepts:
+• dict(a) creates a separate outer dictionary
+• Changing b does not change a
+• This is the dictionary version of a shallow copy
+
+Step by step:
+1. a is {"count": 1}
+2. b = dict(a) creates another dictionary with the same pair
+3. b["count"] becomes 2
+4. a["count"] stays 1
+
+Examples:
+• a.copy() would also work here
+
+Notes:
+• As with lists, nested mutable values would still be shared in a shallow copy.`
   }),
   // 56. String interning
   (_i: number) => ({

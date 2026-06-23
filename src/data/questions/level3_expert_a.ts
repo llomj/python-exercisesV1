@@ -4,269 +4,269 @@ export const level3ExpertA = [
 
   // Q1
   (_i: number) => ({
-    q: `What Python version introduced match/case (structural pattern matching)?`,
-    o: ["3.10", "3.8", "3.9", "3.11"],
+    q: `x = 12\nWhat is "high" if x > 10 else "low"?`,
+    o: ['"high"', '"low"', "12", "Error"],
     c: 0,
-    e: "Structural pattern matching with match/case was introduced in Python 3.10 (PEP 634).",
-    de: `Python 3.10 introduced structural pattern matching via PEP 634, 635, and 636. This feature adds the match and case keywords to Python.
+    e: "Since x is greater than 10, the first branch is chosen.",
+    de: `This is a conditional expression, also called a ternary expression.
 
-Key concepts:
-• match/case is NOT the same as a switch/case from C or Java
-• It performs structural pattern matching — matching the shape and content of data
-• PEP 634 defines the syntax, PEP 635 the motivation, PEP 636 is a tutorial
-• The keywords match and case are "soft keywords" — they only act as keywords inside match statements
+Key Concepts:
+• condition_if_true if condition else condition_if_false
+• Python checks the condition first
+• Only one of the two results is returned
 
-Example:
->>> match command:
-...     case "quit":
-...         print("Goodbye")
-...     case "hello":
-...         print("Hi there")
-
-Python versions: 3.10 (Oct 2021) and later support match/case.
-
-Key Distinctions:
-• PEP 634 introduced match/case in Python 3.10; earlier interpreters cannot parse the statement.
-• Soft keywords match and case only act as keywords inside match grammar.
-
-How It Works:
-• Version gates belong in packaging (python_requires) and CI before using structural patterns.
-
-Step-by-Step Execution:
-1. Confirm sys.version_info >= (3, 10).
-2. Only then ship modules that contain match statements.
-
-Order of Operations:
-• Syntax validity is decided at parse time — not a runtime flag.
-
-Common Use Cases:
-• Teaching modern control flow and pattern-rich APIs.
-
-Edge Cases:
-• Alternate implementations (older PyPy builds) may lag; test your matrix.
-
-Performance Considerations:
-• No runtime cost comparison needed — wrong version fails at import.
+Step by step:
+1. x is 12
+2. Check x > 10
+3. The condition is True
+4. Result: "high"
 
 Examples:
-• if sys.version_info < (3, 10): raise RuntimeError("need 3.10+")
+• "yes" if 5 > 3 else "no" -> "yes"
+• "adult" if age >= 18 else "minor"
 
 Notes:
-• Document minimum Python in pyproject.toml when adopting match/case.`
+• This is more practical for this level than version-history syntax questions.`
   }),
 
   // Q2
   (_i: number) => ({
-    q: `What is result after:\nmatch 42:\n    case 42:\n        result = "found"`,
-    o: ['result = "found"', 'result = 42', "SyntaxError", "No match"],
+    q: `x = 7\nWhat is "adult" if x >= 18 else "minor"?`,
+    o: ['"minor"', '"adult"', "7", "Error"],
     c: 0,
-    e: "The literal 42 matches case 42 exactly, so result is assigned \"found\".",
-    de: `This is the simplest form of pattern matching — matching a literal value. When the subject (42) equals the case pattern (42), the block executes.
+    e: "7 is not at least 18, so the else branch is used.",
+    de: `The expression checks whether x meets the condition x >= 18.
 
-Key concepts:
-• match evaluates the subject expression once
-• Each case is tested in order from top to bottom
-• Literal patterns match by equality (==)
-• Once a case matches, its block runs and no further cases are checked
+Key Concepts:
+• >= means greater than or equal to
+• If the condition is False, Python uses the else result
+• Ternary expressions are compact versions of if/else
 
-Example:
->>> match 42:
-...     case 42:
-...         result = "found"
->>> result
-'found'
-
-Literal patterns work with int, float, str, bytes, True, False, and None.
-
-Key Distinctions:
-• Literal value patterns use equality; case 42 matches an int subject equal to 42.
-• No binding occurs unless you use capture patterns (bare names).
-
-How It Works:
-• Cases are tried in order; the first successful pattern runs its suite.
-
-Step-by-Step Execution:
-1. Evaluate subject 42.
-2. Compare to pattern 42.
-3. Execute assignment to result.
-
-Order of Operations:
-• Earlier cases win; keep specific literals before wildcards.
-
-Common Use Cases:
-• Numeric status codes and tokenized commands.
-
-Edge Cases:
-• Mixed float/int subjects need consistent patterns.
-
-Performance Considerations:
-• Small literal compares are O(1).
+Step by step:
+1. x is 7
+2. Check 7 >= 18
+3. That is False
+4. Result: "minor"
 
 Examples:
-• match n: case 0: ... case 1: ...
+• "pass" if score >= 50 else "fail"
+• "open" if ready else "wait"
 
 Notes:
-• Add guards (if) when a range is better than many literals.`
+• Understanding the false branch is just as important as understanding the true branch.`
   }),
 
   // Q3
   (_i: number) => ({
-    q: `What is result after:\nmatch "hello":\n    case "hello":\n        result = "match"`,
-    o: ['result = "match"', 'result = "hello"', "SyntaxError", "No match"],
+    q: `x = 0\nif x:\n    result = "yes"\nelse:\n    result = "no"\nWhat is result?`,
+    o: ['"no"', '"yes"', '"0"', "Error"],
     c: 0,
-    e: "The string literal \"hello\" matches case \"hello\" exactly.",
-    de: `String literals can be used directly as match patterns. The match works by equality — the subject string must be identical to the pattern string.
+    e: "0 is falsy, so the else block runs.",
+    de: `In Python, 0 is a falsy value. That means an if x check treats it like False.
 
-Key concepts:
-• String matching is case-sensitive: "hello" matches "hello" but NOT "Hello"
-• The match is exact — no partial matching with literals
-• String patterns are one of the simplest literal patterns
-• After matching, the case block executes and control moves past the match
+Key Concepts:
+• if x checks truthiness
+• 0 is falsy
+• Non-zero numbers are usually truthy
 
-Example:
->>> match "hello":
-...     case "hello":
-...         result = "match"
->>> result
-'match'
-
-Key Distinctions:
-• String literal patterns require the whole subject string to equal the pattern value.
-• This is not substring matching — use other tools for partial strings.
-
-How It Works:
-• str equality semantics apply between subject and pattern literal.
-
-Step-by-Step Execution:
-1. Subject is "hello".
-2. Pattern "hello" matches.
-3. Bind result in the case suite.
-
-Order of Operations:
-• Case order matters if multiple patterns could match.
-
-Common Use Cases:
-• CLI verbs and fixed protocol tokens.
-
-Edge Cases:
-• Unicode normalization can break naive equality — normalize first if needed.
-
-Performance Compares:
-• Short string compare is fast.
+Step by step:
+1. x is 0
+2. if x checks whether x is truthy
+3. 0 is falsy
+4. Python runs the else block
+5. result becomes "no"
 
 Examples:
-• match cmd: case "start": ...
+• if 5: runs the if block
+• if "": runs the else block
 
 Notes:
-• Use casefold() before match if you need case-insensitive commands.`
+• Truthiness is a core skill for reading real Python code.`
   }),
 
   // Q4
   (_i: number) => ({
-    q: `What is r after:\nmatch 5:\n    case 1:\n        r = "one"\n    case 5:\n        r = "five"\n    case _:\n        r = "other"`,
-    o: ['r = "five"', 'r = "one"', 'r = "other"', "SyntaxError"],
+    q: `name = ""\nWhat is name or "Anonymous"?`,
+    o: ['"Anonymous"', '""', '"name"', "Error"],
     c: 0,
-    e: "The value 5 matches case 5, so r is \"five\". Cases are checked top to bottom and 5 matches the second case.",
-    de: `When multiple cases are present, they are checked in order. The first matching case executes, then the entire match block is done.
+    e: "An empty string is falsy, so or returns the fallback value.",
+    de: `This is a common default-value pattern in Python.
 
-Key concepts:
-• case 1 does not match 5 — skipped
-• case 5 matches 5 — r = "five" executes
-• case _ is never reached because case 5 already matched
-• There is no "fall-through" like in C/Java — only one case runs
+Key Concepts:
+• Empty strings are falsy
+• or returns the first truthy value
+• Fallbacks are often written with or
 
-Example:
->>> match 5:
-...     case 1: r = "one"
-...     case 5: r = "five"
-...     case _: r = "other"
->>> r
-'five'
-
-Key Distinctions:
-• Cases are evaluated top to bottom; the first matching pattern wins.
-• Later cases are skipped after a match — order is part of the program logic.
-
-How It Works:
-• Subject 5 matches case 5 after case 1 fails.
-
-Step-by-Step Execution:
-1. Test case 1 (fails).
-2. Test case 5 (succeeds).
-3. Assign r = "five".
-
-Order of Operations:
-• Put cheaper or more specific tests first when readability allows.
-
-Common Use Cases:
-• Priority-based routing of small integer codes.
-
-Edge Cases:
-• Unreachable cases below an always-true pattern indicate a bug.
-
-Performance Considerations:
-• Linear scan of cases — keep ladders readable.
+Step by step:
+1. name is ""
+2. Python checks the left side of or
+3. The empty string is falsy
+4. Python returns "Anonymous"
 
 Examples:
-• match x: case 0: ... case 1: ... case _: ...
+• username or "guest"
+• title or "Untitled"
 
 Notes:
-• Refactor huge ladders into dict dispatch when patterns repeat.`
+• Use this pattern only when an empty string should count as "missing".`
   }),
 
   // Q5
   (_i: number) => ({
-    q: `What does case _: mean in a match/case statement?`,
-    o: ["Wildcard/default — matches anything", "Matches the underscore character", "Matches None", "Raises an error"],
+    q: `score = 85\nif score >= 90:\n    grade = "A"\nelif score >= 80:\n    grade = "B"\nelse:\n    grade = "C"\nWhat is grade?`,
+    o: ['"B"', '"A"', '"C"', "Error"],
     c: 0,
-    e: "case _: is the wildcard/default case that matches any value, like a catch-all.",
-    de: `The underscore _ in a case pattern is the wildcard pattern. It matches any value without binding it to a name.
+    e: "85 does not reach 90, but it does reach 80, so the elif branch sets grade to \"B\".",
+    de: `elif lets Python test another condition when the first if condition is False.
 
-Key concepts:
-• case _: acts as a catch-all / default case
-• It matches anything that didn't match previous cases
-• The value is NOT captured — you can't use _ to refer to it
-• It should typically be the last case (anything after it is unreachable)
-• _ is special ONLY in match/case — elsewhere it's a normal variable
+Key Concepts:
+• if is checked first
+• elif is checked only if earlier branches fail
+• The first matching branch wins
 
-Example:
->>> match "unknown":
-...     case "hello":
-...         print("greeting")
-...     case _:
-...         print("something else")
-something else
-
-Unlike a variable pattern (case x:), the wildcard _ doesn't bind the matched value.
-
-Key Distinctions:
-• case _ is a wildcard that matches any subject and does not bind a name to it.
-• It is the conventional default branch when you ignore the value.
-
-How It Works:
-• After other patterns fail, _ accepts anything.
-
-Step-by-Step Execution:
-1. Try explicit patterns.
-2. Fall through to _ when nothing else fits.
-
-Order of Operations:
-• Typically place _ last to avoid masking specific cases.
-
-Common Use Cases:
-• Fallback logging and "else" behavior inside match.
-
-Edge Cases:
-• If no case matches and there is no _, Python raises MatchError.
-
-Performance Considerations:
-• Wildcard acceptance is O(1).
+Step by step:
+1. score is 85
+2. score >= 90 is False
+3. score >= 80 is True
+4. grade becomes "B"
+5. The else branch is skipped
 
 Examples:
-• case _: pass
+• This is a common grading or category pattern
 
 Notes:
-• For enums, consider covering all members explicitly for maintainability.`
+• Branch order matters. If you put the broader condition first, the later branch may never run.`
+  }),
+
+  // Q6
+  (_i: number) => ({
+    q: `age = 17\nhas_id = True\nWhat is age >= 18 and has_id?`,
+    o: ["False", "True", "17", "Error"],
+    c: 0,
+    e: "Both sides of and must be truthy, and age >= 18 is False here.",
+    de: `The and operator returns True only when both conditions are true.
+
+Key Concepts:
+• and requires both conditions
+• age >= 18 is False when age is 17
+• False and True becomes False
+
+Step by step:
+1. Check age >= 18 -> False
+2. Check has_id -> True
+3. False and True -> False
+
+Examples:
+• logged_in and is_admin
+• x > 0 and y > 0
+
+Notes:
+• This is the basis of many real access or validation checks.`
+  }),
+
+  // Q7
+  (_i: number) => ({
+    q: `age = 20\nhas_id = False\nWhat is age >= 18 or has_id?`,
+    o: ["True", "False", "20", "Error"],
+    c: 0,
+    e: "or needs only one truthy side, and age >= 18 is already True.",
+    de: `The or operator returns True if at least one side is true.
+
+Key Concepts:
+• or needs one truthy condition
+• age >= 18 is True here
+• True or False becomes True
+
+Step by step:
+1. Check age >= 18 -> True
+2. Check has_id -> False
+3. True or False -> True
+
+Examples:
+• is_weekend or is_holiday
+• x == 0 or x == 1
+
+Notes:
+• or is useful when more than one condition can allow the same result.`
+  }),
+
+  // Q8
+  (_i: number) => ({
+    q: `x = -3\nif x > 0:\n    label = "positive"\nelif x < 0:\n    label = "negative"\nelse:\n    label = "zero"\nWhat is label?`,
+    o: ['"negative"', '"positive"', '"zero"', "Error"],
+    c: 0,
+    e: "x is less than 0, so the elif branch assigns \"negative\".",
+    de: `This is a standard multi-branch sign check.
+
+Key Concepts:
+• The first true branch runs
+• elif handles the middle condition
+• else catches anything not matched earlier
+
+Step by step:
+1. x > 0 is False
+2. x < 0 is True
+3. label becomes "negative"
+4. else is skipped
+
+Examples:
+• Similar logic is used for ranges and categories
+
+Notes:
+• This teaches branch order in a very practical setting.`
+  }),
+
+  // Q9
+  (_i: number) => ({
+    q: `items = []\nWhat is "empty" if not items else "filled"?`,
+    o: ['"empty"', '"filled"', "[]", "Error"],
+    c: 0,
+    e: "An empty list is falsy, so not items is True.",
+    de: `Empty containers are falsy in Python. Because items is [], not items becomes True.
+
+Key Concepts:
+• Empty lists are falsy
+• not reverses the truth value
+• Ternary expressions can combine with truthiness checks
+
+Step by step:
+1. items is []
+2. [] is falsy
+3. not items becomes True
+4. Result: "empty"
+
+Examples:
+• "filled" if items else "empty" is another common style
+
+Notes:
+• This is a very common real-world pattern for lists, strings, and dictionaries.`
+  }),
+
+  // Q10
+  (_i: number) => ({
+    q: `text = "Python"\nWhat is "yes" if "Py" in text else "no"?`,
+    o: ['"yes"', '"no"', '"Py"', "Error"],
+    c: 0,
+    e: "\"Py\" is found inside \"Python\", so the expression returns \"yes\".",
+    de: `The in operator checks whether one string appears inside another.
+
+Key Concepts:
+• in checks membership
+• "Py" is a substring of "Python"
+• The condition is True, so the first result is used
+
+Step by step:
+1. Look for "Py" inside "Python"
+2. It appears at the beginning
+3. The condition is True
+4. Result: "yes"
+
+Examples:
+• "on" in "Python" -> True
+• "java" in "Python" -> False
+
+Notes:
+• This is a practical condition for text checks and filtering.`
   }),
 
   // Q6

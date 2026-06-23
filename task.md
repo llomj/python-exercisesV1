@@ -497,3 +497,12 @@ Level 1 `301-600` French in-depth pass: **done through ID `600`**. Level 2: **60
 - **Session rules:** review sessions record attempts in history but do **not** grant XP, stars, or level progression.
 - **Quiz wiring:** `src/components/QuizView.tsx` and `src/App.tsx` now pass history/session mode through to the quiz engine and surface review-mode labels.
 - **Build verification:** `npm run build` passed.
+
+### 2026-06-24 — Phase 2 early expert-bank rebalance
+
+- **Completed:** rewrote the steepest opening clusters in early expert banks so they feel more progressive and practical.
+- **English IDs updated:** `501–510`, `551–560`, `901–910`.
+- **French question IDs synced:** `501–510`, `551–560`, `901–910`.
+- **French in-depth IDs synced:** `501–510`, `551–560`, `901–910`.
+- **Progression change:** replaced low-value bytes internals, object-caching trivia, and `match/case` history/syntax openings with practical string fluency, copy-vs-alias reasoning, and real conditional patterns.
+- **Build verification:** `npm run build` passed.

@@ -4,357 +4,277 @@ export const level1ExpertA = [
 
   // Q1
   (_i: number) => ({
-    q: `What is type(b"hello")?`,
-    o: ["<class 'bytes'>", "<class 'str'>", "<class 'bytearray'>", "<class 'list'>"],
+    q: `What is "Python".lower()?`,
+    o: ["python", "Python", "PYTHON", "Error"],
     c: 0,
-    e: "A bytes literal created with b\"...\" is of type bytes.",
-    de: `The b prefix before a string literal creates a bytes object. Bytes represent raw binary data — a sequence of integers in the range 0–255.
+    e: "lower() converts every uppercase letter to lowercase.",
+    de: `"Python".lower() returns "python" because lower() makes the string lowercase.
 
 Key Concepts:
-• b"hello" is a bytes literal, not a string
-• type(b"hello") returns <class 'bytes'>
-• bytes objects are immutable sequences of integers
-• Each element is an int (0–255), not a character
+• lower() returns a new string
+• The original string is not modified
+• Only the letter case changes
 
-Common uses: file I/O, network communication, binary protocols, and encoding/decoding text.
+Why it matters:
+• This is a practical string-cleaning skill
+• It is useful before comparisons such as user input checks
 
-Key Distinctions:
-• type(b"hello") inspects a bytes literal produced by the b prefix, not a Unicode str.
-• bytes is immutable; bytearray is mutable — this question is only about the bytes literal form.
-
-How It Works:
-• Python builds a bytes object from the literal token b"hello" at compile/parse time.
-• type() returns the class object for that instance, which is bytes.
-
-Step-by-Step Execution:
-1. Parse the expression: the inner value is the bytes literal b"hello".
-2. Call the built-in type() with that object as its sole argument.
-3. type() reads the object’s class pointer and returns the bytes type object.
-4. The REPL prints repr of that type: <class 'bytes'>.
-
-Order of Operations:
-• There is only a literal and a function call: the literal is evaluated first, then type().
-• No arithmetic or attribute access participates in this exact expression.
-
-Common Use Cases:
-• Debugging when data unexpectedly mixes str and bytes from files or sockets.
-• Teaching that binary payloads are first-class objects with their own type.
-
-Edge Cases:
-• type(b"") is still bytes; empty bytes is a valid object.
-• Subclassing bytes is rare in beginner code but would still report the subclass via type().
-
-Performance Considerations:
-• type() is a cheap pointer lookup on the object header in CPython.
-• The bytes object for small literals is created once; repeated type() calls stay trivial.
+Step by step:
+1. Start with "Python"
+2. Convert P to p
+3. Keep the other letters in lowercase
+4. Result: "python"
 
 Examples:
-• type(b"hello")  # <class 'bytes'>
-• type(bytearray(b"hello"))  # <class 'bytearray'>
-• isinstance(b"hello", (bytes, bytearray))  # True for bytes only here
+• "HELLO".lower() -> "hello"
+• "PyThOn".lower() -> "python"
 
 Notes:
-• For API boundaries, prefer isinstance(x, (bytes, bytearray)) when mutability does not matter.
-• Display <class 'bytes'> is not a string value "hello" — it names the type object.`
+• Strings are immutable, so lower() creates a new result instead of changing the original value.`
   }),
 
   // Q2
   (_i: number) => ({
-    q: `What is type(bytearray(b"hello"))?`,
-    o: ["<class 'bytearray'>", "<class 'bytes'>", "<class 'str'>", "<class 'list'>"],
+    q: `What is "  hello  ".strip()?`,
+    o: ["hello", '"hello"', "  hello", "Error"],
     c: 0,
-    e: "bytearray() creates a mutable byte sequence.",
-    de: `bytearray is the mutable counterpart of bytes. While bytes objects cannot be modified after creation, bytearray objects can be changed in place.
+    e: "strip() removes spaces from the beginning and end of a string.",
+    de: `strip() removes outer whitespace and returns the cleaned text.
 
 Key Concepts:
-• bytearray(b"hello") creates a mutable copy of the bytes data
-• type() returns <class 'bytearray'>
-• You can assign to individual indices: ba[0] = 65
-• Supports the same methods as bytes (upper, split, hex, etc.)
+• strip() removes leading and trailing spaces
+• It does not remove spaces inside the text
+• It returns a new string
 
-Use bytearray when you need to modify binary data in place, such as building network packets or manipulating file buffers.
-
-Key Distinctions:
-• bytearray is a distinct built-in type: mutable buffer of ints 0–255, unlike immutable bytes.
-• type() reports the concrete class, not an abstract “binary sequence” protocol.
-
-How It Works:
-• bytearray(b"hello") copies the bytes payload into a growable, mutable buffer.
-• type() returns the metaclass/type object registered for that instance.
-
-Step-by-Step Execution:
-1. Evaluate the inner call bytearray(b"hello") → a bytearray instance holding the same bytes.
-2. Pass that instance to type().
-3. type() returns the bytearray class object.
-4. Interactive display shows <class 'bytearray'>.
-
-Order of Operations:
-• Inner call bytearray(...) completes before the outer type(...) runs.
-• No other operators are present.
-
-Common Use Cases:
-• Building packets or file chunks where in-place edits avoid repeated concatenation.
-• Interop with socket.recv_into style buffers (advanced, but motivation for bytearray).
-
-Edge Cases:
-• bytearray() with no args yields an empty growable buffer; type is still bytearray.
-• Mixing str into bytearray() raises TypeError — construction paths matter.
-
-Performance Considerations:
-• Copying b"hello" into bytearray allocates a new buffer; still tiny for small literals.
-• In-place slice assignment can be faster than bytes concatenation loops.
+Step by step:
+1. Start with "  hello  "
+2. Remove the two spaces at the start
+3. Remove the two spaces at the end
+4. Result: "hello"
 
 Examples:
-• type(bytearray())  # <class 'bytearray'>
-• ba = bytearray(b"ab"); ba[0] = 65  # bytearray(b'Ab')
+• "  hi".strip() -> "hi"
+• "a b".strip() -> "a b"
 
 Notes:
-• If you only read binary data immutably, bytes is simpler and hashable (dict keys, sets).`
+• This is common when handling user input copied with extra spaces.`
   }),
 
   // Q3
   (_i: number) => ({
-    q: `What is b"hello"[0]?`,
-    o: ["104", "b'h'", "'h'", "Error"],
+    q: `What is "hello".replace("l", "L", 1)?`,
+    o: ["heLlo", "heLLo", "hello", "Error"],
     c: 0,
-    e: "Indexing bytes returns an integer, not a character.",
-    de: `When you index a bytes object, you get an integer — the byte value at that position — not a single-byte bytes object.
+    e: "replace(..., 1) changes only the first matching occurrence.",
+    de: `replace("l", "L", 1) changes only the first "l" in "hello".
 
 Key Concepts:
-• b"hello"[0] returns 104, because ord('h') == 104
-• This differs from strings: "hello"[0] returns 'h'
-• Slicing bytes returns bytes: b"hello"[0:1] returns b'h'
-• Each byte is an int in range 0–255
+• replace(old, new, count) can limit how many replacements happen
+• count = 1 means replace only the first match
+• The original string is unchanged
 
-This is a common source of confusion: indexing gives int, slicing gives bytes.
-
-Key Distinctions:
-• Indexing bytes yields an int 0–255; indexing str yields a one-character str — easy to confuse.
-• b"hello"[0] is 104, not b'h' and not 'h'.
-
-How It Works:
-• The bytes sequence implements __getitem__ to return the numeric byte at that offset.
-• Negative indices count from the end, same rules as str.
-
-Step-by-Step Execution:
-1. Build b"hello" (immutable bytes with values [104,101,108,108,111]).
-2. Apply [0] → first byte value 104.
-3. No decoding happens; this is raw numeric access.
-
-Order of Operations:
-• Literal first, then subscript; no method calls unless you write something like (b"hello")[0].
-
-Common Use Cases:
-• Comparing first byte of a magic header (e.g. b"GIF"[0]).
-• Manual parsing of binary protocols without converting whole objects to str.
-
-Edge Cases:
-• Out-of-range index raises IndexError; empty bytes b"" has no [0].
-• Slicing b"hello"[0:1] returns b'h' (bytes), unlike [0] returning int.
-
-Performance Considerations:
-• Indexing is O(1) on the internal buffer in CPython.
-• Avoid repeated indexing in tight loops if you can iterate or use memoryview (advanced).
+Step by step:
+1. Start with "hello"
+2. Find the first "l"
+3. Replace that one with "L"
+4. Result: "heLlo"
 
 Examples:
-• b"A"[0]  # 65
-• list(b"Hi")  # [72, 105]
+• "banana".replace("a", "A", 1) -> "bAnana"
+• "hello".replace("l", "L") -> "heLLo"
 
 Notes:
-• Use slicing when you need a length-1 bytes object to match APIs expecting bytes, not int.`
+• This is useful when you want a partial change instead of replacing every occurrence.`
   }),
 
   // Q4
   (_i: number) => ({
-    q: `What is b"hello"[1]?`,
-    o: ["101", "b'e'", "'e'", "104"],
+    q: `What is "banana".count("a")?`,
+    o: ["3", "2", "4", "Error"],
     c: 0,
-    e: "b\"hello\"[1] is 101, the ASCII code for 'e'.",
-    de: `Indexing bytes at position 1 returns the integer value of the second byte. In b"hello", the second character is 'e', and ord('e') == 101.
+    e: "count() returns how many times a substring appears.",
+    de: `"banana".count("a") is 3 because the letter "a" appears three times.
 
 Key Concepts:
-• b"hello"[0] = 104 (h), [1] = 101 (e), [2] = 108 (l), [3] = 108 (l), [4] = 111 (o)
-• These are standard ASCII values
-• Remember: bytes indexing always yields an int
-• To get a single-byte bytes object, slice instead: b"hello"[1:2] → b'e'
+• count() counts matches
+• It returns a number
+• It does not change the string
 
-Key Distinctions:
-• Position 1 is the second byte; for ASCII "hello" that is 'e' → ord 101.
-• Still int output: bytes indices always return ints until you slice.
-
-How It Works:
-• Offset 1 selects the byte at index 1 from the packed buffer backing b"hello".
-
-Step-by-Step Execution:
-1. Materialize b"hello".
-2. Apply subscript 1.
-3. Return integer 101.
-
-Order of Operations:
-• Subscript binds tighter than nothing else here — single primary expression.
-
-Common Use Cases:
-• Byte-level diffing or checksums over specific positions.
-• Learning ASCII tables by correlating characters with ord values.
-
-Edge Cases:
-• Non-ASCII UTF-8 bytes inside a bytes object: each byte is still 0–255; meaning needs decode().
-• Negative index [-1] is last byte (111 for 'o' here).
-
-Performance Considerations:
-• Same O(1) indexing cost as any fixed sequence.
+Step by step:
+1. Look at "banana"
+2. Find each "a"
+3. They appear in positions 1, 3, and 5
+4. Result: 3
 
 Examples:
-• b"hello"[1]  # 101
-• bytes([101])  # b'e'
+• "hello".count("l") -> 2
+• "aaaa".count("aa") counts substring matches by Python's rules
 
 Notes:
-• If you expected the letter 'e', remember: text lives in str; bytes stores numeric byte values.`
+• count() is useful for validation tasks such as checking how many separators or symbols appear in a value.`
   }),
 
   // Q5
   (_i: number) => ({
-    q: `What is list(b"Hi")?`,
-    o: ["[72, 105]", "['H', 'i']", "[b'H', b'i']", "Error"],
+    q: `What is "42".isdigit()?`,
+    o: ["True", "False", "Error", '"42"'],
     c: 0,
-    e: "Converting bytes to a list gives a list of integers.",
-    de: `list() on a bytes object produces a list of the integer byte values. Since bytes iterates over ints, the result is a list of ints.
+    e: "isdigit() returns True when every character is a digit.",
+    de: `"42".isdigit() is True because both characters are digits.
 
 Key Concepts:
-• 'H' has ASCII value 72, 'i' has ASCII value 105
-• list(b"Hi") → [72, 105]
-• This is consistent with indexing: b"Hi"[0] == 72
-• Iterating over bytes also yields ints: for x in b"Hi": print(x) prints 72 then 105
+• isdigit() checks the whole string
+• Every character must be numeric
+• The method returns a boolean
 
-Key Distinctions:
-• list(...) on bytes consumes the iteration protocol, which yields ints, not 1-char strings.
-• Contrast: list("Hi") → ['H','i'] because str iterates characters.
-
-How It Works:
-• bytes.__iter__ yields int values; list() collects all yielded items into a Python list.
-
-Step-by-Step Execution:
-1. Evaluate b"Hi" → two-byte object.
-2. Call list(...) which exhausts the iterator from those two ints.
-3. Produce [72, 105].
-
-Order of Operations:
-• Inner literal, then list() call; no chained operations.
-
-Common Use Cases:
-• Debugging encodings by viewing exact byte values as numbers.
-• Feeding custom codecs or XOR loops over numeric byte values.
-
-Edge Cases:
-• list(b"") → []; empty iteration.
-• Very large bytes objects: list() allocates a Python int per byte — can be memory-heavy.
-
-Performance Considerations:
-• list(b"...") builds many small int objects; for huge buffers prefer iteration without materializing all.
+Step by step:
+1. Check the first character: "4" is a digit
+2. Check the second character: "2" is a digit
+3. All characters pass
+4. Result: True
 
 Examples:
-• [hex(x) for x in b"Hi"]  # ['0x48', '0x69']
-• bytes([72, 105])  # b'Hi'
+• "123".isdigit() -> True
+• "12a".isdigit() -> False
+• "-5".isdigit() -> False because "-" is not a digit
 
 Notes:
-• To get ['H','i']-like structure from bytes, decode first: list("Hi".encode()) still gives ints — decode to str instead.`
+• This is useful for simple input checks before converting text with int().`
   }),
 
   // Q6
   (_i: number) => ({
-    q: `What is len(b"abc")?`,
-    o: ["3", "5", "6", "Error"],
+    q: `What is str(None)?`,
+    o: ['"None"', '"null"', '""', "Error"],
     c: 0,
-    e: "len() counts the number of bytes.",
-    de: `len() on a bytes object returns the number of bytes (not characters, though for pure ASCII they are the same).
+    e: "str(None) produces the string \"None\".",
+    de: `str(None) returns "None", which is the text form of the special value None.
 
 Key Concepts:
-• b"abc" contains 3 bytes: 97, 98, 99
-• For ASCII text, len(bytes) == len(str)
-• For non-ASCII (e.g. UTF-8 encoded text), byte length can exceed character count
-• Example: len("é".encode("utf-8")) == 2, but len("é") == 1
+• None means "no value" or "missing value"
+• str(...) converts a value to text
+• The result is a string, not the special value None itself
 
-Key Distinctions:
-• len on bytes counts byte slots, not Unicode characters; multi-byte UTF-8 chars need decode() first.
-• For pure ASCII literals, len(bytes) == len(str) numerically.
-
-How It Works:
-• len calls the bytes object’s length, which is stored alongside the buffer.
-
-Step-by-Step Execution:
-1. Create b"abc" (three bytes).
-2. len(...) reads the stored size 3.
-
-Order of Operations:
-• len is a single call; its argument is fully evaluated first.
-
-Common Use Cases:
-• Checking packet or record size before reading more data from a stream.
-• Validating fixed-width binary layouts.
-
-Edge Cases:
-• len(b"") is 0.
-• Surrogate or Unicode edge cases do not apply until decoding — raw bytes are just bytes.
-
-Performance Considerations:
-• len is O(1) for built-in variable-length objects in CPython.
+Step by step:
+1. Start with None
+2. Convert it to text with str()
+3. Python returns "None"
 
 Examples:
-• len("é".encode("utf-8"))  # often 2
-• len("é")  # 1 character
+• str(42) -> "42"
+• str(True) -> "True"
 
 Notes:
-• Always know whether your pipeline measures characters (str) or encoded bytes (bytes).`
+• "None" is text, while None is a Python value. They are not the same thing.`
   }),
 
   // Q7
   (_i: number) => ({
-    q: `What is b"hello" + b" world"?`,
-    o: ["b'hello world'", "'hello world'", "Error", "b'helloworld'"],
+    q: `What is "abc".upper().startswith("A")?`,
+    o: ["True", "False", "Error", '"A"'],
     c: 0,
-    e: "The + operator concatenates two bytes objects.",
-    de: `Bytes support concatenation with +, just like strings. Both operands must be bytes — you cannot concatenate bytes and str.
+    e: "upper() makes the string uppercase, then startswith() checks the beginning.",
+    de: `This expression uses two string methods in sequence.
 
 Key Concepts:
-• b"hello" + b" world" → b'hello world'
-• Both operands must be bytes; b"hi" + " there" raises TypeError
-• The result is a new bytes object (bytes are immutable)
-• You can also use += on bytearray for in-place concatenation
+• upper() changes "abc" into "ABC"
+• startswith("A") checks whether the string begins with "A"
+• Method chaining applies one result to the next method
 
-Key Distinctions:
-• bytes + bytes is allowed; bytes + str (or str + bytes) raises TypeError in Python 3.
-• + builds a new immutable bytes object (neither operand is mutated).
-
-How It Works:
-• The bytes type implements __add__ to allocate a new buffer sized sum of lengths and copy both parts.
-
-Step-by-Step Execution:
-1. Evaluate left b"hello".
-2. Evaluate right b" world".
-3. Call bytes.__add__ to concatenate.
-4. Produce b'hello world'.
-
-Order of Operations:
-• Binary + on bytes is left-to-right after subexpressions; both operands evaluated before add.
-
-Common Use Cases:
-• Building wire messages from fixed headers and variable bodies as bytes.
-• Concatenating file chunks read as binary.
-
-Edge Cases:
-• b"" + x is x semantically (new object may still be created); huge concatenations in a loop are quadratic if done naïvely — prefer join pattern on list of bytes or bytearray.
-
-Performance Considerations:
-• Repeated + in loops allocates many temporaries; for big data use bytearray.extend or b"".join(iterable_of_bytes) patterns.
+Step by step:
+1. Start with "abc"
+2. upper() produces "ABC"
+3. startswith("A") checks the first character
+4. Result: True
 
 Examples:
-• b"a" + b"b"  # b'ab'
-• bytes().join([b"hello", b"world"])  # alternative style
+• "python".upper() -> "PYTHON"
+• "PYTHON".startswith("P") -> True
 
 Notes:
-• If you have str pieces, encode consistently before byte concatenation.`
+• Chaining is common in Python because many string methods return a new string.`
   }),
 
+  // Q8
+  (_i: number) => ({
+    q: `What is len("a\nb")?`,
+    o: ["3", "2", "4", "Error"],
+    c: 0,
+    e: "The newline character counts as one character.",
+    de: `The string contains three characters: "a", the newline, and "b".
+
+Key Concepts:
+• \n is one character
+• len() counts every character in the string
+• Escape sequences still count as characters once interpreted
+
+Step by step:
+1. "a" counts as 1
+2. "\n" counts as 1
+3. "b" counts as 1
+4. Total: 3
+
+Examples:
+• len("ab") -> 2
+• len("a\tb") -> 3
+
+Notes:
+• This helps learners understand that what you type and what the string stores are not always identical visually.`
+  }),
+
+  // Q9
+  (_i: number) => ({
+    q: `What is "7".zfill(3)?`,
+    o: ['"007"', '"700"', '"07"', "Error"],
+    c: 0,
+    e: "zfill() pads the left side with zeros until the target width is reached.",
+    de: `zfill(3) makes the string at least 3 characters long by adding zeros on the left.
+
+Key Concepts:
+• zfill() works on strings
+• It pads on the left side
+• It is useful for codes or fixed-width display values
+
+Step by step:
+1. Start with "7"
+2. Target width is 3
+3. Add two zeros to the left
+4. Result: "007"
+
+Examples:
+• "42".zfill(5) -> "00042"
+• "123".zfill(3) -> "123"
+
+Notes:
+• zfill() is often easier than manual string concatenation for number-like text.`
+  }),
+
+  // Q10
+  (_i: number) => ({
+    q: `What is f"{3.14159:.2f}"?`,
+    o: ['"3.14"', '"3.15"', '"3.1"', "Error"],
+    c: 0,
+    e: "The .2f format keeps two digits after the decimal point.",
+    de: `The format specifier .2f displays the number with exactly two decimal places.
+
+Key Concepts:
+• f-strings can format numbers
+• .2f means fixed-point with 2 digits after the decimal
+• Formatting changes display, not the original numeric value
+
+Step by step:
+1. Start with 3.14159
+2. Apply .2f formatting
+3. Python rounds for display
+4. Result: "3.14"
+
+Examples:
+• f"{2:.2f}" -> "2.00"
+• f"{7.5:.1f}" -> "7.5"
+
+Notes:
+• This is a practical formatting skill for prices, measurements, and reports.`
+  }),
   // Q8
   (_i: number) => ({
     q: `What is b"ab" * 3?`,
