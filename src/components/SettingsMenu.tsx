@@ -197,13 +197,13 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     : 'border-white/15';
   const panelSurfaceStyle = theme === 'light'
     ? {
-        backgroundColor: 'rgba(241, 245, 249, 0.98)',
+        backgroundColor: 'rgba(241, 245, 249, 0.20)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
         boxShadow: '0 20px 48px rgba(15, 23, 42, 0.18)'
       }
     : {
-        backgroundColor: 'rgba(15, 23, 42, 0.98)',
+        backgroundColor: 'rgba(15, 23, 42, 0.20)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
         boxShadow: '0 24px 56px rgba(2, 6, 23, 0.65)'
