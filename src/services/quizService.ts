@@ -38,6 +38,16 @@ const getLevelHistory = (
 ): QuestionAttempt[] =>
   history.filter(attempt => randomMode || attempt.level === level);
 
+const getLatestAttemptById = (history: QuestionAttempt[]): Map<number, QuestionAttempt> => {
+  const latest = new Map<number, QuestionAttempt>();
+  for (const attempt of history) {
+    if (!latest.has(attempt.id)) {
+      latest.set(attempt.id, attempt);
+    }
+  }
+  return latest;
+};
+
 const buildConceptStats = (
   history: QuestionAttempt[],
   bank: Question[],
@@ -136,9 +146,12 @@ const buildReviewBatch = (
   const grouped = groupByConcept(available);
   const seenIds = new Set<number>();
   const selected: Question[] = [];
+  const relevantHistory = getLevelHistory(history, level, randomMode);
+  const latestAttemptById = getLatestAttemptById(relevantHistory);
 
-  const recentIncorrectIds = getLevelHistory(history, level, randomMode)
+  const recentIncorrectIds = relevantHistory
     .filter(attempt => !attempt.isCorrect)
+    .filter(attempt => latestAttemptById.get(attempt.id)?.isCorrect === false)
     .sort((a, b) => b.timestamp - a.timestamp)
     .map(attempt => attempt.id);
 

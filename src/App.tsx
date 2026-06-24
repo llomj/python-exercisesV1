@@ -10,7 +10,7 @@ import { FallingStars } from './components/FallingStars';
 import { PersonaIcon } from './components/PersonaIcon';
 import { SettingsMenu } from './components/SettingsMenu';
 import { IdLogEntry } from './types';
-import { LEVELS, XP_PER_QUESTION, QUESTIONS_PER_LEVEL, getStarsForLevel, getStarsFromAccuracyRandom, getRandomModeScore, getPersonaFromRandomScore } from './constants';
+import { LEVELS, XP_PER_QUESTION, REVIEW_XP_PER_QUESTION, QUESTIONS_PER_LEVEL, getStarsForLevel, getStarsFromAccuracyRandom, getRandomModeScore, getPersonaFromRandomScore } from './constants';
 import { useLanguage } from './contexts/LanguageContext';
 import { SoundProvider, playCutSoundIfEnabled } from './contexts/SoundContext';
 import { formatTranslation } from './translations';
@@ -380,6 +380,7 @@ const App: React.FC = () => {
     score: number;
     total: number;
     starEarned: number | null;
+    xpGained?: number;
     levelAccuracyPercent?: number;
     reviewMode?: boolean;
     allLevelsFiveStars?: boolean;
@@ -607,11 +608,30 @@ const App: React.FC = () => {
     const xpGained = score * XP_PER_QUESTION;
 
     if (reviewMode) {
+      const reviewXpGained = score * REVIEW_XP_PER_QUESTION;
+      setStats(prev => {
+        if (randomMode) {
+          return {
+            ...prev,
+            xpRandom: (prev.xpRandom ?? 0) + reviewXpGained,
+            lastSessionScore: score,
+            lastSessionTotal: total
+          };
+        }
+
+        return {
+          ...prev,
+          xp: prev.xp + reviewXpGained,
+          lastSessionScore: score,
+          lastSessionTotal: total
+        };
+      });
       setShowResult({
         score,
         total,
         starEarned: null,
-        reviewMode: true
+        reviewMode: true,
+        xpGained: reviewXpGained
       });
       setView('hub');
       return;
@@ -656,6 +676,7 @@ const App: React.FC = () => {
         score,
         total,
         starEarned,
+        xpGained,
         randomMode: true,
         prevScore,
         newScore,
@@ -712,7 +733,7 @@ const App: React.FC = () => {
         return getStarsForLevel(correct) === 5;
       });
 
-      setShowResult({ score, total, starEarned, levelAccuracyPercent, allLevelsFiveStars: allLevelsFiveStars || undefined });
+      setShowResult({ score, total, starEarned, xpGained, levelAccuracyPercent, allLevelsFiveStars: allLevelsFiveStars || undefined });
     }
 
     setView('hub');
@@ -943,7 +964,7 @@ const App: React.FC = () => {
               <div>
                 <div className="text-xs text-slate-500 uppercase font-bold mb-1 tracking-wider">{t('result.evolutionGain')}</div>
                 <div className="text-2xl font-black text-amber-400">
-                  {showResult.reviewMode ? '0 XP' : `+${showResult.score * XP_PER_QUESTION} XP`}
+                  +{showResult.xpGained ?? 0} XP
                 </div>
               </div>
               <div>

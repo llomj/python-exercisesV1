@@ -33,9 +33,19 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
   const nextThreshold = getNextRandomModeThreshold(randomScore);
   const currentLevelInfo = LEVELS.find(l => l.level === stats.currentLevel) || LEVELS[0];
   const progress = stats.levelProgress[stats.currentLevel] || 0;
-  const reviewMistakesCount = stats.history.filter(
-    attempt => !attempt.isCorrect && (randomMode || attempt.level === stats.currentLevel)
-  ).length;
+  const scopedHistory = stats.history.filter(
+    attempt => randomMode || attempt.level === stats.currentLevel
+  );
+  const latestAttemptById = new Map<number, (typeof scopedHistory)[number]>();
+  for (const attempt of scopedHistory) {
+    if (!latestAttemptById.has(attempt.id)) {
+      latestAttemptById.set(attempt.id, attempt);
+    }
+  }
+  const weakSpotIds = new Set(scopedHistory.filter(attempt => !attempt.isCorrect).map(attempt => attempt.id));
+  const openWeakSpotCount = Array.from(weakSpotIds).filter(id => latestAttemptById.get(id)?.isCorrect === false).length;
+  const masteredWeakSpotCount = Array.from(weakSpotIds).filter(id => latestAttemptById.get(id)?.isCorrect === true).length;
+  const mistakesMadeCount = scopedHistory.filter(attempt => !attempt.isCorrect).length;
 
   const totalCompleted = stats.completedQuestionIds.length;
   const totalPossible = TOTAL_QUESTIONS;
@@ -245,13 +255,37 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
           >
             {t('hub.continueMutation')} <i className="fas fa-chevron-right text-sm"></i>
           </button>
-          {reviewMistakesCount > 0 && (
-            <button
-              onClick={() => { playCutSound(); onStartQuiz('review'); }}
-              className="w-full py-3 bg-amber-500/15 hover:bg-amber-500/20 text-amber-300 rounded-2xl font-black text-sm transition-all border border-amber-500/30 flex items-center justify-center gap-3"
-            >
-              {t('hub.reviewMistakes' as any)} <span className="text-amber-400">({reviewMistakesCount})</span>
-            </button>
+          {(mistakesMadeCount > 0 || openWeakSpotCount > 0 || masteredWeakSpotCount > 0) && (
+            <div className="space-y-3">
+              {openWeakSpotCount > 0 && (
+                <button
+                  onClick={() => { playCutSound(); onStartQuiz('review'); }}
+                  className="w-full py-3 bg-amber-500/15 hover:bg-amber-500/20 text-amber-300 rounded-2xl font-black text-sm transition-all border border-amber-500/30 flex items-center justify-center gap-3"
+                >
+                  {t('hub.reviewMistakes' as any)} <span className="text-amber-400">({openWeakSpotCount})</span>
+                </button>
+              )}
+              <div className="grid grid-cols-3 gap-3">
+                <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5">
+                  <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                    {t('hub.mistakesMade' as any)}
+                  </div>
+                  <div className="text-lg font-black text-rose-400">{mistakesMadeCount}</div>
+                </div>
+                <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5">
+                  <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                    {t('hub.openWeakSpots' as any)}
+                  </div>
+                  <div className="text-lg font-black text-amber-400">{openWeakSpotCount}</div>
+                </div>
+                <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5">
+                  <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                    {t('hub.masteredWeakSpots' as any)}
+                  </div>
+                  <div className="text-lg font-black text-emerald-400">{masteredWeakSpotCount}</div>
+                </div>
+              </div>
+            </div>
           )}
         </div>
 

@@ -7,6 +7,7 @@ export const APP_VERSION =
     : '1.0.5';
 
 export const XP_PER_QUESTION = 10;
+export const REVIEW_XP_PER_QUESTION = 2;
 export const QUESTIONS_PER_SUBLEVEL = 100;
 export const SUBLEVELS_PER_LEVEL = 3;
 export const QUESTIONS_PER_LEVEL = QUESTIONS_PER_SUBLEVEL * SUBLEVELS_PER_LEVEL; // 300
