@@ -192,6 +192,10 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     });
   }
 
+  const panelSurfaceClass = theme === 'light'
+    ? 'bg-slate-100/95 border-slate-900/10'
+    : 'bg-slate-900/80 border-white/15';
+
   return (
     <>
       {/* Backdrop */}
@@ -202,7 +206,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
 
       {/* Menu - near top-right on mobile, below trigger on desktop */}
       <div className={`z-50 min-w-[200px] ${anchorBottom ? 'fixed top-[max(4rem,env(safe-area-inset-top))] right-4' : 'absolute top-full right-0 mt-2'}`}>
-        <div className="glass-settings rounded-2xl p-2 shadow-2xl border border-white/10 animate-in slide-in-from-top-2 duration-200">
+        <div className={`glass-settings rounded-2xl p-2 shadow-2xl border animate-in slide-in-from-top-2 duration-200 ${panelSurfaceClass}`}>
           {menuItems.map((item, index) =>
             item.type === 'expandable' && item.children ? (
               <div key={index} className="rounded-xl overflow-hidden">
