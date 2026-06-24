@@ -17,6 +17,67 @@ const CODE_BLOCK_START_RE = /^\s*(def|class|for|while|if|with|import|from|print|
 const SIMPLE_ASSIGNMENT_RE = /^\s*[A-Za-z_][\w,\s]*(?::\s*[\w\[\], ]+)?\s*=\s*.+$/;
 const CALL_OR_INDEX_RE = /^\s*[A-Za-z_][\w.]*\s*(\(|\[)/;
 const EXPRESSION_RE = /^\s*[\[\(\{'"`0-9A-Za-z_].*(==|!=|<=|>=|<|>|\bin\b|\bis\b|\bor\b|\band\b|\bif\b|\belse\b|\+|-|\*|\/|%)/;
+const QUESTION_STARTERS = [
+  'Qu\'est-ce que',
+  'Qu\'est-ce qui',
+  'Quelle est la valeur de',
+  'Quel est le résultat de',
+  'Quel est le résultat',
+  'Quelle est la valeur',
+  'Que se passe-t-il lorsque',
+  'Que se passe-t-il quand',
+  'Que se passe-t-il si',
+  'Que se passe-t-il',
+  'Que renvoie',
+  'Que retourne',
+  'Que donne',
+  'Que vaut',
+  'Que signifie',
+  'Quel est',
+  'Quelle est',
+  'Quels sont',
+  'Quelles sont',
+  'Quel',
+  'Quelle',
+  'Quels',
+  'Quelles',
+  'Que',
+  'En Python, que vaut',
+  'En Python',
+  'What is the output of',
+  'What is the return',
+  'What is returned',
+  'What is the output',
+  'What is the result',
+  'What is the value',
+  'What happens when you',
+  'What happens when',
+  'What happens if',
+  'What happens with',
+  'What happens to',
+  'What happens here',
+  'What happens',
+  'What is',
+  'Result of',
+  'Output of',
+  'Value of',
+  'Result',
+  'Output',
+  'Value',
+  'Which',
+  'How',
+  'When',
+  'Where',
+  'Why',
+  'Can',
+  'Does',
+  'Is',
+  'Are',
+  'Will',
+  'Would',
+  'Should',
+];
+const CODE_PREFIX_RE = /^(What|Result|Output|Value|Which|How|When|Where|Why|Can|Does|Is|Are|Will|Would|Should|Qu'est-ce que|Qu'est-ce qui|Que|Quel|Quelle|Quels|Quelles|Que vaut|Que donne|Que renvoie|Que retourne|Que signifie|Quel est|Quelle est|Quels sont|Quelles sont|En Python)/i;
 
 const isLikelyCodeLine = (line: string): boolean => {
   const trimmed = line.trim();
@@ -624,17 +685,8 @@ const splitQuestion = (text: string, language: string = 'en', questionId?: numbe
     // For single-line questions, find where code starts
     // First, check if there's a question word pattern (English or French)
     // Use simpler pattern matching to avoid regex issues with special characters
-    const questionWords = [
-      'What is', 'Résultat : ',
-      'Result', 'Résultat',
-      'Output', 'Sortie',
-      'Value', 'Valeur',
-      'What', 'Which', 'Lequel', 'How', 'Comment', 'When', 'Quand', 'Where', 'Où', 'Why', 'Pourquoi',
-      'Can', 'Peut', 'Does', 'Est-ce que', 'Is', 'Est', 'Are', 'Sont', 'Will', 'Va', 'Would', 'Serait', 'Should', 'Devrait'
-    ];
-
     let questionWordMatch = null;
-    for (const word of questionWords) {
+    for (const word of QUESTION_STARTERS) {
       const pattern = new RegExp(`^${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s+`, 'i');
       const match = enhancedText.match(pattern);
       if (match) {
@@ -678,8 +730,7 @@ const splitQuestion = (text: string, language: string = 'en', questionId?: numbe
       const match = enhancedText.match(pattern);
       if (match && match.index !== undefined) {
         const beforeCode = enhancedText.substring(0, match.index).trim();
-        // Check if there's a question word before
-        if (/^(What|Result|Output|Value|Which|How|When|Where|Why|Can|Does|Is|Are|Will|Would|Should)/i.test(beforeCode)) {
+        if (CODE_PREFIX_RE.test(beforeCode)) {
           const code = enhancedText.substring(match.index).trim();
           return {
             prefix: beforeCode,
