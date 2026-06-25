@@ -16,7 +16,7 @@ import { getTranslatedQuestion } from '../data/questionsFr';
 const CODE_BLOCK_START_RE = /^\s*(def|class|for|while|if|with|import|from|print|match|case|try|except|finally|elif|else|return|break|continue|assert)\b/;
 const SIMPLE_ASSIGNMENT_RE = /^\s*[A-Za-z_][\w,\s]*(?::\s*[\w\[\], ]+)?\s*=\s*.+$/;
 const CALL_OR_INDEX_RE = /^\s*[A-Za-z_][\w.]*\s*(\(|\[)/;
-const EXPRESSION_RE = /^\s*[\[\(\{'"`0-9A-Za-z_].*(==|!=|<=|>=|<|>|\bin\b|\bis\b|\bor\b|\band\b|\bif\b|\belse\b|\+|-|\*|\/|%)/;
+const EXPRESSION_RE = /^\s*[\[\(\{'"\`0-9A-Za-z_].*(==|!=|<=|>=|<|>|\bin\b|\bis\b|\bor\b|\band\b|\+|-|\*|\/|%)/;
 const QUESTION_STARTERS = [
   'Qu\'est-ce que',
   'Qu\'est-ce qui',
@@ -86,6 +86,18 @@ const isLikelyCodeLine = (line: string): boolean => {
   if (CODE_BLOCK_START_RE.test(trimmed)) return true;
   if (SIMPLE_ASSIGNMENT_RE.test(trimmed)) return true;
   if (CALL_OR_INDEX_RE.test(trimmed)) return true;
+  // Method calls on literals: "hello".upper(), [1,2].remove(2), {}.popitem()
+  if (/^["'\[\{\(].*[\]\}\)"']\.[a-zA-Z_]\w*\s*\(/.test(trimmed)) return true;
+  // Collection indexing: [1,2,3][1], {'a':1}['a']
+  if (/^[\[\{\(].*[\]\}\)"']\[/.test(trimmed)) return true;
+  // f-strings
+  if (/^[fF]["']/.test(trimmed)) return true;
+  // Lambda expressions
+  if (/^\s*lambda\b/.test(trimmed)) return true;
+  // List/dict/set comprehensions
+  if (/^\s*[\[\{].*for\s+\w+.*in\s+/.test(trimmed)) return true;
+  // Conditional expressions (ternary)
+  if (/^[\d"'\{\[\(].*\s+if\s+.*\s+else\s+/.test(trimmed)) return true;
   if (EXPRESSION_RE.test(trimmed) && !/^(What|Quel|Quelle|Quels|Que|Résultat|Sortie|Valeur|Comment|Quand|Où|Pourquoi|Peut|Est|Sont|Laquelle|Lequel)\b/i.test(trimmed)) {
     return true;
   }
