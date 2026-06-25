@@ -1152,7 +1152,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
                           padding: '1rem',
                           margin: 0,
                           background: 'transparent',
-                          fontSize: '0.875rem',
+                          fontSize: '1rem',
                           lineHeight: '1.75',
                           fontFamily: "'Fira Code', monospace"
                         }}
@@ -1173,9 +1173,11 @@ export const QuizView: React.FC<QuizViewProps> = ({
               }
               // No code detected, show as regular question
               return (
-                <h2 className="text-xl md:text-2xl font-bold leading-tight text-white px-4 pt-4">
-                  {translateText(currentQuestion.question, language, currentQuestion.id)}
-                </h2>
+                <div className="px-4 pt-4 pb-2">
+                  <p className="text-white text-lg font-medium leading-relaxed">
+                    {translateText(currentQuestion.question, language, currentQuestion.id)}
+                  </p>
+                </div>
               );
             })()}
           </div>

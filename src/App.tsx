@@ -466,7 +466,9 @@ const App: React.FC = () => {
   const handleLevelChange = (level: number) => {
     setStats(prev => ({
       ...prev,
-      currentLevel: level
+      currentLevel: level,
+      // Selecting a level from the selector switches out of random mode
+      randomMode: false
     }));
   };
 
