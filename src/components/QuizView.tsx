@@ -82,6 +82,10 @@ const CODE_PREFIX_RE = /^(What|Result|Output|Value|Which|How|When|Where|Why|Can|
 const isLikelyCodeLine = (line: string): boolean => {
   const trimmed = line.trim();
   if (!trimmed || trimmed.endsWith('?')) return false;
+  // If it starts with common English words followed by space, it's English text not code
+  if (/^\s*(the|a|an|this|that|these|those|it|they|them|we|us|our|your|his|her|their|my|its|what|which|who|whom|whose|where|when|why|how|all|each|every|both|few|more|most|other|some|such|no|nor|only|own|same|so|than|too|very|can|will|just|don|should|now|also|have|has|had|do|does|did|would|could|may|might|must|shall|to|by|on|at|up|out|about|into|over|after|access|get|set|use|find|check|look|see|know|think|want|need|make|take|give|tell|ask|work|call|run|go|come|move|help|show|put|end|add|keep|let|begin|seem|turn|pass|grow|walk|win|offer|remember|love|consider|appear|buy|wait|serve|die|send|expect|build|stay|fall|cut|reach|kill|remain|difference|result|output|value|syntax|purpose|meaning|way|method|approach|example|step|part|type|kind|form|style|pattern|rule|thing|stuff)\s+/i.test(trimmed)) {
+    return false;
+  }
   if (/^\s{2,}/.test(line)) return true;
   if (CODE_BLOCK_START_RE.test(trimmed)) {
     // Check if it starts with an ambiguous keyword followed by English text
@@ -104,6 +108,10 @@ const isLikelyCodeLine = (line: string): boolean => {
   if (/^\s*[\[\{].*for\s+\w+.*in\s+/.test(trimmed)) return true;
   // Conditional expressions (ternary)
   if (/^[\d"'\{\[\(].*\s+if\s+.*\s+else\s+/.test(trimmed)) return true;
+  // Boolean/negation expressions: not not [], not True, not [], not (x and y)
+  if (/^\s*not\s+(not|True|False|None|and|or|is|in|[\[\(\{"'\d])/i.test(trimmed)) return true;
+  // Boolean literals and None with operators: True and False, None is None
+  if (/^\s*(True|False|None)\s+(and|or|is|in|==|!=)/i.test(trimmed)) return true;
   if (EXPRESSION_RE.test(trimmed) && !/^(What|Quel|Quelle|Quels|Que|Résultat|Sortie|Valeur|Comment|Quand|Où|Pourquoi|Peut|Est|Sont|Laquelle|Lequel)\b/i.test(trimmed)) {
     return true;
   }
