@@ -3,7 +3,7 @@
 export const level10IntermediateB = [
   // 50. chain — flatten multiple iterables
   (_i: number) => ({
-    q: `from itertools import chain\nlist(chain([1,2],[3,4],[5]))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import chain\nlist(chain([1,2],[3,4],[5]))`,
     o: ["[1, 2, 3, 4, 5]", "[[1,2],[3,4],[5]]", "[1, 2, 3, 4]", "Error"],
     c: 0,
     e: "chain() concatenates multiple iterables into a single sequence, yielding each element one by one.",
@@ -77,7 +77,7 @@ Notes:
   }),
   // 51. chain.from_iterable — flatten an iterable of iterables
   (_i: number) => ({
-    q: `from itertools import chain\nlist(chain.from_iterable([[1,2],[3,4]]))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import chain\nlist(chain.from_iterable([[1,2],[3,4]]))`,
     o: ["[1, 2, 3, 4]", "[[1,2],[3,4]]", "[1, 2]", "Error"],
     c: 0,
     e: "chain.from_iterable() takes a single iterable of iterables and flattens them into one sequence.",
@@ -152,7 +152,7 @@ Notes:
   }),
   // 52. product — Cartesian product
   (_i: number) => ({
-    q: `from itertools import product\nlist(product("AB", "12"))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import product\nlist(product("AB", "12"))`,
     o: [`[("A","1"),("A","2"),("B","1"),("B","2")]`, `[("A","B"),("1","2")]`, `["A1","A2","B1","B2"]`, "Error"],
     c: 0,
     e: "product() computes the Cartesian product, pairing every element of the first iterable with every element of the second.",
@@ -229,7 +229,7 @@ Notes:
   }),
   // 53. permutations — count of arrangements
   (_i: number) => ({
-    q: `from itertools import permutations\nlen(list(permutations("ABC")))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import permutations\nlen(list(permutations("ABC")))`,
     o: ["6", "3", "9", "27"],
     c: 0,
     e: "permutations('ABC') generates all 3! = 6 arrangements of the 3 characters.",
@@ -304,7 +304,7 @@ Notes:
   }),
   // 54. combinations — choosing subsets
   (_i: number) => ({
-    q: `from itertools import combinations\nlist(combinations("ABC", 2))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import combinations\nlist(combinations("ABC", 2))`,
     o: [`[("A","B"),("A","C"),("B","C")]`, `[("A","B"),("B","A"),("A","C"),("C","A"),("B","C"),("C","B")]`, `["AB","AC","BC"]`, "Error"],
     c: 0,
     e: "combinations('ABC', 2) returns all 2-element subsets in sorted order, without repeated elements.",
@@ -379,7 +379,7 @@ Notes:
   }),
   // 55. combinations_with_replacement — subsets with repeats allowed
   (_i: number) => ({
-    q: `from itertools import combinations_with_replacement\nlist(combinations_with_replacement("AB", 2))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import combinations_with_replacement\nlist(combinations_with_replacement("AB", 2))`,
     o: [`[("A","A"),("A","B"),("B","B")]`, `[("A","B"),("B","A")]`, `[("A","A"),("A","B"),("B","A"),("B","B")]`, "Error"],
     c: 0,
     e: "combinations_with_replacement allows elements to repeat, so ('A','A') and ('B','B') are included.",
@@ -452,7 +452,7 @@ Notes:
   }),
   // 56. repeat — finite repetition
   (_i: number) => ({
-    q: `from itertools import repeat\nlist(repeat("x", 3))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import repeat\nlist(repeat("x", 3))`,
     o: [`["x", "x", "x"]`, `"xxx"`, `[("x", 3)]`, "Error"],
     c: 0,
     e: "repeat('x', 3) yields 'x' three times, producing a list of three 'x' strings.",
@@ -526,7 +526,7 @@ Notes:
   }),
   // 57. count — infinite counter with step
   (_i: number) => ({
-    q: `from itertools import count\nc = count(10, 2)\n[next(c) for _ in range(4)]\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import count\nc = count(10, 2)\n[next(c) for _ in range(4)]`,
     o: ["[10, 12, 14, 16]", "[10, 11, 12, 13]", "[2, 4, 6, 8]", "Error"],
     c: 0,
     e: "count(10, 2) starts at 10 and increments by 2 each time: 10, 12, 14, 16.",
@@ -600,7 +600,7 @@ Notes:
   }),
   // 58. cycle — infinite cycling
   (_i: number) => ({
-    q: `from itertools import cycle\nc = cycle("AB")\n[next(c) for _ in range(5)]\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import cycle\nc = cycle("AB")\n[next(c) for _ in range(5)]`,
     o: [`["A", "B", "A", "B", "A"]`, `["A", "B"]`, `["A", "A", "A", "A", "A"]`, "Error"],
     c: 0,
     e: "cycle('AB') repeats A, B, A, B, A, ... infinitely. Taking 5 elements gives ['A','B','A','B','A'].",
@@ -673,7 +673,7 @@ Notes:
   }),
   // 59. islice — slicing iterators
   (_i: number) => ({
-    q: `from itertools import islice\nlist(islice(range(100), 0, 10, 3))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import islice\nlist(islice(range(100), 0, 10, 3))`,
     o: ["[0, 3, 6, 9]", "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]", "[0, 10, 20, 30]", "Error"],
     c: 0,
     e: "islice(range(100), 0, 10, 3) takes elements at indices 0, 3, 6, 9 from the range.",
@@ -748,7 +748,7 @@ Notes:
   }),
   // 60. accumulate with custom function (multiplication)
   (_i: number) => ({
-    q: `from itertools import accumulate\nlist(accumulate([1,2,3,4], lambda a,b: a*b))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import accumulate\nlist(accumulate([1,2,3,4], lambda a,b: a*b))`,
     o: ["[1, 2, 6, 24]", "[1, 3, 6, 10]", "[24, 24, 24, 24]", "Error"],
     c: 0,
     e: "accumulate with multiplication: 1, 1*2=2, 2*3=6, 6*4=24.",
@@ -823,7 +823,7 @@ Notes:
   }),
   // 61. takewhile — take while predicate is true
   (_i: number) => ({
-    q: `from itertools import takewhile\nlist(takewhile(lambda x: x < 5, [1, 3, 5, 2, 4]))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import takewhile\nlist(takewhile(lambda x: x < 5, [1, 3, 5, 2, 4]))`,
     o: ["[1, 3]", "[1, 3, 2, 4]", "[1, 3, 5]", "Error"],
     c: 0,
     e: "takewhile stops as soon as the predicate is False. At 5, x < 5 is False, so only [1, 3] are taken.",
@@ -896,7 +896,7 @@ Notes:
   }),
   // 62. dropwhile — skip while predicate is true
   (_i: number) => ({
-    q: `from itertools import dropwhile\nlist(dropwhile(lambda x: x < 5, [1, 3, 5, 2, 4]))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import dropwhile\nlist(dropwhile(lambda x: x < 5, [1, 3, 5, 2, 4]))`,
     o: ["[5, 2, 4]", "[2, 4]", "[5]", "Error"],
     c: 0,
     e: "dropwhile skips elements while the predicate is True. Once 5 fails x < 5, it yields 5 and all remaining: [5, 2, 4].",
@@ -969,7 +969,7 @@ Notes:
   }),
   // 63. compress — selective filtering with selectors
   (_i: number) => ({
-    q: `from itertools import compress\nlist(compress("ABCDE", [1, 0, 1, 0, 1]))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import compress\nlist(compress("ABCDE", [1, 0, 1, 0, 1]))`,
     o: [`["A", "C", "E"]`, `["B", "D"]`, `["A", "B", "C", "D", "E"]`, "Error"],
     c: 0,
     e: "compress selects elements where the corresponding selector is truthy: A (1), C (1), E (1).",
@@ -1045,7 +1045,7 @@ Notes:
   }),
   // 64. zip_longest — zip with fill value
   (_i: number) => ({
-    q: `from itertools import zip_longest\nlist(zip_longest([1,2], [3,4,5], fillvalue=0))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import zip_longest\nlist(zip_longest([1,2], [3,4,5], fillvalue=0))`,
     o: ["[(1,3), (2,4), (0,5)]", "[(1,3), (2,4)]", "[(1,3), (2,4), (5,0)]", "Error"],
     c: 0,
     e: "zip_longest pads the shorter iterable with fillvalue=0, so the third pair is (0, 5).",
@@ -1122,7 +1122,7 @@ Notes:
   }),
   // 65. starmap — map with unpacked arguments
   (_i: number) => ({
-    q: `from itertools import starmap\nlist(starmap(pow, [(2,3), (3,2)]))\nWhat is the result?`,
+    q: `What is the result?\nfrom itertools import starmap\nlist(starmap(pow, [(2,3), (3,2)]))`,
     o: ["[8, 9]", "[6, 6]", "[9, 8]", "Error"],
     c: 0,
     e: "starmap unpacks each tuple as arguments: pow(2,3)=8, pow(3,2)=9.",
@@ -1195,7 +1195,7 @@ Notes:
   }),
   // 66. json.dumps with indent — pretty-printing
   (_i: number) => ({
-    q: `import json\njson.dumps({"a": 1}, indent=2)\nWhat does the indent parameter do?`,
+    q: `What does the indent parameter do?\nimport json\njson.dumps({"a": 1}, indent=2)`,
     o: ["Pretty-prints with 2-space indentation", "Adds 2 spaces before the key", "Limits output to 2 lines", "Indents only nested objects"],
     c: 0,
     e: "The indent parameter pretty-prints the JSON output with the specified number of spaces for indentation.",
@@ -1276,7 +1276,7 @@ Notes:
   }),
   // 67. json.dumps with sort_keys
   (_i: number) => ({
-    q: `import json\njson.dumps({"b": 2, "a": 1}, sort_keys=True)\nWhat is the result?`,
+    q: `What is the result?\nimport json\njson.dumps({"b": 2, "a": 1}, sort_keys=True)`,
     o: [`'{"a": 1, "b": 2}'`, `'{"b": 2, "a": 1}'`, `'{"a":1,"b":2}'`, "Error"],
     c: 0,
     e: "sort_keys=True sorts dictionary keys alphabetically in the JSON output.",
@@ -1348,7 +1348,7 @@ Notes:
   }),
   // 68. json.dumps with a list
   (_i: number) => ({
-    q: `import json\njson.dumps([1, 2, 3])\nWhat is the result?`,
+    q: `What is the result?\nimport json\njson.dumps([1, 2, 3])`,
     o: ['"[1, 2, 3]"', "'[1,2,3]'", "[1, 2, 3]", "Error"],
     c: 0,
     e: "json.dumps serializes a Python list to a JSON string: '[1, 2, 3]' (with spaces after commas by default).",
@@ -1420,7 +1420,7 @@ Notes:
   }),
   // 69. json.dumps with None
   (_i: number) => ({
-    q: `import json\njson.dumps(None)\nWhat is the result?`,
+    q: `What is the result?\nimport json\njson.dumps(None)`,
     o: ['"null"', '"None"', '""', "Error"],
     c: 0,
     e: "Python's None maps to JSON's null, so json.dumps(None) returns the string 'null'.",
@@ -1496,7 +1496,7 @@ Notes:
   }),
   // 70. json.dumps with True
   (_i: number) => ({
-    q: `import json\njson.dumps(True)\nWhat is the result?`,
+    q: `What is the result?\nimport json\njson.dumps(True)`,
     o: ['"true"', '"True"', '"1"', "Error"],
     c: 0,
     e: "Python's True maps to JSON's true (lowercase), so json.dumps(True) returns 'true'.",
@@ -1570,7 +1570,7 @@ Notes:
   }),
   // 71. json.loads with "null"
   (_i: number) => ({
-    q: `import json\njson.loads("null")\nWhat is the result?`,
+    q: `What is the result?\nimport json\njson.loads("null")`,
     o: ["None", '"null"', "Error", "0"],
     c: 0,
     e: "JSON null maps to Python None, so json.loads('null') returns None.",
@@ -1646,7 +1646,7 @@ Notes:
   }),
   // 72. json.loads with "true"
   (_i: number) => ({
-    q: `import json\njson.loads("true")\nWhat is the result?`,
+    q: `What is the result?\nimport json\njson.loads("true")`,
     o: ["True", '"true"', "1", "Error"],
     c: 0,
     e: "JSON true maps to Python True, so json.loads('true') returns True.",
@@ -1718,7 +1718,7 @@ Notes:
   }),
   // 73. json.loads with an array string
   (_i: number) => ({
-    q: `import json\njson.loads("[1, 2, 3]")\nWhat is the result?`,
+    q: `What is the result?\nimport json\njson.loads("[1, 2, 3]")`,
     o: ["[1, 2, 3]", '"[1, 2, 3]"', "(1, 2, 3)", "Error"],
     c: 0,
     e: "json.loads parses a JSON array string into a Python list: [1, 2, 3].",
@@ -1792,7 +1792,7 @@ Notes:
   }),
   // 74. json.dumps with a set — TypeError
   (_i: number) => ({
-    q: `import json\njson.dumps({1, 2, 3})\nWhat happens?`,
+    q: `What happens?\nimport json\njson.dumps({1, 2, 3})`,
     o: ["TypeError — sets are not JSON serializable", "'{1, 2, 3}'", "'[1, 2, 3]'", "'{}'"],
     c: 0,
     e: "Sets are not JSON serializable. json.dumps raises TypeError for unsupported types like set.",
@@ -1873,7 +1873,7 @@ Notes:
   }),
   // 75. json.dumps with compact separators
   (_i: number) => ({
-    q: `import json\njson.dumps({"a": 1}, separators=(",", ":"))\nWhat is the result?`,
+    q: `What is the result?\nimport json\njson.dumps({"a": 1}, separators=(",", ":"))`,
     o: [`'{"a":1}'`, `'{"a": 1}'`, `'{ "a" : 1 }'`, "Error"],
     c: 0,
     e: "separators=(',', ':') removes spaces, producing compact JSON: '{\"a\":1}'.",
@@ -1946,7 +1946,7 @@ Notes:
   }),
   // 76. Path.name — last component
   (_i: number) => ({
-    q: `from pathlib import Path\nPath("a/b/c").name\nWhat is the result?`,
+    q: `What is the result?\nfrom pathlib import Path\nPath("a/b/c").name`,
     o: ['"c"', '"a/b/c"', '"a"', "Error"],
     c: 0,
     e: "Path.name returns the final component of the path: 'c'.",
@@ -2019,7 +2019,7 @@ Notes:
   }),
   // 77. Path.suffix — file extension
   (_i: number) => ({
-    q: `from pathlib import Path\nPath("a/b/c.txt").suffix\nWhat is the result?`,
+    q: `What is the result?\nfrom pathlib import Path\nPath("a/b/c.txt").suffix`,
     o: ['".txt"', '"txt"', '"c.txt"', "Error"],
     c: 0,
     e: "Path.suffix returns the file extension including the dot: '.txt'.",
@@ -2092,7 +2092,7 @@ Notes:
   }),
   // 78. Path.stem — filename without extension
   (_i: number) => ({
-    q: `from pathlib import Path\nPath("a/b/c.txt").stem\nWhat is the result?`,
+    q: `What is the result?\nfrom pathlib import Path\nPath("a/b/c.txt").stem`,
     o: ['"c"', '"c.txt"', '"txt"', "Error"],
     c: 0,
     e: "Path.stem returns the filename without the extension: 'c'.",
@@ -2166,7 +2166,7 @@ Notes:
   }),
   // 79. Path / operator — joining paths
   (_i: number) => ({
-    q: `from pathlib import Path\nPath("a/b") / "c.txt"\nWhat is the result?`,
+    q: `What is the result?\nfrom pathlib import Path\nPath("a/b") / "c.txt"`,
     o: ['Path("a/b/c.txt")', '"a/bc.txt"', "Error", "TypeError"],
     c: 0,
     e: "The / operator joins Path objects and strings, producing Path('a/b/c.txt').",
@@ -2241,7 +2241,7 @@ Notes:
   }),
   // 80. Path.parent — parent directory
   (_i: number) => ({
-    q: `from pathlib import Path\nPath("a/b/c").parent\nWhat is the result?`,
+    q: `What is the result?\nfrom pathlib import Path\nPath("a/b/c").parent`,
     o: ['Path("a/b")', '"a/b"', 'Path("a")', "Error"],
     c: 0,
     e: "Path.parent returns the logical parent: Path('a/b').",
@@ -2317,7 +2317,7 @@ Notes:
   }),
   // 81. Path.parts — tuple of path components
   (_i: number) => ({
-    q: `from pathlib import Path\nPath("a/b/c").parts\nWhat is the result?`,
+    q: `What is the result?\nfrom pathlib import Path\nPath("a/b/c").parts`,
     o: [`("a", "b", "c")`, `["a", "b", "c"]`, `"a/b/c"`, "Error"],
     c: 0,
     e: "Path.parts returns a tuple of the path's components: ('a', 'b', 'c').",
@@ -2389,7 +2389,7 @@ Notes:
   }),
   // 82. Path.suffixes — all file extensions
   (_i: number) => ({
-    q: `from pathlib import Path\nPath("file.tar.gz").suffixes\nWhat is the result?`,
+    q: `What is the result?\nfrom pathlib import Path\nPath("file.tar.gz").suffixes`,
     o: [`[".tar", ".gz"]`, `".gz"`, `[".tar.gz"]`, "Error"],
     c: 0,
     e: "Path.suffixes returns a list of all extensions: ['.tar', '.gz'].",
@@ -2462,7 +2462,7 @@ Notes:
   }),
   // 83. os.path.join — joining path components
   (_i: number) => ({
-    q: `import os.path\nos.path.join("a", "b", "c")\nWhat is the result?`,
+    q: `What is the result?\nimport os.path\nos.path.join("a", "b", "c")`,
     o: ['"a/b/c"', '"abc"', '"a, b, c"', "Error"],
     c: 0,
     e: "os.path.join combines path components with the OS separator: 'a/b/c' on Unix.",
@@ -2534,7 +2534,7 @@ Notes:
   }),
   // 84. os.path.splitext — split extension
   (_i: number) => ({
-    q: `import os.path\nos.path.splitext("file.txt")\nWhat is the result?`,
+    q: `What is the result?\nimport os.path\nos.path.splitext("file.txt")`,
     o: [`("file", ".txt")`, `("file", "txt")`, `["file", ".txt"]`, "Error"],
     c: 0,
     e: "os.path.splitext splits into root and extension: ('file', '.txt').",
@@ -2608,7 +2608,7 @@ Notes:
   }),
   // 85. os.path.basename — filename from path
   (_i: number) => ({
-    q: `import os.path\nos.path.basename("/a/b/c.txt")\nWhat is the result?`,
+    q: `What is the result?\nimport os.path\nos.path.basename("/a/b/c.txt")`,
     o: ['"c.txt"', '"/a/b"', '"c"', "Error"],
     c: 0,
     e: "os.path.basename returns the final component of the path: 'c.txt'.",
@@ -2680,7 +2680,7 @@ Notes:
   }),
   // 86. os.path.dirname — directory from path
   (_i: number) => ({
-    q: `import os.path\nos.path.dirname("/a/b/c.txt")\nWhat is the result?`,
+    q: `What is the result?\nimport os.path\nos.path.dirname("/a/b/c.txt")`,
     o: ['"/a/b"', '"c.txt"', '"/a/b/c"', "Error"],
     c: 0,
     e: "os.path.dirname returns the directory portion of the path: '/a/b'.",
@@ -2757,7 +2757,7 @@ Notes:
   }),
   // 87. os.sep — path separator on Unix
   (_i: number) => ({
-    q: `import os\nos.sep on Unix/macOS\nWhat is the value?`,
+    q: `What is the value?\nimport os\nos.sep on Unix/macOS`,
     o: ['"/"', '"\\\\"', '";"', '":"'],
     c: 0,
     e: "os.sep is '/' on Unix/macOS and '\\\\' on Windows. It's the OS path separator.",
@@ -2833,7 +2833,7 @@ Notes:
   }),
   // 88. Path.with_suffix — change extension
   (_i: number) => ({
-    q: `from pathlib import Path\nPath("a.txt").with_suffix(".md")\nWhat is the result?`,
+    q: `What is the result?\nfrom pathlib import Path\nPath("a.txt").with_suffix(".md")`,
     o: ['Path("a.md")', '"a.md"', 'Path("a.txt.md")', "Error"],
     c: 0,
     e: "with_suffix('.md') replaces the existing extension, producing Path('a.md').",
@@ -2906,7 +2906,7 @@ Notes:
   }),
   // 89. string.ascii_lowercase
   (_i: number) => ({
-    q: `import string\nstring.ascii_lowercase\nWhat is the value?`,
+    q: `What is the value?\nimport string\nstring.ascii_lowercase`,
     o: ['"abcdefghijklmnopqrstuvwxyz"', '"ABCDEFGHIJKLMNOPQRSTUVWXYZ"', '"abcdef"', "Error"],
     c: 0,
     e: "string.ascii_lowercase is a string constant containing all 26 lowercase ASCII letters.",
@@ -2979,7 +2979,7 @@ Notes:
   }),
   // 90. string.ascii_uppercase
   (_i: number) => ({
-    q: `import string\nstring.ascii_uppercase\nWhat is the value?`,
+    q: `What is the value?\nimport string\nstring.ascii_uppercase`,
     o: ['"ABCDEFGHIJKLMNOPQRSTUVWXYZ"', '"abcdefghijklmnopqrstuvwxyz"', '"ABCDEF"', "Error"],
     c: 0,
     e: "string.ascii_uppercase is a string constant containing all 26 uppercase ASCII letters.",
@@ -3051,7 +3051,7 @@ Notes:
   }),
   // 91. string.digits
   (_i: number) => ({
-    q: `import string\nstring.digits\nWhat is the value?`,
+    q: `What is the value?\nimport string\nstring.digits`,
     o: ['"0123456789"', '"123456789"', '"digits"', "Error"],
     c: 0,
     e: "string.digits is the string '0123456789' — all decimal digit characters.",
@@ -3127,7 +3127,7 @@ Notes:
   }),
   // 92. string.punctuation — punctuation characters
   (_i: number) => ({
-    q: `import string\nDoes string.punctuation contain '!' and '@'?`,
+    q: `Does string.punctuation contain '!' and '@'?\nimport string`,
     o: ["Yes, it contains all ASCII punctuation", "No, only some punctuation", "Only '!'", "Error"],
     c: 0,
     e: "string.punctuation contains all ASCII punctuation characters including !, @, #, $, etc.",
@@ -3201,7 +3201,7 @@ Notes:
   }),
   // 93. len(string.ascii_letters) — combined letters
   (_i: number) => ({
-    q: `import string\nlen(string.ascii_letters)\nWhat is the result?`,
+    q: `What is the result?\nimport string\nlen(string.ascii_letters)`,
     o: ["52", "26", "62", "36"],
     c: 0,
     e: "string.ascii_letters combines lowercase (26) and uppercase (26) for a total of 52.",
@@ -3275,7 +3275,7 @@ Notes:
   }),
   // 94. string.hexdigits — hexadecimal digits
   (_i: number) => ({
-    q: `import string\nstring.hexdigits\nWhat is the value?`,
+    q: `What is the value?\nimport string\nstring.hexdigits`,
     o: ['"0123456789abcdefABCDEF"', '"0123456789abcdef"', '"0123456789ABCDEF"', "Error"],
     c: 0,
     e: "string.hexdigits contains all valid hexadecimal characters: digits plus a-f and A-F.",
@@ -3353,7 +3353,7 @@ Notes:
   }),
   // 95. string.whitespace — whitespace characters
   (_i: number) => ({
-    q: `import string\nWhat does string.whitespace contain?`,
+    q: `What does string.whitespace contain?\nimport string`,
     o: ["Space, tab, newline, and other whitespace", "Only spaces", "Only space and tab", "Error"],
     c: 0,
     e: "string.whitespace contains space, tab (\\t), newline (\\n), carriage return (\\r), form feed, and vertical tab.",
@@ -3430,7 +3430,7 @@ Notes:
   }),
   // 96. textwrap.wrap — wrapping text to a width
   (_i: number) => ({
-    q: `import textwrap\ntextwrap.wrap("hello world foo bar", width=10)\nWhat does this do?`,
+    q: `What does this do?\nimport textwrap\ntextwrap.wrap("hello world foo bar", width=10)`,
     o: ["Wraps text into lines of at most 10 characters each", "Truncates to 10 characters", "Adds 10 spaces of padding", "Error"],
     c: 0,
     e: "textwrap.wrap breaks text into a list of lines, each no longer than the specified width.",
@@ -3509,7 +3509,7 @@ Notes:
   }),
   // 97. textwrap.dedent — remove common leading whitespace
   (_i: number) => ({
-    q: `import textwrap\ntextwrap.dedent("  hello\\n  world")\nWhat is the result?`,
+    q: `What is the result?\nimport textwrap\ntextwrap.dedent("  hello\\n  world")`,
     o: ['"hello\\nworld"', '"  hello\\n  world"', '"helloworld"', "Error"],
     c: 0,
     e: "textwrap.dedent removes common leading whitespace from all lines. Both lines have 2 spaces, so both are removed.",
@@ -3588,7 +3588,7 @@ Notes:
   }),
   // 98. string.Template — variable substitution
   (_i: number) => ({
-    q: `from string import Template\nTemplate("Hello $name").substitute(name="World")\nWhat is the result?`,
+    q: `What is the result?\nfrom string import Template\nTemplate("Hello $name").substitute(name="World")`,
     o: ['"Hello World"', '"Hello $name"', "Error", '"Hello name"'],
     c: 0,
     e: "Template.substitute replaces $name with the value 'World', producing 'Hello World'.",

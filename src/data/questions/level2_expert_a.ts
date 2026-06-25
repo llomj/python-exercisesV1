@@ -2584,7 +2584,7 @@ Notes:
 
   // Q48
   (_i: number) => ({
-    q: `x = 5\nx = x * 2\nWhat is x?`,
+    q: `What is x?\nx = 5\nx = x * 2`,
     o: ["0", "5", "10", "25"],
     c: 2,
     e: "Start with 5, multiply by 2, and x becomes 10.",
@@ -2637,7 +2637,7 @@ Notes:
 
   // Q49
   (_i: number) => ({
-    q: `a, b = 3, 1\nWhat is a + b?`,
+    q: `What is a + b?\na, b = 3, 1`,
     o: ["3", "7", "0", "4"],
     c: 3,
     e: "Add the two values: 3 + 1 = 4.",

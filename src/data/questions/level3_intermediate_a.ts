@@ -1014,7 +1014,7 @@ Notes:
 
   // 21-35: Nested conditionals and guard clauses
   (_i: number) => ({
-    q: `x = 15\nWhat is "big" if x > 10 else ("mid" if x > 5 else "small")?`,
+    q: `What is "big" if x > 10 else ("mid" if x > 5 else "small")?\nx = 15`,
     o: ['"big"', '"mid"', '"small"', "Error"],
     c: 0,
     e: "x is 15, which is > 10, so the outer ternary returns \"big\".",
@@ -1065,7 +1065,7 @@ Notes:
 • PEP 8 line wrapping for long ternaries.`
   }),
   (_i: number) => ({
-    q: `x = 7\nWhat is "big" if x > 10 else ("mid" if x > 5 else "small")?`,
+    q: `What is "big" if x > 10 else ("mid" if x > 5 else "small")?\nx = 7`,
     o: ['"mid"', '"big"', '"small"', "Error"],
     c: 0,
     e: "x is 7: not > 10, but > 5, so the inner ternary returns \"mid\".",
@@ -1115,7 +1115,7 @@ Notes:
 • Unit-test boundaries inclusive/exclusive.`
   }),
   (_i: number) => ({
-    q: `x = 3\nWhat is "big" if x > 10 else ("mid" if x > 5 else "small")?`,
+    q: `What is "big" if x > 10 else ("mid" if x > 5 else "small")?\nx = 3`,
     o: ['"small"', '"big"', '"mid"', "Error"],
     c: 0,
     e: "x is 3: not > 10, not > 5, so it returns \"small\".",
@@ -1230,7 +1230,7 @@ Notes:
 • Assertions only for internal invariants, not user input.`
   }),
   (_i: number) => ({
-    q: `x = 5; y = 10\nWhat is "both" if x > 0 and y > 0 else "not both"?`,
+    q: `What is "both" if x > 0 and y > 0 else "not both"?\nx = 5; y = 10`,
     o: ['"both"', '"not both"', "Error", "None"],
     c: 0,
     e: "Both x (5) and y (10) are > 0, so the condition is True.",
@@ -1280,7 +1280,7 @@ Notes:
 • De Morgan: not (A and B) == (not A) or (not B).`
   }),
   (_i: number) => ({
-    q: `x = -1; y = 10\nWhat is "both" if x > 0 and y > 0 else "not both"?`,
+    q: `What is "both" if x > 0 and y > 0 else "not both"?\nx = -1; y = 10`,
     o: ['"not both"', '"both"', "Error", "None"],
     c: 0,
     e: "x is -1, which is not > 0, so the 'and' is False.",
@@ -1330,7 +1330,7 @@ Notes:
 • Document short-circuit in code reviews.`
   }),
   (_i: number) => ({
-    q: `x = 0\nWhat is "pos" if x > 0 else ("neg" if x < 0 else "zero")?`,
+    q: `What is "pos" if x > 0 else ("neg" if x < 0 else "zero")?\nx = 0`,
     o: ['"zero"', '"pos"', '"neg"', "Error"],
     c: 0,
     e: "x is 0: not positive, not negative, so it's \"zero\".",
@@ -1382,7 +1382,7 @@ Notes:
 • elif chain often clearer.`
   }),
   (_i: number) => ({
-    q: `x = None\nWhat is x if x is not None else "default"?`,
+    q: `What is x if x is not None else "default"?\nx = None`,
     o: ['"default"', "None", "Error", "True"],
     c: 0,
     e: "x is None, so 'x is not None' is False, returning \"default\".",
@@ -1436,7 +1436,7 @@ Notes:
 • typing.Optional patterns.`
   }),
   (_i: number) => ({
-    q: `x = 42\nWhat is x if x is not None else "default"?`,
+    q: `What is x if x is not None else "default"?\nx = 42`,
     o: ["42", '"default"', "None", "Error"],
     c: 0,
     e: "x is 42 (not None), so 'x is not None' is True, returning 42.",

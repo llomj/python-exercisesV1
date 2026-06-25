@@ -732,7 +732,7 @@ Notes:
   }),
   // 61. d={0:"zero", False:"false", 0.0:"float_zero"}; len(d) → 1
   (_i: number) => ({
-    q: `d = {0: "zero", False: "false", 0.0: "float_zero"}\nWhat is len(d)?`,
+    q: `What is len(d)?\nd = {0: "zero", False: "false", 0.0: "float_zero"}`,
     o: ["1", "2", "3", "Error"],
     c: 0,
     e: "0 == False == 0.0, so all three are the same key. The dict has only 1 entry.",
@@ -807,7 +807,7 @@ Notes:
   }),
   // 62. NaN as dict key — different NaN objects create different keys
   (_i: number) => ({
-    q: `d = {}\nd[float("nan")] = 1\nd[float("nan")] = 2\nWhat is len(d)?`,
+    q: `What is len(d)?\nd = {}\nd[float("nan")] = 1\nd[float("nan")] = 2`,
     o: ["2", "1", "0", "Error"],
     c: 0,
     e: "Each float(\"nan\") creates a new object. NaN != NaN, so they are different keys.",
@@ -884,7 +884,7 @@ Notes:
   }),
   // 63. Same NaN object as dict key — only one key
   (_i: number) => ({
-    q: `n = float("nan")\nd = {}\nd[n] = 1\nd[n] = 2\nWhat is len(d)?`,
+    q: `What is len(d)?\nn = float("nan")\nd = {}\nd[n] = 1\nd[n] = 2`,
     o: ["1", "2", "0", "Error"],
     c: 0,
     e: "Same object reference: Python checks identity (is) before equality. n is n → True, so same key.",
@@ -1036,7 +1036,7 @@ Notes:
   }),
   // 65. Two different instances → two different dict keys
   (_i: number) => ({
-    q: `class C: pass\na = C()\nb = C()\nd = {a: 1, b: 2}\nWhat is len(d)?`,
+    q: `What is len(d)?\nclass C: pass\na = C()\nb = C()\nd = {a: 1, b: 2}`,
     o: ["2", "1", "Error", "0"],
     c: 0,
     e: "Different instances have different id() values, so they are different dict keys.",
@@ -1193,7 +1193,7 @@ Notes:
   }),
   // 67. Defining __eq__ without __hash__ makes class unhashable
   (_i: number) => ({
-    q: `class C:\n    def __eq__(self, other): return True\na = C()\nWhat happens with hash(a)?`,
+    q: `What happens with hash(a)?\nclass C:\n    def __eq__(self, other): return True\na = C()`,
     o: ["TypeError: unhashable type", "Returns 0", "Returns id(a)", "Returns None"],
     c: 0,
     e: "Defining __eq__ without __hash__ sets __hash__ to None, making instances unhashable.",
@@ -1274,7 +1274,7 @@ Notes:
   }),
   // 68. dict_keys set intersection
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is d.keys() & {"a", "b"}?`,
+    q: `What is d.keys() & {"a", "b"}?\nd = {"a": 1}`,
     o: ['{"a"}', '{"a", "b"}', "Error", '{"b"}'],
     c: 0,
     e: "dict_keys views support set operations. & is intersection, returning common elements.",
@@ -1349,7 +1349,7 @@ Notes:
   }),
   // 69. dict_keys set union
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is d.keys() | {"c"}?`,
+    q: `What is d.keys() | {"c"}?\nd = {"a": 1, "b": 2}`,
     o: ['{"a", "b", "c"}', '{"c"}', "Error", '{"a", "b"}'],
     c: 0,
     e: "dict_keys views support | (union). All unique elements from both sides are combined.",
@@ -1422,7 +1422,7 @@ Notes:
   }),
   // 70. dict_keys set difference
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is d.keys() - {"a"}?`,
+    q: `What is d.keys() - {"a"}?\nd = {"a": 1}`,
     o: ["set()", '{"a"}', "Error", "0"],
     c: 0,
     e: "Set difference removes elements found in the right operand. 'a' is removed, leaving an empty set.",
@@ -1496,7 +1496,7 @@ Notes:
   }),
   // 71. __missing__ in dict subclass
   (_i: number) => ({
-    q: `class MyDict(dict):\n    def __missing__(self, key):\n        return f"no {key}"\nd = MyDict(a=1)\nWhat is d["b"]?`,
+    q: `What is d["b"]?\nclass MyDict(dict):\n    def __missing__(self, key):\n        return f"no {key}"\nd = MyDict(a=1)`,
     o: ['"no b"', "KeyError", "None", '""'],
     c: 0,
     e: "__missing__ is called when a key is not found in __getitem__. It returns \"no b\" for missing key \"b\".",
@@ -1575,7 +1575,7 @@ Notes:
   }),
   // 72. __missing__ does NOT add the key
   (_i: number) => ({
-    q: `class MyDict(dict):\n    def __missing__(self, key):\n        return 0\nd = MyDict()\nd["x"]\nIs "x" in d?`,
+    q: `Is "x" in d?\nclass MyDict(dict):\n    def __missing__(self, key):\n        return 0\nd = MyDict()\nd["x"]`,
     o: ["False", "True", "Error", "None"],
     c: 0,
     e: "__missing__ returns a value but does NOT add the key to the dict. 'x' is not in d.",
@@ -1653,7 +1653,7 @@ Notes:
   }),
   // 73. __missing__ that also inserts the key
   (_i: number) => ({
-    q: `class MyDict(dict):\n    def __missing__(self, key):\n        self[key] = 0\n        return 0\nd = MyDict()\nd["x"]\nIs "x" in d?`,
+    q: `Is "x" in d?\nclass MyDict(dict):\n    def __missing__(self, key):\n        self[key] = 0\n        return 0\nd = MyDict()\nd["x"]`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "This __missing__ explicitly inserts the key with self[key]=0 before returning, so 'x' IS in d.",
@@ -1733,7 +1733,7 @@ Notes:
   }),
   // 74. Regular dict does NOT have __missing__
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat happens when you access d["b"]?`,
+    q: `What happens when you access d["b"]?\nd = {"a": 1}`,
     o: ["KeyError", "None", "0", 'Calls __missing__'],
     c: 0,
     e: "Regular dict raises KeyError for missing keys. Only dict subclasses can define __missing__.",
@@ -1888,7 +1888,7 @@ Notes:
   }),
   // 76. MappingProxyType — read-only view, access works
   (_i: number) => ({
-    q: `from types import MappingProxyType\nd = {"a": 1}\np = MappingProxyType(d)\nWhat is p["a"]?`,
+    q: `What is p["a"]?\nfrom types import MappingProxyType\nd = {"a": 1}\np = MappingProxyType(d)`,
     o: ["1", "Error", "None", '{"a": 1}'],
     c: 0,
     e: "MappingProxyType creates a read-only view of a dict. Reading values works normally.",
@@ -1964,7 +1964,7 @@ Notes:
   }),
   // 77. MappingProxyType — writing raises TypeError
   (_i: number) => ({
-    q: `from types import MappingProxyType\nd = {"a": 1}\np = MappingProxyType(d)\nWhat happens with p["b"] = 2?`,
+    q: `What happens with p["b"] = 2?\nfrom types import MappingProxyType\nd = {"a": 1}\np = MappingProxyType(d)`,
     o: ["TypeError", "Adds 'b' to both p and d", "Adds 'b' only to p", "KeyError"],
     c: 0,
     e: "MappingProxyType is read-only. Any attempt to modify it raises TypeError.",
@@ -2040,7 +2040,7 @@ Notes:
   }),
   // 78. MappingProxyType reflects changes to original dict
   (_i: number) => ({
-    q: `from types import MappingProxyType\nd = {"a": 1}\np = MappingProxyType(d)\nd["b"] = 2\nWhat is p["b"]?`,
+    q: `What is p["b"]?\nfrom types import MappingProxyType\nd = {"a": 1}\np = MappingProxyType(d)\nd["b"] = 2`,
     o: ["2", "KeyError", "None", "TypeError"],
     c: 0,
     e: "MappingProxyType is a live view. Changes to the original dict are visible through the proxy.",
@@ -2118,7 +2118,7 @@ Notes:
   }),
   // 79. dict.copy() creates independent shallow copy
   (_i: number) => ({
-    q: `d = {"a": 1}\nd2 = d.copy()\nd2["b"] = 2\nWhat is d?`,
+    q: `What is d?\nd = {"a": 1}\nd2 = d.copy()\nd2["b"] = 2`,
     o: ['{"a": 1}', '{"a": 1, "b": 2}', "Error", "None"],
     c: 0,
     e: "dict.copy() creates a shallow copy. Modifying d2 does not affect d for top-level keys.",
@@ -2193,7 +2193,7 @@ Notes:
   }),
   // 80. Shallow copy shares nested mutable objects
   (_i: number) => ({
-    q: `d = {"a": {"x": 1}}\nd2 = d.copy()\nd2["a"]["y"] = 2\nWhat is d["a"]?`,
+    q: `What is d["a"]?\nd = {"a": {"x": 1}}\nd2 = d.copy()\nd2["a"]["y"] = 2`,
     o: ['{"x": 1, "y": 2}', '{"x": 1}', "Error", "None"],
     c: 0,
     e: "Shallow copy: the nested dict is shared. Modifying it through d2 also changes d.",
@@ -2272,7 +2272,7 @@ Notes:
   }),
   // 81. d.__class__ for a dict
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is d.__class__?`,
+    q: `What is d.__class__?\nd = {"a": 1}`,
     o: ["<class 'dict'>", "<class 'object'>", "<class 'mapping'>", "Error"],
     c: 0,
     e: "d.__class__ returns the type of the object. For a dict literal, it's <class 'dict'>.",
@@ -2420,7 +2420,7 @@ Notes:
   }),
   // 83. setdefault with a missing key
   (_i: number) => ({
-    q: `d = {"a": 1}\nd.setdefault("b", [])\nWhat is d?`,
+    q: `What is d?\nd = {"a": 1}\nd.setdefault("b", [])`,
     o: ['{"a": 1, "b": []}', '{"a": 1}', "Error", '{"a": 1, "b": None}'],
     c: 0,
     e: "setdefault inserts the key with the given default if the key is not present. 'b' gets [].",
@@ -2494,7 +2494,7 @@ Notes:
   }),
   // 84. dict constructor with extra kwargs
   (_i: number) => ({
-    q: `d = {"a": 1}\ne = dict(d, b=2)\nWhat is e?`,
+    q: `What is e?\nd = {"a": 1}\ne = dict(d, b=2)`,
     o: ['{"a": 1, "b": 2}', '{"a": 1}', "Error", '{"b": 2}'],
     c: 0,
     e: "dict() accepts another dict plus keyword arguments. Both are merged into the new dict.",
@@ -2567,7 +2567,7 @@ Notes:
   }),
   // 85. Remove key via dict comprehension
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\ne = {k: v for k, v in d.items() if k != "a"}\nWhat is e?`,
+    q: `What is e?\nd = {"a": 1, "b": 2}\ne = {k: v for k, v in d.items() if k != "a"}`,
     o: ['{"b": 2}', '{"a": 1, "b": 2}', '{"a": 1}', "Error"],
     c: 0,
     e: "Dict comprehension with a filter: only keys where k != 'a' are included. Result: {'b': 2}.",
@@ -2640,7 +2640,7 @@ Notes:
   }),
   // 86. Popping multiple keys with list comprehension
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2, "c": 3}\n[d.pop(k) for k in ["a", "c"]]\nWhat is d?`,
+    q: `What is d?\nd = {"a": 1, "b": 2, "c": 3}\n[d.pop(k) for k in ["a", "c"]]`,
     o: ['{"b": 2}', '{"a": 1, "b": 2, "c": 3}', "Error", '{"a": 1}'],
     c: 0,
     e: "d.pop(k) removes key k and returns its value. After popping 'a' and 'c', only 'b' remains.",
@@ -2713,7 +2713,7 @@ Notes:
   }),
   // 87. dict_keys equality with a set
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is d.keys() == {"a", "b"}?`,
+    q: `What is d.keys() == {"a", "b"}?\nd = {"a": 1, "b": 2}`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "dict_keys views support equality comparison with sets. Same elements → True.",
@@ -2787,7 +2787,7 @@ Notes:
   }),
   // 88. dict_keys inequality with a set
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is d.keys() == {"a", "c"}?`,
+    q: `What is d.keys() == {"a", "c"}?\nd = {"a": 1, "b": 2}`,
     o: ["False", "True", "Error", "None"],
     c: 0,
     e: "The keys are {'a', 'b'} but the set is {'a', 'c'} — different elements, so False.",
@@ -2858,7 +2858,7 @@ Notes:
   }),
   // 89. Counter.most_common
   (_i: number) => ({
-    q: `from collections import Counter\nWhat is Counter("abracadabra").most_common(3)?`,
+    q: `What is Counter("abracadabra").most_common(3)?\nfrom collections import Counter`,
     o: ['[("a", 5), ("b", 2), ("r", 2)]', '[("a", 5), ("b", 2), ("c", 1)]', '[("a", 5)]', "Error"],
     c: 0,
     e: "Counter counts each character. 'a' appears 5 times. most_common(3) returns the 3 most frequent.",
@@ -2932,7 +2932,7 @@ Notes:
   }),
   // 90. Converting dict items to list, accessing first pair
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is list(d.items())[0]?`,
+    q: `What is list(d.items())[0]?\nd = {"a": 1}`,
     o: ['("a", 1)', '"a"', "1", "Error"],
     c: 0,
     e: "d.items() returns key-value pairs as tuples. The first (and only) item is ('a', 1).",
@@ -3005,7 +3005,7 @@ Notes:
   }),
   // 91. Unpacking creates an equal dict
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is {**d} == d?`,
+    q: `What is {**d} == d?\nd = {"a": 1, "b": 2}`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "Dict unpacking {**d} creates a new dict with the same contents. Equal contents → True.",
@@ -3078,7 +3078,7 @@ Notes:
   }),
   // 92. Unpacking creates a different object
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is {**d} is d?`,
+    q: `What is {**d} is d?\nd = {"a": 1, "b": 2}`,
     o: ["False", "True", "Error", "None"],
     c: 0,
     e: "{**d} creates a NEW dict object. 'is' checks identity, not equality. Different objects → False.",
@@ -3151,7 +3151,7 @@ Notes:
   }),
   // 93. exec modifying a dict
   (_i: number) => ({
-    q: `d = {}\nexec("d['a'] = 1")\nWhat is d?`,
+    q: `What is d?\nd = {}\nexec("d['a'] = 1")`,
     o: ['{"a": 1}', '{}', "Error", "None"],
     c: 0,
     e: "exec() executes the string as Python code. It modifies d in the current scope.",
@@ -3304,7 +3304,7 @@ Notes:
   }),
   // 95. next(iter(d)) — first key
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2, "c": 3}\nWhat is next(iter(d))?`,
+    q: `What is next(iter(d))?\nd = {"a": 1, "b": 2, "c": 3}`,
     o: ['"a"', '"c"', '("a", 1)', "Error"],
     c: 0,
     e: "iter(d) iterates over keys. next() returns the first key: 'a' (insertion order in Python 3.7+).",
@@ -3376,7 +3376,7 @@ Notes:
   }),
   // 96. next(reversed(d)) — last key (Python 3.8+)
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2, "c": 3}\nWhat is next(reversed(d))?`,
+    q: `What is next(reversed(d))?\nd = {"a": 1, "b": 2, "c": 3}`,
     o: ['"c"', '"a"', '("c", 3)', "Error"],
     c: 0,
     e: "reversed(d) iterates keys in reverse insertion order. next() returns the last key: 'c' (Python 3.8+).",
@@ -3524,7 +3524,7 @@ Notes:
   }),
   // 98. tuple(d.items())
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is tuple(d.items())?`,
+    q: `What is tuple(d.items())?\nd = {"a": 1, "b": 2}`,
     o: ['(("a", 1), ("b", 2))', '("a", "b")', "(1, 2)", "Error"],
     c: 0,
     e: "d.items() yields (key, value) tuples. tuple() converts the view to a tuple of tuples.",
@@ -3597,7 +3597,7 @@ Notes:
   }),
   // 99. Multiple updates — last wins
   (_i: number) => ({
-    q: `d = {"a": 1}\nd.update({"a": 2})\nd.update(a=3)\nWhat is d?`,
+    q: `What is d?\nd = {"a": 1}\nd.update({"a": 2})\nd.update(a=3)`,
     o: ['{"a": 3}', '{"a": 1}', '{"a": 2}', "Error"],
     c: 0,
     e: "Each update overwrites 'a'. First to 2, then to 3. Final value: {'a': 3}.",

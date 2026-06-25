@@ -3,7 +3,7 @@
 export const level5ExpertB = [
   // 51. namedtuple field access via attribute
   (_i: number) => ({
-    q: `from collections import namedtuple\nPoint = namedtuple("Point", ["x", "y"])\np = Point(1, 2)\nWhat is p.x?`,
+    q: `What is p.x?\nfrom collections import namedtuple\nPoint = namedtuple("Point", ["x", "y"])\np = Point(1, 2)`,
     o: ["1", "2", "Error", "(1, 2)"],
     c: 0,
     e: "namedtuple fields are accessed by name. p.x returns the first field value, 1.",
@@ -79,7 +79,7 @@ Notes:
   }),
   // 52. namedtuple supports indexing like a regular tuple
   (_i: number) => ({
-    q: `from collections import namedtuple\nPoint = namedtuple("Point", "x y")\np = Point(3, 4)\nWhat is p[0]?`,
+    q: `What is p[0]?\nfrom collections import namedtuple\nPoint = namedtuple("Point", "x y")\np = Point(3, 4)`,
     o: ["3", "4", "Error", "(3, 4)"],
     c: 0,
     e: "namedtuples support indexing. p[0] returns the first element, 3.",
@@ -151,7 +151,7 @@ Notes:
   }),
   // 53. namedtuple _asdict() converts to dictionary
   (_i: number) => ({
-    q: `from collections import namedtuple\nPoint = namedtuple("Point", "x y")\np = Point(1, 2)\nWhat does p._asdict() return?`,
+    q: `What does p._asdict() return?\nfrom collections import namedtuple\nPoint = namedtuple("Point", "x y")\np = Point(1, 2)`,
     o: ['{"x": 1, "y": 2}', '("x", "y")', "[1, 2]", "Error"],
     c: 0,
     e: "_asdict() returns a dictionary mapping field names to values.",
@@ -226,7 +226,7 @@ Notes:
   }),
   // 54. namedtuple is an instance of tuple
   (_i: number) => ({
-    q: `from collections import namedtuple\nPoint = namedtuple("Point", "x y")\np = Point(1, 2)\nWhat is isinstance(p, tuple)?`,
+    q: `What is isinstance(p, tuple)?\nfrom collections import namedtuple\nPoint = namedtuple("Point", "x y")\np = Point(1, 2)`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "namedtuple creates a tuple subclass, so isinstance returns True.",
@@ -298,7 +298,7 @@ Notes:
   }),
   // 55. Counter counts character occurrences
   (_i: number) => ({
-    q: `from collections import Counter\nc = Counter("abracadabra")\nWhat is c["a"]?`,
+    q: `What is c["a"]?\nfrom collections import Counter\nc = Counter("abracadabra")`,
     o: ["5", "4", "3", "2"],
     c: 0,
     e: "Counter counts occurrences. 'a' appears 5 times in 'abracadabra'.",
@@ -369,7 +369,7 @@ Notes:
   }),
   // 56. Counter.most_common(1)
   (_i: number) => ({
-    q: `from collections import Counter\nWhat is Counter([1, 1, 2, 3, 3, 3]).most_common(1)?`,
+    q: `What is Counter([1, 1, 2, 3, 3, 3]).most_common(1)?\nfrom collections import Counter`,
     o: ["[(3, 3)]", "[(1, 2)]", "[3]", "3"],
     c: 0,
     e: "most_common(1) returns the single most frequent element as a list of (element, count) tuples.",
@@ -439,7 +439,7 @@ Notes:
   }),
   // 57. Counter.most_common(2) with string
   (_i: number) => ({
-    q: `from collections import Counter\nWhat is Counter("hello").most_common(2)?`,
+    q: `What is Counter("hello").most_common(2)?\nfrom collections import Counter`,
     o: [`[("l", 2), ("h", 1)]`, `[("h", 1), ("l", 2)]`, `[("l", 2), ("e", 1)]`, `["l", "h"]`],
     c: 0,
     e: "most_common(2) returns the 2 most frequent: 'l' (2 times), then 'h' (1 time, first by insertion order).",
@@ -508,7 +508,7 @@ Notes:
   }),
   // 58. Counter addition combines counts
   (_i: number) => ({
-    q: `from collections import Counter\nWhat is Counter("abc") + Counter("bcd")?`,
+    q: `What is Counter("abc") + Counter("bcd")?\nfrom collections import Counter`,
     o: [`Counter({"b": 2, "c": 2, "a": 1, "d": 1})`, `Counter({"a": 1, "b": 1, "c": 1, "d": 1})`, `{"abcbcd"}`, "Error"],
     c: 0,
     e: "Adding Counters combines counts. 'b' and 'c' appear in both, so their counts add up.",
@@ -581,7 +581,7 @@ Notes:
   }),
   // 59. Counter.elements() repeats elements by count
   (_i: number) => ({
-    q: `from collections import Counter\nWhat is list(Counter(a=2, b=3).elements())?`,
+    q: `What is list(Counter(a=2, b=3).elements())?\nfrom collections import Counter`,
     o: [`["a", "a", "b", "b", "b"]`, `["a", "b"]`, `[2, 3]`, `[("a", 2), ("b", 3)]`],
     c: 0,
     e: "elements() returns each element repeated by its count: 'a' twice, 'b' three times.",
@@ -652,7 +652,7 @@ Notes:
   }),
   // 60. Counter returns 0 for missing keys, no KeyError
   (_i: number) => ({
-    q: `from collections import Counter\nc = Counter([1, 2, 2, 3, 3, 3])\nWhat is c[4]?`,
+    q: `What is c[4]?\nfrom collections import Counter\nc = Counter([1, 2, 2, 3, 3, 3])`,
     o: ["0", "KeyError", "None", "False"],
     c: 0,
     e: "Counter returns 0 for missing keys instead of raising KeyError.",
@@ -727,7 +727,7 @@ Notes:
   }),
   // 61. Counter subtraction drops zero/negative counts
   (_i: number) => ({
-    q: `from collections import Counter\nWhat is Counter("aab") - Counter("ab")?`,
+    q: `What is Counter("aab") - Counter("ab")?\nfrom collections import Counter`,
     o: [`Counter({"a": 1})`, `Counter({"a": 1, "b": 0})`, `Counter({"a": 2})`, "Error"],
     c: 0,
     e: "Counter subtraction removes counts. 'b' drops to 0 and is excluded from the result.",
@@ -874,7 +874,7 @@ Notes:
   }),
   // 63. defaultdict(int) auto-creates missing keys with 0
   (_i: number) => ({
-    q: `from collections import defaultdict\nd = defaultdict(int)\nd["x"] += 1\nWhat is d["x"]?`,
+    q: `What is d["x"]?\nfrom collections import defaultdict\nd = defaultdict(int)\nd["x"] += 1`,
     o: ["1", "0", "KeyError", "None"],
     c: 0,
     e: "defaultdict(int) creates missing keys with int() = 0. Then += 1 makes it 1.",
@@ -949,7 +949,7 @@ Notes:
   }),
   // 64. defaultdict(list) auto-creates empty lists
   (_i: number) => ({
-    q: `from collections import defaultdict\nd = defaultdict(list)\nd["a"].append(1)\nWhat is d["a"]?`,
+    q: `What is d["a"]?\nfrom collections import defaultdict\nd = defaultdict(list)\nd["a"].append(1)`,
     o: ["[1]", "1", "Error", "None"],
     c: 0,
     e: "defaultdict(list) creates missing keys with an empty list. Then append(1) adds 1 to it.",
@@ -1025,7 +1025,7 @@ Notes:
   }),
   // 65. defaultdict auto-creates with default even without assignment
   (_i: number) => ({
-    q: `from collections import defaultdict\nd = defaultdict(int)\nWhat is d["missing"]?`,
+    q: `What is d["missing"]?\nfrom collections import defaultdict\nd = defaultdict(int)`,
     o: ["0", "KeyError", "None", '""'],
     c: 0,
     e: "defaultdict(int) auto-creates missing keys with int() = 0. Just accessing the key creates it.",
@@ -1105,7 +1105,7 @@ Notes:
   }),
   // 66. itertools.chain flattens iterables
   (_i: number) => ({
-    q: `from itertools import chain\nWhat is list(chain([1, 2], [3, 4]))?`,
+    q: `What is list(chain([1, 2], [3, 4]))?\nfrom itertools import chain`,
     o: ["[1, 2, 3, 4]", "[[1, 2], [3, 4]]", "[(1, 3), (2, 4)]", "Error"],
     c: 0,
     e: "chain() joins multiple iterables into one continuous sequence.",
@@ -1177,7 +1177,7 @@ Notes:
   }),
   // 67. chain works with strings (iterates characters)
   (_i: number) => ({
-    q: `from itertools import chain\nWhat is list(chain("ab", "cd"))?`,
+    q: `What is list(chain("ab", "cd"))?\nfrom itertools import chain`,
     o: [`["a", "b", "c", "d"]`, `["ab", "cd"]`, `["abcd"]`, "Error"],
     c: 0,
     e: "chain iterates each string character by character, yielding 'a', 'b', 'c', 'd'.",
@@ -1248,7 +1248,7 @@ Notes:
   }),
   // 68. itertools.repeat creates repeated values
   (_i: number) => ({
-    q: `from itertools import repeat\nWhat is list(repeat(5, 3))?`,
+    q: `What is list(repeat(5, 3))?\nfrom itertools import repeat`,
     o: ["[5, 5, 5]", "[5, 3]", "[15]", "[3, 3, 3, 3, 3]"],
     c: 0,
     e: "repeat(5, 3) yields the value 5 exactly 3 times.",
@@ -1321,7 +1321,7 @@ Notes:
   }),
   // 69. itertools.count creates an infinite counter
   (_i: number) => ({
-    q: `from itertools import count\nc = count(10)\nWhat is [next(c) for _ in range(3)]?`,
+    q: `What is [next(c) for _ in range(3)]?\nfrom itertools import count\nc = count(10)`,
     o: ["[10, 11, 12]", "[10, 10, 10]", "[0, 1, 2]", "[10, 20, 30]"],
     c: 0,
     e: "count(10) starts at 10 and increments by 1. Three next() calls give [10, 11, 12].",
@@ -1398,7 +1398,7 @@ Notes:
   }),
   // 70. itertools.cycle repeats an iterable endlessly
   (_i: number) => ({
-    q: `from itertools import cycle\nc = cycle([1, 2, 3])\nWhat is [next(c) for _ in range(7)]?`,
+    q: `What is [next(c) for _ in range(7)]?\nfrom itertools import cycle\nc = cycle([1, 2, 3])`,
     o: ["[1, 2, 3, 1, 2, 3, 1]", "[1, 2, 3, 1, 2, 3, 7]", "[1, 1, 1, 1, 1, 1, 1]", "[1, 2, 3]"],
     c: 0,
     e: "cycle repeats the iterable endlessly: 1,2,3,1,2,3,1,... Taking 7 gives [1,2,3,1,2,3,1].",
@@ -1476,7 +1476,7 @@ Notes:
   }),
   // 71. itertools.islice slices an iterator
   (_i: number) => ({
-    q: `from itertools import islice\nWhat is list(islice(range(100), 5))?`,
+    q: `What is list(islice(range(100), 5))?\nfrom itertools import islice`,
     o: ["[0, 1, 2, 3, 4]", "[0, 1, 2, 3, 4, 5]", "[5]", "[95, 96, 97, 98, 99]"],
     c: 0,
     e: "islice(iterable, 5) takes the first 5 elements, like iterable[:5] but for any iterator.",
@@ -1550,7 +1550,7 @@ Notes:
   }),
   // 72. islice with start and stop
   (_i: number) => ({
-    q: `from itertools import islice\nWhat is list(islice(range(100), 2, 7))?`,
+    q: `What is list(islice(range(100), 2, 7))?\nfrom itertools import islice`,
     o: ["[2, 3, 4, 5, 6]", "[2, 3, 4, 5, 6, 7]", "[0, 1, 2, 3, 4]", "[2, 7]"],
     c: 0,
     e: "islice(range(100), 2, 7) skips the first 2 elements and takes up to index 7 (exclusive).",
@@ -1624,7 +1624,7 @@ Notes:
   }),
   // 73. itertools.product gives Cartesian product
   (_i: number) => ({
-    q: `from itertools import product\nWhat is list(product([1, 2], [3, 4]))?`,
+    q: `What is list(product([1, 2], [3, 4]))?\nfrom itertools import product`,
     o: ["[(1,3),(1,4),(2,3),(2,4)]", "[(1,3),(2,4)]", "[[1,3],[2,4]]", "[1,2,3,4]"],
     c: 0,
     e: "product computes the Cartesian product: every combination of one element from each iterable.",
@@ -1699,7 +1699,7 @@ Notes:
   }),
   // 74. itertools.permutations gives ordered arrangements
   (_i: number) => ({
-    q: `from itertools import permutations\nWhat is list(permutations([1, 2, 3], 2))?`,
+    q: `What is list(permutations([1, 2, 3], 2))?\nfrom itertools import permutations`,
     o: ["[(1,2),(1,3),(2,1),(2,3),(3,1),(3,2)]", "[(1,2),(1,3),(2,3)]", "[(1,2),(2,3),(3,1)]", "Error"],
     c: 0,
     e: "permutations([1,2,3], 2) gives all 2-element ordered arrangements: 6 results (order matters).",
@@ -1774,7 +1774,7 @@ Notes:
   }),
   // 75. itertools.combinations gives unordered selections
   (_i: number) => ({
-    q: `from itertools import combinations\nWhat is list(combinations([1, 2, 3], 2))?`,
+    q: `What is list(combinations([1, 2, 3], 2))?\nfrom itertools import combinations`,
     o: ["[(1,2),(1,3),(2,3)]", "[(1,2),(2,1),(1,3),(3,1),(2,3),(3,2)]", "[(1,2),(2,3)]", "Error"],
     c: 0,
     e: "combinations([1,2,3], 2) gives all 2-element subsets: (1,2), (1,3), (2,3). Order doesn't matter.",
@@ -1849,7 +1849,7 @@ Notes:
   }),
   // 76. permutations count: n! for full permutations
   (_i: number) => ({
-    q: `from itertools import permutations\nWhat is len(list(permutations([1, 2, 3])))?`,
+    q: `What is len(list(permutations([1, 2, 3])))?\nfrom itertools import permutations`,
     o: ["6", "3", "9", "27"],
     c: 0,
     e: "Full permutations of 3 elements = 3! = 3 × 2 × 1 = 6.",
@@ -1923,7 +1923,7 @@ Notes:
   }),
   // 77. combinations count: C(4,2) = 6
   (_i: number) => ({
-    q: `from itertools import combinations\nWhat is len(list(combinations([1, 2, 3, 4], 2)))?`,
+    q: `What is len(list(combinations([1, 2, 3, 4], 2)))?\nfrom itertools import combinations`,
     o: ["6", "12", "4", "8"],
     c: 0,
     e: "C(4, 2) = 4! / (2! × 2!) = 6. There are 6 ways to choose 2 items from 4.",
@@ -1997,7 +1997,7 @@ Notes:
   }),
   // 78. itertools.accumulate gives running totals
   (_i: number) => ({
-    q: `from itertools import accumulate\nWhat is list(accumulate([1, 2, 3, 4]))?`,
+    q: `What is list(accumulate([1, 2, 3, 4]))?\nfrom itertools import accumulate`,
     o: ["[1, 3, 6, 10]", "[1, 2, 3, 4]", "[10]", "[10, 9, 7, 4]"],
     c: 0,
     e: "accumulate gives running sums: 1, 1+2=3, 3+3=6, 6+4=10.",
@@ -2074,7 +2074,7 @@ Notes:
   }),
   // 79. itertools.groupby groups consecutive identical elements
   (_i: number) => ({
-    q: `from itertools import groupby\nWhat is [(k, list(g)) for k, g in groupby("AAABBC")]?`,
+    q: `What is [(k, list(g)) for k, g in groupby("AAABBC")]?\nfrom itertools import groupby`,
     o: [`[("A",["A","A","A"]),("B",["B","B"]),("C",["C"])]`, `[("A",3),("B",2),("C",1)]`, `{"A":3,"B":2,"C":1}`, "Error"],
     c: 0,
     e: "groupby groups consecutive identical elements. Each group has a key and an iterator of matching elements.",
@@ -2151,7 +2151,7 @@ Notes:
   }),
   // 80. itertools.starmap unpacks arguments
   (_i: number) => ({
-    q: `from itertools import starmap\nWhat is list(starmap(pow, [(2, 3), (3, 2)]))?`,
+    q: `What is list(starmap(pow, [(2, 3), (3, 2)]))?\nfrom itertools import starmap`,
     o: ["[8, 9]", "[6, 6]", "[(2,3), (3,2)]", "Error"],
     c: 0,
     e: "starmap unpacks each tuple as arguments: pow(2,3)=8, pow(3,2)=9.",
@@ -2226,7 +2226,7 @@ Notes:
   }),
   // 81. Self-referencing list
   (_i: number) => ({
-    q: `a = []\na.append(a)\nWhat is len(a)?`,
+    q: `What is len(a)?\na = []\na.append(a)`,
     o: ["1", "0", "Error", "Infinite"],
     c: 0,
     e: "a.append(a) adds a single element (a reference to itself). len(a) is 1.",
@@ -2301,7 +2301,7 @@ Notes:
   }),
   // 82. Self-referencing list identity check
   (_i: number) => ({
-    q: `a = []\na.append(a)\nWhat is a[0] is a?`,
+    q: `What is a[0] is a?\na = []\na.append(a)`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "a[0] is the same object as a (self-reference). The 'is' check confirms identity.",
@@ -2741,7 +2741,7 @@ Notes:
   }),
   // 88. In-place multiply by 0 empties the list
   (_i: number) => ({
-    q: `a = [1, 2, 3]\na *= 0\nWhat is a?`,
+    q: `What is a?\na = [1, 2, 3]\na *= 0`,
     o: ["[]", "[1, 2, 3]", "[0, 0, 0]", "Error"],
     c: 0,
     e: "a *= 0 multiplies the list by 0 in place, resulting in an empty list.",
@@ -2817,7 +2817,7 @@ Notes:
   }),
   // 89. Non-mutating multiply by 0 — original unchanged
   (_i: number) => ({
-    q: `a = [1, 2, 3]\nb = a * 0\nWhat is a?`,
+    q: `What is a?\na = [1, 2, 3]\nb = a * 0`,
     o: ["[1, 2, 3]", "[]", "[0, 0, 0]", "Error"],
     c: 0,
     e: "a * 0 creates a NEW empty list (b). The original list a is unchanged.",
@@ -3191,7 +3191,7 @@ Notes:
   }),
   // 94. Tuple identity — constructor always creates new object
   (_i: number) => ({
-    q: `a = tuple([1, 2])\nb = tuple([1, 2])\nWhat is a is b?`,
+    q: `What is a is b?\na = tuple([1, 2])\nb = tuple([1, 2])`,
     o: ["False", "True", "Error", "None"],
     c: 0,
     e: "tuple() constructor creates new objects each time. a and b are equal but not the same object.",
@@ -3266,7 +3266,7 @@ Notes:
   }),
   // 95. Comma creates a tuple, no parentheses needed
   (_i: number) => ({
-    q: `a = 1, 2, 3\nWhat is type(a)?`,
+    q: `What is type(a)?\na = 1, 2, 3`,
     o: ["<class 'tuple'>", "<class 'list'>", "<class 'int'>", "Error"],
     c: 0,
     e: "Commas create a tuple. a = 1, 2, 3 is the same as a = (1, 2, 3).",
@@ -3415,7 +3415,7 @@ Notes:
   }),
   // 97. Spread into new list with [*a, ...]
   (_i: number) => ({
-    q: `a = [1, 2, 3]\nWhat is [*a, 4]?`,
+    q: `What is [*a, 4]?\na = [1, 2, 3]`,
     o: ["[1, 2, 3, 4]", "[[1, 2, 3], 4]", "Error", "[4, 1, 2, 3]"],
     c: 0,
     e: "[*a, 4] unpacks a into a new list and appends 4.",

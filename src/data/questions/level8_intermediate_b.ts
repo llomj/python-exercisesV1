@@ -3,7 +3,7 @@
 export const level8IntermediateB = [
   // 51. __getattr__ returns fallback for missing attributes
   (_i: number) => ({
-    q: `class C:\n    def __getattr__(self, name):\n        return f"no {name}"\nWhat is C().xyz?`,
+    q: `What is C().xyz?\nclass C:\n    def __getattr__(self, name):\n        return f"no {name}"`,
     o: ['"no xyz"', 'AttributeError', 'None', '"xyz"'],
     c: 0,
     e: "__getattr__ is called when normal attribute lookup fails, so C().xyz returns \"no xyz\".",
@@ -149,7 +149,7 @@ Notes:
   }),
   // 53. __getattribute__ intercepts every attribute access
   (_i: number) => ({
-    q: `class C:\n    def __getattribute__(self, name):\n        return 42\nWhat is C().anything?`,
+    q: `What is C().anything?\nclass C:\n    def __getattribute__(self, name):\n        return 42`,
     o: ['42', 'AttributeError', 'None', '"anything"'],
     c: 0,
     e: "__getattribute__ is called on every attribute access, so it always returns 42.",
@@ -292,7 +292,7 @@ Notes:
   }),
   // 55. __setattr__ doubles assigned values
   (_i: number) => ({
-    q: `class C:\n    def __setattr__(self, name, val):\n        object.__setattr__(self, name, val * 2)\nc = C()\nc.x = 5\nWhat is c.x?`,
+    q: `What is c.x?\nclass C:\n    def __setattr__(self, name, val):\n        object.__setattr__(self, name, val * 2)\nc = C()\nc.x = 5`,
     o: ['10', '5', 'Error', '25'],
     c: 0,
     e: "__setattr__ intercepts c.x = 5 and stores val * 2 = 10.",
@@ -365,7 +365,7 @@ Notes:
   }),
   // 56. __delattr__ is called on attribute deletion
   (_i: number) => ({
-    q: `class C:\n    def __delattr__(self, name):\n        print(f"deleting {name}")\nWhat does del C().x call?`,
+    q: `What does del C().x call?\nclass C:\n    def __delattr__(self, name):\n        print(f"deleting {name}")`,
     o: ['__delattr__', '__setattr__', '__getattr__', '__init__'],
     c: 0,
     e: "del obj.x triggers __delattr__ on the object.",
@@ -437,7 +437,7 @@ Notes:
   }),
   // 57. Custom attribute storage with _data dict
   (_i: number) => ({
-    q: `class C:\n    def __init__(self):\n        self._data = {}\n    def __getattr__(self, name):\n        return self._data.get(name, "missing")\n    def __setattr__(self, name, val):\n        if name == "_data":\n            object.__setattr__(self, name, val)\n        else:\n            self._data[name] = val\nc = C()\nc.x = 42\nWhat is c.x?`,
+    q: `What is c.x?\nclass C:\n    def __init__(self):\n        self._data = {}\n    def __getattr__(self, name):\n        return self._data.get(name, "missing")\n    def __setattr__(self, name, val):\n        if name == "_data":\n            object.__setattr__(self, name, val)\n        else:\n            self._data[name] = val\nc = C()\nc.x = 42`,
     o: ['42', '"missing"', 'AttributeError', 'None'],
     c: 0,
     e: "__setattr__ stores x in _data, and __getattr__ retrieves it from _data.",
@@ -506,7 +506,7 @@ Notes:
   }),
   // 58. Empty instance __dict__
   (_i: number) => ({
-    q: `class C: pass\nc = C()\nWhat is c.__dict__?`,
+    q: `What is c.__dict__?\nclass C: pass\nc = C()`,
     o: ['{}', 'None', 'Error', "{'__class__': C}"],
     c: 0,
     e: "A fresh instance with no attributes has an empty __dict__.",
@@ -576,7 +576,7 @@ Notes:
   }),
   // 59. Instance __dict__ length matches attribute count
   (_i: number) => ({
-    q: `class C:\n    def __init__(self):\n        self.x = 1\n        self.y = 2\nc = C()\nWhat is len(c.__dict__)?`,
+    q: `What is len(c.__dict__)?\nclass C:\n    def __init__(self):\n        self.x = 1\n        self.y = 2\nc = C()`,
     o: ['2', '0', '1', '3'],
     c: 0,
     e: "self.x and self.y create two entries in the instance __dict__.",
@@ -712,7 +712,7 @@ Notes:
   }),
   // 61. __slots__ removes __dict__
   (_i: number) => ({
-    q: `class C:\n    __slots__ = ["x"]\nc = C()\nWhat is hasattr(c, "__dict__")?`,
+    q: `What is hasattr(c, "__dict__")?\nclass C:\n    __slots__ = ["x"]\nc = C()`,
     o: ['False', 'True', 'Error', 'None'],
     c: 0,
     e: '__slots__ prevents creation of __dict__, so hasattr returns False.',
@@ -781,7 +781,7 @@ Notes:
   }),
   // 62. __slots__ allows declared attributes
   (_i: number) => ({
-    q: `class C:\n    __slots__ = ["x", "y"]\nc = C()\nc.x = 1\nc.y = 2\nWhat is (c.x, c.y)?`,
+    q: `What is (c.x, c.y)?\nclass C:\n    __slots__ = ["x", "y"]\nc = C()\nc.x = 1\nc.y = 2`,
     o: ['(1, 2)', 'AttributeError', '(None, None)', 'Error'],
     c: 0,
     e: "Attributes listed in __slots__ can be set and accessed normally.",
@@ -924,7 +924,7 @@ Notes:
   }),
   // 64. __class__ attribute reveals the class
   (_i: number) => ({
-    q: `class C: pass\nc = C()\nWhat does c.__class__ return?`,
+    q: `What does c.__class__ return?\nclass C: pass\nc = C()`,
     o: ["<class '__main__.C'>", '"C"', 'type', 'None'],
     c: 0,
     e: "c.__class__ returns the class object that created the instance.",
@@ -992,7 +992,7 @@ Notes:
   }),
   // 65. __class__.__name__ gives class name as string
   (_i: number) => ({
-    q: `class C: pass\nc = C()\nWhat is c.__class__.__name__?`,
+    q: `What is c.__class__.__name__?\nclass C: pass\nc = C()`,
     o: ['"C"', '"c"', '"__main__.C"', 'Error'],
     c: 0,
     e: "__class__.__name__ returns the class name as a string.",
@@ -1059,7 +1059,7 @@ Notes:
   }),
   // 66. Composition: Car has an Engine
   (_i: number) => ({
-    q: `class Engine:\n    def start(self):\n        return "vroom"\nclass Car:\n    def __init__(self):\n        self.engine = Engine()\nWhat is Car().engine.start()?`,
+    q: `What is Car().engine.start()?\nclass Engine:\n    def start(self):\n        return "vroom"\nclass Car:\n    def __init__(self):\n        self.engine = Engine()`,
     o: ['"vroom"', 'None', 'Error', '"Car"'],
     c: 0,
     e: "Car composes an Engine. Car().engine is an Engine instance, and .start() returns \"vroom\".",
@@ -1281,7 +1281,7 @@ Notes:
   }),
   // 69. Class variable list bug — shared across instances
   (_i: number) => ({
-    q: `class Logger:\n    logs = []\n    def log(self, msg):\n        self.logs.append(msg)\nWhat is wrong with this class?`,
+    q: `What is wrong with this class?\nclass Logger:\n    logs = []\n    def log(self, msg):\n        self.logs.append(msg)`,
     o: ['logs is shared across all instances', 'log method is invalid', 'Missing __init__', 'Nothing is wrong'],
     c: 0,
     e: "logs is a class variable (mutable list), so all instances share the same list.",
@@ -1353,7 +1353,7 @@ Notes:
   }),
   // 70. Correct: instance variable list — independent
   (_i: number) => ({
-    q: `class Logger:\n    def __init__(self):\n        self.logs = []\n    def log(self, msg):\n        self.logs.append(msg)\nl1 = Logger()\nl2 = Logger()\nl1.log("a")\nWhat is l2.logs?`,
+    q: `What is l2.logs?\nclass Logger:\n    def __init__(self):\n        self.logs = []\n    def log(self, msg):\n        self.logs.append(msg)\nl1 = Logger()\nl2 = Logger()\nl1.log("a")`,
     o: ['[]', '["a"]', 'None', 'Error'],
     c: 0,
     e: "Each instance creates its own logs list in __init__, so l2.logs is independent and empty.",
@@ -1421,7 +1421,7 @@ Notes:
   }),
   // 71. Singleton pattern using __new__
   (_i: number) => ({
-    q: `class Singleton:\n    _instance = None\n    def __new__(cls):\n        if cls._instance is None:\n            cls._instance = object.__new__(cls)\n        return cls._instance\nWhat is Singleton() is Singleton()?`,
+    q: `What is Singleton() is Singleton()?\nclass Singleton:\n    _instance = None\n    def __new__(cls):\n        if cls._instance is None:\n            cls._instance = object.__new__(cls)\n        return cls._instance`,
     o: ['True', 'False', 'Error', 'None'],
     c: 0,
     e: "__new__ always returns the same instance, so both calls return the identical object.",
@@ -1646,7 +1646,7 @@ Notes:
   }),
   // 74. Order of __new__ and __init__
   (_i: number) => ({
-    q: `class C:\n    def __new__(cls):\n        print("new")\n        return object.__new__(cls)\n    def __init__(self):\n        print("init")\nWhat is printed when C() is called?`,
+    q: `What is printed when C() is called?\nclass C:\n    def __new__(cls):\n        print("new")\n        return object.__new__(cls)\n    def __init__(self):\n        print("init")`,
     o: ['"new" then "init"', '"init" then "new"', 'Only "init"', 'Only "new"'],
     c: 0,
     e: "__new__ runs first to create the instance, then __init__ runs to initialize it.",
@@ -1720,7 +1720,7 @@ Notes:
   }),
   // 75. Tracking instances with class variable
   (_i: number) => ({
-    q: `class C:\n    instances = []\n    def __init__(self):\n        C.instances.append(self)\nC()\nC()\nWhat is len(C.instances)?`,
+    q: `What is len(C.instances)?\nclass C:\n    instances = []\n    def __init__(self):\n        C.instances.append(self)\nC()\nC()`,
     o: ['2', '0', '1', 'Error'],
     c: 0,
     e: "Each C() appends self to the shared instances list. Two calls → len is 2.",
@@ -1793,7 +1793,7 @@ Notes:
   }),
   // 76. Class-level counter
   (_i: number) => ({
-    q: `class C:\n    count = 0\n    def __init__(self):\n        C.count += 1\nC()\nC()\nC()\nWhat is C.count?`,
+    q: `What is C.count?\nclass C:\n    count = 0\n    def __init__(self):\n        C.count += 1\nC()\nC()\nC()`,
     o: ['3', '0', '1', 'Error'],
     c: 0,
     e: "Each instantiation increments the class variable count. Three calls → C.count is 3.",
@@ -1865,7 +1865,7 @@ Notes:
   }),
   // 77. Proxy pattern using __getattr__
   (_i: number) => ({
-    q: `class Proxy:\n    def __init__(self, obj):\n        self._obj = obj\n    def __getattr__(self, name):\n        return getattr(self._obj, name)\np = Proxy([1, 2, 3])\np.append(4)\nWhat is p._obj?`,
+    q: `What is p._obj?\nclass Proxy:\n    def __init__(self, obj):\n        self._obj = obj\n    def __getattr__(self, name):\n        return getattr(self._obj, name)\np = Proxy([1, 2, 3])\np.append(4)`,
     o: ['[1, 2, 3, 4]', '[1, 2, 3]', 'Error', '[4]'],
     c: 0,
     e: "Proxy delegates attribute access to _obj. p.append finds list.append via __getattr__, which modifies the list.",
@@ -2006,7 +2006,7 @@ Notes:
   }),
   // 79. Nested class as attribute
   (_i: number) => ({
-    q: `class A: pass\nclass B:\n    inner_class = A\nDoes B.inner_class() work?`,
+    q: `Does B.inner_class() work?\nclass A: pass\nclass B:\n    inner_class = A`,
     o: ['Yes, creates an A instance', 'No, raises Error', 'Returns None', 'Returns B instance'],
     c: 0,
     e: "B.inner_class is just a reference to class A, so calling it creates an A instance.",
@@ -2075,7 +2075,7 @@ Notes:
   }),
   // 80. **kwargs to instance attributes
   (_i: number) => ({
-    q: `class C:\n    def __init__(self, **kw):\n        self.__dict__.update(kw)\nc = C(x=1, y=2)\nWhat is c.x?`,
+    q: `What is c.x?\nclass C:\n    def __init__(self, **kw):\n        self.__dict__.update(kw)\nc = C(x=1, y=2)`,
     o: ['1', 'Error', 'None', '{"x": 1}'],
     c: 0,
     e: "self.__dict__.update(kw) merges all keyword arguments into instance attributes. c.x is 1.",
@@ -2148,7 +2148,7 @@ Notes:
   }),
   // 81. __del__ is called on garbage collection
   (_i: number) => ({
-    q: `class C:\n    def __del__(self):\n        print("deleted")\nWhen is __del__ called?`,
+    q: `When is __del__ called?\nclass C:\n    def __del__(self):\n        print("deleted")`,
     o: ['When the object is garbage collected', 'When del is used', 'At program start', 'When __init__ runs'],
     c: 0,
     e: "__del__ is the finalizer, called when the object is about to be garbage collected.",
@@ -2293,7 +2293,7 @@ Notes:
   }),
   // 83. Shallow copy shares nested references
   (_i: number) => ({
-    q: `import copy\nclass C:\n    def __init__(self, x):\n        self.x = x\nc = C([1])\nd = copy.copy(c)\nWhat is d.x is c.x?`,
+    q: `What is d.x is c.x?\nimport copy\nclass C:\n    def __init__(self, x):\n        self.x = x\nc = C([1])\nd = copy.copy(c)`,
     o: ['True', 'False', 'Error', 'None'],
     c: 0,
     e: "copy.copy() creates a shallow copy — the new object shares references to the same nested objects.",
@@ -2361,7 +2361,7 @@ Notes:
   }),
   // 84. Deep copy creates independent copies
   (_i: number) => ({
-    q: `import copy\nclass C:\n    def __init__(self, x):\n        self.x = x\nc = C([1])\nd = copy.deepcopy(c)\nWhat is d.x is c.x?`,
+    q: `What is d.x is c.x?\nimport copy\nclass C:\n    def __init__(self, x):\n        self.x = x\nc = C([1])\nd = copy.deepcopy(c)`,
     o: ['False', 'True', 'Error', 'None'],
     c: 0,
     e: "copy.deepcopy() recursively copies all nested objects, so d.x is a different list than c.x.",
@@ -2431,7 +2431,7 @@ Notes:
   }),
   // 85. Customizing copy.copy with __copy__
   (_i: number) => ({
-    q: `class C:\n    def __init__(self, x):\n        self.x = x\n    def __copy__(self):\n        return C(self.x[:])\nWhat does defining __copy__ do?`,
+    q: `What does defining __copy__ do?\nclass C:\n    def __init__(self, x):\n        self.x = x\n    def __copy__(self):\n        return C(self.x[:])`,
     o: ['Customizes copy.copy() behavior', 'Prevents copying', 'Enables deep copy', 'Makes the class immutable'],
     c: 0,
     e: "Defining __copy__ lets you control exactly what copy.copy() does for your class.",
@@ -2504,7 +2504,7 @@ Notes:
   }),
   // 86. __repr__ for string representation
   (_i: number) => ({
-    q: `class C:\n    def __init__(self, x):\n        self.x = x\n    def __repr__(self):\n        return f"C({self.x})"\nWhat is repr(C(5))?`,
+    q: `What is repr(C(5))?\nclass C:\n    def __init__(self, x):\n        self.x = x\n    def __repr__(self):\n        return f"C({self.x})"`,
     o: ['"C(5)"', '"<C object>"', '5', 'Error'],
     c: 0,
     e: "__repr__ returns the custom string representation. repr(C(5)) calls __repr__ which returns \"C(5)\".",
@@ -2576,7 +2576,7 @@ Notes:
   }),
   // 87. __eq__ for value equality
   (_i: number) => ({
-    q: `class C:\n    def __init__(self, x):\n        self.x = x\n    def __eq__(self, other):\n        return isinstance(other, C) and self.x == other.x\nWhat is C(1) == C(1)?`,
+    q: `What is C(1) == C(1)?\nclass C:\n    def __init__(self, x):\n        self.x = x\n    def __eq__(self, other):\n        return isinstance(other, C) and self.x == other.x`,
     o: ['True', 'False', 'Error', 'None'],
     c: 0,
     e: "__eq__ compares .x values. Both have x=1, and isinstance check passes, so True.",
@@ -2647,7 +2647,7 @@ Notes:
   }),
   // 88. __eq__ with non-matching type
   (_i: number) => ({
-    q: `class C:\n    def __init__(self, x):\n        self.x = x\n    def __eq__(self, other):\n        return isinstance(other, C) and self.x == other.x\nWhat is C(1) == 1?`,
+    q: `What is C(1) == 1?\nclass C:\n    def __init__(self, x):\n        self.x = x\n    def __eq__(self, other):\n        return isinstance(other, C) and self.x == other.x`,
     o: ['False', 'True', 'Error', 'None'],
     c: 0,
     e: "isinstance(1, C) is False, so __eq__ short-circuits and returns False.",
@@ -2715,7 +2715,7 @@ Notes:
   }),
   // 89. __hash__ without __eq__ — identity-based equality
   (_i: number) => ({
-    q: `class C:\n    def __init__(self, x):\n        self.x = x\n    def __hash__(self):\n        return hash(self.x)\nWhat is len({C(1), C(1)})?`,
+    q: `What is len({C(1), C(1)})?\nclass C:\n    def __init__(self, x):\n        self.x = x\n    def __hash__(self):\n        return hash(self.x)`,
     o: ['2', '1', 'Error', '0'],
     c: 0,
     e: "Without __eq__, default identity comparison is used. Two C(1) objects are different objects, so both stay in the set.",
@@ -2786,7 +2786,7 @@ Notes:
   }),
   // 90. __eq__ + __hash__ enables proper set deduplication
   (_i: number) => ({
-    q: `class C:\n    def __init__(self, x):\n        self.x = x\n    def __eq__(self, other):\n        return self.x == other.x\n    def __hash__(self):\n        return hash(self.x)\nWhat is len({C(1), C(1)})?`,
+    q: `What is len({C(1), C(1)})?\nclass C:\n    def __init__(self, x):\n        self.x = x\n    def __eq__(self, other):\n        return self.x == other.x\n    def __hash__(self):\n        return hash(self.x)`,
     o: ['1', '2', 'Error', '0'],
     c: 0,
     e: "With both __eq__ and __hash__, C(1) == C(1) is True and hashes match, so the set deduplicates to 1.",
@@ -2854,7 +2854,7 @@ Notes:
   }),
   // 91. Identity check — different objects
   (_i: number) => ({
-    q: `class C:\n    def __init__(self, x):\n        self.x = x\nc = C(5)\nc2 = C(5)\nWhat is c is c2?`,
+    q: `What is c is c2?\nclass C:\n    def __init__(self, x):\n        self.x = x\nc = C(5)\nc2 = C(5)`,
     o: ['False', 'True', 'Error', 'None'],
     c: 0,
     e: "c and c2 are two separate C(5) calls, creating different objects. 'is' checks identity, not equality.",
@@ -2923,7 +2923,7 @@ Notes:
   }),
   // 92. Identity check — same object via assignment
   (_i: number) => ({
-    q: `class C:\n    def __init__(self, x):\n        self.x = x\nc = C(5)\nc2 = c\nWhat is c is c2?`,
+    q: `What is c is c2?\nclass C:\n    def __init__(self, x):\n        self.x = x\nc = C(5)\nc2 = c`,
     o: ['True', 'False', 'Error', 'None'],
     c: 0,
     e: "c2 = c makes c2 reference the same object as c. They have the same identity.",
@@ -2993,7 +2993,7 @@ Notes:
   }),
   // 93. Class variable identity — shared string
   (_i: number) => ({
-    q: `class C:\n    class_var = "shared"\nc1 = C()\nc2 = C()\nWhat is c1.class_var is c2.class_var?`,
+    q: `What is c1.class_var is c2.class_var?\nclass C:\n    class_var = "shared"\nc1 = C()\nc2 = C()`,
     o: ['True', 'False', 'Error', 'None'],
     c: 0,
     e: "class_var is a class variable — both instances reference the same string object.",
@@ -3061,7 +3061,7 @@ Notes:
   }),
   // 94. Instance variable identity — separate lists
   (_i: number) => ({
-    q: `class C:\n    def __init__(self):\n        self.data = []\nc1 = C()\nc2 = C()\nWhat is c1.data is c2.data?`,
+    q: `What is c1.data is c2.data?\nclass C:\n    def __init__(self):\n        self.data = []\nc1 = C()\nc2 = C()`,
     o: ['False', 'True', 'Error', 'None'],
     c: 0,
     e: "Each __init__ call creates a new list. c1.data and c2.data are different list objects.",
@@ -3129,7 +3129,7 @@ Notes:
   }),
   // 95. __sizeof__ affects sys.getsizeof
   (_i: number) => ({
-    q: `class C:\n    def __sizeof__(self):\n        return 0\nimport sys\nDoes sys.getsizeof(C()) use __sizeof__?`,
+    q: `Does sys.getsizeof(C()) use __sizeof__?\nclass C:\n    def __sizeof__(self):\n        return 0\nimport sys`,
     o: ['Yes', 'No', 'Only for built-in types', 'Only with __slots__'],
     c: 0,
     e: "sys.getsizeof() calls the object's __sizeof__() method to determine its size.",
@@ -3201,7 +3201,7 @@ Notes:
   }),
   // 96. __init_subclass__ hook
   (_i: number) => ({
-    q: `class C:\n    def __init_subclass__(cls, **kw):\n        print(f"Subclass {cls.__name__}")\nclass D(C): pass\nWhat is printed?`,
+    q: `What is printed?\nclass C:\n    def __init_subclass__(cls, **kw):\n        print(f"Subclass {cls.__name__}")\nclass D(C): pass`,
     o: ['"Subclass D"', '"Subclass C"', 'Nothing', 'Error'],
     c: 0,
     e: "__init_subclass__ is called when D is defined as a subclass of C, printing \"Subclass D\".",
@@ -3351,7 +3351,7 @@ Notes:
   }),
   // 98. Dynamic attribute assignment
   (_i: number) => ({
-    q: `class C: pass\nc = C()\nc.dynamic_attr = "hello"\nWhat is c.dynamic_attr?`,
+    q: `What is c.dynamic_attr?\nclass C: pass\nc = C()\nc.dynamic_attr = "hello"`,
     o: ['"hello"', 'AttributeError', 'None', 'Error'],
     c: 0,
     e: "Python allows adding attributes to instances dynamically. c.dynamic_attr is set to \"hello\".",

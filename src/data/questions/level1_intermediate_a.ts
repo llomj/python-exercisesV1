@@ -562,7 +562,7 @@ Notes:
   }),
   // Q13: maketrans() + translate() — character mapping
   (_i: number) => ({
-    q: `t = str.maketrans("aeiou", "12345")\nWhat is "hello".translate(t)?`,
+    q: `What is "hello".translate(t)?\nt = str.maketrans("aeiou", "12345")`,
     o: ["h2ll4", "12ll4", "hello", "h1ll5"],
     c: 0,
     e: "maketrans maps a→1, e→2, i→3, o→4, u→5. In 'hello': e→2, o→4.",
@@ -984,7 +984,7 @@ Notes:
   }),
   // Q22: String immutability — assignment to index
   (_i: number) => ({
-    q: `s = "hello"\ns[0] = "H"\nWhat happens?`,
+    q: `What happens?\ns = "hello"\ns[0] = "H"`,
     o: ["TypeError", "s becomes 'Hello'", "s becomes 'H'", "None"],
     c: 0,
     e: "Strings are immutable in Python — you cannot assign to an index.",
@@ -1445,7 +1445,7 @@ Notes:
   }),
   // Q32: f-string left-align — trailing space test
   (_i: number) => ({
-    q: `x = f"{'hi':<10}"\nWhat is x.endswith("hi")?`,
+    q: `What is x.endswith("hi")?\nx = f"{'hi':<10}"`,
     o: ["False", "True", "Error", "None"],
     c: 0,
     e: "Left-aligned 'hi' has trailing spaces, so it does NOT end with 'hi'.",
@@ -1492,7 +1492,7 @@ Notes:
   }),
   // Q33: f-string center-align — strip test
   (_i: number) => ({
-    q: `x = f"{'hi':^10}"\nWhat is x.strip()?`,
+    q: `What is x.strip()?\nx = f"{'hi':^10}"`,
     o: ["hi", "    hi    ", "hi    ", "    hi"],
     c: 0,
     e: "Center-aligned 'hi' has spaces on both sides; strip() removes them all.",
@@ -1863,7 +1863,7 @@ Notes:
   }),
   // Q41: f-string with dictionary access
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is f"{d['a']}"?`,
+    q: `What is f"{d['a']}"?\nd = {"a": 1}`,
     o: ["1", "a", "{'a': 1}", "Error"],
     c: 0,
     e: "d['a'] accesses the value 1 from the dictionary, which is inserted into the f-string.",
@@ -1911,7 +1911,7 @@ Notes:
   }),
   // Q42: f-string with list index
   (_i: number) => ({
-    q: `lst = [10, 20, 30]\nWhat is f"{lst[1]}"?`,
+    q: `What is f"{lst[1]}"?\nlst = [10, 20, 30]`,
     o: ["20", "10", "30", "Error"],
     c: 0,
     e: "lst[1] accesses index 1, which is 20. The f-string converts it to '20'.",
@@ -2051,7 +2051,7 @@ Notes:
   }),
   // Q45: f-string self-documenting expression (= specifier)
   (_i: number) => ({
-    q: `x = 42\nWhat is f"{x=}"?`,
+    q: `What is f"{x=}"?\nx = 42`,
     o: ["x=42", "42", "x42", "Error"],
     c: 0,
     e: "The = specifier in f-strings shows the expression text and its value: x=42.",

@@ -3,7 +3,7 @@
 export const level9ExpertB = [
   // 51. Inherited attr not in subclass __dict__
   (_i: number) => ({
-    q: `class A:\n    x = 1\nclass B(A): pass\nWhat is "x" in B.__dict__?`,
+    q: `What is "x" in B.__dict__?\nclass A:\n    x = 1\nclass B(A): pass`,
     o: ["False", "True", "Error", "None"],
     c: 0,
     e: "x is inherited from A but not stored in B's own __dict__.",
@@ -78,7 +78,7 @@ Notes:
   }),
   // 52. Overridden attr IS in subclass __dict__
   (_i: number) => ({
-    q: `class A:\n    x = 1\nclass B(A):\n    x = 2\nWhat is "x" in B.__dict__?`,
+    q: `What is "x" in B.__dict__?\nclass A:\n    x = 1\nclass B(A):\n    x = 2`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "B defines its own x, so it appears in B.__dict__.",
@@ -153,7 +153,7 @@ Notes:
   }),
   // 53. Inherited method not in subclass __dict__
   (_i: number) => ({
-    q: `class A:\n    def f(self): return 1\nclass B(A): pass\nWhat is "f" in B.__dict__?`,
+    q: `What is "f" in B.__dict__?\nclass A:\n    def f(self): return 1\nclass B(A): pass`,
     o: ["False", "True", "Error", "None"],
     c: 0,
     e: "f is inherited from A, so it is not in B's own __dict__.",
@@ -226,7 +226,7 @@ Notes:
   }),
   // 54. Instance attr in instance __dict__
   (_i: number) => ({
-    q: `class A:\n    def __init__(self):\n        self.x = 1\nclass B(A): pass\nb = B()\nWhat is "x" in b.__dict__?`,
+    q: `What is "x" in b.__dict__?\nclass A:\n    def __init__(self):\n        self.x = 1\nclass B(A): pass\nb = B()`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "self.x = 1 creates an instance attribute on b, stored in b.__dict__.",
@@ -301,7 +301,7 @@ Notes:
   }),
   // 55. __subclasses__() returns direct subclasses
   (_i: number) => ({
-    q: `class A: pass\nclass B(A): pass\nWhat is A.__subclasses__()?`,
+    q: `What is A.__subclasses__()?\nclass A: pass\nclass B(A): pass`,
     o: ["[<class 'B'>]", "[]", "[A, B]", "Error"],
     c: 0,
     e: "__subclasses__() returns a list of direct subclasses.",
@@ -375,7 +375,7 @@ Notes:
   }),
   // 56. Multiple subclasses counted
   (_i: number) => ({
-    q: `class A: pass\nclass B(A): pass\nclass C(A): pass\nWhat is len(A.__subclasses__())?`,
+    q: `What is len(A.__subclasses__())?\nclass A: pass\nclass B(A): pass\nclass C(A): pass`,
     o: ["2", "1", "3", "0"],
     c: 0,
     e: "A has two direct subclasses: B and C.",
@@ -447,7 +447,7 @@ Notes:
   }),
   // 57. __slots__ inheritance — both parent and child slots
   (_i: number) => ({
-    q: `class A:\n    __slots__ = ("x",)\nclass B(A):\n    __slots__ = ("y",)\nb = B()\nb.x = 1; b.y = 2\nWhat is (b.x, b.y)?`,
+    q: `What is (b.x, b.y)?\nclass A:\n    __slots__ = ("x",)\nclass B(A):\n    __slots__ = ("y",)\nb = B()\nb.x = 1; b.y = 2`,
     o: ["(1, 2)", "Error", "(1,)", "None"],
     c: 0,
     e: "B inherits slot x from A and adds slot y. Both are accessible.",
@@ -523,7 +523,7 @@ Notes:
   }),
   // 58. __slots__ parent but no __slots__ in child — child gets __dict__
   (_i: number) => ({
-    q: `class A:\n    __slots__ = ("x",)\nclass B(A): pass\nb = B()\nb.x = 1; b.z = 3\nWhat is (b.x, b.z)?`,
+    q: `What is (b.x, b.z)?\nclass A:\n    __slots__ = ("x",)\nclass B(A): pass\nb = B()\nb.x = 1; b.z = 3`,
     o: ["(1, 3)", "Error", "(1,)", "None"],
     c: 0,
     e: "B has no __slots__, so it gets a __dict__ and can store arbitrary attributes alongside inherited slots.",
@@ -599,7 +599,7 @@ Notes:
   }),
   // 59. Single-underscore private accessible in subclass
   (_i: number) => ({
-    q: `class A:\n    def __init__(self):\n        self._x = 1\nclass B(A):\n    def get_x(self):\n        return self._x\nWhat is B().get_x()?`,
+    q: `What is B().get_x()?\nclass A:\n    def __init__(self):\n        self._x = 1\nclass B(A):\n    def get_x(self):\n        return self._x`,
     o: ["1", "Error", "None", "0"],
     c: 0,
     e: "Single underscore _x is just a convention; it is fully accessible in subclasses.",
@@ -674,7 +674,7 @@ Notes:
   }),
   // 60. Double-underscore name mangling — AttributeError
   (_i: number) => ({
-    q: `class A:\n    def __init__(self):\n        self.__x = 1\nclass B(A):\n    def get_x(self):\n        return self.__x\nWhat happens when calling B().get_x()?`,
+    q: `What happens when calling B().get_x()?\nclass A:\n    def __init__(self):\n        self.__x = 1\nclass B(A):\n    def get_x(self):\n        return self.__x`,
     o: ["AttributeError", "1", "None", "0"],
     c: 0,
     e: "Name mangling transforms self.__x in A to self._A__x, and self.__x in B to self._B__x. B has no _B__x.",
@@ -749,7 +749,7 @@ Notes:
   }),
   // 61. Accessing mangled name directly
   (_i: number) => ({
-    q: `class A:\n    def __init__(self):\n        self.__x = 1\nclass B(A):\n    def get_x(self):\n        return self._A__x\nWhat is B().get_x()?`,
+    q: `What is B().get_x()?\nclass A:\n    def __init__(self):\n        self.__x = 1\nclass B(A):\n    def get_x(self):\n        return self._A__x`,
     o: ["1", "AttributeError", "None", "0"],
     c: 0,
     e: "self._A__x accesses the mangled name directly, returning 1.",
@@ -1118,7 +1118,7 @@ Notes:
   }),
   // 66. Class-level counter with __init__
   (_i: number) => ({
-    q: `class A:\n    class_id = 0\n    def __init__(self):\n        A.class_id += 1\n        self.id = A.class_id\na1 = A()\na2 = A()\nWhat is (a1.id, a2.id)?`,
+    q: `What is (a1.id, a2.id)?\nclass A:\n    class_id = 0\n    def __init__(self):\n        A.class_id += 1\n        self.id = A.class_id\na1 = A()\na2 = A()`,
     o: ["(1, 2)", "(0, 1)", "(2, 2)", "(1, 1)"],
     c: 0,
     e: "Each __init__ increments A.class_id, so a1.id=1 and a2.id=2.",
@@ -1196,7 +1196,7 @@ Notes:
   }),
   // 67. __init_subclass__ sets attribute on subclass
   (_i: number) => ({
-    q: `class A:\n    def __init_subclass__(cls, **kw):\n        super().__init_subclass__(**kw)\n        cls.parent_name = "A"\nclass B(A): pass\nWhat is B.parent_name?`,
+    q: `What is B.parent_name?\nclass A:\n    def __init_subclass__(cls, **kw):\n        super().__init_subclass__(**kw)\n        cls.parent_name = "A"\nclass B(A): pass`,
     o: ['"A"', "Error", "None", '"B"'],
     c: 0,
     e: "__init_subclass__ runs when B is defined and sets B.parent_name to 'A'.",
@@ -1270,7 +1270,7 @@ Notes:
   }),
   // 68. Subclassing int — __new__ for immutables
   (_i: number) => ({
-    q: `class Positive(int):\n    def __new__(cls, val):\n        if val < 0:\n            raise ValueError\n        return super().__new__(cls, val)\nWhat is Positive(5) + 3?`,
+    q: `What is Positive(5) + 3?\nclass Positive(int):\n    def __new__(cls, val):\n        if val < 0:\n            raise ValueError\n        return super().__new__(cls, val)`,
     o: ["8", "Error", "5", "Positive(8)"],
     c: 0,
     e: "Positive(5) creates an int subclass with value 5. Adding 3 gives 8.",
@@ -1347,7 +1347,7 @@ Notes:
   }),
   // 69. Subclassing int — __new__ raises ValueError
   (_i: number) => ({
-    q: `class Positive(int):\n    def __new__(cls, val):\n        if val < 0:\n            raise ValueError\n        return super().__new__(cls, val)\nWhat happens with Positive(-1)?`,
+    q: `What happens with Positive(-1)?\nclass Positive(int):\n    def __new__(cls, val):\n        if val < 0:\n            raise ValueError\n        return super().__new__(cls, val)`,
     o: ["ValueError", "0", "-1", "None"],
     c: 0,
     e: "val < 0 is True, so ValueError is raised.",
@@ -1423,7 +1423,7 @@ Notes:
   }),
   // 70. Subclassing float — custom __repr__
   (_i: number) => ({
-    q: `class Percentage(float):\n    def __repr__(self):\n        return f"{self:.1%}"\nWhat is repr(Percentage(0.75))?`,
+    q: `What is repr(Percentage(0.75))?\nclass Percentage(float):\n    def __repr__(self):\n        return f"{self:.1%}"`,
     o: ['"75.0%"', '"0.75"', '"0.75%"', "Error"],
     c: 0,
     e: "f\"{self:.1%}\" formats 0.75 as '75.0%' using the percentage format specifier.",
@@ -1577,7 +1577,7 @@ Notes:
   }),
   // 72. Identifying the template method
   (_i: number) => ({
-    q: `class Report:\n    def generate(self):\n        return self.header() + self.body() + self.footer()\n    def header(self): return "=Head=\\n"\n    def footer(self): return "=End="\nWhich method is the template method?`,
+    q: `Which method is the template method?\nclass Report:\n    def generate(self):\n        return self.header() + self.body() + self.footer()\n    def header(self): return "=Head=\\n"\n    def footer(self): return "=End="`,
     o: ["generate()", "header()", "footer()", "__init__()"],
     c: 0,
     e: "generate() is the template method — it defines the algorithm skeleton by calling step methods.",
@@ -1730,7 +1730,7 @@ Notes:
   }),
   // 74. Strategy pattern example
   (_i: number) => ({
-    q: `class Sorter:\n    def __init__(self, strategy):\n        self.strategy = strategy\n    def sort(self, data):\n        return self.strategy(data)\ns = Sorter(sorted)\nWhat is s.sort([3, 1, 2])?`,
+    q: `What is s.sort([3, 1, 2])?\nclass Sorter:\n    def __init__(self, strategy):\n        self.strategy = strategy\n    def sort(self, data):\n        return self.strategy(data)\ns = Sorter(sorted)`,
     o: ["[1, 2, 3]", "[3, 2, 1]", "[3, 1, 2]", "Error"],
     c: 0,
     e: "The strategy is sorted, so s.sort([3, 1, 2]) returns [1, 2, 3].",
@@ -1882,7 +1882,7 @@ Notes:
   }),
   // 76. Factory Method with classmethod
   (_i: number) => ({
-    q: `class Animal:\n    @classmethod\n    def create(cls, sound):\n        return cls(sound)\nclass Dog(Animal):\n    def __init__(self, sound):\n        self.sound = sound\nWhat is Dog.create("woof").sound?`,
+    q: `What is Dog.create("woof").sound?\nclass Animal:\n    @classmethod\n    def create(cls, sound):\n        return cls(sound)\nclass Dog(Animal):\n    def __init__(self, sound):\n        self.sound = sound`,
     o: ['"woof"', "Error", "None", '"bark"'],
     c: 0,
     e: "Dog.create('woof') calls cls(sound) where cls is Dog, creating Dog('woof').",
@@ -2039,7 +2039,7 @@ Notes:
   }),
   // 78. Observer pattern implementation
   (_i: number) => ({
-    q: `class Event:\n    def __init__(self):\n        self._handlers = []\n    def subscribe(self, f):\n        self._handlers.append(f)\n    def fire(self, data):\n        for h in self._handlers:\n            h(data)\ne = Event()\nresults = []\ne.subscribe(lambda d: results.append(d))\ne.fire("hello")\nWhat is results?`,
+    q: `What is results?\nclass Event:\n    def __init__(self):\n        self._handlers = []\n    def subscribe(self, f):\n        self._handlers.append(f)\n    def fire(self, data):\n        for h in self._handlers:\n            h(data)\ne = Event()\nresults = []\ne.subscribe(lambda d: results.append(d))\ne.fire("hello")`,
     o: ['["hello"]', "[]", '["hello", "hello"]', "Error"],
     c: 0,
     e: "fire('hello') calls the subscribed handler, which appends 'hello' to results.",
@@ -2193,7 +2193,7 @@ Notes:
   }),
   // 80. Square/Rectangle LSP violation
   (_i: number) => ({
-    q: `class Rectangle:\n    def __init__(self, w, h):\n        self.w = w\n        self.h = h\n    def area(self):\n        return self.w * self.h\nclass Square(Rectangle):\n    def __init__(self, s):\n        super().__init__(s, s)\nDoes Square potentially violate LSP?`,
+    q: `Does Square potentially violate LSP?\nclass Rectangle:\n    def __init__(self, w, h):\n        self.w = w\n        self.h = h\n    def area(self):\n        return self.w * self.h\nclass Square(Rectangle):\n    def __init__(self, s):\n        super().__init__(s, s)`,
     o: ["Yes, if w and h can be set independently", "No, it always follows LSP", "Only if area() is overridden", "Only in Python 2"],
     c: 0,
     e: "If code sets r.w = 5 expecting r.h to stay the same, a Square breaks that expectation.",
@@ -2598,7 +2598,7 @@ Notes:
   }),
   // 85. ABC for dependency inversion
   (_i: number) => ({
-    q: `from abc import ABC, abstractmethod\nclass Plugin(ABC):\n    @abstractmethod\n    def execute(self): pass\nWhat design principle does this implement?`,
+    q: `What design principle does this implement?\nfrom abc import ABC, abstractmethod\nclass Plugin(ABC):\n    @abstractmethod\n    def execute(self): pass`,
     o: ["Dependency Inversion", "Single Responsibility", "Don't Repeat Yourself", "YAGNI"],
     c: 0,
     e: "Defining an abstract Plugin class means code depends on the abstraction, not concrete plugins.",
@@ -2681,7 +2681,7 @@ Notes:
   }),
   // 86. Singleton pattern
   (_i: number) => ({
-    q: `class Singleton:\n    _instance = None\n    def __new__(cls):\n        if not cls._instance:\n            cls._instance = super().__new__(cls)\n        return cls._instance\ns1 = Singleton()\ns2 = Singleton()\nWhat is s1 is s2?`,
+    q: `What is s1 is s2?\nclass Singleton:\n    _instance = None\n    def __new__(cls):\n        if not cls._instance:\n            cls._instance = super().__new__(cls)\n        return cls._instance\ns1 = Singleton()\ns2 = Singleton()`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "__new__ returns the same instance every time, so s1 is s2 is True.",
@@ -2762,7 +2762,7 @@ Notes:
   }),
   // 87. Metaclass __call__ logs creation
   (_i: number) => ({
-    q: `class Meta(type):\n    def __call__(cls, *a, **kw):\n        print(f"Creating {cls.__name__}")\n        return super().__call__(*a, **kw)\nclass Foo(metaclass=Meta): pass\nWhat happens when Foo() is called?`,
+    q: `What happens when Foo() is called?\nclass Meta(type):\n    def __call__(cls, *a, **kw):\n        print(f"Creating {cls.__name__}")\n        return super().__call__(*a, **kw)\nclass Foo(metaclass=Meta): pass`,
     o: ["Prints 'Creating Foo' and returns Foo instance", "Error", "Returns None", "Prints nothing"],
     c: 0,
     e: "Meta.__call__ intercepts Foo() creation, prints the message, then creates the instance normally.",
@@ -3160,7 +3160,7 @@ Notes:
   }),
   // 92. Custom exception class
   (_i: number) => ({
-    q: `class CustomError(Exception): pass\nraise CustomError("oops")\nDoes this work?`,
+    q: `Does this work?\nclass CustomError(Exception): pass\nraise CustomError("oops")`,
     o: ["Yes, raises CustomError", "No, syntax error", "No, must define __init__", "No, must inherit BaseException"],
     c: 0,
     e: "A class inheriting from Exception can be raised. __init__ is inherited from Exception.",
@@ -3235,7 +3235,7 @@ Notes:
   }),
   // 93. Custom exception with extra attributes
   (_i: number) => ({
-    q: `class CustomError(Exception):\n    def __init__(self, msg, code):\n        super().__init__(msg)\n        self.code = code\ne = CustomError("fail", 404)\nWhat is e.code?`,
+    q: `What is e.code?\nclass CustomError(Exception):\n    def __init__(self, msg, code):\n        super().__init__(msg)\n        self.code = code\ne = CustomError("fail", 404)`,
     o: ["404", "Error", '"fail"', "None"],
     c: 0,
     e: "CustomError stores code=404 as an instance attribute.",
@@ -3313,7 +3313,7 @@ Notes:
   }),
   // 94. Exception hierarchy — app-specific
   (_i: number) => ({
-    q: `class AppError(Exception): pass\nclass DBError(AppError): pass\nclass AuthError(AppError): pass\nWhat is issubclass(DBError, AppError)?`,
+    q: `What is issubclass(DBError, AppError)?\nclass AppError(Exception): pass\nclass DBError(AppError): pass\nclass AuthError(AppError): pass`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "DBError inherits from AppError, so issubclass(DBError, AppError) is True.",
@@ -3394,7 +3394,7 @@ Notes:
   }),
   // 95. Catching subclass exception with parent handler
   (_i: number) => ({
-    q: `class AppError(Exception): pass\nclass DBError(AppError): pass\ntry:\n    raise DBError()\nexcept AppError:\n    result = "caught"\nWhat is result?`,
+    q: `What is result?\nclass AppError(Exception): pass\nclass DBError(AppError): pass\ntry:\n    raise DBError()\nexcept AppError:\n    result = "caught"`,
     o: ['"caught"', "DBError is not caught", "Error", "None"],
     c: 0,
     e: "except AppError catches DBError because DBError is a subclass of AppError.",
@@ -3476,7 +3476,7 @@ Notes:
   }),
   // 96. Catching multiple exception types with tuple
   (_i: number) => ({
-    q: `try:\n    raise ValueError()\nexcept (TypeError, ValueError):\n    result = "caught"\nWhat is result?`,
+    q: `What is result?\ntry:\n    raise ValueError()\nexcept (TypeError, ValueError):\n    result = "caught"`,
     o: ['"caught"', "Error", "ValueError not caught", "None"],
     c: 0,
     e: "except (TypeError, ValueError) catches either exception type. ValueError matches.",

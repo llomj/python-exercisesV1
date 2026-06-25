@@ -5,7 +5,7 @@ import { PersonaStage } from '../../types';
 export const level6IntermediateA = [
   // 1-15: Nested dict access and manipulation
   (_i: number) => ({
-    q: `d = {"a": {"x": 1}}\nWhat is d["a"]["x"]?`,
+    q: `What is d["a"]["x"]?\nd = {"a": {"x": 1}}`,
     o: ["1", "{'x': 1}", "KeyError", "None"],
     c: 0,
     e: "Chained indexing accesses nested dicts: d['a'] returns {'x': 1}, then ['x'] returns 1.",
@@ -74,7 +74,7 @@ Notes:
 • For maintainable code, make the intent behind: Each bracket dereferences one level deeper into the structure. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": {"x": 1}}\nd["a"]["y"] = 2\nWhat is d["a"]?`,
+    q: `What is d["a"]?\nd = {"a": {"x": 1}}\nd["a"]["y"] = 2`,
     o: ["{'x': 1, 'y': 2}", "{'y': 2}", "{'x': 1}", "KeyError"],
     c: 0,
     e: "Assigning to d['a']['y'] adds key 'y' to the nested dict, so d['a'] becomes {'x': 1, 'y': 2}.",
@@ -142,7 +142,7 @@ Notes:
 • For maintainable code, make the intent behind: d["a"]["y"] = 2 adds the key "y" with value 2 to the inner dictionary that d["a"] references. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": {"b": {"c": 3}}}\nWhat is d["a"]["b"]["c"]?`,
+    q: `What is d["a"]["b"]["c"]?\nd = {"a": {"b": {"c": 3}}}`,
     o: ["3", "{'c': 3}", "{'b': {'c': 3}}", "KeyError"],
     c: 0,
     e: "Triple-chained indexing drills through three levels of nesting to reach the value 3.",
@@ -211,7 +211,7 @@ Notes:
 • For maintainable code, make the intent behind: Each level resolves one dictionary, and the next bracket digs deeper. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"users": [{"name": "Alice"}, {"name": "Bob"}]}\nWhat is d["users"][0]["name"]?`,
+    q: `What is d["users"][0]["name"]?\nd = {"users": [{"name": "Alice"}, {"name": "Bob"}]}`,
     o: ["'Alice'", "'Bob'", "[{'name': 'Alice'}]", "KeyError"],
     c: 0,
     e: "d['users'] is a list of dicts; [0] gets the first dict, then ['name'] gets 'Alice'.",
@@ -280,7 +280,7 @@ Notes:
 • For maintainable code, make the intent behind: This mixed nesting is common in real-world data (e.g., JSON APIs). explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"users": [{"name": "Alice"}, {"name": "Bob"}]}\nWhat is len(d["users"])?`,
+    q: `What is len(d["users"])?\nd = {"users": [{"name": "Alice"}, {"name": "Bob"}]}`,
     o: ["2", "1", "3", "Error"],
     c: 0,
     e: "d['users'] is a list with two dict elements, so len() returns 2.",
@@ -348,7 +348,7 @@ Notes:
 • For maintainable code, make the intent behind: Here d["users"] is a list containing two dictionaries, so len() returns 2. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {}\nd.setdefault("a", {})["x"] = 1\nWhat is d?`,
+    q: `What is d?\nd = {}\nd.setdefault("a", {})["x"] = 1`,
     o: ["{'a': {'x': 1}}", "{'a': {}}", "{}", "KeyError"],
     c: 0,
     e: "setdefault returns the existing or newly-set value; here it returns {}, then ['x']=1 mutates that dict in place.",
@@ -418,7 +418,7 @@ Notes:
 • For maintainable code, make the intent behind: It returns the value for the key if it exists, or sets it to the default and returns that default. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {}\nd.setdefault("a", []).append(1)\nd.setdefault("a", []).append(2)\nWhat is d?`,
+    q: `What is d?\nd = {}\nd.setdefault("a", []).append(1)\nd.setdefault("a", []).append(2)`,
     o: ["{'a': [1, 2]}", "{'a': [2]}", "{'a': [1]}", "{'a': [], 'a': []}"],
     c: 0,
     e: "First setdefault creates the list and appends 1; the second call finds 'a' already exists, returns the same list, and appends 2.",
@@ -486,7 +486,7 @@ Notes:
 • For maintainable code, make the intent behind: On the first call the key is missing so a new list is created; on subsequent calls the existing list is returned and appended to. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is {v: k for k, v in d.items()}?`,
+    q: `What is {v: k for k, v in d.items()}?\nd = {"a": 1, "b": 2}`,
     o: ["{1: 'a', 2: 'b'}", "{'a': 1, 'b': 2}", "{('a', 1): ('b', 2)}", "Error"],
     c: 0,
     e: "This dict comprehension swaps keys and values, creating an inverted dictionary.",
@@ -555,7 +555,7 @@ Notes:
 • For maintainable code, make the intent behind: For each (k, v) pair in d.items(), the new dict maps v → k. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 1}\nWhat is {v: k for k, v in d.items()}?`,
+    q: `What is {v: k for k, v in d.items()}?\nd = {"a": 1, "b": 1}`,
     o: ["{1: 'b'}", "{1: 'a'}", "{1: 'a', 1: 'b'}", "Error"],
     c: 0,
     e: "When multiple keys share the same value, the last one processed wins during inversion. 'b' overwrites 'a' for key 1.",
@@ -625,7 +625,7 @@ Notes:
 • For maintainable code, make the intent behind: Since dicts are insertion-ordered (Python 3.7+), the last key-value pair processed for a given new key wins. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d1 = {"a": 1}\nd2 = {"b": 2}\nWhat is {**d1, **d2, "c": 3}?`,
+    q: `What is {**d1, **d2, "c": 3}?\nd1 = {"a": 1}\nd2 = {"b": 2}`,
     o: ["{'a': 1, 'b': 2, 'c': 3}", "{'c': 3}", "{'a': 1, 'b': 2}", "Error"],
     c: 0,
     e: "Double-star unpacking merges d1 and d2 into a new dict, then the literal 'c': 3 is added.",
@@ -696,7 +696,7 @@ Notes:
 • For maintainable code, make the intent behind: Key concepts: • **d1 unpacks {"a": 1} into the new dict • **d2 unpacks {"b": 2} into the new dict • "c": 3 adds a literal entry • All combined into one dict: {"a": 1, "b": 2, "c": 3} How it works: • Start with empty dict • **d1 → adds "a": 1 • **d2 → adds "b": 2 • "c": 3 → adds "c": 3 • Result: {"a": 1, "b": 2, "c": 3} Examples: • {**{"x": 1}, **{"y": 2}} → {"x": 1, "y": 2} • {**d1, **d2, "c": 3} → merges all three sources Common uses: • Merging multiple dicts into one (pre-3.9 alternative to |) • Adding extra keys during merge • Creating modified copies of dicts explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2, "c": 3}\nWhat is {k: v for k, v in d.items() if v > 1}?`,
+    q: `What is {k: v for k, v in d.items() if v > 1}?\nd = {"a": 1, "b": 2, "c": 3}`,
     o: ["{'b': 2, 'c': 3}", "{'a': 1}", "{'c': 3}", "{2: 'b', 3: 'c'}"],
     c: 0,
     e: "The dict comprehension filters to only include entries where the value is greater than 1.",
@@ -766,7 +766,7 @@ Notes:
 • For maintainable code, make the intent behind: Key concepts: • d.items() yields all (key, value) pairs • The if v > 1 clause keeps only pairs where the value exceeds 1 • "a": 1 is excluded (1 > 1 is False) • "b": 2 and "c": 3 are included How it works: • ("a", 1): 1 > 1 → False → excluded • ("b", 2): 2 > 1 → True → included • ("c", 3): 3 > 1 → True → included • Result: {"b": 2, "c": 3} Examples: • {k: v for k, v in d.items() if v > 1} → {"b": 2, "c": 3} • {k: v for k, v in d.items() if v % 2 == 0} → {"b": 2} Common uses: • Filtering dicts by value thresholds • Removing entries that meet certain criteria • Selecting subsets of configuration explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is list(d)?`,
+    q: `What is list(d)?\nd = {"a": 1, "b": 2}`,
     o: ["['a', 'b']", "[('a', 1), ('b', 2)]", "[1, 2]", "Error"],
     c: 0,
     e: "Iterating over a dict (or calling list() on it) yields the keys, not the values or items.",
@@ -835,7 +835,7 @@ Notes:
 • For maintainable code, make the intent behind: This is a fundamental dict behavior. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is dict(sorted(d.items(), key=lambda x: x[1]))?`,
+    q: `What is dict(sorted(d.items(), key=lambda x: x[1]))?\nd = {"a": 1, "b": 2}`,
     o: ["{'a': 1, 'b': 2}", "{'b': 2, 'a': 1}", "[('a', 1), ('b', 2)]", "Error"],
     c: 0,
     e: "Sorting by value (x[1]) sorts pairs as [('a',1),('b',2)]; dict() reconstructs the dict preserving that order.",
@@ -904,7 +904,7 @@ Notes:
 • For maintainable code, make the intent behind: dict() then reconstructs a dictionary from those sorted tuples, preserving the sorted order (Python 3.7+). explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"b": 2, "a": 1}\nWhat is dict(sorted(d.items()))?`,
+    q: `What is dict(sorted(d.items()))?\nd = {"b": 2, "a": 1}`,
     o: ["{'a': 1, 'b': 2}", "{'b': 2, 'a': 1}", "[('a', 1), ('b', 2)]", "Error"],
     c: 0,
     e: "sorted(d.items()) sorts by key alphabetically; dict() preserves that order.",
@@ -973,7 +973,7 @@ Notes:
 • For maintainable code, make the intent behind: Key concepts: • d.items() → [("b", 2), ("a", 1)] • sorted() compares tuples: ("a", 1) < ("b", 2) because "a" < "b" • Result: [("a", 1), ("b", 2)] • dict() preserves this alphabetical key order How it works: • Tuples compare lexicographically: first element first • "a" < "b" → ("a", 1) comes first • dict() rebuilds with that order Examples: • dict(sorted({"b": 2, "a": 1}.items())) → {"a": 1, "b": 2} • dict(sorted({"z": 1, "m": 2, "a": 3}.items())) → {"a": 3, "m": 2, "z": 1} Common uses: • Alphabetizing dict keys for display • Canonical ordering for comparison • Deterministic serialization explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2, "c": 3}\nWhat is max(d, key=d.get)?`,
+    q: `What is max(d, key=d.get)?\nd = {"a": 1, "b": 2, "c": 3}`,
     o: ["'c'", "3", "('c', 3)", "Error"],
     c: 0,
     e: "max(d) iterates over keys; key=d.get compares by their values. 'c' has the largest value (3).",
@@ -1045,7 +1045,7 @@ Notes:
   }),
   // 16-30: Dict method mastery
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nd.update(b=3, c=4)\nWhat is d?`,
+    q: `What is d?\nd = {"a": 1, "b": 2}\nd.update(b=3, c=4)`,
     o: ["{'a': 1, 'b': 3, 'c': 4}", "{'a': 1, 'b': 2, 'c': 4}", "{'b': 3, 'c': 4}", "Error"],
     c: 0,
     e: "update() with keyword arguments overwrites 'b' to 3 and adds 'c': 4.",
@@ -1115,7 +1115,7 @@ Notes:
 • For maintainable code, make the intent behind: Keyword arguments are treated as key-value pairs where the argument name is the key (as a string). explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1}\nd.update([("b", 2), ("c", 3)])\nWhat is d?`,
+    q: `What is d?\nd = {"a": 1}\nd.update([("b", 2), ("c", 3)])`,
     o: ["{'a': 1, 'b': 2, 'c': 3}", "{'b': 2, 'c': 3}", "[('a', 1), ('b', 2), ('c', 3)]", "Error"],
     c: 0,
     e: "update() accepts a list of (key, value) pairs and adds each pair to the dict.",
@@ -1184,7 +1184,7 @@ Notes:
 • For maintainable code, make the intent behind: When given a list of tuples, each tuple is treated as a key-value pair. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nd.pop("a")\nWhat is d?`,
+    q: `What is d?\nd = {"a": 1, "b": 2}\nd.pop("a")`,
     o: ["{'b': 2}", "{'a': 1}", "{'a': 1, 'b': 2}", "Error"],
     c: 0,
     e: "pop('a') removes key 'a' and its value from the dict. Only 'b': 2 remains.",
@@ -1253,7 +1253,7 @@ Notes:
 • For maintainable code, make the intent behind: The dict is mutated in place. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nresult = [d.pop(k) for k in list(d) if d[k] < 2]\nWhat is d?`,
+    q: `What is d?\nd = {"a": 1, "b": 2}\nresult = [d.pop(k) for k in list(d) if d[k] < 2]`,
     o: ["{'b': 2}", "{'a': 1}", "{}", "Error"],
     c: 0,
     e: "list(d) snapshots the keys. Only 'a' has value < 2, so pop('a') removes it. d becomes {'b': 2}.",
@@ -1322,7 +1322,7 @@ Notes:
 • For maintainable code, make the intent behind: list(d) creates a snapshot of keys first (essential to avoid modifying the dict during iteration), then the comprehension pops matching entries. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is d.setdefault("a", 999)?`,
+    q: `What is d.setdefault("a", 999)?\nd = {"a": 1}`,
     o: ["1", "999", "None", "Error"],
     c: 0,
     e: "Key 'a' already exists with value 1, so setdefault returns the existing value without changing it.",
@@ -1390,7 +1390,7 @@ Notes:
 • For maintainable code, make the intent behind: If the key is missing, it inserts it with the default value and returns that default. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is d.setdefault("b", 999)?`,
+    q: `What is d.setdefault("b", 999)?\nd = {"a": 1}`,
     o: ["999", "1", "None", "Error"],
     c: 0,
     e: "Key 'b' is missing, so setdefault inserts 'b': 999 and returns 999.",
@@ -1530,7 +1530,7 @@ Notes:
 • For maintainable code, make the intent behind: When the iterable is a string, each character becomes a key. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {}.fromkeys("abc", [])\nd["a"].append(1)\nWhat is d?`,
+    q: `What is d?\nd = {}.fromkeys("abc", [])\nd["a"].append(1)`,
     o: ["{'a': [1], 'b': [1], 'c': [1]}", "{'a': [1], 'b': [], 'c': []}", "{'a': 1, 'b': [], 'c': []}", "Error"],
     c: 0,
     e: "fromkeys shares ONE list object across all keys. Appending to one mutates them all.",
@@ -1600,7 +1600,7 @@ Notes:
 • For maintainable code, make the intent behind: fromkeys uses the SAME value object for every key — it does not copy it. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {k: [] for k in "abc"}\nd["a"].append(1)\nWhat is d?`,
+    q: `What is d?\nd = {k: [] for k in "abc"}\nd["a"].append(1)`,
     o: ["{'a': [1], 'b': [], 'c': []}", "{'a': [1], 'b': [1], 'c': [1]}", "{'a': 1, 'b': [], 'c': []}", "Error"],
     c: 0,
     e: "A dict comprehension creates a NEW list for each key, so appending to 'a' only affects 'a'.",
@@ -1670,7 +1670,7 @@ Notes:
 • For maintainable code, make the intent behind: Each call to [] creates a brand-new list object. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is d.keys() & {"a", "c"}?`,
+    q: `What is d.keys() & {"a", "c"}?\nd = {"a": 1, "b": 2}`,
     o: ["{'a'}", "['a']", "{'a', 'c'}", "Error"],
     c: 0,
     e: "dict.keys() returns a view that supports set operations. The intersection (&) with {'a','c'} gives {'a'}.",
@@ -1740,7 +1740,7 @@ Notes:
 • For maintainable code, make the intent behind: This lets you perform set operations between dict keys and other sets without converting first. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d1 = {"a": 1, "b": 2}\nd2 = {"b": 3, "c": 4}\nWhat is d1.keys() & d2.keys()?`,
+    q: `What is d1.keys() & d2.keys()?\nd1 = {"a": 1, "b": 2}\nd2 = {"b": 3, "c": 4}`,
     o: ["{'b'}", "{'a', 'b', 'c'}", "{'a'}", "Error"],
     c: 0,
     e: "The & operator on key views gives the intersection — keys present in both dicts. Only 'b' is shared.",
@@ -1810,7 +1810,7 @@ Notes:
 • For maintainable code, make the intent behind: This is a powerful and efficient way to find shared keys. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d1 = {"a": 1, "b": 2}\nd2 = {"b": 3, "c": 4}\nWhat is d1.keys() | d2.keys()?`,
+    q: `What is d1.keys() | d2.keys()?\nd1 = {"a": 1, "b": 2}\nd2 = {"b": 3, "c": 4}`,
     o: ["{'a', 'b', 'c'}", "{'b'}", "{'a', 'c'}", "Error"],
     c: 0,
     e: "The | operator on key views gives the union — all keys from both dicts.",
@@ -1879,7 +1879,7 @@ Notes:
 • For maintainable code, make the intent behind: Duplicates are naturally deduplicated since it's a set operation. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d1 = {"a": 1, "b": 2}\nd2 = {"b": 3, "c": 4}\nWhat is d1.keys() - d2.keys()?`,
+    q: `What is d1.keys() - d2.keys()?\nd1 = {"a": 1, "b": 2}\nd2 = {"b": 3, "c": 4}`,
     o: ["{'a'}", "{'c'}", "{'a', 'c'}", "Error"],
     c: 0,
     e: "The - operator on key views gives keys in d1 that are NOT in d2. Only 'a' qualifies.",
@@ -1948,7 +1948,7 @@ Notes:
 • For maintainable code, make the intent behind: This is a set difference operation. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is d.keys() ^ {"a", "c"}?`,
+    q: `What is d.keys() ^ {"a", "c"}?\nd = {"a": 1, "b": 2}`,
     o: ["{'b', 'c'}", "{'a'}", "{'a', 'b', 'c'}", "Error"],
     c: 0,
     e: "Symmetric difference (^) returns keys in either operand but not both: 'b' and 'c'.",
@@ -2021,7 +2021,7 @@ Notes:
 • For maintainable code, make the intent behind: It's the opposite of intersection. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is "a" in d.keys()?`,
+    q: `What is "a" in d.keys()?\nd = {"a": 1, "b": 2}`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "'a' in d.keys() checks if 'a' is a key, which is the same as 'a' in d. Result is True.",
@@ -2091,7 +2091,7 @@ Notes:
   }),
   // 31-50: Dict unpacking and patterns
   (_i: number) => ({
-    q: `def f(**kwargs):\n    return kwargs\nWhat is f(a=1, b=2)?`,
+    q: `What is f(a=1, b=2)?\ndef f(**kwargs):\n    return kwargs`,
     o: ["{'a': 1, 'b': 2}", "(1, 2)", "['a', 'b']", "Error"],
     c: 0,
     e: "**kwargs collects keyword arguments into a dictionary. f(a=1, b=2) returns {'a': 1, 'b': 2}.",
@@ -2161,7 +2161,7 @@ Notes:
 • For maintainable code, make the intent behind: The keys are the argument names (as strings) and the values are the argument values. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\ndef f(a, b):\n    return a + b\nWhat is f(**d)?`,
+    q: `What is f(**d)?\nd = {"a": 1, "b": 2}\ndef f(a, b):\n    return a + b`,
     o: ["3", "{'a': 1, 'b': 2}", "('a', 'b')", "Error"],
     c: 0,
     e: "**d unpacks the dict as keyword arguments: f(a=1, b=2), so a+b = 3.",
@@ -2230,7 +2230,7 @@ Notes:
 • For maintainable code, make the intent behind: Each key becomes a parameter name and its value becomes the argument value. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d1 = {"a": 1}\nd2 = {"a": 2}\nWhat is {**d1, **d2}?`,
+    q: `What is {**d1, **d2}?\nd1 = {"a": 1}\nd2 = {"a": 2}`,
     o: ["{'a': 2}", "{'a': 1}", "{'a': 1, 'a': 2}", "Error"],
     c: 0,
     e: "When unpacking dicts with duplicate keys, the last one wins. d2's 'a': 2 overwrites d1's 'a': 1.",
@@ -2299,7 +2299,7 @@ Notes:
 • For maintainable code, make the intent behind: Key concepts: • {**d1, **d2} merges d1 then d2 into a new dict • d1 contributes "a": 1 • d2 contributes "a": 2 (overwrites) • Result: {"a": 2} How it works: • Start empty dict • **d1: add "a": 1 → {"a": 1} • **d2: add "a": 2 → overwrites → {"a": 2} Examples: • {**{"a": 1}, **{"a": 2}} → {"a": 2} • {**{"a": 2}, **{"a": 1}} → {"a": 1} (order matters!) Common uses: • Merging dicts with intentional override priority • Configuration layers (defaults → user overrides) • Understanding merge conflict resolution explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `keys = ["a", "b", "c"]\nvals = [1, 2, 3]\nWhat is dict(zip(keys, vals))?`,
+    q: `What is dict(zip(keys, vals))?\nkeys = ["a", "b", "c"]\nvals = [1, 2, 3]`,
     o: ["{'a': 1, 'b': 2, 'c': 3}", "[('a', 1), ('b', 2), ('c', 3)]", "{'a': 'b': 'c'}", "Error"],
     c: 0,
     e: "zip pairs up elements from both lists; dict() converts those pairs into a dictionary.",
@@ -2368,7 +2368,7 @@ Notes:
 • For maintainable code, make the intent behind: dict() then converts that iterable of (key, value) tuples into a dictionary. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2, "c": 3}\nWhat is [d[k] for k in ["a", "c"]]?`,
+    q: `What is [d[k] for k in ["a", "c"]]?\nd = {"a": 1, "b": 2, "c": 3}`,
     o: ["[1, 3]", "[1, 2, 3]", "{'a': 1, 'c': 3}", "Error"],
     c: 0,
     e: "The list comprehension selects values for keys 'a' and 'c': d['a']=1 and d['c']=3.",
@@ -2438,7 +2438,7 @@ Notes:
 • For maintainable code, make the intent behind: Key concepts: • ["a", "c"] lists the keys we want • d["a"] = 1, d["c"] = 3 • Collects into a list: [1, 3] • Raises KeyError if a key is missing How it works: • k="a" → d["a"] = 1 • k="c" → d["c"] = 3 • Result: [1, 3] Examples: • [d[k] for k in ["a", "c"]] → [1, 3] • [d[k] for k in ["b"]] → [2] • [d.get(k) for k in ["a", "z"]] → [1, None] (safe version) Common uses: • Extracting a subset of values by key list • Reordering dict values by specific key order • Projecting specific fields from records explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2, "c": 3}\nWhat is {k: d[k] for k in ["a", "c"] if k in d}?`,
+    q: `What is {k: d[k] for k in ["a", "c"] if k in d}?\nd = {"a": 1, "b": 2, "c": 3}`,
     o: ["{'a': 1, 'c': 3}", "{'a': 1, 'b': 2, 'c': 3}", "[1, 3]", "Error"],
     c: 0,
     e: "This dict comprehension creates a sub-dict containing only keys 'a' and 'c' from d.",
@@ -2506,7 +2506,7 @@ Notes:
 • For maintainable code, make the intent behind: Key concepts: • Iterates over ["a", "c"] • if k in d ensures KeyError is avoided for missing keys • Builds a new dict with only matching keys and their values How it works: • k="a": "a" in d → True → include "a": 1 • k="c": "c" in d → True → include "c": 3 • Result: {"a": 1, "c": 3} Examples: • {k: d[k] for k in ["a", "c"] if k in d} → {"a": 1, "c": 3} • {k: d[k] for k in ["a", "z"] if k in d} → {"a": 1} (z is missing, safely skipped) Common uses: • Sub-dict / projection from a larger dict • Filtering to only desired fields • Safe subset extraction without KeyError explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is d.get("c") is None?`,
+    q: `What is d.get("c") is None?\nd = {"a": 1, "b": 2}`,
     o: ["True", "False", "None", "Error"],
     c: 0,
     e: "d.get('c') returns None for a missing key (default). None is None evaluates to True.",
@@ -2574,7 +2574,7 @@ Notes:
 • For maintainable code, make the intent behind: Comparing with is None checks identity against the None singleton. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": None}\nWhat is d.get("a") is None?`,
+    q: `What is d.get("a") is None?\nd = {"a": None}`,
     o: ["True", "False", "KeyError", "Error"],
     c: 0,
     e: "Key 'a' exists with value None, so d.get('a') returns None. None is None is True.",
@@ -2644,7 +2644,7 @@ Notes:
 • For maintainable code, make the intent behind: You cannot distinguish the two cases using get() alone. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": None}\nWhat is "a" in d?`,
+    q: `What is "a" in d?\nd = {"a": None}`,
     o: ["True", "False", "None", "Error"],
     c: 0,
     e: "'a' is a key in d regardless of its value. The in operator checks key existence, not value.",
@@ -2714,7 +2714,7 @@ Notes:
 • For maintainable code, make the intent behind: Even if the value is None, False, 0, or any other falsy value, in returns True. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is sum(d.values())?`,
+    q: `What is sum(d.values())?\nd = {"a": 1, "b": 2}`,
     o: ["3", "{'a': 1, 'b': 2}", "['a', 'b']", "Error"],
     c: 0,
     e: "d.values() yields 1 and 2. sum() adds them: 1 + 2 = 3.",
@@ -2782,7 +2782,7 @@ Notes:
 • For maintainable code, make the intent behind: d.values() returns a view of the dict's values, which sum() consumes to produce the total. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": "hello", "b": "world"}\nWhat is " ".join(d.values())?`,
+    q: `What is " ".join(d.values())?\nd = {"a": "hello", "b": "world"}`,
     o: ["'hello world'", "'helloworld'", "['hello', 'world']", "Error"],
     c: 0,
     e: "d.values() yields 'hello' and 'world'. ' '.join() concatenates them with a space.",
@@ -2849,7 +2849,7 @@ Notes:
 • For maintainable code, make the intent behind: d.values() provides the string values from the dict, and " ".join() concatenates them with a space separator. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is all(v > 0 for v in d.values())?`,
+    q: `What is all(v > 0 for v in d.values())?\nd = {"a": 1, "b": 2}`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "all() returns True if every element is truthy. Both values (1, 2) are > 0, so the result is True.",
@@ -2918,7 +2918,7 @@ Notes:
 • For maintainable code, make the intent behind: It short-circuits on the first False. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 0}\nWhat is any(v == 0 for v in d.values())?`,
+    q: `What is any(v == 0 for v in d.values())?\nd = {"a": 1, "b": 0}`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "any() returns True if at least one element is truthy. d['b']=0, and 0==0 is True.",
@@ -2986,7 +2986,7 @@ Notes:
 • For maintainable code, make the intent behind: It short-circuits on the first True. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2, "c": 3}\nWhat is len(d)?`,
+    q: `What is len(d)?\nd = {"a": 1, "b": 2, "c": 3}`,
     o: ["3", "6", "['a', 'b', 'c']", "Error"],
     c: 0,
     e: "len() on a dict returns the number of key-value pairs. d has 3 pairs.",
@@ -3054,7 +3054,7 @@ Notes:
 • For maintainable code, make the intent behind: It does not count keys and values separately. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is list(reversed(d))?`,
+    q: `What is list(reversed(d))?\nd = {"a": 1, "b": 2}`,
     o: ["['b', 'a']", "['a', 'b']", "[2, 1]", "Error"],
     c: 0,
     e: "reversed(d) yields keys in reverse insertion order. list() collects them: ['b', 'a'].",
@@ -3123,7 +3123,7 @@ Notes:
 • For maintainable code, make the intent behind: It reverses the iteration order of keys (which is insertion order in Python 3.7+). explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is min(d.items(), key=lambda x: x[1])?`,
+    q: `What is min(d.items(), key=lambda x: x[1])?\nd = {"a": 1, "b": 2}`,
     o: ["('a', 1)", "'a'", "1", "Error"],
     c: 0,
     e: "min() over items with key=lambda x: x[1] finds the pair with the smallest value. ('a', 1) has value 1.",
@@ -3192,7 +3192,7 @@ Notes:
 • For maintainable code, make the intent behind: It returns the full tuple, not just the key or value. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1}\nd["a"] += 1\nWhat is d?`,
+    q: `What is d?\nd = {"a": 1}\nd["a"] += 1`,
     o: ["{'a': 2}", "{'a': 1}", "{'a': 11}", "Error"],
     c: 0,
     e: "d['a'] += 1 is equivalent to d['a'] = d['a'] + 1 = 1 + 1 = 2.",
@@ -3261,7 +3261,7 @@ Notes:
 • For maintainable code, make the intent behind: d["a"] += 1 reads the current value, adds 1, and stores the result back. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {}\nd["a"] = d.get("a", 0) + 1\nWhat is d?`,
+    q: `What is d?\nd = {}\nd["a"] = d.get("a", 0) + 1`,
     o: ["{'a': 1}", "{'a': 0}", "{}", "Error"],
     c: 0,
     e: "d.get('a', 0) returns 0 (key missing), then 0 + 1 = 1 is assigned to d['a'].",
@@ -3331,7 +3331,7 @@ Notes:
 • For maintainable code, make the intent behind: When the key is missing, get() returns the default (0), which is then incremented and stored. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is {k: v for k, v in d.items() if k in "ac"}?`,
+    q: `What is {k: v for k, v in d.items() if k in "ac"}?\nd = {"a": 1, "b": 2}`,
     o: ["{'a': 1}", "{'a': 1, 'b': 2}", "{'c': None}", "Error"],
     c: 0,
     e: "The filter checks if each key is a character in 'ac'. Only 'a' matches; 'b' is not in 'ac'.",
@@ -3400,7 +3400,7 @@ Notes:
 • For maintainable code, make the intent behind: The in operator on a string checks for substring/character membership. explicit (and test it with inputs like those in this prompt).`
   }),
   (_i: number) => ({
-    q: `d = {"a": 1}\ne = d\ne["b"] = 2\nWhat is d?`,
+    q: `What is d?\nd = {"a": 1}\ne = d\ne["b"] = 2`,
     o: ["{'a': 1, 'b': 2}", "{'a': 1}", "{'b': 2}", "Error"],
     c: 0,
     e: "e = d creates an alias, not a copy. Both names reference the same dict object, so e['b']=2 also changes d.",

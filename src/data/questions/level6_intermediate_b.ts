@@ -397,7 +397,7 @@ Notes:
   }),
   // 57. Word frequency count using dict comprehension
   (_i: number) => ({
-    q: `words = "the cat sat on the mat".split()\nWhat is {w: words.count(w) for w in set(words)}["the"]?`,
+    q: `What is {w: words.count(w) for w in set(words)}["the"]?\nwords = "the cat sat on the mat".split()`,
     o: ['2', '1', '3', 'Error'],
     c: 0,
     e: "'the' appears twice in the sentence. The comprehension counts each unique word's frequency.",
@@ -597,7 +597,7 @@ Notes:
   }),
   // 60. Tuple keys — product table without diagonal
   (_i: number) => ({
-    q: `d = {(i,j): i*j for i in range(3) for j in range(3) if i != j}\nWhat is d[(1, 2)]?`,
+    q: `What is d[(1, 2)]?\nd = {(i,j): i*j for i in range(3) for j in range(3) if i != j}`,
     o: ['2', '0', '3', 'KeyError'],
     c: 0,
     e: "The comprehension builds a multiplication table skipping diagonal entries (i==j). 1*2=2.",
@@ -663,7 +663,7 @@ Notes:
   }),
   // 61. Filter dict by even values
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2, "c": 3, "d": 4}\nWhat is {k: v for k, v in d.items() if v % 2 == 0}?`,
+    q: `What is {k: v for k, v in d.items() if v % 2 == 0}?\nd = {"a": 1, "b": 2, "c": 3, "d": 4}`,
     o: ['{"b": 2, "d": 4}', '{"a": 1, "c": 3}', '{"b": 2}', '{}'],
     c: 0,
     e: "The comprehension filters to keep only items where the value is even. 2 and 4 are even.",
@@ -1262,7 +1262,7 @@ Notes:
   }),
   // 70. In-place merge with |=
   (_i: number) => ({
-    q: `d = {"a": 1}\nd |= {"a": 2, "b": 3}\nWhat is d?`,
+    q: `What is d?\nd = {"a": 1}\nd |= {"a": 2, "b": 3}`,
     o: ['{"a": 2, "b": 3}', '{"a": 1, "b": 3}', '{"a": 1}', 'Error'],
     c: 0,
     e: "|= merges in-place. 'a' is overwritten to 2, and 'b': 3 is added. Result: {'a': 2, 'b': 3}.",
@@ -1329,7 +1329,7 @@ Notes:
   }),
   // 71. ChainMap basic lookup
   (_i: number) => ({
-    q: `from collections import ChainMap\na = {"x": 1}; b = {"y": 2}\nc = ChainMap(a, b)\nWhat is c["x"]?`,
+    q: `What is c["x"]?\nfrom collections import ChainMap\na = {"x": 1}; b = {"y": 2}\nc = ChainMap(a, b)`,
     o: ['1', '2', 'KeyError', 'None'],
     c: 0,
     e: "ChainMap searches through its maps in order. 'x' is found in the first map 'a' with value 1.",
@@ -1395,7 +1395,7 @@ Notes:
   }),
   // 72. ChainMap first-map-wins for duplicate keys
   (_i: number) => ({
-    q: `from collections import ChainMap\na = {"x": 1}; b = {"x": 2}\nc = ChainMap(a, b)\nWhat is c["x"]?`,
+    q: `What is c["x"]?\nfrom collections import ChainMap\na = {"x": 1}; b = {"x": 2}\nc = ChainMap(a, b)`,
     o: ['1', '2', 'KeyError', '3'],
     c: 0,
     e: "When the same key exists in multiple maps, ChainMap returns the value from the first map. First wins!",
@@ -1461,7 +1461,7 @@ Notes:
   }),
   // 73. ChainMap lookup from second map
   (_i: number) => ({
-    q: `from collections import ChainMap\na = {"x": 1}; b = {"y": 2}\nc = ChainMap(a, b)\nWhat is c["y"]?`,
+    q: `What is c["y"]?\nfrom collections import ChainMap\na = {"x": 1}; b = {"y": 2}\nc = ChainMap(a, b)`,
     o: ['2', '1', 'KeyError', 'None'],
     c: 0,
     e: "ChainMap searches maps in order. 'y' isn't in a, so it checks b and finds 'y': 2.",
@@ -1526,7 +1526,7 @@ Notes:
   }),
   // 74. ChainMap iteration order
   (_i: number) => ({
-    q: `from collections import ChainMap\nc = ChainMap({"a": 1}, {"b": 2})\nWhat is list(c)?`,
+    q: `What is list(c)?\nfrom collections import ChainMap\nc = ChainMap({"a": 1}, {"b": 2})`,
     o: ['["b", "a"]', '["a", "b"]', '[("a", 1), ("b", 2)]', 'Error'],
     c: 0,
     e: "list() on a ChainMap gives all unique keys. The internal iteration reverses maps then updates, producing ['b', 'a'].",
@@ -1592,7 +1592,7 @@ Notes:
   }),
   // 75. max() on dict by value using key function
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2, "c": 3}\nWhat is max(d, key=lambda k: d[k])?`,
+    q: `What is max(d, key=lambda k: d[k])?\nd = {"a": 1, "b": 2, "c": 3}`,
     o: ['"c"', '3', '"a"', '("c", 3)'],
     c: 0,
     e: "max() iterates over dict keys. The key function looks up each value. 'c' has the max value (3).",
@@ -1658,7 +1658,7 @@ Notes:
   }),
   // 76. min() on dict by value
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2, "c": 3}\nWhat is min(d, key=lambda k: d[k])?`,
+    q: `What is min(d, key=lambda k: d[k])?\nd = {"a": 1, "b": 2, "c": 3}`,
     o: ['"a"', '1', '"c"', '("a", 1)'],
     c: 0,
     e: "min() with key=lambda k: d[k] finds the key with the smallest value. d['a']=1 is the minimum.",
@@ -1723,7 +1723,7 @@ Notes:
   }),
   // 77. Sort dict keys by their values
   (_i: number) => ({
-    q: `d = {"a": 3, "b": 1, "c": 2}\nWhat is sorted(d, key=d.get)?`,
+    q: `What is sorted(d, key=d.get)?\nd = {"a": 3, "b": 1, "c": 2}`,
     o: ['["b", "c", "a"]', '["a", "c", "b"]', '["a", "b", "c"]', '[1, 2, 3]'],
     c: 0,
     e: "sorted() sorts dict keys. d.get returns each key's value: b→1, c→2, a→3. Ascending: ['b','c','a'].",
@@ -1790,7 +1790,7 @@ Notes:
   }),
   // 78. Sort dict keys by values descending
   (_i: number) => ({
-    q: `d = {"a": 3, "b": 1, "c": 2}\nWhat is sorted(d, key=d.get, reverse=True)?`,
+    q: `What is sorted(d, key=d.get, reverse=True)?\nd = {"a": 3, "b": 1, "c": 2}`,
     o: ['["a", "c", "b"]', '["b", "c", "a"]', '["a", "b", "c"]', '[3, 2, 1]'],
     c: 0,
     e: "reverse=True sorts descending. By value: a→3, c→2, b→1. Result: ['a', 'c', 'b'].",
@@ -1855,7 +1855,7 @@ Notes:
   }),
   // 79. Sum of lengths of list values
   (_i: number) => ({
-    q: `d = {"a": [1, 2], "b": [3]}\nWhat is sum(len(v) for v in d.values())?`,
+    q: `What is sum(len(v) for v in d.values())?\nd = {"a": [1, 2], "b": [3]}`,
     o: ['3', '2', '6', 'Error'],
     c: 0,
     e: "len([1,2])=2, len([3])=1. sum(2, 1) = 3. Counts total items across all list values.",
@@ -1922,7 +1922,7 @@ Notes:
   }),
   // 80. Dict keys intersection
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\ne = {"b": 3, "c": 4}\nWhat is list(d.keys() & e.keys())?`,
+    q: `What is list(d.keys() & e.keys())?\nd = {"a": 1, "b": 2}\ne = {"b": 3, "c": 4}`,
     o: ['["b"]', '["a", "b", "c"]', '["a", "c"]', 'Error'],
     c: 0,
     e: "dict keys support set operations. & finds the intersection: only 'b' is in both dicts.",
@@ -2056,7 +2056,7 @@ Notes:
   }),
   // 82. Reverse mapping (swap keys and values)
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is {v: k for k, v in d.items()}?`,
+    q: `What is {v: k for k, v in d.items()}?\nd = {"a": 1, "b": 2}`,
     o: ['{1: "a", 2: "b"}', '{"a": 1, "b": 2}', '{("a", 1), ("b", 2)}', 'Error'],
     c: 0,
     e: "The comprehension swaps keys and values. 'a'→1 becomes 1→'a', 'b'→2 becomes 2→'b'.",
@@ -2121,7 +2121,7 @@ Notes:
   }),
   // 83. Dict assignment creates alias, not copy
   (_i: number) => ({
-    q: `d1 = {"a": 1}\nd2 = d1\nWhat is d2 is d1?`,
+    q: `What is d2 is d1?\nd1 = {"a": 1}\nd2 = d1`,
     o: ['True', 'False', 'Error', 'None'],
     c: 0,
     e: "Assignment (=) creates an alias — d2 points to the same object as d1, so 'is' returns True.",
@@ -2319,7 +2319,7 @@ Notes:
   }),
   // 86. Type of dict.keys() is dict_keys
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is type(d.keys())?`,
+    q: `What is type(d.keys())?\nd = {"a": 1}`,
     o: ["<class 'dict_keys'>", "<class 'list'>", "<class 'set'>", "<class 'tuple'>"],
     c: 0,
     e: "d.keys() returns a dict_keys view object, not a list. Views are live and reflect changes to the dict.",
@@ -2386,7 +2386,7 @@ Notes:
   }),
   // 87. Type of dict.items() is dict_items
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is type(d.items())?`,
+    q: `What is type(d.items())?\nd = {"a": 1}`,
     o: ["<class 'dict_items'>", "<class 'list'>", "<class 'set'>", "<class 'dict_keys'>"],
     c: 0,
     e: "d.items() returns a dict_items view object containing (key, value) tuples.",
@@ -2452,7 +2452,7 @@ Notes:
   }),
   // 88. Converting items view to set
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is set(d.items())?`,
+    q: `What is set(d.items())?\nd = {"a": 1, "b": 2}`,
     o: ['{("a", 1), ("b", 2)}', '{"a", "b"}', '{1, 2}', 'Error'],
     c: 0,
     e: "d.items() yields (key, value) tuples. Since both keys and values are hashable, set() works.",
@@ -2518,7 +2518,7 @@ Notes:
   }),
   // 89. TypeError when items contain unhashable values
   (_i: number) => ({
-    q: `d = {"a": [1]}\nWhat happens with set(d.items())?`,
+    q: `What happens with set(d.items())?\nd = {"a": [1]}`,
     o: ['TypeError', '{("a", [1])}', '{"a"}', '{[1]}'],
     c: 0,
     e: "d.items() yields ('a', [1]). Lists are unhashable, so the tuple ('a', [1]) can't go in a set → TypeError.",
@@ -2584,7 +2584,7 @@ Notes:
   }),
   // 90. f-string with dict lookups
   (_i: number) => ({
-    q: `d = {"name": "Alice", "age": 30}\nWhat is f"Name: {d['name']}, Age: {d['age']}"?`,
+    q: `What is f"Name: {d['name']}, Age: {d['age']}"?\nd = {"name": "Alice", "age": 30}`,
     o: ['"Name: Alice, Age: 30"', '"Name: name, Age: age"', 'KeyError', 'SyntaxError'],
     c: 0,
     e: "f-strings can embed dict lookups. d['name'] evaluates to 'Alice', d['age'] to 30.",
@@ -2650,7 +2650,7 @@ Notes:
   }),
   // 91. Tuples as dict keys
   (_i: number) => ({
-    q: `d = {}\nd[(1, 2)] = "tuple key"\nWhat is d[(1, 2)]?`,
+    q: `What is d[(1, 2)]?\nd = {}\nd[(1, 2)] = "tuple key"`,
     o: ['"tuple key"', 'TypeError', 'KeyError', 'None'],
     c: 0,
     e: "Tuples are hashable and can be used as dict keys. d[(1,2)] stores and retrieves the value.",
@@ -2716,7 +2716,7 @@ Notes:
   }),
   // 92. frozenset as dict key
   (_i: number) => ({
-    q: `d = {}\nd[frozenset({1, 2})] = "fs key"\nWhat is d[frozenset({1, 2})]?`,
+    q: `What is d[frozenset({1, 2})]?\nd = {}\nd[frozenset({1, 2})] = "fs key"`,
     o: ['"fs key"', 'TypeError', 'KeyError', 'Error'],
     c: 0,
     e: "frozenset is immutable and hashable, so it can be a dict key. Regular sets cannot.",
@@ -2782,7 +2782,7 @@ Notes:
   }),
   // 93. dict.get returns existing value, not default
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is d.get("a", 0)?`,
+    q: `What is d.get("a", 0)?\nd = {"a": 1}`,
     o: ['1', '0', 'None', 'KeyError'],
     c: 0,
     e: "get() returns the existing value when the key exists. 'a' maps to 1, so the default 0 is ignored.",
@@ -2980,7 +2980,7 @@ Notes:
   }),
   // 96. del removes a key from dict
   (_i: number) => ({
-    q: `d = {"a": 1}\ndel d["a"]\nWhat is d?`,
+    q: `What is d?\nd = {"a": 1}\ndel d["a"]`,
     o: ['{}', '{"a": None}', 'Error', '{"a": 1}'],
     c: 0,
     e: "del d['a'] removes the key 'a' and its value entirely from the dict, leaving an empty dict.",
@@ -3046,7 +3046,7 @@ Notes:
   }),
   // 97. __contains__ dunder method (in operator)
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is d.__contains__("a")?`,
+    q: `What is d.__contains__("a")?\nd = {"a": 1}`,
     o: ['True', 'False', 'Error', '1'],
     c: 0,
     e: "__contains__ is the dunder method behind the 'in' operator. 'a' in d calls d.__contains__('a').",
@@ -3113,7 +3113,7 @@ Notes:
   }),
   // 98. __getitem__ dunder method (bracket access)
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is d.__getitem__("a")?`,
+    q: `What is d.__getitem__("a")?\nd = {"a": 1}`,
     o: ['1', 'True', '"a"', 'Error'],
     c: 0,
     e: "__getitem__ is the dunder method behind d['a']. It returns the value associated with the key.",
@@ -3180,7 +3180,7 @@ Notes:
   }),
   // 99. __setitem__ dunder method
   (_i: number) => ({
-    q: `d = {"a": 1}\nd.__setitem__("b", 2)\nWhat is d?`,
+    q: `What is d?\nd = {"a": 1}\nd.__setitem__("b", 2)`,
     o: ['{"a": 1, "b": 2}', '{"b": 2}', '{"a": 1}', 'Error'],
     c: 0,
     e: "__setitem__ is the dunder behind d['b'] = 2. It adds or updates a key-value pair in the dict.",
@@ -3247,7 +3247,7 @@ Notes:
   }),
   // 100. Reversed list of dict values
   (_i: number) => ({
-    q: `d = {"a": 1, "b": 2}\nWhat is list(d.values())[::-1]?`,
+    q: `What is list(d.values())[::-1]?\nd = {"a": 1, "b": 2}`,
     o: ['[2, 1]', '[1, 2]', '["b", "a"]', 'Error'],
     c: 0,
     e: "d.values() gives [1, 2]. [::-1] reverses the list to [2, 1].",

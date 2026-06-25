@@ -4,7 +4,7 @@ export const level10ExpertA = [
 
   // Q1: Number of standard logging levels
   (_i: number) => ({
-    q: `import logging\n\nHow many standard logging levels does the logging module have?`,
+    q: `How many standard logging levels does the logging module have?\nimport logging\n`,
     o: ["5", "4", "6", "3"],
     c: 0,
     e: "The 5 standard levels are DEBUG, INFO, WARNING, ERROR, and CRITICAL.",
@@ -88,7 +88,7 @@ Notes:
 
   // Q2: Default logging level
   (_i: number) => ({
-    q: `import logging\n\nWhat is the default logging level?`,
+    q: `What is the default logging level?\nimport logging\n`,
     o: ["WARNING", "DEBUG", "INFO", "ERROR"],
     c: 0,
     e: "The default level is WARNING — only WARNING and above are shown.",
@@ -511,7 +511,7 @@ Notes:
 
   // Q8: basicConfig sets root logger
   (_i: number) => ({
-    q: `import logging\nlogging.basicConfig(level=logging.DEBUG)\n\nWhat does this do?`,
+    q: `What does this do?\nimport logging\nlogging.basicConfig(level=logging.DEBUG)\n`,
     o: ["Sets the root logger to show DEBUG and above", "Creates a new logger", "Disables logging", "Sets level to WARNING"],
     c: 0,
     e: "basicConfig configures the root logger to display DEBUG and all higher-level messages.",
@@ -746,7 +746,7 @@ Notes:
 
   // Q11: getLogger(__name__) purpose
   (_i: number) => ({
-    q: `logging.getLogger(__name__)\n\nWhy use __name__ as the logger name?`,
+    q: `Why use __name__ as the logger name?\nlogging.getLogger(__name__)\n`,
     o: ["Creates a logger named after the module for hierarchical logging", "It runs faster", "It is required by Python", "It prevents errors"],
     c: 0,
     e: "Using __name__ creates a module-specific logger that supports hierarchical logging.",
@@ -910,7 +910,7 @@ Notes:
 
   // Q13: logging.exception adds traceback
   (_i: number) => ({
-    q: `logging.exception("msg")\n\nWhat extra info does this add compared to logging.error()?`,
+    q: `What extra info does this add compared to logging.error()?\nlogging.exception("msg")\n`,
     o: ["Includes traceback information", "Adds timestamp", "Adds the module name", "Nothing extra"],
     c: 0,
     e: "logging.exception() logs at ERROR level and includes the exception traceback.",
@@ -1068,7 +1068,7 @@ Notes:
 
   // Q15: FileHandler
   (_i: number) => ({
-    q: `import logging\nlogging.FileHandler("app.log")\n\nWhat does this create?`,
+    q: `What does this create?\nimport logging\nlogging.FileHandler("app.log")\n`,
     o: ["A handler that writes log records to a file", "A new log file with default content", "A logger named app", "A formatter for file output"],
     c: 0,
     e: "FileHandler creates a handler that writes log records to the specified file.",
@@ -1149,7 +1149,7 @@ Notes:
 
   // Q16: assertEqual
   (_i: number) => ({
-    q: `import unittest\n\nclass Tests(unittest.TestCase):\n    def test_add(self):\n        self.assertEqual(1+1, 2)\n\nWhat does assertEqual check?`,
+    q: `What does assertEqual check?\nimport unittest\n\nclass Tests(unittest.TestCase):\n    def test_add(self):\n        self.assertEqual(1+1, 2)\n`,
     o: ["That two values are equal", "That the values are the same object", "That the first value is True", "That no exception is raised"],
     c: 0,
     e: "assertEqual checks that the two arguments are equal (using ==).",
@@ -1225,7 +1225,7 @@ Notes:
 
   // Q17: assertTrue
   (_i: number) => ({
-    q: `self.assertTrue(expr)\n\nWhat does this check in unittest?`,
+    q: `What does this check in unittest?\nself.assertTrue(expr)\n`,
     o: ["That expr is True", "That expr is False", "That expr is not None", "That expr equals 1"],
     c: 0,
     e: "assertTrue checks that the expression evaluates to True.",
@@ -1300,7 +1300,7 @@ Notes:
 
   // Q18: assertFalse
   (_i: number) => ({
-    q: `self.assertFalse(expr)\n\nWhat does this check in unittest?`,
+    q: `What does this check in unittest?\nself.assertFalse(expr)\n`,
     o: ["That expr is False", "That expr is True", "That expr is None", "That expr equals 0"],
     c: 0,
     e: "assertFalse checks that the expression evaluates to False.",
@@ -1375,7 +1375,7 @@ Notes:
 
   // Q19: assertIs
   (_i: number) => ({
-    q: `self.assertIs(a, b)\n\nWhat does this check?`,
+    q: `What does this check?\nself.assertIs(a, b)\n`,
     o: ["That a is b (same object identity)", "That a == b (equality)", "That a and b have the same type", "That a is not None"],
     c: 0,
     e: "assertIs checks that a and b are the exact same object (identity, not equality).",
@@ -1450,7 +1450,7 @@ Notes:
 
   // Q20: assertIsNone
   (_i: number) => ({
-    q: `self.assertIsNone(x)\n\nWhat does this check?`,
+    q: `What does this check?\nself.assertIsNone(x)\n`,
     o: ["That x is None", "That x is False", "That x is 0", "That x is empty"],
     c: 0,
     e: "assertIsNone checks that x is None (using identity, not equality).",
@@ -1523,7 +1523,7 @@ Notes:
 
   // Q21: assertIn
   (_i: number) => ({
-    q: `self.assertIn(a, b)\n\nWhat does this check?`,
+    q: `What does this check?\nself.assertIn(a, b)\n`,
     o: ["That a is in b", "That a equals b", "That a is b", "That a is a subset of b"],
     c: 0,
     e: "assertIn checks that a is a member of b (using the 'in' operator).",
@@ -1595,7 +1595,7 @@ Notes:
 
   // Q22: assertRaises
   (_i: number) => ({
-    q: `self.assertRaises(ValueError)\n\nWhat is this used to check?`,
+    q: `What is this used to check?\nself.assertRaises(ValueError)\n`,
     o: ["That a ValueError is raised", "That no error occurs", "That the value is valid", "That ValueError is a class"],
     c: 0,
     e: "assertRaises checks that the specified exception is raised during execution.",
@@ -1675,7 +1675,7 @@ Notes:
 
   // Q23: assertRaises with context manager
   (_i: number) => ({
-    q: `with self.assertRaises(ValueError):\n    int("abc")\n\nDoes this test pass?`,
+    q: `Does this test pass?\nwith self.assertRaises(ValueError):\n    int("abc")\n`,
     o: ["Yes", "No", "It raises ValueError", "It raises AssertionError"],
     c: 0,
     e: "Yes — int('abc') raises ValueError, which is exactly what assertRaises expects.",
@@ -1751,7 +1751,7 @@ Notes:
 
   // Q24: assertAlmostEqual
   (_i: number) => ({
-    q: `self.assertAlmostEqual(0.1 + 0.2, 0.3)\n\nDoes this pass?`,
+    q: `Does this pass?\nself.assertAlmostEqual(0.1 + 0.2, 0.3)\n`,
     o: ["Yes", "No", "Error", "Depends on the system"],
     c: 0,
     e: "Yes — assertAlmostEqual checks within 7 decimal places, handling floating-point imprecision.",
@@ -2232,7 +2232,7 @@ Notes:
 
   // Q30: assert passes
   (_i: number) => ({
-    q: `assert 1 == 1\n\nDoes this raise an error?`,
+    q: `Does this raise an error?\nassert 1 == 1\n`,
     o: ["No", "Yes, AssertionError", "Yes, ValueError", "Yes, SyntaxError"],
     c: 0,
     e: "No — the assertion passes because 1 == 1 is True.",
@@ -2306,7 +2306,7 @@ Notes:
 
   // Q31: assert fails
   (_i: number) => ({
-    q: `assert 1 == 2\n\nWhat error is raised?`,
+    q: `What error is raised?\nassert 1 == 2\n`,
     o: ["AssertionError", "ValueError", "TypeError", "RuntimeError"],
     c: 0,
     e: "AssertionError is raised because 1 == 2 is False.",
@@ -2384,7 +2384,7 @@ Notes:
 
   // Q32: assert with message
   (_i: number) => ({
-    q: `assert 1 == 2, "numbers not equal"\n\nWhere does the message appear?`,
+    q: `Where does the message appear?\nassert 1 == 2, "numbers not equal"\n`,
     o: ["In the AssertionError", "In stdout", "In stderr only", "It is ignored"],
     c: 0,
     e: "The message becomes part of the AssertionError that is raised.",
@@ -3022,7 +3022,7 @@ Notes:
 
   // Q40: try/except/else/finally coexistence
   (_i: number) => ({
-    q: `try:\n    x = 1\nexcept:\n    pass\nelse:\n    y = 2\nfinally:\n    z = 3\n\nCan except, else, and finally all coexist?`,
+    q: `Can except, else, and finally all coexist?\ntry:\n    x = 1\nexcept:\n    pass\nelse:\n    y = 2\nfinally:\n    z = 3\n`,
     o: ["Yes, all three can coexist", "No, only two at a time", "No, else and finally conflict", "Only with specific exceptions"],
     c: 0,
     e: "Yes — a try statement can have except, else, and finally all together.",
@@ -3191,7 +3191,7 @@ Notes:
 
   // Q42: exception __traceback__
   (_i: number) => ({
-    q: `try:\n    raise ValueError\nexcept ValueError as e:\n    tb = e.__traceback__\n\nWhat is e.__traceback__?`,
+    q: `What is e.__traceback__?\ntry:\n    raise ValueError\nexcept ValueError as e:\n    tb = e.__traceback__\n`,
     o: ["The traceback object", "The error message string", "The exception class", "None"],
     c: 0,
     e: "e.__traceback__ is the traceback object containing the call stack at the point where the exception was raised.",
@@ -3270,7 +3270,7 @@ Notes:
 
   // Q43: traceback.format_exc()
   (_i: number) => ({
-    q: `import traceback\n\ntry:\n    1/0\nexcept:\n    s = traceback.format_exc()\n\nWhat is s?`,
+    q: `What is s?\nimport traceback\n\ntry:\n    1/0\nexcept:\n    s = traceback.format_exc()\n`,
     o: ["Formatted traceback string of the current exception", "The exception object", "A list of frames", "None"],
     c: 0,
     e: "traceback.format_exc() returns the formatted traceback of the current exception as a string.",
@@ -3350,7 +3350,7 @@ Notes:
 
   // Q44: sys.exc_info()
   (_i: number) => ({
-    q: `try:\n    1/0\nexcept:\n    import sys\n    info = sys.exc_info()\n\nWhat does sys.exc_info() return?`,
+    q: `What does sys.exc_info() return?\ntry:\n    1/0\nexcept:\n    import sys\n    info = sys.exc_info()\n`,
     o: ["A (type, value, traceback) tuple", "The exception message string", "The exception object only", "A list of error codes"],
     c: 0,
     e: "sys.exc_info() returns a tuple of (exception type, exception value, traceback object).",

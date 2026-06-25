@@ -3,7 +3,7 @@
 export const level9IntermediateB = [
   // 51. Subclassing list — adding a custom method
   (_i: number) => ({
-    q: `class MyList(list):\n    def first(self):\n        return self[0]\nml = MyList([1, 2, 3])\nWhat is ml.first()?`,
+    q: `What is ml.first()?\nclass MyList(list):\n    def first(self):\n        return self[0]\nml = MyList([1, 2, 3])`,
     o: ["1", "Error", "None", "[1, 2, 3]"],
     c: 0,
     e: "MyList inherits from list and adds a first() method that returns self[0], so ml.first() returns 1.",
@@ -81,7 +81,7 @@ Notes:
   }),
   // 52. Subclassing list — inherited methods work
   (_i: number) => ({
-    q: `class MyList(list): pass\nml = MyList([1, 2, 3])\nml.append(4)\nWhat is len(ml)?`,
+    q: `What is len(ml)?\nclass MyList(list): pass\nml = MyList([1, 2, 3])\nml.append(4)`,
     o: ["4", "3", "Error", "None"],
     c: 0,
     e: "MyList inherits all list methods including append() and works with len(), so after appending 4 the length is 4.",
@@ -156,7 +156,7 @@ Notes:
   }),
   // 53. Subclassing dict — custom method using self.keys()
   (_i: number) => ({
-    q: `class MyDict(dict):\n    def keys_sorted(self):\n        return sorted(self.keys())\nWhat is MyDict(b=2, a=1).keys_sorted()?`,
+    q: `What is MyDict(b=2, a=1).keys_sorted()?\nclass MyDict(dict):\n    def keys_sorted(self):\n        return sorted(self.keys())`,
     o: ["['a', 'b']", "['b', 'a']", "Error", "{'a', 'b'}"],
     c: 0,
     e: "keys_sorted() calls sorted() on the dict's keys, returning them in alphabetical order: ['a', 'b'].",
@@ -228,7 +228,7 @@ Notes:
   }),
   // 54. Subclassing str — custom method
   (_i: number) => ({
-    q: `class MyStr(str):\n    def shout(self):\n        return self.upper() + "!"\nWhat is MyStr("hello").shout()?`,
+    q: `What is MyStr("hello").shout()?\nclass MyStr(str):\n    def shout(self):\n        return self.upper() + "!"`,
     o: ['"HELLO!"', '"hello!"', 'Error', '"HELLO"'],
     c: 0,
     e: "shout() calls self.upper() which returns 'HELLO', then concatenates '!' to get 'HELLO!'.",
@@ -301,7 +301,7 @@ Notes:
   }),
   // 55. Subclassing int — custom method returns True
   (_i: number) => ({
-    q: `class MyInt(int):\n    def is_even(self):\n        return self % 2 == 0\nWhat is MyInt(4).is_even()?`,
+    q: `What is MyInt(4).is_even()?\nclass MyInt(int):\n    def is_even(self):\n        return self % 2 == 0`,
     o: ["True", "False", "Error", "0"],
     c: 0,
     e: "MyInt(4) has value 4, and 4 % 2 == 0 is True, so is_even() returns True.",
@@ -373,7 +373,7 @@ Notes:
   }),
   // 56. Subclassing int — custom method returns False
   (_i: number) => ({
-    q: `class MyInt(int):\n    def is_even(self):\n        return self % 2 == 0\nWhat is MyInt(3).is_even()?`,
+    q: `What is MyInt(3).is_even()?\nclass MyInt(int):\n    def is_even(self):\n        return self % 2 == 0`,
     o: ["False", "True", "Error", "1"],
     c: 0,
     e: "MyInt(3) has value 3, and 3 % 2 == 0 is False (3 % 2 is 1), so is_even() returns False.",
@@ -439,7 +439,7 @@ Notes:
   }),
   // 57. Subclassing dict — __missing__ hook
   (_i: number) => ({
-    q: `class DefaultDict(dict):\n    def __missing__(self, key):\n        self[key] = 0\n        return 0\nd = DefaultDict()\nd["x"] += 1\nWhat is d["x"]?`,
+    q: `What is d["x"]?\nclass DefaultDict(dict):\n    def __missing__(self, key):\n        self[key] = 0\n        return 0\nd = DefaultDict()\nd["x"] += 1`,
     o: ["1", "0", "Error", "None"],
     c: 0,
     e: "When d['x'] is first accessed, __missing__ sets it to 0 and returns 0. Then += 1 makes it 1.",
@@ -512,7 +512,7 @@ Notes:
   }),
   // 58. Subclassing str — __new__ for immutable customization
   (_i: number) => ({
-    q: `class UpperStr(str):\n    def __new__(cls, s):\n        return super().__new__(cls, s.upper())\nWhat is UpperStr("hello")?`,
+    q: `What is UpperStr("hello")?\nclass UpperStr(str):\n    def __new__(cls, s):\n        return super().__new__(cls, s.upper())`,
     o: ['"HELLO"', '"hello"', 'Error', 'None'],
     c: 0,
     e: "__new__ creates the string with s.upper() before the object exists, so UpperStr('hello') produces 'HELLO'.",
@@ -660,7 +660,7 @@ Notes:
   }),
   // 60. Subclassing set — overriding __contains__
   (_i: number) => ({
-    q: `class MySet(set):\n    def __contains__(self, item):\n        return super().__contains__(item)\nWhat is 1 in MySet({1, 2, 3})?`,
+    q: `What is 1 in MySet({1, 2, 3})?\nclass MySet(set):\n    def __contains__(self, item):\n        return super().__contains__(item)`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "The overridden __contains__ delegates to super().__contains__, which checks set membership normally. 1 is in the set, so True.",
@@ -737,7 +737,7 @@ Notes:
   }),
   // 61. isinstance with subclass — child is instance of parent
   (_i: number) => ({
-    q: `class MyList(list): pass\nWhat is isinstance(MyList([]), list)?`,
+    q: `What is isinstance(MyList([]), list)?\nclass MyList(list): pass`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "A subclass instance IS an instance of its parent class. MyList inherits from list, so isinstance returns True.",
@@ -808,7 +808,7 @@ Notes:
   }),
   // 62. isinstance — parent NOT instance of child
   (_i: number) => ({
-    q: `class MyList(list): pass\nWhat is isinstance([], MyList)?`,
+    q: `What is isinstance([], MyList)?\nclass MyList(list): pass`,
     o: ["False", "True", "Error", "None"],
     c: 0,
     e: "A plain list is NOT an instance of MyList. isinstance only looks upward in the hierarchy, not downward.",
@@ -878,7 +878,7 @@ Notes:
   }),
   // 63. Subclassing list — unique-only append
   (_i: number) => ({
-    q: `class AutoList(list):\n    def append(self, item):\n        if item not in self:\n            super().append(item)\nal = AutoList()\nal.append(1)\nal.append(1)\nWhat is len(al)?`,
+    q: `What is len(al)?\nclass AutoList(list):\n    def append(self, item):\n        if item not in self:\n            super().append(item)\nal = AutoList()\nal.append(1)\nal.append(1)`,
     o: ["1", "2", "0", "Error"],
     c: 0,
     e: "AutoList.append only adds items not already present. The second append(1) is skipped, so len is 1.",
@@ -952,7 +952,7 @@ Notes:
   }),
   // 64. type() on subclass instance
   (_i: number) => ({
-    q: `class MyList(list): pass\nWhat is type(MyList()).__name__?`,
+    q: `What is type(MyList()).__name__?\nclass MyList(list): pass`,
     o: ['"MyList"', '"list"', '"object"', 'Error'],
     c: 0,
     e: "type() returns the actual class of the instance. MyList() is a MyList, not a plain list.",
@@ -1023,7 +1023,7 @@ Notes:
   }),
   // 65. Built-in operations return base type, not subclass
   (_i: number) => ({
-    q: `class MyList(list): pass\nWhat is type(MyList([1]) + [2]).__name__?`,
+    q: `What is type(MyList([1]) + [2]).__name__?\nclass MyList(list): pass`,
     o: ['"list"', '"MyList"', 'Error', '"object"'],
     c: 0,
     e: "List operations like + use list.__add__ which returns a plain list, not the subclass type.",
@@ -1096,7 +1096,7 @@ Notes:
   }),
   // 66. __bases__ shows only direct parent
   (_i: number) => ({
-    q: `class A: pass\nclass B(A): pass\nclass C(B): pass\nWhat is C.__bases__[0].__name__?`,
+    q: `What is C.__bases__[0].__name__?\nclass A: pass\nclass B(A): pass\nclass C(B): pass`,
     o: ['"B"', '"A"', '"object"', '"C"'],
     c: 0,
     e: "__bases__ contains only the direct parent classes. C's direct parent is B, not A.",
@@ -1171,7 +1171,7 @@ Notes:
   }),
   // 67. issubclass is transitive
   (_i: number) => ({
-    q: `class A: pass\nclass B(A): pass\nclass C(B): pass\nWhat is issubclass(C, A)?`,
+    q: `What is issubclass(C, A)?\nclass A: pass\nclass B(A): pass\nclass C(B): pass`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "issubclass is transitive: C inherits from B which inherits from A, so C is a subclass of A.",
@@ -1240,7 +1240,7 @@ Notes:
   }),
   // 68. __subclasses__() returns direct subclasses
   (_i: number) => ({
-    q: `class A: pass\nWhat does A.__subclasses__() return?`,
+    q: `What does A.__subclasses__() return?\nclass A: pass`,
     o: ["List of direct subclasses of A", "List of all instances of A", "List of parent classes of A", "The MRO of A"],
     c: 0,
     e: "__subclasses__() returns a list of classes that directly inherit from A (not instances, not parents).",
@@ -1319,7 +1319,7 @@ Notes:
   }),
   // 69. __subclasses__ — getting subclass names
   (_i: number) => ({
-    q: `class A: pass\nclass B(A): pass\nclass C(A): pass\nWhat is set(x.__name__ for x in A.__subclasses__())?`,
+    q: `What is set(x.__name__ for x in A.__subclasses__())?\nclass A: pass\nclass B(A): pass\nclass C(A): pass`,
     o: ['{"B", "C"}', '{"A", "B", "C"}', '{"A"}', "set()"],
     c: 0,
     e: "A.__subclasses__() returns [B, C], and extracting __name__ gives {'B', 'C'}.",
@@ -1393,7 +1393,7 @@ Notes:
   }),
   // 70. __init_subclass__ — auto-registration
   (_i: number) => ({
-    q: `class Base:\n    registry = []\n    def __init_subclass__(cls, **kwargs):\n        super().__init_subclass__(**kwargs)\n        Base.registry.append(cls.__name__)\nclass A(Base): pass\nclass B(Base): pass\nWhat is Base.registry?`,
+    q: `What is Base.registry?\nclass Base:\n    registry = []\n    def __init_subclass__(cls, **kwargs):\n        super().__init_subclass__(**kwargs)\n        Base.registry.append(cls.__name__)\nclass A(Base): pass\nclass B(Base): pass`,
     o: ['["A", "B"]', '["Base", "A", "B"]', '["Base"]', "[]"],
     c: 0,
     e: "__init_subclass__ is called each time a subclass is defined. A and B trigger it, adding their names to registry.",
@@ -1547,7 +1547,7 @@ Notes:
   }),
   // 72. type(self).__name__ for polymorphic method
   (_i: number) => ({
-    q: `class Base:\n    def method(self):\n        return type(self).__name__\nclass Child(Base): pass\nWhat is Child().method()?`,
+    q: `What is Child().method()?\nclass Base:\n    def method(self):\n        return type(self).__name__\nclass Child(Base): pass`,
     o: ['"Child"', '"Base"', 'Error', '"object"'],
     c: 0,
     e: "type(self) returns the actual class of the instance. Since self is a Child instance, type(self).__name__ is 'Child'.",
@@ -1623,7 +1623,7 @@ Notes:
   }),
   // 73. self.__class__.__name__ — same result
   (_i: number) => ({
-    q: `class Base:\n    def method(self):\n        return self.__class__.__name__\nclass Child(Base): pass\nWhat is Child().method()?`,
+    q: `What is Child().method()?\nclass Base:\n    def method(self):\n        return self.__class__.__name__\nclass Child(Base): pass`,
     o: ['"Child"', '"Base"', 'Error', '"object"'],
     c: 0,
     e: "self.__class__ is equivalent to type(self). For a Child instance, self.__class__.__name__ is 'Child'.",
@@ -1699,7 +1699,7 @@ Notes:
   }),
   // 74. Setting attribute on subclass doesn't affect parent
   (_i: number) => ({
-    q: `class A:\n    x = 1\nclass B(A): pass\nB.x = 2\nWhat is A.x?`,
+    q: `What is A.x?\nclass A:\n    x = 1\nclass B(A): pass\nB.x = 2`,
     o: ["1", "2", "Error", "None"],
     c: 0,
     e: "Setting B.x = 2 creates a new attribute on B's own namespace. A.x remains 1.",
@@ -1772,7 +1772,7 @@ Notes:
   }),
   // 75. Shared mutable class variable — gotcha!
   (_i: number) => ({
-    q: `class A:\n    lst = []\nclass B(A): pass\nB.lst.append(1)\nWhat is A.lst?`,
+    q: `What is A.lst?\nclass A:\n    lst = []\nclass B(A): pass\nB.lst.append(1)`,
     o: ["[1]", "[]", "Error", "None"],
     c: 0,
     e: "B.lst IS A.lst (same object). Mutating it through B also mutates it through A. This is a common gotcha!",
@@ -1849,7 +1849,7 @@ Notes:
   }),
   // 76. Separate mutable class variable — no sharing
   (_i: number) => ({
-    q: `class A:\n    lst = []\nclass B(A):\n    lst = []\nB.lst.append(1)\nWhat is A.lst?`,
+    q: `What is A.lst?\nclass A:\n    lst = []\nclass B(A):\n    lst = []\nB.lst.append(1)`,
     o: ["[]", "[1]", "Error", "None"],
     c: 0,
     e: "B defines its own lst = [], so B.lst and A.lst are different objects. Mutating B.lst doesn't affect A.lst.",
@@ -1922,7 +1922,7 @@ Notes:
   }),
   // 77. NotImplementedError pattern — child overrides
   (_i: number) => ({
-    q: `class Animal:\n    def speak(self):\n        raise NotImplementedError\nclass Dog(Animal):\n    def speak(self):\n        return "Woof"\nWhat is Dog().speak()?`,
+    q: `What is Dog().speak()?\nclass Animal:\n    def speak(self):\n        raise NotImplementedError\nclass Dog(Animal):\n    def speak(self):\n        return "Woof"`,
     o: ['"Woof"', "NotImplementedError", "None", "Error"],
     c: 0,
     e: "Dog overrides speak() to return 'Woof'. The NotImplementedError in Animal is never reached.",
@@ -1998,7 +1998,7 @@ Notes:
   }),
   // 78. NotImplementedError — calling unoverridden method
   (_i: number) => ({
-    q: `class Animal:\n    def speak(self):\n        raise NotImplementedError\nWhat happens when you call Animal().speak()?`,
+    q: `What happens when you call Animal().speak()?\nclass Animal:\n    def speak(self):\n        raise NotImplementedError`,
     o: ["Raises NotImplementedError", "Returns None", "Returns an empty string", "Raises TypeError"],
     c: 0,
     e: "Animal.speak() explicitly raises NotImplementedError. You can create an Animal instance but calling speak() raises the error.",
@@ -2145,7 +2145,7 @@ Notes:
   }),
   // 80. Template method pattern — serialize via __dict__
   (_i: number) => ({
-    q: `class Serializable:\n    def serialize(self):\n        return str(self.__dict__)\nclass User(Serializable):\n    def __init__(self, name):\n        self.name = name\nWhat is User("Bob").serialize()?`,
+    q: `What is User("Bob").serialize()?\nclass Serializable:\n    def serialize(self):\n        return str(self.__dict__)\nclass User(Serializable):\n    def __init__(self, name):\n        self.name = name`,
     o: [`"{'name': 'Bob'}"`, '"Bob"', "Error", "{}"],
     c: 0,
     e: "serialize() returns str(self.__dict__). User('Bob').__dict__ is {'name': 'Bob'}, so str of that is \"{'name': 'Bob'}\".",
@@ -2216,7 +2216,7 @@ Notes:
   }),
   // 81. Lambda as class attribute — inherited like methods
   (_i: number) => ({
-    q: `class A:\n    f = lambda self: "A"\nclass B(A): pass\nWhat is B().f()?`,
+    q: `What is B().f()?\nclass A:\n    f = lambda self: "A"\nclass B(A): pass`,
     o: ['"A"', '"B"', "Error", "None"],
     c: 0,
     e: "Lambda functions assigned as class attributes work like methods and are inherited. B inherits f from A, returning 'A'.",
@@ -2288,7 +2288,7 @@ Notes:
   }),
   // 82. Separate inheritance chains
   (_i: number) => ({
-    q: `class A:\n    def f(self): return "A"\nclass B:\n    def f(self): return "B"\nclass D(B): pass\nWhat is D().f()?`,
+    q: `What is D().f()?\nclass A:\n    def f(self): return "A"\nclass B:\n    def f(self): return "B"\nclass D(B): pass`,
     o: ['"B"', '"A"', '"D"', "Error"],
     c: 0,
     e: "D inherits from B (not A). D doesn't override f, so it uses B's version which returns 'B'.",
@@ -2366,7 +2366,7 @@ Notes:
   }),
   // 83. @classmethod — cls reflects the calling class
   (_i: number) => ({
-    q: `class A:\n    @classmethod\n    def who(cls):\n        return cls.__name__\nclass B(A): pass\nWhat is B.who()?`,
+    q: `What is B.who()?\nclass A:\n    @classmethod\n    def who(cls):\n        return cls.__name__\nclass B(A): pass`,
     o: ['"B"', '"A"', 'Error', '"object"'],
     c: 0,
     e: "@classmethod receives the calling class as cls. When called on B, cls is B, so cls.__name__ is 'B'.",
@@ -2442,7 +2442,7 @@ Notes:
   }),
   // 84. Factory classmethod — returns subclass instance
   (_i: number) => ({
-    q: `class A:\n    @classmethod\n    def create(cls):\n        return cls()\nclass B(A): pass\nWhat is type(B.create()).__name__?`,
+    q: `What is type(B.create()).__name__?\nclass A:\n    @classmethod\n    def create(cls):\n        return cls()\nclass B(A): pass`,
     o: ['"B"', '"A"', '"object"', 'Error'],
     c: 0,
     e: "cls is B when called as B.create(), so cls() creates a B instance. type(B.create()) is B.",
@@ -2521,7 +2521,7 @@ Notes:
   }),
   // 85. isinstance on factory-created subclass instance
   (_i: number) => ({
-    q: `class A:\n    @classmethod\n    def create(cls):\n        return cls()\nclass B(A): pass\nWhat is isinstance(B.create(), B)?`,
+    q: `What is isinstance(B.create(), B)?\nclass A:\n    @classmethod\n    def create(cls):\n        return cls()\nclass B(A): pass`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "B.create() returns B() (a B instance). isinstance(B(), B) is True.",
@@ -2591,7 +2591,7 @@ Notes:
   }),
   // 86. Missing super().__init__() — attribute not set
   (_i: number) => ({
-    q: `class A:\n    def __init__(self):\n        self.x = 1\nclass B(A):\n    def __init__(self):\n        self.y = 2\nb = B()\nWhat is hasattr(b, "x")?`,
+    q: `What is hasattr(b, "x")?\nclass A:\n    def __init__(self):\n        self.x = 1\nclass B(A):\n    def __init__(self):\n        self.y = 2\nb = B()`,
     o: ["False", "True", "Error", "None"],
     c: 0,
     e: "B.__init__ doesn't call super().__init__(), so A.__init__ never runs and self.x is never set. hasattr returns False.",
@@ -2663,7 +2663,7 @@ Notes:
   }),
   // 87. Proper super().__init__() — both attributes set
   (_i: number) => ({
-    q: `class A:\n    def __init__(self):\n        self.x = 1\nclass B(A):\n    def __init__(self):\n        super().__init__()\n        self.y = 2\nb = B()\nWhat is (b.x, b.y)?`,
+    q: `What is (b.x, b.y)?\nclass A:\n    def __init__(self):\n        self.x = 1\nclass B(A):\n    def __init__(self):\n        super().__init__()\n        self.y = 2\nb = B()`,
     o: ["(1, 2)", "(None, 2)", "Error", "(2, 1)"],
     c: 0,
     e: "super().__init__() calls A.__init__ which sets x=1, then B.__init__ sets y=2. Both attributes exist.",
@@ -2740,7 +2740,7 @@ Notes:
   }),
   // 88. Inherited __repr__ — returns parent's format
   (_i: number) => ({
-    q: `class A:\n    def __repr__(self):\n        return "A()"\nclass B(A): pass\nWhat is repr(B())?`,
+    q: `What is repr(B())?\nclass A:\n    def __repr__(self):\n        return "A()"\nclass B(A): pass`,
     o: ['"A()"', '"B()"', 'Error', '"<B object>"'],
     c: 0,
     e: "B inherits __repr__ from A. The method is hardcoded to return 'A()', regardless of the actual type.",
@@ -2808,7 +2808,7 @@ Notes:
   }),
   // 89. Polymorphic __repr__ using type(self).__name__
   (_i: number) => ({
-    q: `class A:\n    def __repr__(self):\n        return f"{type(self).__name__}()"\nclass B(A): pass\nWhat is repr(B())?`,
+    q: `What is repr(B())?\nclass A:\n    def __repr__(self):\n        return f"{type(self).__name__}()"\nclass B(A): pass`,
     o: ['"B()"', '"A()"', 'Error', '"object()"'],
     c: 0,
     e: "type(self).__name__ returns the actual class name. For a B instance, it returns 'B', so repr gives 'B()'.",
@@ -2879,7 +2879,7 @@ Notes:
   }),
   // 90. __eq__ with isinstance — parent == child
   (_i: number) => ({
-    q: `class A:\n    def __eq__(self, other):\n        return isinstance(other, A)\nclass B(A): pass\nWhat is A() == B()?`,
+    q: `What is A() == B()?\nclass A:\n    def __eq__(self, other):\n        return isinstance(other, A)\nclass B(A): pass`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "A.__eq__ checks isinstance(other, A). B() is an instance of A (subclass), so isinstance returns True.",
@@ -2951,7 +2951,7 @@ Notes:
   }),
   // 91. __eq__ symmetry — child == parent
   (_i: number) => ({
-    q: `class A:\n    def __eq__(self, other):\n        return isinstance(other, A)\nclass B(A): pass\nWhat is B() == A()?`,
+    q: `What is B() == A()?\nclass A:\n    def __eq__(self, other):\n        return isinstance(other, A)\nclass B(A): pass`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "B inherits __eq__ from A. It checks isinstance(other, A). A() IS an instance of A, so True.",
@@ -3020,7 +3020,7 @@ Notes:
   }),
   // 92. __init_subclass__ with keyword arguments
   (_i: number) => ({
-    q: `class A:\n    def __init_subclass__(cls, greeting="hello", **kwargs):\n        super().__init_subclass__(**kwargs)\n        cls.greeting = greeting\nclass B(A, greeting="hi"): pass\nWhat is B.greeting?`,
+    q: `What is B.greeting?\nclass A:\n    def __init_subclass__(cls, greeting="hello", **kwargs):\n        super().__init_subclass__(**kwargs)\n        cls.greeting = greeting\nclass B(A, greeting="hi"): pass`,
     o: ['"hi"', '"hello"', 'Error', 'None'],
     c: 0,
     e: "B passes greeting='hi' as a class keyword argument. __init_subclass__ receives it and sets B.greeting = 'hi'.",
@@ -3095,7 +3095,7 @@ Notes:
   }),
   // 93. Monkey-patching class method — resolved at call time
   (_i: number) => ({
-    q: `class A:\n    def method(self): return 1\na = A()\nA.method = lambda self: 2\nWhat is a.method()?`,
+    q: `What is a.method()?\nclass A:\n    def method(self): return 1\na = A()\nA.method = lambda self: 2`,
     o: ["2", "1", "Error", "None"],
     c: 0,
     e: "Methods are resolved at call time via the class. Replacing A.method after creating a affects all instances.",
@@ -3171,7 +3171,7 @@ Notes:
   }),
   // 94. Instance attribute shadows class method
   (_i: number) => ({
-    q: `class A:\n    def method(self): return 1\na = A()\na.method = lambda: 2\nWhat is a.method()?`,
+    q: `What is a.method()?\nclass A:\n    def method(self): return 1\na = A()\na.method = lambda: 2`,
     o: ["2", "1", "Error", "None"],
     c: 0,
     e: "Setting a.method directly stores a function in the instance __dict__, which shadows the class method. Note: no self parameter needed.",
@@ -3244,7 +3244,7 @@ Notes:
   }),
   // 95. a.__class__.x modifies the class attribute
   (_i: number) => ({
-    q: `class A:\n    x = 1\na = A()\na.__class__.x = 2\nWhat is A.x?`,
+    q: `What is A.x?\nclass A:\n    x = 1\na = A()\na.__class__.x = 2`,
     o: ["2", "1", "Error", "None"],
     c: 0,
     e: "a.__class__ IS A (the same class object). Setting a.__class__.x = 2 is identical to A.x = 2.",
@@ -3315,7 +3315,7 @@ Notes:
   }),
   // 96. Checking if class is in MRO
   (_i: number) => ({
-    q: `class A: pass\nclass B(A): pass\nWhat is A in B.__mro__?`,
+    q: `What is A in B.__mro__?\nclass A: pass\nclass B(A): pass`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "B.__mro__ contains B, A, and object. A is in the MRO, so the 'in' check returns True.",
@@ -3387,7 +3387,7 @@ Notes:
   }),
   // 97. object is always in MRO
   (_i: number) => ({
-    q: `class A: pass\nclass B(A): pass\nWhat is object in B.__mro__?`,
+    q: `What is object in B.__mro__?\nclass A: pass\nclass B(A): pass`,
     o: ["True", "False", "Error", "None"],
     c: 0,
     e: "Every class in Python ultimately inherits from object. object is always the last entry in any class's MRO.",
@@ -3462,7 +3462,7 @@ Notes:
   }),
   // 98. Template method pattern — __str__ calls subclass method
   (_i: number) => ({
-    q: `class Printable:\n    def __str__(self):\n        return self.to_string()\nclass Report(Printable):\n    def to_string(self):\n        return "Report"\nWhat is str(Report())?`,
+    q: `What is str(Report())?\nclass Printable:\n    def __str__(self):\n        return self.to_string()\nclass Report(Printable):\n    def to_string(self):\n        return "Report"`,
     o: ['"Report"', 'Error', '"Printable"', 'None'],
     c: 0,
     e: "__str__ calls self.to_string(). self is a Report, so Report.to_string() is called, returning 'Report'.",
@@ -3539,7 +3539,7 @@ Notes:
   }),
   // 99. Multiple inheritance — __bases__ shows all direct parents
   (_i: number) => ({
-    q: `class A: pass\nclass B: pass\nclass C(A, B): pass\nWhat is len(C.__bases__)?`,
+    q: `What is len(C.__bases__)?\nclass A: pass\nclass B: pass\nclass C(A, B): pass`,
     o: ["2", "1", "3", "Error"],
     c: 0,
     e: "C inherits from both A and B. __bases__ contains both direct parents, so len is 2.",

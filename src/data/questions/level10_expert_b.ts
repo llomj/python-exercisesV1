@@ -1629,7 +1629,7 @@ Notes:
   }),
   // 71. asyncio.run returns the value
   (_i: number) => ({
-    q: `import asyncio\nasync def f(): return 42\nWhat is asyncio.run(f())?`,
+    q: `What is asyncio.run(f())?\nimport asyncio\nasync def f(): return 42`,
     o: ["42", "None", "A coroutine", "Error"],
     c: 0,
     e: "asyncio.run() executes the coroutine and returns its result, which is 42.",

@@ -3,7 +3,7 @@
 export const level7IntermediateB = [
   // 51. Basic generator with three yields collected into a list
   (_i: number) => ({
-    q: `def gen(): yield 1; yield 2; yield 3\nWhat is list(gen())?`,
+    q: `What is list(gen())?\ndef gen(): yield 1; yield 2; yield 3`,
     o: ['[1, 2, 3]', '[1]', '(1, 2, 3)', 'Error'],
     c: 0,
     e: "Each yield produces one value. list() collects all yielded values into [1, 2, 3].",
@@ -69,7 +69,7 @@ Notes:
   }),
   // 52. next() on generator returns first yielded value
   (_i: number) => ({
-    q: `def gen(): yield 1; yield 2\ng = gen()\nWhat is next(g)?`,
+    q: `What is next(g)?\ndef gen(): yield 1; yield 2\ng = gen()`,
     o: ['1', '2', '[1, 2]', 'Error'],
     c: 0,
     e: "next(g) advances the generator to its first yield and returns 1.",
@@ -135,7 +135,7 @@ Notes:
   }),
   // 53. Second next() returns second yielded value
   (_i: number) => ({
-    q: `def gen(): yield 1; yield 2\ng = gen(); next(g)\nWhat is next(g)?`,
+    q: `What is next(g)?\ndef gen(): yield 1; yield 2\ng = gen(); next(g)`,
     o: ['2', '1', '[1, 2]', 'StopIteration'],
     c: 0,
     e: "The first next(g) consumed 1. The second next(g) resumes and yields 2.",
@@ -200,7 +200,7 @@ Notes:
   }),
   // 54. next() past all yields raises StopIteration
   (_i: number) => ({
-    q: `def gen(): yield 1; yield 2\ng = gen(); next(g); next(g)\nWhat happens with next(g)?`,
+    q: `What happens with next(g)?\ndef gen(): yield 1; yield 2\ng = gen(); next(g); next(g)`,
     o: ['StopIteration is raised', '2', 'None', '1'],
     c: 0,
     e: "Both yields are exhausted. A third next() raises StopIteration.",
@@ -264,7 +264,7 @@ Notes:
   }),
   // 55. Generator yielding computed values from a loop
   (_i: number) => ({
-    q: `def gen():\n    for i in range(3):\n        yield i ** 2\nWhat is list(gen())?`,
+    q: `What is list(gen())?\ndef gen():\n    for i in range(3):\n        yield i ** 2`,
     o: ['[0, 1, 4]', '[0, 1, 2]', '[1, 4, 9]', '[0, 2, 4]'],
     c: 0,
     e: "range(3) gives 0, 1, 2. Squaring each: 0**2=0, 1**2=1, 2**2=4.",
@@ -397,7 +397,7 @@ Notes:
   }),
   // 57. yield from delegates to a sub-iterable
   (_i: number) => ({
-    q: `def gen(): yield from [1, 2, 3]\nWhat is list(gen())?`,
+    q: `What is list(gen())?\ndef gen(): yield from [1, 2, 3]`,
     o: ['[1, 2, 3]', '[[1, 2, 3]]', '[1]', 'Error'],
     c: 0,
     e: "yield from iterates over the list and yields each element individually.",
@@ -467,7 +467,7 @@ Notes:
   }),
   // 58. yield from with range
   (_i: number) => ({
-    q: `def gen(): yield from range(5)\nWhat is list(gen())?`,
+    q: `What is list(gen())?\ndef gen(): yield from range(5)`,
     o: ['[0, 1, 2, 3, 4]', '[1, 2, 3, 4, 5]', 'range(0, 5)', '[0, 1, 2, 3, 4, 5]'],
     c: 0,
     e: "yield from range(5) yields each number from 0 to 4 individually.",
@@ -532,7 +532,7 @@ Notes:
   }),
   // 59. yield from with a string yields individual characters
   (_i: number) => ({
-    q: `def gen(): yield from "abc"\nWhat is list(gen())?`,
+    q: `What is list(gen())?\ndef gen(): yield from "abc"`,
     o: ['["a", "b", "c"]', '["abc"]', '[("a", "b", "c")]', 'Error'],
     c: 0,
     e: "Strings are iterable. yield from 'abc' yields each character: 'a', 'b', 'c'.",
@@ -988,7 +988,7 @@ Notes:
   }),
   // 66. Generator exhaustion — second list() returns empty
   (_i: number) => ({
-    q: `g = (x**2 for x in range(3))\na = list(g)\nb = list(g)\nWhat is b?`,
+    q: `What is b?\ng = (x**2 for x in range(3))\na = list(g)\nb = list(g)`,
     o: ['[]', '[0, 1, 4]', '[0, 0, 0]', 'Error'],
     c: 0,
     e: "Generators are single-use. The first list(g) exhausts it. The second list(g) gets an empty list.",
@@ -1053,7 +1053,7 @@ Notes:
   }),
   // 67. Infinite generator with manual next() calls
   (_i: number) => ({
-    q: `def infinite():\n    n = 0\n    while True:\n        yield n\n        n += 1\ng = infinite()\nWhat is [next(g) for _ in range(5)]?`,
+    q: `What is [next(g) for _ in range(5)]?\ndef infinite():\n    n = 0\n    while True:\n        yield n\n        n += 1\ng = infinite()`,
     o: ['[0, 1, 2, 3, 4]', '[1, 2, 3, 4, 5]', 'Infinite loop', 'Error'],
     c: 0,
     e: "The generator yields 0, 1, 2, 3, ... Each next(g) gets the next number. Five calls give [0,1,2,3,4].",
@@ -1121,7 +1121,7 @@ Notes:
   }),
   // 68. Generator with return value attached to StopIteration
   (_i: number) => ({
-    q: `def gen():\n    yield 1\n    return "done"\ng = gen()\nWhat is next(g)?`,
+    q: `What is next(g)?\ndef gen():\n    yield 1\n    return "done"\ng = gen()`,
     o: ['1', '"done"', 'StopIteration', 'Error'],
     c: 0,
     e: "next(g) returns the first yielded value: 1. The return value 'done' is attached to StopIteration when the generator ends.",
@@ -1188,7 +1188,7 @@ Notes:
   }),
   // 69. Fibonacci generator
   (_i: number) => ({
-    q: `def fibonacci():\n    a, b = 0, 1\n    while True:\n        yield a\n        a, b = b, a + b\ng = fibonacci()\nWhat is [next(g) for _ in range(7)]?`,
+    q: `What is [next(g) for _ in range(7)]?\ndef fibonacci():\n    a, b = 0, 1\n    while True:\n        yield a\n        a, b = b, a + b\ng = fibonacci()`,
     o: ['[0, 1, 1, 2, 3, 5, 8]', '[1, 1, 2, 3, 5, 8, 13]', '[0, 1, 2, 3, 5, 8, 13]', '[1, 2, 3, 5, 8, 13, 21]'],
     c: 0,
     e: "Classic Fibonacci: each number is the sum of the two before it. Starting with 0, 1: 0, 1, 1, 2, 3, 5, 8.",
@@ -1255,7 +1255,7 @@ Notes:
   }),
   // 70. yield from twice concatenates sequences
   (_i: number) => ({
-    q: `def gen(n):\n    yield from range(n)\n    yield from range(n)\nWhat is list(gen(3))?`,
+    q: `What is list(gen(3))?\ndef gen(n):\n    yield from range(n)\n    yield from range(n)`,
     o: ['[0, 1, 2, 0, 1, 2]', '[0, 1, 2]', '[0, 0, 1, 1, 2, 2]', '[0, 1, 2, 3, 4, 5]'],
     c: 0,
     e: "yield from range(3) yields 0,1,2. Doing it twice concatenates: [0,1,2,0,1,2].",
@@ -1320,7 +1320,7 @@ Notes:
   }),
   // 71. Reading a global variable inside a function
   (_i: number) => ({
-    q: `x = 1\ndef f():\n    return x\nWhat is f()?`,
+    q: `What is f()?\nx = 1\ndef f():\n    return x`,
     o: ['1', 'Error', 'None', '0'],
     c: 0,
     e: "Functions can read variables from the enclosing/global scope. x is 1 at module level.",
@@ -1385,7 +1385,7 @@ Notes:
   }),
   // 72. Local variable doesn't affect global
   (_i: number) => ({
-    q: `x = 1\ndef f():\n    x = 2\nf()\nWhat is x?`,
+    q: `What is x?\nx = 1\ndef f():\n    x = 2\nf()`,
     o: ['1', '2', 'None', 'Error'],
     c: 0,
     e: "x = 2 inside f() creates a local variable. The global x remains 1.",
@@ -1451,7 +1451,7 @@ Notes:
   }),
   // 73. global keyword modifies module-level variable
   (_i: number) => ({
-    q: `x = 1\ndef f():\n    global x\n    x = 2\nf()\nWhat is x?`,
+    q: `What is x?\nx = 1\ndef f():\n    global x\n    x = 2\nf()`,
     o: ['2', '1', 'None', 'Error'],
     c: 0,
     e: "The global keyword tells Python that x refers to the module-level variable. f() changes it to 2.",
@@ -1517,7 +1517,7 @@ Notes:
   }),
   // 74. nonlocal modifies enclosing function's variable
   (_i: number) => ({
-    q: `def f():\n    x = 1\n    def g():\n        nonlocal x\n        x = 2\n    g()\n    return x\nWhat is f()?`,
+    q: `What is f()?\ndef f():\n    x = 1\n    def g():\n        nonlocal x\n        x = 2\n    g()\n    return x`,
     o: ['2', '1', 'None', 'Error'],
     c: 0,
     e: "nonlocal x in g() tells Python to modify the enclosing function's x. After g(), x is 2.",
@@ -1583,7 +1583,7 @@ Notes:
   }),
   // 75. Without nonlocal, inner function's x is separate
   (_i: number) => ({
-    q: `def f():\n    x = 1\n    def g():\n        x = 2\n    g()\n    return x\nWhat is f()?`,
+    q: `What is f()?\ndef f():\n    x = 1\n    def g():\n        x = 2\n    g()\n    return x`,
     o: ['1', '2', 'None', 'Error'],
     c: 0,
     e: "Without nonlocal, x = 2 in g() creates a local variable in g. f()'s x stays 1.",
@@ -1721,7 +1721,7 @@ Notes:
   }),
   // 77. Variable lookup happens at call time, not definition time
   (_i: number) => ({
-    q: `x = 10\ndef f():\n    return x\nx = 20\nWhat is f()?`,
+    q: `What is f()?\nx = 10\ndef f():\n    return x\nx = 20`,
     o: ['20', '10', 'Error', 'None'],
     c: 0,
     e: "Python looks up x when f() is called, not when f is defined. At call time, x is 20.",
@@ -1787,7 +1787,7 @@ Notes:
   }),
   // 78. f() sees global x, not g()'s local x
   (_i: number) => ({
-    q: `x = 10\ndef f():\n    return x\ndef g():\n    x = 99\n    return f()\nWhat is g()?`,
+    q: `What is g()?\nx = 10\ndef f():\n    return x\ndef g():\n    x = 99\n    return f()`,
     o: ['10', '99', 'Error', 'None'],
     c: 0,
     e: "f() looks up x in its own global scope, not in g()'s local scope. Global x is 10.",
@@ -1994,7 +1994,7 @@ Notes:
   }),
   // 81. Inspecting closure cell contents
   (_i: number) => ({
-    q: `def f():\n    x = 1\n    def g():\n        return x\n    return g.__closure__[0].cell_contents\nWhat is f()?`,
+    q: `What is f()?\ndef f():\n    x = 1\n    def g():\n        return x\n    return g.__closure__[0].cell_contents`,
     o: ['1', 'None', 'Error', '0'],
     c: 0,
     e: "g captures x from f's scope. The closure cell stores x=1, accessible via cell_contents.",
@@ -2064,7 +2064,7 @@ Notes:
   }),
   // 82. Closure is not None when variable is captured
   (_i: number) => ({
-    q: `def f():\n    x = 1\n    def g():\n        return x\n    return g.__closure__ is not None\nWhat is f()?`,
+    q: `What is f()?\ndef f():\n    x = 1\n    def g():\n        return x\n    return g.__closure__ is not None`,
     o: ['True', 'False', 'None', 'Error'],
     c: 0,
     e: "g captures x from f, so g has a closure. __closure__ is a non-None tuple of cells.",
@@ -2129,7 +2129,7 @@ Notes:
   }),
   // 83. No closure when nested function doesn't capture anything
   (_i: number) => ({
-    q: `def f():\n    def g():\n        return 42\n    return g.__closure__\nWhat is f()?`,
+    q: `What is f()?\ndef f():\n    def g():\n        return 42\n    return g.__closure__`,
     o: ['None', '()', 'True', 'Error'],
     c: 0,
     e: "g does not reference any variable from f, so no closure is created. __closure__ is None.",
@@ -2196,7 +2196,7 @@ Notes:
   }),
   // 84. Enclosing scope variable wins over global
   (_i: number) => ({
-    q: `x = "global"\ndef f():\n    x = "local"\n    def g():\n        return x\n    return g()\nWhat is f()?`,
+    q: `What is f()?\nx = "global"\ndef f():\n    x = "local"\n    def g():\n        return x\n    return g()`,
     o: ['"local"', '"global"', 'None', 'Error'],
     c: 0,
     e: "g() finds x in f()'s scope (Enclosing) before checking the global scope. Returns 'local'.",
@@ -2264,7 +2264,7 @@ Notes:
   }),
   // 85. Counting free variables with co_freevars
   (_i: number) => ({
-    q: `def f():\n    x = 1\n    y = 2\n    def g():\n        return x + y\n    return len(g.__code__.co_freevars)\nWhat is f()?`,
+    q: `What is f()?\ndef f():\n    x = 1\n    y = 2\n    def g():\n        return x + y\n    return len(g.__code__.co_freevars)`,
     o: ['2', '1', '0', 'Error'],
     c: 0,
     e: "g captures x and y from f. co_freevars lists them, so len() returns 2.",
@@ -2330,7 +2330,7 @@ Notes:
   }),
   // 86. Function __name__ attribute
   (_i: number) => ({
-    q: `def f(x):\n    return x\nWhat is f.__name__?`,
+    q: `What is f.__name__?\ndef f(x):\n    return x`,
     o: ['"f"', '"function"', '"x"', 'Error'],
     c: 0,
     e: "Every function has a __name__ attribute that holds its name as defined with def.",
@@ -2396,7 +2396,7 @@ Notes:
   }),
   // 87. Function __doc__ attribute (docstring)
   (_i: number) => ({
-    q: `def f(x):\n    """My function"""\n    return x\nWhat is f.__doc__?`,
+    q: `What is f.__doc__?\ndef f(x):\n    """My function"""\n    return x`,
     o: ['"My function"', 'None', '"f"', 'Error'],
     c: 0,
     e: "The first string literal in a function body becomes the docstring, accessible via __doc__.",
@@ -2472,7 +2472,7 @@ Notes:
   }),
   // 88. Function __annotations__ with type hints
   (_i: number) => ({
-    q: `def f(x: int, y: str) -> bool:\n    return True\nWhat is f.__annotations__?`,
+    q: `What is f.__annotations__?\ndef f(x: int, y: str) -> bool:\n    return True`,
     o: ['{"x": int, "y": str, "return": bool}', '{"x": "int", "y": "str"}', '(int, str, bool)', 'Error'],
     c: 0,
     e: "Type hints are stored in __annotations__ as a dict mapping parameter names and 'return' to their types.",
@@ -2539,7 +2539,7 @@ Notes:
   }),
   // 89. Functions can have custom attributes
   (_i: number) => ({
-    q: `def f(x):\n    return x\nf.custom_attr = 42\nWhat is f.custom_attr?`,
+    q: `What is f.custom_attr?\ndef f(x):\n    return x\nf.custom_attr = 42`,
     o: ['42', 'Error', 'None', '"custom_attr"'],
     c: 0,
     e: "Functions are objects and can have arbitrary attributes assigned to them.",
@@ -2607,7 +2607,7 @@ Notes:
   }),
   // 90. Function dispatch table using dict of lambdas
   (_i: number) => ({
-    q: `def dispatch(op):\n    return {"+": lambda a,b: a+b, "-": lambda a,b: a-b}[op]\nWhat is dispatch("+")(3, 2)?`,
+    q: `What is dispatch("+")(3, 2)?\ndef dispatch(op):\n    return {"+": lambda a,b: a+b, "-": lambda a,b: a-b}[op]`,
     o: ['5', '1', '"+"', 'Error'],
     c: 0,
     e: "dispatch('+') returns lambda a,b: a+b. Calling it with (3,2) returns 3+2 = 5.",
@@ -2681,7 +2681,7 @@ Notes:
   }),
   // 91. @once decorator — function runs only on first call
   (_i: number) => ({
-    q: `def once(f):\n    called = [False]\n    def wrapper(*a):\n        if not called[0]:\n            called[0] = True\n            return f(*a)\n    return wrapper\nWhat does @once do to a function?`,
+    q: `What does @once do to a function?\ndef once(f):\n    called = [False]\n    def wrapper(*a):\n        if not called[0]:\n            called[0] = True\n            return f(*a)\n    return wrapper`,
     o: ['Makes it run only on the first call', 'Makes it run twice', 'Caches all return values', 'Raises an error on second call'],
     c: 0,
     e: "The once decorator uses a mutable flag to ensure the wrapped function only executes on the first call.",
@@ -2754,7 +2754,7 @@ Notes:
   }),
   // 92. Memoize decorator caches results
   (_i: number) => ({
-    q: `def memoize(f):\n    cache = {}\n    def wrapper(n):\n        if n not in cache:\n            cache[n] = f(n)\n        return cache[n]\n    return wrapper\nWhat does memoize do?`,
+    q: `What does memoize do?\ndef memoize(f):\n    cache = {}\n    def wrapper(n):\n        if n not in cache:\n            cache[n] = f(n)\n        return cache[n]\n    return wrapper`,
     o: ['Caches results to avoid recomputation', 'Limits function to one call', 'Adds type checking', 'Converts to a generator'],
     c: 0,
     e: "memoize stores results in a dict. If the same argument is passed again, it returns the cached result.",
@@ -2895,7 +2895,7 @@ Notes:
   }),
   // 94. Calling a generator function returns a generator object
   (_i: number) => ({
-    q: `def f():\n    yield 1\nWhat is type(f())?`,
+    q: `What is type(f())?\ndef f():\n    yield 1`,
     o: ["<class 'generator'>", "<class 'function'>", "<class 'int'>", "<class 'NoneType'>"],
     c: 0,
     e: "Calling a generator function returns a generator object, not the yielded value.",
@@ -2961,7 +2961,7 @@ Notes:
   }),
   // 95. The generator function itself is still type 'function'
   (_i: number) => ({
-    q: `def f():\n    yield 1\nWhat is type(f)?`,
+    q: `What is type(f)?\ndef f():\n    yield 1`,
     o: ["<class 'function'>", "<class 'generator'>", "<class 'method'>", "<class 'builtin_function_or_method'>"],
     c: 0,
     e: "f itself is a function. Only calling f() produces a generator object.",
@@ -3027,7 +3027,7 @@ Notes:
   }),
   // 96. Keyword-only parameters after bare *
   (_i: number) => ({
-    q: `def f(*, x, y):\n    return x + y\nWhat is f(x=1, y=2)?`,
+    q: `What is f(x=1, y=2)?\ndef f(*, x, y):\n    return x + y`,
     o: ['3', 'Error', '(1, 2)', 'None'],
     c: 0,
     e: "After bare *, all parameters are keyword-only. f(x=1, y=2) works and returns 3.",
@@ -3092,7 +3092,7 @@ Notes:
   }),
   // 97. Passing positional args to keyword-only params raises TypeError
   (_i: number) => ({
-    q: `def f(*, x, y):\n    return x + y\nWhat happens with f(1, 2)?`,
+    q: `What happens with f(1, 2)?\ndef f(*, x, y):\n    return x + y`,
     o: ['TypeError', '3', '(1, 2)', 'None'],
     c: 0,
     e: "x and y are keyword-only (after *). Passing positional arguments raises TypeError.",
@@ -3160,7 +3160,7 @@ Notes:
   }),
   // 98. Positional-only + regular + keyword-only parameters
   (_i: number) => ({
-    q: `def f(a, b, /, c, *, d):\n    return a + b + c + d\nWhat is f(1, 2, 3, d=4)?`,
+    q: `What is f(1, 2, 3, d=4)?\ndef f(a, b, /, c, *, d):\n    return a + b + c + d`,
     o: ['10', 'Error', '(1, 2, 3, 4)', 'None'],
     c: 0,
     e: "a,b are positional-only (/), c is regular, d is keyword-only (*). f(1,2,3,d=4) = 1+2+3+4 = 10.",
@@ -3226,7 +3226,7 @@ Notes:
   }),
   // 99. Regular parameter can be passed as keyword
   (_i: number) => ({
-    q: `def f(a, b, /, c, *, d):\n    return a + b + c + d\nWhat is f(1, 2, c=3, d=4)?`,
+    q: `What is f(1, 2, c=3, d=4)?\ndef f(a, b, /, c, *, d):\n    return a + b + c + d`,
     o: ['10', 'Error', '(1, 2, 3, 4)', 'None'],
     c: 0,
     e: "c is a regular parameter and can be passed as a keyword argument. Result: 1+2+3+4 = 10.",
@@ -3293,7 +3293,7 @@ Notes:
   }),
   // 100. Positional-only parameters cannot be passed as keywords
   (_i: number) => ({
-    q: `def f(a, b, /, c, *, d):\n    return a + b + c + d\nWhat happens with f(a=1, b=2, c=3, d=4)?`,
+    q: `What happens with f(a=1, b=2, c=3, d=4)?\ndef f(a, b, /, c, *, d):\n    return a + b + c + d`,
     o: ['TypeError', '10', '(1, 2, 3, 4)', 'None'],
     c: 0,
     e: "a and b are positional-only (before /). Passing them as keyword arguments raises TypeError.",

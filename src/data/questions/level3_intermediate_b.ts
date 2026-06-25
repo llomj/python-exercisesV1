@@ -746,7 +746,7 @@ Notes:
   }),
   // 66. Range check via chaining
   (_i: number) => ({
-    q: `x = 5\nWhat is the result of: 1 <= x <= 10?`,
+    q: `What is the result of: 1 <= x <= 10?\nx = 5`,
     o: ['True', 'False', 'Error', 'None'],
     c: 0,
     e: "Chained range check: 1 <= 5 and 5 <= 10, both True.",
@@ -795,7 +795,7 @@ Notes:
   }),
   // 67. Range check that fails
   (_i: number) => ({
-    q: `x = 15\nWhat is the result of: 1 <= x <= 10?`,
+    q: `What is the result of: 1 <= x <= 10?\nx = 15`,
     o: ['False', 'True', 'Error', 'None'],
     c: 0,
     e: "15 is not in range [1, 10]: 1 <= 15 is True, but 15 <= 10 is False.",
@@ -844,7 +844,7 @@ Notes:
   }),
   // 68. Truthy check before method call
   (_i: number) => ({
-    q: `x = "hello"\nWhat is the result of: x and len(x) > 3?`,
+    q: `What is the result of: x and len(x) > 3?\nx = "hello"`,
     o: ['True', 'False', '""', 'None'],
     c: 0,
     e: "x is truthy ('hello'), so len('hello') > 3 → 5 > 3 → True.",
@@ -894,7 +894,7 @@ Notes:
   }),
   // 69. Short-circuit returns falsy value
   (_i: number) => ({
-    q: `x = ""\nWhat is the result of: x and len(x) > 3?`,
+    q: `What is the result of: x and len(x) > 3?\nx = ""`,
     o: ['""', 'False', 'True', 'None'],
     c: 0,
     e: "x is '' (falsy), so 'and' short-circuits and returns '' without evaluating len(x).",
@@ -943,7 +943,7 @@ Notes:
   }),
   // 70. None short-circuits before attribute access
   (_i: number) => ({
-    q: `x = None\nWhat is the result of: x and x.strip()?`,
+    q: `What is the result of: x and x.strip()?\nx = None`,
     o: ['None', 'Error', '""', 'False'],
     c: 0,
     e: "x is None (falsy), so 'and' short-circuits and returns None. x.strip() is never called.",
@@ -995,7 +995,7 @@ Notes:
   }),
   // 71. dict.get() returns None (falsy), or-fallback triggers
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is d.get("b") or "missing"?`,
+    q: `What is d.get("b") or "missing"?\nd = {"a": 1}`,
     o: ['"missing"', 'None', '1', 'Error'],
     c: 0,
     e: "d.get('b') returns None (falsy), so 'or' returns 'missing'.",
@@ -1043,7 +1043,7 @@ Notes:
   }),
   // 72. dict.get() returns truthy value, or-fallback skipped
   (_i: number) => ({
-    q: `d = {"a": 1}\nWhat is d.get("a") or "missing"?`,
+    q: `What is d.get("a") or "missing"?\nd = {"a": 1}`,
     o: ['1', '"missing"', 'None', 'Error'],
     c: 0,
     e: "d.get('a') returns 1 (truthy), so 'or' short-circuits and returns 1.",
@@ -1091,7 +1091,7 @@ Notes:
   }),
   // 73. The 0-is-falsy bug pattern with or
   (_i: number) => ({
-    q: `d = {"a": 0}\nWhat is d.get("a") or "missing"?`,
+    q: `What is d.get("a") or "missing"?\nd = {"a": 0}`,
     o: ['"missing"', '0', 'None', 'Error'],
     c: 0,
     e: "d.get('a') returns 0, which is falsy! So 'or' returns 'missing' — a common bug.",
@@ -1141,7 +1141,7 @@ Notes:
   }),
   // 74. Correct default with .get() second parameter
   (_i: number) => ({
-    q: `d = {"a": 0}\nWhat is d.get("a", "missing")?`,
+    q: `What is d.get("a", "missing")?\nd = {"a": 0}`,
     o: ['0', '"missing"', 'None', 'Error'],
     c: 0,
     e: "d.get() with a default only uses it when the key is absent. Key 'a' exists, so it returns 0.",
@@ -1856,7 +1856,7 @@ Notes:
   }),
   // 88. Nested ternary — middle branch
   (_i: number) => ({
-    q: `x = 5\nresult = "a" if x > 10 else "b" if x > 3 else "c"\nWhat is result?`,
+    q: `What is result?\nx = 5\nresult = "a" if x > 10 else "b" if x > 3 else "c"`,
     o: ['"b"', '"a"', '"c"', 'Error'],
     c: 0,
     e: "x=5: x > 10 is False, so evaluate 'b' if x > 3 else 'c'. x > 3 is True → 'b'.",
@@ -1907,7 +1907,7 @@ Notes:
   }),
   // 89. Nested ternary — last branch
   (_i: number) => ({
-    q: `x = 1\nresult = "a" if x > 10 else "b" if x > 3 else "c"\nWhat is result?`,
+    q: `What is result?\nx = 1\nresult = "a" if x > 10 else "b" if x > 3 else "c"`,
     o: ['"c"', '"b"', '"a"', 'Error'],
     c: 0,
     e: "x=1: x > 10 is False, x > 3 is also False, so result is 'c'.",

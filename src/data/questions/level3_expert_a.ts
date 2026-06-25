@@ -4,7 +4,7 @@ export const level3ExpertA = [
 
   // Q1
   (_i: number) => ({
-    q: `x = 12\nWhat is "high" if x > 10 else "low"?`,
+    q: `What is "high" if x > 10 else "low"?\nx = 12`,
     o: ['"high"', '"low"', "12", "Error"],
     c: 0,
     e: "Since x is greater than 10, the first branch is chosen.",
@@ -31,7 +31,7 @@ Notes:
 
   // Q2
   (_i: number) => ({
-    q: `x = 7\nWhat is "adult" if x >= 18 else "minor"?`,
+    q: `What is "adult" if x >= 18 else "minor"?\nx = 7`,
     o: ['"minor"', '"adult"', "7", "Error"],
     c: 0,
     e: "7 is not at least 18, so the else branch is used.",
@@ -58,7 +58,7 @@ Notes:
 
   // Q3
   (_i: number) => ({
-    q: `x = 0\nif x:\n    result = "yes"\nelse:\n    result = "no"\nWhat is result?`,
+    q: `What is result?\nx = 0\nif x:\n    result = "yes"\nelse:\n    result = "no"`,
     o: ['"no"', '"yes"', '"0"', "Error"],
     c: 0,
     e: "0 is falsy, so the else block runs.",
@@ -86,7 +86,7 @@ Notes:
 
   // Q4
   (_i: number) => ({
-    q: `name = ""\nWhat is name or "Anonymous"?`,
+    q: `What is name or "Anonymous"?\nname = ""`,
     o: ['"Anonymous"', '""', '"name"', "Error"],
     c: 0,
     e: "An empty string is falsy, so or returns the fallback value.",
@@ -113,7 +113,7 @@ Notes:
 
   // Q5
   (_i: number) => ({
-    q: `score = 85\nif score >= 90:\n    grade = "A"\nelif score >= 80:\n    grade = "B"\nelse:\n    grade = "C"\nWhat is grade?`,
+    q: `What is grade?\nscore = 85\nif score >= 90:\n    grade = "A"\nelif score >= 80:\n    grade = "B"\nelse:\n    grade = "C"`,
     o: ['"B"', '"A"', '"C"', "Error"],
     c: 0,
     e: "85 does not reach 90, but it does reach 80, so the elif branch sets grade to \"B\".",
@@ -140,7 +140,7 @@ Notes:
 
   // Q6
   (_i: number) => ({
-    q: `age = 17\nhas_id = True\nWhat is age >= 18 and has_id?`,
+    q: `What is age >= 18 and has_id?\nage = 17\nhas_id = True`,
     o: ["False", "True", "17", "Error"],
     c: 0,
     e: "Both sides of and must be truthy, and age >= 18 is False here.",
@@ -166,7 +166,7 @@ Notes:
 
   // Q7
   (_i: number) => ({
-    q: `age = 20\nhas_id = False\nWhat is age >= 18 or has_id?`,
+    q: `What is age >= 18 or has_id?\nage = 20\nhas_id = False`,
     o: ["True", "False", "20", "Error"],
     c: 0,
     e: "or needs only one truthy side, and age >= 18 is already True.",
@@ -192,7 +192,7 @@ Notes:
 
   // Q8
   (_i: number) => ({
-    q: `x = -3\nif x > 0:\n    label = "positive"\nelif x < 0:\n    label = "negative"\nelse:\n    label = "zero"\nWhat is label?`,
+    q: `What is label?\nx = -3\nif x > 0:\n    label = "positive"\nelif x < 0:\n    label = "negative"\nelse:\n    label = "zero"`,
     o: ['"negative"', '"positive"', '"zero"', "Error"],
     c: 0,
     e: "x is less than 0, so the elif branch assigns \"negative\".",
@@ -218,7 +218,7 @@ Notes:
 
   // Q9
   (_i: number) => ({
-    q: `items = []\nWhat is "empty" if not items else "filled"?`,
+    q: `What is "empty" if not items else "filled"?\nitems = []`,
     o: ['"empty"', '"filled"', "[]", "Error"],
     c: 0,
     e: "An empty list is falsy, so not items is True.",
@@ -244,7 +244,7 @@ Notes:
 
   // Q10
   (_i: number) => ({
-    q: `text = "Python"\nWhat is "yes" if "Py" in text else "no"?`,
+    q: `What is "yes" if "Py" in text else "no"?\ntext = "Python"`,
     o: ['"yes"', '"no"', '"Py"', "Error"],
     c: 0,
     e: "\"Py\" is found inside \"Python\", so the expression returns \"yes\".",

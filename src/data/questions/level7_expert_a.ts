@@ -293,7 +293,7 @@ Notes:
 
   // Q5: log decorator behavior
   (_i: number) => ({
-    q: `def log(f):\n    def wrapper(*a):\n        print(f"Calling {f.__name__}")\n        return f(*a)\n    return wrapper\n\nWhat does @log do to a function?`,
+    q: `What does @log do to a function?\ndef log(f):\n    def wrapper(*a):\n        print(f"Calling {f.__name__}")\n        return f(*a)\n    return wrapper\n`,
     o: ["Prints function name before each call", "Prints function name after each call", "Prevents the function from being called", "Renames the function"],
     c: 0,
     e: "The @log decorator prints the function's name before executing the original function.",
@@ -953,7 +953,7 @@ Notes:
 
   // Q14: Timer decorator pattern
   (_i: number) => ({
-    q: `def timer(f):\n    import time\n    def wrapper(*a):\n        start = time.time()\n        result = f(*a)\n        return result\n    return wrapper\n\nWhat pattern is this?`,
+    q: `What pattern is this?\ndef timer(f):\n    import time\n    def wrapper(*a):\n        start = time.time()\n        result = f(*a)\n        return result\n    return wrapper\n`,
     o: ["Timing/profiling decorator", "Caching decorator", "Authorization decorator", "Retry decorator"],
     c: 0,
     e: "This decorator records the start time before calling the function — a timing/profiling pattern.",
@@ -1476,7 +1476,7 @@ Notes:
 
   // Q21: count_calls decorator
   (_i: number) => ({
-    q: `def count_calls(f):\n    f.calls = 0\n    def w(*a, **kw):\n        f.calls += 1\n        return f(*a, **kw)\n    return w\n\nWhat does this decorator track?`,
+    q: `What does this decorator track?\ndef count_calls(f):\n    f.calls = 0\n    def w(*a, **kw):\n        f.calls += 1\n        return f(*a, **kw)\n    return w\n`,
     o: ["Number of times function is called", "Time taken per call", "Arguments passed to function", "Return values of function"],
     c: 0,
     e: "f.calls increments by 1 each time the wrapper is called, tracking call count.",
@@ -1551,7 +1551,7 @@ Notes:
 
   // Q22: Singleton decorator pattern
   (_i: number) => ({
-    q: `def singleton(cls):\n    instances = {}\n    def get_instance(*a):\n        if cls not in instances:\n            instances[cls] = cls(*a)\n        return instances[cls]\n    return get_instance\n\nWhat design pattern does this implement?`,
+    q: `What design pattern does this implement?\ndef singleton(cls):\n    instances = {}\n    def get_instance(*a):\n        if cls not in instances:\n            instances[cls] = cls(*a)\n        return instances[cls]\n    return get_instance\n`,
     o: ["Singleton pattern", "Factory pattern", "Observer pattern", "Strategy pattern"],
     c: 0,
     e: "This ensures only one instance of the class is ever created — the Singleton pattern.",
@@ -1626,7 +1626,7 @@ Notes:
 
   // Q23: Memoization/caching decorator
   (_i: number) => ({
-    q: `def cache(f):\n    memo = {}\n    def w(*a):\n        if a not in memo:\n            memo[a] = f(*a)\n        return memo[a]\n    return w\n\nWhat pattern does this implement?`,
+    q: `What pattern does this implement?\ndef cache(f):\n    memo = {}\n    def w(*a):\n        if a not in memo:\n            memo[a] = f(*a)\n        return memo[a]\n    return w\n`,
     o: ["Memoization/caching", "Singleton", "Retry logic", "Logging"],
     c: 0,
     e: "This caches results keyed by arguments — the memoization pattern.",
@@ -2072,7 +2072,7 @@ Notes:
 
   // Q29: Retry decorator pattern
   (_i: number) => ({
-    q: `def retry(times):\n    def dec(f):\n        def w(*a):\n            for i in range(times):\n                try:\n                    return f(*a)\n                except:\n                    if i == times - 1:\n                        raise\n        return w\n    return dec\n\nWhat pattern is this?`,
+    q: `What pattern is this?\ndef retry(times):\n    def dec(f):\n        def w(*a):\n            for i in range(times):\n                try:\n                    return f(*a)\n                except:\n                    if i == times - 1:\n                        raise\n        return w\n    return dec\n`,
     o: ["Retry decorator", "Cache decorator", "Timer decorator", "Logging decorator"],
     c: 0,
     e: "This retries the function up to 'times' attempts, re-raising on the last failure.",
@@ -2145,7 +2145,7 @@ Notes:
 
   // Q30: Debug/logging decorator
   (_i: number) => ({
-    q: `def debug(f):\n    from functools import wraps\n    @wraps(f)\n    def w(*a, **kw):\n        r = f(*a, **kw)\n        print(f"{f.__name__}({a}, {kw}) -> {r}")\n        return r\n    return w\n\nWhat pattern is this?`,
+    q: `What pattern is this?\ndef debug(f):\n    from functools import wraps\n    @wraps(f)\n    def w(*a, **kw):\n        r = f(*a, **kw)\n        print(f"{f.__name__}({a}, {kw}) -> {r}")\n        return r\n    return w\n`,
     o: ["Debug/logging decorator", "Retry decorator", "Caching decorator", "Authorization decorator"],
     c: 0,
     e: "This prints the function name, arguments, and return value — a debug/logging pattern.",
@@ -2217,7 +2217,7 @@ Notes:
 
   // Q31: Identity decorator
   (_i: number) => ({
-    q: `def dec(f):\n    return f\n\nWhat does this decorator do?`,
+    q: `What does this decorator do?\ndef dec(f):\n    return f\n`,
     o: ["Nothing — returns function unchanged (identity decorator)", "Deletes the function", "Wraps the function in a class", "Doubles the function's output"],
     c: 0,
     e: "This is an identity decorator — it returns the function as-is with no modification.",
@@ -2289,7 +2289,7 @@ Notes:
 
   // Q32: Decorator returning non-function
   (_i: number) => ({
-    q: `def dec(f):\n    return 42\n\nCan a decorator return a non-function value?`,
+    q: `Can a decorator return a non-function value?\ndef dec(f):\n    return 42\n`,
     o: ["Yes, but calling the decorated name will fail since 42 is not callable", "No, decorators must return functions", "Yes, and calling it will return 42", "Error at decoration time"],
     c: 0,
     e: "A decorator can return anything, but the name now refers to 42. Calling it raises TypeError.",
@@ -2437,7 +2437,7 @@ Notes:
 
   // Q34: Authorization decorator pattern
   (_i: number) => ({
-    q: `def requires_auth(f):\n    def w(user, *a):\n        if not user.get("auth"):\n            raise PermissionError\n        return f(user, *a)\n    return w\n\nWhat pattern is this?`,
+    q: `What pattern is this?\ndef requires_auth(f):\n    def w(user, *a):\n        if not user.get("auth"):\n            raise PermissionError\n        return f(user, *a)\n    return w\n`,
     o: ["Authorization/permission decorator", "Logging decorator", "Caching decorator", "Singleton decorator"],
     c: 0,
     e: "This checks for authentication before allowing the function to execute — an authorization pattern.",
@@ -2805,7 +2805,7 @@ Notes:
 
   // Q39: When does decoration happen?
   (_i: number) => ({
-    q: `def dec(f):\n    print("decorating")\n    def w():\n        return f()\n    return w\n\n@dec\ndef f():\n    return 1\n\nWhen does "decorating" print?`,
+    q: `When does "decorating" print?\ndef dec(f):\n    print("decorating")\n    def w():\n        return f()\n    return w\n\n@dec\ndef f():\n    return 1\n`,
     o: ["At decoration time (when @dec is applied), not when f() is called", "When f() is called", "When the module is imported AND when f() is called", "Never — print is inside dec but dec is never called"],
     c: 0,
     e: "The decorator function runs when @dec is applied (at definition time), printing 'decorating' immediately.",
@@ -3255,7 +3255,7 @@ Notes:
 
   // Q45: Trace decorator (entry and exit)
   (_i: number) => ({
-    q: `def trace(f):\n    def w(*a, **kw):\n        print(f"-> {f.__name__}")\n        r = f(*a, **kw)\n        print(f"<- {f.__name__}: {r}")\n        return r\n    return w\n\nWhat does this decorator do?`,
+    q: `What does this decorator do?\ndef trace(f):\n    def w(*a, **kw):\n        print(f"-> {f.__name__}")\n        r = f(*a, **kw)\n        print(f"<- {f.__name__}: {r}")\n        return r\n    return w\n`,
     o: ["Traces function entry and exit with return value", "Only traces function entry", "Only traces the return value", "Prevents the function from running"],
     c: 0,
     e: "This decorator prints when a function is entered and when it exits, including the return value.",
