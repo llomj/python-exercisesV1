@@ -83,7 +83,13 @@ const isLikelyCodeLine = (line: string): boolean => {
   const trimmed = line.trim();
   if (!trimmed || trimmed.endsWith('?')) return false;
   if (/^\s{2,}/.test(line)) return true;
-  if (CODE_BLOCK_START_RE.test(trimmed)) return true;
+  if (CODE_BLOCK_START_RE.test(trimmed)) {
+    // Check if it starts with an ambiguous keyword followed by English text
+    if (/^\s*(if|for|while|with|from|import|print|try|except|finally|elif|else|return|break|continue|assert|match|case)\s+(you|the|a|an|is|are|was|were|this|that|these|those|it|they|them|we|us|our|your|his|her|their|my|its|what|which|who|whom|whose|where|when|why|how|all|each|every|both|few|more|most|other|some|such|no|nor|not|only|own|same|so|than|too|very|can|will|just|don|should|now|also|have|has|had|do|does|did|would|could|may|might|must|shall|to|in|by|on|at|up|out|about|into|over|after|access|get|set|use|find|check|look|see|know|think|want|need|make|take|give|tell|ask|work|try|call|run|go|come|move|help|show|put|end|add|keep|let|begin|seem|turn|start|pass|grow|walk|win|offer|remember|love|consider|appear|buy|wait|serve|die|send|expect|build|stay|fall|cut|reach|kill|remain)\b/i.test(trimmed)) {
+      return false;
+    }
+    return true;
+  }
   if (SIMPLE_ASSIGNMENT_RE.test(trimmed)) return true;
   if (CALL_OR_INDEX_RE.test(trimmed)) return true;
   // Method calls on literals: "hello".upper(), [1,2].remove(2), {}.popitem()
