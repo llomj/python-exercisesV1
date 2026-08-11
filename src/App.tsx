@@ -743,11 +743,11 @@ const App: React.FC = () => {
 
   return (
     <SoundProvider soundEnabled={soundEnabled}>
-    <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-indigo-500/30 pb-28 overflow-x-hidden touch-pan-y">
+    <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-indigo-500/30 pb-28">
       {(showResult?.starEarned === 5 || showResult?.godMode) && (
         <FallingStars count={showResult?.godMode ? 250 : showResult?.allLevelsFiveStars ? 120 : 50} />
       )}
-      <nav className="pt-[env(safe-area-inset-top)] px-2 pb-1.5 flex items-center justify-between border-b border-white/5 sticky top-0 z-50 glass">
+      <nav className="pt-[env(safe-area-inset-top)] px-2 pb-1.5 flex items-center justify-between border-b border-white/5 sticky top-0 z-50 glass shadow-lg shadow-black/20">
         <div className="flex w-full items-center gap-4">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => { playCutSoundIfEnabled(); setView('hub'); }}>
             <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
@@ -778,15 +778,6 @@ const App: React.FC = () => {
           </div>
 
           <div className="ml-auto relative flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => { playCutSoundIfEnabled(); setShowGameplayInfoModal(true); }}
-              className="flex items-center justify-center text-slate-400 hover:text-white transition-all"
-              title={t('gameplayInfo.title')}
-              aria-label={t('gameplayInfo.title')}
-            >
-              <i className="fas fa-circle-info text-lg"></i>
-            </button>
             {(() => {
               const answerCount = randomMode
                 ? (stats.randomModeStats?.totalAnswered ?? 0)
@@ -796,7 +787,7 @@ const App: React.FC = () => {
                   className="flex items-center gap-1.5"
                   title="Answer Count"
                 >
-                  <i className="fas fa-hashtag text-slate-400 text-sm"></i>
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{t('app.count')}</span>
                   <span className="text-sm font-bold text-slate-200">
                     {answerCount.toLocaleString()}
                   </span>
@@ -828,6 +819,7 @@ const App: React.FC = () => {
               onShowFlow={() => { setOpenSettingsOnBack(true); setView('flow'); }}
               onShowOperations={() => { setOpenSettingsOnBack(true); setShowOperations(true); }}
               onShowFundamentals={(section) => { setOpenSettingsOnBack(true); setFundamentalsInitialSection(section); setView('fundamentals'); }}
+              onShowGameplayInfo={() => setShowGameplayInfoModal(true)}
               onToggleLanguage={toggleLanguage}
               soundEnabled={soundEnabled}
               hapticEnabled={hapticEnabled}
@@ -844,7 +836,7 @@ const App: React.FC = () => {
 
       </nav>
 
-      <main className="container mx-auto px-4 py-1 max-w-4xl min-h-[calc(100dvh-160px)]">
+      <main className="container mx-auto px-4 py-1 max-w-4xl min-h-[calc(100dvh-160px)] overflow-x-hidden touch-pan-y">
         {view === 'quiz' ? (
           <Suspense fallback={<ViewLoading />}>
             <QuizView

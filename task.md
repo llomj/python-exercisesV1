@@ -8,6 +8,15 @@
 - Added `overscroll-behavior: none` to `html, body` in `index.html` to suppress elastic horizontal wiggle on mobile/PWA.
 - Built and previewed locally; app loads successfully.
 
+### 2026-08-11 — Sticky header, count label, info moved to settings menu
+
+- Made top nav stickier and added `shadow-lg` so content visibly slides underneath when scrolling.
+- Moved `overflow-x-hidden touch-pan-y` from root div to `<main>` so the sticky header isn't affected.
+- Removed the standalone info (i) button from the header; added `How the game works` / `Comment fonctionne le jeu` inside the Rules section of `SettingsMenu` (sorted alphabetically).
+- Replaced `#` count badge with `Count <n>` / `Compteur <n>` using new `app.count` translation key.
+- Confirmed the existing settings-menu backdrop closes the panel on outside clicks.
+- Built and previewed locally; app loads successfully.
+
 ### 2026-06-24 — Header settings control
 
 - Moved the mobile settings trigger from the fixed bottom-center bar into the top-right header beside the answer-count badge in `src/App.tsx`.

@@ -12,6 +12,7 @@ export const translations = {
       methods: "Methods",
       flow: "Flow",
       fundamentals: "Fundamentals",
+      count: "Count",
     },
     
     // Evolution Hub
@@ -399,6 +400,7 @@ export const translations = {
       methods: "Méthodes",
       flow: "Flux",
       fundamentals: "Fondements",
+      count: "Compteur",
     },
     
     // Evolution Hub
