@@ -743,7 +743,7 @@ const App: React.FC = () => {
 
   return (
     <SoundProvider soundEnabled={soundEnabled}>
-    <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-indigo-500/30 pb-28">
+    <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-indigo-500/30 pb-28 overflow-x-hidden touch-pan-y">
       {(showResult?.starEarned === 5 || showResult?.godMode) && (
         <FallingStars count={showResult?.godMode ? 250 : showResult?.allLevelsFiveStars ? 120 : 50} />
       )}
@@ -758,18 +758,18 @@ const App: React.FC = () => {
 
           <div className="h-8 w-[1px] bg-white/10 mx-2 hidden sm:block"></div>
 
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-3 bg-white/5 px-3 py-1.5 rounded-2xl border border-white/10">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full evolution-gradient flex items-center justify-center text-white">
                 <PersonaIcon persona={currentPersona} size="sm" />
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col leading-none">
                 <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-none">{t('app.rank')}</span>
                 <span className="text-sm font-bold text-slate-200 leading-tight">{currentPersona}</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               <i className="fas fa-bolt text-amber-400 text-sm"></i>
               <span className="text-sm font-bold text-indigo-400">
                 {(randomMode ? (stats.xpRandom ?? 0) : stats.xp).toLocaleString()}
@@ -777,15 +777,15 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          <div className="ml-auto relative flex items-center gap-2">
+          <div className="ml-auto relative flex items-center gap-3">
             <button
               type="button"
               onClick={() => { playCutSoundIfEnabled(); setShowGameplayInfoModal(true); }}
-              className="w-8 h-8 flex items-center justify-center rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all"
+              className="flex items-center justify-center text-slate-400 hover:text-white transition-all"
               title={t('gameplayInfo.title')}
               aria-label={t('gameplayInfo.title')}
             >
-              <i className="fas fa-circle-info text-sm"></i>
+              <i className="fas fa-circle-info text-lg"></i>
             </button>
             {(() => {
               const answerCount = randomMode
@@ -793,7 +793,7 @@ const App: React.FC = () => {
                 : (stats.totalAttempts ?? stats.history.length);
               return (
                 <div
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10"
+                  className="flex items-center gap-1.5"
                   title="Answer Count"
                 >
                   <i className="fas fa-hashtag text-slate-400 text-sm"></i>
@@ -806,11 +806,11 @@ const App: React.FC = () => {
             <button
               type="button"
               onClick={() => { playCutSoundIfEnabled(); setShowSettingsMenu(!showSettingsMenu); }}
-              className="w-10 h-10 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all"
+              className="flex items-center justify-center text-slate-400 hover:text-white transition-all"
               title={t('settings.settings')}
               aria-label={t('settings.settings')}
             >
-              <i className="fas fa-gear text-sm"></i>
+              <i className="fas fa-gear text-2xl"></i>
             </button>
             <SettingsMenu
               isOpen={showSettingsMenu}
