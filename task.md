@@ -17,6 +17,14 @@
 - Confirmed the existing settings-menu backdrop closes the panel on outside clicks.
 - Built and previewed locally; app loads successfully.
 
+### 2026-08-11 — Fixed top nav and restored info icon
+
+- Changed top nav from `sticky` to `fixed top-0 left-0 right-0` with a matching height spacer so the header stays locked while content scrolls underneath.
+- Removed the iOS PWA `padding-top` from `body` since the fixed nav now handles its own safe-area padding.
+- Restored the standalone info (i) button in the top-right header next to the count and settings gear.
+- Removed the gameplay-info item from `SettingsMenu` to avoid duplication.
+- Built and verified the info icon, fixed nav, and count label are present in the production bundle.
+
 ### 2026-06-24 — Header settings control
 
 - Moved the mobile settings trigger from the fixed bottom-center bar into the top-right header beside the answer-count badge in `src/App.tsx`.

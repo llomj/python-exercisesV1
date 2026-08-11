@@ -22,7 +22,6 @@ interface SettingsMenuProps {
   onShowFlow?: () => void;
   onShowFundamentals?: (section: 'builtins' | 'syntax' | 'errors' | 'datatypes' | 'logic') => void;
   onShowLevelSelector?: () => void;
-  onShowGameplayInfo?: () => void;
   onToggleLanguage?: () => void;
   soundEnabled?: boolean;
   hapticEnabled?: boolean;
@@ -52,7 +51,6 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onShowFlow,
   onShowFundamentals,
   onShowLevelSelector,
-  onShowGameplayInfo,
   onToggleLanguage,
   soundEnabled = true,
   hapticEnabled = true,
@@ -132,12 +130,11 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   }
 
   // Rules (under Select Level): expandable — Concepts on top, then Flow, Glossary, Methods, Operations & Math (alphabetical)
-  if (onShowConcepts || onShowMethods || onShowFlow || onShowOperations || onShowGlossary || onShowGameplayInfo) {
+  if (onShowConcepts || onShowMethods || onShowFlow || onShowOperations || onShowGlossary) {
     const rulesChildren: Array<{ icon: string; label: string; onClick: () => void }> = [];
     if (onShowConcepts) rulesChildren.push({ icon: 'fa-lightbulb', label: t('app.concepts'), onClick: () => { onShowConcepts(); onClose(); } });
     if (onShowFlow) rulesChildren.push({ icon: 'fa-diagram-project', label: t('app.flow'), onClick: () => { onShowFlow(); onClose(); } });
     if (onShowGlossary) rulesChildren.push({ icon: 'fa-circle-info', label: t('app.glossary'), onClick: () => { onShowGlossary(); onClose(); } });
-    if (onShowGameplayInfo) rulesChildren.push({ icon: 'fa-circle-info', label: t('gameplayInfo.title'), onClick: () => { onShowGameplayInfo(); onClose(); } });
     if (onShowMethods) rulesChildren.push({ icon: 'fa-code', label: t('app.methods'), onClick: () => { onShowMethods(); onClose(); } });
     if (onShowOperations) rulesChildren.push({ icon: 'fa-calculator', label: t('app.operations'), onClick: () => { onShowOperations(); onClose(); } });
     rulesChildren.sort((a, b) => a.label.localeCompare(b.label));

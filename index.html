@@ -56,12 +56,7 @@
             padding-bottom: env(safe-area-inset-bottom, 0);
             -webkit-overflow-scrolling: touch;
         }
-        /* iOS PWA: env(safe-area-inset-top) often 0 - force padding so nav clears status bar (4rem for Dynamic Island) */
-        @media (display-mode: standalone), (display-mode: minimal-ui) {
-            body {
-                padding-top: max(4rem, env(safe-area-inset-top, 4rem));
-            }
-        }
+        /* Nav is fixed and handles its own safe-area padding; no extra body padding needed */
         .code-font {
             font-family: 'Fira Code', monospace;
         }
